@@ -53,7 +53,7 @@ public class DeathLaser extends SimpleSlimefunItem<BlockTicker> implements Energ
 
             @Override
             public void onPlayerBreak(@NotNull BlockBreakEvent e, @NotNull ItemStack item, @NotNull List<ItemStack> drops) {
-                LaserDisplayStorage.remove(e.getBlock().getLocation());
+                LaserDisplayStorage.scheduleForRemoval(e.getBlock().getLocation());
             }
         };
     }
