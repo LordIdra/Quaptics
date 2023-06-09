@@ -12,6 +12,7 @@ import io.github.thebusybiscuit.slimefun4.implementation.items.SimpleSlimefunIte
 import lombok.Getter;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
+import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -47,15 +48,16 @@ public class DeathLaser extends SimpleSlimefunItem<BlockTicker> implements Energ
 
             @Override
             public void onPlayerPlace(@NotNull BlockPlaceEvent e) {
+                Location location = e.getBlock().getLocation();
                 final Beam linearRedBeam = new BlockDisplayBeam(
                         new LinearTimeTickerFactory(
-                                Lasers.testDisplay,
-                                e.getBlock().getLocation(),
-                                e.getBlock().getLocation().add(new Vector(5, 0, 0)),
+                                Lasers.testDisplay(location),
+                                location,
+                                location.add(new Vector(5, 0, 0)),
                                 20),
                         Lasers.testTimer,
                         true);
-                BeamStorage.add(e.getBlock().getLocation(), linearRedBeam);
+                BeamStorage.add(location, linearRedBeam);
             }
         };
     }
