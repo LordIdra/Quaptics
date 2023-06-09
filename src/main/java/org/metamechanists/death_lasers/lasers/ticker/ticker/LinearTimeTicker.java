@@ -14,6 +14,9 @@ public class LinearTimeTicker implements LaserBlockDisplayTicker {
     public LinearTimeTicker(BlockDisplay display, Location source, Location target, int lifespanTicks) {
         this.display = display;
         this.lifespanTicks = lifespanTicks;
+        DEATH_LASERS.getInstance().getLogger().severe("hi mum" + source.toString());
+        DEATH_LASERS.getInstance().getLogger().severe("hi mum" + target.toString());
+        DEATH_LASERS.getInstance().getLogger().severe("hi mum" + target.toVector().subtract(source.toVector()));
         velocity = target.toVector()
                 .subtract(source.toVector())
                 .multiply(1.0/lifespanTicks);
@@ -22,7 +25,6 @@ public class LinearTimeTicker implements LaserBlockDisplayTicker {
 
     @Override
     public void tick() {
-        DEATH_LASERS.getInstance().getLogger().severe("hi mum" + velocity.toString());
         display.setVelocity(velocity);
         ageTicks++;
     }
@@ -37,3 +39,4 @@ public class LinearTimeTicker implements LaserBlockDisplayTicker {
         return ageTicks >= lifespanTicks;
     }
 }
+
