@@ -17,10 +17,11 @@ public class LaserDisplay {
     }
 
     public void remove() {
-        group.remove();
+        group.removeDisplay("main");
     }
 
     public void update() {
+        group.removeDisplay("main");
         group.addDisplay("MAIN",
                 new ItemDisplayBuilder()
                         .setGroupParentOffset(new Vector(0, 1, stage))
