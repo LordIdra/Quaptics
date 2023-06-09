@@ -17,17 +17,23 @@ public class LaserDisplay {
         group.addDisplay(MAIN_DISPLAY_NAME, new BlockDisplayBuilder()
                 .setGroupParentOffset(new Vector(0, 1, stage))
                 .setBlockData(Material.RED_CONCRETE.createBlockData())
+                .setTransformation(new TransformationBuilder()
+                        .scale(0.2F, 0.2F, 0.8F)
+                        .build())
                 .build(group));
         update();
     }
 
     public void remove() {
-        group.removeDisplay(MAIN_DISPLAY_NAME);
+        group.removeDisplay(MAIN_DISPLAY_NAME).remove();
     }
 
     public void update() {
         var display = group.removeDisplay(MAIN_DISPLAY_NAME);
-        display.setTransformation(new TransformationBuilder().translation(0, 1, stage).build());
+        display.setTransformation(new TransformationBuilder()
+                .scale(0.2F, 0.2F, 0.8F)
+                .translation(0, 1, stage)
+                .build());
         group.addDisplay(MAIN_DISPLAY_NAME, display);
         stage += 0.1;
     }
