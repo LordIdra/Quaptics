@@ -5,16 +5,22 @@ import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.metamechanists.death_lasers.implementation.DeathLaserRunnable;
 
 public final class DEATH_LASERS extends JavaPlugin implements SlimefunAddon {
     @Getter
     private static DEATH_LASERS instance;
+
+    public static void initializeRunnables() {
+        new DeathLaserRunnable().runTaskTimer(instance, 0, 2);
+    }
 
     @Override
     public void onEnable() {
         instance = this;
         Groups.initialize();
         Items.initialize();
+        initializeRunnables();
     }
 
     @Override

@@ -42,7 +42,7 @@ public class DeathLaser extends SimpleSlimefunItem<BlockTicker> implements Energ
 
             @Override
             public void onPlayerPlace(@NotNull BlockPlaceEvent e) {
-                LaserDisplayStorage.newLaserDisplay(e.getBlock().getLocation());
+                LaserDisplayStorage.add(e.getBlock().getLocation());
             }
         };
     }
@@ -53,7 +53,7 @@ public class DeathLaser extends SimpleSlimefunItem<BlockTicker> implements Energ
 
             @Override
             public void onPlayerBreak(@NotNull BlockBreakEvent e, @NotNull ItemStack item, @NotNull List<ItemStack> drops) {
-                LaserDisplayStorage.removeLaserDisplay(e.getBlock().getLocation());
+                LaserDisplayStorage.remove(e.getBlock().getLocation());
             }
         };
     }
@@ -67,7 +67,6 @@ public class DeathLaser extends SimpleSlimefunItem<BlockTicker> implements Energ
             public void tick(Block b, SlimefunItem item, Config data) {
                 int charge = getCharge(b.getLocation(), data);
                 if (charge >= consumption) {
-                    LaserDisplayStorage.updateLaserDisplay(b.getLocation());
                     removeCharge(b.getLocation(), consumption);
                 }
             }

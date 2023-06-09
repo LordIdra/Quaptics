@@ -5,7 +5,6 @@ import dev.sefiraat.sefilib.entity.display.builders.BlockDisplayBuilder;
 import dev.sefiraat.sefilib.misc.TransformationBuilder;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.util.Vector;
 
 public class LaserDisplay {
     private static final String MAIN_DISPLAY_NAME = "MAIN";
@@ -15,7 +14,6 @@ public class LaserDisplay {
     public LaserDisplay(Location location) {
         group = new DisplayGroup(location);
         group.addDisplay(MAIN_DISPLAY_NAME, new BlockDisplayBuilder()
-                .setGroupParentOffset(new Vector(0, 1, stage))
                 .setBlockData(Material.RED_CONCRETE.createBlockData())
                 .setTransformation(new TransformationBuilder()
                         .scale(0.2F, 0.2F, 0.8F)
