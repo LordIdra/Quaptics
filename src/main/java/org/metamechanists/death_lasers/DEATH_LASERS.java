@@ -12,7 +12,7 @@ public final class DEATH_LASERS extends JavaPlugin implements SlimefunAddon {
     private static DEATH_LASERS instance;
 
     public static void initializeRunnables() {
-        new DeathLaserRunnable().runTaskTimer(instance, 0, 2);
+        new DeathLaserRunnable().runTaskTimer(instance, 0, 1);
     }
 
     @Override

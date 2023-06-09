@@ -1,16 +1,15 @@
 package org.metamechanists.death_lasers.implementation;
 
-import lombok.val;
 import org.bukkit.Location;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class LaserDisplayStorage {
-    private static final Map<Location, LaserDisplay> storage = new HashMap<>();
+    private static final Map<Location, LaserBeam> storage = new HashMap<>();
 
     public static void add(Location location) {
-        storage.put(location, new LaserDisplay(location));
+        storage.put(location, new LaserBeam(location));
     }
 
     public static void remove(Location location) {
@@ -19,6 +18,6 @@ public class LaserDisplayStorage {
     }
 
     public static void update() {
-        storage.values().forEach(LaserDisplay::update);
+        storage.values().forEach(LaserBeam::update);
     }
 }
