@@ -11,8 +11,8 @@
     <name>DEATH_LASERS</name>
 
     <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>16</maven.compiler.source>
+        <maven.compiler.target>16</maven.compiler.target>
     </properties>
 
     <build>
@@ -53,9 +53,6 @@
                         <goals>
                             <goal>shade</goal>
                         </goals>
-                        <configuration>
-                            <createDependencyReducedPom>false</createDependencyReducedPom>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
