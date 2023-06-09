@@ -74,7 +74,7 @@ public class DeathLaser extends SimpleSlimefunItem<BlockTicker> implements Energ
 
             @Override
             public boolean isSynchronized() {
-                return false;
+                return true;
             }
         };
     }
