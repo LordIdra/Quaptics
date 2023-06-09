@@ -30,6 +30,7 @@ public class LaserDisplayStorage {
                 .forEach(location -> {
             storage.get(location).remove();
             storage.remove(location);
+            locationsToRemove.remove(location);
         });
 
         storage.values().forEach(LaserBeam::update);
