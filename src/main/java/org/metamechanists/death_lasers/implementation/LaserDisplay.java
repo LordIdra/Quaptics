@@ -1,15 +1,13 @@
 package org.metamechanists.death_lasers.implementation;
 
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
-import dev.sefiraat.sefilib.entity.display.builders.ItemDisplayBuilder;
+import dev.sefiraat.sefilib.misc.TransformationBuilder;
 import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.util.Vector;
 
 public class LaserDisplay {
+    private static final String MAIN_DISPLAY_NAME = "MAIN";
     private final DisplayGroup group;
-    private double stage = 0;
+    private float stage = 0;
 
     public LaserDisplay(Location location) {
         group = new DisplayGroup(location);
@@ -17,16 +15,13 @@ public class LaserDisplay {
     }
 
     public void remove() {
-        group.removeDisplay("main");
+        group.removeDisplay(MAIN_DISPLAY_NAME);
     }
 
     public void update() {
-        group.removeDisplay("main");
-        group.addDisplay("MAIN",
-                new ItemDisplayBuilder()
-                        .setGroupParentOffset(new Vector(0, 1, stage))
-                        .setItemStack(new ItemStack(Material.STICK))
-                        .build(group));
-        stage += 0.2;
+        var display = group.removeDisplay(MAIN_DISPLAY_NAME);
+        display.setTransformation(new TransformationBuilder().translation(0, 1, stage).build());
+        group.addDisplay(MAIN_DISPLAY_NAME, display);
+        stage += 0.1;
     }
 }
