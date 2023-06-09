@@ -9,11 +9,10 @@ import org.bukkit.util.Vector;
 public class Lasers {
     public static final SpawnTimer testTimer = new SpawnTimer(5);
 
-    public static BlockDisplay testDisplay(Location location) {
+    public static BlockDisplayBuilder testDisplay(Location location) {
         return new BlockDisplayBuilder()
                 .setLocation(location)
                 .setBlockData(Material.RED_CONCRETE.createBlockData())
-                .setGroupParentOffset(new Vector())
-                .build();
+                .setGroupParentOffset(new Vector());
     }
 }
