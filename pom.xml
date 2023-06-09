@@ -16,7 +16,7 @@
     </properties>
 
     <build>
-        <finalName>MetaMachines</finalName>
+        <finalName>DEATH_LASERS</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
