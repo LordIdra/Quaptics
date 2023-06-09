@@ -13,6 +13,8 @@ public final class DEATH_LASERS extends JavaPlugin implements SlimefunAddon {
     @Override
     public void onEnable() {
         instance = this;
+        Groups.initialize();
+        Items.initialize();
     }
 
     @Override
