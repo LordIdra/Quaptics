@@ -52,8 +52,8 @@ public class DeathLaser extends SimpleSlimefunItem<BlockTicker> implements Energ
                 final Beam linearRedBeam = new BlockDisplayBeam(
                         new LinearTimeTickerFactory(
                                 Lasers.testDisplay(location),
-                                location,
-                                location.add(new Vector(5, 0, 0)),
+                                location.clone(),
+                                location.clone().add(new Vector(5, 0, 0)),
                                 20),
                         Lasers.testTimer,
                         true);
