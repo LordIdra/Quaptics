@@ -25,7 +25,7 @@ public class LaserDisplay {
     }
 
     public void remove() {
-        group.removeDisplay(MAIN_DISPLAY_NAME).remove();
+        group.remove();
     }
 
     public void update() {
