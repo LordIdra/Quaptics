@@ -8,17 +8,18 @@ import org.bukkit.entity.BlockDisplay;
 import org.bukkit.util.Vector;
 
 public class LaserDisplay {
-    private final int max_age = 10;
+    private final int max_age = 100;
     private int age = 0;
     private final BlockDisplay display;
 
     public LaserDisplay(Location location) {
+        final float scale = (float)age / (float)max_age;
         display = new BlockDisplayBuilder()
                 .setLocation(location)
                 .setBlockData(Material.RED_CONCRETE.createBlockData())
                 .setGroupParentOffset(new Vector())
                 .setTransformation(new TransformationBuilder()
-                        .scale(0.2F, 0.2F, 0.8F)
+                        .scale(0.2F*scale, 0.2F*scale, 0.8F*scale)
                         .build())
                 .build();
     }
