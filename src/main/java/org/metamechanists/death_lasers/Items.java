@@ -8,7 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import org.metamechanists.death_lasers.implementation.DeathLaser;
 
 public class Items {
-    public static SlimefunItemStack DEATH_LASER = new SlimefunItemStack(
+    public static final SlimefunItemStack DEATH_LASER = new SlimefunItemStack(
             "DEATH_LASER",
             Material.GLASS,
             "&4&lDeath Laser");

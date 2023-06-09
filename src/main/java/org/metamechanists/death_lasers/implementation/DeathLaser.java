@@ -16,7 +16,13 @@ import org.bukkit.block.Block;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
+import org.metamechanists.death_lasers.lasers.Lasers;
+import org.metamechanists.death_lasers.lasers.beam.Beam;
+import org.metamechanists.death_lasers.lasers.beam.BlockDisplayBeam;
+import org.metamechanists.death_lasers.lasers.storage.BeamStorage;
+import org.metamechanists.death_lasers.lasers.ticker.factory.LinearTimeTickerFactory;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -32,7 +38,6 @@ public class DeathLaser extends SimpleSlimefunItem<BlockTicker> implements Energ
         super(group, item, recipeType, recipe);
         this.consumption = consumption;
         this.capacity = capacity;
-
         addItemHandler(onPlace(), onBreak());
     }
 
@@ -42,7 +47,15 @@ public class DeathLaser extends SimpleSlimefunItem<BlockTicker> implements Energ
 
             @Override
             public void onPlayerPlace(@NotNull BlockPlaceEvent e) {
-                LaserDisplayStorage.add(e.getBlock().getLocation());
+                final Beam linearRedBeam = new BlockDisplayBeam(
+                        new LinearTimeTickerFactory(
+                                Lasers.testDisplay,
+                                e.getBlock().getLocation(),
+                                e.getBlock().getLocation().add(new Vector(5, 0, 0)),
+                                20),
+                        Lasers.testTimer,
+                        true);
+                BeamStorage.add(e.getBlock().getLocation(), linearRedBeam);
             }
         };
     }
@@ -53,7 +66,7 @@ public class DeathLaser extends SimpleSlimefunItem<BlockTicker> implements Energ
 
             @Override
             public void onPlayerBreak(@NotNull BlockBreakEvent e, @NotNull ItemStack item, @NotNull List<ItemStack> drops) {
-                LaserDisplayStorage.scheduleForRemoval(e.getBlock().getLocation());
+                BeamStorage.scheduleLocationRemoval(e.getBlock().getLocation());
             }
         };
     }

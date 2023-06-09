@@ -5,15 +5,15 @@ import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.metamechanists.death_lasers.implementation.DeathLaserRunnable;
-import org.metamechanists.death_lasers.implementation.LaserDisplayStorage;
+import org.metamechanists.death_lasers.lasers.storage.BeamStorage;
+import org.metamechanists.death_lasers.lasers.storage.BeamStorageRunnable;
 
 public final class DEATH_LASERS extends JavaPlugin implements SlimefunAddon {
     @Getter
     private static DEATH_LASERS instance;
 
     public static void initializeRunnables() {
-        new DeathLaserRunnable().runTaskTimer(instance, 0, 1);
+        new BeamStorageRunnable().runTaskTimer(instance, 0, 1);
     }
 
     @Override
@@ -26,7 +26,7 @@ public final class DEATH_LASERS extends JavaPlugin implements SlimefunAddon {
 
     @Override
     public void onDisable() {
-        LaserDisplayStorage.hardRemoveAllLasers();
+        BeamStorage.hardRemoveAllBeams();
     }
 
     @NotNull
