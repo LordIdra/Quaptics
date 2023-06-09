@@ -28,7 +28,7 @@ public class BeamStorage {
     }
 
     public static void tick() {
-        // Remove expired Beams
+        // Remove expired beams
         locationsToRemove.forEach(x -> storage.get(x).stream()
                 .filter(Beam::readyToRemove)
                 .forEach(y -> {

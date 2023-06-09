@@ -3,6 +3,7 @@ package org.metamechanists.death_lasers.lasers.ticker.ticker;
 import org.bukkit.Location;
 import org.bukkit.entity.BlockDisplay;
 import org.bukkit.util.Vector;
+import org.metamechanists.death_lasers.DEATH_LASERS;
 
 public class LinearTimeTicker implements LaserBlockDisplayTicker {
     private final BlockDisplay display;
@@ -21,6 +22,7 @@ public class LinearTimeTicker implements LaserBlockDisplayTicker {
 
     @Override
     public void tick() {
+        DEATH_LASERS.getInstance().getLogger().severe("hi mum" + velocity.toString());
         display.setVelocity(velocity);
         ageTicks++;
     }

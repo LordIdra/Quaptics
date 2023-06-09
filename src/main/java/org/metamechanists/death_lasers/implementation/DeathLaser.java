@@ -48,7 +48,7 @@ public class DeathLaser extends SimpleSlimefunItem<BlockTicker> implements Energ
 
             @Override
             public void onPlayerPlace(@NotNull BlockPlaceEvent e) {
-                Location location = e.getBlock().getLocation();
+                final Location location = e.getBlock().getLocation();
                 final Beam linearRedBeam = new BlockDisplayBeam(
                         new LinearTimeTickerFactory(
                                 Lasers.testDisplay(location),
