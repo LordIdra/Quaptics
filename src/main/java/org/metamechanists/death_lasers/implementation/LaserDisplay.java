@@ -8,7 +8,7 @@ import org.bukkit.entity.BlockDisplay;
 import org.bukkit.util.Vector;
 
 public class LaserDisplay {
-    private final int max_age = 20;
+    private final int max_age = 40;
     private int age = 0;
     private final BlockDisplay display;
 
@@ -26,10 +26,10 @@ public class LaserDisplay {
     }
 
     public void update() {
-        final float scale = (float)age / (float)max_age;
+        final float scale = 1 - ((float)age / (float)max_age);
         display.setTransformation(new TransformationBuilder()
                 .scale(0.2F*scale, 0.2F*scale, 0.2F*scale)
-                .translation(0.6F, 0.6F, age*0.1F)
+                .translation(0.4F, 0.4F, age*0.5F)
                 .build());
         age++;
     }

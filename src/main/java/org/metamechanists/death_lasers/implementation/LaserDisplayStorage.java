@@ -20,6 +20,10 @@ public class LaserDisplayStorage {
         locationsToRemove.add(location);
     }
 
+    public static void hardRemoveAllLasers() {
+        storage.values().forEach(LaserBeam::remove);
+    }
+
     public static void update() {
         locationsToRemove.stream()
                 .filter(location -> storage.get(location).canBeRemoved())

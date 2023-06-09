@@ -6,6 +6,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.metamechanists.death_lasers.implementation.DeathLaserRunnable;
+import org.metamechanists.death_lasers.implementation.LaserDisplayStorage;
 
 public final class DEATH_LASERS extends JavaPlugin implements SlimefunAddon {
     @Getter
@@ -25,7 +26,7 @@ public final class DEATH_LASERS extends JavaPlugin implements SlimefunAddon {
 
     @Override
     public void onDisable() {
-
+        LaserDisplayStorage.hardRemoveAllLasers();
     }
 
     @NotNull
