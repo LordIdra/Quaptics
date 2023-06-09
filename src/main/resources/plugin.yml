@@ -2,3 +2,7 @@ name: DEATH_LASERS
 version: '${project.version}'
 main: org.metamechanists.death_lasers.DEATH_LASERS
 api-version: 1.19
+
+depend:
+  - MetaLib
+  - Slimefun
