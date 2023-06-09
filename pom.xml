@@ -80,11 +80,6 @@
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
         </repository>
-
-        <repository>
-            <id>sefi-repo</id>
-            <url>sefiraat.jfrog.io/artifactory/default-maven-local</url>
-        </repository>
     </repositories>
 
     <dependencies>
