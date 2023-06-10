@@ -31,7 +31,7 @@ public class BeamStorage {
         beamGroups.get(location).setPowered(powered);
     }
     public static void deprecateBeamGroup(Location location) {
-        beamGroups.get(location).setPowered(false);
+        setBeamGroupPowered(location, false);
         deprecatedBeamGroups.add(beamGroups.remove(location));
     }
 

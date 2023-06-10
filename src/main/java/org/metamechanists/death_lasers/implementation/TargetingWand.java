@@ -26,7 +26,8 @@ public class TargetingWand extends SlimefunItem {
         super(itemGroup, item, recipeType, recipe);
     }
 
-    private final Vector blockCenterVector = new Vector(0.5, 0.5, 0);
+    private final Vector BLOCK_CENTER_VECTOR = new Vector(0.5F, 0.5F, 0.5F);
+    private final float FLOAT_THRESHOLD = 0.001F;
 
     @Override
     public void preRegister() {
@@ -65,14 +66,14 @@ public class TargetingWand extends SlimefunItem {
                 return;
             }
 
-            if (source == target) {
+            if (source.distance(target) < FLOAT_THRESHOLD) {
                 player.sendMessage(Language.getLanguageEntry("targeting-wand.same-block"));
                 return;
             }
 
             if (BlockStorage.check(source) instanceof LaserEmitter emitter) {
                 player.sendMessage("instance of laser emitter");
-                emitter.updateBeamGroup(source.add(blockCenterVector), target.add(blockCenterVector));
+                emitter.updateBeamGroup(source.add(BLOCK_CENTER_VECTOR), target.add(BLOCK_CENTER_VECTOR));
             }
         };
     }

@@ -47,7 +47,9 @@ public abstract class LaserEmitter extends SimpleSlimefunItem<BlockTicker> imple
 
             @Override
             public void onPlayerBreak(@NotNull BlockBreakEvent e, @NotNull ItemStack item, @NotNull List<ItemStack> drops) {
-                BeamStorage.deprecateBeamGroup(e.getBlock().getLocation());
+                if (BeamStorage.hasBeamGroup(e.getBlock().getLocation())) {
+                    BeamStorage.deprecateBeamGroup(e.getBlock().getLocation());
+                }
             }
         };
     }
