@@ -29,7 +29,7 @@ public class DeathLaser extends LaserEmitter {
     @Override
     public void updateBeamGroup(Location source, Location target) {
         if (BeamStorage.hasBeamGroup(source)) {
-            BeamStorage.removeBeamGroup(source);
+            BeamStorage.deprecateBeamGroup(source);
         }
 
         final Beam linearRedBeam = new BlockDisplayBeam(

@@ -8,44 +8,41 @@ import java.util.List;
 import java.util.Map;
 
 public class BeamStorage {
-    private static final Map<Location, BeamGroup> storage = new HashMap<>();
-    private static final List<Location> locationsToRemove = new ArrayList<>();
+    private static final Map<Location, BeamGroup> beamGroups = new HashMap<>();
+    private static final List<BeamGroup> deprecatedBeamGroups = new ArrayList<>();
 
     public static void tick() {
-        // Remove expired beam groups
-        locationsToRemove.stream()
-                .filter(location -> storage.get(location).readyToRemove())
-                .forEach(location -> {
-                    storage.remove(location);
-                    locationsToRemove.remove(location);
-                });
+        beamGroups.values().forEach(BeamGroup::tick);
+        deprecatedBeamGroups.forEach(BeamGroup::tick);
 
-        // Tick remaining beams
-        storage.values().forEach(BeamGroup::tick);
+        // Remove expired groups
+        deprecatedBeamGroups.stream()
+                .filter(BeamGroup::readyToRemove)
+                .forEach(deprecatedBeamGroups::remove);
     }
 
     public static boolean hasBeamGroup(Location location) {
-        return storage.containsKey(location);
+        return beamGroups.containsKey(location);
     }
     public static void setBeamGroup(Location location, BeamGroup beamGroup) {
-        storage.put(location, beamGroup);
-        locationsToRemove.remove(location);
-    }
-    public static void removeBeamGroup(Location location) {
-        locationsToRemove.add(location);
+        beamGroups.put(location, beamGroup);
     }
     public static void setBeamGroupPowered(Location location,boolean powered) {
-        storage.get(location).setPowered(powered);
+        beamGroups.get(location).setPowered(powered);
+    }
+    public static void deprecateBeamGroup(Location location) {
+        deprecatedBeamGroups.add(beamGroups.remove(location));
     }
 
-    public static void removeBeam(Location location, String key) {
-        storage.get(location).remove(key);
-    }
     public static void setBeamPowered(Location location, String key, boolean powered) {
-        storage.get(location).setPowered(key, powered);
+        beamGroups.get(location).setPowered(key, powered);
+    }
+    public static void deprecatedBeam(Location location, String key) {
+        beamGroups.get(location).remove(key);
     }
 
     public static void hardRemoveAllBeamGroups() {
-        storage.values().forEach(BeamGroup::hardRemoveAllBeams);
+        beamGroups.values().forEach(BeamGroup::hardRemoveAllBeams);
+        deprecatedBeamGroups.forEach(BeamGroup::hardRemoveAllBeams);
     }
 }
