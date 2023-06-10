@@ -36,7 +36,7 @@ public class DeathLaser extends LaserEmitter {
 
         final Beam linearRedBeam = new BlockDisplayBeam(
                 new LinearTimeTickerFactory(
-                        Lasers.testDisplay(source.clone().add(BLOCK_CENTER_VECTOR)),
+                        Lasers.testDisplay(),
                         source.clone().add(BLOCK_CENTER_VECTOR),
                         target.clone().add(BLOCK_CENTER_VECTOR),
                         20),

@@ -9,7 +9,7 @@ import org.bukkit.util.Vector;
 public class Lasers {
     public static final SpawnTimer testTimer = new SpawnTimer(5);
 
-    public static BlockDisplayBuilder testDisplay(Location location) {
+    public static BlockDisplayBuilder testDisplay() {
         return new BlockDisplayBuilder()
                 .setBrightness(new Display.Brightness(4, 0))
                 .setBlockData(Material.RED_CONCRETE.createBlockData())
