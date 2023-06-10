@@ -15,8 +15,8 @@ public class Items {
             "&4&lDeath Laser");
     public static final SlimefunItemStack TARGETING_WAND = new SlimefunItemStack(
             "TARGETING_WAND",
-            Material.GLASS,
-            "&bTargeting Wand");
+            Material.BLAZE_ROD,
+            "&6Targeting Wand");
 
     public static void initialize() {
         final SlimefunAddon addon = DEATH_LASERS.getInstance();

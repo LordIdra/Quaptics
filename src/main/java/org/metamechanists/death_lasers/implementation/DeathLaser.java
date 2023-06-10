@@ -17,6 +17,7 @@ import org.bukkit.block.Block;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import org.metamechanists.death_lasers.DEATH_LASERS;
 import org.metamechanists.death_lasers.Keys;
 import org.metamechanists.death_lasers.lasers.Lasers;
 import org.metamechanists.death_lasers.lasers.beam.Beam;
@@ -66,9 +67,11 @@ public class DeathLaser extends SimpleSlimefunItem<BlockTicker> implements Energ
 
                 final Location source = b.getLocation();
                 if (BlockStorage.getLocationInfo(source, Keys.LOCATION_X.getKey()) == null) {
+                    DEATH_LASERS.getInstance().getLogger().severe("2");
                     return;
                 }
 
+                DEATH_LASERS.getInstance().getLogger().severe("3");
                 final Location target = new Location(
                         source.getWorld(),
                         Integer.parseInt(BlockStorage.getLocationInfo(source, Keys.LOCATION_X.getKey())),
