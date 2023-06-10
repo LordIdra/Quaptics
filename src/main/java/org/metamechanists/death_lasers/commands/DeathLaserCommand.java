@@ -2,6 +2,7 @@ package org.metamechanists.death_lasers.commands;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandHelp;
+import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandPermission;
 import co.aikar.commands.annotation.Description;
 import co.aikar.commands.annotation.HelpCommand;
@@ -12,6 +13,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.metamechanists.death_lasers.lasers.storage.BeamStorage;
 
+
+@SuppressWarnings("unused")
+@CommandAlias("deathlasers")
 public class DeathLaserCommand extends BaseCommand {
 
     @HelpCommand
