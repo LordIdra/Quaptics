@@ -3,17 +3,17 @@ package org.metamechanists.death_lasers.lasers.storage;
 import org.metamechanists.death_lasers.lasers.beam.Beam;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class BeamGroup {
 
-    private final Map<String, Beam> beams;
+    private final Map<String, Beam> beams = new HashMap<>();
     private final List<Beam> deprecatedBeams = new ArrayList<>();
 
     public BeamGroup(String key, Beam value) {
-        beams = Collections.singletonMap(key, value);
+        beams.put(key, value);
     }
 
     public void tick() {

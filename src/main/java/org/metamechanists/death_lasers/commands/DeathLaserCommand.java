@@ -9,6 +9,7 @@ import co.aikar.commands.annotation.HelpCommand;
 import co.aikar.commands.annotation.Private;
 import co.aikar.commands.annotation.Subcommand;
 import co.aikar.commands.annotation.Syntax;
+import io.github.bakedlibs.dough.common.ChatColors;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.metamechanists.death_lasers.lasers.storage.BeamStorage;
@@ -37,10 +38,9 @@ public class DeathLaserCommand extends BaseCommand {
 
         BeamStorage.getActiveBeamGroups()
                 .forEach(location -> builder
-                        .append("&7- &e")
                         .append(location.toString())
                         .append("\n"));
 
-        player.sendMessage(builder.toString());
+        player.sendMessage(ChatColors.color(builder.toString()));
     }
 }
