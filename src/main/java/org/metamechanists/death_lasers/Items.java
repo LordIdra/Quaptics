@@ -33,7 +33,7 @@ public class Items {
                 RecipeType.NULL,
                 new ItemStack[] {},
                 1000,
-                1000)
+                100)
                 .register(addon);
     }
 }

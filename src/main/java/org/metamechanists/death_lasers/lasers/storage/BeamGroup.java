@@ -33,6 +33,9 @@ public class BeamGroup {
         beams.get(key).setPowered(powered);
     }
 
+    public void deprecateAllBeams() {
+        beams.keySet().forEach(this::deprecate);
+    }
     public void deprecate(String key) {
         setPowered(key, false);
         deprecatedBeams.add(beams.remove(key));
