@@ -34,7 +34,7 @@ public class BeamGroup {
     }
 
     public void deprecate(String key) {
-        beams.get(key).setPowered(false);
+        setPowered(key, false);
         deprecatedBeams.add(beams.remove(key));
     }
 
