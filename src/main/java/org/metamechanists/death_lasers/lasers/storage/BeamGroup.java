@@ -2,8 +2,6 @@ package org.metamechanists.death_lasers.lasers.storage;
 
 import org.metamechanists.death_lasers.lasers.beam.Beam;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentHashMap;

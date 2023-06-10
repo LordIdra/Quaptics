@@ -20,7 +20,7 @@ public class LinearTimeTicker implements LaserBlockDisplayTicker {
         this.display = displayBuilder
                 .setLocation(source)
                 .setTransformation(new TransformationBuilder()
-                        .scale(0.2F, 0.2F, 0.2F)
+                        .scale(0.1F, 0.1F, 0.1F)
                         .build())
                 .build();
     }
