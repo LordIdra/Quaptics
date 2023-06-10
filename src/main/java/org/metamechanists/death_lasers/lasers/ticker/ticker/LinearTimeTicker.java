@@ -29,7 +29,7 @@ public class LinearTimeTicker implements LaserBlockDisplayTicker {
 
     @Override
     public void tick() {
-        DEATH_LASERS.getInstance().getLogger().info( display.getBlock().getMaterial().name() + " === " + display.getLocation());
+       // DEATH_LASERS.getInstance().getLogger().info( display.getBlock().getMaterial().name() + " === " + display.getLocation());
         display.teleport(display.getLocation().add(velocity));
         ageTicks++;
     }
