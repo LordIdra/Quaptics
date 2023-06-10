@@ -33,7 +33,7 @@ public class TargetingWand extends SlimefunItem {
 
     @Nonnull
     private ItemUseHandler onBlockInteract() {
-        return event -> {
+        return event -> Slimefun.runSync(() -> {
             final Player player = event.getPlayer();
             final Block block = event.getClickedBlock().orElse(null);
             final ItemStack stack = event.getItem();
@@ -71,6 +71,6 @@ public class TargetingWand extends SlimefunItem {
             if (BlockStorage.check(source) instanceof LaserEmitter emitter) {
                 emitter.updateBeamGroup(source, target);
             }
-        };
+        });
     }
 }
