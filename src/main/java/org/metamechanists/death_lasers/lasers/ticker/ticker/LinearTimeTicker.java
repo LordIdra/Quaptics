@@ -1,6 +1,7 @@
 package org.metamechanists.death_lasers.lasers.ticker.ticker;
 
 import dev.sefiraat.sefilib.entity.display.builders.BlockDisplayBuilder;
+import dev.sefiraat.sefilib.misc.TransformationBuilder;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.BlockDisplay;
@@ -19,13 +20,11 @@ public class LinearTimeTicker implements LaserBlockDisplayTicker {
         velocity = target.toVector()
                 .subtract(source.toVector())
                 .multiply(1.0/lifespanTicks);
-        this.display = new BlockDisplayBuilder()
-                .setBrightness(new Display.Brightness(4, 0))
-                .setBlockData(Material.RED_CONCRETE.createBlockData())
-                .setGroupParentOffset(new Vector())
+        this.display = displayBuilder
                 .setLocation(source)
                 .setDisplayHeight(0.1F)
                 .setDisplayWidth(0.1F)
+                .setTransformation(new TransformationBuilder().scale(0.1F, 0.1F, 0.1F).build())
                 .build();
     }
 
