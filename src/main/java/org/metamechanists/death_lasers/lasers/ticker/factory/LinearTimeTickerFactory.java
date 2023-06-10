@@ -18,6 +18,6 @@ public class LinearTimeTickerFactory implements LaserBlockDisplayTickerFactory {
     }
 
     public LinearTimeTicker build() {
-        return new LinearTimeTicker(displayBuilder, source, target, lifespanTicks);
+        return new LinearTimeTicker(displayBuilder, source.clone(), target.clone(), lifespanTicks);
     }
 }
