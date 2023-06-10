@@ -2,6 +2,7 @@ package org.metamechanists.death_lasers.lasers.ticker.factory;
 
 import dev.sefiraat.sefilib.entity.display.builders.BlockDisplayBuilder;
 import org.bukkit.Location;
+import org.metamechanists.death_lasers.DEATH_LASERS;
 import org.metamechanists.death_lasers.lasers.ticker.ticker.LinearTimeTicker;
 
 public class LinearTimeTickerFactory implements LaserBlockDisplayTickerFactory {
@@ -11,6 +12,7 @@ public class LinearTimeTickerFactory implements LaserBlockDisplayTickerFactory {
     private final int lifespanTicks;
 
     public LinearTimeTickerFactory(BlockDisplayBuilder displayBuilder, Location source, Location target, int lifespanTicks) {
+        DEATH_LASERS.getInstance().getLogger().severe(source.toString() + " to " + target.toString());
         this.displayBuilder = displayBuilder;
         this.source = source;
         this.target = target;
