@@ -25,7 +25,9 @@ public class BlockDisplayBeam extends Beam {
 
     @Override
     public void remove() {
-        displays.forEach(LaserBlockDisplayTicker::remove);
+        for (LaserBlockDisplayTicker display : displays) {
+            display.remove();
+        }
     }
 
     @Override
@@ -34,7 +36,13 @@ public class BlockDisplayBeam extends Beam {
             displays.add(tickerFactory.build());
         }
 
-        displays.stream().filter(LaserBlockDisplayTicker::expired).forEach(LaserBlockDisplayTicker::remove);
-        displays.forEach(LaserBlockDisplayTicker::tick);
+        for (LaserBlockDisplayTicker display : displays) {
+            if (display.expired()) {
+                display.remove();
+            }
+        }
+        for (LaserBlockDisplayTicker display : displays) {
+            display.tick();
+        }
     }
 }

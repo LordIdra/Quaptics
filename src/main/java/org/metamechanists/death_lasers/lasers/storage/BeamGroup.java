@@ -25,26 +25,35 @@ public class BeamGroup {
     }
 
     public void tick() {
-        beams.values().forEach(Beam::tick);
-        deprecatedBeams.forEach(Beam::tick);
+        for (Beam beam : beams.values()) {
+            beam.tick();
+        }
 
-        deprecatedBeams.stream()
-                .filter(Beam::readyToRemove)
-                .forEach(beam -> {
-                    beam.remove();
-                    deprecatedBeams.remove(beam);
-                });
+        for (Beam beam : deprecatedBeams) {
+            beam.tick();
+        }
+
+        for (Beam beam : deprecatedBeams) {
+            if (beam.readyToRemove()) {
+                beam.remove();
+                deprecatedBeams.remove(beam);
+            }
+        }
     }
 
     public void setPowered(boolean powered) {
-        beams.values().forEach(beam -> beam.setPowered(powered));
+        for (Beam beam : beams.values()) {
+            beam.setPowered(powered);
+        }
     }
     public void setPowered(String key, boolean powered) {
         beams.get(key).setPowered(powered);
     }
 
     public void deprecateAllBeams() {
-        beams.keySet().forEach(this::deprecate);
+        for (String s : beams.keySet()) {
+            deprecate(s);
+        }
     }
     public void deprecate(String key) {
         setPowered(key, false);
@@ -52,7 +61,9 @@ public class BeamGroup {
     }
 
     public void hardRemoveAllBeams() {
-        beams.values().forEach(Beam::remove);
+        for (Beam beam : beams.values()) {
+            beam.remove();
+        }
     }
 
     public boolean readyToRemove() {
