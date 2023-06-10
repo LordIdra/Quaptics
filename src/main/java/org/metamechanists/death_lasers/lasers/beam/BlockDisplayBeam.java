@@ -34,6 +34,7 @@ public class BlockDisplayBeam extends Beam {
             displays.add(tickerFactory.build());
         }
 
+        displays.stream().filter(LaserBlockDisplayTicker::expired).forEach(LaserBlockDisplayTicker::remove);
         displays.removeIf(LaserBlockDisplayTicker::expired);
         displays.forEach(LaserBlockDisplayTicker::tick);
     }
