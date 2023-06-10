@@ -26,11 +26,13 @@ public class TargetingWand extends SlimefunItem {
     }
 
     private void setTargetingMode(ItemStack stack, TargetingMode mode) {
+        DEATH_LASERS.getInstance().getLogger().severe("h");
         PersistentDataAPI.setString(stack.getItemMeta(), Keys.TARGETING_MODE, mode.name());
     }
 
     private TargetingMode getTargetingMode(ItemStack stack) {
         if (PersistentDataAPI.hasString(stack.getItemMeta(), Keys.TARGETING_MODE)) {
+            DEATH_LASERS.getInstance().getLogger().severe("i");
             return TargetingMode.valueOf(PersistentDataAPI.getString(stack.getItemMeta(), Keys.LOCATION_WORLD));
         }
         return TargetingMode.SOURCE_NOT_SELECTED;
