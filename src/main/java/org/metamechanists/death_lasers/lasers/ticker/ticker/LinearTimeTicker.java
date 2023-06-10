@@ -5,6 +5,7 @@ import dev.sefiraat.sefilib.misc.TransformationBuilder;
 import org.bukkit.Location;
 import org.bukkit.entity.BlockDisplay;
 import org.bukkit.util.Vector;
+import org.metamechanists.death_lasers.DEATH_LASERS;
 
 public class LinearTimeTicker implements LaserBlockDisplayTicker {
     private final int lifespanTicks;
@@ -28,6 +29,7 @@ public class LinearTimeTicker implements LaserBlockDisplayTicker {
 
     @Override
     public void tick() {
+        DEATH_LASERS.getInstance().getLogger().info( display.getBlock().getMaterial().name() + " === " + display.getLocation());
         display.teleport(display.getLocation().add(velocity));
         ageTicks++;
     }
