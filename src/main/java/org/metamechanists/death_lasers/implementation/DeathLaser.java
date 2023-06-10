@@ -5,6 +5,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.Vector;
 import org.metamechanists.death_lasers.lasers.Lasers;
 import org.metamechanists.death_lasers.lasers.beam.Beam;
 import org.metamechanists.death_lasers.lasers.beam.BlockDisplayBeam;
@@ -15,6 +16,7 @@ import org.metamechanists.death_lasers.lasers.ticker.factory.LinearTimeTickerFac
 
 
 public class DeathLaser extends LaserEmitter {
+    private final Vector BLOCK_CENTER_VECTOR = new Vector(0.5F, 0.5F, 0.5F);
     private final String MAIN_BEAM = "MAIN";
 
     public DeathLaser(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, int capacity, int consumption) {
@@ -34,9 +36,9 @@ public class DeathLaser extends LaserEmitter {
 
         final Beam linearRedBeam = new BlockDisplayBeam(
                 new LinearTimeTickerFactory(
-                        Lasers.testDisplay(source),
-                        source.clone(),
-                        target,
+                        Lasers.testDisplay(source.clone().add(BLOCK_CENTER_VECTOR)),
+                        source.clone().add(BLOCK_CENTER_VECTOR),
+                        target.clone().add(BLOCK_CENTER_VECTOR),
                         20),
                 Lasers.testTimer,
                 true);
