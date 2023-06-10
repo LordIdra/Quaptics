@@ -10,13 +10,13 @@ import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.inventory.ItemStack;
 import org.metamechanists.death_lasers.DEATH_LASERS;
 import org.metamechanists.death_lasers.Keys;
+import org.metamechanists.death_lasers.utils.PersistentDataUtils;
 
 import javax.annotation.Nonnull;
 
@@ -25,33 +25,12 @@ public class TargetingWand extends SlimefunItem {
         super(itemGroup, item, recipeType, recipe);
     }
 
-    private void setTargetingMode(ItemStack stack, TargetingMode mode) {
-        DEATH_LASERS.getInstance().getLogger().severe("h");
-        PersistentDataAPI.setString(stack.getItemMeta(), Keys.TARGETING_MODE, mode.name());
-    }
-
     private TargetingMode getTargetingMode(ItemStack stack) {
         if (PersistentDataAPI.hasString(stack.getItemMeta(), Keys.TARGETING_MODE)) {
             DEATH_LASERS.getInstance().getLogger().severe("i");
-            return TargetingMode.valueOf(PersistentDataAPI.getString(stack.getItemMeta(), Keys.LOCATION_WORLD));
+            return TargetingMode.valueOf(PersistentDataUtils.getString(stack, Keys.TARGETING_MODE));
         }
         return TargetingMode.SOURCE_NOT_SELECTED;
-    }
-
-
-    private void setSourceData(ItemStack stack, Location location) {
-        PersistentDataAPI.setUUID(stack.getItemMeta(), Keys.LOCATION_WORLD, location.getWorld().getUID());
-        PersistentDataAPI.setInt(stack.getItemMeta(), Keys.LOCATION_X, location.getBlockX());
-        PersistentDataAPI.setInt(stack.getItemMeta(), Keys.LOCATION_Y, location.getBlockY());
-        PersistentDataAPI.setInt(stack.getItemMeta(), Keys.LOCATION_Z, location.getBlockZ());
-    }
-
-    private Location getSourceData(ItemStack stack) {
-        return new Location(
-                DEATH_LASERS.getInstance().getServer().getWorld(PersistentDataAPI.getString(stack.getItemMeta(), Keys.LOCATION_WORLD)),
-                PersistentDataAPI.getInt(stack.getItemMeta(), Keys.LOCATION_X),
-                PersistentDataAPI.getInt(stack.getItemMeta(), Keys.LOCATION_Y),
-                PersistentDataAPI.getInt(stack.getItemMeta(), Keys.LOCATION_Z));
     }
 
     @Override
@@ -73,13 +52,15 @@ public class TargetingWand extends SlimefunItem {
                     && block != null
                     && Slimefun.getProtectionManager().hasPermission(player, player.getLocation(), Interaction.INTERACT_BLOCK)
                     && event.getInteractEvent().getAction() == Action.RIGHT_CLICK_BLOCK) {
+
                 if (getTargetingMode(stack) == TargetingMode.SOURCE_NOT_SELECTED) {
                     DEATH_LASERS.getInstance().getLogger().severe("A");
-                    setSourceData(stack, block.getLocation());
-                    setTargetingMode(stack, TargetingMode.SOURCE_SELECTED);
+                    PersistentDataUtils.setLocation(stack, Keys.LOCATION, block.getLocation());
+                    PersistentDataUtils.setString(stack, Keys.TARGETING_MODE,TargetingMode.SOURCE_SELECTED.name());
+
                 } else {
                     DEATH_LASERS.getInstance().getLogger().severe("B");
-                    final Location source = getSourceData(stack);
+                    final Location source = PersistentDataUtils.getLocation(stack, Keys.LOCATION);
                     final Location target = block.getLocation();
 
                     // TODO range/world check
@@ -88,7 +69,7 @@ public class TargetingWand extends SlimefunItem {
                     BlockStorage.addBlockInfo(source, Keys.LOCATION_Y.getKey(), String.valueOf(target.getBlockY()));
                     BlockStorage.addBlockInfo(source, Keys.LOCATION_Z.getKey(), String.valueOf(target.getBlockZ()));
 
-                    setTargetingMode(stack, TargetingMode.SOURCE_NOT_SELECTED);
+                    PersistentDataUtils.setString(stack, Keys.TARGETING_MODE, TargetingMode.SOURCE_NOT_SELECTED.name());
 
                     DEATH_LASERS.getInstance().getLogger().severe("1");
                 }
