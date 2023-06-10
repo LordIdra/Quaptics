@@ -16,6 +16,14 @@ public class BeamGroup {
         beams.put(key, value);
     }
 
+    // debug methods
+    public int getNumberOfActiveBeams() {
+        return beams.size();
+    }
+    public int getNumberOfActiveBeamTickers() {
+        return beams.size();
+    }
+
     public void tick() {
         beams.values().forEach(Beam::tick);
         deprecatedBeams.forEach(Beam::tick);

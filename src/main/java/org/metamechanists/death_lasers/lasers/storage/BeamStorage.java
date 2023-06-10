@@ -22,11 +22,19 @@ public class BeamStorage {
                 .forEach(deprecatedBeamGroups::remove);
     }
 
+    // debug methods
     public static Collection<Location> getBeamGroupLocations() {
         return beamGroups.keySet();
     }
     public static int getNumberOfActiveBeamGroups() {
         return beamGroups.size();
+    }
+    public static int getNumberOfActiveBeams() {
+        int i = 0;
+        for (var group : beamGroups.values()) {
+            i += group.getNumberOfActiveBeams();
+        }
+        return i;
     }
     public static int getNumberOfDeprecatedBeamGroups() {
         return deprecatedBeamGroups.size();

@@ -43,4 +43,16 @@ public class DeathLaserCommand extends BaseCommand {
 
         player.sendMessage(ChatColors.color(builder.toString()));
     }
+
+    @Subcommand("getbeamcounts")
+    @Description("[Debug] Shows the counts of various beam types")
+    @CommandPermission("death_lasers.command.getbeamcounts")
+    public void getbeamcounts(Player player) {
+        final StringBuilder builder = new StringBuilder();
+
+        builder.append("&7Active BeamGroups: &e").append(BeamStorage.getNumberOfActiveBeamGroups()).append("\n");
+        builder.append("&7Active BeamGroups: &e").append(BeamStorage.getNumberOfActiveBeamGroups()).append("\n");
+
+        player.sendMessage(ChatColors.color(builder.toString()));
+    }
 }
