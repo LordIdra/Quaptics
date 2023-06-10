@@ -4,12 +4,12 @@ import org.bukkit.Location;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class BeamStorage {
-    private static final Map<Location, BeamGroup> beamGroups = new HashMap<>();
+    private static final Map<Location, BeamGroup> beamGroups = new ConcurrentHashMap<>();
     private static final List<BeamGroup> deprecatedBeamGroups = new ArrayList<>();
 
     public static void tick() {
