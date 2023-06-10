@@ -10,7 +10,7 @@ import java.util.Map;
 public class BeamGroup {
 
     private final Map<String, Beam> beams;
-    private final List<String> toRemove = new ArrayList<>();
+    private final List<Beam> deprecatedBeams = new ArrayList<>();
 
     public BeamGroup(String key, Beam value) {
         beams = Collections.singletonMap(key, value);
@@ -18,8 +18,12 @@ public class BeamGroup {
 
     public void tick() {
         beams.values().forEach(Beam::tick);
-        // Remove expired beeams
-        toRemove.stream().filter(key -> beams.get(key).readyToRemove()).forEach(beams::remove);
+        deprecatedBeams.stream()
+                .filter(Beam::readyToRemove)
+                .forEach(beam -> {
+                    beam.remove();
+                    deprecatedBeams.remove(beam);
+                });
     }
 
     public void setPowered(boolean powered) {
@@ -29,8 +33,8 @@ public class BeamGroup {
         beams.get(key).setPowered(powered);
     }
 
-    public void remove(String key) {
-        toRemove.add(key);
+    public void deprecate(String key) {
+        deprecatedBeams.add(beams.remove(key));
     }
 
     public void hardRemoveAllBeams() {
@@ -38,6 +42,6 @@ public class BeamGroup {
     }
 
     public boolean readyToRemove() {
-        return toRemove.isEmpty();
+        return beams.isEmpty() && deprecatedBeams.isEmpty();
     }
 }

@@ -15,7 +15,7 @@ public class BeamStorage {
         beamGroups.values().forEach(BeamGroup::tick);
         deprecatedBeamGroups.forEach(BeamGroup::tick);
 
-        // Remove expired groups
+        // Remove deprecated groups that are ready to remove
         deprecatedBeamGroups.stream()
                 .filter(BeamGroup::readyToRemove)
                 .forEach(deprecatedBeamGroups::remove);
@@ -38,7 +38,7 @@ public class BeamStorage {
         beamGroups.get(location).setPowered(key, powered);
     }
     public static void deprecatedBeam(Location location, String key) {
-        beamGroups.get(location).remove(key);
+        beamGroups.get(location).deprecate(key);
     }
 
     public static void hardRemoveAllBeamGroups() {
