@@ -2,15 +2,15 @@ package org.metamechanists.death_lasers.lasers.storage;
 
 import org.bukkit.Location;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class BeamStorage {
     private static final Map<Location, BeamGroup> beamGroups = new ConcurrentHashMap<>();
-    private static final List<BeamGroup> deprecatedBeamGroups = new ArrayList<>();
+    private static final Queue<BeamGroup> deprecatedBeamGroups = new ConcurrentLinkedQueue<>();
 
     public static void tick() {
         beamGroups.values().forEach(BeamGroup::tick);

@@ -5,12 +5,14 @@ import org.metamechanists.death_lasers.lasers.beam.Beam;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class BeamGroup {
 
     private final Map<String, Beam> beams = new ConcurrentHashMap<>();
-    private final List<Beam> deprecatedBeams = new ArrayList<>();
+    private final Queue<Beam> deprecatedBeams = new ConcurrentLinkedQueue<>();
 
     public BeamGroup(String key, Beam value) {
         beams.put(key, value);
