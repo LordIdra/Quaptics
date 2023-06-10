@@ -68,13 +68,13 @@ public class TargetingWand extends SlimefunItem {
                     && canUse(player, false)
                     && block != null
                     && Slimefun.getProtectionManager().hasPermission(player, player.getLocation(), Interaction.INTERACT_BLOCK)
-                    && player.isSneaking()
-                    && event.getInteractEvent().getAction() == Action.RIGHT_CLICK_BLOCK
-                    && block.getType() == Material.SCULK_SHRIEKER) {
+                    && event.getInteractEvent().getAction() == Action.RIGHT_CLICK_BLOCK) {
                 if (getTargetingMode(stack) == TargetingMode.SOURCE_NOT_SELECTED) {
+                    DEATH_LASERS.getInstance().getLogger().severe("A");
                     setSourceData(stack, block.getLocation());
                     setTargetingMode(stack, TargetingMode.SOURCE_SELECTED);
                 } else {
+                    DEATH_LASERS.getInstance().getLogger().severe("B");
                     final Location source = getSourceData(stack);
                     final Location target = block.getLocation();
 
