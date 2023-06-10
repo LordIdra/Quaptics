@@ -3,7 +3,7 @@ package org.metamechanists.death_lasers.lasers;
 import dev.sefiraat.sefilib.entity.display.builders.BlockDisplayBuilder;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.entity.BlockDisplay;
+import org.bukkit.entity.Display;
 import org.bukkit.util.Vector;
 
 public class Lasers {
@@ -11,7 +11,7 @@ public class Lasers {
 
     public static BlockDisplayBuilder testDisplay(Location location) {
         return new BlockDisplayBuilder()
-                .setLocation(location)
+                .setBrightness(new Display.Brightness(4, 0))
                 .setBlockData(Material.RED_CONCRETE.createBlockData())
                 .setGroupParentOffset(new Vector());
     }

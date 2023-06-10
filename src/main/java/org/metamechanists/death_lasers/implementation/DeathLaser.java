@@ -12,12 +12,12 @@ import io.github.thebusybiscuit.slimefun4.implementation.items.SimpleSlimefunIte
 import lombok.Getter;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
+import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.death_lasers.lasers.Lasers;
 import org.metamechanists.death_lasers.lasers.beam.Beam;
@@ -48,16 +48,21 @@ public class DeathLaser extends SimpleSlimefunItem<BlockTicker> implements Energ
 
             @Override
             public void onPlayerPlace(@NotNull BlockPlaceEvent e) {
-                final Location location = e.getBlock().getLocation();
+                final Location source = e.getBlock().getLocation();
+                final Location target = new Location(
+                        source.getWorld(),
+                        Integer.parseInt(BlockStorage.getLocationInfo(source, String.valueOf(source.getBlockX()))),
+                        Integer.parseInt(BlockStorage.getLocationInfo(source, String.valueOf(source.getBlockY()))),
+                        Integer.parseInt(BlockStorage.getLocationInfo(source, String.valueOf(source.getBlockZ()))));
                 final Beam linearRedBeam = new BlockDisplayBeam(
                         new LinearTimeTickerFactory(
-                                Lasers.testDisplay(location),
-                                location.clone(),
-                                location.clone().add(new Vector(5, 0, 0)),
+                                Lasers.testDisplay(source),
+                                source.clone(),
+                                target,
                                 20),
                         Lasers.testTimer,
                         true);
-                BeamStorage.add(location, linearRedBeam);
+                BeamStorage.add(source, linearRedBeam);
             }
         };
     }
