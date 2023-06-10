@@ -67,7 +67,6 @@ public class DeathLaser extends SimpleSlimefunItem<BlockTicker> implements Energ
 
                 final Location source = b.getLocation();
                 if (BlockStorage.getLocationInfo(source, Keys.LOCATION_X.getKey()) == null) {
-                    DEATH_LASERS.getInstance().getLogger().severe("2");
                     return;
                 }
 

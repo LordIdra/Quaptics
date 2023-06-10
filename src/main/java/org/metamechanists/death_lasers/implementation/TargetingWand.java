@@ -64,6 +64,8 @@ public class TargetingWand extends SlimefunItem {
             final Block block = event.getClickedBlock().orElse(null);
             final ItemStack stack = event.getItem();
 
+            DEATH_LASERS.getInstance().getLogger().severe("C");
+
             if (isItem(stack)
                     && canUse(player, false)
                     && block != null
