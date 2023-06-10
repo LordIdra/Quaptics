@@ -18,6 +18,8 @@ public class BeamGroup {
 
     public void tick() {
         beams.values().forEach(Beam::tick);
+        deprecatedBeams.forEach(Beam::tick);
+
         deprecatedBeams.stream()
                 .filter(Beam::readyToRemove)
                 .forEach(beam -> {
