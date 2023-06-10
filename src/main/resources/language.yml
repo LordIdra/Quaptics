@@ -1,2 +1,3 @@
 targeting-wand.not-source: "&cShift right click a source block to set the source"
 targeting-wand.different-worlds: "&cSource and target cannot be in different worlds"
+targeting-wand.same-block: "&cSource and target cannot be the same block"

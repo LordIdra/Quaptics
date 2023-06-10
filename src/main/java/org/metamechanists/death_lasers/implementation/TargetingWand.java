@@ -13,6 +13,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.Vector;
 import org.metamechanists.death_lasers.Items;
 import org.metamechanists.death_lasers.Keys;
 import org.metamechanists.death_lasers.utils.Language;
@@ -24,6 +25,8 @@ public class TargetingWand extends SlimefunItem {
     public TargetingWand(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
+
+    private final Vector blockCenterVector = new Vector(0.5, 0.5, 0);
 
     @Override
     public void preRegister() {
@@ -62,9 +65,14 @@ public class TargetingWand extends SlimefunItem {
                 return;
             }
 
+            if (source == target) {
+                player.sendMessage(Language.getLanguageEntry("targeting-wand.same-block"));
+                return;
+            }
+
             if (BlockStorage.check(source) instanceof LaserEmitter emitter) {
                 player.sendMessage("instance of laser emitter");
-                emitter.updateBeamGroup(source, target);
+                emitter.updateBeamGroup(source.add(blockCenterVector), target.add(blockCenterVector));
             }
         };
     }
