@@ -24,9 +24,7 @@ public class Items {
                 Groups.DEATH_LASER_GROUP,
                 TARGETING_WAND,
                 RecipeType.NULL,
-                new ItemStack[] {},
-                1000,
-                1000)
+                new ItemStack[] {})
                 .register(addon);
 
         new DeathLaser(
