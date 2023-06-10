@@ -13,15 +13,13 @@ public class BeamStorage {
     private static final Queue<BeamGroup> deprecatedBeamGroups = new ConcurrentLinkedQueue<>();
 
     public static void tick() {
-        for (BeamGroup beamGroup : beamGroups.values()) {
-            beamGroup.tick();
-        }
-        for (BeamGroup deprecatedBeamGroup : deprecatedBeamGroups) {
-            deprecatedBeamGroup.tick();
-        }
+        beamGroups.values().forEach(BeamGroup::tick);
+        deprecatedBeamGroups.forEach(BeamGroup::tick);
 
         // Remove deprecated groups that are ready to remove
-        deprecatedBeamGroups.removeIf(BeamGroup::readyToRemove);
+        deprecatedBeamGroups.stream()
+                .filter(BeamGroup::readyToRemove)
+                .forEach(deprecatedBeamGroups::remove);
     }
 
     // debug methods
@@ -64,11 +62,7 @@ public class BeamStorage {
     }
 
     public static void hardRemoveAllBeamGroups() {
-        for (BeamGroup beamGroup : beamGroups.values()) {
-            beamGroup.hardRemoveAllBeams();
-        }
-        for (BeamGroup deprecatedBeamGroup : deprecatedBeamGroups) {
-            deprecatedBeamGroup.hardRemoveAllBeams();
-        }
+        beamGroups.values().forEach(BeamGroup::hardRemoveAllBeams);
+        deprecatedBeamGroups.forEach(BeamGroup::hardRemoveAllBeams);
     }
 }
