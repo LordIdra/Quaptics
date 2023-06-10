@@ -57,7 +57,7 @@ public class TargetingWand extends SlimefunItem {
             final Location source = PersistentDataUtils.getLocation(stack, Keys.SOURCE);
             final Location target = block.getLocation();
 
-            if (source.getWorld().getUID() == target.getWorld().getUID()) {
+            if (source.getWorld().getUID() != target.getWorld().getUID()) {
                 player.sendMessage(Language.getLanguageEntry("targeting-wand.different-worlds"));
                 return;
             }
