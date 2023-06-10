@@ -7,6 +7,8 @@ import org.bukkit.entity.BlockDisplay;
 import org.bukkit.util.Vector;
 import org.metamechanists.death_lasers.DEATH_LASERS;
 
+import java.util.Objects;
+
 public class LinearTimeTicker implements LaserBlockDisplayTicker {
     private final int lifespanTicks;
     private final Vector velocity;
@@ -29,7 +31,7 @@ public class LinearTimeTicker implements LaserBlockDisplayTicker {
 
     @Override
     public void tick() {
-        DEATH_LASERS.getInstance().getLogger().severe(display.getLocation().add(velocity).toString());
+        DEATH_LASERS.getInstance().getLogger().severe(Objects.toString(ageTicks));
         display.teleport(display.getLocation().add(velocity));
         ageTicks++;
     }
@@ -41,6 +43,7 @@ public class LinearTimeTicker implements LaserBlockDisplayTicker {
 
     @Override
     public boolean expired() {
+        DEATH_LASERS.getInstance().getLogger().severe("Checking expired: " + Objects.toString(ageTicks));
         return ageTicks >= lifespanTicks;
     }
 }

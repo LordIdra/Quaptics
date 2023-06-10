@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.metamechanists.death_lasers.lasers.storage.BeamStorage;
 import org.metamechanists.death_lasers.lasers.storage.BeamStorageRunnable;
+import org.metamechanists.death_lasers.utils.Language;
 
 public final class DEATH_LASERS extends JavaPlugin implements SlimefunAddon {
     @Getter
@@ -19,6 +20,7 @@ public final class DEATH_LASERS extends JavaPlugin implements SlimefunAddon {
     @Override
     public void onEnable() {
         instance = this;
+        Language.initialize();
         Groups.initialize();
         Items.initialize();
         initializeRunnables();

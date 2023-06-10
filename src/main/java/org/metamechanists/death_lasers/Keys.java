@@ -9,7 +9,6 @@ public class Keys {
 
     public static final NamespacedKey MAIN_GROUP = newKey("DEATH_LASER_GROUP");
 
-    public static final NamespacedKey TARGETING_MODE = newKey("TARGETING_MODE");
     public static final NamespacedKey SOURCE = newKey("SOURCE");
     public static final NamespacedKey LOCATION_X = newKey("LOCATION_X");
     public static final NamespacedKey LOCATION_Y = newKey("LOCATION_Y");
