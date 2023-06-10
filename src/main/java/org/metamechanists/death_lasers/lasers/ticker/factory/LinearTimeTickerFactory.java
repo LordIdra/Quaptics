@@ -12,7 +12,7 @@ public class LinearTimeTickerFactory implements LaserBlockDisplayTickerFactory {
     private final int lifespanTicks;
 
     public LinearTimeTickerFactory(BlockDisplayBuilder displayBuilder, Location source, Location target, int lifespanTicks) {
-        DEATH_LASERS.getInstance().getLogger().severe(source.toString() + " to " + target.toString());
+        DEATH_LASERS.getInstance().getLogger().warning(source.toString() + " to " + target.toString());
         this.displayBuilder = displayBuilder;
         this.source = source;
         this.target = target;
@@ -20,6 +20,7 @@ public class LinearTimeTickerFactory implements LaserBlockDisplayTickerFactory {
     }
 
     public LinearTimeTicker build() {
-        return new LinearTimeTicker(displayBuilder, source.clone(), target.clone(), lifespanTicks);
+        DEATH_LASERS.getInstance().getLogger().severe(source.toString() + " to " + target.toString());
+        return new LinearTimeTicker(displayBuilder, source, target, lifespanTicks);
     }
 }
