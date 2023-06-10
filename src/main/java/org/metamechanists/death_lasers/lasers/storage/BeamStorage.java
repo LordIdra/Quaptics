@@ -2,6 +2,7 @@ package org.metamechanists.death_lasers.lasers.storage;
 
 import org.bukkit.Location;
 
+import java.util.Collection;
 import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentHashMap;
@@ -21,8 +22,8 @@ public class BeamStorage {
                 .forEach(deprecatedBeamGroups::remove);
     }
 
-    public static Map<Location, BeamGroup> getBeamGroups() {
-        return beamGroups;
+    public static Collection<Location> getBeamGroupLocations() {
+        return beamGroups.keySet();
     }
     public static int getNumberOfActiveBeamGroups() {
         return beamGroups.size();
