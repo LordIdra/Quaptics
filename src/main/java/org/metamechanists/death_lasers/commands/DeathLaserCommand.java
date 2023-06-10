@@ -27,14 +27,15 @@ public class DeathLaserCommand extends BaseCommand {
     public void getbeamstorage(Player player) {
         final StringBuilder builder = new StringBuilder();
 
-        builder.append("&fDeprecated BeamGroups: ").append(BeamStorage.getNumberOfDeprecatedBeamGroups());
-        builder.append("&fActive BeamGroups: ").append(BeamStorage.getNumberOfActiveBeamGroups());
-        builder.append("&fActive BeamGroup Locations:");
+        builder.append("&fDeprecated BeamGroups: ").append(BeamStorage.getNumberOfDeprecatedBeamGroups()).append("\n");
+        builder.append("&fActive BeamGroups: ").append(BeamStorage.getNumberOfActiveBeamGroups()).append("\n");
+        builder.append("&fActive BeamGroup Locations:").append("\n");
 
         BeamStorage.getActiveBeamGroups()
                 .forEach(location -> builder
                         .append("&7- &e")
-                        .append(location.toString()));
+                        .append(location.toString())
+                        .append("\n"));
 
         player.sendMessage(builder.toString());
     }
