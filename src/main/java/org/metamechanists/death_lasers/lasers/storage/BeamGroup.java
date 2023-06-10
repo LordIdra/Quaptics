@@ -22,11 +22,18 @@ public class BeamGroup {
         toRemove.stream().filter(key -> beams.get(key).readyToRemove()).forEach(beams::remove);
     }
 
+    public void setPowered(boolean powered) {
+        beams.values().forEach(beam -> beam.setPowered(powered));
+    }
+    public void setPowered(String key, boolean powered) {
+        beams.get(key).setPowered(powered);
+    }
+
     public void remove(String key) {
         toRemove.add(key);
     }
 
-    public void hardRemove() {
+    public void hardRemoveAllBeams() {
         beams.values().forEach(Beam::remove);
     }
 

@@ -28,7 +28,7 @@ public final class DEATH_LASERS extends JavaPlugin implements SlimefunAddon {
 
     @Override
     public void onDisable() {
-        BeamStorage.hardRemoveAllBeams();
+        BeamStorage.hardRemoveAllBeamGroups();
     }
 
     @NotNull

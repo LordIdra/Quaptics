@@ -1,6 +1,5 @@
 package org.metamechanists.death_lasers.lasers.beam;
 
-import lombok.Setter;
 import org.metamechanists.death_lasers.lasers.SpawnTimer;
 import org.metamechanists.death_lasers.lasers.ticker.factory.LaserBlockDisplayTickerFactory;
 import org.metamechanists.death_lasers.lasers.ticker.ticker.LaserBlockDisplayTicker;
@@ -8,12 +7,10 @@ import org.metamechanists.death_lasers.lasers.ticker.ticker.LaserBlockDisplayTic
 import java.util.ArrayList;
 import java.util.List;
 
-public class BlockDisplayBeam implements Beam {
+public class BlockDisplayBeam extends Beam {
     private final LaserBlockDisplayTickerFactory tickerFactory;
     private final SpawnTimer timer;
     private final List<LaserBlockDisplayTicker> displays = new ArrayList<>();
-    @Setter
-    private boolean powered;
 
     public BlockDisplayBeam(LaserBlockDisplayTickerFactory tickerFactory, SpawnTimer timer, boolean powered) {
         this.tickerFactory = tickerFactory;

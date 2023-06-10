@@ -1,8 +1,12 @@
 package org.metamechanists.death_lasers.lasers.beam;
 
 
-public interface Beam {
-    boolean readyToRemove();
-    void remove();
-    void tick();
+import lombok.Setter;
+
+public abstract class Beam {
+    @Setter
+    protected boolean powered;
+    public abstract boolean readyToRemove();
+    public abstract void remove();
+    public abstract void tick();
 }

@@ -13,7 +13,6 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.inventory.ItemStack;
-import org.metamechanists.death_lasers.DEATH_LASERS;
 import org.metamechanists.death_lasers.Items;
 import org.metamechanists.death_lasers.Keys;
 import org.metamechanists.death_lasers.utils.Language;
@@ -60,11 +59,13 @@ public class TargetingWand extends SlimefunItem {
 
             if (source.getWorld().getUID() == target.getWorld().getUID()) {
                 player.sendMessage(Language.getLanguageEntry("targeting-wand.different-worlds"));
+                return;
             }
 
-            BlockStorage.addBlockInfo(source, Keys.LOCATION_X.getKey(), String.valueOf(target.getBlockX()));
-            BlockStorage.addBlockInfo(source, Keys.LOCATION_Y.getKey(), String.valueOf(target.getBlockY()));
-            BlockStorage.addBlockInfo(source, Keys.LOCATION_Z.getKey(), String.valueOf(target.getBlockZ()));
+            if (BlockStorage.check(source) instanceof LaserEmitter emitter) {
+                player.sendMessage("instance of laser emitter");
+                emitter.updateBeamGroup(source, target);
+            }
         };
     }
 }
