@@ -3,11 +3,8 @@ package org.metamechanists.death_lasers.lasers.ticker.ticker;
 import dev.sefiraat.sefilib.entity.display.builders.BlockDisplayBuilder;
 import dev.sefiraat.sefilib.misc.TransformationBuilder;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.entity.BlockDisplay;
-import org.bukkit.entity.Display;
 import org.bukkit.util.Vector;
-import org.metamechanists.death_lasers.DEATH_LASERS;
 
 public class LinearTimeTicker implements LaserBlockDisplayTicker {
     private final int lifespanTicks;
