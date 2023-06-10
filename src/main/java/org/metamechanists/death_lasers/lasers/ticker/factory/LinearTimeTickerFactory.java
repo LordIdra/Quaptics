@@ -2,7 +2,6 @@ package org.metamechanists.death_lasers.lasers.ticker.factory;
 
 import dev.sefiraat.sefilib.entity.display.builders.BlockDisplayBuilder;
 import org.bukkit.Location;
-import org.bukkit.entity.BlockDisplay;
 import org.metamechanists.death_lasers.lasers.ticker.ticker.LinearTimeTicker;
 
 public class LinearTimeTickerFactory implements LaserBlockDisplayTickerFactory {

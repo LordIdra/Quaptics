@@ -1,50 +1,43 @@
 package org.metamechanists.death_lasers.lasers.storage;
 
 import org.bukkit.Location;
-import org.metamechanists.death_lasers.lasers.beam.Beam;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class BeamStorage {
-    private static final Map<Location, List<Beam>> storage = new HashMap<>();
+    private static final Map<Location, BeamGroup> storage = new HashMap<>();
     private static final List<Location> locationsToRemove = new ArrayList<>();
 
-    public static void add(Location location, Beam beam) {
-        storage.computeIfAbsent(location, k -> new ArrayList<>());
-        storage.get(location).add(beam);
+    public static void setBeamGroup(Location location, BeamGroup beamGroup) {
+        storage.put(location, beamGroup);
         locationsToRemove.remove(location);
     }
 
-    public static void scheduleLocationRemoval(Location location) {
+    public static void removeBeamGroup(Location location) {
         locationsToRemove.add(location);
     }
 
+    public static void removeBeamFromBeamGroup(Location location, String key) {
+        storage.get(location).remove(key);
+    }
+
     public static void hardRemoveAllBeams() {
-        storage.values().stream().flatMap(Collection::stream).forEach(Beam::remove);
+        storage.values().forEach(BeamGroup::hardRemove);
     }
 
     public static void tick() {
-        // Remove expired beams
-        locationsToRemove.forEach(x -> storage.get(x).stream()
-                .filter(Beam::readyToRemove)
-                .forEach(y -> {
-                    y.remove();
-                    storage.get(x).remove(y);
-                }));
-
-        // Remove empty List<Beam>
+        // Remove expired beam groups
         locationsToRemove.stream()
-                .filter(location -> storage.get(location).isEmpty())
+                .filter(location -> storage.get(location).readyToRemove())
                 .forEach(location -> {
-                    storage.remove(location);
-                    locationsToRemove.remove(location);
-                });
+            storage.remove(location);
+            locationsToRemove.remove(location);
+        });
 
         // Tick remaining beams
-        storage.values().forEach(beamList -> beamList.forEach(Beam::tick));
+        storage.values().forEach(BeamGroup::tick);
     }
 }

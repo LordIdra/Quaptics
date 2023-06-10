@@ -21,6 +21,7 @@ import org.metamechanists.death_lasers.Keys;
 import org.metamechanists.death_lasers.lasers.Lasers;
 import org.metamechanists.death_lasers.lasers.beam.Beam;
 import org.metamechanists.death_lasers.lasers.beam.BlockDisplayBeam;
+import org.metamechanists.death_lasers.lasers.storage.BeamGroup;
 import org.metamechanists.death_lasers.lasers.storage.BeamStorage;
 import org.metamechanists.death_lasers.lasers.ticker.factory.LinearTimeTickerFactory;
 
@@ -41,13 +42,15 @@ public class DeathLaser extends SimpleSlimefunItem<BlockTicker> implements Energ
         addItemHandler(onBreak());
     }
 
+
+
     @Nonnull
     private BlockBreakHandler onBreak() {
         return new BlockBreakHandler(false, false) {
 
             @Override
             public void onPlayerBreak(@NotNull BlockBreakEvent e, @NotNull ItemStack item, @NotNull List<ItemStack> drops) {
-                BeamStorage.scheduleLocationRemoval(e.getBlock().getLocation());
+                BeamStorage.removeBeamGroup(e.getBlock().getLocation());
             }
         };
     }
@@ -74,6 +77,7 @@ public class DeathLaser extends SimpleSlimefunItem<BlockTicker> implements Energ
                         Integer.parseInt(BlockStorage.getLocationInfo(source, Keys.LOCATION_X.getKey())),
                         Integer.parseInt(BlockStorage.getLocationInfo(source, Keys.LOCATION_Y.getKey())),
                         Integer.parseInt(BlockStorage.getLocationInfo(source, Keys.LOCATION_Z.getKey())));
+
                 final Beam linearRedBeam = new BlockDisplayBeam(
                         new LinearTimeTickerFactory(
                                 Lasers.testDisplay(source),
@@ -82,7 +86,8 @@ public class DeathLaser extends SimpleSlimefunItem<BlockTicker> implements Energ
                                 20),
                         Lasers.testTimer,
                         true);
-                BeamStorage.add(source, linearRedBeam);
+
+                BeamStorage.setBeamGroup(source, new BeamGroup("MAIN", linearRedBeam));
             }
 
             @Override

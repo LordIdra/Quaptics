@@ -65,8 +65,6 @@ public class TargetingWand extends SlimefunItem {
             BlockStorage.addBlockInfo(source, Keys.LOCATION_X.getKey(), String.valueOf(target.getBlockX()));
             BlockStorage.addBlockInfo(source, Keys.LOCATION_Y.getKey(), String.valueOf(target.getBlockY()));
             BlockStorage.addBlockInfo(source, Keys.LOCATION_Z.getKey(), String.valueOf(target.getBlockZ()));
-
-            DEATH_LASERS.getInstance().getLogger().severe(source + " to " + target);
         };
     }
 }
