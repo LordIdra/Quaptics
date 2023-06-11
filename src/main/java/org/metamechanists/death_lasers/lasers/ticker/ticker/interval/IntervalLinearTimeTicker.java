@@ -5,7 +5,10 @@ import dev.sefiraat.sefilib.misc.RotationFace;
 import dev.sefiraat.sefilib.misc.TransformationBuilder;
 import org.bukkit.Location;
 import org.bukkit.entity.BlockDisplay;
+import org.bukkit.util.Transformation;
 import org.bukkit.util.Vector;
+import org.joml.AxisAngle4f;
+import org.joml.Vector3f;
 import org.metamechanists.death_lasers.DEATH_LASERS;
 import org.metamechanists.death_lasers.lasers.ticker.ticker.LaserBlockDisplayTicker;
 
@@ -22,6 +25,7 @@ public class IntervalLinearTimeTicker implements LaserBlockDisplayTicker {
         final Vector displacement = source.clone().subtract(target).toVector();
         final float rotationXZ = (float)Math.toDegrees(Math.atan(displacement.normalize().getX() / displacement.normalize().getZ()));
         final float rotationXY = (float)Math.toDegrees(Math.atan(displacement.normalize().getX() / displacement.normalize().getY()));
+
         this.lifespanTicks = lifespanTicks;
         this.velocity = target.clone().toVector()
                 .subtract(source.toVector())
@@ -30,12 +34,11 @@ public class IntervalLinearTimeTicker implements LaserBlockDisplayTicker {
                 .setLocation(source)
                 .setDisplayHeight(0.1F)
                 .setDisplayWidth(0.1F)
-                .setTransformation(new TransformationBuilder()
-                        .scale(scale, scale, scale)
-                        //.translation(-scale, -scale, -scale)
-                        .firstRotation(RotationFace.TOP, rotationXZ)
-                        .secondRotation(RotationFace.SIDE, rotationXY)
-                        .build())
+                .setTransformation(new Transformation(
+                        new Vector3f(0, 0, 0),
+                        new AxisAngle4f(rotationXZ, 0, 1, 0),
+                        new Vector3f(scale, scale, scale),
+                        new AxisAngle4f(rotationXY, (float)Math.cos(Math.toRadians(rotationXZ)), 0, (float)Math.sin(Math.toRadians(rotationXZ)))))
                 .build();
     }
 
