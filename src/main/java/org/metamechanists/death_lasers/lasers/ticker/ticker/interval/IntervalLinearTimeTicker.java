@@ -6,7 +6,10 @@ import dev.sefiraat.sefilib.misc.TransformationBuilder;
 import org.bukkit.Location;
 import org.bukkit.entity.BlockDisplay;
 import org.bukkit.util.Vector;
+import org.metamechanists.death_lasers.DEATH_LASERS;
 import org.metamechanists.death_lasers.lasers.ticker.ticker.LaserBlockDisplayTicker;
+
+import java.util.Objects;
 
 public class IntervalLinearTimeTicker implements LaserBlockDisplayTicker {
     private final float scale = 0.1F;
@@ -17,7 +20,8 @@ public class IntervalLinearTimeTicker implements LaserBlockDisplayTicker {
 
     public IntervalLinearTimeTicker(BlockDisplayBuilder displayBuilder, Location source, Location target, int lifespanTicks) {
         final Vector displacement = source.clone().subtract(target).toVector();
-        final float rotationXZ =  (float)Math.toDegrees(Math.acos(displacement.getZ() / displacement.getX()));
+        final float rotationXZ = (float)Math.toDegrees(Math.acos(displacement.normalize().getZ() / displacement.normalize().getX()));
+        DEATH_LASERS.getInstance().getLogger().info(Objects.toString(rotationXZ));
         this.lifespanTicks = lifespanTicks;
         this.velocity = target.clone().toVector()
                 .subtract(source.toVector())
