@@ -16,10 +16,10 @@ public class IntervalLinearTimeTicker implements LaserBlockDisplayTicker {
     private int ageTicks = 0;
 
     public IntervalLinearTimeTicker(BlockDisplayBuilder displayBuilder, Location source, Location target, int lifespanTicks) {
-        final Vector displacement = source.subtract(target).toVector();
+        final Vector displacement = source.clone().subtract(target).toVector();
         final float rotationXZ = (float)(Math.acos(displacement.getZ() / displacement.getX()));
         this.lifespanTicks = lifespanTicks;
-        this.velocity = target.toVector()
+        this.velocity = target.clone().toVector()
                 .subtract(source.toVector())
                 .multiply(1.0/lifespanTicks);
         this.display = displayBuilder
