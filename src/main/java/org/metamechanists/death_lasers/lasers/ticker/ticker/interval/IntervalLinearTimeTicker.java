@@ -1,25 +1,16 @@
 package org.metamechanists.death_lasers.lasers.ticker.ticker.interval;
 
 import dev.sefiraat.sefilib.entity.display.builders.BlockDisplayBuilder;
-import dev.sefiraat.sefilib.misc.ParticleUtils;
-import dev.sefiraat.sefilib.misc.RotationFace;
-import dev.sefiraat.sefilib.misc.TransformationBuilder;
 import org.bukkit.Location;
-import org.bukkit.Particle;
-import org.bukkit.Color;
-import org.bukkit.block.BlockFace;
 import org.bukkit.entity.BlockDisplay;
 import org.bukkit.util.Transformation;
 import org.bukkit.util.Vector;
 import org.joml.AxisAngle4f;
 import org.joml.Vector3f;
-import org.metamechanists.death_lasers.DEATH_LASERS;
 import org.metamechanists.death_lasers.lasers.ticker.ticker.LaserBlockDisplayTicker;
 
-import java.util.Objects;
-
 public class IntervalLinearTimeTicker implements LaserBlockDisplayTicker {
-    private final float scale = 0.1F;
+    private static final float SCALE = 0.1F;
     private final int lifespanTicks;
     private final Vector velocity;
     private final BlockDisplay display;
@@ -45,7 +36,7 @@ public class IntervalLinearTimeTicker implements LaserBlockDisplayTicker {
                 .setTransformation(new Transformation(
                         new Vector3f(0, 0, 0),
                         new AxisAngle4f(rotationXZ, 0, 1, 0),
-                        new Vector3f(scale, scale, scale),
+                        new Vector3f(SCALE, SCALE, SCALE),
                         new AxisAngle4f(rotationXY, 1.0F, 0.0F, 0.0F)))
                 .build();
     }
