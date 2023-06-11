@@ -39,7 +39,7 @@ public class DeathLaser extends LaserEmitter {
                         Lasers.testDisplay(),
                         source.clone().add(BLOCK_CENTER_VECTOR),
                         target.clone().add(BLOCK_CENTER_VECTOR),
-                        20),
+                        100),
                 Lasers.testTimer,
                 false);
 

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Lasers {
-    public static final SpawnTimer testTimer = new SpawnTimer(5);
+    public static final SpawnTimer testTimer = new SpawnTimer(20);
     public static final List<Material> concreteTypes = new ArrayList<>();
     static {{
         concreteTypes.add(Material.RED_CONCRETE);
