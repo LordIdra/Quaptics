@@ -31,7 +31,7 @@ public class IntervalLinearTimeTicker implements LaserBlockDisplayTicker {
         float rotationXY = new Vector(0, 0, 1).rotateAroundY(rotationXZ).angle(displacement);
 
         if (rotationXY < 0) {
-            rotationXY = ((float)Math.PI/2) + rotationXY;
+            rotationXY = ((float)Math.PI/2) - rotationXY;
         }
 
         DEATH_LASERS.getInstance().getLogger().info(new Vector(0, 0, 1).rotateAroundY(rotationXZ) + " " + displacement);
