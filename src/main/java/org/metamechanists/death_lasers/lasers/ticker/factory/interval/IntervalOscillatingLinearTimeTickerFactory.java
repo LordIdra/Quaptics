@@ -20,6 +20,6 @@ public class IntervalOscillatingLinearTimeTickerFactory implements LaserBlockDis
     }
 
     public IntervalOscillatingLinearTimeTicker build() {
-        return new IntervalOscillatingLinearTimeTicker(displayBuilder, source.clone(), target.clone(), 3, lifespanTicks);
+        return new IntervalOscillatingLinearTimeTicker(displayBuilder, source.clone(), target.clone(), 0.5, lifespanTicks);
     }
 }

@@ -11,14 +11,14 @@ import org.metamechanists.death_lasers.lasers.ticker.ticker.LaserBlockDisplayTic
 
 public class IntervalOscillatingLinearTimeTicker implements LaserBlockDisplayTicker {
     private static final float SCALE = 0.1F;
-    private final int amplitude;
+    private final double amplitude;
     private final double period;
     private final int lifespanTicks;
     private final Vector velocity;
     private final BlockDisplay display;
     private int ageTicks = 0;
 
-    public IntervalOscillatingLinearTimeTicker(BlockDisplayBuilder displayBuilder, Location source, Location target, int amplitude, int lifespanTicks) {
+    public IntervalOscillatingLinearTimeTicker(BlockDisplayBuilder displayBuilder, Location source, Location target, double amplitude, int lifespanTicks) {
         final Vector displacement = target.clone().subtract(source).toVector();
         final Vector direction = displacement.clone().normalize();
         float rotationXZ = (float) Math.atan(direction.getX() / direction.getZ());
@@ -47,8 +47,8 @@ public class IntervalOscillatingLinearTimeTicker implements LaserBlockDisplayTic
 
     @Override
     public void tick() {
-        final double oscillation = (this.ageTicks % this.period) / this.period;
-        display.teleport(display.getLocation().add(velocity).add(new Vector(0, 0, Math.sin(oscillation) * amplitude)));
+        final double phase = (this.ageTicks / this.period) * 8 * Math.PI;
+        display.teleport(display.getLocation().add(velocity).add(new Vector(0, 0, Math.sin(phase) * amplitude)));
         ageTicks++;
     }
 
