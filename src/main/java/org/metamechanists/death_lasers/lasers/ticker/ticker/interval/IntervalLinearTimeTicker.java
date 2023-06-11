@@ -38,7 +38,7 @@ public class IntervalLinearTimeTicker implements LaserBlockDisplayTicker {
                         new Vector3f(0, 0, 0),
                         new AxisAngle4f(rotationXZ, 0, 1, 0),
                         new Vector3f(scale, scale, scale),
-                        new AxisAngle4f(rotationXY, (float)Math.sin(rotationXZ), 0, (float)Math.cos(rotationXZ))))
+                        new AxisAngle4f(rotationXZ, (float)Math.sin(rotationXY), 0, (float)Math.cos(rotationXY))))
                 .build();
     }
 
