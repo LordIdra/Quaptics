@@ -1,4 +1,4 @@
-package org.metamechanists.death_lasers.implementation;
+package org.metamechanists.death_lasers.implementation.emitters;
 
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
@@ -6,6 +6,7 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
+import org.metamechanists.death_lasers.implementation.emitters.LaserEmitter;
 import org.metamechanists.death_lasers.lasers.Lasers;
 import org.metamechanists.death_lasers.lasers.beam.Beam;
 import org.metamechanists.death_lasers.lasers.beam.IntervalBlockDisplayBeam;
@@ -15,11 +16,11 @@ import org.metamechanists.death_lasers.lasers.ticker.factory.interval.IntervalLi
 
 
 
-public class DeathLaser extends LaserEmitter {
+public class LinearTimeEmitter extends LaserEmitter {
     private final Vector BLOCK_CENTER_VECTOR = new Vector(0.5F, 0.5F, 0.5F);
     private final String MAIN_BEAM = "MAIN";
 
-    public DeathLaser(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, int capacity, int consumption) {
+    public LinearTimeEmitter(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, int capacity, int consumption) {
         super(group, item, recipeType, recipe, capacity, consumption);
     }
 

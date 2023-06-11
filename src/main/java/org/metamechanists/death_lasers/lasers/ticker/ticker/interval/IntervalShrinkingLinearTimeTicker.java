@@ -1,31 +1,22 @@
 package org.metamechanists.death_lasers.lasers.ticker.ticker.interval;
 
 import dev.sefiraat.sefilib.entity.display.builders.BlockDisplayBuilder;
-import dev.sefiraat.sefilib.misc.ParticleUtils;
-import dev.sefiraat.sefilib.misc.RotationFace;
-import dev.sefiraat.sefilib.misc.TransformationBuilder;
 import org.bukkit.Location;
-import org.bukkit.Particle;
-import org.bukkit.Color;
-import org.bukkit.block.BlockFace;
 import org.bukkit.entity.BlockDisplay;
 import org.bukkit.util.Transformation;
 import org.bukkit.util.Vector;
 import org.joml.AxisAngle4f;
 import org.joml.Vector3f;
-import org.metamechanists.death_lasers.DEATH_LASERS;
 import org.metamechanists.death_lasers.lasers.ticker.ticker.LaserBlockDisplayTicker;
 
-import java.util.Objects;
-
-public class IntervalLinearTimeTicker implements LaserBlockDisplayTicker {
+public class IntervalShrinkingLinearTimeTicker implements LaserBlockDisplayTicker {
     private final float scale = 0.1F;
     private final int lifespanTicks;
     private final Vector velocity;
     private final BlockDisplay display;
     private int ageTicks = 0;
 
-    public IntervalLinearTimeTicker(BlockDisplayBuilder displayBuilder, Location source, Location target, int lifespanTicks) {
+    public IntervalShrinkingLinearTimeTicker(BlockDisplayBuilder displayBuilder, Location source, Location target, int lifespanTicks) {
         final Vector displacement = target.clone().subtract(source).toVector();
         final Vector direction = displacement.clone().normalize();
         float rotationXZ = (float) Math.atan(direction.getX() / direction.getZ());
@@ -47,12 +38,15 @@ public class IntervalLinearTimeTicker implements LaserBlockDisplayTicker {
                         new AxisAngle4f(rotationXZ, 0, 1, 0),
                         new Vector3f(scale, scale, scale),
                         new AxisAngle4f(rotationXY, 1.0F, 0.0F, 0.0F)))
+                        //new AxisAngle4f(rotationXY, (float)Math.sin(rotationXZ), 0, -(float)Math.cos(rotationXZ))))
                 .build();
     }
 
     @Override
     public void tick() {
         display.teleport(display.getLocation().add(velocity));
+        display.setDisplayHeight(0.1F - (((float) ageTicks / lifespanTicks) * 0.1F));
+        display.setDisplayWidth(0.1F - (((float) ageTicks / lifespanTicks) * 0.1F));
         ageTicks++;
     }
 

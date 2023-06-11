@@ -5,14 +5,24 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
-import org.metamechanists.death_lasers.implementation.DeathLaser;
+import org.metamechanists.death_lasers.implementation.emitters.LinearTimeEmitter;
 import org.metamechanists.death_lasers.implementation.TargetingWand;
+import org.metamechanists.death_lasers.implementation.emitters.LinearVelocityEmitter;
+import org.metamechanists.death_lasers.implementation.emitters.ShrinkingLinearTimeEmitter;
 
 public class Items {
-    public static final SlimefunItemStack DEATH_LASER = new SlimefunItemStack(
-            "DEATH_LASER",
+    public static final SlimefunItemStack LINEAR_TIME_EMITTER = new SlimefunItemStack(
+            "LINEAR_TIME_EMITTER",
             Material.GLASS,
-            "&4&lDeath Laser");
+            "&4&lLinear Time Emitter");
+    public static final SlimefunItemStack LINEAR_VELOCITY_EMITTER = new SlimefunItemStack(
+            "LINEAR_VELOCITY_EMITTER",
+            Material.GLASS,
+            "&4&lLinear Velocity Emitter");
+    public static final SlimefunItemStack SHRINKING_LINEAR_TIME_EMITTER = new SlimefunItemStack(
+            "SHRINKING_LINEAR_TIME_EMITTER",
+            Material.GLASS,
+            "&4&lShrinking Linear Velocity Emitter");
     public static final SlimefunItemStack TARGETING_WAND = new SlimefunItemStack(
             "TARGETING_WAND",
             Material.BLAZE_ROD,
@@ -27,9 +37,27 @@ public class Items {
                 new ItemStack[] {})
                 .register(addon);
 
-        new DeathLaser(
+        new LinearTimeEmitter(
                 Groups.DEATH_LASER_GROUP,
-                DEATH_LASER,
+                LINEAR_TIME_EMITTER,
+                RecipeType.NULL,
+                new ItemStack[] {},
+                1000,
+                100)
+                .register(addon);
+
+        new LinearVelocityEmitter(
+                Groups.DEATH_LASER_GROUP,
+                LINEAR_VELOCITY_EMITTER,
+                RecipeType.NULL,
+                new ItemStack[] {},
+                1000,
+                100)
+                .register(addon);
+
+        new ShrinkingLinearTimeEmitter(
+                Groups.DEATH_LASER_GROUP,
+                SHRINKING_LINEAR_TIME_EMITTER,
                 RecipeType.NULL,
                 new ItemStack[] {},
                 1000,

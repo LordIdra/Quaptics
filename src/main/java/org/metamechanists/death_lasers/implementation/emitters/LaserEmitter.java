@@ -1,4 +1,4 @@
-package org.metamechanists.death_lasers.implementation;
+package org.metamechanists.death_lasers.implementation.emitters;
 
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
