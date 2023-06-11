@@ -28,7 +28,7 @@ public class IntervalLinearTimeTicker implements LaserBlockDisplayTicker {
                 .setDisplayWidth(0.1F)
                 .setTransformation(new TransformationBuilder()
                         .scale(scale, scale, scale)
-                        .firstRotation(RotationFace.TOP, rotationXZ)
+                        //.firstRotation(RotationFace.TOP, rotationXZ)
                         .translation(-scale/2, -scale/2, -scale/2)
                         .build())
                 .build();

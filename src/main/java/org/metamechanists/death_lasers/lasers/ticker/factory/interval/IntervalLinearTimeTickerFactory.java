@@ -13,7 +13,6 @@ public class IntervalLinearTimeTickerFactory implements LaserBlockDisplayTickerF
     private final int lifespanTicks;
 
     public IntervalLinearTimeTickerFactory(BlockDisplayBuilder displayBuilder, Location source, Location target, int lifespanTicks) {
-        DEATH_LASERS.getInstance().getLogger().warning(source.toString() + " to " + target.toString());
         this.displayBuilder = displayBuilder;
         this.source = source;
         this.target = target;
