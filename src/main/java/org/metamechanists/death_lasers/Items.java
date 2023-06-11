@@ -22,7 +22,7 @@ public class Items {
     public static final SlimefunItemStack SHRINKING_LINEAR_TIME_EMITTER = new SlimefunItemStack(
             "SHRINKING_LINEAR_TIME_EMITTER",
             Material.GLASS,
-            "&4&lShrinking Linear Velocity Emitter");
+            "&4&lShrinking Linear Time Emitter");
     public static final SlimefunItemStack TARGETING_WAND = new SlimefunItemStack(
             "TARGETING_WAND",
             Material.BLAZE_ROD,
