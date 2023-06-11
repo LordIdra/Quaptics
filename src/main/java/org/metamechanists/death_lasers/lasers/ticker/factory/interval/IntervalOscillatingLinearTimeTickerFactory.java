@@ -4,7 +4,6 @@ import dev.sefiraat.sefilib.entity.display.builders.BlockDisplayBuilder;
 import org.bukkit.Location;
 import org.metamechanists.death_lasers.lasers.ticker.factory.LaserBlockDisplayTickerFactory;
 import org.metamechanists.death_lasers.lasers.ticker.ticker.interval.IntervalOscillatingLinearTimeTicker;
-import org.metamechanists.death_lasers.lasers.ticker.ticker.interval.IntervalShrinkingLinearTimeTicker;
 
 public class IntervalOscillatingLinearTimeTickerFactory implements LaserBlockDisplayTickerFactory {
     private final BlockDisplayBuilder displayBuilder;
