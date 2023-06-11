@@ -24,7 +24,7 @@ public class IntervalLinearTimeTicker implements LaserBlockDisplayTicker {
     public IntervalLinearTimeTicker(BlockDisplayBuilder displayBuilder, Location source, Location target, int lifespanTicks) {
         final Vector displacement = source.clone().subtract(target).toVector();
         final float rotationXZ = (float)Math.atan(displacement.normalize().getX() / displacement.normalize().getZ());
-        final float rotationXY = (float)Math.atan(displacement.normalize().getX() / displacement.normalize().getY());
+        final float rotationXY = (float)(new Vector(1, 0, 0).rotateAroundY(rotationXZ).dot(displacement));
 
         DEATH_LASERS.getInstance().getLogger().info(Objects.toString(rotationXZ) + " " + Objects.toString(rotationXY));
 
@@ -40,7 +40,7 @@ public class IntervalLinearTimeTicker implements LaserBlockDisplayTicker {
                         new Vector3f(0, 0, 0),
                         new AxisAngle4f(rotationXZ, 0, 1, 0),
                         new Vector3f(scale, scale, scale),
-                        new AxisAngle4f(rotationXY, (float)Math.cos(rotationXZ), 0, (float)Math.sin(rotationXZ))))
+                        new AxisAngle4f(rotationXY, (float)Math.sin(rotationXZ), 0, (float)Math.cos(rotationXZ))))
                 .build();
     }
 
