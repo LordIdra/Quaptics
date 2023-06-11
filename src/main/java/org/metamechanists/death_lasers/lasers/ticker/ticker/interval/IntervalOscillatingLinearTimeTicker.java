@@ -47,7 +47,7 @@ public class IntervalOscillatingLinearTimeTicker implements LaserBlockDisplayTic
 
     @Override
     public void tick() {
-        final double oscillation = this.ageTicks / this.period;
+        final double oscillation = (this.ageTicks % this.period) / this.period;
         display.teleport(display.getLocation().add(velocity).add(new Vector(0, 0, oscillation * amplitude)));
         ageTicks++;
     }
