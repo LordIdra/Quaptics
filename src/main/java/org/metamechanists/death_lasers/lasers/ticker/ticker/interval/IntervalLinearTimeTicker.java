@@ -55,6 +55,8 @@ public class IntervalLinearTimeTicker implements LaserBlockDisplayTicker {
     @Override
     public void tick() {
         display.teleport(display.getLocation().add(velocity));
+        display.setDisplayHeight(0.1F - (((float) ageTicks / lifespanTicks) * 0.1F));
+        display.setDisplayWidth(0.1F - (((float) ageTicks / lifespanTicks) * 0.1F));
         ageTicks++;
     }
 
