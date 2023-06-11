@@ -1,12 +1,10 @@
 package org.metamechanists.death_lasers.lasers.ticker.ticker.interval;
 
-import com.destroystokyo.paper.ParticleBuilder;
 import dev.sefiraat.sefilib.entity.display.builders.BlockDisplayBuilder;
 import dev.sefiraat.sefilib.misc.ParticleUtils;
-import dev.sefiraat.sefilib.misc.RotationFace;
-import dev.sefiraat.sefilib.misc.TransformationBuilder;
 import org.bukkit.Location;
 import org.bukkit.Particle;
+import org.bukkit.Color;
 import org.bukkit.entity.BlockDisplay;
 import org.bukkit.util.Transformation;
 import org.bukkit.util.Vector;
@@ -29,9 +27,9 @@ public class IntervalLinearTimeTicker implements LaserBlockDisplayTicker {
         final float rotationXZ = (float)Math.atan(displacement.clone().normalize().getX() / displacement.clone().normalize().getZ());
         final float rotationXY = new Vector(1, 0, 0).rotateAroundY(rotationXZ).angle(displacement);
 
-        ParticleUtils.drawLine(Particle.REDSTONE.builder().color(0, 255, 0).particle(),
+        ParticleUtils.drawLine(new Particle.DustOptions(Color.fromBGR(255, 0, 0), 1),
                 source, source.clone().add(new Vector(1, 0, 0).rotateAroundY(rotationXZ)), 0.2);
-        ParticleUtils.drawLine(Particle.REDSTONE.builder().color(255, 0, 0).particle(),
+        ParticleUtils.drawLine(new Particle.DustOptions(Color.fromBGR(0, 255, 0), 1),
                 source, source.clone().add(displacement), 0.2);
 
         DEATH_LASERS.getInstance().getLogger().info(
