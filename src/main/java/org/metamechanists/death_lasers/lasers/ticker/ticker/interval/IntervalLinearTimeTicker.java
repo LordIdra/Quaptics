@@ -2,9 +2,12 @@ package org.metamechanists.death_lasers.lasers.ticker.ticker.interval;
 
 import dev.sefiraat.sefilib.entity.display.builders.BlockDisplayBuilder;
 import dev.sefiraat.sefilib.misc.ParticleUtils;
+import dev.sefiraat.sefilib.misc.RotationFace;
+import dev.sefiraat.sefilib.misc.TransformationBuilder;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.Color;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.BlockDisplay;
 import org.bukkit.util.Transformation;
 import org.bukkit.util.Vector;
@@ -24,20 +27,14 @@ public class IntervalLinearTimeTicker implements LaserBlockDisplayTicker {
 
     public IntervalLinearTimeTicker(BlockDisplayBuilder displayBuilder, Location source, Location target, int lifespanTicks) {
         final Vector displacement = target.clone().subtract(source).toVector();
-        float rotationXZ = (float) Math.atan(displacement.clone().normalize().getX() / displacement.clone().normalize().getZ());
-        float rotationXY = new Vector(0, 0, 1).rotateAroundY(rotationXZ).angle(displacement);
+        final Vector direction = displacement.clone().normalize();
+        float rotationXZ = (float) Math.atan(direction.getX() / direction.getZ());
+        Vector vectorInXZPlaneAtSameRotationAsDisplacement = new Vector(0, 0, 1).rotateAroundY(rotationXZ);
+        float rotationXY = vectorInXZPlaneAtSameRotationAsDisplacement.angle(displacement);
 
         if (displacement.getY() > 0) {
             rotationXY = -rotationXY;
         }
-
-        DEATH_LASERS.getInstance().getLogger().info(new Vector(0, 0, 1).rotateAroundY(rotationXZ) + " " + displacement);
-        DEATH_LASERS.getInstance().getLogger().info(rotationXZ + " " + rotationXY);
-
-        ParticleUtils.drawLine(new Particle.DustOptions(Color.fromBGR(255, 0, 0), 1),
-                source, source.clone().add(new Vector(0, 0, 1).rotateAroundY(rotationXZ)), 0.2);
-        ParticleUtils.drawLine(new Particle.DustOptions(Color.fromBGR(0, 255, 0), 1),
-                source, source.clone().add(displacement), 0.2);
 
         this.lifespanTicks = lifespanTicks;
         this.velocity = displacement.clone().multiply(1.0/lifespanTicks);
@@ -45,12 +42,17 @@ public class IntervalLinearTimeTicker implements LaserBlockDisplayTicker {
                 .setLocation(source)
                 .setDisplayHeight(0.1F)
                 .setDisplayWidth(0.1F)
-                .setTransformation(new Transformation(
-                        new Vector3f(0, 0, 0),
-                        new AxisAngle4f(rotationXZ, 0, 1, 0),
-                        new Vector3f(scale, scale, scale),
-                        new AxisAngle4f(rotationXY, 1.0F, 0.0F, 0.0F)))
-                        //new AxisAngle4f(rotationXY, (float)Math.sin(rotationXZ), 0, -(float)Math.cos(rotationXZ))))
+                .setTransformation(new TransformationBuilder()
+                                .scale(scale, scale, scale)
+                                .firstRotation(RotationFace.TOP, rotationXY)
+                                .secondRotation(RotationFace.SIDE, rotationXZ)
+                                .build())
+                //.setTransformation(new Transformation(
+                //        new Vector3f(0, 0, 0),
+                //        new AxisAngle4f(rotationXZ, 0, 1, 0),
+                //        new Vector3f(scale, scale, scale),
+                //        new AxisAngle4f(rotationXY, 1.0F, 0.0F, 0.0F)))
+                //        //new AxisAngle4f(rotationXY, (float)Math.sin(rotationXZ), 0, -(float)Math.cos(rotationXZ))))
                 .build();
     }
 
