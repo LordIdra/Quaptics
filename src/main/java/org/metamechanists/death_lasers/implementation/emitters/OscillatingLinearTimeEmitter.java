@@ -38,7 +38,7 @@ public class OscillatingLinearTimeEmitter extends LaserEmitter {
                         source.clone().add(BLOCK_CENTER_VECTOR),
                         target.clone().add(BLOCK_CENTER_VECTOR),
                         100),
-                Lasers.testTimer(),
+                Lasers.oscillatingTimer(),
                 false);
 
         BeamStorage.setBeamGroup(source, new BeamGroup(MAIN_BEAM, linearRedBeam));

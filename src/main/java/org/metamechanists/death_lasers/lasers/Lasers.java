@@ -23,6 +23,10 @@ public class Lasers {
         return new SpawnTimer(20);
     }
 
+    public static SpawnTimer oscillatingTimer() {
+        return new SpawnTimer(1);
+    }
+
     public static BlockDisplayBuilder testDisplay() {
         return new BlockDisplayBuilder()
                 .setBrightness(new Display.Brightness(15, 15))
