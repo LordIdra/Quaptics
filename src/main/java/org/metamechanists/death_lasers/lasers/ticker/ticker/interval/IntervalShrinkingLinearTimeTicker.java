@@ -6,11 +6,12 @@ import org.bukkit.entity.BlockDisplay;
 import org.bukkit.util.Transformation;
 import org.bukkit.util.Vector;
 import org.joml.AxisAngle4f;
+import org.joml.Quaternionf;
 import org.joml.Vector3f;
 import org.metamechanists.death_lasers.lasers.ticker.ticker.LaserBlockDisplayTicker;
 
 public class IntervalShrinkingLinearTimeTicker implements LaserBlockDisplayTicker {
-    private final float scale = 0.1F;
+    private static final float SCALE = 0.1F;
     private final int lifespanTicks;
     private final Vector velocity;
     private final BlockDisplay display;
@@ -36,7 +37,7 @@ public class IntervalShrinkingLinearTimeTicker implements LaserBlockDisplayTicke
                 .setTransformation(new Transformation(
                         new Vector3f(0, 0, 0),
                         new AxisAngle4f(rotationXZ, 0, 1, 0),
-                        new Vector3f(scale, scale, scale),
+                        new Vector3f(SCALE, SCALE, SCALE),
                         new AxisAngle4f(rotationXY, 1.0F, 0.0F, 0.0F)))
                         //new AxisAngle4f(rotationXY, (float)Math.sin(rotationXZ), 0, -(float)Math.cos(rotationXZ))))
                 .build();
@@ -44,9 +45,12 @@ public class IntervalShrinkingLinearTimeTicker implements LaserBlockDisplayTicke
 
     @Override
     public void tick() {
+        final Transformation transformation = display.getTransformation();
+        final Quaternionf leftRotation = transformation.getLeftRotation();
+        final Quaternionf rightRotation = transformation.getRightRotation();
+        final float newScale = 0.1F - (((float) ageTicks / (float) lifespanTicks) * 0.1F);
         display.teleport(display.getLocation().add(velocity));
-        display.setDisplayHeight(0.1F - (((float) ageTicks / lifespanTicks) * 0.1F));
-        display.setDisplayWidth(0.1F - (((float) ageTicks / lifespanTicks) * 0.1F));
+        display.setTransformation(new Transformation(new Vector3f(0, 0, 0), leftRotation, new Vector3f(newScale, newScale, newScale), rightRotation));
         ageTicks++;
     }
 
