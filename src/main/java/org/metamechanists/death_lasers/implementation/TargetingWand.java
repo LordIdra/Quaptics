@@ -15,7 +15,6 @@ import org.bukkit.event.block.Action;
 import org.bukkit.inventory.ItemStack;
 import org.metamechanists.death_lasers.Keys;
 import org.metamechanists.death_lasers.implementation.emitters.LaserEmitter;
-import org.metamechanists.death_lasers.implementation.emitters.LinearTimeEmitter;
 import org.metamechanists.death_lasers.utils.Language;
 import org.metamechanists.death_lasers.utils.PersistentDataUtils;
 
@@ -49,7 +48,7 @@ public class TargetingWand extends SlimefunItem {
             }
 
             if (player.isSneaking()) {
-                if (BlockStorage.hasBlockInfo(block) && BlockStorage.check(block) instanceof LinearTimeEmitter) {
+                if (BlockStorage.hasBlockInfo(block) && BlockStorage.check(block) instanceof LaserEmitter) {
                     PersistentDataUtils.setLocation(stack, Keys.SOURCE, block.getLocation());
                 } else {
                     player.sendMessage(Language.getLanguageEntry("targeting-wand.not-source"));
