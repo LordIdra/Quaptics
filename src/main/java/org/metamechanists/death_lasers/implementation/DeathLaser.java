@@ -40,7 +40,7 @@ public class DeathLaser extends LaserEmitter {
                         source.clone().add(BLOCK_CENTER_VECTOR),
                         target.clone().add(BLOCK_CENTER_VECTOR),
                         100),
-                Lasers.testTimer,
+                Lasers.testTimer(),
                 false);
 
         BeamStorage.setBeamGroup(source, new BeamGroup(MAIN_BEAM, linearRedBeam));
