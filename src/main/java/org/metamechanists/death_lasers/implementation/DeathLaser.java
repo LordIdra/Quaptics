@@ -16,7 +16,7 @@ import org.metamechanists.death_lasers.lasers.ticker.factory.interval.IntervalLi
 
 
 public class DeathLaser extends LaserEmitter {
-    private final Vector BLOCK_CENTER_VECTOR = new Vector(0.4F, 0.4F, 0.4F);
+    private final Vector BLOCK_CENTER_VECTOR = new Vector(0.5F, 0.5F, 0.5F);
     private final String MAIN_BEAM = "MAIN";
 
     public DeathLaser(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, int capacity, int consumption) {

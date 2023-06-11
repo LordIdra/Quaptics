@@ -34,10 +34,12 @@ public class IntervalBlockDisplayBeam extends Beam {
             displays.add(tickerFactory.build());
         }
 
-        // TODO one of these doesn't work
-        //displays.stream().filter(LaserBlockDisplayTicker::expired).forEach(LaserBlockDisplayTicker::remove);
-        displays.removeIf(LaserBlockDisplayTicker::expired);
-
+        displays.stream()
+                .filter(LaserBlockDisplayTicker::expired)
+                .forEach(ticker -> {
+                    ticker.remove();
+                    displays.remove(ticker);
+                });
         displays.forEach(LaserBlockDisplayTicker::tick);
     }
 }
