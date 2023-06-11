@@ -23,9 +23,9 @@ public class IntervalLinearTimeTicker implements LaserBlockDisplayTicker {
     private int ageTicks = 0;
 
     public IntervalLinearTimeTicker(BlockDisplayBuilder displayBuilder, Location source, Location target, int lifespanTicks) {
-        final Vector displacement = source.clone().subtract(target).toVector();
+        final Vector displacement = target.clone().subtract(source).toVector();
         final float rotationXZ = (float)Math.atan(displacement.clone().normalize().getX() / displacement.clone().normalize().getZ());
-        final float rotationXY = new Vector(1, 0, 0).rotateAroundY(rotationXZ).angle(displacement);
+        final float rotationXY = new Vector(0, 0, 1).rotateAroundY(rotationXZ).angle(displacement);
 
         ParticleUtils.drawLine(new Particle.DustOptions(Color.fromBGR(255, 0, 0), 1),
                 source, source.clone().add(new Vector(1, 0, 0).rotateAroundY(rotationXZ)), 0.2);
@@ -38,9 +38,7 @@ public class IntervalLinearTimeTicker implements LaserBlockDisplayTicker {
                 + Objects.toString(rotationXZ) + " " + Objects.toString(rotationXY));
 
         this.lifespanTicks = lifespanTicks;
-        this.velocity = target.clone().toVector()
-                .subtract(source.toVector())
-                .multiply(1.0/lifespanTicks);
+        this.velocity = displacement.clone().multiply(1.0/lifespanTicks);
         this.display = displayBuilder
                 .setLocation(source)
                 .setDisplayHeight(0.1F)
