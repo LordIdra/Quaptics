@@ -11,14 +11,13 @@ import org.metamechanists.death_lasers.lasers.beam.Beam;
 import org.metamechanists.death_lasers.lasers.beam.IntervalBlockDisplayBeam;
 import org.metamechanists.death_lasers.lasers.storage.BeamGroup;
 import org.metamechanists.death_lasers.lasers.storage.BeamStorage;
-import org.metamechanists.death_lasers.lasers.ticker.factory.interval.IntervalShrinkingLinearTimeTickerFactory;
+import org.metamechanists.death_lasers.lasers.ticker.factory.interval.IntervalOscillatingLinearTimeTickerFactory;
 
-
-public class ShrinkingLinearTimeEmitter extends LaserEmitter {
+public class OscillatingLinearTimeEmitter extends LaserEmitter {
     private final Vector BLOCK_CENTER_VECTOR = new Vector(0.5F, 0.5F, 0.5F);
     private final String MAIN_BEAM = "MAIN";
 
-    public ShrinkingLinearTimeEmitter(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, int capacity, int consumption) {
+    public OscillatingLinearTimeEmitter(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, int capacity, int consumption) {
         super(group, item, recipeType, recipe, capacity, consumption);
     }
 
@@ -34,7 +33,7 @@ public class ShrinkingLinearTimeEmitter extends LaserEmitter {
         }
 
         final Beam linearRedBeam = new IntervalBlockDisplayBeam(
-                new IntervalShrinkingLinearTimeTickerFactory(
+                new IntervalOscillatingLinearTimeTickerFactory(
                         Lasers.testDisplay(),
                         source.clone().add(BLOCK_CENTER_VECTOR),
                         target.clone().add(BLOCK_CENTER_VECTOR),
