@@ -28,7 +28,7 @@ public class IntervalLinearTimeTicker implements LaserBlockDisplayTicker {
         final float rotationXY = new Vector(0, 0, 1).rotateAroundY(rotationXZ).angle(displacement);
 
         ParticleUtils.drawLine(new Particle.DustOptions(Color.fromBGR(255, 0, 0), 1),
-                source, source.clone().add(new Vector(1, 0, 0).rotateAroundY(rotationXZ)), 0.2);
+                source, source.clone().add(new Vector(0, 0, 1).rotateAroundY(rotationXZ)), 0.2);
         ParticleUtils.drawLine(new Particle.DustOptions(Color.fromBGR(0, 255, 0), 1),
                 source, source.clone().add(displacement), 0.2);
 
@@ -47,7 +47,7 @@ public class IntervalLinearTimeTicker implements LaserBlockDisplayTicker {
                         new Vector3f(0, 0, 0),
                         new AxisAngle4f(rotationXZ, 0, 1, 0),
                         new Vector3f(scale, scale, scale),
-                        new AxisAngle4f(rotationXY, (float)Math.sin(rotationXZ), 0, (float)Math.cos(rotationXZ))))
+                        new AxisAngle4f(rotationXY, (float)Math.cos(rotationXZ), 0, (float)Math.sin(rotationXZ))))
                 .build();
     }
 
