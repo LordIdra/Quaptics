@@ -1,23 +1,22 @@
-package org.metamechanists.death_lasers.lasers.ticker.ticker;
+package org.metamechanists.death_lasers.lasers.ticker.ticker.interval;
 
 import dev.sefiraat.sefilib.entity.display.builders.BlockDisplayBuilder;
 import dev.sefiraat.sefilib.misc.TransformationBuilder;
 import org.bukkit.Location;
 import org.bukkit.entity.BlockDisplay;
 import org.bukkit.util.Vector;
-import org.metamechanists.death_lasers.DEATH_LASERS;
+import org.metamechanists.death_lasers.lasers.ticker.ticker.LaserBlockDisplayTicker;
 
-public class LinearTimeTicker implements LaserBlockDisplayTicker {
-    private final int lifespanTicks;
+public class IntervalLinearVelocityTicker implements LaserBlockDisplayTicker {
+    private final double lifespanTicks;
     private final Vector velocity;
     private final BlockDisplay display;
     private int ageTicks = 0;
 
-    public LinearTimeTicker(BlockDisplayBuilder displayBuilder, Location source, Location target, int lifespanTicks) {
-        this.lifespanTicks = lifespanTicks;
-        velocity = target.toVector()
-                .subtract(source.toVector())
-                .multiply(1.0/lifespanTicks);
+    public IntervalLinearVelocityTicker(BlockDisplayBuilder displayBuilder, Location source, Location target, float speed) {
+        final Vector displacement = target.clone().subtract(source).toVector();
+        this.lifespanTicks = displacement.length() / speed;
+        this.velocity = displacement.clone().normalize().multiply(speed);
         this.display = displayBuilder
                 .setLocation(source)
                 .setDisplayHeight(0.1F)
@@ -29,7 +28,6 @@ public class LinearTimeTicker implements LaserBlockDisplayTicker {
 
     @Override
     public void tick() {
-       // DEATH_LASERS.getInstance().getLogger().info( display.getBlock().getMaterial().name() + " === " + display.getLocation());
         display.teleport(display.getLocation().add(velocity));
         ageTicks++;
     }

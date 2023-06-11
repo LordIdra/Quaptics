@@ -8,10 +8,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.metamechanists.death_lasers.lasers.Lasers;
 import org.metamechanists.death_lasers.lasers.beam.Beam;
-import org.metamechanists.death_lasers.lasers.beam.BlockDisplayBeam;
+import org.metamechanists.death_lasers.lasers.beam.IntervalBlockDisplayBeam;
 import org.metamechanists.death_lasers.lasers.storage.BeamGroup;
 import org.metamechanists.death_lasers.lasers.storage.BeamStorage;
-import org.metamechanists.death_lasers.lasers.ticker.factory.LinearTimeTickerFactory;
+import org.metamechanists.death_lasers.lasers.ticker.factory.interval.IntervalLinearTimeTickerFactory;
 
 
 
@@ -34,8 +34,8 @@ public class DeathLaser extends LaserEmitter {
             BeamStorage.deprecateBeamGroup(source);
         }
 
-        final Beam linearRedBeam = new BlockDisplayBeam(
-                new LinearTimeTickerFactory(
+        final Beam linearRedBeam = new IntervalBlockDisplayBeam(
+                new IntervalLinearTimeTickerFactory(
                         Lasers.testDisplay(),
                         source.clone().add(BLOCK_CENTER_VECTOR),
                         target.clone().add(BLOCK_CENTER_VECTOR),

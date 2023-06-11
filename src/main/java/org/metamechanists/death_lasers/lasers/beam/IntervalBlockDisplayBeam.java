@@ -7,12 +7,12 @@ import org.metamechanists.death_lasers.lasers.ticker.ticker.LaserBlockDisplayTic
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-public class BlockDisplayBeam extends Beam {
+public class IntervalBlockDisplayBeam extends Beam {
     private final LaserBlockDisplayTickerFactory tickerFactory;
     private final SpawnTimer timer;
     private final Queue<LaserBlockDisplayTicker> displays = new ConcurrentLinkedQueue<>();
 
-    public BlockDisplayBeam(LaserBlockDisplayTickerFactory tickerFactory, SpawnTimer timer, boolean powered) {
+    public IntervalBlockDisplayBeam(LaserBlockDisplayTickerFactory tickerFactory, SpawnTimer timer, boolean powered) {
         this.tickerFactory = tickerFactory;
         this.timer = timer;
         this.powered = powered;
@@ -35,7 +35,7 @@ public class BlockDisplayBeam extends Beam {
         }
 
         // TODO one of these doesn't work
-        displays.stream().filter(LaserBlockDisplayTicker::expired).forEach(LaserBlockDisplayTicker::remove);
+        //displays.stream().filter(LaserBlockDisplayTicker::expired).forEach(LaserBlockDisplayTicker::remove);
         displays.removeIf(LaserBlockDisplayTicker::expired);
 
         displays.forEach(LaserBlockDisplayTicker::tick);
