@@ -6,7 +6,7 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.metamechanists.death_lasers.implementation.emitters.LinearTimeEmitter;
-import org.metamechanists.death_lasers.implementation.TargetingWand;
+import org.metamechanists.death_lasers.implementation.tools.TargetingWand;
 import org.metamechanists.death_lasers.implementation.emitters.LinearVelocityEmitter;
 import org.metamechanists.death_lasers.implementation.emitters.OscillatingLinearTimeEmitter;
 import org.metamechanists.death_lasers.implementation.emitters.ShrinkingLinearTimeEmitter;

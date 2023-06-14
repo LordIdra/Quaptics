@@ -5,7 +5,6 @@ import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.metamechanists.death_lasers.implementation.PersistentDataLocation;
 
 public class PersistentDataUtils {
     public static void setString(ItemStack stack, NamespacedKey key, String value) {

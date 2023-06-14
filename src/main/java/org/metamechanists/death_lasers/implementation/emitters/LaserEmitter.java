@@ -6,6 +6,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.attributes.EnergyNetComponent;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
+import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNetComponentType;
 import io.github.thebusybiscuit.slimefun4.implementation.items.SimpleSlimefunItem;
 import lombok.Getter;
@@ -14,14 +15,22 @@ import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
-import org.metamechanists.death_lasers.lasers.storage.BeamStorage;
+import org.metamechanists.death_lasers.implementation.ConnectionPoint;
+import org.metamechanists.death_lasers.implementation.ConnectionType;
+import org.metamechanists.death_lasers.storage.beams.BeamStorage;
+import org.metamechanists.death_lasers.storage.connections.ConnectionPointGroupBuilder;
+import org.metamechanists.death_lasers.storage.connections.ConnectionPointStorage;
 
 import javax.annotation.Nonnull;
 import java.util.List;
 
 public abstract class LaserEmitter extends SimpleSlimefunItem<BlockTicker> implements EnergyNetComponent {
+    private static final Vector INPUT_VECTOR = new Vector(0.5F, 0.5F, 0.0F);
+    private static final Vector OUTPUT_VECTOR = new Vector(0.5F, 0.5F, 1.0F);
     @Getter
     private final EnergyNetComponentType energyComponentType = EnergyNetComponentType.CONSUMER;
     @Getter
@@ -32,7 +41,7 @@ public abstract class LaserEmitter extends SimpleSlimefunItem<BlockTicker> imple
         super(group, item, recipeType, recipe);
         this.consumption = consumption;
         this.capacity = capacity;
-        addItemHandler(onBreak());
+        addItemHandler(onBreak(), onPlace());
     }
 
     public abstract void updateBeamGroup(Location source, Location target);
@@ -42,11 +51,27 @@ public abstract class LaserEmitter extends SimpleSlimefunItem<BlockTicker> imple
     }
 
     @Nonnull
+    private BlockPlaceHandler onPlace() {
+        return new BlockPlaceHandler(false) {
+            @Override
+            public void onPlayerPlace(@NotNull BlockPlaceEvent e) {
+                final Location source = e.getBlock().getLocation();
+                ConnectionPointStorage.addConnectionPointGroup(source,
+                        new ConnectionPointGroupBuilder()
+                                .addConnectionPoint(new ConnectionPoint(source.clone().add(INPUT_VECTOR), ConnectionType.INPUT))
+                                .addConnectionPoint(new ConnectionPoint(source.clone().add(OUTPUT_VECTOR), ConnectionType.OUTPUT))
+                                .build());
+            }
+        };
+    }
+
+    @Nonnull
     private BlockBreakHandler onBreak() {
         return new BlockBreakHandler(false, false) {
-
             @Override
             public void onPlayerBreak(@NotNull BlockBreakEvent e, @NotNull ItemStack item, @NotNull List<ItemStack> drops) {
+                final Location source = e.getBlock().getLocation();
+                ConnectionPointStorage.removeConnectionPointGroup(source);
                 if (BeamStorage.hasBeamGroup(e.getBlock().getLocation())) {
                     BeamStorage.deprecateBeamGroup(e.getBlock().getLocation());
                 }

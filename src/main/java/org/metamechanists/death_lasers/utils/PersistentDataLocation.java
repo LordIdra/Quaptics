@@ -1,4 +1,4 @@
-package org.metamechanists.death_lasers.implementation;
+package org.metamechanists.death_lasers.utils;
 
 import org.bukkit.Location;
 import org.bukkit.persistence.PersistentDataAdapterContext;

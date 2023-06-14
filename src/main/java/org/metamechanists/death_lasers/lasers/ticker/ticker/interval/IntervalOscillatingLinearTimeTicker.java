@@ -22,8 +22,8 @@ public class IntervalOscillatingLinearTimeTicker implements LaserBlockDisplayTic
         final Vector displacement = target.clone().subtract(source).toVector();
         final Vector direction = displacement.clone().normalize();
         float rotationXZ = (float) Math.atan(direction.getX() / direction.getZ());
-        Vector vectorInXZPlaneAtSameRotationAsDisplacement = new Vector(0, 0, 1).rotateAroundY(rotationXZ);
-        float rotationXY = vectorInXZPlaneAtSameRotationAsDisplacement.angle(displacement);
+        Vector directionInXZPlane = new Vector(displacement.getX(), 0, displacement.getZ());
+        float rotationXY = directionInXZPlane.angle(displacement);
 
         if (displacement.getY() > 0) {
             rotationXY = -rotationXY;
@@ -35,8 +35,8 @@ public class IntervalOscillatingLinearTimeTicker implements LaserBlockDisplayTic
         this.period = this.velocity.length();
         this.display = displayBuilder
                 .setLocation(source)
-                .setDisplayHeight(0.1F)
-                .setDisplayWidth(0.1F)
+                .setDisplayHeight(SCALE)
+                .setDisplayWidth(SCALE)
                 .setTransformation(new Transformation(
                         new Vector3f(0, 0, 0),
                         new AxisAngle4f(rotationXZ, 0, 1, 0),
@@ -48,6 +48,7 @@ public class IntervalOscillatingLinearTimeTicker implements LaserBlockDisplayTic
     @Override
     public void tick() {
         final double phase = (this.ageTicks / this.period) * 8 * Math.PI;
+        final Vector oscillation = new Vector(0, 1, 0);
         display.teleport(display.getLocation().add(velocity).add(new Vector(0, 0, Math.sin(phase) * amplitude)));
         ageTicks++;
     }

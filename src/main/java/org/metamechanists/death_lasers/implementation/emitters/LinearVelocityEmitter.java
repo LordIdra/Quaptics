@@ -9,9 +9,8 @@ import org.bukkit.util.Vector;
 import org.metamechanists.death_lasers.lasers.Lasers;
 import org.metamechanists.death_lasers.lasers.beam.Beam;
 import org.metamechanists.death_lasers.lasers.beam.IntervalBlockDisplayBeam;
-import org.metamechanists.death_lasers.lasers.storage.BeamGroup;
-import org.metamechanists.death_lasers.lasers.storage.BeamStorage;
-import org.metamechanists.death_lasers.lasers.ticker.factory.interval.IntervalLinearTimeTickerFactory;
+import org.metamechanists.death_lasers.storage.beams.BeamGroup;
+import org.metamechanists.death_lasers.storage.beams.BeamStorage;
 import org.metamechanists.death_lasers.lasers.ticker.factory.interval.IntervalLinearVelocityTickerFactory;
 
 

@@ -12,7 +12,7 @@ import co.aikar.commands.annotation.Syntax;
 import io.github.bakedlibs.dough.common.ChatColors;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.metamechanists.death_lasers.lasers.storage.BeamStorage;
+import org.metamechanists.death_lasers.storage.beams.BeamStorage;
 
 
 @SuppressWarnings("unused")

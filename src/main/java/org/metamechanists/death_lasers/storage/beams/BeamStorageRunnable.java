@@ -1,4 +1,4 @@
-package org.metamechanists.death_lasers.lasers.storage;
+package org.metamechanists.death_lasers.storage.beams;
 
 import org.bukkit.scheduler.BukkitRunnable;
 

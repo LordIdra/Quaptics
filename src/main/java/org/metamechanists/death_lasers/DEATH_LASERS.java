@@ -7,8 +7,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.metamechanists.death_lasers.commands.DeathLaserCommand;
-import org.metamechanists.death_lasers.lasers.storage.BeamStorage;
-import org.metamechanists.death_lasers.lasers.storage.BeamStorageRunnable;
+import org.metamechanists.death_lasers.storage.beams.BeamStorage;
+import org.metamechanists.death_lasers.storage.beams.BeamStorageRunnable;
 import org.metamechanists.death_lasers.utils.Language;
 
 public final class DEATH_LASERS extends JavaPlugin implements SlimefunAddon {
