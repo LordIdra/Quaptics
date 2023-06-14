@@ -1,5 +1,6 @@
 package org.metamechanists.death_lasers.connections;
 
+import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Display;
@@ -45,5 +46,14 @@ public class ConnectionPoint {
         target = null;
         blockDisplay.setBrightness(disconnectedBrightness);
         DEATH_LASERS.getInstance().getLogger().info("Unlinked");
+    }
+
+    public void select() {
+        blockDisplay.setGlowing(true);
+        blockDisplay.setGlowColorOverride(Color.fromRGB(0, 255, 0));
+    }
+
+    public void deselect() {
+        blockDisplay.setGlowing(false);
     }
 }

@@ -29,14 +29,22 @@ public class TargetingWand extends SlimefunItem {
     }
 
     private void setSourceConnectionPoint(Location sourceLocation, ItemStack stack) {
+        final ConnectionPointGroup sourceGroup = ConnectionPointStorage.getConnectionGroupFromConnectionPointLocation(sourceLocation);
+        final ConnectionPoint sourcePoint = sourceGroup.getConnectionPoint(sourceLocation);
+        sourcePoint.select();
         PersistentDataUtils.setLocation(stack, Keys.SOURCE, sourceLocation);
     }
 
-    private void removeLink(Player player, Location sourceLocation) {
+    private void unsetSourceConnectionPoint(ItemStack stack) {
+        PersistentDataUtils.clear(stack, Keys.SOURCE);
+    }
+
+    private void removeLink(Player player, Location sourceLocation, ItemStack stack) {
         final ConnectionPointGroup sourceGroup = ConnectionPointStorage.getConnectionGroupFromConnectionPointLocation(sourceLocation);
         final ConnectionPoint sourcePoint = sourceGroup.getConnectionPoint(sourceLocation);
         if (!sourcePoint.hasLink()) {
             player.sendMessage(Language.getLanguageEntry("targeting-wand.not-linked"));
+            return;
         }
         sourcePoint.unlink();
     }
@@ -57,6 +65,7 @@ public class TargetingWand extends SlimefunItem {
         final ConnectionPointGroup sourceGroup = ConnectionPointStorage.getConnectionGroupFromConnectionPointLocation(sourceLocation);
         final ConnectionPoint sourcePoint = sourceGroup.getConnectionPoint(sourceLocation);
 
+        sourcePoint.deselect();
         sourcePoint.link(targetLocation);
     }
 
@@ -70,9 +79,11 @@ public class TargetingWand extends SlimefunItem {
         }
 
         if (player.isSneaking()) {
-            removeLink(player, connectionPointLocation);
+            removeLink(player, connectionPointLocation, stack);
+            unsetSourceConnectionPoint(stack);
         } else if (isSourceSet(stack)) {
             createLink(player, connectionPointLocation, stack);
+            unsetSourceConnectionPoint(stack);
         } else {
             setSourceConnectionPoint(connectionPointLocation, stack);
         }
