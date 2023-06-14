@@ -25,9 +25,9 @@ public class PersistentDataLocation implements PersistentDataType<byte[], Locati
         ByteBuffer buffer = ByteBuffer.wrap(new byte[28]);
         buffer.putLong(complex.getWorld().getUID().getMostSignificantBits());
         buffer.putLong(complex.getWorld().getUID().getLeastSignificantBits());
-        buffer.putInt(complex.getBlockX());
-        buffer.putInt(complex.getBlockY());
-        buffer.putInt(complex.getBlockZ());
+        buffer.putDouble(complex.getX());
+        buffer.putDouble(complex.getY());
+        buffer.putDouble(complex.getZ());
         return buffer.array();
     }
 
@@ -37,9 +37,9 @@ public class PersistentDataLocation implements PersistentDataType<byte[], Locati
         ByteBuffer buffer = ByteBuffer.wrap(primitive);
         final long msb = buffer.getLong();
         final long lsb = buffer.getLong();
-        final int x = buffer.getInt();
-        final int y = buffer.getInt();
-        final int z = buffer.getInt();
+        final double x = buffer.getDouble();
+        final double y = buffer.getDouble();
+        final double z = buffer.getDouble();
         final UUID uuid = new UUID(msb, lsb);
         return new Location(DEATH_LASERS.getInstance().getServer().getWorld(uuid), x, y, z);
     }

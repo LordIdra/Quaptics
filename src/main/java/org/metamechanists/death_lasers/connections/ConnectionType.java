@@ -35,7 +35,7 @@ public enum ConnectionType {
     }
 
     public BlockDisplay buildBlockDisplay(Location location) {
-        final Location locationAdjustedForBukkitWeirdness = location.clone().add(new Vector(scale/2, 0, scale/2));
+        final Location locationAdjustedForBukkitWeirdness = location.clone().add(new Vector(-scale/2, 0, -scale/2));
         final BlockDisplay display = location.getWorld().spawn(locationAdjustedForBukkitWeirdness, BlockDisplay.class);
         display.setBlock(blockData);
         display.setBrightness(disconnectedBrightness);
