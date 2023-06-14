@@ -40,9 +40,7 @@ public enum ConnectionType {
     }
 
     public BlockDisplay buildBlockDisplay(Location location) {
-        final BlockDisplay display = builder.build();
-        display.teleport(location);
-        return display;
+        return builder.setLocation(location).build();
     }
 
     public Interaction buildInteraction(Location location) {
