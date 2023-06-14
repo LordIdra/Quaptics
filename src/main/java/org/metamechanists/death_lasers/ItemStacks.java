@@ -23,5 +23,8 @@ public class ItemStacks {
     public static final SlimefunItemStack TARGETING_WAND = new SlimefunItemStack(
             "TARGETING_WAND",
             Material.BLAZE_ROD,
-            "&6Targeting Wand");
+            "&6Targeting Wand",
+            "&eRight Click &3a connection point to set the source",
+            "&eRight Click &3another connection point to create a link",
+            "&eShift Right Click &3a connection point to remove a link");
 }

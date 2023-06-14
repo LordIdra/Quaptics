@@ -4,6 +4,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Display;
 import org.bukkit.entity.Interaction;
+import org.metamechanists.death_lasers.DEATH_LASERS;
 
 public class ConnectionPoint {
     private final Location location;
@@ -11,7 +12,7 @@ public class ConnectionPoint {
     private final Interaction interaction;
     private final Display.Brightness connectedBrightness;
     private final Display.Brightness disconnectedBrightness;
-    private boolean connected = false;
+    private Location target;
 
     public ConnectionPoint(Location location, ConnectionType type) {
         this.location = location;
@@ -30,8 +31,19 @@ public class ConnectionPoint {
         return location;
     }
 
-    public void toggleConnected() {
-        connected = !connected;
-        blockDisplay.setBrightness(connected ? connectedBrightness : disconnectedBrightness);
+    public boolean hasLink() {
+        return target != null;
+    }
+
+    public void link(Location target) {
+        this.target = target;
+        blockDisplay.setBrightness(connectedBrightness);
+        DEATH_LASERS.getInstance().getLogger().info("Linked");
+    }
+
+    public void unlink() {
+        target = null;
+        blockDisplay.setBrightness(disconnectedBrightness);
+        DEATH_LASERS.getInstance().getLogger().info("Unlinked");
     }
 }

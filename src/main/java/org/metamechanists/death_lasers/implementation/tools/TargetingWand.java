@@ -4,74 +4,77 @@ import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
-import io.github.thebusybiscuit.slimefun4.core.handlers.ItemUseHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Location;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-import org.bukkit.event.block.Action;
 import org.bukkit.inventory.ItemStack;
+import org.metamechanists.death_lasers.Items;
 import org.metamechanists.death_lasers.Keys;
+import org.metamechanists.death_lasers.connections.ConnectionPoint;
+import org.metamechanists.death_lasers.connections.ConnectionPointGroup;
+import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
 import org.metamechanists.death_lasers.implementation.emitters.LaserEmitter;
 import org.metamechanists.death_lasers.utils.Language;
 import org.metamechanists.death_lasers.utils.PersistentDataUtils;
-
-import javax.annotation.Nonnull;
 
 public class TargetingWand extends SlimefunItem {
     public TargetingWand(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
 
-    private final float FLOAT_THRESHOLD = 0.001F;
-
-    @Override
-    public void preRegister() {
-        addItemHandler(onBlockInteract());
+    private boolean isSourceSet(ItemStack stack) {
+        return stack.getItemMeta().getPersistentDataContainer().has(Keys.SOURCE);
     }
 
-    @Nonnull
-    private ItemUseHandler onBlockInteract() {
-        return event -> Slimefun.runSync(() -> {
-            final Player player = event.getPlayer();
-            final Block block = event.getClickedBlock().orElse(null);
-            final ItemStack stack = event.getItem();
+    private void setSourceConnectionPoint(Location sourceLocation, ItemStack stack) {
+        PersistentDataUtils.setLocation(stack, Keys.SOURCE, sourceLocation);
+    }
 
-            if (!isItem(stack)
-                    || !canUse(player, false)
-                    || block == null
-                    || !Slimefun.getProtectionManager().hasPermission(player, player.getLocation(), Interaction.INTERACT_BLOCK)
-                    || event.getInteractEvent().getAction() != Action.RIGHT_CLICK_BLOCK) {
-                return;
-            }
+    private void removeLink(Player player, Location sourceLocation) {
+        final ConnectionPointGroup sourceGroup = ConnectionPointStorage.getConnectionGroupFromConnectionPointLocation(sourceLocation);
+        final ConnectionPoint sourcePoint = sourceGroup.getConnectionPoint(sourceLocation);
+        if (!sourcePoint.hasLink()) {
+            player.sendMessage(Language.getLanguageEntry("targeting-wand.not-linked"));
+        }
+        sourcePoint.unlink();
+    }
 
-            if (player.isSneaking()) {
-                if (BlockStorage.hasBlockInfo(block) && BlockStorage.check(block) instanceof LaserEmitter) {
-                    PersistentDataUtils.setLocation(stack, Keys.SOURCE, block.getLocation());
-                } else {
-                    player.sendMessage(Language.getLanguageEntry("targeting-wand.not-source"));
-                }
-                return;
-            }
+    private void createLink(Player player, Location targetLocation, ItemStack stack) {
+        final Location sourceLocation = PersistentDataUtils.getLocation(stack, Keys.SOURCE);
 
-            final Location source = PersistentDataUtils.getLocation(stack, Keys.SOURCE);
-            final Location target = block.getLocation();
+        if (sourceLocation.getWorld().getUID() != targetLocation.getWorld().getUID()) {
+            player.sendMessage(Language.getLanguageEntry("targeting-wand.different-worlds"));
+            return;
+        }
 
-            if (source.getWorld().getUID() != target.getWorld().getUID()) {
-                player.sendMessage(Language.getLanguageEntry("targeting-wand.different-worlds"));
-                return;
-            }
+        if (sourceLocation.distance(targetLocation) < 0.001F) {
+            player.sendMessage(Language.getLanguageEntry("targeting-wand.same-connection-point"));
+            return;
+        }
 
-            if (source.distance(target) < FLOAT_THRESHOLD) {
-                player.sendMessage(Language.getLanguageEntry("targeting-wand.same-block"));
-                return;
-            }
+        final ConnectionPointGroup sourceGroup = ConnectionPointStorage.getConnectionGroupFromConnectionPointLocation(sourceLocation);
+        final ConnectionPoint sourcePoint = sourceGroup.getConnectionPoint(sourceLocation);
 
-            if (BlockStorage.check(source) instanceof LaserEmitter emitter) {
-                emitter.updateBeamGroup(source, target);
-            }
-        });
+        sourcePoint.link(targetLocation);
+    }
+
+    public void use(Player player, Location connectionPointLocation, ItemStack stack) {
+        final Location sourceBlockLocation = ConnectionPointStorage.getBlockLocationFromConnectionPointLocation(connectionPointLocation);
+        if (!BlockStorage.hasBlockInfo(sourceBlockLocation)
+                || !(BlockStorage.check(sourceBlockLocation) instanceof LaserEmitter)
+                || !Items.targetingWand.canUse(player, false)
+                || !Slimefun.getProtectionManager().hasPermission(player, player.getLocation(), Interaction.INTERACT_BLOCK)) {
+            return;
+        }
+
+        if (player.isSneaking()) {
+            removeLink(player, connectionPointLocation);
+        } else if (isSourceSet(stack)) {
+            createLink(player, connectionPointLocation, stack);
+        } else {
+            setSourceConnectionPoint(connectionPointLocation, stack);
+        }
     }
 }

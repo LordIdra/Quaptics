@@ -1,6 +1,6 @@
 package org.metamechanists.death_lasers.connections;
 
-import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -10,8 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.metamechanists.death_lasers.ItemStacks;
-import org.metamechanists.death_lasers.Items;
-import org.metamechanists.death_lasers.storage.connections.ConnectionPointStorage;
+import org.metamechanists.death_lasers.implementation.tools.TargetingWand;
 
 public class ConnectionPointListener implements Listener {
 
@@ -20,21 +19,23 @@ public class ConnectionPointListener implements Listener {
         final Entity clickedEntity = event.getRightClicked();
         final ItemStack heldItem = event.getPlayer().getInventory().getItemInMainHand();
 
-        if (!(clickedEntity instanceof Interaction interaction)
-                || !(SlimefunUtils.isItemSimilar(heldItem, ItemStacks.TARGETING_WAND, false))) {
+        if (!(clickedEntity instanceof Interaction)) {
             return;
         }
 
-        if (!Items.targetingWand.canUse(event.getPlayer(), false)
-            || !Slimefun.getProtectionManager().hasPermission(event.getPlayer(), event.getPlayer().getLocation(),
-                    io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction.INTERACT_BLOCK)) {
-            return;
+        // TODO check the interaction is a connection point
+
+        if (SlimefunUtils.isItemSimilar(heldItem, ItemStacks.TARGETING_WAND, true)) {
+            final Location connectionPointLocation = event.getRightClicked().getLocation();
+            if (SlimefunItem.getByItem(heldItem) instanceof TargetingWand wand) {
+                wand.use(event.getPlayer(), clickedEntity.getLocation(), heldItem);
+            }
         }
 
-        final Location connectionPointLocation = interaction.getLocation();
-        final ConnectionPointGroup group = ConnectionPointStorage.getConnectionGroupFromConnectionPointLocation(connectionPointLocation);
-        final ConnectionPoint point = group.getConnectionPoint(interaction.getLocation());
+        //final Location connectionPointLocation = interaction.getLocation();
+        //final ConnectionPointGroup group = ConnectionPointStorage.getConnectionGroupFromConnectionPointLocation(connectionPointLocation);
+        //final ConnectionPoint point = group.getConnectionPoint(interaction.getLocation());
 
-        point.toggleConnected();
+        //point.toggleConnected();
     }
 }

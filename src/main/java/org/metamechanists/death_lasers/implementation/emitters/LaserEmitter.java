@@ -21,9 +21,9 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.death_lasers.connections.ConnectionPoint;
 import org.metamechanists.death_lasers.connections.ConnectionType;
-import org.metamechanists.death_lasers.storage.beams.BeamStorage;
+import org.metamechanists.death_lasers.lasers.BeamStorage;
 import org.metamechanists.death_lasers.connections.ConnectionPointGroupBuilder;
-import org.metamechanists.death_lasers.storage.connections.ConnectionPointStorage;
+import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
 
 import javax.annotation.Nonnull;
 import java.util.List;

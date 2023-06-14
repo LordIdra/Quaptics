@@ -1,4 +1,4 @@
-package org.metamechanists.death_lasers.storage.beams;
+package org.metamechanists.death_lasers.lasers;
 
 import org.metamechanists.death_lasers.lasers.beam.Beam;
 

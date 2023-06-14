@@ -8,6 +8,7 @@ import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Display;
 import org.bukkit.entity.Interaction;
+import org.bukkit.util.Vector;
 
 public enum ConnectionType {
     INPUT(Material.LIME_STAINED_GLASS.createBlockData(),
@@ -34,8 +35,8 @@ public enum ConnectionType {
     }
 
     public BlockDisplay buildBlockDisplay(Location location) {
-        //final Location locationAdjustedForBukkitWeirdness = location.clone().add(new Vector(scale/2, 0, scale/2));
-        final BlockDisplay display = location.getWorld().spawn(location, BlockDisplay.class);
+        final Location locationAdjustedForBukkitWeirdness = location.clone().add(new Vector(scale/2, 0, scale/2));
+        final BlockDisplay display = location.getWorld().spawn(locationAdjustedForBukkitWeirdness, BlockDisplay.class);
         display.setBlock(blockData);
         display.setBrightness(disconnectedBrightness);
         display.setTransformation(new TransformationBuilder().scale(scale, scale, scale).build());

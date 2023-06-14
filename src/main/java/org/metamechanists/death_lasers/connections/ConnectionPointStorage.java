@@ -1,4 +1,4 @@
-package org.metamechanists.death_lasers.storage.connections;
+package org.metamechanists.death_lasers.connections;
 
 import org.bukkit.Location;
 import org.metamechanists.death_lasers.connections.ConnectionPointGroup;
@@ -29,6 +29,10 @@ public class ConnectionPointStorage {
         for (ConnectionPointGroup group : blockLocationToGroupMap.values()) {
             group.removeAllConnectionPoints();
         }
+    }
+
+    public static Location getBlockLocationFromConnectionPointLocation(Location location) {
+        return connectionPointLocationToGroupMap.get(location);
     }
 
     public static ConnectionPointGroup getConnectionGroupFromBlockLocation(Location location) {
