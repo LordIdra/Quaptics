@@ -9,6 +9,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
+import org.metamechanists.death_lasers.ItemStacks;
 import org.metamechanists.death_lasers.Items;
 import org.metamechanists.death_lasers.storage.connections.ConnectionPointStorage;
 
@@ -19,7 +20,8 @@ public class ConnectionPointListener implements Listener {
         final Entity clickedEntity = event.getRightClicked();
         final ItemStack heldItem = event.getPlayer().getActiveItem();
 
-        if (!(clickedEntity instanceof Interaction interaction) || !(SlimefunUtils.isItemSimilar(heldItem, Items.TARGETING_WAND, false))) {
+        if (!(clickedEntity instanceof Interaction interaction)
+                || !(SlimefunUtils.isItemSimilar(heldItem, ItemStacks.TARGETING_WAND, false))) {
             return;
         }
 

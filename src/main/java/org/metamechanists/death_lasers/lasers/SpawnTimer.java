@@ -2,10 +2,11 @@ package org.metamechanists.death_lasers.lasers;
 
 public class SpawnTimer {
     private final int interval;
-    private int tick = 0;
+    private int tick;
 
     public SpawnTimer(int interval) {
         this.interval = interval;
+        this.tick = interval;
     }
 
     public boolean Update() {

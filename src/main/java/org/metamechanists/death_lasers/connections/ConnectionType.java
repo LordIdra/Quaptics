@@ -1,5 +1,6 @@
 package org.metamechanists.death_lasers.connections;
 
+import dev.sefiraat.sefilib.misc.TransformationBuilder;
 import lombok.Getter;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -37,8 +38,7 @@ public enum ConnectionType {
         final BlockDisplay display = location.getWorld().spawn(location, BlockDisplay.class);
         display.setBlock(blockData);
         display.setBrightness(disconnectedBrightness);
-        display.setDisplayWidth(scale);
-        display.setDisplayHeight(scale);
+        display.setTransformation(new TransformationBuilder().scale(scale, scale, scale).build());
         return display;
     }
 
