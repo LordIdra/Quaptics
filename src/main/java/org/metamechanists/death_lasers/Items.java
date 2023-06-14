@@ -33,14 +33,14 @@ public class Items {
             Material.BLAZE_ROD,
             "&6Targeting Wand");
 
+    public static final TargetingWand targetingWand = new TargetingWand(
+            Groups.DEATH_LASER_GROUP,
+            TARGETING_WAND,
+            RecipeType.NULL,
+            new ItemStack[] {});
     public static void initialize() {
         final SlimefunAddon addon = DEATH_LASERS.getInstance();
-        new TargetingWand(
-                Groups.DEATH_LASER_GROUP,
-                TARGETING_WAND,
-                RecipeType.NULL,
-                new ItemStack[] {})
-                .register(addon);
+        targetingWand.register(addon);
 
         new LinearTimeEmitter(
                 Groups.DEATH_LASER_GROUP,
