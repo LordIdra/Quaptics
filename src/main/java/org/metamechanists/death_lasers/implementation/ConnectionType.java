@@ -1,6 +1,7 @@
 package org.metamechanists.death_lasers.implementation;
 
 import dev.sefiraat.sefilib.entity.display.builders.BlockDisplayBuilder;
+import dev.sefiraat.sefilib.misc.TransformationBuilder;
 import lombok.Getter;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -13,30 +14,29 @@ public enum ConnectionType {
     INPUT(Material.LIME_STAINED_GLASS.createBlockData(),
             new Display.Brightness(15, 15),
             new Display.Brightness(5, 5),
-            0.1F, 0.1F),
+            0.1F),
     OUTPUT(Material.RED_STAINED_GLASS.createBlockData(),
             new Display.Brightness(15, 15),
             new Display.Brightness(5, 5),
-            0.1F, 0.1F);
+            0.1F);
 
     private final BlockDisplayBuilder builder;
     @Getter
     private final Display.Brightness connectedBrightness;
     @Getter
     private final Display.Brightness disconnectedBrightness;
-    private final float width;
-    private final float height;
+    private final float scale;
 
-    ConnectionType(BlockData blockData, Display.Brightness connectedBrightness, Display.Brightness disconnectedBrightness, float width, float height) {
+    ConnectionType(BlockData blockData, Display.Brightness connectedBrightness, Display.Brightness disconnectedBrightness, float scale) {
         this.builder = new BlockDisplayBuilder()
                 .setBlockData(blockData)
                 .setBrightness(disconnectedBrightness)
-                .setDisplayWidth(width)
-                .setDisplayHeight(height);
+                .setTransformation(new TransformationBuilder().scale(scale, scale, scale).build())
+                .setDisplayWidth(scale)
+                .setDisplayHeight(scale);
         this.connectedBrightness = connectedBrightness;
         this.disconnectedBrightness = disconnectedBrightness;
-        this.width = width;
-        this.height = height;
+        this.scale = scale;
     }
 
     public BlockDisplay buildBlockDisplay(Location location) {
@@ -45,8 +45,8 @@ public enum ConnectionType {
 
     public Interaction buildInteraction(Location location) {
         final Interaction interaction = location.getWorld().spawn(location, Interaction.class);
-        interaction.setInteractionWidth(width);
-        interaction.setInteractionHeight(height);
+        interaction.setInteractionWidth(scale);
+        interaction.setInteractionHeight(scale);
         return interaction;
     }
 }

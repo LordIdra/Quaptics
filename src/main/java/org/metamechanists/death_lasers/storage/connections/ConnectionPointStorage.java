@@ -19,6 +19,7 @@ public class ConnectionPointStorage {
     public static void removeConnectionPointGroup(Location blockLocation) {
         final ConnectionPointGroup group = blockLocationToGroupMap.remove(blockLocation);
         for (Location connectionPointLocation : group.getConnectionPointLocations()) {
+            group.removeAllConnectionPoints();
             connectionPointLocationToGroupMap.remove(connectionPointLocation);
         }
     }

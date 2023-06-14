@@ -13,6 +13,12 @@ public class ConnectionPointGroup {
         this.points = points;
     }
 
+    public void removeAllConnectionPoints() {
+        for (ConnectionPoint point : points.values()) {
+            point.remove();
+        }
+    }
+
     public ConnectionPoint getConnectionPoint(Location location) {
         return points.get(location);
     }
