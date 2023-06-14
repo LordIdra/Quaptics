@@ -9,6 +9,7 @@ import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Display;
 import org.bukkit.entity.Interaction;
+import org.bukkit.util.Vector;
 
 public enum ConnectionType {
     INPUT(Material.LIME_STAINED_GLASS.createBlockData(),
@@ -45,7 +46,8 @@ public enum ConnectionType {
     }
 
     public Interaction buildInteraction(Location location) {
-        final Interaction interaction = location.getWorld().spawn(location, Interaction.class);
+        final Location locationAdjustedForBukkitWeirdness = location.clone().add(new Vector(scale/2, 0, scale/2));
+        final Interaction interaction = location.getWorld().spawn(locationAdjustedForBukkitWeirdness, Interaction.class);
         interaction.setInteractionWidth(scale);
         interaction.setInteractionHeight(scale);
         return interaction;
