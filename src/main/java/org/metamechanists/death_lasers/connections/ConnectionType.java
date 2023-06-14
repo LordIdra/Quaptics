@@ -1,4 +1,4 @@
-package org.metamechanists.death_lasers.implementation;
+package org.metamechanists.death_lasers.connections;
 
 import dev.sefiraat.sefilib.entity.display.builders.BlockDisplayBuilder;
 import dev.sefiraat.sefilib.misc.TransformationBuilder;

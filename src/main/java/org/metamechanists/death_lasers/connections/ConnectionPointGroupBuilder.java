@@ -1,7 +1,6 @@
-package org.metamechanists.death_lasers.storage.connections;
+package org.metamechanists.death_lasers.connections;
 
 import org.bukkit.Location;
-import org.metamechanists.death_lasers.implementation.ConnectionPoint;
 
 import java.util.HashMap;
 import java.util.Map;

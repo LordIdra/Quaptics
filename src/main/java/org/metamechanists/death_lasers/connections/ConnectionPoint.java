@@ -1,4 +1,4 @@
-package org.metamechanists.death_lasers.implementation;
+package org.metamechanists.death_lasers.connections;
 
 import org.bukkit.Location;
 import org.bukkit.entity.BlockDisplay;

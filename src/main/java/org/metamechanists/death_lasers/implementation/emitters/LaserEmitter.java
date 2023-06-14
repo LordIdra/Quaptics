@@ -19,18 +19,18 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
-import org.metamechanists.death_lasers.implementation.ConnectionPoint;
-import org.metamechanists.death_lasers.implementation.ConnectionType;
+import org.metamechanists.death_lasers.connections.ConnectionPoint;
+import org.metamechanists.death_lasers.connections.ConnectionType;
 import org.metamechanists.death_lasers.storage.beams.BeamStorage;
-import org.metamechanists.death_lasers.storage.connections.ConnectionPointGroupBuilder;
+import org.metamechanists.death_lasers.connections.ConnectionPointGroupBuilder;
 import org.metamechanists.death_lasers.storage.connections.ConnectionPointStorage;
 
 import javax.annotation.Nonnull;
 import java.util.List;
 
 public abstract class LaserEmitter extends SimpleSlimefunItem<BlockTicker> implements EnergyNetComponent {
-    private static final Vector INPUT_VECTOR = new Vector(0.5F, 0.5F, 0.0F);
-    private static final Vector OUTPUT_VECTOR = new Vector(0.5F, 0.5F, 1.0F);
+    private static final Vector INPUT_VECTOR = new Vector(0.3F, 1.0F, 0.2F);
+    private static final Vector OUTPUT_VECTOR = new Vector(0.3F, 1.0F, 1.0F);
     @Getter
     private final EnergyNetComponentType energyComponentType = EnergyNetComponentType.CONSUMER;
     @Getter
