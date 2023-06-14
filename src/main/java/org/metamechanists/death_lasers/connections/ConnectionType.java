@@ -13,12 +13,12 @@ import org.bukkit.entity.Interaction;
 public enum ConnectionType {
     INPUT(Material.LIME_STAINED_GLASS.createBlockData(),
             new Display.Brightness(15, 15),
-            new Display.Brightness(5, 5),
-            0.1F),
+            new Display.Brightness(0, 0),
+            0.2F),
     OUTPUT(Material.RED_STAINED_GLASS.createBlockData(),
             new Display.Brightness(15, 15),
-            new Display.Brightness(5, 5),
-            0.1F);
+            new Display.Brightness(0, 0),
+            0.2F);
 
     private final BlockDisplayBuilder builder;
     @Getter
@@ -40,13 +40,16 @@ public enum ConnectionType {
     }
 
     public BlockDisplay buildBlockDisplay(Location location) {
-        return builder.setLocation(location).build();
+        final BlockDisplay display = builder.build();
+        display.teleport(location);
+        return display;
     }
 
     public Interaction buildInteraction(Location location) {
         final Interaction interaction = location.getWorld().spawn(location, Interaction.class);
         interaction.setInteractionWidth(scale);
         interaction.setInteractionHeight(scale);
+        interaction.teleport(location);
         return interaction;
     }
 }
