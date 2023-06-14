@@ -22,7 +22,7 @@ public class PersistentDataLocation implements PersistentDataType<byte[], Locati
 
     @Override
     public byte @NotNull [] toPrimitive(@NotNull Location complex, @NotNull PersistentDataAdapterContext persistentDataAdapterContext) {
-        ByteBuffer buffer = ByteBuffer.wrap(new byte[28]);
+        ByteBuffer buffer = ByteBuffer.wrap(new byte[40]);
         buffer.putLong(complex.getWorld().getUID().getMostSignificantBits());
         buffer.putLong(complex.getWorld().getUID().getLeastSignificantBits());
         buffer.putDouble(complex.getX());

@@ -29,8 +29,8 @@ import javax.annotation.Nonnull;
 import java.util.List;
 
 public abstract class LaserEmitter extends SimpleSlimefunItem<BlockTicker> implements EnergyNetComponent {
-    private static final Vector INPUT_VECTOR = new Vector(0.4F, 1.0F, 0.0F);
-    private static final Vector OUTPUT_VECTOR = new Vector(0.4F, 1.0F, 0.8F);
+    private static final Vector INPUT_VECTOR = new Vector(0.5F, 1.0F, 0.1F);
+    private static final Vector OUTPUT_VECTOR = new Vector(0.5F, 1.0F, 0.9F);
     @Getter
     private final EnergyNetComponentType energyComponentType = EnergyNetComponentType.CONSUMER;
     @Getter
