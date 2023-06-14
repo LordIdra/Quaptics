@@ -18,7 +18,7 @@ public class ConnectionPointListener implements Listener {
     @EventHandler
     public void interactEvent(PlayerInteractEntityEvent event) {
         final Entity clickedEntity = event.getRightClicked();
-        final ItemStack heldItem = event.getPlayer().getActiveItem();
+        final ItemStack heldItem = event.getPlayer().getInventory().getItemInMainHand();
 
         if (!(clickedEntity instanceof Interaction interaction)
                 || !(SlimefunUtils.isItemSimilar(heldItem, ItemStacks.TARGETING_WAND, false))) {
