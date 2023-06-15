@@ -20,6 +20,9 @@ public class ConnectionPointInput extends ConnectionPoint {
     @Override
     public void tick() {}
 
+    @Override
+    public void cleanup() {}
+
     public boolean hasLink() {
         return source != null;
     }
