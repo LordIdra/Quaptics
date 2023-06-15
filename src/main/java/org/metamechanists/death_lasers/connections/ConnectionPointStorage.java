@@ -31,6 +31,10 @@ public class ConnectionPointStorage {
         }
     }
 
+    public static boolean hasConnectionPoint(Location pointLocation) {
+        return groupIdFromPointLocation.containsKey(pointLocation);
+    }
+
     public static Location getGroupLocationFromPointLocation(Location pointLocation) {
         return groupIdFromPointLocation.get(pointLocation);
     }

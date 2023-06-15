@@ -40,6 +40,13 @@ public class TargetingWand extends SlimefunItem {
     }
 
     private void unsetSourceConnectionPoint(ItemStack stack) {
+        if (isSourceSet(stack)) {
+            final Location sourcePointLocation = PersistentDataUtils.getLocation(stack, Keys.SOURCE);
+            final ConnectionPoint sourcePoint = ConnectionPointStorage.getPointFromPointLocation(sourcePointLocation);
+            final ConnectionPointOutput outputSourcePoint = (ConnectionPointOutput)sourcePoint;
+            outputSourcePoint.deselect();
+        }
+
         PersistentDataUtils.clear(stack, Keys.SOURCE);
     }
 
@@ -88,7 +95,6 @@ public class TargetingWand extends SlimefunItem {
 
         final ConnectionPointOutput outputSourcePoint = (ConnectionPointOutput)sourcePoint;
 
-        outputSourcePoint.deselect();
         outputSourcePoint.link(inputTargetPoint);
     }
 

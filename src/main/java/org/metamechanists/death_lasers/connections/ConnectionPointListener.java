@@ -23,19 +23,15 @@ public class ConnectionPointListener implements Listener {
             return;
         }
 
-        // TODO check the interaction is a connection point
+        if (!ConnectionPointStorage.hasConnectionPoint(clickedEntity.getLocation())) {
+            return;
+        }
 
         if (SlimefunUtils.isItemSimilar(heldItem, ItemStacks.TARGETING_WAND, true)) {
-            final Location connectionPointLocation = event.getRightClicked().getLocation();
+            final Location connectionPointLocation = clickedEntity.getLocation();
             if (SlimefunItem.getByItem(heldItem) instanceof TargetingWand wand) {
                 wand.use(event.getPlayer(), clickedEntity.getLocation(), heldItem);
             }
         }
-
-        //final Location connectionPointLocation = interaction.getLocation();
-        //final ConnectionPointGroup group = ConnectionPointStorage.getConnectionGroupFromConnectionPointLocation(connectionPointLocation);
-        //final ConnectionPoint point = group.getConnectionPoint(interaction.getLocation());
-
-        //point.toggleConnected();
     }
 }
