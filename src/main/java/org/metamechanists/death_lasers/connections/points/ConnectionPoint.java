@@ -11,6 +11,7 @@ import org.bukkit.entity.Interaction;
 import org.bukkit.util.Vector;
 
 public abstract class ConnectionPoint {
+    public static final float SCALE = 0.2F;
     @Getter
     protected final Location location;
     private final BlockData blockData;
@@ -18,33 +19,31 @@ public abstract class ConnectionPoint {
     protected final Display.Brightness connectedBrightness;
     @Getter
     protected final Display.Brightness disconnectedBrightness;
-    private final float scale;
     protected final BlockDisplay blockDisplay;
     protected final Interaction interaction;
 
-    ConnectionPoint(Location location, BlockData blockData, Display.Brightness connectedBrightness, Display.Brightness disconnectedBrightness, float scale) {
+    ConnectionPoint(Location location, BlockData blockData, Display.Brightness connectedBrightness, Display.Brightness disconnectedBrightness) {
         this.location = location;
         this.blockData = blockData;
         this.connectedBrightness = connectedBrightness;
         this.disconnectedBrightness = disconnectedBrightness;
-        this.scale = scale;
         this.blockDisplay = buildBlockDisplay(location);
         this.interaction = buildInteraction(location);
     }
 
     private BlockDisplay buildBlockDisplay(Location location) {
-        final Location locationAdjustedForBukkitWeirdness = location.clone().add(new Vector(-scale/2, 0, -scale/2));
+        final Location locationAdjustedForBukkitWeirdness = location.clone().add(new Vector(-SCALE /2, 0, -SCALE /2));
         final BlockDisplay display = location.getWorld().spawn(locationAdjustedForBukkitWeirdness, BlockDisplay.class);
         display.setBlock(blockData);
         display.setBrightness(disconnectedBrightness);
-        display.setTransformation(new TransformationBuilder().scale(scale, scale, scale).build());
+        display.setTransformation(new TransformationBuilder().scale(SCALE, SCALE, SCALE).build());
         return display;
     }
 
     private Interaction buildInteraction(Location location) {
         final Interaction interaction = location.getWorld().spawn(location, Interaction.class);
-        interaction.setInteractionWidth(scale);
-        interaction.setInteractionHeight(scale);
+        interaction.setInteractionWidth(SCALE);
+        interaction.setInteractionHeight(SCALE);
         return interaction;
     }
 
