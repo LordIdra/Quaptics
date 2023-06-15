@@ -4,6 +4,7 @@ import lombok.Getter;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Display;
+import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
 
 public class ConnectionPointInput extends ConnectionPoint {
     @Getter
@@ -21,7 +22,9 @@ public class ConnectionPointInput extends ConnectionPoint {
     public void tick() {}
 
     @Override
-    public void cleanup() {}
+    public void cleanup() {
+        ((ConnectionPointOutput) ConnectionPointStorage.getPointFromPointLocation(source)).unlink();
+    }
 
     public boolean hasLink() {
         return source != null;
