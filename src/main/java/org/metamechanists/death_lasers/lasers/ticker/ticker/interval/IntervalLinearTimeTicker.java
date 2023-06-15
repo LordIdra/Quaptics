@@ -22,9 +22,9 @@ public class IntervalLinearTimeTicker implements LaserBlockDisplayTicker {
         float verticalRotation = ScaryMathsUtils.getVerticalRotation(source, target);
         float horizontalRotation = ScaryMathsUtils.getHorizontalRotation(source, target);
 
-        final Vector offset = new Vector(-SCALE/2, SCALE/2, -SCALE/2)
+        final Vector offset = new Vector(-SCALE/2, -SCALE/2, -SCALE/2)
                 .rotateAroundY(horizontalRotation)
-                .rotateAroundAxis(new Vector(Math.sin(horizontalRotation), 0, Math.cos(horizontalRotation)), verticalRotation);
+                .rotateAroundAxis(new Vector(Math.cos(horizontalRotation), 0, Math.sin(horizontalRotation)), verticalRotation);
 
         this.lifespanTicks = lifespanTicks;
         this.velocity = displacement.clone().multiply(1.0/lifespanTicks);
