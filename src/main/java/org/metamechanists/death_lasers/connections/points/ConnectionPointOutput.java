@@ -17,8 +17,7 @@ public class ConnectionPointOutput extends ConnectionPoint {
         super(location,
                 Material.LIME_STAINED_GLASS.createBlockData(),
                 new Display.Brightness(15, 15),
-                new Display.Brightness(3, 3),
-                0.2F);
+                new Display.Brightness(3, 3));
     }
 
     @Override
