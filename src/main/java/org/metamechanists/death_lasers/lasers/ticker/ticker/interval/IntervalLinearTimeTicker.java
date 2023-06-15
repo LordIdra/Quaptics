@@ -1,15 +1,12 @@
 package org.metamechanists.death_lasers.lasers.ticker.ticker.interval;
 
 import dev.sefiraat.sefilib.entity.display.builders.BlockDisplayBuilder;
-import org.bukkit.Color;
 import org.bukkit.Location;
-import org.bukkit.Particle;
 import org.bukkit.entity.BlockDisplay;
 import org.bukkit.util.Transformation;
 import org.bukkit.util.Vector;
 import org.joml.AxisAngle4f;
 import org.joml.Vector3f;
-
 import org.metamechanists.death_lasers.lasers.ticker.ticker.LaserBlockDisplayTicker;
 import org.metamechanists.death_lasers.utils.ScaryMathsUtils;
 
@@ -27,16 +24,7 @@ public class IntervalLinearTimeTicker implements LaserBlockDisplayTicker {
 
         final Vector offset = new Vector(-SCALE/2, SCALE/2, -SCALE/2)
                 .rotateAroundY(horizontalRotation)
-                .rotateAroundX(verticalRotation);
-
-        source.getWorld().spawnParticle(Particle.REDSTONE, source, 50, new Particle.DustOptions(Color.BLUE, 0.1F));
-        target.getWorld().spawnParticle(Particle.REDSTONE, target, 50, new Particle.DustOptions(Color.BLUE, 0.1F));
-
-        //source.add(0, 0, -(SCALE/2)*Math.cos(horizontalRotation));
-        //target.add(0, 0, -(SCALE/2)*Math.cos(horizontalRotation));
-
-        source.getWorld().spawnParticle(Particle.REDSTONE, source, 50, new Particle.DustOptions(Color.RED, 0.1F));
-        target.getWorld().spawnParticle(Particle.REDSTONE, target, 50, new Particle.DustOptions(Color.RED, 0.1F));
+                .rotateAroundAxis(new Vector(Math.cos(horizontalRotation), 0, Math.sin(horizontalRotation)), verticalRotation);
 
         this.lifespanTicks = lifespanTicks;
         this.velocity = displacement.clone().multiply(1.0/lifespanTicks);
