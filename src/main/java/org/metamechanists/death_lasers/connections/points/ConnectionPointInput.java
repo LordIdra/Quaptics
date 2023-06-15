@@ -1,12 +1,13 @@
 package org.metamechanists.death_lasers.connections.points;
 
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Display;
 
 public class ConnectionPointInput extends ConnectionPoint {
     private boolean linked;
 
-    public ConnectionPointInput(ConnectionPointLocation location) {
+    public ConnectionPointInput(Location location) {
         super(location,
                 Material.RED_STAINED_GLASS.createBlockData(),
                 new Display.Brightness(15, 15),

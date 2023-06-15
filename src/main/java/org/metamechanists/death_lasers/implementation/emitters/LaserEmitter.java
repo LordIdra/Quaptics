@@ -55,13 +55,13 @@ public abstract class LaserEmitter extends SimpleSlimefunItem<BlockTicker> imple
         return new BlockPlaceHandler(false) {
             @Override
             public void onPlayerPlace(@NotNull BlockPlaceEvent e) {
-                final ConnectionGroupLocation source = new ConnectionGroupLocation(e.getBlock().getLocation());
-                final ConnectionPointLocation inputLocation = new ConnectionPointLocation(source.location.clone().add(INPUT_VECTOR));
-                final ConnectionPointLocation outputLocation = new ConnectionPointLocation(source.location.clone().add(OUTPUT_VECTOR));
-                ConnectionPointStorage.addConnectionPointGroup(source,
+                final Location sourceGroupLocation = e.getBlock().getLocation();
+                final Location inputPointLocation = sourceGroupLocation.clone().add(INPUT_VECTOR);
+                final Location outputPointLocation = sourceGroupLocation.clone().add(OUTPUT_VECTOR);
+                ConnectionPointStorage.addConnectionPointGroup(sourceGroupLocation,
                         new ConnectionGroupBuilder()
-                                .addConnectionPoint(new ConnectionPointInput(inputLocation))
-                                .addConnectionPoint(new ConnectionPointOutput(outputLocation))
+                                .addConnectionPoint(new ConnectionPointInput(inputPointLocation))
+                                .addConnectionPoint(new ConnectionPointOutput(outputPointLocation))
                                 .build());
             }
         };
@@ -72,8 +72,8 @@ public abstract class LaserEmitter extends SimpleSlimefunItem<BlockTicker> imple
         return new BlockBreakHandler(false, false) {
             @Override
             public void onPlayerBreak(@NotNull BlockBreakEvent e, @NotNull ItemStack item, @NotNull List<ItemStack> drops) {
-                final ConnectionGroupLocation source = new ConnectionGroupLocation(e.getBlock().getLocation());
-                ConnectionPointStorage.removeConnectionPointGroup(source);
+                final Location sourceGroupLocation = e.getBlock().getLocation();
+                ConnectionPointStorage.removeConnectionPointGroup(sourceGroupLocation);
                 if (BeamStorage.hasBeamGroup(e.getBlock().getLocation())) {
                     BeamStorage.deprecateBeamGroup(e.getBlock().getLocation());
                 }
