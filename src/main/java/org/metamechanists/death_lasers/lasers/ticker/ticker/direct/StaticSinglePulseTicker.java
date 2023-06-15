@@ -4,7 +4,6 @@ import dev.sefiraat.sefilib.entity.display.builders.BlockDisplayBuilder;
 import dev.sefiraat.sefilib.misc.TransformationBuilder;
 import org.bukkit.Location;
 import org.bukkit.entity.BlockDisplay;
-import org.bukkit.util.Vector;
 import org.metamechanists.death_lasers.lasers.ticker.ticker.LaserBlockDisplayTicker;
 
 public class StaticSinglePulseTicker implements LaserBlockDisplayTicker {
@@ -23,7 +22,6 @@ public class StaticSinglePulseTicker implements LaserBlockDisplayTicker {
 
     @Override
     public void tick() {
-
         ageTicks++;
     }
 

@@ -1,13 +1,13 @@
 package org.metamechanists.death_lasers.connections;
 
+import org.bukkit.Location;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
-import org.metamechanists.death_lasers.utils.ConnectionPointLocation;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class ConnectionGroupBuilder {
-    private final Map<ConnectionPointLocation, ConnectionPoint> points = new HashMap<>();
+    private final Map<Location, ConnectionPoint> points = new HashMap<>();
 
     public ConnectionGroupBuilder() {}
 

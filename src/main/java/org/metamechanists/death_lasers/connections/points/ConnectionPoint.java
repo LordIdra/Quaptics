@@ -9,11 +9,10 @@ import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Display;
 import org.bukkit.entity.Interaction;
 import org.bukkit.util.Vector;
-import org.metamechanists.death_lasers.utils.ConnectionPointLocation;
 
 public class ConnectionPoint {
     @Getter
-    private final ConnectionPointLocation location;
+    private final Location location;
     private final BlockData blockData;
     @Getter
     protected final Display.Brightness connectedBrightness;
@@ -23,14 +22,14 @@ public class ConnectionPoint {
     protected final BlockDisplay blockDisplay;
     protected final Interaction interaction;
 
-    ConnectionPoint(ConnectionPointLocation location, BlockData blockData, Display.Brightness connectedBrightness, Display.Brightness disconnectedBrightness, float scale) {
+    ConnectionPoint(Location location, BlockData blockData, Display.Brightness connectedBrightness, Display.Brightness disconnectedBrightness, float scale) {
         this.location = location;
         this.blockData = blockData;
         this.connectedBrightness = connectedBrightness;
         this.disconnectedBrightness = disconnectedBrightness;
         this.scale = scale;
-        this.blockDisplay = buildBlockDisplay(location.location);
-        this.interaction = buildInteraction(location.location);
+        this.blockDisplay = buildBlockDisplay(location);
+        this.interaction = buildInteraction(location);
     }
 
     private BlockDisplay buildBlockDisplay(Location location) {

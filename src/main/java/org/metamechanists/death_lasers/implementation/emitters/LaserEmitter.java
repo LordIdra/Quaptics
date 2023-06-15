@@ -24,8 +24,6 @@ import org.metamechanists.death_lasers.connections.points.ConnectionPointOutput;
 import org.metamechanists.death_lasers.lasers.BeamStorage;
 import org.metamechanists.death_lasers.connections.ConnectionGroupBuilder;
 import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
-import org.metamechanists.death_lasers.utils.ConnectionGroupLocation;
-import org.metamechanists.death_lasers.utils.ConnectionPointLocation;
 
 import javax.annotation.Nonnull;
 import java.util.List;

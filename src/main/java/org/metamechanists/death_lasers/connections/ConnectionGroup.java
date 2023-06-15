@@ -1,15 +1,15 @@
 package org.metamechanists.death_lasers.connections;
 
+import org.bukkit.Location;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
-import org.metamechanists.death_lasers.utils.ConnectionPointLocation;
 
 import java.util.Map;
 import java.util.Set;
 
 public class ConnectionGroup {
-    private final Map<ConnectionPointLocation, ConnectionPoint> points;
+    private final Map<Location, ConnectionPoint> points;
 
-    public ConnectionGroup(Map<ConnectionPointLocation, ConnectionPoint> points) {
+    public ConnectionGroup(Map<Location, ConnectionPoint> points) {
         this.points = points;
     }
 
@@ -19,11 +19,11 @@ public class ConnectionGroup {
         }
     }
 
-    public ConnectionPoint getPoint(ConnectionPointLocation location) {
+    public ConnectionPoint getPoint(Location location) {
         return points.get(location);
     }
 
-    public Set<ConnectionPointLocation> getPointLocations() {
+    public Set<Location> getPointLocations() {
         return points.keySet();
     }
 }

@@ -2,7 +2,6 @@ package org.metamechanists.death_lasers.connections.points;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Display;
-import org.metamechanists.death_lasers.utils.ConnectionPointLocation;
 
 public class ConnectionPointOutput extends ConnectionPoint {
     private ConnectionPointInput target;

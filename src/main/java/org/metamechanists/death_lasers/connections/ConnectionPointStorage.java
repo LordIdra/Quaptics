@@ -1,28 +1,27 @@
 package org.metamechanists.death_lasers.connections;
 
+import org.bukkit.Location;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
-import org.metamechanists.death_lasers.utils.ConnectionGroupLocation;
-import org.metamechanists.death_lasers.utils.ConnectionPointLocation;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class ConnectionPointStorage {
-    private static final Map<ConnectionGroupLocation, ConnectionGroup> groups = new HashMap<>();
-    private static final Map<ConnectionPointLocation, ConnectionGroupLocation> pointToGroupLocation = new HashMap<>();
+    private static final Map<Location, ConnectionGroup> groups = new HashMap<>();
+    private static final Map<Location, Location> groupIdFromPointLocation = new HashMap<>();
 
-    public static void addConnectionPointGroup(ConnectionGroupLocation groupLocation, ConnectionGroup group) {
+    public static void addConnectionPointGroup(Location groupLocation, ConnectionGroup group) {
         groups.put(groupLocation, group);
-        for (ConnectionPointLocation pointLocation : group.getPointLocations()) {
-            pointToGroupLocation.put(pointLocation, groupLocation);
+        for (Location pointLocation : group.getPointLocations()) {
+            groupIdFromPointLocation.put(pointLocation, groupLocation);
         }
     }
 
-    public static void removeConnectionPointGroup(ConnectionGroupLocation groupLocation) {
+    public static void removeConnectionPointGroup(Location groupLocation) {
         final ConnectionGroup group = groups.remove(groupLocation);
-        for (ConnectionPointLocation pointLocation : group.getPointLocations()) {
+        for (Location pointLocation : group.getPointLocations()) {
             group.removeAllPoints();
-            pointToGroupLocation.remove(pointLocation);
+            groupIdFromPointLocation.remove(pointLocation);
         }
     }
 
@@ -32,20 +31,20 @@ public class ConnectionPointStorage {
         }
     }
 
-    public static ConnectionGroupLocation getGroupLocation(ConnectionPointLocation pointLocation) {
-        return pointToGroupLocation.get(pointLocation);
+    public static Location getGroupLocationFromPointLocation(Location pointLocation) {
+        return groupIdFromPointLocation.get(pointLocation);
     }
 
-    public static ConnectionGroup getGroup(ConnectionGroupLocation groupLocation) {
+    public static ConnectionGroup getGroupLocationFromGroupLocation(Location groupLocation) {
         return groups.get(groupLocation);
     }
 
-    public static ConnectionGroup getGroup(ConnectionPointLocation pointLocation) {
-        final ConnectionGroupLocation groupLocation = pointToGroupLocation.get(pointLocation);
-        return getGroup(groupLocation);
+    public static ConnectionGroup getGroupFromPointLocation(Location pointLocation) {
+        final Location groupLocation = groupIdFromPointLocation.get(pointLocation);
+        return getGroupLocationFromGroupLocation(groupLocation);
     }
 
-    public static ConnectionPoint getPoint(ConnectionPointLocation pointLocation) {
-        return getGroup(pointLocation).getPoint(pointLocation);
+    public static ConnectionPoint getPointFromPointLocation(Location pointLocation) {
+        return getGroupLocationFromGroupLocation(pointLocation).getPoint(pointLocation);
     }
 }
