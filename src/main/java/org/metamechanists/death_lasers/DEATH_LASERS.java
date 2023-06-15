@@ -1,13 +1,11 @@
 package org.metamechanists.death_lasers;
 
-import co.aikar.commands.PaperCommandManager;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import lombok.Getter;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.metamechanists.death_lasers.commands.DeathLaserCommand;
 import org.metamechanists.death_lasers.lasers.BeamStorage;
 import org.metamechanists.death_lasers.lasers.BeamStorageRunnable;
 import org.metamechanists.death_lasers.connections.ConnectionPointListener;
@@ -18,11 +16,6 @@ public final class DEATH_LASERS extends JavaPlugin implements SlimefunAddon {
     @Getter
     private static DEATH_LASERS instance;
 
-    private void initializeCommands() {
-        final PaperCommandManager commandManager = new PaperCommandManager(this);
-        commandManager.enableUnstableAPI("help");
-        commandManager.registerCommand(new DeathLaserCommand());
-    }
     private void initializeListeners() {
         final PluginManager pluginManager = this.getServer().getPluginManager();
         pluginManager.registerEvents(new ConnectionPointListener(), this);
@@ -38,7 +31,6 @@ public final class DEATH_LASERS extends JavaPlugin implements SlimefunAddon {
         Language.initialize();
         Groups.initialize();
         Items.initialize();
-        initializeCommands();
         initializeListeners();
         initializeRunnables();
     }

@@ -1,7 +1,6 @@
 package org.metamechanists.death_lasers.lasers;
 
 import org.bukkit.Location;
-import org.metamechanists.death_lasers.lasers.BeamGroup;
 
 import java.util.Collection;
 import java.util.Map;

@@ -57,9 +57,9 @@ public abstract class LaserEmitter extends SimpleSlimefunItem<BlockTicker> imple
         return new BlockPlaceHandler(false) {
             @Override
             public void onPlayerPlace(@NotNull BlockPlaceEvent e) {
-                final ConnectionGroupLocation source = (ConnectionGroupLocation) e.getBlock().getLocation();
-                final ConnectionPointLocation inputLocation = (ConnectionPointLocation) source.clone().add(INPUT_VECTOR);
-                final ConnectionPointLocation outputLocation = (ConnectionPointLocation) source.clone().add(OUTPUT_VECTOR);
+                final ConnectionGroupLocation source = new ConnectionGroupLocation(e.getBlock().getLocation());
+                final ConnectionPointLocation inputLocation = new ConnectionPointLocation(source.location.clone().add(INPUT_VECTOR));
+                final ConnectionPointLocation outputLocation = new ConnectionPointLocation(source.location.clone().add(OUTPUT_VECTOR));
                 ConnectionPointStorage.addConnectionPointGroup(source,
                         new ConnectionGroupBuilder()
                                 .addConnectionPoint(new ConnectionPointInput(inputLocation))
@@ -74,7 +74,7 @@ public abstract class LaserEmitter extends SimpleSlimefunItem<BlockTicker> imple
         return new BlockBreakHandler(false, false) {
             @Override
             public void onPlayerBreak(@NotNull BlockBreakEvent e, @NotNull ItemStack item, @NotNull List<ItemStack> drops) {
-                final ConnectionGroupLocation source = (ConnectionGroupLocation) e.getBlock().getLocation();
+                final ConnectionGroupLocation source = new ConnectionGroupLocation(e.getBlock().getLocation());
                 ConnectionPointStorage.removeConnectionPointGroup(source);
                 if (BeamStorage.hasBeamGroup(e.getBlock().getLocation())) {
                     BeamStorage.deprecateBeamGroup(e.getBlock().getLocation());

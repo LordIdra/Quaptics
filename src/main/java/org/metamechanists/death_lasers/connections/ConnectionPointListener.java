@@ -29,7 +29,7 @@ public class ConnectionPointListener implements Listener {
         if (SlimefunUtils.isItemSimilar(heldItem, ItemStacks.TARGETING_WAND, true)) {
             final Location connectionPointLocation = event.getRightClicked().getLocation();
             if (SlimefunItem.getByItem(heldItem) instanceof TargetingWand wand) {
-                wand.use(event.getPlayer(), (ConnectionPointLocation) clickedEntity.getLocation(), heldItem);
+                wand.use(event.getPlayer(), new ConnectionPointLocation(clickedEntity.getLocation()), heldItem);
             }
         }
 

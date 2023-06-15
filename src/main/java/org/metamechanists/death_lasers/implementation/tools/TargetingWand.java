@@ -33,7 +33,7 @@ public class TargetingWand extends SlimefunItem {
     private void setSourceConnectionPoint(ConnectionPointLocation sourceLocation, ItemStack stack) {
         final ConnectionPoint sourcePoint = ConnectionPointStorage.getPoint(sourceLocation);
         sourcePoint.select();
-        PersistentDataUtils.setLocation(stack, Keys.SOURCE, sourceLocation);
+        PersistentDataUtils.setLocation(stack, Keys.SOURCE, sourceLocation.location);
     }
 
     private void unsetSourceConnectionPoint(ItemStack stack) {
@@ -55,14 +55,14 @@ public class TargetingWand extends SlimefunItem {
     }
 
     private void createLink(Player player, ConnectionPointLocation targetLocation, ItemStack stack) {
-        final ConnectionPointLocation sourceLocation = (ConnectionPointLocation) PersistentDataUtils.getLocation(stack, Keys.SOURCE);
+        final ConnectionPointLocation sourceLocation = new ConnectionPointLocation(PersistentDataUtils.getLocation(stack, Keys.SOURCE));
 
-        if (sourceLocation.getWorld().getUID() != targetLocation.getWorld().getUID()) {
+        if (sourceLocation.location.getWorld().getUID() != targetLocation.location.getWorld().getUID()) {
             player.sendMessage(Language.getLanguageEntry("targeting-wand.different-worlds"));
             return;
         }
 
-        if (sourceLocation.distance(targetLocation) < 0.0001F) {
+        if (sourceLocation.location.distance(targetLocation.location) < 0.0001F) {
             player.sendMessage(Language.getLanguageEntry("targeting-wand.same-connection-point"));
             return;
         }
@@ -81,8 +81,8 @@ public class TargetingWand extends SlimefunItem {
 
     public void use(Player player, ConnectionPointLocation pointLocation, ItemStack stack) {
         final ConnectionGroupLocation groupLocation = ConnectionPointStorage.getGroupLocation(pointLocation);
-        if (!BlockStorage.hasBlockInfo(groupLocation)
-                || !(BlockStorage.check(groupLocation) instanceof LaserEmitter)
+        if (!BlockStorage.hasBlockInfo(groupLocation.location)
+                || !(BlockStorage.check(groupLocation.location) instanceof LaserEmitter)
                 || !Items.targetingWand.canUse(player, false)
                 || !Slimefun.getProtectionManager().hasPermission(player, player.getLocation(), Interaction.INTERACT_BLOCK)) {
             return;

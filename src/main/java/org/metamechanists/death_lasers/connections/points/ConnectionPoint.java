@@ -29,8 +29,8 @@ public class ConnectionPoint {
         this.connectedBrightness = connectedBrightness;
         this.disconnectedBrightness = disconnectedBrightness;
         this.scale = scale;
-        this.blockDisplay = buildBlockDisplay(location);
-        this.interaction = buildInteraction(location);
+        this.blockDisplay = buildBlockDisplay(location.location);
+        this.interaction = buildInteraction(location.location);
     }
 
     private BlockDisplay buildBlockDisplay(Location location) {
