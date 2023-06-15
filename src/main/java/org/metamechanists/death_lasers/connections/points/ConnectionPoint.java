@@ -48,6 +48,8 @@ public abstract class ConnectionPoint {
         return interaction;
     }
 
+    public abstract void tick();
+
     public void remove() {
         blockDisplay.remove();
         interaction.remove();

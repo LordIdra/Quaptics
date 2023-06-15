@@ -17,6 +17,9 @@ public class ConnectionPointInput extends ConnectionPoint {
                 0.2F);
     }
 
+    @Override
+    public void tick() {}
+
     public boolean hasLink() {
         return source != null;
     }

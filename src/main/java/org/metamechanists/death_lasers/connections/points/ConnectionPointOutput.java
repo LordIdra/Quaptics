@@ -21,6 +21,7 @@ public class ConnectionPointOutput extends ConnectionPoint {
                 0.2F);
     }
 
+    @Override
     public void tick() {
         if (beam != null) {
             beam.tick();

@@ -43,8 +43,6 @@ public abstract class LaserEmitter extends SimpleSlimefunItem<BlockTicker> imple
         addItemHandler(onBreak(), onPlace());
     }
 
-    abstract void doTick(Block block, SlimefunItem item);
-
     @Nonnull
     private BlockPlaceHandler onPlace() {
         return new BlockPlaceHandler(false) {
@@ -84,7 +82,6 @@ public abstract class LaserEmitter extends SimpleSlimefunItem<BlockTicker> imple
                 if (charge >= consumption) {
                     removeCharge(block.getLocation(), consumption);
                 }
-                doTick(block, item);
             }
 
             @Override

@@ -15,6 +15,12 @@ public class ConnectionGroup {
         this.pointNames = pointNames;
     }
 
+    public void tick() {
+        for (ConnectionPoint point : points.values()) {
+            point.tick();
+        }
+    }
+
     public void removeAllPoints() {
         for (ConnectionPoint point : points.values()) {
             point.remove();

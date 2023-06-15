@@ -9,6 +9,7 @@ public class DeprecatedBeams {
     private static final List<Beam> beams = new ArrayList<>();
 
     public static void add(Beam beam) {
+        beam.setPowered(false);
         beams.add(beam);
     }
 

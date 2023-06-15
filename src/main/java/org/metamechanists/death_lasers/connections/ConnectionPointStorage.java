@@ -10,6 +10,12 @@ public class ConnectionPointStorage {
     private static final Map<Location, ConnectionGroup> groups = new HashMap<>();
     private static final Map<Location, Location> groupIdFromPointLocation = new HashMap<>();
 
+    public static void tick() {
+        for (ConnectionGroup group : groups.values()) {
+            group.tick();
+        }
+    }
+
     public static void addConnectionPointGroup(Location groupLocation, ConnectionGroup group) {
         groups.put(groupLocation, group);
         for (Location pointLocation : group.getPointLocations()) {
