@@ -23,7 +23,7 @@ public class IntervalLinearTimeTicker implements LaserBlockDisplayTicker {
     public IntervalLinearTimeTicker(BlockDisplayBuilder displayBuilder, Location source, Location target, int lifespanTicks) {
         final Vector displacement = ScaryMathsUtils.getDisplacement(source, target);
         float verticalRotation = ScaryMathsUtils.getVerticalRotation(source, target);
-        float horizontalRotation = ScaryMathsUtils.getVerticalRotation(source, target);
+        float horizontalRotation = ScaryMathsUtils.getHorizontalRotation(source, target);
 
         //source.add(SCALE*Math.cos(rotationXZ), ConnectionPoint.SCALE/2 -SCALE/2, SCALE*Math.sin(rotationXZ));
         //target.add(SCALE*Math.cos(rotationXZ), ConnectionPoint.SCALE/2 -SCALE/2, SCALE*Math.sin(rotationXZ));
