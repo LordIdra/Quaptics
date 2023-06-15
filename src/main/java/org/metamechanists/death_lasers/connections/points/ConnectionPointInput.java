@@ -24,9 +24,11 @@ public class ConnectionPointInput extends ConnectionPoint {
     public void remove() {
         blockDisplay.remove();
         interaction.remove();
-        ConnectionPointOutput sourcePoint = (ConnectionPointOutput) ConnectionPointStorage.getPointFromPointLocation(source);
-        if (sourcePoint.hasLink()) {
-            sourcePoint.unlink();
+        if (source != null) {
+            ConnectionPointOutput sourcePoint = (ConnectionPointOutput) ConnectionPointStorage.getPointFromPointLocation(source);
+            if (sourcePoint.hasLink()) {
+                sourcePoint.unlink();
+            }
         }
     }
 
