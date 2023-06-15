@@ -1,6 +1,7 @@
 package org.metamechanists.death_lasers.lasers.ticker.ticker.interval;
 
 import dev.sefiraat.sefilib.entity.display.builders.BlockDisplayBuilder;
+import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.BlockDisplay;
@@ -18,8 +19,8 @@ public class IntervalLinearTimeTicker implements LaserBlockDisplayTicker {
     private int ageTicks = 0;
 
     public IntervalLinearTimeTicker(BlockDisplayBuilder displayBuilder, Location source, Location target, int lifespanTicks) {
-        source.getWorld().spawnParticle(Particle.END_ROD, source, 1);
-        source.getWorld().spawnParticle(Particle.END_ROD, target, 1);
+        source.getWorld().spawnParticle(Particle.REDSTONE, source, 50, new Particle.DustOptions(Color.RED, 0.1F));
+        source.getWorld().spawnParticle(Particle.END_ROD, target, 50, new Particle.DustOptions(Color.GREEN, 0.1F));
 
         final Vector displacement = target.clone().subtract(source).toVector();
         final Vector direction = displacement.clone().normalize();
