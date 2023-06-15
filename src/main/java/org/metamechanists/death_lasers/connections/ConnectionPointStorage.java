@@ -31,9 +31,9 @@ public class ConnectionPointStorage {
         }
     }
 
-    public static void removeAllConnectionPoints() {
+    public static void killAllConnectionPoints() {
         for (ConnectionGroup group : groups.values()) {
-            group.removeAllPoints();
+            group.killAllPoints();
         }
     }
 

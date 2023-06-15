@@ -27,6 +27,12 @@ public class ConnectionGroup {
         }
     }
 
+    public void killAllPoints() {
+        for (ConnectionPoint point : points.values()) {
+            point.kill();
+        }
+    }
+
     public ConnectionPoint getPoint(Location location) {
         return points.get(location);
     }

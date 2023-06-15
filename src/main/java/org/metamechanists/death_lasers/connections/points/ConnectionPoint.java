@@ -49,13 +49,8 @@ public abstract class ConnectionPoint {
     }
 
     public abstract void tick();
-    public abstract void cleanup();
-
-    public void remove() {
-        blockDisplay.remove();
-        interaction.remove();
-        cleanup();
-    }
+    public abstract void remove();
+    public abstract void kill();
 
     public void select() {
         blockDisplay.setGlowing(true);

@@ -19,8 +19,8 @@ public class IntervalLinearTimeTicker implements LaserBlockDisplayTicker {
     public IntervalLinearTimeTicker(BlockDisplayBuilder displayBuilder, Location source, Location target, int lifespanTicks) {
         final Vector displacement = target.clone().subtract(source).toVector();
         final Vector direction = displacement.clone().normalize();
-        float rotationXZ = (float) Math.atan(direction.getX() / direction.getZ());
-        Vector vectorInXZPlaneAtSameRotationAsDisplacement = new Vector(0, 0, 1).rotateAroundY(rotationXZ);
+        final float rotationXZ = (float) Math.atan(direction.getX() / direction.getZ());
+        final Vector vectorInXZPlaneAtSameRotationAsDisplacement = new Vector(0, 0, 1).rotateAroundY(rotationXZ);
         float rotationXY = vectorInXZPlaneAtSameRotationAsDisplacement.angle(displacement);
 
         if (displacement.getY() > 0) {

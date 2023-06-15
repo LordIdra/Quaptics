@@ -29,8 +29,17 @@ public class ConnectionPointOutput extends ConnectionPoint {
     }
 
     @Override
-    public void cleanup() {
+    public void remove() {
+        blockDisplay.remove();
+        interaction.remove();
         DeprecatedBeams.add(beam);
+    }
+
+    @Override
+    public void kill() {
+        blockDisplay.remove();
+        interaction.remove();
+        beam.remove();
     }
 
     public boolean hasLink() {

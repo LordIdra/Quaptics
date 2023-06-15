@@ -22,9 +22,14 @@ public class ConnectionPointInput extends ConnectionPoint {
     public void tick() {}
 
     @Override
-    public void cleanup() {
+    public void remove() {
+        blockDisplay.remove();
+        interaction.remove();
         ((ConnectionPointOutput) ConnectionPointStorage.getPointFromPointLocation(source)).unlink();
     }
+
+    @Override
+    public void kill() {}
 
     public boolean hasLink() {
         return source != null;

@@ -37,7 +37,7 @@ public final class DEATH_LASERS extends JavaPlugin implements SlimefunAddon {
     @Override
     public void onDisable() {
         DeprecatedBeams.killAllBeams();
-        ConnectionPointStorage.removeAllConnectionPoints();
+        ConnectionPointStorage.killAllConnectionPoints();
     }
 
     @NotNull
