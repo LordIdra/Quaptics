@@ -33,7 +33,10 @@ public class ConnectionPointInput extends ConnectionPoint {
     }
 
     @Override
-    public void kill() {}
+    public void kill() {
+        blockDisplay.remove();
+        interaction.remove();
+    }
 
     public boolean hasLink() {
         return source != null;
