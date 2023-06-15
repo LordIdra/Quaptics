@@ -7,4 +7,9 @@ public class ConnectionGroupLocation {
     public ConnectionGroupLocation(Location location) {
         this.location = location;
     }
+
+    @Override
+    public int hashCode() {
+        return location.hashCode();
+    }
 }

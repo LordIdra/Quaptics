@@ -7,4 +7,9 @@ public class ConnectionPointLocation {
     public ConnectionPointLocation(Location location) {
         this.location = location;
     }
+
+    @Override
+    public int hashCode() {
+        return location.hashCode();
+    }
 }
