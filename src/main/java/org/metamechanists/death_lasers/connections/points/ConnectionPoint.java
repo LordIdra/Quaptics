@@ -12,7 +12,7 @@ import org.bukkit.util.Vector;
 
 public class ConnectionPoint {
     @Getter
-    private final Location location;
+    protected final Location location;
     private final BlockData blockData;
     @Getter
     protected final Display.Brightness connectedBrightness;

@@ -1,11 +1,13 @@
 package org.metamechanists.death_lasers.connections.points;
 
+import lombok.Getter;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Display;
 
 public class ConnectionPointInput extends ConnectionPoint {
-    private boolean linked;
+    @Getter
+    private Location source;
 
     public ConnectionPointInput(Location location) {
         super(location,
@@ -16,16 +18,16 @@ public class ConnectionPointInput extends ConnectionPoint {
     }
 
     public boolean hasLink() {
-        return linked;
+        return source != null;
     }
 
-    public void link() {
-        this.linked = true;
+    public void link(Location source) {
+        this.source = source;
         blockDisplay.setBrightness(connectedBrightness);
     }
 
     public void unlink() {
-        this.linked = false;
+        this.source = null;
         blockDisplay.setBrightness(disconnectedBrightness);
     }
 }

@@ -33,6 +33,7 @@ public class TargetingWand extends SlimefunItem {
         final ConnectionPoint sourceOutputPoint = ConnectionPointStorage.getPointFromPointLocation(sourcePointLocation);
         if (!(sourceOutputPoint instanceof ConnectionPointOutput)) {
             player.sendMessage(Language.getLanguageEntry("targeting-wand.source-must-be-output"));
+            return;
         }
         sourceOutputPoint.select();
         PersistentDataUtils.setLocation(stack, Keys.SOURCE, sourcePointLocation);
@@ -42,18 +43,26 @@ public class TargetingWand extends SlimefunItem {
         PersistentDataUtils.clear(stack, Keys.SOURCE);
     }
 
-    private void removeLink(Player player, Location sourcePointLocation) {
-        final ConnectionPoint sourcePoint = ConnectionPointStorage.getPointFromPointLocation(sourcePointLocation);
-        if (!(sourcePoint instanceof ConnectionPointOutput sourceOutputPoint)) {
+    private void removeLink(Player player, Location pointLocation) {
+        final ConnectionPoint sourcePoint = ConnectionPointStorage.getPointFromPointLocation(pointLocation);
+
+        if (sourcePoint instanceof ConnectionPointOutput outputPoint) {
+            if (!outputPoint.hasLink()) {
+                player.sendMessage(Language.getLanguageEntry("targeting-wand.not-linked"));
+                return;
+            }
+            outputPoint.unlink();
             return;
         }
 
-        if (!sourceOutputPoint.hasLink()) {
-            player.sendMessage(Language.getLanguageEntry("targeting-wand.not-linked"));
-            return;
+        if (sourcePoint instanceof ConnectionPointInput inputPoint) {
+            if (!inputPoint.hasLink()) {
+                player.sendMessage(Language.getLanguageEntry("targeting-wand.not-linked"));
+                return;
+            }
+            final ConnectionPointOutput outputPoint = (ConnectionPointOutput) ConnectionPointStorage.getPointFromPointLocation(inputPoint.getSource());
+            outputPoint.unlink();
         }
-
-        sourceOutputPoint.unlink();
     }
 
     private void createLink(Player player, Location targetPointLocation, ItemStack stack) {

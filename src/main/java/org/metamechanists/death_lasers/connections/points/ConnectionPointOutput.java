@@ -21,7 +21,7 @@ public class ConnectionPointOutput extends ConnectionPoint {
 
     public void link(ConnectionPointInput target) {
         this.target = target;
-        this.target.link();
+        this.target.link(this.location);
         blockDisplay.setBrightness(connectedBrightness);
     }
 
