@@ -14,7 +14,7 @@ public class ScaryMathsUtils {
 
     public static float getHorizontalRotation(Location from, Location to) {
         final Vector direction = getDirection(from, to);
-        return (float) Math.atan(direction.getX() / direction.getZ());
+        return (float) Math.atan2(direction.getX(), direction.getZ());
     }
 
     public static float getVerticalRotation(Location from, Location to) {
