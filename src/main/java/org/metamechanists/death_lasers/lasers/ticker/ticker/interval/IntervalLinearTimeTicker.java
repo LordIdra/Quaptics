@@ -9,6 +9,7 @@ import org.bukkit.util.Transformation;
 import org.bukkit.util.Vector;
 import org.joml.AxisAngle4f;
 import org.joml.Vector3f;
+import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
 import org.metamechanists.death_lasers.lasers.ticker.ticker.LaserBlockDisplayTicker;
 
 public class IntervalLinearTimeTicker implements LaserBlockDisplayTicker {
@@ -18,9 +19,13 @@ public class IntervalLinearTimeTicker implements LaserBlockDisplayTicker {
     private final BlockDisplay display;
     private int ageTicks = 0;
 
-    public IntervalLinearTimeTicker(BlockDisplayBuilder displayBuilder, Location source, Location target, int lifespanTicks) {
+    public IntervalLinearTimeTicker(BlockDisplayBuilder displayBuilder, Location rawSource, Location rawTarget, int lifespanTicks) {
+        // Centre the source/target vertically
+        final Location source = rawSource.clone().add(0, ConnectionPoint.SCALE/2, 0);
+        final Location target = rawTarget.clone().add(0, ConnectionPoint.SCALE/2, 0);
+
         source.getWorld().spawnParticle(Particle.REDSTONE, source, 50, new Particle.DustOptions(Color.RED, 0.1F));
-        source.getWorld().spawnParticle(Particle.END_ROD, target, 50, new Particle.DustOptions(Color.GREEN, 0.1F));
+        source.getWorld().spawnParticle(Particle.REDSTONE, target, 50, new Particle.DustOptions(Color.GREEN, 0.1F));
 
         final Vector displacement = target.clone().subtract(source).toVector();
         final Vector direction = displacement.clone().normalize();
