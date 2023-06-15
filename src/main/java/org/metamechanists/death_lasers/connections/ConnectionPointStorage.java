@@ -35,16 +35,16 @@ public class ConnectionPointStorage {
         return groupIdFromPointLocation.get(pointLocation);
     }
 
-    public static ConnectionGroup getGroupLocationFromGroupLocation(Location groupLocation) {
+    public static ConnectionGroup getGroupFromGroupLocation(Location groupLocation) {
         return groups.get(groupLocation);
     }
 
     public static ConnectionGroup getGroupFromPointLocation(Location pointLocation) {
         final Location groupLocation = groupIdFromPointLocation.get(pointLocation);
-        return getGroupLocationFromGroupLocation(groupLocation);
+        return getGroupFromGroupLocation(groupLocation);
     }
 
     public static ConnectionPoint getPointFromPointLocation(Location pointLocation) {
-        return getGroupLocationFromGroupLocation(pointLocation).getPoint(pointLocation);
+        return getGroupFromPointLocation(pointLocation).getPoint(pointLocation);
     }
 }
