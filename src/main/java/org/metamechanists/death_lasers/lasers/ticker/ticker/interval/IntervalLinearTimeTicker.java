@@ -26,8 +26,8 @@ public class IntervalLinearTimeTicker implements LaserBlockDisplayTicker {
         float verticalRotation = ScaryMathsUtils.getVerticalRotation(source, target);
         float horizontalRotation = ScaryMathsUtils.getHorizontalRotation(source, target);
 
-        source.add((SCALE/2)*Math.sin(horizontalRotation), 0, (SCALE/2)*Math.cos(horizontalRotation));
-        target.add((SCALE/2)*Math.sin(horizontalRotation), 0, (SCALE/2)*Math.cos(horizontalRotation));
+        source.add(SCALE*Math.sin(horizontalRotation), 0, SCALE*Math.cos(horizontalRotation));
+        target.add(SCALE*Math.sin(horizontalRotation), 0, SCALE*Math.cos(horizontalRotation));
 
         source.getWorld().spawnParticle(Particle.REDSTONE, source, 50, new Particle.DustOptions(Color.RED, 0.1F));
         target.getWorld().spawnParticle(Particle.REDSTONE, target, 50, new Particle.DustOptions(Color.GREEN, 0.1F));
