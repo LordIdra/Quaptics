@@ -1,6 +1,7 @@
 package org.metamechanists.death_lasers.utils;
 
 import org.bukkit.Location;
+import org.bukkit.util.Transformation;
 import org.bukkit.util.Vector;
 
 public class ScaryMathsUtils {
@@ -27,4 +28,6 @@ public class ScaryMathsUtils {
         }
         return verticalRotation;
     }
+
+    //public static Transformation
 }

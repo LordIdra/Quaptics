@@ -30,11 +30,11 @@ public class IntervalLinearTimeTicker implements LaserBlockDisplayTicker {
         this.lifespanTicks = lifespanTicks;
         this.velocity = displacement.clone().multiply(1.0/lifespanTicks);
         this.display = displayBuilder
-                .setLocation(source.clone().add(offset))
+                .setLocation(source)
                 .setDisplayHeight(0.1F)
                 .setDisplayWidth(0.1F)
                 .setTransformation(new Transformation(
-                        new Vector3f(),
+                        new Vector3f((float)offset.getX(), (float)offset.getY(), (float)offset.getZ()),
                         new AxisAngle4f(horizontalRotation, 0, 1, 0),
                         new Vector3f(SCALE, SCALE, SCALE),
                         new AxisAngle4f(verticalRotation, 1, 0, 0)))
