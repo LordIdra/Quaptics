@@ -21,8 +21,8 @@ public class IntervalLinearTimeTicker implements LaserBlockDisplayTicker {
 
     public IntervalLinearTimeTicker(BlockDisplayBuilder displayBuilder, Location rawSource, Location rawTarget, int lifespanTicks) {
         // Centre the source/target vertically
-        final Location source = rawSource.clone().add(0, ConnectionPoint.SCALE/2, 0);
-        final Location target = rawTarget.clone().add(0, ConnectionPoint.SCALE/2, 0);
+        final Location source = rawSource.clone().add(-SCALE/2, ConnectionPoint.SCALE/2 -SCALE/2, -SCALE/2);
+        final Location target = rawTarget.clone().add(-SCALE/2, ConnectionPoint.SCALE/2 -SCALE/2, -SCALE/2);
 
         source.getWorld().spawnParticle(Particle.REDSTONE, source, 50, new Particle.DustOptions(Color.RED, 0.1F));
         source.getWorld().spawnParticle(Particle.REDSTONE, target, 50, new Particle.DustOptions(Color.GREEN, 0.1F));
@@ -44,7 +44,7 @@ public class IntervalLinearTimeTicker implements LaserBlockDisplayTicker {
                 .setDisplayHeight(0.1F)
                 .setDisplayWidth(0.1F)
                 .setTransformation(new Transformation(
-                        new Vector3f(-SCALE/2, -SCALE/2, -SCALE/2),
+                        new Vector3f(),
                         new AxisAngle4f(rotationXZ, 0, 1, 0),
                         new Vector3f(SCALE, SCALE, SCALE),
                         new AxisAngle4f(rotationXY, 1.0F, 0.0F, 0.0F)))
