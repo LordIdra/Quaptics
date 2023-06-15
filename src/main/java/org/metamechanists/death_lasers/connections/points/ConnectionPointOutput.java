@@ -22,7 +22,9 @@ public class ConnectionPointOutput extends ConnectionPoint {
     }
 
     public void tick() {
-        beam.tick();
+        if (beam != null) {
+            beam.tick();
+        }
     }
 
     public boolean hasLink() {
