@@ -44,7 +44,9 @@ public class TargetingWand extends SlimefunItem {
             final Location sourcePointLocation = PersistentDataUtils.getLocation(stack, Keys.SOURCE);
             final ConnectionPoint sourcePoint = ConnectionPointStorage.getPointFromPointLocation(sourcePointLocation);
             final ConnectionPointOutput outputSourcePoint = (ConnectionPointOutput)sourcePoint;
-            outputSourcePoint.deselect();
+            if (outputSourcePoint != null) {
+                outputSourcePoint.deselect();
+            }
         }
 
         PersistentDataUtils.clear(stack, Keys.SOURCE);
@@ -68,7 +70,9 @@ public class TargetingWand extends SlimefunItem {
                 return;
             }
             final ConnectionPointOutput outputPoint = (ConnectionPointOutput) ConnectionPointStorage.getPointFromPointLocation(inputPoint.getSource());
-            outputPoint.unlink();
+            if (outputPoint != null) {
+                outputPoint.unlink();
+            }
         }
     }
 
@@ -100,7 +104,9 @@ public class TargetingWand extends SlimefunItem {
 
         final ConnectionPointOutput outputSourcePoint = (ConnectionPointOutput)sourcePoint;
 
-        outputSourcePoint.link(inputTargetPoint);
+        if (outputSourcePoint != null) {
+            outputSourcePoint.link(inputTargetPoint);
+        }
     }
 
     public void use(Player player, Location pointLocation, ItemStack stack) {

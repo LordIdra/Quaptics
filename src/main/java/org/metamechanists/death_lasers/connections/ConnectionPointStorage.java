@@ -55,6 +55,10 @@ public class ConnectionPointStorage {
     }
 
     public static ConnectionPoint getPointFromPointLocation(Location pointLocation) {
-        return getGroupFromPointLocation(pointLocation).getPoint(pointLocation);
+        ConnectionGroup group = getGroupFromPointLocation(pointLocation);
+        if (group == null) {
+            return null;
+        }
+        return group.getPoint(pointLocation);
     }
 }
