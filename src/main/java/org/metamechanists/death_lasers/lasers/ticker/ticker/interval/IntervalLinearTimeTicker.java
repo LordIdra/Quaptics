@@ -10,6 +10,7 @@ import org.bukkit.util.Vector;
 import org.joml.AxisAngle4f;
 import org.joml.Vector3f;
 
+import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
 import org.metamechanists.death_lasers.lasers.ticker.ticker.LaserBlockDisplayTicker;
 import org.metamechanists.death_lasers.utils.ScaryMathsUtils;
 
@@ -25,8 +26,8 @@ public class IntervalLinearTimeTicker implements LaserBlockDisplayTicker {
         float verticalRotation = ScaryMathsUtils.getVerticalRotation(source, target);
         float horizontalRotation = ScaryMathsUtils.getHorizontalRotation(source, target);
 
-        //source.add(SCALE*Math.cos(rotationXZ), ConnectionPoint.SCALE/2 -SCALE/2, SCALE*Math.sin(rotationXZ));
-        //target.add(SCALE*Math.cos(rotationXZ), ConnectionPoint.SCALE/2 -SCALE/2, SCALE*Math.sin(rotationXZ));
+        source.add(SCALE*Math.sin(horizontalRotation), ConnectionPoint.SCALE/2 -SCALE/2, SCALE*Math.cos(horizontalRotation));
+        target.add(SCALE*Math.sin(horizontalRotation), ConnectionPoint.SCALE/2 -SCALE/2, SCALE*Math.cos(horizontalRotation));
 
         source.getWorld().spawnParticle(Particle.REDSTONE, source, 50, new Particle.DustOptions(Color.RED, 0.1F));
         target.getWorld().spawnParticle(Particle.REDSTONE, target, 50, new Particle.DustOptions(Color.GREEN, 0.1F));
