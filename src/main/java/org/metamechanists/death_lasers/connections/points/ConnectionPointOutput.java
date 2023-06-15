@@ -34,6 +34,8 @@ public class ConnectionPointOutput extends ConnectionPoint {
         interaction.remove();
         if (target != null) {
             target.unlink();
+        }
+        if (beam != null) {
             DeprecatedBeams.add(beam);
             beam = null;
         }
