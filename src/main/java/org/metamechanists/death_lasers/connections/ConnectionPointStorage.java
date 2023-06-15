@@ -1,46 +1,51 @@
 package org.metamechanists.death_lasers.connections;
 
-import org.bukkit.Location;
-import org.metamechanists.death_lasers.connections.ConnectionPointGroup;
+import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
+import org.metamechanists.death_lasers.utils.ConnectionGroupLocation;
+import org.metamechanists.death_lasers.utils.ConnectionPointLocation;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class ConnectionPointStorage {
-    private static final Map<Location, ConnectionPointGroup> blockLocationToGroupMap = new HashMap<>();
-    private static final Map<Location, Location> connectionPointLocationToGroupMap = new HashMap<>();
+    private static final Map<ConnectionGroupLocation, ConnectionGroup> groups = new HashMap<>();
+    private static final Map<ConnectionPointLocation, ConnectionGroupLocation> pointToGroupLocation = new HashMap<>();
 
-    public static void addConnectionPointGroup(Location blockLocation, ConnectionPointGroup group) {
-        blockLocationToGroupMap.put(blockLocation, group);
-        for (Location connectionPointLocation : group.getConnectionPointLocations()) {
-            connectionPointLocationToGroupMap.put(connectionPointLocation, blockLocation);
+    public static void addConnectionPointGroup(ConnectionGroupLocation groupLocation, ConnectionGroup group) {
+        groups.put(groupLocation, group);
+        for (ConnectionPointLocation pointLocation : group.getPointLocations()) {
+            pointToGroupLocation.put(pointLocation, groupLocation);
         }
     }
 
-    public static void removeConnectionPointGroup(Location blockLocation) {
-        final ConnectionPointGroup group = blockLocationToGroupMap.remove(blockLocation);
-        for (Location connectionPointLocation : group.getConnectionPointLocations()) {
-            group.removeAllConnectionPoints();
-            connectionPointLocationToGroupMap.remove(connectionPointLocation);
+    public static void removeConnectionPointGroup(ConnectionGroupLocation groupLocation) {
+        final ConnectionGroup group = groups.remove(groupLocation);
+        for (ConnectionPointLocation pointLocation : group.getPointLocations()) {
+            group.removeAllPoints();
+            pointToGroupLocation.remove(pointLocation);
         }
     }
 
     public static void removeAllConnectionPoints() {
-        for (ConnectionPointGroup group : blockLocationToGroupMap.values()) {
-            group.removeAllConnectionPoints();
+        for (ConnectionGroup group : groups.values()) {
+            group.removeAllPoints();
         }
     }
 
-    public static Location getBlockLocationFromConnectionPointLocation(Location location) {
-        return connectionPointLocationToGroupMap.get(location);
+    public static ConnectionGroupLocation getGroupLocation(ConnectionPointLocation pointLocation) {
+        return pointToGroupLocation.get(pointLocation);
     }
 
-    public static ConnectionPointGroup getConnectionGroupFromBlockLocation(Location location) {
-        return blockLocationToGroupMap.get(location);
+    public static ConnectionGroup getGroup(ConnectionGroupLocation groupLocation) {
+        return groups.get(groupLocation);
     }
 
-    public static ConnectionPointGroup getConnectionGroupFromConnectionPointLocation(Location location) {
-        final Location blockLocation = connectionPointLocationToGroupMap.get(location);
-        return getConnectionGroupFromBlockLocation(blockLocation);
+    public static ConnectionGroup getGroup(ConnectionPointLocation pointLocation) {
+        final ConnectionGroupLocation groupLocation = pointToGroupLocation.get(pointLocation);
+        return getGroup(groupLocation);
+    }
+
+    public static ConnectionPoint getPoint(ConnectionPointLocation pointLocation) {
+        return getGroup(pointLocation).getPoint(pointLocation);
     }
 }

@@ -19,11 +19,13 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
-import org.metamechanists.death_lasers.connections.ConnectionPoint;
-import org.metamechanists.death_lasers.connections.ConnectionType;
+import org.metamechanists.death_lasers.connections.points.ConnectionPointInput;
+import org.metamechanists.death_lasers.connections.points.ConnectionPointOutput;
 import org.metamechanists.death_lasers.lasers.BeamStorage;
-import org.metamechanists.death_lasers.connections.ConnectionPointGroupBuilder;
+import org.metamechanists.death_lasers.connections.ConnectionGroupBuilder;
 import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
+import org.metamechanists.death_lasers.utils.ConnectionGroupLocation;
+import org.metamechanists.death_lasers.utils.ConnectionPointLocation;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -55,11 +57,13 @@ public abstract class LaserEmitter extends SimpleSlimefunItem<BlockTicker> imple
         return new BlockPlaceHandler(false) {
             @Override
             public void onPlayerPlace(@NotNull BlockPlaceEvent e) {
-                final Location source = e.getBlock().getLocation();
+                final ConnectionGroupLocation source = (ConnectionGroupLocation) e.getBlock().getLocation();
+                final ConnectionPointLocation inputLocation = (ConnectionPointLocation) source.clone().add(INPUT_VECTOR);
+                final ConnectionPointLocation outputLocation = (ConnectionPointLocation) source.clone().add(OUTPUT_VECTOR);
                 ConnectionPointStorage.addConnectionPointGroup(source,
-                        new ConnectionPointGroupBuilder()
-                                .addConnectionPoint(new ConnectionPoint(source.clone().add(INPUT_VECTOR), ConnectionType.INPUT))
-                                .addConnectionPoint(new ConnectionPoint(source.clone().add(OUTPUT_VECTOR), ConnectionType.OUTPUT))
+                        new ConnectionGroupBuilder()
+                                .addConnectionPoint(new ConnectionPointInput(inputLocation))
+                                .addConnectionPoint(new ConnectionPointOutput(outputLocation))
                                 .build());
             }
         };
@@ -70,7 +74,7 @@ public abstract class LaserEmitter extends SimpleSlimefunItem<BlockTicker> imple
         return new BlockBreakHandler(false, false) {
             @Override
             public void onPlayerBreak(@NotNull BlockBreakEvent e, @NotNull ItemStack item, @NotNull List<ItemStack> drops) {
-                final Location source = e.getBlock().getLocation();
+                final ConnectionGroupLocation source = (ConnectionGroupLocation) e.getBlock().getLocation();
                 ConnectionPointStorage.removeConnectionPointGroup(source);
                 if (BeamStorage.hasBeamGroup(e.getBlock().getLocation())) {
                     BeamStorage.deprecateBeamGroup(e.getBlock().getLocation());
