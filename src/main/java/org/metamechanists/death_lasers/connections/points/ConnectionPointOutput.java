@@ -28,6 +28,11 @@ public class ConnectionPointOutput extends ConnectionPoint {
         }
     }
 
+    @Override
+    public void cleanup() {
+        DeprecatedBeams.add(beam);
+    }
+
     public boolean hasLink() {
         return target != null;
     }
