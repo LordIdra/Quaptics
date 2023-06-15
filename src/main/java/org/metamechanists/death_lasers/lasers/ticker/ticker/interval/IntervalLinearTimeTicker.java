@@ -19,19 +19,19 @@ public class IntervalLinearTimeTicker implements LaserBlockDisplayTicker {
     private final BlockDisplay display;
     private int ageTicks = 0;
 
-    public IntervalLinearTimeTicker(BlockDisplayBuilder displayBuilder, Location rawSource, Location rawTarget, int lifespanTicks) {
-        // Centre the source/target vertically
-        final Location source = rawSource.clone().add(-SCALE/2, ConnectionPoint.SCALE/2 -SCALE/2, -SCALE/2);
-        final Location target = rawTarget.clone().add(-SCALE/2, ConnectionPoint.SCALE/2 -SCALE/2, -SCALE/2);
-
-        source.getWorld().spawnParticle(Particle.REDSTONE, source, 50, new Particle.DustOptions(Color.RED, 0.1F));
-        source.getWorld().spawnParticle(Particle.REDSTONE, target, 50, new Particle.DustOptions(Color.GREEN, 0.1F));
-
-        final Vector displacement = target.clone().subtract(source).toVector();
+    public IntervalLinearTimeTicker(BlockDisplayBuilder displayBuilder, Location source, Location target, int lifespanTicks) {
+        final Vector displacement = source.clone().subtract(target).toVector();
         final Vector direction = displacement.clone().normalize();
+
         final float rotationXZ = (float) Math.atan(direction.getX() / direction.getZ());
         final Vector vectorInXZPlaneAtSameRotationAsDisplacement = new Vector(0, 0, 1).rotateAroundY(rotationXZ);
         float rotationXY = vectorInXZPlaneAtSameRotationAsDisplacement.angle(displacement);
+
+        source.add(-SCALE/2*Math.cos(rotationXZ), ConnectionPoint.SCALE/2 -SCALE/2, -SCALE/2*Math.sin(rotationXZ));
+        target.add(-SCALE/2*Math.cos(rotationXZ), ConnectionPoint.SCALE/2 -SCALE/2, -SCALE/2*Math.sin(rotationXZ));
+
+        source.getWorld().spawnParticle(Particle.REDSTONE, source, 50, new Particle.DustOptions(Color.RED, 0.1F));
+        source.getWorld().spawnParticle(Particle.REDSTONE, target, 50, new Particle.DustOptions(Color.GREEN, 0.1F));
 
         if (displacement.getY() > 0) {
             rotationXY = -rotationXY;
