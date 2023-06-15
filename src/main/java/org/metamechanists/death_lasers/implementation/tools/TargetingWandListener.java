@@ -1,4 +1,4 @@
-package org.metamechanists.death_lasers.connections;
+package org.metamechanists.death_lasers.implementation.tools;
 
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
@@ -10,9 +10,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.metamechanists.death_lasers.ItemStacks;
+import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
 import org.metamechanists.death_lasers.implementation.tools.TargetingWand;
 
-public class ConnectionPointListener implements Listener {
+public class TargetingWandListener implements Listener {
 
     @EventHandler
     public void interactEvent(PlayerInteractEntityEvent event) {

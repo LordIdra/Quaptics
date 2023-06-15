@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.metamechanists.death_lasers.lasers.BeamStorage;
 import org.metamechanists.death_lasers.lasers.BeamStorageRunnable;
-import org.metamechanists.death_lasers.connections.ConnectionPointListener;
+import org.metamechanists.death_lasers.implementation.tools.TargetingWandListener;
 import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
 import org.metamechanists.death_lasers.utils.Language;
 
@@ -18,7 +18,7 @@ public final class DEATH_LASERS extends JavaPlugin implements SlimefunAddon {
 
     private void initializeListeners() {
         final PluginManager pluginManager = this.getServer().getPluginManager();
-        pluginManager.registerEvents(new ConnectionPointListener(), this);
+        pluginManager.registerEvents(new TargetingWandListener(), this);
     }
 
     public static void initializeRunnables() {

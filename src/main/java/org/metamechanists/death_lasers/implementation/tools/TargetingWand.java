@@ -93,6 +93,11 @@ public class TargetingWand extends SlimefunItem {
             return;
         }
 
+        if (inputTargetPoint.hasLink()) {
+            player.sendMessage(Language.getLanguageEntry("targeting-wand.target-already-linked"));
+            return;
+        }
+
         final ConnectionPointOutput outputSourcePoint = (ConnectionPointOutput)sourcePoint;
 
         outputSourcePoint.link(inputTargetPoint);

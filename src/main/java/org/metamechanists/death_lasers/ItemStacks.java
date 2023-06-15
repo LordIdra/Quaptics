@@ -24,7 +24,7 @@ public class ItemStacks {
             "TARGETING_WAND",
             Material.BLAZE_ROD,
             "&6Targeting Wand",
-            "&eRight Click &3a connection point to set the source",
-            "&eRight Click &3another connection point to create a link",
-            "&eShift Right Click &3a connection point to remove a link");
+            "&eRight Click &7to select a source",
+            "&eRight Click &7again to create a link",
+            "&eShift Right Click &7to remove a link");
 }
