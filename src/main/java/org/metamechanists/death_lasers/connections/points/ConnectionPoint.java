@@ -10,7 +10,7 @@ import org.bukkit.entity.Display;
 import org.bukkit.entity.Interaction;
 import org.bukkit.util.Vector;
 
-public class ConnectionPoint {
+public abstract class ConnectionPoint {
     @Getter
     protected final Location location;
     private final BlockData blockData;

@@ -6,10 +6,10 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.metamechanists.death_lasers.lasers.BeamStorage;
-import org.metamechanists.death_lasers.lasers.BeamStorageRunnable;
+import org.metamechanists.death_lasers.connections.ConnectionPointRunnable;
 import org.metamechanists.death_lasers.implementation.tools.TargetingWandListener;
 import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
+import org.metamechanists.death_lasers.lasers.DeprecatedBeams;
 import org.metamechanists.death_lasers.utils.Language;
 
 public final class DEATH_LASERS extends JavaPlugin implements SlimefunAddon {
@@ -22,7 +22,7 @@ public final class DEATH_LASERS extends JavaPlugin implements SlimefunAddon {
     }
 
     public static void initializeRunnables() {
-        new BeamStorageRunnable().runTaskTimer(instance, 0, 1);
+        new ConnectionPointRunnable().runTaskTimer(instance, 0, 1);
     }
 
     @Override
@@ -37,7 +37,7 @@ public final class DEATH_LASERS extends JavaPlugin implements SlimefunAddon {
 
     @Override
     public void onDisable() {
-        BeamStorage.hardRemoveAllBeamGroups();
+        DeprecatedBeams.killAllBeams();
         ConnectionPointStorage.removeAllConnectionPoints();
     }
 

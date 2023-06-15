@@ -12,10 +12,9 @@ public class IntervalBlockDisplayBeam extends Beam {
     private final SpawnTimer timer;
     private final Queue<LaserBlockDisplayTicker> displays = new ConcurrentLinkedQueue<>();
 
-    public IntervalBlockDisplayBeam(LaserBlockDisplayTickerFactory tickerFactory, SpawnTimer timer, boolean powered) {
+    public IntervalBlockDisplayBeam(LaserBlockDisplayTickerFactory tickerFactory, SpawnTimer timer) {
         this.tickerFactory = tickerFactory;
         this.timer = timer;
-        this.powered = powered;
     }
 
     @Override

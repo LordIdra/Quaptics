@@ -19,11 +19,10 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
-import org.metamechanists.death_lasers.connections.points.ConnectionPointInput;
-import org.metamechanists.death_lasers.connections.points.ConnectionPointOutput;
-import org.metamechanists.death_lasers.lasers.BeamStorage;
 import org.metamechanists.death_lasers.connections.ConnectionGroupBuilder;
 import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
+import org.metamechanists.death_lasers.connections.points.ConnectionPointInput;
+import org.metamechanists.death_lasers.connections.points.ConnectionPointOutput;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -44,24 +43,20 @@ public abstract class LaserEmitter extends SimpleSlimefunItem<BlockTicker> imple
         addItemHandler(onBreak(), onPlace());
     }
 
-    public abstract void updateBeamGroup(Location source, Location target);
-    protected abstract void powerOn(Location source);
-    protected void powerOff(Location source) {
-        BeamStorage.setBeamGroupPowered(source, false);
-    }
+    abstract void doTick(Block block, SlimefunItem item);
 
     @Nonnull
     private BlockPlaceHandler onPlace() {
         return new BlockPlaceHandler(false) {
             @Override
-            public void onPlayerPlace(@NotNull BlockPlaceEvent e) {
-                final Location sourceGroupLocation = e.getBlock().getLocation();
+            public void onPlayerPlace(@NotNull BlockPlaceEvent event) {
+                final Location sourceGroupLocation = event.getBlock().getLocation();
                 final Location inputPointLocation = sourceGroupLocation.clone().add(INPUT_VECTOR);
                 final Location outputPointLocation = sourceGroupLocation.clone().add(OUTPUT_VECTOR);
                 ConnectionPointStorage.addConnectionPointGroup(sourceGroupLocation,
                         new ConnectionGroupBuilder()
-                                .addConnectionPoint(new ConnectionPointInput(inputPointLocation))
-                                .addConnectionPoint(new ConnectionPointOutput(outputPointLocation))
+                                .addConnectionPoint("input", new ConnectionPointInput(inputPointLocation))
+                                .addConnectionPoint("output", new ConnectionPointOutput(outputPointLocation))
                                 .build());
             }
         };
@@ -74,9 +69,6 @@ public abstract class LaserEmitter extends SimpleSlimefunItem<BlockTicker> imple
             public void onPlayerBreak(@NotNull BlockBreakEvent e, @NotNull ItemStack item, @NotNull List<ItemStack> drops) {
                 final Location sourceGroupLocation = e.getBlock().getLocation();
                 ConnectionPointStorage.removeConnectionPointGroup(sourceGroupLocation);
-                if (BeamStorage.hasBeamGroup(e.getBlock().getLocation())) {
-                    BeamStorage.deprecateBeamGroup(e.getBlock().getLocation());
-                }
             }
         };
     }
@@ -87,21 +79,12 @@ public abstract class LaserEmitter extends SimpleSlimefunItem<BlockTicker> imple
         return new BlockTicker() {
 
             @Override
-            public void tick(Block b, SlimefunItem item, Config data) {
-                final Location source = b.getLocation();
-
-                // Check powered status
-                int charge = getCharge(b.getLocation(), data);
+            public void tick(Block block, SlimefunItem item, Config data) {
+                int charge = getCharge(block.getLocation(), data);
                 if (charge >= consumption) {
-                    removeCharge(b.getLocation(), consumption);
-                    if (BeamStorage.hasBeamGroup(source)) {
-                        powerOn(source);
-                    }
-                } else {
-                    if (BeamStorage.hasBeamGroup(source)) {
-                        powerOff(source);
-                    }
+                    removeCharge(block.getLocation(), consumption);
                 }
+                doTick(block, item);
             }
 
             @Override

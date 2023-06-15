@@ -8,9 +8,11 @@ import java.util.Set;
 
 public class ConnectionGroup {
     private final Map<Location, ConnectionPoint> points;
+    private final Map<String, Location> pointNames;
 
-    public ConnectionGroup(Map<Location, ConnectionPoint> points) {
+    public ConnectionGroup(Map<Location, ConnectionPoint> points, Map<String, Location> pointNames) {
         this.points = points;
+        this.pointNames = pointNames;
     }
 
     public void removeAllPoints() {
@@ -21,6 +23,10 @@ public class ConnectionGroup {
 
     public ConnectionPoint getPoint(Location location) {
         return points.get(location);
+    }
+
+    public ConnectionPoint getPoint(String name) {
+        return points.get(pointNames.get(name));
     }
 
     public Set<Location> getPointLocations() {

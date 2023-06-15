@@ -13,8 +13,8 @@ public class IntervalLinearTimeTickerFactory implements LaserBlockDisplayTickerF
 
     public IntervalLinearTimeTickerFactory(BlockDisplayBuilder displayBuilder, Location source, Location target, int lifespanTicks) {
         this.displayBuilder = displayBuilder;
-        this.source = source;
-        this.target = target;
+        this.source = source.clone();
+        this.target = target.clone();
         this.lifespanTicks = lifespanTicks;
     }
 

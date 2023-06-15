@@ -8,15 +8,17 @@ import java.util.Map;
 
 public class ConnectionGroupBuilder {
     private final Map<Location, ConnectionPoint> points = new HashMap<>();
+    private final Map<String, Location> pointNames = new HashMap<>();
 
     public ConnectionGroupBuilder() {}
 
-    public ConnectionGroupBuilder addConnectionPoint(ConnectionPoint point) {
+    public ConnectionGroupBuilder addConnectionPoint(String name, ConnectionPoint point) {
+        pointNames.put(name, point.getLocation());
         points.put(point.getLocation(), point);
         return this;
     }
 
     public ConnectionGroup build() {
-        return new ConnectionGroup(points);
+        return new ConnectionGroup(points, pointNames);
     }
 }

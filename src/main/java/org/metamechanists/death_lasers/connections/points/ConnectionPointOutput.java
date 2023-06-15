@@ -3,9 +3,15 @@ package org.metamechanists.death_lasers.connections.points;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Display;
+import org.metamechanists.death_lasers.lasers.DeprecatedBeams;
+import org.metamechanists.death_lasers.lasers.Lasers;
+import org.metamechanists.death_lasers.lasers.beam.Beam;
+import org.metamechanists.death_lasers.lasers.beam.IntervalBlockDisplayBeam;
+import org.metamechanists.death_lasers.lasers.ticker.factory.interval.IntervalLinearTimeTickerFactory;
 
 public class ConnectionPointOutput extends ConnectionPoint {
     private ConnectionPointInput target;
+    private Beam beam;
 
     public ConnectionPointOutput(Location location) {
         super(location,
@@ -13,6 +19,10 @@ public class ConnectionPointOutput extends ConnectionPoint {
                 new Display.Brightness(15, 15),
                 new Display.Brightness(3, 3),
                 0.2F);
+    }
+
+    public void tick() {
+        beam.tick();
     }
 
     public boolean hasLink() {
@@ -23,11 +33,21 @@ public class ConnectionPointOutput extends ConnectionPoint {
         this.target = target;
         this.target.link(this.location);
         blockDisplay.setBrightness(connectedBrightness);
+        beam = new IntervalBlockDisplayBeam(
+                new IntervalLinearTimeTickerFactory(
+                        Lasers.testDisplay(),
+                        this.location,
+                        target.location,
+                        100),
+                Lasers.testTimer());
+        beam.setPowered(true);
     }
 
     public void unlink() {
         target.unlink();
         target = null;
         blockDisplay.setBrightness(disconnectedBrightness);
+        DeprecatedBeams.add(beam);
+        beam = null;
     }
 }
