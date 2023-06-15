@@ -2,12 +2,12 @@ package org.metamechanists.death_lasers.lasers.ticker.ticker.interval;
 
 import dev.sefiraat.sefilib.entity.display.builders.BlockDisplayBuilder;
 import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.entity.BlockDisplay;
 import org.bukkit.util.Transformation;
 import org.bukkit.util.Vector;
 import org.joml.AxisAngle4f;
 import org.joml.Vector3f;
-import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
 import org.metamechanists.death_lasers.lasers.ticker.ticker.LaserBlockDisplayTicker;
 
 public class IntervalLinearTimeTicker implements LaserBlockDisplayTicker {
@@ -18,6 +18,9 @@ public class IntervalLinearTimeTicker implements LaserBlockDisplayTicker {
     private int ageTicks = 0;
 
     public IntervalLinearTimeTicker(BlockDisplayBuilder displayBuilder, Location source, Location target, int lifespanTicks) {
+        source.getWorld().spawnParticle(Particle.END_ROD, source, 1);
+        source.getWorld().spawnParticle(Particle.END_ROD, target, 1);
+
         final Vector displacement = target.clone().subtract(source).toVector();
         final Vector direction = displacement.clone().normalize();
         final float rotationXZ = (float) Math.atan(direction.getX() / direction.getZ());
