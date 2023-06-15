@@ -3,6 +3,7 @@ package org.metamechanists.death_lasers.connections.points;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Display;
+import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
 import org.metamechanists.death_lasers.lasers.DeprecatedBeams;
 import org.metamechanists.death_lasers.lasers.Lasers;
 import org.metamechanists.death_lasers.lasers.beam.Beam;
@@ -31,8 +32,10 @@ public class ConnectionPointOutput extends ConnectionPoint {
     public void remove() {
         blockDisplay.remove();
         interaction.remove();
-        if (beam != null) {
+        if (target != null) {
+            target.unlink();
             DeprecatedBeams.add(beam);
+            beam = null;
         }
     }
 

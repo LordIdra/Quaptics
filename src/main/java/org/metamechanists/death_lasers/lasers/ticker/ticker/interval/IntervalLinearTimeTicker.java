@@ -27,8 +27,8 @@ public class IntervalLinearTimeTicker implements LaserBlockDisplayTicker {
         final Vector vectorInXZPlaneAtSameRotationAsDisplacement = new Vector(0, 0, 1).rotateAroundY(rotationXZ);
         float rotationXY = vectorInXZPlaneAtSameRotationAsDisplacement.angle(displacement);
 
-        source.add(SCALE/2*Math.cos(rotationXZ), ConnectionPoint.SCALE/2 -SCALE/2, SCALE/2*Math.sin(rotationXZ));
-        target.add(SCALE/2*Math.cos(rotationXZ), ConnectionPoint.SCALE/2 -SCALE/2, SCALE/2*Math.sin(rotationXZ));
+        source.add(SCALE*Math.cos(rotationXZ), ConnectionPoint.SCALE/2 -SCALE/2, SCALE*Math.sin(rotationXZ));
+        target.add(SCALE*Math.cos(rotationXZ), ConnectionPoint.SCALE/2 -SCALE/2, SCALE*Math.sin(rotationXZ));
 
         source.getWorld().spawnParticle(Particle.REDSTONE, source, 50, new Particle.DustOptions(Color.RED, 0.1F));
         target.getWorld().spawnParticle(Particle.REDSTONE, target, 50, new Particle.DustOptions(Color.GREEN, 0.1F));
