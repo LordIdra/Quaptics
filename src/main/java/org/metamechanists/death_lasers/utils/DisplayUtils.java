@@ -38,8 +38,8 @@ public class DisplayUtils {
         //float horizontalRotation = DisplayUtils.getHorizontalRotation(from, to);
 
         float rotationX = new Vector3f((float)from.x(), 0, 0).angle(new Vector3f((float)to.x(), 0, 0));
-        float rotationY = new Vector3f(0, (float)from.y(), 0).angle(new Vector3f(0, (float)from.y(), 0));
-        float rotationZ = new Vector3f(0, 0, (float)from.z()).angle(new Vector3f(0, 0, (float)from.z()));
+        float rotationY = new Vector3f(0, (float)from.y(), 0).angle(new Vector3f(0, (float)to.y(), 0));
+        float rotationZ = new Vector3f(0, 0, (float)from.z()).angle(new Vector3f(0, 0, (float)to.z()));
 
 
         return rotationTransformation(
@@ -61,7 +61,7 @@ public class DisplayUtils {
         // - Scale the block by scale
         // - Rotate the block by rotationInDegrees
         return new Matrix4f()
-                .translate(-scale.x/2, scale.x/2, -scale.z/2)
+                .translate(0, 0, 0)
                 .scale(scale)
                 .rotateXYZ(rotationInRadians);
     }
