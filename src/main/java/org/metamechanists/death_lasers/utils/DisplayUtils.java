@@ -101,7 +101,7 @@ public class DisplayUtils {
         matrix = matrix.translate(-scale.x/2, scale.y/2, -scale.z/2);
         matrix = matrix.rotateXYZ(rotationInRadians);
         matrix = matrix.scale(scale);
-        matrix = matrix.translate(calculateHitboxAdjustmentTranslation(matrix));
+        //matrix = matrix.translate(calculateHitboxAdjustmentTranslation(matrix));
         return matrix;
     }
 
