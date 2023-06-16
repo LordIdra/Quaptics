@@ -41,10 +41,14 @@ public class LaserEmitter extends ConnectedBlock {
     @Override
     protected DisplayGroup generateDisplayGroup(Location location) {
         final DisplayGroup displayGroup = new DisplayGroup(location);
+
         displayGroup.addDisplay(
                 "main",
-                DisplayUtils.regularBlockDisplay(location, Material.GLASS, 0.7F, new Vector3f(55, 45, 0))
-        );
+                DisplayUtils.spawnBlockDisplay(location, Material.GLASS,
+                        DisplayUtils.rotationTransformation(
+                                new Vector3f(0.7F, 0.7F, 0.7F),
+                                new Vector3f(45, 45, 0))));
+
         return displayGroup;
     }
 

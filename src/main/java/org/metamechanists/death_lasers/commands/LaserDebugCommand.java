@@ -28,6 +28,8 @@ public class LaserDebugCommand extends BaseCommand {
 
         final BlockDisplay display = player.getWorld().spawn(player.getLocation(), BlockDisplay.class);
         display.setBlock(material.createBlockData());
-        display.setTransformationMatrix(DisplayUtils.createDisplayTransformationType2(scale, new Vector3f(rotationX, rotationY, rotationZ)));
+        display.setTransformationMatrix(DisplayUtils.rotationTransformation(
+                new Vector3f(scale, scale, scale),
+                new Vector3f(rotationX, rotationY, rotationZ)));
     }
 }
