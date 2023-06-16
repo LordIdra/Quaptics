@@ -58,8 +58,8 @@ public class ScaryMathsUtils {
         return new Transformation(
                 new Vector3f(),
                 //new Vector3f((float)offset.getX(), (float)offset.getY(), (float)offset.getZ()),
-                new AxisAngle4f(rotationAroundAllAxes, 1, 0, 0),
+                new AxisAngle4f(rotationAroundAllAxes, 1, 0, 1),
                 new Vector3f(scale, scale, scale),
-                new AxisAngle4f(rotationAroundAllAxes, 0, 0, 1));
+                new AxisAngle4f(0, 0, 0, 1));
     }
 }
