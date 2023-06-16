@@ -57,7 +57,7 @@ public class ScaryMathsUtils {
         final Vector offset = new Vector(offsetOnAllAxes, offsetOnAllAxes, offsetOnAllAxes);
         return new Transformation(
                 new Vector3f((float)offset.getX(), (float)offset.getY(), (float)offset.getZ()),
-                new AxisAngle4f(rotationAroundAllAxes, 0, 1, 0),
+                new AxisAngle4f(rotationAroundAllAxes, 1, 0, 0),
                 new Vector3f(scale, scale, scale),
                 new AxisAngle4f(rotationAroundAllAxes, 0, 0, 1));
     }
