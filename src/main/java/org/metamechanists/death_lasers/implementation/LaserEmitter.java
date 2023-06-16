@@ -44,10 +44,12 @@ public class LaserEmitter extends ConnectedBlock {
 
         displayGroup.addDisplay(
                 "main",
-                DisplayUtils.spawnBlockDisplay(location, Material.GLASS,
+                DisplayUtils.spawnBlockDisplay(
+                        location.clone().add(0.5, 0.5, 0.5),
+                        Material.GLASS,
                         DisplayUtils.rotationTransformation(
                                 new Vector3f(0.7F, 0.7F, 0.7F),
-                                new Vector3f(45, 45, 0))));
+                                new Vector3f((float)(Math.PI/4), (float)(Math.PI/4), 0))));
 
         return displayGroup;
     }

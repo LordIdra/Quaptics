@@ -8,12 +8,6 @@ import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
 public class DisplayUtils {
-    private static Vector3f degreesToRadians(Vector3f rotationInDegrees) {
-        return new Vector3f(
-                (float)Math.toRadians(rotationInDegrees.x),
-                (float)Math.toRadians(rotationInDegrees.y),
-                (float)Math.toRadians(rotationInDegrees.z));
-    }
     public static Vector getDisplacement(Location from, Location to) {
         return to.clone().subtract(from).toVector();
     }
@@ -62,13 +56,12 @@ public class DisplayUtils {
         //        new AxisAngle4f(verticalRotation, 1, 0, 0));
     }
 
-    public static Matrix4f rotationTransformation(Vector3f scale, Vector3f rotationInDegrees) {
+    public static Matrix4f rotationTransformation(Vector3f scale, Vector3f rotationInRadians) {
         // - Translate the block so that the center is where its location is set to
         // - Scale the block by scale
         // - Rotate the block by rotationInDegrees
-        final Vector3f rotationInRadians = degreesToRadians(rotationInDegrees);
         return new Matrix4f()
-                .translate(-scale.x/2, -scale.y/2, -scale.z/2)
+                .translate(-scale.x/2, scale.x/2, -scale.z/2)
                 .scale(scale)
                 .rotateXYZ(rotationInRadians);
     }
