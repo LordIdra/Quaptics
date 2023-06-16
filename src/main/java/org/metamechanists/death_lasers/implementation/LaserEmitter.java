@@ -1,7 +1,6 @@
 package org.metamechanists.death_lasers.implementation;
 
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
-import dev.sefiraat.sefilib.entity.display.builders.ItemDisplayBuilder;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
@@ -12,10 +11,11 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
+import org.joml.Vector3f;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointInput;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointOutput;
-import org.metamechanists.death_lasers.utils.ScaryMathsUtils;
+import org.metamechanists.death_lasers.utils.DisplayUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -40,15 +40,10 @@ public class LaserEmitter extends ConnectedBlock {
 
     @Override
     protected DisplayGroup generateDisplayGroup(Location location) {
-        DisplayGroup displayGroup = new DisplayGroup(location);
+        final DisplayGroup displayGroup = new DisplayGroup(location);
         displayGroup.addDisplay(
                 "main",
-                new ItemDisplayBuilder()
-                        .setGroupParentOffset(new Vector(0.5, 0.5, 0.5))
-                        .setItemStack(new ItemStack(Material.GLASS))
-                        .setTransformation(ScaryMathsUtils.createDisplayTransformationType2(
-                                location, 0.5F))
-                        .build(displayGroup)
+                DisplayUtils.regularBlockDisplay(location, Material.GLASS, 0.2F, new Vector3f(45, 45, 0))
         );
         return displayGroup;
     }

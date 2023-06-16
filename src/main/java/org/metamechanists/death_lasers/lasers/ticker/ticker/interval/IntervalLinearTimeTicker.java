@@ -5,7 +5,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.BlockDisplay;
 import org.bukkit.util.Vector;
 import org.metamechanists.death_lasers.lasers.ticker.ticker.LaserBlockDisplayTicker;
-import org.metamechanists.death_lasers.utils.ScaryMathsUtils;
+import org.metamechanists.death_lasers.utils.DisplayUtils;
 
 public class IntervalLinearTimeTicker implements LaserBlockDisplayTicker {
     private static final float SCALE = 0.1F;
@@ -16,12 +16,12 @@ public class IntervalLinearTimeTicker implements LaserBlockDisplayTicker {
 
     public IntervalLinearTimeTicker(BlockDisplayBuilder displayBuilder, Location source, Location target, int lifespanTicks) {
         this.lifespanTicks = lifespanTicks;
-        this.velocity = ScaryMathsUtils.getDisplacement(source, target).multiply(1.0/lifespanTicks);
+        this.velocity = DisplayUtils.getDisplacement(source, target).multiply(1.0/lifespanTicks);
         this.display = displayBuilder
                 .setLocation(source)
                 .setDisplayHeight(0.1F)
                 .setDisplayWidth(0.1F)
-                .setTransformation(ScaryMathsUtils.createDisplayTransformationType1(source, target, SCALE))
+                .setTransformation(DisplayUtils.displayTransformationFacing(source, target, SCALE))
                 .build();
     }
 
