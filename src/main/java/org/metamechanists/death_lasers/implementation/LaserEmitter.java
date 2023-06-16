@@ -43,7 +43,7 @@ public class LaserEmitter extends ConnectedBlock {
         final DisplayGroup displayGroup = new DisplayGroup(location);
         displayGroup.addDisplay(
                 "main",
-                DisplayUtils.regularBlockDisplay(location, Material.GLASS, 0.7F, new Vector3f(45, 45, 0))
+                DisplayUtils.regularBlockDisplay(location, Material.GLASS, 0.7F, new Vector3f(45, 45, 90))
         );
         return displayGroup;
     }

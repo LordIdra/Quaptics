@@ -63,9 +63,7 @@ public class DisplayUtils {
     public static Matrix4f createDisplayTransformationType2(float scale, Vector3f rotationInDegrees) {
         // Orient the block as a regular diamond
         final Vector3f rotationInRadians = degreesToRadians(rotationInDegrees);
-        return new Matrix4f()
-                .scale(scale)
-                .rotateXYZ(rotationInRadians);
+        return new Matrix4f().scale(scale).rotateXYZ(rotationInRadians);
     }
 
     public static BlockDisplay regularBlockDisplay(Location location, Material material, float size, Vector3f rotation) {
