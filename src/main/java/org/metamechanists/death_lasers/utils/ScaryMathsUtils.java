@@ -52,7 +52,7 @@ public class ScaryMathsUtils {
 
     public static Transformation createDisplayTransformationType2(Location source, float scale) {
         // Orient the block as a regular diamond
-        final float rotationAroundAllAxes = (float)Math.PI/4;
+        final float rotationAroundAllAxes = (float)Math.PI/2;
         final float offsetOnAllAxes = -(scale/2) * (float)Math.cos(rotationAroundAllAxes);
         final Vector offset = new Vector(offsetOnAllAxes, offsetOnAllAxes, offsetOnAllAxes);
         return new Transformation(
