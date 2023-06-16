@@ -99,7 +99,7 @@ public class DisplayUtils {
         // - Scale the block by scale
         // - Rotate the block by rotationInDegrees
         Matrix4f matrix = new Matrix4f();
-        matrix = matrix.translate(-0.5F, -0.5F, -0.5F);
+        //matrix = matrix.translate(-0.5F, -0.5F, -0.5F);
         matrix = matrix.rotateXYZ(rotationInRadians);
         matrix = matrix.scale(scale);
         //matrix = matrix.translate(calculateHitboxAdjustmentTranslation(matrix));
