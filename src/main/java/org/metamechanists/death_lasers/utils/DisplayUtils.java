@@ -66,7 +66,7 @@ public class DisplayUtils {
             if (vector.z > max.z) { max.z = vector.z; }
         });
 
-        max.sub(min);
+        final Vector3f hitbox = max.sub(min);
         return max.div(-2);
     }
 
