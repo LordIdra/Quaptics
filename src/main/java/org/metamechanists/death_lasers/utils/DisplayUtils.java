@@ -67,7 +67,7 @@ public class DisplayUtils {
         });
 
         final Vector3f hitbox = max.sub(min);
-        return hitbox.sub(1, 1, 1).div(-2);
+        return hitbox.sub(1, 1, 1).div(2);
     }
 
     public static Matrix4f faceTargetTransformation(Location from, Location to, float scale) {
@@ -101,7 +101,7 @@ public class DisplayUtils {
         matrix = matrix.translate(-scale.x/2, scale.y/2, -scale.z/2);
         matrix = matrix.rotateXYZ(rotationInRadians);
         matrix = matrix.scale(scale);
-        //matrix = matrix.translate(calculateHitboxAdjustmentTranslation(matrix));
+        matrix = matrix.translate(calculateHitboxAdjustmentTranslation(matrix));
         return matrix;
     }
 
