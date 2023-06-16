@@ -51,7 +51,7 @@ public class DisplayUtils {
         // When we rotate a block, the hitbox in X, Y, and Z changes
         // We need to account for this change to center the block
         final List<Vector3f> transformedVertices = new ArrayList<>();
-        BLOCK_VERTICES.forEach(vertex -> transformedVertices.add(vertex.mulTransposeDirection(matrix)));
+        BLOCK_VERTICES.forEach(vertex -> transformedVertices.add(vertex.mulDirection(matrix)));
 
         final Vector3f min = new Vector3f();
         final Vector3f max = new Vector3f();
