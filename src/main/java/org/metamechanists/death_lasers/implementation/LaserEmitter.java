@@ -1,19 +1,26 @@
 package org.metamechanists.death_lasers.implementation;
 
+import dev.sefiraat.sefilib.entity.display.DisplayGroup;
+import dev.sefiraat.sefilib.entity.display.builders.ItemDisplayBuilder;
+import dev.sefiraat.sefilib.misc.TransformationBuilder;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNetComponentType;
 import lombok.Getter;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
-import org.metamechanists.death_lasers.connections.ConnectionGroup;
-import org.metamechanists.death_lasers.connections.ConnectionGroupBuilder;
+import org.jetbrains.annotations.NotNull;
+import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointInput;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointOutput;
 
-public class LaserEmitter extends DisplayGroupTickerBlock {
+import java.util.HashMap;
+import java.util.Map;
+
+public class LaserEmitter extends ConnectedBlock {
     @Getter
     private final EnergyNetComponentType energyComponentType = EnergyNetComponentType.CONSUMER;
     private static final Vector INPUT_VECTOR = new Vector(0.5F, 1.0F, 0.1F);
@@ -24,15 +31,31 @@ public class LaserEmitter extends DisplayGroupTickerBlock {
     }
 
     @Override
-    protected ConnectionGroup createConnectionGroup(Location location) {
-        final Location inputPointLocation = location.clone().add(INPUT_VECTOR);
-        final Location outputPointLocation = location.clone().add(OUTPUT_VECTOR);
-        return new ConnectionGroupBuilder()
-                .addConnectionPoint("input", new ConnectionPointInput(inputPointLocation))
-                .addConnectionPoint("output", new ConnectionPointOutput(outputPointLocation))
-                .build();
+    protected Map<String, ConnectionPoint> generateConnectionPoints(Location location) {
+        final Map<String, ConnectionPoint> points = new HashMap<>();
+        points.put("input", new ConnectionPointInput(location.clone().add(INPUT_VECTOR)));
+        points.put("output", new ConnectionPointOutput(location.clone().add(OUTPUT_VECTOR)));
+        return points;
     }
 
     @Override
-    protected void doTick() {}
+    protected DisplayGroup generateDisplayGroup(Location location) {
+        DisplayGroup displayGroup = new DisplayGroup(location);
+        displayGroup.addDisplay(
+                "main",
+                new ItemDisplayBuilder()
+                        .setGroupParentOffset(new Vector(0.1, 0.9, 0.15))
+                        .setItemStack(new ItemStack(Material.GLASS))
+                        .setTransformation(new TransformationBuilder()
+                                .scale(0.1F, 0.5F, 0.1F)
+                                .build())
+                        .build(displayGroup)
+        );
+        return displayGroup;
+    }
+
+    @Override
+    protected @NotNull Material getBaseMaterial() {
+        return Material.BARRIER;
+    }
 }

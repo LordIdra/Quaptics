@@ -3,16 +3,19 @@ package org.metamechanists.death_lasers.connections;
 import org.bukkit.Location;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
 public class ConnectionGroup {
-    private final Map<Location, ConnectionPoint> points;
-    private final Map<String, Location> pointNames;
+    private final Map<Location, ConnectionPoint> points = new HashMap<>();
+    private final Map<String, Location> pointLocations = new HashMap<>();
 
-    public ConnectionGroup(Map<Location, ConnectionPoint> points, Map<String, Location> pointNames) {
-        this.points = points;
-        this.pointNames = pointNames;
+    public ConnectionGroup(Map<String, ConnectionPoint> inputPoints) {
+        inputPoints.forEach((name, point) -> {
+            points.put(point.getLocation(), point);
+            pointLocations.put(name, point.getLocation());
+        });
     }
 
     public void tick() {
@@ -27,9 +30,9 @@ public class ConnectionGroup {
         }
     }
 
-    public void killAllPoints() {
+    public void killAllBeams() {
         for (ConnectionPoint point : points.values()) {
-            point.kill();
+            point.killBeam();
         }
     }
 
@@ -38,7 +41,7 @@ public class ConnectionGroup {
     }
 
     public ConnectionPoint getPoint(String name) {
-        return points.get(pointNames.get(name));
+        return points.get(pointLocations.get(name));
     }
 
     public Set<Location> getPointLocations() {

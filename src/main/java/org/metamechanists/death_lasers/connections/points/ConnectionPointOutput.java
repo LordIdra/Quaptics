@@ -41,9 +41,7 @@ public class ConnectionPointOutput extends ConnectionPoint {
     }
 
     @Override
-    public void kill() {
-        blockDisplay.remove();
-        interaction.remove();
+    public void killBeam() {
         if (beam != null) {
             beam.remove();
         }

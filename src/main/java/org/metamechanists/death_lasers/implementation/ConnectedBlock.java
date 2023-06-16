@@ -4,25 +4,23 @@ import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
-import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
-import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNetComponentType;
 import lombok.Getter;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
-import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.NotNull;
+import org.metamechanists.death_lasers.connections.ConnectionGroup;
 import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
-import javax.annotation.OverridingMethodsMustInvokeSuper;
-import java.util.List;
+import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
 
-public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
+import java.util.Map;
+
+public abstract class ConnectedBlock extends EnergyDisplayGroupBlock {
     @Getter
-    private final EnergyNetComponentType energyComponentType = EnergyNetComponentType.CONSUMER;
+    private static final EnergyNetComponentType energyComponentType = EnergyNetComponentType.CONSUMER;
     @Getter
     private final int capacity;
     private final int consumption;
@@ -33,44 +31,26 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
         this.capacity = capacity;
     }
 
-    @Override
-    @OverridingMethodsMustInvokeSuper
-    public void preRegister() {
-        addItemHandler(
-                new BlockBreakHandler(false, false) {
-                    @Override
-                    public void onPlayerBreak(@NotNull BlockBreakEvent e, @NotNull ItemStack item, @NotNull List<ItemStack> drops) {
-                        final Location sourceGroupLocation = e.getBlock().getLocation();
-                        ConnectionPointStorage.removeConnectionPointGroup(sourceGroupLocation);
-                    }
-                },
+    protected abstract Map<String, ConnectionPoint> generateConnectionPoints(Location location);
 
-                new BlockPlaceHandler(false) {
-                    @Override
-                    public void onPlayerPlace(@NotNull BlockPlaceEvent event) {
-                        Location location = event.getBlock().getLocation();
-                        ConnectionPointStorage.addConnectionPointGroup(location, createConnectionGroup(location));
-                    }
-                });
+    @Override
+    protected void onPlace(BlockPlaceEvent event) {
+        final Location location = event.getBlock().getLocation();
+        final Map<String, ConnectionPoint> points = generateConnectionPoints(location);
+        ConnectionPointStorage.addConnectionPointGroup(location, new ConnectionGroup(points));
     }
 
-    @NotNull
     @Override
-    public BlockTicker getItemHandler() {
-        return new BlockTicker() {
+    protected void onBreak(BlockBreakEvent event) {
+        final Location location = event.getBlock().getLocation();
+        ConnectionPointStorage.removeConnectionPointGroup(location);
+    }
 
-            @Override
-            public void tick(Block block, SlimefunItem item, Config data) {
-                int charge = getCharge(block.getLocation(), data);
-                if (charge >= consumption) {
-                    removeCharge(block.getLocation(), consumption);
-                }
-            }
-
-            @Override
-            public boolean isSynchronized() {
-                return true;
-            }
-        };
+    @Override
+    public void onTick(Block block, SlimefunItem item, Config data) {
+        final int charge = getCharge(block.getLocation(), data);
+        if (charge >= consumption) {
+            removeCharge(block.getLocation(), consumption);
+        }
     }
 }

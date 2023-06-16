@@ -3,10 +3,11 @@ package org.metamechanists.death_lasers.connections;
 import org.bukkit.Location;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ConnectionPointStorage {
+public class ConnectionPointStorage implements Serializable {
     private static final Map<Location, ConnectionGroup> groups = new HashMap<>();
     private static final Map<Location, Location> groupIdFromPointLocation = new HashMap<>();
 
@@ -31,9 +32,9 @@ public class ConnectionPointStorage {
         }
     }
 
-    public static void killAllConnectionPoints() {
+    public static void killAllBeams() {
         for (ConnectionGroup group : groups.values()) {
-            group.killAllPoints();
+            group.killAllBeams();
         }
     }
 
@@ -61,4 +62,6 @@ public class ConnectionPointStorage {
         }
         return group.getPoint(pointLocation);
     }
+
+
 }
