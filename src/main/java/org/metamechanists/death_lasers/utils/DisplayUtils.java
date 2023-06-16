@@ -65,9 +65,7 @@ public class DisplayUtils {
         final Vector3f rotationInRadians = degreesToRadians(rotationInDegrees);
         return new Matrix4f()
                 .scale(scale)
-                .rotate(rotationInDegrees.x, new Vector3f(1, 0, 0))
-                .rotate(rotationInDegrees.y, new Vector3f(0, 1, 0))
-                .rotate(rotationInDegrees.z, new Vector3f(0, 0, 1));
+                .rotateXYZ(rotationInRadians);
     }
 
     public static BlockDisplay regularBlockDisplay(Location location, Material material, float size, Vector3f rotation) {
