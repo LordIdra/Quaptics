@@ -66,8 +66,8 @@ public class DisplayUtils {
             if (vector.z > max.z) { max.z = vector.z; }
         });
 
-        final Vector3f hitbox = max.sub(min);
-        return hitbox.div(-2);
+        max.sub(min);
+        return max.div(-2);
     }
 
     public static Matrix4f faceTargetTransformation(Location from, Location to, float scale) {
