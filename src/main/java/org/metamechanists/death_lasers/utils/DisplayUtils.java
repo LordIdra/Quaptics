@@ -13,14 +13,14 @@ import java.util.List;
 public class DisplayUtils {
     private static final List<Vector3f> BLOCK_VERTICES = new ArrayList<>();
     static {{
+        BLOCK_VERTICES.add(new Vector3f(0, 0, 0));
+        BLOCK_VERTICES.add(new Vector3f(0, 0, 1));
+        BLOCK_VERTICES.add(new Vector3f(0, 1, 0));
+        BLOCK_VERTICES.add(new Vector3f(0, 1, 1));
+        BLOCK_VERTICES.add(new Vector3f(1, 0, 0));
+        BLOCK_VERTICES.add(new Vector3f(1, 0, 1));
+        BLOCK_VERTICES.add(new Vector3f(1, 1, 0));
         BLOCK_VERTICES.add(new Vector3f(1, 1, 1));
-        BLOCK_VERTICES.add(new Vector3f(-1, 1, 1));
-        BLOCK_VERTICES.add(new Vector3f(1, -1, 1));
-        BLOCK_VERTICES.add(new Vector3f(-1, -1, 1));
-        BLOCK_VERTICES.add(new Vector3f(1, 1, -1));
-        BLOCK_VERTICES.add(new Vector3f(-1, 1, -1));
-        BLOCK_VERTICES.add(new Vector3f(1, -1, -1));
-        BLOCK_VERTICES.add(new Vector3f(-1, -1, -1));
     }}
 
     public static Vector getDisplacement(Location from, Location to) {
