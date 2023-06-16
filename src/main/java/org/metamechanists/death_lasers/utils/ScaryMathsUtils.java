@@ -3,6 +3,8 @@ package org.metamechanists.death_lasers.utils;
 import org.bukkit.Location;
 import org.bukkit.util.Transformation;
 import org.bukkit.util.Vector;
+import org.joml.AxisAngle4f;
+import org.joml.Vector3f;
 
 public class ScaryMathsUtils {
     public static Vector getDisplacement(Location from, Location to) {
@@ -29,5 +31,17 @@ public class ScaryMathsUtils {
         return verticalRotation;
     }
 
-    //public static Transformation
+    public static Transformation createDisplayTransformation(Location source, Location target, float scale) {
+        float verticalRotation = ScaryMathsUtils.getVerticalRotation(source, target);
+        float horizontalRotation = ScaryMathsUtils.getHorizontalRotation(source, target);
+        final Vector offset = new Vector(-scale/2, -scale/2, -scale/2)
+                .rotateAroundY(horizontalRotation)
+                .rotateAroundAxis(new Vector(Math.cos(horizontalRotation), 0, -Math.sin(horizontalRotation)), verticalRotation)
+                .add(new Vector(0, scale, 0));
+        return new Transformation(
+                new Vector3f((float)offset.getX(), (float)offset.getY(), (float)offset.getZ()),
+                new AxisAngle4f(horizontalRotation, 0, 1, 0),
+                new Vector3f(scale, scale, scale),
+                new AxisAngle4f(verticalRotation, 1, 0, 0));
+    }
 }
