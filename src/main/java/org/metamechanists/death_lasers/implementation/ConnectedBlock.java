@@ -20,7 +20,7 @@ import java.util.Map;
 
 public abstract class ConnectedBlock extends EnergyDisplayGroupBlock {
     @Getter
-    private static final EnergyNetComponentType energyComponentType = EnergyNetComponentType.CONSUMER;
+    private final EnergyNetComponentType energyComponentType = EnergyNetComponentType.CONSUMER;
     @Getter
     private final int capacity;
     private final int consumption;
