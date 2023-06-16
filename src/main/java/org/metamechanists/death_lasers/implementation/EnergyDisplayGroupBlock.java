@@ -22,9 +22,11 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
+import java.util.UUID;
 
 import static dev.sefiraat.sefilib.slimefun.blocks.DisplayGroupBlock.KEY_UUID;
 
@@ -74,8 +76,8 @@ public abstract class EnergyDisplayGroupBlock extends SimpleSlimefunItem<BlockTi
                 new BlockPlaceHandler(false) {
                     @Override
                     public void onPlayerPlace(@Nonnull BlockPlaceEvent event) {
-                        Location location = event.getBlock().getLocation();
-                        DisplayGroup displayGroup = generateDisplayGroup(location.clone());
+                        final Location location = event.getBlock().getLocation();
+                        final DisplayGroup displayGroup = generateDisplayGroup(location.clone());
                         setUUID(displayGroup, location);
                         event.getBlock().setType(getBaseMaterial());
                         onPlace(event);
@@ -86,8 +88,8 @@ public abstract class EnergyDisplayGroupBlock extends SimpleSlimefunItem<BlockTi
                     @Override
                     @ParametersAreNonnullByDefault
                     public void onPlayerBreak(BlockBreakEvent event, ItemStack item, List<ItemStack> drops) {
-                        Location location = event.getBlock().getLocation();
-                        DisplayGroup displayGroup = generateDisplayGroup(location.clone());
+                        final Location location = event.getBlock().getLocation();
+                        final DisplayGroup displayGroup = getDisplayGroup(location.clone());
                         if (displayGroup == null) {
                             return;
                         }
@@ -101,5 +103,25 @@ public abstract class EnergyDisplayGroupBlock extends SimpleSlimefunItem<BlockTi
 
     private void setUUID(@Nonnull DisplayGroup displayGroup, @Nonnull Location location) {
         BlockStorage.addBlockInfo(location, KEY_UUID, displayGroup.getParentUUID().toString());
+    }
+
+    @Nullable
+    @OverridingMethodsMustInvokeSuper
+    public UUID getUUID(@Nonnull Location location) {
+        final String uuid = BlockStorage.getLocationInfo(location, KEY_UUID);
+        if (uuid == null) {
+            return null;
+        }
+        return UUID.fromString(uuid);
+    }
+
+    @Nullable
+    @OverridingMethodsMustInvokeSuper
+    public DisplayGroup getDisplayGroup(@Nonnull Location location) {
+        final UUID uuid = getUUID(location);
+        if (uuid == null) {
+            return null;
+        }
+        return DisplayGroup.fromUUID(uuid);
     }
 }

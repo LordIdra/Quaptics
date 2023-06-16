@@ -44,4 +44,8 @@ public class ScaryMathsUtils {
                 new Vector3f(scale, scale, scale),
                 new AxisAngle4f(verticalRotation, 1, 0, 0));
     }
+
+    public static Transformation createDisplayTransformation(Location source, Vector direction, float scale) {
+        return createDisplayTransformation(source, source.clone().add(direction), scale);
+    }
 }
