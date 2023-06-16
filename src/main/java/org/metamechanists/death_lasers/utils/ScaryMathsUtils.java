@@ -31,7 +31,8 @@ public class ScaryMathsUtils {
         return verticalRotation;
     }
 
-    public static Transformation createDisplayTransformation(Location source, Location target, float scale) {
+    public static Transformation createDisplayTransformationType1(Location source, Location target, float scale) {
+        // Locate the Display entity (with size scale) at the source, with one of the faces facing the target
         float verticalRotation = ScaryMathsUtils.getVerticalRotation(source, target);
         float horizontalRotation = ScaryMathsUtils.getHorizontalRotation(source, target);
         final Vector offset = new Vector(-scale/2, -scale/2, -scale/2)
@@ -45,7 +46,19 @@ public class ScaryMathsUtils {
                 new AxisAngle4f(verticalRotation, 1, 0, 0));
     }
 
-    public static Transformation createDisplayTransformation(Location source, Vector direction, float scale) {
-        return createDisplayTransformation(source, source.clone().add(direction), scale);
+    public static Transformation createDisplayTransformationType1(Location source, Vector direction, float scale) {
+        return createDisplayTransformationType1(source, source.clone().add(direction), scale);
+    }
+
+    public static Transformation createDisplayTransformationType2(Location source, float scale) {
+        // Orient the block as a regular diamond
+        final float rotationAroundAllAxes = (float)Math.PI/2;
+        final float offsetOnAllAxes = -(scale/2) * (float)Math.cos(rotationAroundAllAxes);
+        final Vector offset = new Vector(offsetOnAllAxes, offsetOnAllAxes, offsetOnAllAxes);
+        return new Transformation(
+                new Vector3f((float)offset.getX(), (float)offset.getY(), (float)offset.getZ()),
+                new AxisAngle4f(rotationAroundAllAxes, 0, 1, 0),
+                new Vector3f(scale, scale, scale),
+                new AxisAngle4f(rotationAroundAllAxes, 0, 0, 1));
     }
 }

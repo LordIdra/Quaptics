@@ -21,7 +21,7 @@ public class IntervalLinearTimeTicker implements LaserBlockDisplayTicker {
                 .setLocation(source)
                 .setDisplayHeight(0.1F)
                 .setDisplayWidth(0.1F)
-                .setTransformation(ScaryMathsUtils.createDisplayTransformation(source, target, SCALE))
+                .setTransformation(ScaryMathsUtils.createDisplayTransformationType1(source, target, SCALE))
                 .build();
     }
 

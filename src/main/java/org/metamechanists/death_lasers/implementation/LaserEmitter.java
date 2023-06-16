@@ -44,10 +44,10 @@ public class LaserEmitter extends ConnectedBlock {
         displayGroup.addDisplay(
                 "main",
                 new ItemDisplayBuilder()
-                        .setGroupParentOffset(new Vector(0.25, 0.25, 0.25))
+                        .setGroupParentOffset(new Vector(0.5, 0.5, 0.5))
                         .setItemStack(new ItemStack(Material.GLASS))
-                        .setTransformation(ScaryMathsUtils.createDisplayTransformation(
-                                location, new Vector(1, 1, 0), 0.5F))
+                        .setTransformation(ScaryMathsUtils.createDisplayTransformationType2(
+                                location, 0.5F))
                         .build(displayGroup)
         );
         return displayGroup;
