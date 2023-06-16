@@ -16,7 +16,7 @@ import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointInput;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointOutput;
-import org.metamechanists.death_lasers.implementation.emitters.LaserEmitter;
+import org.metamechanists.death_lasers.implementation.LaserEmitter;
 import org.metamechanists.death_lasers.utils.Language;
 import org.metamechanists.death_lasers.utils.PersistentDataUtils;
 
