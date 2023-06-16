@@ -32,4 +32,7 @@ public class LaserEmitter extends DisplayGroupTickerBlock {
                 .addConnectionPoint("output", new ConnectionPointOutput(outputPointLocation))
                 .build();
     }
+
+    @Override
+    protected void doTick() {}
 }
