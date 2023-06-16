@@ -7,7 +7,22 @@ import org.bukkit.util.Vector;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DisplayUtils {
+    private static final List<Vector3f> BLOCK_VERTICES = new ArrayList<>();
+    static {{
+        BLOCK_VERTICES.add(new Vector3f(1, 1, 1));
+        BLOCK_VERTICES.add(new Vector3f(-1, 1, 1));
+        BLOCK_VERTICES.add(new Vector3f(1, -1, 1));
+        BLOCK_VERTICES.add(new Vector3f(-1, -1, 1));
+        BLOCK_VERTICES.add(new Vector3f(1, 1, -1));
+        BLOCK_VERTICES.add(new Vector3f(-1, 1, -1));
+        BLOCK_VERTICES.add(new Vector3f(1, -1, -1));
+        BLOCK_VERTICES.add(new Vector3f(-1, -1, -1));
+    }}
+
     public static Vector getDisplacement(Location from, Location to) {
         return to.clone().subtract(from).toVector();
     }
@@ -32,15 +47,37 @@ public class DisplayUtils {
         return verticalRotation;
     }
 
+    private static Vector3f calculateHitboxAdjustmentTranslation(Matrix4f matrix, Vector3f scale) {
+        // When we rotate a block, the hitbox in X, Y, and Z changes
+        // We need to account for this change to center the block
+        final List<Vector3f> transformedVertices = new ArrayList<>();
+        BLOCK_VERTICES.forEach(vertex -> transformedVertices.add(vertex.mulTransposeDirection(matrix)));
+
+        final Vector3f min = new Vector3f();
+        final Vector3f max = new Vector3f();
+
+        transformedVertices.forEach(vector -> {
+            if (vector.x < min.x) { min.x = vector.x; }
+            if (vector.y < min.y) { min.y = vector.y; }
+            if (vector.z < min.z) { min.z = vector.z; }
+
+            if (vector.x > max.x) { max.x = vector.x;}
+            if (vector.y > max.y) { max.y = vector.y; }
+            if (vector.z > max.z) { max.z = vector.z; }
+        });
+
+        final Vector3f hitbox = max.sub(min);
+        return hitbox.sub(1, 1, 1).div(-2).mul(scale);
+    }
+
     public static Matrix4f faceTargetTransformation(Location from, Location to, float scale) {
         // Rotate the display entity so that one of the blockfaces face 'to'
         //float verticalRotation = DisplayUtils.getVerticalRotation(from, to);
         //float horizontalRotation = DisplayUtils.getHorizontalRotation(from, to);
 
-        float rotationX = new Vector3f((float)from.x(), 0, 0).angle(new Vector3f((float)to.x(), 0, 0));
-        float rotationY = new Vector3f(0, (float)from.y(), 0).angle(new Vector3f(0, (float)to.y(), 0));
-        float rotationZ = new Vector3f(0, 0, (float)from.z()).angle(new Vector3f(0, 0, (float)to.z()));
-
+        float rotationX = new Vector3f(0, (float)from.y(), (float)from.z()).angle(new Vector3f(0, (float)to.y(), (float)to.z()));
+        float rotationY = new Vector3f((float)from.x(), 0, (float)from.z()).angle(new Vector3f((float)to.x(), 0, (float)to.z()));
+        float rotationZ = new Vector3f((float)from.x(), (float)from.y(), 0).angle(new Vector3f((float)to.x(), (float)to.y(), 0));
 
         return rotationTransformation(
                 new Vector3f(scale, scale, scale),
@@ -60,10 +97,12 @@ public class DisplayUtils {
         // - Translate the block so that the center is where its location is set to
         // - Scale the block by scale
         // - Rotate the block by rotationInDegrees
-        return new Matrix4f()
-                .translate(0, 0, 0)
-                .scale(scale)
-                .rotateXYZ(rotationInRadians);
+        Matrix4f matrix = new Matrix4f();
+        matrix = matrix.translate(-scale.x/2, scale.y/2, -scale.z/2);
+        matrix = matrix.translate(calculateHitboxAdjustmentTranslation(matrix, scale));
+        matrix = matrix.scale(scale);
+        matrix = matrix.rotateXYZ(rotationInRadians);
+        return matrix;
     }
 
     public static BlockDisplay spawnBlockDisplay(Location location, Material material, Matrix4f transformation) {
