@@ -56,7 +56,8 @@ public class ScaryMathsUtils {
         final float offsetOnAllAxes = -(scale/2) * (float)Math.cos(rotationAroundAllAxes);
         final Vector offset = new Vector(offsetOnAllAxes, offsetOnAllAxes, offsetOnAllAxes);
         return new Transformation(
-                new Vector3f((float)offset.getX(), (float)offset.getY(), (float)offset.getZ()),
+                new Vector3f(),
+                //new Vector3f((float)offset.getX(), (float)offset.getY(), (float)offset.getZ()),
                 new AxisAngle4f(rotationAroundAllAxes, 1, 0, 0),
                 new Vector3f(scale, scale, scale),
                 new AxisAngle4f(rotationAroundAllAxes, 0, 0, 1));
