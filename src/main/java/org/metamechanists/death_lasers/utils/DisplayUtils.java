@@ -35,13 +35,13 @@ public class DisplayUtils {
 
     private static float getHorizontalRotation(Location from, Location to) {
         final Vector direction = getDirection(from, to);
-        return (float) Math.atan2(direction.getZ(), direction.getX());
+        return (float) Math.atan2(direction.getX(), direction.getZ());
     }
 
     private static float getVerticalRotation(Location from, Location to) {
         final Vector displacement = getDisplacement(from, to);
         final float horizontalRotation = getHorizontalRotation(from, to);
-        final Vector directionVectorInOnlyHorizontalPlane = new Vector(1, 0, 0).rotateAroundY(horizontalRotation);
+        final Vector directionVectorInOnlyHorizontalPlane = new Vector(0, 0, 1).rotateAroundY(horizontalRotation);
         float verticalRotation = directionVectorInOnlyHorizontalPlane.angle(displacement);
         //if (displacement.getY()/displacement.getX() > 0) { verticalRotation *= -1; }
         return verticalRotation;
