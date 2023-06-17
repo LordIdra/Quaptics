@@ -35,7 +35,7 @@ public class DisplayUtils {
 
     private static float getHorizontalRotation(Location from, Location to) {
         final Vector direction = getDirection(from, to);
-        return (float) Math.atan2(direction.getX(), direction.getZ());
+        return (float) Math.atan2(direction.getZ(), direction.getX());
     }
 
     private static float getVerticalRotation(Location from, Location to) {
