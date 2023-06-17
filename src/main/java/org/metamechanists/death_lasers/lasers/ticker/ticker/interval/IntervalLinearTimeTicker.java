@@ -10,7 +10,7 @@ import org.metamechanists.death_lasers.utils.DisplayUtils;
 
 public class IntervalLinearTimeTicker implements LaserBlockDisplayTicker {
     // Not quite 1 to prevent Z-fighting with connection points
-    private static final Vector3f SCALE = new Vector3f(0.095F, 0.095F, 0.2F);
+    private static final Vector3f SCALE = new Vector3f(0.095F, 0.095F, 0.095F);
     private final int lifespanTicks;
     private final Vector velocity;
     private final BlockDisplay display;
