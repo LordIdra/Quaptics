@@ -87,7 +87,7 @@ public class DisplayUtils {
         float rotationXY =   (float) Math.atan2(direction.getX(), direction.getY());
         float rotationZY = - (float) Math.atan2(direction.getY(), direction.getZ()); // fine
 
-        if (rotationXZ < 0) { rotationXZ *= -1; }
+        //if (rotationXZ < 0) { rotationXZ *= -1; }
 
         return rotationTransformation(
                 new Vector3f(scale, scale, scale),
