@@ -2,7 +2,9 @@ package org.metamechanists.death_lasers.utils;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.BlockDisplay;
+import org.bukkit.entity.Interaction;
 import org.bukkit.util.Transformation;
 import org.bukkit.util.Vector;
 import org.joml.AxisAngle4f;
@@ -63,6 +65,10 @@ public class DisplayUtils {
                 new AxisAngle4f(verticalRotation, 1, 0, 0));
     }
 
+    public static Matrix4f simpleScaleTransformation(Vector3f scale) {
+        return new Matrix4f().translate(scale.x, scale.y, scale.z).scale(scale);
+    }
+
     private static Vector3f calculateHitboxAdjustmentTranslation(Vector3f scale, Vector3f rotationInRadians) {
         // When we rotate a block, the hitbox in X, Y, and Z changes
         // We need to account for this change to center the block
@@ -104,6 +110,8 @@ public class DisplayUtils {
         final BlockDisplay display = location.getWorld().spawn(location, BlockDisplay.class);
         display.setBlock(material.createBlockData());
         display.setTransformationMatrix(transformation);
+        display.setDisplayWidth(0);
+        display.setDisplayHeight(0);
         return display;
     }
 
@@ -111,6 +119,24 @@ public class DisplayUtils {
         final BlockDisplay display = location.getWorld().spawn(location, BlockDisplay.class);
         display.setBlock(material.createBlockData());
         display.setTransformation(transformation);
+        display.setDisplayWidth(0);
+        display.setDisplayHeight(0);
         return display;
+    }
+
+    public static BlockDisplay spawnBlockDisplay(Location location, BlockData blockData, Matrix4f transformation) {
+        final BlockDisplay display = location.getWorld().spawn(location, BlockDisplay.class);
+        display.setBlock(blockData);
+        display.setTransformationMatrix(transformation);
+        display.setDisplayWidth(0);
+        display.setDisplayHeight(0);
+        return display;
+    }
+
+    public static Interaction spawnInteraction(Location location, float width, float height) {
+        final Interaction interaction = location.getWorld().spawn(location, Interaction.class);
+        interaction.setInteractionWidth(width);
+        interaction.setInteractionHeight(height);
+        return interaction;
     }
 }

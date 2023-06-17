@@ -1,6 +1,5 @@
 package org.metamechanists.death_lasers.connections.points;
 
-import dev.sefiraat.sefilib.misc.TransformationBuilder;
 import lombok.Getter;
 import org.bukkit.Color;
 import org.bukkit.Location;
@@ -8,13 +7,12 @@ import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Display;
 import org.bukkit.entity.Interaction;
-import org.bukkit.util.Vector;
+import org.joml.Vector3f;
+import org.metamechanists.death_lasers.utils.DisplayUtils;
 
 public abstract class ConnectionPoint {
-    public static final float SCALE = 0.2F;
     @Getter
     protected final Location location;
-    private final BlockData blockData;
     @Getter
     protected final Display.Brightness connectedBrightness;
     @Getter
@@ -24,27 +22,11 @@ public abstract class ConnectionPoint {
 
     ConnectionPoint(Location location, BlockData blockData, Display.Brightness connectedBrightness, Display.Brightness disconnectedBrightness) {
         this.location = location;
-        this.blockData = blockData;
         this.connectedBrightness = connectedBrightness;
         this.disconnectedBrightness = disconnectedBrightness;
-        this.blockDisplay = buildBlockDisplay(location);
-        this.interaction = buildInteraction(location);
-    }
-
-    private BlockDisplay buildBlockDisplay(Location location) {
-        final Location locationAdjustedForBukkitWeirdness = location.clone().add(new Vector(-SCALE /2, -SCALE /2, -SCALE /2));
-        final BlockDisplay display = location.getWorld().spawn(locationAdjustedForBukkitWeirdness, BlockDisplay.class);
-        display.setBlock(blockData);
-        display.setBrightness(disconnectedBrightness);
-        display.setTransformation(new TransformationBuilder().scale(SCALE, SCALE, SCALE).build());
-        return display;
-    }
-
-    private Interaction buildInteraction(Location location) {
-        final Interaction interaction = location.getWorld().spawn(location, Interaction.class);
-        interaction.setInteractionWidth(SCALE);
-        interaction.setInteractionHeight(SCALE);
-        return interaction;
+        this.blockDisplay = DisplayUtils.spawnBlockDisplay(location, blockData, DisplayUtils.simpleScaleTransformation(new Vector3f(0.2F, 0.2F, 0.2F)));
+        this.interaction = DisplayUtils.spawnInteraction(location, 0.2F, 0.2F);
+        this.blockDisplay.setBrightness(disconnectedBrightness);
     }
 
     public abstract void tick();
