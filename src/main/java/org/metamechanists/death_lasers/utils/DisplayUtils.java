@@ -68,7 +68,7 @@ public class DisplayUtils {
         final float angle = initial.angle(direction);
 
         return new Matrix4f()
-                .translate(scale.div(2))
+                .translate(new Vector3f(scale).div(2))
                 .scale(scale)
                 .rotate(angle, axis);
     }
@@ -133,7 +133,7 @@ public class DisplayUtils {
     }
 
     public static Interaction spawnInteraction(Location location, float width, float height) {
-        final Interaction interaction = location.getWorld().spawn(location, Interaction.class);
+        final Interaction interaction = location.getWorld().spawn(location.clone().add(0, height/2, 0), Interaction.class);
         interaction.setInteractionWidth(width);
         interaction.setInteractionHeight(height);
         return interaction;
