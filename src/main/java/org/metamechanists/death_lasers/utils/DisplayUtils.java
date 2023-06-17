@@ -43,7 +43,7 @@ public class DisplayUtils {
         final float horizontalRotation = getHorizontalRotation(from, to);
         final Vector directionVectorInOnlyHorizontalPlane = new Vector(0, 0, 1).rotateAroundY(horizontalRotation);
         float verticalRotation = directionVectorInOnlyHorizontalPlane.angle(displacement);
-        if (displacement.getY() > 0) { verticalRotation = -verticalRotation; }
+        if (displacement.getY() > 0) { verticalRotation *= -1; }
         return verticalRotation;
     }
 
@@ -68,9 +68,7 @@ public class DisplayUtils {
         // We need to account for this change to center the block
         final List<Vector3f> transformedVertices = new ArrayList<>();
 
-        Matrix4f matrix = new Matrix4f();
-        matrix = matrix.rotateXYZ(rotationInRadians);
-        matrix = matrix.scale(scale);
+        final Matrix4f matrix = new Matrix4f().rotateXYZ(rotationInRadians).scale(scale);
 
         for (Vector3f vertex : BLOCK_VERTICES) {
             transformedVertices.add(new Vector3f(vertex).mulDirection(matrix));
@@ -89,20 +87,17 @@ public class DisplayUtils {
             if (vector.z > max.z) { max.z = vector.z; }
         });
 
-        max.add(min);
-        max.div(-2);
-        return max;
+        return max.add(min).div(-2);
     }
 
     public static Matrix4f rotationTransformation(Vector3f scale, Vector3f rotationInRadians) {
         // - Translate the block so that the center is where its location is set to
         // - Scale the block by scale
         // - Rotate the block by rotationInDegrees
-        Matrix4f matrix = new Matrix4f();
-        matrix = matrix.translate(calculateHitboxAdjustmentTranslation(scale, rotationInRadians));
-        matrix = matrix.rotateXYZ(rotationInRadians);
-        matrix = matrix.scale(scale);
-        return matrix;
+        return new Matrix4f()
+                .translate(calculateHitboxAdjustmentTranslation(scale, rotationInRadians))
+                .rotateXYZ(rotationInRadians)
+                .scale(scale);
     }
 
     public static BlockDisplay spawnBlockDisplay(Location location, Material material, Matrix4f transformation) {
