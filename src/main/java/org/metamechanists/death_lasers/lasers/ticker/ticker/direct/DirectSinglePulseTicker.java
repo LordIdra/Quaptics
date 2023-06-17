@@ -15,7 +15,7 @@ public class DirectSinglePulseTicker implements LaserBlockDisplayTicker {
     public DirectSinglePulseTicker(Material material, Location source, Location target) {
         final Location midpoint = source.clone().add(target).multiply(0.5);
         this.display = DisplayUtils.spawnBlockDisplay(source, material,
-                DisplayUtils.faceTargetTransformation(midpoint, target, new Vector3f(SCALE, SCALE, SCALE)));
+                DisplayUtils.faceTargetTransformation(midpoint, target, new Vector3f(SCALE, SCALE, (float) (source.distance(target)/2))));
     }
 
     @Override
