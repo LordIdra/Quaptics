@@ -21,14 +21,15 @@ public abstract class ConnectionPoint {
     protected final Display.Brightness disconnectedBrightness;
     protected BlockDisplay blockDisplay;
     protected Interaction interaction;
+    private final static float SCALE = 0.1F;
 
     ConnectionPoint(String name, Location location, Material material, Display.Brightness connectedBrightness, Display.Brightness disconnectedBrightness) {
         this.name = name;
         this.location = location;
         this.connectedBrightness = connectedBrightness;
         this.disconnectedBrightness = disconnectedBrightness;
-        this.blockDisplay = DisplayUtils.spawnBlockDisplay(location, material, DisplayUtils.simpleScaleTransformation(new Vector3f(0.2F, 0.2F, 0.2F)));
-        this.interaction = DisplayUtils.spawnInteraction(location, 0.2F, 0.2F);
+        this.blockDisplay = DisplayUtils.spawnBlockDisplay(location, material, DisplayUtils.simpleScaleTransformation(new Vector3f(SCALE, SCALE, SCALE)));
+        this.interaction = DisplayUtils.spawnInteraction(location, SCALE, SCALE);
         this.blockDisplay.setBrightness(disconnectedBrightness);
     }
 

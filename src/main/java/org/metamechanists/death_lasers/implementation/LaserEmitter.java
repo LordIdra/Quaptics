@@ -26,7 +26,7 @@ public class LaserEmitter extends ConnectedBlock {
     private final EnergyNetComponentType energyComponentType = EnergyNetComponentType.CONSUMER;
     private static final Vector INPUT_VECTOR = new Vector(0.5F, 0.5F, 0.0F);
     private static final Vector OUTPUT_VECTOR = new Vector(0.5F, 0.5F, 1.0F);
-    private static final float SCALE = 0.1F;
+    private static final float SCALE = 0.3F;
 
     public LaserEmitter(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, int capacity, int consumption) {
         super(group, item, recipeType, recipe, capacity, consumption);
