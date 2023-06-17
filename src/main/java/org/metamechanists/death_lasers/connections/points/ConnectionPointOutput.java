@@ -15,7 +15,7 @@ public class ConnectionPointOutput extends ConnectionPoint {
 
     public ConnectionPointOutput(Location location) {
         super(location,
-                Material.LIME_STAINED_GLASS.createBlockData(),
+                Material.LIME_STAINED_GLASS,
                 new Display.Brightness(15, 15),
                 new Display.Brightness(3, 3));
     }

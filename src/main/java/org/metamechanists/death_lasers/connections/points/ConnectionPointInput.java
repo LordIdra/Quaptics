@@ -12,7 +12,7 @@ public class ConnectionPointInput extends ConnectionPoint {
 
     public ConnectionPointInput(Location location) {
         super(location,
-                Material.RED_STAINED_GLASS.createBlockData(),
+                Material.RED_STAINED_GLASS,
                 new Display.Brightness(15, 15),
                 new Display.Brightness(3, 3));
     }

@@ -2,7 +2,6 @@ package org.metamechanists.death_lasers.utils;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Interaction;
 import org.bukkit.util.Transformation;
@@ -66,7 +65,7 @@ public class DisplayUtils {
     }
 
     public static Matrix4f simpleScaleTransformation(Vector3f scale) {
-        return new Matrix4f().translate(scale.x, scale.y, scale.z).scale(scale);
+        return new Matrix4f().translate(-scale.x/2, -scale.y/2, scale.z/2).scale(scale);
     }
 
     private static Vector3f calculateHitboxAdjustmentTranslation(Vector3f scale, Vector3f rotationInRadians) {
@@ -119,15 +118,6 @@ public class DisplayUtils {
         final BlockDisplay display = location.getWorld().spawn(location, BlockDisplay.class);
         display.setBlock(material.createBlockData());
         display.setTransformation(transformation);
-        display.setDisplayWidth(0);
-        display.setDisplayHeight(0);
-        return display;
-    }
-
-    public static BlockDisplay spawnBlockDisplay(Location location, BlockData blockData, Matrix4f transformation) {
-        final BlockDisplay display = location.getWorld().spawn(location, BlockDisplay.class);
-        display.setBlock(blockData);
-        display.setTransformationMatrix(transformation);
         display.setDisplayWidth(0);
         display.setDisplayHeight(0);
         return display;

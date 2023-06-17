@@ -3,7 +3,7 @@ package org.metamechanists.death_lasers.connections.points;
 import lombok.Getter;
 import org.bukkit.Color;
 import org.bukkit.Location;
-import org.bukkit.block.data.BlockData;
+import org.bukkit.Material;
 import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Display;
 import org.bukkit.entity.Interaction;
@@ -20,11 +20,11 @@ public abstract class ConnectionPoint {
     protected final BlockDisplay blockDisplay;
     protected final Interaction interaction;
 
-    ConnectionPoint(Location location, BlockData blockData, Display.Brightness connectedBrightness, Display.Brightness disconnectedBrightness) {
+    ConnectionPoint(Location location, Material material, Display.Brightness connectedBrightness, Display.Brightness disconnectedBrightness) {
         this.location = location;
         this.connectedBrightness = connectedBrightness;
         this.disconnectedBrightness = disconnectedBrightness;
-        this.blockDisplay = DisplayUtils.spawnBlockDisplay(location, blockData, DisplayUtils.simpleScaleTransformation(new Vector3f(0.2F, 0.2F, 0.2F)));
+        this.blockDisplay = DisplayUtils.spawnBlockDisplay(location, material, DisplayUtils.simpleScaleTransformation(new Vector3f(0.2F, 0.2F, 0.2F)));
         this.interaction = DisplayUtils.spawnInteraction(location, 0.2F, 0.2F);
         this.blockDisplay.setBrightness(disconnectedBrightness);
     }
