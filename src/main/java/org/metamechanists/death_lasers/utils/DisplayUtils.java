@@ -133,7 +133,7 @@ public class DisplayUtils {
     }
 
     public static Interaction spawnInteraction(Location location, float width, float height) {
-        final Interaction interaction = location.getWorld().spawn(location.clone().add(0, height/2, 0), Interaction.class);
+        final Interaction interaction = location.getWorld().spawn(location.clone().add(), Interaction.class);
         interaction.setInteractionWidth(width);
         interaction.setInteractionHeight(height);
         return interaction;

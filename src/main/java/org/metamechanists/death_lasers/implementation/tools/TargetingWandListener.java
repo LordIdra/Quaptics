@@ -11,7 +11,7 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.metamechanists.death_lasers.ItemStacks;
 import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
-import org.metamechanists.death_lasers.implementation.tools.TargetingWand;
+import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
 
 public class TargetingWandListener implements Listener {
 
@@ -29,7 +29,7 @@ public class TargetingWandListener implements Listener {
         }
 
         if (SlimefunUtils.isItemSimilar(heldItem, ItemStacks.TARGETING_WAND, true)) {
-            final Location connectionPointLocation = clickedEntity.getLocation();
+            final Location connectionPointLocation = clickedEntity.getLocation().clone().add(ConnectionPoint.INTERACTION_OFFSET);
             if (SlimefunItem.getByItem(heldItem) instanceof TargetingWand wand) {
                 wand.use(event.getPlayer(), clickedEntity.getLocation(), heldItem);
             }

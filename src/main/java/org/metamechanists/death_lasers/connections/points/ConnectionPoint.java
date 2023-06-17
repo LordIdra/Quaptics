@@ -7,6 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Display;
 import org.bukkit.entity.Interaction;
+import org.bukkit.util.Vector;
 import org.joml.Vector3f;
 import org.metamechanists.death_lasers.utils.DisplayUtils;
 
@@ -22,6 +23,7 @@ public abstract class ConnectionPoint {
     protected BlockDisplay blockDisplay;
     protected Interaction interaction;
     private final static float SCALE = 0.1F;
+    public static Vector INTERACTION_OFFSET = new Vector(0, -SCALE/2, 0);
 
     ConnectionPoint(String name, Location location, Material material, Display.Brightness connectedBrightness, Display.Brightness disconnectedBrightness) {
         this.name = name;
@@ -29,7 +31,7 @@ public abstract class ConnectionPoint {
         this.connectedBrightness = connectedBrightness;
         this.disconnectedBrightness = disconnectedBrightness;
         this.blockDisplay = DisplayUtils.spawnBlockDisplay(location, material, DisplayUtils.simpleScaleTransformation(new Vector3f(SCALE, SCALE, SCALE)));
-        this.interaction = DisplayUtils.spawnInteraction(location, SCALE, SCALE);
+        this.interaction = DisplayUtils.spawnInteraction(location.clone().add(INTERACTION_OFFSET), SCALE, SCALE);
         this.blockDisplay.setBrightness(disconnectedBrightness);
     }
 
