@@ -65,7 +65,7 @@ public class DisplayUtils {
     }
 
     public static Matrix4f simpleScaleTransformation(Vector3f scale) {
-        return new Matrix4f().scale(scale).translate(-scale.x/2, -scale.y/2, scale.z/2);
+        return new Matrix4f().translate(-scale.x/2, 0, -scale.z/2).scale(scale);
     }
 
     private static Vector3f calculateHitboxAdjustmentTranslation(Vector3f scale, Vector3f rotationInRadians) {

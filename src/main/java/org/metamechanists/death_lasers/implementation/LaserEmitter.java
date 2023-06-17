@@ -11,9 +11,11 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
+import org.joml.Vector3f;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointInput;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointOutput;
+import org.metamechanists.death_lasers.utils.DisplayUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,16 +40,17 @@ public class LaserEmitter extends ConnectedBlock {
 
     @Override
     protected DisplayGroup generateDisplayGroup(Location location) {
-        final DisplayGroup displayGroup = new DisplayGroup(location);
+        // Height/width are zero to prevent the large interaction entity from obstructing the player
+        final DisplayGroup displayGroup = new DisplayGroup(location, 0, 0);
 
-        //displayGroup.addDisplay(
-        //        "main",
-        //        DisplayUtils.spawnBlockDisplay(
-        //                location.clone().add(0.5, 0.5, 0.5),
-        //                Material.GLASS,
-        //                DisplayUtils.rotationTransformation(
-        //                        new Vector3f(0.3F, 0.3F, 0.3F),
-        //                        new Vector3f((float)(Math.PI/4), (float)(Math.PI/4), 0))));
+        displayGroup.addDisplay(
+                "main",
+                DisplayUtils.spawnBlockDisplay(
+                        location.clone().add(0.5, 0.5, 0.5),
+                        Material.GLASS,
+                        DisplayUtils.rotationTransformation(
+                                new Vector3f(0.3F, 0.3F, 0.3F),
+                                new Vector3f((float)(Math.PI/4), (float)(Math.PI/4), 0))));
 
         return displayGroup;
     }
