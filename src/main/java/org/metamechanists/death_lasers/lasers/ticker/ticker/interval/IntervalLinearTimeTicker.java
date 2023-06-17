@@ -19,7 +19,7 @@ public class IntervalLinearTimeTicker implements LaserBlockDisplayTicker {
     public IntervalLinearTimeTicker(Material material, Location source, Location target, int lifespanTicks) {
         this.lifespanTicks = lifespanTicks;
         this.velocity = DisplayUtils.getDisplacement(source, target).multiply(1.0/lifespanTicks);
-        this.display = DisplayUtils.spawnBlockDisplay(source, material, DisplayUtils.faceTargetTransformation(source, target, SCALE));
+        this.display = DisplayUtils.spawnBlockDisplay(source.clone().subtract(velocity), material, DisplayUtils.faceTargetTransformation(source, target, SCALE));
     }
 
     @Override
@@ -35,7 +35,7 @@ public class IntervalLinearTimeTicker implements LaserBlockDisplayTicker {
 
     @Override
     public boolean expired() {
-        return ageTicks >= lifespanTicks;
+        return ageTicks > lifespanTicks;
     }
 }
 
