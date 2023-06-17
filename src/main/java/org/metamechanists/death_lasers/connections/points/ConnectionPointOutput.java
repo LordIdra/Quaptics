@@ -60,7 +60,7 @@ public class ConnectionPointOutput extends ConnectionPoint {
         blockDisplay.setBrightness(connectedBrightness);
         beam = new IntervalBlockDisplayBeam(
                 new IntervalLinearTimeTickerFactory(
-                        Lasers.testDisplay(),
+                        Material.WHITE_CONCRETE,
                         this.location,
                         target.location,
                         100),

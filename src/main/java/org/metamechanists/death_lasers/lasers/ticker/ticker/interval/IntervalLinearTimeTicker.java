@@ -1,6 +1,5 @@
 package org.metamechanists.death_lasers.lasers.ticker.ticker.interval;
 
-import dev.sefiraat.sefilib.entity.display.builders.BlockDisplayBuilder;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.BlockDisplay;
@@ -15,16 +14,11 @@ public class IntervalLinearTimeTicker implements LaserBlockDisplayTicker {
     private final BlockDisplay display;
     private int ageTicks = 0;
 
-    public IntervalLinearTimeTicker(BlockDisplayBuilder displayBuilder, Location source, Location target, int lifespanTicks) {
+    public IntervalLinearTimeTicker(Material material, Location source, Location target, int lifespanTicks) {
         this.lifespanTicks = lifespanTicks;
         this.velocity = DisplayUtils.getDisplacement(source, target).multiply(1.0/lifespanTicks);
-        this.display = DisplayUtils.spawnBlockDisplay(source, Material.GLASS, DisplayUtils.faceTargetTransformation(source, target, SCALE));
+        this.display = DisplayUtils.spawnBlockDisplay(source, material, DisplayUtils.faceTargetTransformation(source, target, SCALE));
         //this.display = displayBuilder
-        //        .setLocation(source)
-        //        .setDisplayHeight(0.1F)
-        //        .setDisplayWidth(0.1F)
-        //        .setTransformation(DisplayUtils.faceTargetTransformation(source, target, SCALE))
-        //        .build();
     }
 
     @Override

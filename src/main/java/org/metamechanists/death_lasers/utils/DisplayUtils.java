@@ -43,19 +43,35 @@ public class DisplayUtils {
         final float horizontalRotation = getHorizontalRotation(from, to);
         final Vector directionVectorInOnlyHorizontalPlane = new Vector(0, 0, 1).rotateAroundY(horizontalRotation);
         float verticalRotation = directionVectorInOnlyHorizontalPlane.angle(displacement);
-        if (displacement.getY() > 0) {
-            verticalRotation = -verticalRotation;
-        }
+        if (displacement.getY() > 0) { verticalRotation = -verticalRotation; }
         return verticalRotation;
+    }
+
+    public static Transformation faceTargetTransformation(Location from, Location to, float scale) {
+        // Rotate the display entity so that one of the blockfaces face 'to'
+        final float verticalRotation = DisplayUtils.getVerticalRotation(from, to);
+        final float horizontalRotation = DisplayUtils.getHorizontalRotation(from, to);
+
+        final Vector3f offset = new Vector3f(-scale/2, -scale/2, -scale/2)
+                .rotateY(horizontalRotation)
+                .rotateAxis(verticalRotation, (float)Math.cos(horizontalRotation), 0, -(float)Math.sin(horizontalRotation))
+                .add(0, scale, 0);
+        return new Transformation(
+                offset,
+                new AxisAngle4f(horizontalRotation, 0, 1, 0),
+                new Vector3f(scale, scale, scale),
+                new AxisAngle4f(verticalRotation, 1, 0, 0));
     }
 
     private static Vector3f calculateHitboxAdjustmentTranslation(Vector3f scale, Vector3f rotationInRadians) {
         // When we rotate a block, the hitbox in X, Y, and Z changes
         // We need to account for this change to center the block
         final List<Vector3f> transformedVertices = new ArrayList<>();
+
         Matrix4f matrix = new Matrix4f();
         matrix = matrix.rotateXYZ(rotationInRadians);
         matrix = matrix.scale(scale);
+
         for (Vector3f vertex : BLOCK_VERTICES) {
             transformedVertices.add(new Vector3f(vertex).mulDirection(matrix));
         }
@@ -76,33 +92,6 @@ public class DisplayUtils {
         max.add(min);
         max.div(-2);
         return max;
-    }
-
-    public static Transformation faceTargetTransformation(Location from, Location to, float scale) {
-        // Rotate the display entity so that one of the blockfaces face 'to'
-        float verticalRotation = DisplayUtils.getVerticalRotation(from, to);
-        float horizontalRotation = DisplayUtils.getHorizontalRotation(from, to);
-
-        //final Vector direction = getDirection(from, to);
-
-        //float rotationXZ = - (float) Math.atan2(direction.getZ(), direction.getX()); // fine
-        //float rotationXY = - (float) Math.atan2(direction.getY(), direction.getX());
-        //float rotationZY = - (float) Math.atan2(direction.getY(), direction.getZ()); // fine
-
-        //if (direction.getZ() < 0) { rotationXZ *= -1; }
-
-        //return rotationTransformation(
-        //        new Vector3f(scale, scale, scale),
-        //        new Vector3f(rotationZY, rotationXZ, rotationXY));
-        final Vector offset = new Vector(-scale/2, -scale/2, -scale/2)
-                .rotateAroundY(horizontalRotation)
-                .rotateAroundAxis(new Vector(Math.cos(horizontalRotation), 0, -Math.sin(horizontalRotation)), verticalRotation)
-                .add(new Vector(0, scale, 0));
-        return new Transformation(
-                new Vector3f((float)offset.getX(), (float)offset.getY(), (float)offset.getZ()),
-                new AxisAngle4f(horizontalRotation, 0, 1, 0),
-                new Vector3f(scale, scale, scale),
-                new AxisAngle4f(verticalRotation, 1, 0, 0));
     }
 
     public static Matrix4f rotationTransformation(Vector3f scale, Vector3f rotationInRadians) {
