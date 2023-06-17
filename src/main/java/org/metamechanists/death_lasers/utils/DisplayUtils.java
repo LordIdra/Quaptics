@@ -41,7 +41,7 @@ public class DisplayUtils {
     private static float getVerticalRotation(Location from, Location to) {
         final Vector displacement = getDisplacement(from, to);
         final float horizontalRotation = getHorizontalRotation(from, to);
-        final Vector directionVectorInOnlyHorizontalPlane = new Vector(0, 0, 1).rotateAroundY(horizontalRotation);
+        final Vector directionVectorInOnlyHorizontalPlane = new Vector(1, 0, 0).rotateAroundY(horizontalRotation);
         float verticalRotation = directionVectorInOnlyHorizontalPlane.angle(displacement);
         //if (displacement.getY() > 0) { verticalRotation *= -1; }
         return verticalRotation;
@@ -61,9 +61,6 @@ public class DisplayUtils {
         //        scale,
         //        new AxisAngle4f(verticalRotation, 1, 0, 0));
 
-        final Vector3f initial = new Vector3f(1, 0, 0);
-        final Vector3f direction = getDirection(from, to).toVector3f();
-
         final float verticalRotation = DisplayUtils.getVerticalRotation(from, to);
         final float horizontalRotation = DisplayUtils.getHorizontalRotation(from, to);
 
@@ -72,7 +69,7 @@ public class DisplayUtils {
 
         return new Matrix4f()
                 .rotateY(horizontalRotation)
-                .rotate(verticalRotation, (float)Math.sin(horizontalRotation), 0, -(float)Math.cos(horizontalRotation))
+                .rotate(verticalRotation, (float)Math.sin(horizontalRotation), 0, (float)Math.cos(horizontalRotation))
                 .translate(new Vector3f(scale).div(-2))
                 .scale(scale);
 
