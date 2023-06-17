@@ -50,7 +50,9 @@ public class ConnectionGroup {
 
     public void updateLocation(Location oldLocation, Location newLocation) {
         final ConnectionPoint point = points.get(oldLocation);
+        points.remove(oldLocation);
         points.put(newLocation, point);
         pointLocations.replace(point.getName(), newLocation);
+        point.updateLocation(newLocation);
     }
 }
