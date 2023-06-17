@@ -84,8 +84,8 @@ public class DisplayUtils {
         final Vector direction = getDirection(from, to);
 
         float rotationXZ = - (float) Math.atan2(direction.getZ(), direction.getX());
-        float rotationXY =   (float) Math.atan2(direction.getX(), direction.getY());
-        float rotationZY = - (float) Math.atan2(direction.getY(), direction.getZ()); // fine
+        float rotationXY = - (float) Math.atan2(direction.getX(), direction.getY());
+        float rotationZY = - (float) Math.atan2(direction.getY(), direction.getZ());
 
         if (direction.getZ() < 0) { rotationXZ *= -1; }
 
