@@ -23,8 +23,8 @@ import java.util.Map;
 public class LaserEmitter extends ConnectedBlock {
     @Getter
     private final EnergyNetComponentType energyComponentType = EnergyNetComponentType.CONSUMER;
-    private static final Vector INPUT_VECTOR = new Vector(0.4F, 0.4F, 0.1F);
-    private static final Vector OUTPUT_VECTOR = new Vector(0.4F, 0.4F, 0.9F);
+    private static final Vector INPUT_VECTOR = new Vector(0.5F, 0.5F, 0.1F);
+    private static final Vector OUTPUT_VECTOR = new Vector(0.5F, 0.5F, 0.9F);
 
     public LaserEmitter(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, int capacity, int consumption) {
         super(group, item, recipeType, recipe, capacity, consumption);
@@ -56,6 +56,6 @@ public class LaserEmitter extends ConnectedBlock {
 
     @Override
     protected @NotNull Material getBaseMaterial() {
-        return Material.BARRIER;
+        return Material.STRUCTURE_VOID;
     }
 }

@@ -32,7 +32,7 @@ public abstract class ConnectionPoint {
     }
 
     private BlockDisplay buildBlockDisplay(Location location) {
-        final Location locationAdjustedForBukkitWeirdness = location.clone().add(new Vector(-SCALE /2, 0, -SCALE /2));
+        final Location locationAdjustedForBukkitWeirdness = location.clone().add(new Vector(-SCALE /2, -SCALE /2, -SCALE /2));
         final BlockDisplay display = location.getWorld().spawn(locationAdjustedForBukkitWeirdness, BlockDisplay.class);
         display.setBlock(blockData);
         display.setBrightness(disconnectedBrightness);
