@@ -55,8 +55,7 @@ public class DisplayUtils {
 
         final Vector3f offset = new Vector3f(-scale/2, -scale/2, -scale/2)
                 .rotateY(horizontalRotation)
-                .rotateAxis(verticalRotation, (float)Math.cos(horizontalRotation), 0, -(float)Math.sin(horizontalRotation))
-                .add(0, scale, 0);
+                .rotateAxis(verticalRotation, (float)Math.cos(horizontalRotation), 0, -(float)Math.sin(horizontalRotation));
         return new Transformation(
                 offset,
                 new AxisAngle4f(horizontalRotation, 0, 1, 0),
@@ -65,7 +64,7 @@ public class DisplayUtils {
     }
 
     public static Matrix4f simpleScaleTransformation(Vector3f scale) {
-        return new Matrix4f().translate(-scale.x/2, 0, -scale.z/2).scale(scale);
+        return new Matrix4f().translate(-scale.x/2, -scale.y/2, -scale.z/2).scale(scale);
     }
 
     private static Vector3f calculateHitboxAdjustmentTranslation(Vector3f scale, Vector3f rotationInRadians) {

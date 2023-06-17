@@ -18,7 +18,6 @@ public class IntervalLinearTimeTicker implements LaserBlockDisplayTicker {
         this.lifespanTicks = lifespanTicks;
         this.velocity = DisplayUtils.getDisplacement(source, target).multiply(1.0/lifespanTicks);
         this.display = DisplayUtils.spawnBlockDisplay(source, material, DisplayUtils.faceTargetTransformation(source, target, SCALE));
-        //this.display = displayBuilder
     }
 
     @Override
