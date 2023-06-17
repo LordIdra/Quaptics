@@ -69,9 +69,9 @@ public class DisplayUtils {
         //
 
         return new Matrix4f()
-                .lookAt(from.toVector().toVector3f(), to.toVector().toVector3f(), UP_VECTOR)
-                .translate(new Vector3f(scale).div(-2))
-                .scale(scale);
+                .lookAt(from.toVector().toVector3f(), to.toVector().toVector3f(), UP_VECTOR);
+                //.translate(new Vector3f(scale).div(-2))
+                //.scale(scale);
 
     }
 
