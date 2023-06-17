@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DisplayUtils {
+    private static final Vector3f UP_VECTOR = new Vector3f(0, 1, 0);
     private static final List<Vector3f> BLOCK_VERTICES = new ArrayList<>();
     static {{
         BLOCK_VERTICES.add(new Vector3f(0, 0, 0));
@@ -61,15 +62,14 @@ public class DisplayUtils {
         //        scale,
         //        new AxisAngle4f(verticalRotation, 1, 0, 0));
 
-        final float verticalRotation = DisplayUtils.getVerticalRotation(from, to);
-        final float horizontalRotation = DisplayUtils.getHorizontalRotation(from, to);
+        //final float verticalRotation = DisplayUtils.getVerticalRotation(from, to);
+        //final float horizontalRotation = DisplayUtils.getHorizontalRotation(from, to);
 
         // -z not fine
         //
 
         return new Matrix4f()
-                .rotateY(horizontalRotation)
-                .rotate(verticalRotation, (float)Math.cos(horizontalRotation), 0, (float)Math.sin(horizontalRotation))
+                .lookAt(from.toVector().toVector3f(), to.toVector().toVector3f(), UP_VECTOR)
                 .translate(new Vector3f(scale).div(-2))
                 .scale(scale);
 
