@@ -4,11 +4,13 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.BlockDisplay;
 import org.bukkit.util.Vector;
+import org.joml.Vector3f;
 import org.metamechanists.death_lasers.lasers.ticker.ticker.LaserBlockDisplayTicker;
 import org.metamechanists.death_lasers.utils.DisplayUtils;
 
 public class IntervalLinearTimeTicker implements LaserBlockDisplayTicker {
-    private static final float SCALE = 0.1F;
+    // Not quite 1 to prevent Z-fighting with connection points
+    private static final Vector3f SCALE = new Vector3f(0.099F, 1.4F, 0.099F);
     private final int lifespanTicks;
     private final Vector velocity;
     private final BlockDisplay display;

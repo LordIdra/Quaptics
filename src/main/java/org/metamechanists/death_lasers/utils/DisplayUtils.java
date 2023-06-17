@@ -48,18 +48,18 @@ public class DisplayUtils {
         return verticalRotation;
     }
 
-    public static Transformation faceTargetTransformation(Location from, Location to, float scale) {
+    public static Transformation faceTargetTransformation(Location from, Location to, Vector3f scale) {
         // Rotate the display entity so that one of the blockfaces face 'to'
         final float verticalRotation = DisplayUtils.getVerticalRotation(from, to);
         final float horizontalRotation = DisplayUtils.getHorizontalRotation(from, to);
 
-        final Vector3f offset = new Vector3f(-scale/2, -scale/2, -scale/2)
+        final Vector3f offset = new Vector3f(-scale.x/2, -scale.y/2, -scale.z/2)
                 .rotateY(horizontalRotation)
                 .rotateAxis(verticalRotation, (float)Math.cos(horizontalRotation), 0, -(float)Math.sin(horizontalRotation));
         return new Transformation(
                 offset,
                 new AxisAngle4f(horizontalRotation, 0, 1, 0),
-                new Vector3f(scale, scale, scale),
+                scale,
                 new AxisAngle4f(verticalRotation, 1, 0, 0));
     }
 
