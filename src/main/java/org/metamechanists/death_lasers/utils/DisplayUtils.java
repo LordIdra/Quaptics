@@ -67,9 +67,12 @@ public class DisplayUtils {
         final float verticalRotation = DisplayUtils.getVerticalRotation(from, to);
         final float horizontalRotation = DisplayUtils.getHorizontalRotation(from, to);
 
+        // -z not fine
+        //
+
         return new Matrix4f()
                 .rotateY(horizontalRotation)
-                .rotate(verticalRotation, (float)Math.cos(horizontalRotation), 0, -(float)Math.sin(horizontalRotation))
+                .rotate(verticalRotation, (float)Math.sin(horizontalRotation), 0, -(float)Math.cos(horizontalRotation))
                 .translate(new Vector3f(scale).div(-2))
                 .scale(scale);
 
