@@ -3,7 +3,9 @@ package org.metamechanists.death_lasers.utils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.BlockDisplay;
+import org.bukkit.util.Transformation;
 import org.bukkit.util.Vector;
+import org.joml.AxisAngle4f;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
@@ -76,31 +78,31 @@ public class DisplayUtils {
         return max;
     }
 
-    public static Matrix4f faceTargetTransformation(Location from, Location to, float scale) {
+    public static Transformation faceTargetTransformation(Location from, Location to, float scale) {
         // Rotate the display entity so that one of the blockfaces face 'to'
-        //float verticalRotation = DisplayUtils.getVerticalRotation(from, to);
-        //float horizontalRotation = DisplayUtils.getHorizontalRotation(from, to);
+        float verticalRotation = DisplayUtils.getVerticalRotation(from, to);
+        float horizontalRotation = DisplayUtils.getHorizontalRotation(from, to);
 
-        final Vector direction = getDirection(from, to);
+        //final Vector direction = getDirection(from, to);
 
-        float rotationXZ = - (float) Math.atan2(direction.getZ(), direction.getX());
-        float rotationXY =   (float) Math.atan2(direction.getY(), direction.getX());
-        float rotationZY = - (float) Math.atan2(direction.getY(), direction.getZ());
+        //float rotationXZ = - (float) Math.atan2(direction.getZ(), direction.getX()); // fine
+        //float rotationXY = - (float) Math.atan2(direction.getY(), direction.getX());
+        //float rotationZY = - (float) Math.atan2(direction.getY(), direction.getZ()); // fine
 
-        if (direction.getZ() < 0) { rotationXZ *= -1; }
+        //if (direction.getZ() < 0) { rotationXZ *= -1; }
 
-        return rotationTransformation(
-                new Vector3f(scale, scale, scale),
-                new Vector3f(rotationZY, rotationXZ, rotationXY));
-        //final Vector offset = new Vector(-scale/2, -scale/2, -scale/2)
-        //        .rotateAroundY(horizontalRotation)
-        //        .rotateAroundAxis(new Vector(Math.cos(horizontalRotation), 0, -Math.sin(horizontalRotation)), verticalRotation)
-        //        .add(new Vector(0, scale, 0));
-        //return new Transformation(
-        //        new Vector3f((float)offset.getX(), (float)offset.getY(), (float)offset.getZ()),
-        //        new AxisAngle4f(horizontalRotation, 0, 1, 0),
+        //return rotationTransformation(
         //        new Vector3f(scale, scale, scale),
-        //        new AxisAngle4f(verticalRotation, 1, 0, 0));
+        //        new Vector3f(rotationZY, rotationXZ, rotationXY));
+        final Vector offset = new Vector(-scale/2, -scale/2, -scale/2)
+                .rotateAroundY(horizontalRotation)
+                .rotateAroundAxis(new Vector(Math.cos(horizontalRotation), 0, -Math.sin(horizontalRotation)), verticalRotation)
+                .add(new Vector(0, scale, 0));
+        return new Transformation(
+                new Vector3f((float)offset.getX(), (float)offset.getY(), (float)offset.getZ()),
+                new AxisAngle4f(horizontalRotation, 0, 1, 0),
+                new Vector3f(scale, scale, scale),
+                new AxisAngle4f(verticalRotation, 1, 0, 0));
     }
 
     public static Matrix4f rotationTransformation(Vector3f scale, Vector3f rotationInRadians) {
@@ -118,6 +120,13 @@ public class DisplayUtils {
         final BlockDisplay display = location.getWorld().spawn(location, BlockDisplay.class);
         display.setBlock(material.createBlockData());
         display.setTransformationMatrix(transformation);
+        return display;
+    }
+
+    public static BlockDisplay spawnBlockDisplay(Location location, Material material, Transformation transformation) {
+        final BlockDisplay display = location.getWorld().spawn(location, BlockDisplay.class);
+        display.setBlock(material.createBlockData());
+        display.setTransformation(transformation);
         return display;
     }
 }
