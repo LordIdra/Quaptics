@@ -29,9 +29,9 @@ public class TargetingWandListener implements Listener {
         }
 
         if (SlimefunUtils.isItemSimilar(heldItem, ItemStacks.TARGETING_WAND, true)) {
-            final Location connectionPointLocation = clickedEntity.getLocation().clone().add(ConnectionPoint.INTERACTION_OFFSET);
+            final Location connectionPointLocation = clickedEntity.getLocation().clone().subtract(ConnectionPoint.INTERACTION_OFFSET);
             if (SlimefunItem.getByItem(heldItem) instanceof TargetingWand wand) {
-                wand.use(event.getPlayer(), clickedEntity.getLocation(), heldItem);
+                wand.use(event.getPlayer(), connectionPointLocation, heldItem);
             }
         }
     }
