@@ -47,11 +47,16 @@ public class DisplayUtils {
         return verticalRotation;
     }
 
-    private static Vector3f calculateHitboxAdjustmentTranslation(Matrix4f matrix) {
+    private static Vector3f calculateHitboxAdjustmentTranslation(Vector3f scale, Vector3f rotationInRadians) {
         // When we rotate a block, the hitbox in X, Y, and Z changes
         // We need to account for this change to center the block
         final List<Vector3f> transformedVertices = new ArrayList<>();
-        BLOCK_VERTICES.forEach(vertex -> transformedVertices.add(new Vector3f(vertex).mulDirection(matrix)));
+        Matrix4f matrix = new Matrix4f();
+        matrix = matrix.rotateXYZ(rotationInRadians);
+        matrix = matrix.scale(scale);
+        for (Vector3f vertex : BLOCK_VERTICES) {
+            transformedVertices.add(new Vector3f(vertex).mulDirection(matrix));
+        }
 
         final Vector3f min = new Vector3f();
         final Vector3f max = new Vector3f();
@@ -99,10 +104,9 @@ public class DisplayUtils {
         // - Scale the block by scale
         // - Rotate the block by rotationInDegrees
         Matrix4f matrix = new Matrix4f();
-        //matrix = matrix.translate(-0.5F, -0.5F, -0.5F);
+        matrix = matrix.translate(calculateHitboxAdjustmentTranslation(scale, rotationInRadians));
         matrix = matrix.rotateXYZ(rotationInRadians);
         matrix = matrix.scale(scale);
-        //matrix = matrix.translate(calculateHitboxAdjustmentTranslation(matrix));
         return matrix;
     }
 
