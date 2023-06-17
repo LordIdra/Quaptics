@@ -68,8 +68,9 @@ public class DisplayUtils {
         // -z not fine
         //
 
+        final Vector3f direction = getDirection(from, to).toVector3f();
         return new Matrix4f()
-                .lookAt(from.toVector().toVector3f(), to.toVector().toVector3f(), UP_VECTOR);
+                .lookAlong(direction, UP_VECTOR);
                 //.translate(new Vector3f(scale).div(-2))
                 //.scale(scale);
 
