@@ -4,9 +4,10 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Display;
 import org.metamechanists.death_lasers.lasers.DeprecatedBeams;
+import org.metamechanists.death_lasers.lasers.SpawnTimer;
 import org.metamechanists.death_lasers.lasers.beam.Beam;
-import org.metamechanists.death_lasers.lasers.beam.DirectBlockDisplayBeam;
-import org.metamechanists.death_lasers.lasers.ticker.factory.direct.DirectSinglePulseTickerFactory;
+import org.metamechanists.death_lasers.lasers.beam.IntervalBlockDisplayBeam;
+import org.metamechanists.death_lasers.lasers.ticker.factory.interval.IntervalLinearTimeTickerFactory;
 
 public class ConnectionPointOutput extends ConnectionPoint {
     private ConnectionPointInput target;
@@ -57,11 +58,13 @@ public class ConnectionPointOutput extends ConnectionPoint {
         this.target = target;
         this.target.link(this.location);
         blockDisplay.setBrightness(connectedBrightness);
-        beam = new DirectBlockDisplayBeam(
-                new DirectSinglePulseTickerFactory(
+        beam = new IntervalBlockDisplayBeam(
+                new IntervalLinearTimeTickerFactory(
                         Material.WHITE_CONCRETE,
                         this.location,
-                        target.location));
+                        target.location,
+                        100),
+                new SpawnTimer(20));
         beam.setPowered(true);
     }
 
