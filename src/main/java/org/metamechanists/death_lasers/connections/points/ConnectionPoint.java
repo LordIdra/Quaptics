@@ -51,6 +51,6 @@ public abstract class ConnectionPoint {
     public void updateLocation(Location location) {
         this.location = location;
         blockDisplay.teleport(location);
-        interaction.teleport(location);
+        interaction.teleport(location.clone().add(INTERACTION_OFFSET));
     }
 }

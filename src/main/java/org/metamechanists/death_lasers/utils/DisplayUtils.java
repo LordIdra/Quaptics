@@ -64,11 +64,11 @@ public class DisplayUtils {
         final Vector3f initial = new Vector3f(1, 0, 0);
         final Vector3f direction = getDirection(from, to).toVector3f();
 
-        final Vector3f axis = initial.cross(direction);
-        final float angle = initial.angle(direction);
+        final Vector3f axis = new Vector3f(initial).cross(direction);
+        final float angle = new Vector3f(initial).angle(direction);
 
         return new Matrix4f()
-                .translate(new Vector3f(scale).div(2))
+                .translate(new Vector3f(scale).div(-2))
                 .scale(scale)
                 .rotate(angle, axis);
     }
