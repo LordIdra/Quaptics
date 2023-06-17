@@ -105,9 +105,10 @@ public class TargetingWand extends SlimefunItem {
         final ConnectionPointOutput outputSourcePoint = (ConnectionPointOutput)sourcePoint;
 
         if (outputSourcePoint != null) {
-            outputSourcePoint.link(inputTargetPoint);
             Items.linearTimeEmitter.onConnect(sourcePoint, targetPoint);
             Items.linearTimeEmitter.onConnect(targetPoint, sourcePoint);
+            setSourceConnectionPoint(player, outputSourcePoint.getLocation(), stack);
+            outputSourcePoint.link(inputTargetPoint);
         }
     }
 
