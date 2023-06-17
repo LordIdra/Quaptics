@@ -81,15 +81,15 @@ public class DisplayUtils {
         //float verticalRotation = DisplayUtils.getVerticalRotation(from, to);
         //float horizontalRotation = DisplayUtils.getHorizontalRotation(from, to);
 
-        final Vector displacement = getDisplacement(from, to);
+        final Vector direction = getDirection(from, to);
 
-        float rotationX = new Vector3f().angle(new Vector3f(0, (float)displacement.getY(), (float)displacement.getZ()));
-        float rotationY = new Vector3f().angle(new Vector3f((float)displacement.getX(), 0, (float)displacement.getZ()));
-        float rotationZ = new Vector3f().angle(new Vector3f((float)displacement.getX(), (float)displacement.getY(), 0));
+        final float rotationXZ = (float) Math.atan2(direction.getX(), direction.getZ());
+        final float rotationXY = (float) Math.atan2(direction.getY(), direction.getX());
+        final float rotationZY = (float) Math.atan2(direction.getY(), direction.getZ());
 
         return rotationTransformation(
                 new Vector3f(scale, scale, scale),
-                new Vector3f(rotationX, rotationY, rotationZ));
+                new Vector3f(rotationZY, rotationXZ, rotationXY));
         //final Vector offset = new Vector(-scale/2, -scale/2, -scale/2)
         //        .rotateAroundY(horizontalRotation)
         //        .rotateAroundAxis(new Vector(Math.cos(horizontalRotation), 0, -Math.sin(horizontalRotation)), verticalRotation)
