@@ -12,6 +12,8 @@ import org.metamechanists.death_lasers.utils.DisplayUtils;
 
 public abstract class ConnectionPoint {
     @Getter
+    private final String name;
+    @Getter
     protected Location location;
     @Getter
     protected final Display.Brightness connectedBrightness;
@@ -20,7 +22,8 @@ public abstract class ConnectionPoint {
     protected BlockDisplay blockDisplay;
     protected Interaction interaction;
 
-    ConnectionPoint(Location location, Material material, Display.Brightness connectedBrightness, Display.Brightness disconnectedBrightness) {
+    ConnectionPoint(String name, Location location, Material material, Display.Brightness connectedBrightness, Display.Brightness disconnectedBrightness) {
+        this.name = name;
         this.location = location;
         this.connectedBrightness = connectedBrightness;
         this.disconnectedBrightness = disconnectedBrightness;

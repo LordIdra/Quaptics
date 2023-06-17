@@ -63,5 +63,11 @@ public class ConnectionPointStorage implements Serializable {
         return group.getPoint(pointLocation);
     }
 
-
+    public static void updateLocation(Location oldLocation, Location newLocation) {
+        final Location groupLocation = groupIdFromPointLocation.get(oldLocation);
+        final ConnectionGroup group = groups.get(groupLocation);
+        groupIdFromPointLocation.remove(oldLocation);
+        groupIdFromPointLocation.put(newLocation, groupLocation);
+        group.updateLocation(oldLocation, newLocation);
+    }
 }

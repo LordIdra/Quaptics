@@ -47,4 +47,10 @@ public class ConnectionGroup {
     public Set<Location> getPointLocations() {
         return points.keySet();
     }
+
+    public void updateLocation(Location oldLocation, Location newLocation) {
+        final ConnectionPoint point = points.get(oldLocation);
+        points.put(newLocation, point);
+        pointLocations.replace(point.getName(), newLocation);
+    }
 }

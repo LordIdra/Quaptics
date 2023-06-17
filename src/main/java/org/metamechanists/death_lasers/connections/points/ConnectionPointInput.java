@@ -10,8 +10,8 @@ public class ConnectionPointInput extends ConnectionPoint {
     @Getter
     private Location source;
 
-    public ConnectionPointInput(Location location) {
-        super(location,
+    public ConnectionPointInput(String name, Location location) {
+        super(name, location,
                 Material.RED_STAINED_GLASS,
                 new Display.Brightness(15, 15),
                 new Display.Brightness(2, 2));

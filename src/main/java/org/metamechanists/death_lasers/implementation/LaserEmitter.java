@@ -34,8 +34,8 @@ public class LaserEmitter extends ConnectedBlock {
     @Override
     protected Map<String, ConnectionPoint> generateConnectionPoints(Location location) {
         final Map<String, ConnectionPoint> points = new HashMap<>();
-        points.put("input", new ConnectionPointInput(location.clone().add(INPUT_VECTOR)));
-        points.put("output", new ConnectionPointOutput(location.clone().add(OUTPUT_VECTOR)));
+        points.put("input", new ConnectionPointInput("input", location.clone().add(INPUT_VECTOR)));
+        points.put("output", new ConnectionPointOutput("output", location.clone().add(OUTPUT_VECTOR)));
         return points;
     }
 
@@ -58,11 +58,11 @@ public class LaserEmitter extends ConnectedBlock {
 
     @Override
     public void onConnect(ConnectionPoint from, ConnectionPoint to) {
-        final Location fromLocation = ConnectionPointStorage.getGroupLocationFromPointLocation(from.getLocation());
-        final Location toLocation = ConnectionPointStorage.getGroupLocationFromPointLocation(to.getLocation());
-        final Vector direction = DisplayUtils.getDirection(fromLocation, toLocation);
-        final Location newPointLocation = fromLocation.clone().add(direction);
-        from.updateLocation(newPointLocation);
+        final Location fromGroupLocation = ConnectionPointStorage.getGroupLocationFromPointLocation(from.getLocation());
+        final Location toGroupLocation = ConnectionPointStorage.getGroupLocationFromPointLocation(to.getLocation());
+        final Vector direction = DisplayUtils.getDirection(fromGroupLocation, toGroupLocation);
+        final Location newPointLocation = fromGroupLocation.clone().add(direction);
+        ConnectionPointStorage.updateLocation(from.getLocation(), newPointLocation);
     }
 
     @Override

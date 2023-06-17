@@ -13,8 +13,8 @@ public class ConnectionPointOutput extends ConnectionPoint {
     private ConnectionPointInput target;
     private Beam beam;
 
-    public ConnectionPointOutput(Location location) {
-        super(location,
+    public ConnectionPointOutput(String name, Location location) {
+        super(name, location,
                 Material.LIME_STAINED_GLASS,
                 new Display.Brightness(15, 15),
                 new Display.Brightness(3, 3));
