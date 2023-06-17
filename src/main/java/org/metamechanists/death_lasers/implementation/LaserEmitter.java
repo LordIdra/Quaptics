@@ -12,6 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
+import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointInput;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointOutput;
@@ -53,6 +54,15 @@ public class LaserEmitter extends ConnectedBlock {
                                 new Vector3f((float)(Math.PI/4), (float)(Math.PI/4), 0))));
 
         return displayGroup;
+    }
+
+    @Override
+    public void onConnect(ConnectionPoint from, ConnectionPoint to) {
+        final Location fromLocation = ConnectionPointStorage.getGroupLocationFromPointLocation(from.getLocation());
+        final Location toLocation = ConnectionPointStorage.getGroupLocationFromPointLocation(to.getLocation());
+        final Vector direction = DisplayUtils.getDirection(fromLocation, toLocation);
+        final Location newPointLocation = fromLocation.clone().add(direction);
+        from.updateLocation(newPointLocation);
     }
 
     @Override

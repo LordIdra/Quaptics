@@ -53,4 +53,6 @@ public abstract class ConnectedBlock extends EnergyDisplayGroupBlock {
             removeCharge(block.getLocation(), consumption);
         }
     }
+
+    public abstract void onConnect(ConnectionPoint from, ConnectionPoint to);
 }

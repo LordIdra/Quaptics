@@ -12,13 +12,13 @@ import org.metamechanists.death_lasers.utils.DisplayUtils;
 
 public abstract class ConnectionPoint {
     @Getter
-    protected final Location location;
+    protected Location location;
     @Getter
     protected final Display.Brightness connectedBrightness;
     @Getter
     protected final Display.Brightness disconnectedBrightness;
-    protected final BlockDisplay blockDisplay;
-    protected final Interaction interaction;
+    protected BlockDisplay blockDisplay;
+    protected Interaction interaction;
 
     ConnectionPoint(Location location, Material material, Display.Brightness connectedBrightness, Display.Brightness disconnectedBrightness) {
         this.location = location;
@@ -40,5 +40,11 @@ public abstract class ConnectionPoint {
 
     public void deselect() {
         blockDisplay.setGlowing(false);
+    }
+
+    public void updateLocation(Location location) {
+        this.location = location;
+        blockDisplay.teleport(location);
+        interaction.teleport(location);
     }
 }

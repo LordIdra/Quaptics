@@ -14,7 +14,7 @@ public class ConnectionPointInput extends ConnectionPoint {
         super(location,
                 Material.RED_STAINED_GLASS,
                 new Display.Brightness(15, 15),
-                new Display.Brightness(3, 3));
+                new Display.Brightness(2, 2));
     }
 
     @Override

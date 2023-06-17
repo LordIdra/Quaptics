@@ -30,7 +30,7 @@ public class DisplayUtils {
         return to.clone().subtract(from).toVector();
     }
 
-    private static Vector getDirection(Location from, Location to) {
+    public static Vector getDirection(Location from, Location to) {
         return getDisplacement(from, to).normalize();
     }
 
