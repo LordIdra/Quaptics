@@ -71,7 +71,7 @@ public class DisplayUtils {
             if (vector.z > max.z) { max.z = vector.z; }
         });
 
-        max.sub(min);
+        max.add(min);
         max.div(-2);
         return max;
     }
