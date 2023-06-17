@@ -61,7 +61,7 @@ public class LaserEmitter extends ConnectedBlock {
         final Location fromGroupLocation = ConnectionPointStorage.getGroupLocationFromPointLocation(from.getLocation());
         final Location toGroupLocation = ConnectionPointStorage.getGroupLocationFromPointLocation(to.getLocation());
         final Vector direction = DisplayUtils.getDirection(fromGroupLocation, toGroupLocation);
-        final Location newPointLocation = fromGroupLocation.clone().add(direction);
+        final Location newPointLocation = fromGroupLocation.clone().add(0.5, 0.5, 0.5).add(direction);
         ConnectionPointStorage.updateLocation(from.getLocation(), newPointLocation);
     }
 
