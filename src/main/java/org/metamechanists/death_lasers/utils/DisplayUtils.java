@@ -69,7 +69,7 @@ public class DisplayUtils {
 
         return new Matrix4f()
                 .scale(scale)
-                .rotate(angle, axis)
+                //.rotate(angle, axis)
                 .translate(new Vector3f(scale).div(-2));
     }
 
