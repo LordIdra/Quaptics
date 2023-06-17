@@ -68,7 +68,7 @@ public class DisplayUtils {
         final float angle = new Vector3f(initial).angle(direction);
 
         return new Matrix4f()
-                .translate(new Vector3f(scale).mul(-2))
+                .translate(new Vector3f(scale).div(-2))
                 .scale(scale);
                 //.rotate(angle, axis)
 
