@@ -83,9 +83,9 @@ public class DisplayUtils {
 
         final Vector direction = getDirection(from, to);
 
-        final float rotationXZ = (float) Math.atan2(direction.getX(), direction.getZ());
-        final float rotationXY = (float) Math.atan2(direction.getY(), direction.getX());
-        final float rotationZY = (float) Math.atan2(direction.getY(), direction.getZ());
+        final float rotationXZ = - (float) Math.atan2(direction.getX(), direction.getZ());
+        final float rotationXY = - (float) Math.atan2(direction.getY(), direction.getX());
+        final float rotationZY = - (float) Math.atan2(direction.getY(), direction.getZ());
 
         return rotationTransformation(
                 new Vector3f(scale, scale, scale),
