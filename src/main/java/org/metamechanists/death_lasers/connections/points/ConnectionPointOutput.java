@@ -4,7 +4,6 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Display;
 import org.metamechanists.death_lasers.lasers.DeprecatedBeams;
-import org.metamechanists.death_lasers.lasers.Lasers;
 import org.metamechanists.death_lasers.lasers.beam.Beam;
 import org.metamechanists.death_lasers.lasers.beam.DirectBlockDisplayBeam;
 import org.metamechanists.death_lasers.lasers.ticker.factory.direct.DirectSinglePulseTickerFactory;
@@ -62,8 +61,7 @@ public class ConnectionPointOutput extends ConnectionPoint {
                 new DirectSinglePulseTickerFactory(
                         Material.WHITE_CONCRETE,
                         this.location,
-                        target.location),
-                Lasers.testTimer());
+                        target.location));
         beam.setPowered(true);
     }
 
