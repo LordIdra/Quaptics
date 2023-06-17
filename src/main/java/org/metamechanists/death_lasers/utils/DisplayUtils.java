@@ -43,7 +43,7 @@ public class DisplayUtils {
         final float horizontalRotation = getHorizontalRotation(from, to);
         final Vector directionVectorInOnlyHorizontalPlane = new Vector(0, 0, 1).rotateAroundY(horizontalRotation);
         float verticalRotation = directionVectorInOnlyHorizontalPlane.angle(displacement);
-        if (displacement.getY() > 0) { verticalRotation *= -1; }
+        //if (displacement.getY() > 0) { verticalRotation *= -1; }
         return verticalRotation;
     }
 
