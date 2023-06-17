@@ -9,13 +9,13 @@ import org.metamechanists.death_lasers.utils.DisplayUtils;
 
 public class DirectSinglePulseTicker implements LaserBlockDisplayTicker {
     // Not quite 1 to prevent Z-fighting with connection points
-    private static final float SCALE = 0.099F;
+    private static final float SCALE = 0.095F;
     private final BlockDisplay display;
 
     public DirectSinglePulseTicker(Material material, Location source, Location target) {
         final Location midpoint = source.clone().add(target).multiply(0.5);
-        this.display = DisplayUtils.spawnBlockDisplay(source, material,
-                DisplayUtils.faceTargetTransformation(midpoint, target, new Vector3f(SCALE, SCALE, (float) (source.distance(target)/2))));
+        this.display = DisplayUtils.spawnBlockDisplay(midpoint, material,
+                DisplayUtils.faceTargetTransformation(midpoint, target, new Vector3f(SCALE, SCALE, (float) (source.distance(target)))));
     }
 
     @Override
