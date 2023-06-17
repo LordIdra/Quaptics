@@ -70,9 +70,9 @@ public class DisplayUtils {
 
         final Vector3f direction = getDirection(from, to).toVector3f();
         return new Matrix4f()
-                .lookAlong(direction, UP_VECTOR);
-                //.translate(new Vector3f(scale).div(-2))
-                //.scale(scale);
+                .translate(new Vector3f(scale).div(-2))
+                .lookAlong(direction, UP_VECTOR)
+                .scale(scale);
 
     }
 
