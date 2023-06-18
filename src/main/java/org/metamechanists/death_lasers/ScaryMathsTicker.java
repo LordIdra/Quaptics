@@ -11,11 +11,11 @@ public class ScaryMathsTicker extends BukkitRunnable {
 
     public void run() {
         final Location location = new Location(Bukkit.getServer().getWorld("world"), 872, 100, -270);
-        if (Bukkit.getServer().getPlayer("Idra") != null) {
+        if (Bukkit.getServer().getPlayer("bb685dd0-8a71-4506-bc20-24d374fb28b4") == null) {
             return;
         }
 
-        final Location target = Bukkit.getServer().getPlayer("Idra").getLocation();
+        final Location target = Bukkit.getServer().getPlayer("bb685dd0-8a71-4506-bc20-24d374fb28b4").getLocation();
 
         DisplayUtils.spawnBlockDisplay(location, Material.DISPENSER,
                 DisplayUtils.faceTargetTransformation(location, target, new Vector3f(1.0F, 1.0F, 1.0F)));
