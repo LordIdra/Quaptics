@@ -58,7 +58,7 @@ public class DisplayUtils {
                 .rotateZ(verticalRotation);
                 //.rotateAxis(verticalRotation, (float)Math.cos(horizontalRotation), 0, -(float)Math.sin(horizontalRotation));
         final Vector3f rotatedScale = new Vector3f(
-                0,
+                scale.x,
                 (float) (scale.z*Math.cos(verticalRotation) + scale.y*Math.sin(verticalRotation)),
                 (float) (scale.y*Math.cos(verticalRotation) + scale.z*Math.sin(verticalRotation)));
         return new Transformation(
