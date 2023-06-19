@@ -57,10 +57,13 @@ public class DisplayUtils {
         final Vector3f offset = new Vector3f(-scale.x/2, -scale.y/2, -scale.z/2)
                 .rotateY(horizontalRotation)
                 .rotateAxis(verticalRotation, (float)Math.cos(horizontalRotation), 0, -(float)Math.sin(horizontalRotation));
+        final Vector3f rotatedScale = new Vector3f(scale)
+                .rotateY(horizontalRotation);
+                //.rotateAxis(verticalRotation, (float)Math.cos(horizontalRotation), 0, -(float)Math.sin(horizontalRotation));
         return new Transformation(
                 offset,
                 new AxisAngle4f(horizontalRotation, 0, 1, 0),
-                scale,
+                rotatedScale,
                 new AxisAngle4f(verticalRotation, 1, 0, 0));
 
         //final float verticalRotation = DisplayUtils.getVerticalRotation(from, to);
