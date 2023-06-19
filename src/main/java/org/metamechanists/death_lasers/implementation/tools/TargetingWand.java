@@ -17,7 +17,6 @@ import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointInput;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointOutput;
 import org.metamechanists.death_lasers.implementation.abstracts.ConnectedBlock;
-import org.metamechanists.death_lasers.implementation.blocks.Lens;
 import org.metamechanists.death_lasers.utils.Language;
 import org.metamechanists.death_lasers.utils.PersistentDataUtils;
 
@@ -130,7 +129,7 @@ public class TargetingWand extends SlimefunItem {
     public void use(Player player, Location pointLocation, ItemStack stack) {
         final Location groupLocation = ConnectionPointStorage.getGroupLocationFromPointLocation(pointLocation);
         if (!BlockStorage.hasBlockInfo(groupLocation)
-                || !(BlockStorage.check(groupLocation) instanceof Lens)
+                || !(BlockStorage.check(groupLocation) instanceof ConnectedBlock)
                 || !Items.targetingWand.canUse(player, false)
                 || !Slimefun.getProtectionManager().hasPermission(player, player.getLocation(), Interaction.INTERACT_BLOCK)) {
             return;
