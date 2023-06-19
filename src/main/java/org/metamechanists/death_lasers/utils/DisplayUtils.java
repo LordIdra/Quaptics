@@ -58,8 +58,8 @@ public class DisplayUtils {
                 .rotateY(horizontalRotation)
                 .rotateAxis(verticalRotation, (float)Math.cos(horizontalRotation), 0, -(float)Math.sin(horizontalRotation));
         final Vector3f rotatedScale = new Vector3f(scale)
-                .rotateY(horizontalRotation);
-                //.rotateAxis(verticalRotation, (float)Math.cos(horizontalRotation), 0, -(float)Math.sin(horizontalRotation));
+                //.rotateY(horizontalRotation);
+                .rotateAxis(verticalRotation, (float)Math.cos(horizontalRotation), 0, -(float)Math.sin(horizontalRotation));
         return new Transformation(
                 offset,
                 new AxisAngle4f(horizontalRotation, 0, 1, 0),
