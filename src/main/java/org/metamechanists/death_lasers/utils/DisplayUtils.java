@@ -73,8 +73,8 @@ public class DisplayUtils {
         final Vector3f directionAdjustedForBukkitWeirdness = new Vector3f(-direction.x, direction.y, direction.z);
 
         return new Matrix4f()
-                //.translate(new Vector3f(scale).div(-2))
                 .scale(scale)
+                .translate(new Vector3f(scale).div(-2))
                 .lookAlong(directionAdjustedForBukkitWeirdness, UP_VECTOR);
     }
 
