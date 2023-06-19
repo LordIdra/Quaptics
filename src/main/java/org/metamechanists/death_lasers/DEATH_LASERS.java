@@ -24,7 +24,6 @@ public final class DEATH_LASERS extends JavaPlugin implements SlimefunAddon {
 
     public void initializeRunnables() {
         new LaserTicker().runTaskTimer(instance, 0, 1);
-        new ScaryMathsTicker().runTaskTimer(instance, 0, 1);
     }
 
     public void initializeCommands() {

@@ -22,7 +22,7 @@ public abstract class ConnectionPoint {
     protected final Display.Brightness disconnectedBrightness;
     protected BlockDisplay blockDisplay;
     protected Interaction interaction;
-    private final static float SCALE = 0.1F;
+    protected final static float SCALE = 0.1F;
     public static Vector INTERACTION_OFFSET = new Vector(0, -SCALE/2, 0);
 
     ConnectionPoint(String name, Location location, Material material, Display.Brightness connectedBrightness, Display.Brightness disconnectedBrightness) {

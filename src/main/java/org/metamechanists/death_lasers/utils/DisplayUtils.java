@@ -33,49 +33,8 @@ public class DisplayUtils {
         return getDisplacement(from, to).normalize();
     }
 
-    private static float getHorizontalRotation(Location from, Location to) {
-        final Vector direction = getDirection(from, to);
-        return (float) Math.atan2(direction.getX(), direction.getZ());
-    }
-
-    private static float getVerticalRotation(Location from, Location to) {
-        final Vector displacement = getDisplacement(from, to);
-        final float horizontalRotation = getHorizontalRotation(from, to);
-        final Vector directionVectorInOnlyHorizontalPlane = new Vector(0, 0, 1).rotateAroundY(horizontalRotation);
-        float verticalRotation = directionVectorInOnlyHorizontalPlane.angle(displacement);
-        if (displacement.getY() > 0) { verticalRotation *= -1; }
-        return verticalRotation;
-    }
-
     public static Matrix4f faceTargetTransformation(Location from, Location to, Vector3f scale) {
-        // Rotate the display entity so that one of the blockfaces face 'to'
-        //final float verticalRotation = DisplayUtils.getVerticalRotation(from, to);
-        //final float horizontalRotation = DisplayUtils.getHorizontalRotation(from, to);
-
-        //final Vector3f offset = new Vector3f(-scale.x/2, -scale.y/2, -scale.z/2)
-        //        .rotateZ(verticalRotation);
-        //        //.rotateAxis(verticalRotation, (float)Math.cos(horizontalRotation), 0, -(float)Math.sin(horizontalRotation));
-        //final Vector3f rotatedScale = new Vector3f(
-        //        scale.x,
-        //        (float) (scale.z*Math.cos(verticalRotation) + scale.y*Math.sin(verticalRotation)),
-        //        (float) (scale.y*Math.cos(verticalRotation) + scale.z*Math.sin(verticalRotation)));
-        //return new Transformation(
-        //        offset,
-        //        new AxisAngle4f(horizontalRotation, 0, 1, 0),
-        //        rotatedScale,
-        //        new AxisAngle4f(verticalRotation, 1, 0, 0));
-
-        //final float verticalRotation = DisplayUtils.getVerticalRotation(from, to);
-        //final float horizontalRotation = DisplayUtils.getHorizontalRotation(from, to);
-
         final Vector3f direction = getDirection(from, to).toVector3f();
-        //final Vector3f directionAdjustedForBukkitWeirdness = new Vector3f(direction.x, direction.y, direction.z);
-
-        //return new Matrix4f()
-        //        .scale(scale)
-        //        .lookAt(new Vector3f(), new Vector3f().add(directionAdjustedForBukkitWeirdness), new Vector3f(0, 1, 0))
-        //        .translate(new Vector3f(scale).div(-2));
-
         direction.mul(-1);
 
         float angleY = (float) Math.atan2(direction.x, direction.z);

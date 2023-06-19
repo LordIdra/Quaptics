@@ -3,6 +3,7 @@ package org.metamechanists.death_lasers.connections.points;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Display;
+import org.bukkit.util.Vector;
 import org.metamechanists.death_lasers.lasers.DeprecatedBeams;
 import org.metamechanists.death_lasers.lasers.SpawnTimer;
 import org.metamechanists.death_lasers.lasers.beam.Beam;
@@ -61,7 +62,7 @@ public class ConnectionPointOutput extends ConnectionPoint {
         beam = new IntervalBlockDisplayBeam(
                 new IntervalLinearTimeTickerFactory(
                         Material.WHITE_CONCRETE,
-                        this.location,
+                        this.location.add(new Vector(-SCALE/2, -SCALE/2, -SCALE/2)),
                         target.location,
                         100),
                 new SpawnTimer(20));
