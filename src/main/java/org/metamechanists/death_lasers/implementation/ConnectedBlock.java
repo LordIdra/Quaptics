@@ -54,5 +54,6 @@ public abstract class ConnectedBlock extends EnergyDisplayGroupBlock {
         }
     }
 
-    public abstract void onConnect(ConnectionPoint from, ConnectionPoint to);
+    public abstract boolean canConnect(ConnectionPoint from, ConnectionPoint to);
+    public abstract void connect(ConnectionPoint from, ConnectionPoint to);
 }

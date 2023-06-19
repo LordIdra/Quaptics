@@ -104,12 +104,20 @@ public class TargetingWand extends SlimefunItem {
 
         final ConnectionPointOutput outputSourcePoint = (ConnectionPointOutput)sourcePoint;
 
-        if (outputSourcePoint != null) {
-            Items.linearTimeEmitter.onConnect(sourcePoint, targetPoint);
-            Items.linearTimeEmitter.onConnect(targetPoint, sourcePoint);
-            setSourceConnectionPoint(player, outputSourcePoint.getLocation(), stack);
-            outputSourcePoint.link(inputTargetPoint);
+        if (outputSourcePoint == null) {
+            return;
         }
+
+        if (!Items.linearTimeEmitter.canConnect(sourcePoint, targetPoint) || !Items.linearTimeEmitter.canConnect(targetPoint, sourcePoint)) {
+            player.sendMessage(Language.getLanguageEntry("targeting-wand.cannot-correct"));
+            return;
+        }
+
+        Items.linearTimeEmitter.connect(sourcePoint, targetPoint);
+        Items.linearTimeEmitter.connect(targetPoint, sourcePoint);
+
+        setSourceConnectionPoint(player, outputSourcePoint.getLocation(), stack);
+        outputSourcePoint.link(inputTargetPoint);
     }
 
     public void use(Player player, Location pointLocation, ItemStack stack) {
