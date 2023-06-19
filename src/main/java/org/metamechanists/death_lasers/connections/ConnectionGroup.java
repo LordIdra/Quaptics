@@ -3,7 +3,8 @@ package org.metamechanists.death_lasers.connections;
 import lombok.Getter;
 import org.bukkit.Location;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
-import org.metamechanists.death_lasers.implementation.ConnectedBlock;
+import org.metamechanists.death_lasers.connections.points.ConnectionPointOutput;
+import org.metamechanists.death_lasers.implementation.abstracts.ConnectedBlock;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,7 +38,9 @@ public class ConnectionGroup {
 
     public void killAllBeams() {
         for (ConnectionPoint point : points.values()) {
-            point.killBeam();
+            if (point instanceof ConnectionPointOutput output) {
+                output.killBeam();
+            }
         }
     }
 

@@ -16,8 +16,8 @@ import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointInput;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointOutput;
-import org.metamechanists.death_lasers.implementation.ConnectedBlock;
-import org.metamechanists.death_lasers.implementation.LaserEmitter;
+import org.metamechanists.death_lasers.implementation.abstracts.ConnectedBlock;
+import org.metamechanists.death_lasers.implementation.blocks.Lens;
 import org.metamechanists.death_lasers.utils.Language;
 import org.metamechanists.death_lasers.utils.PersistentDataUtils;
 
@@ -112,7 +112,10 @@ public class TargetingWand extends SlimefunItem {
         final ConnectedBlock block1 = ConnectionPointStorage.getGroupFromPointLocation(sourcePointLocation).getBlock();
         final ConnectedBlock block2 = ConnectionPointStorage.getGroupFromPointLocation(targetPointLocation).getBlock();
 
-        if (block1.connectionInvalid(sourcePoint, targetPoint) || block2.connectionInvalid(targetPoint, sourcePoint)) {
+        final Location location1 = ConnectionPointStorage.getGroupLocationFromPointLocation(sourcePointLocation);
+        final Location location2 = ConnectionPointStorage.getGroupLocationFromPointLocation(targetPointLocation);
+
+        if (block1.connectionInvalid(location1, sourcePoint, targetPoint) || block2.connectionInvalid(location2, targetPoint, sourcePoint)) {
             player.sendMessage(Language.getLanguageEntry("targeting-wand.connection-invalid"));
             return;
         }
@@ -127,7 +130,7 @@ public class TargetingWand extends SlimefunItem {
     public void use(Player player, Location pointLocation, ItemStack stack) {
         final Location groupLocation = ConnectionPointStorage.getGroupLocationFromPointLocation(pointLocation);
         if (!BlockStorage.hasBlockInfo(groupLocation)
-                || !(BlockStorage.check(groupLocation) instanceof LaserEmitter)
+                || !(BlockStorage.check(groupLocation) instanceof Lens)
                 || !Items.targetingWand.canUse(player, false)
                 || !Slimefun.getProtectionManager().hasPermission(player, player.getLocation(), Interaction.INTERACT_BLOCK)) {
             return;

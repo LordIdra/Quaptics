@@ -17,6 +17,10 @@ public class ConnectionPointInput extends ConnectionPoint {
                 new Display.Brightness(2, 2));
     }
 
+    public ConnectionPointOutput getSourcePoint() {
+        return (ConnectionPointOutput) ConnectionPointStorage.getPointFromPointLocation(source);
+    }
+
     @Override
     public void tick() {}
 
@@ -32,8 +36,6 @@ public class ConnectionPointInput extends ConnectionPoint {
         }
     }
 
-    @Override
-    public void killBeam() {}
 
     public boolean hasLink() {
         return source != null;

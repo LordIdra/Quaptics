@@ -37,7 +37,6 @@ public abstract class ConnectionPoint {
 
     public abstract void tick();
     public abstract void remove();
-    public abstract void killBeam();
 
     public void select() {
         blockDisplay.setGlowing(true);

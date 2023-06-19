@@ -1,4 +1,4 @@
-package org.metamechanists.death_lasers.implementation;
+package org.metamechanists.death_lasers.implementation.abstracts;
 
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
@@ -22,7 +22,6 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
@@ -47,19 +46,17 @@ public abstract class EnergyDisplayGroupBlock extends SimpleSlimefunItem<BlockTi
     protected abstract DisplayGroup generateDisplayGroup(Location location);
     @NotNull
     protected abstract Material getBaseMaterial();
-    @OverridingMethodsMustInvokeSuper
     protected abstract void onPlace(BlockPlaceEvent event);
-    @OverridingMethodsMustInvokeSuper
     protected abstract void onBreak(BlockBreakEvent event);
-    @OverridingMethodsMustInvokeSuper
-    protected abstract void onTick(Block block, SlimefunItem item, Config data);
+
+    protected void onSlimefunTick(Block block, SlimefunItem item, Config data) {}
 
     @Override
     public @NotNull BlockTicker getItemHandler() {
         return new BlockTicker() {
             @Override
             public void tick(Block block, SlimefunItem item, Config data) {
-                onTick(block, item, data);
+                onSlimefunTick(block, item, data);
             }
 
             @Override
@@ -105,23 +102,15 @@ public abstract class EnergyDisplayGroupBlock extends SimpleSlimefunItem<BlockTi
         BlockStorage.addBlockInfo(location, KEY_UUID, displayGroup.getParentUUID().toString());
     }
 
-    @Nullable
     @OverridingMethodsMustInvokeSuper
     public UUID getUUID(@Nonnull Location location) {
         final String uuid = BlockStorage.getLocationInfo(location, KEY_UUID);
-        if (uuid == null) {
-            return null;
-        }
         return UUID.fromString(uuid);
     }
 
-    @Nullable
     @OverridingMethodsMustInvokeSuper
     public DisplayGroup getDisplayGroup(@Nonnull Location location) {
         final UUID uuid = getUUID(location);
-        if (uuid == null) {
-            return null;
-        }
         return DisplayGroup.fromUUID(uuid);
     }
 }

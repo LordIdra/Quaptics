@@ -3,6 +3,8 @@ package org.metamechanists.death_lasers.connections.points;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Display;
+import org.metamechanists.death_lasers.connections.ConnectionGroup;
+import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
 import org.metamechanists.death_lasers.lasers.DeprecatedBeams;
 import org.metamechanists.death_lasers.lasers.beam.Beam;
 import org.metamechanists.death_lasers.lasers.beam.DirectBlockDisplayBeam;
@@ -39,11 +41,23 @@ public class ConnectionPointOutput extends ConnectionPoint {
         }
     }
 
-    @Override
     public void killBeam() {
         if (beam != null) {
             beam.remove();
         }
+    }
+
+    public void setPowered(boolean powered) {
+        this.beam.setPowered(powered);
+        final ConnectionGroup targetGroup = ConnectionPointStorage.getGroupFromPointLocation(target.location);
+        targetGroup.getBlock().onInputUpdated(target);
+    }
+
+    public boolean isPowered() {
+        if (beam == null) {
+            return false;
+        }
+        return beam.isPowered();
     }
 
     public boolean hasLink() {
@@ -62,7 +76,6 @@ public class ConnectionPointOutput extends ConnectionPoint {
                         Material.WHITE_CONCRETE,
                         this.location,
                         target.location));
-        beam.setPowered(true);
     }
 
     public void unlink() {
