@@ -55,7 +55,7 @@ public class DisplayUtils {
         final float horizontalRotation = DisplayUtils.getHorizontalRotation(from, to);
 
         final Vector3f offset = new Vector3f(-scale.x/2, -scale.y/2, -scale.z/2)
-                .rotateX(verticalRotation);
+                .rotateZ(verticalRotation);
                 //.rotateAxis(verticalRotation, (float)Math.cos(horizontalRotation), 0, -(float)Math.sin(horizontalRotation));
         final Vector3f rotatedScale = new Vector3f(scale);
         return new Transformation(
