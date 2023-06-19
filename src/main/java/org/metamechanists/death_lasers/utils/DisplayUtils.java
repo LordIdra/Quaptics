@@ -59,9 +59,9 @@ public class DisplayUtils {
                 .rotateAxis(verticalRotation, (float)Math.cos(horizontalRotation), 0, -(float)Math.sin(horizontalRotation));
         return new Transformation(
                 offset,
-                new AxisAngle4f(verticalRotation, 1, 0, 0),
+                new AxisAngle4f(horizontalRotation, 0, 1, 0),
                 scale,
-                new AxisAngle4f(horizontalRotation, 0, 1, 0));
+                new AxisAngle4f(verticalRotation, 1, 0, 0));
 
         //final float verticalRotation = DisplayUtils.getVerticalRotation(from, to);
         //final float horizontalRotation = DisplayUtils.getHorizontalRotation(from, to);
