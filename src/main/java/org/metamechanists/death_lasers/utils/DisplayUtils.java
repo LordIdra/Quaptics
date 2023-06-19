@@ -6,6 +6,7 @@ import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Interaction;
 import org.bukkit.util.Transformation;
 import org.bukkit.util.Vector;
+import org.joml.AxisAngle4f;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
@@ -48,19 +49,19 @@ public class DisplayUtils {
         return verticalRotation;
     }
 
-    public static Matrix4f faceTargetTransformation(Location from, Location to, Vector3f scale) {
+    public static Transformation faceTargetTransformation(Location from, Location to, Vector3f scale) {
         // Rotate the display entity so that one of the blockfaces face 'to'
-        //final float verticalRotation = DisplayUtils.getVerticalRotation(from, to);
-        //final float horizontalRotation = DisplayUtils.getHorizontalRotation(from, to);
+        final float verticalRotation = DisplayUtils.getVerticalRotation(from, to);
+        final float horizontalRotation = DisplayUtils.getHorizontalRotation(from, to);
 
-        //final Vector3f offset = new Vector3f(-scale.x/2, -scale.y/2, -scale.z/2)
-        //        .rotateY(horizontalRotation)
-        //        .rotateAxis(verticalRotation, (float)Math.cos(horizontalRotation), 0, -(float)Math.sin(horizontalRotation));
-        //return new Transformation(
-        //        offset,
-        //        new AxisAngle4f(horizontalRotation, 0, 1, 0),
-        //        scale,
-        //        new AxisAngle4f(verticalRotation, 1, 0, 0));
+        final Vector3f offset = new Vector3f(-scale.x/2, -scale.y/2, -scale.z/2)
+                .rotateY(horizontalRotation)
+                .rotateAxis(verticalRotation, (float)Math.cos(horizontalRotation), 0, -(float)Math.sin(horizontalRotation));
+        return new Transformation(
+                offset,
+                new AxisAngle4f(horizontalRotation, 0, 1, 0),
+                scale,
+                new AxisAngle4f(verticalRotation, 1, 0, 0));
 
         //final float verticalRotation = DisplayUtils.getVerticalRotation(from, to);
         //final float horizontalRotation = DisplayUtils.getHorizontalRotation(from, to);
@@ -68,14 +69,13 @@ public class DisplayUtils {
         // -z not fine
         //
 
-        final Vector3f direction = getDirection(from, to).toVector3f();
-        final Vector3f directionAdjustedForBukkitWeirdness = new Vector3f(-direction.x, direction.y, -direction.z);
+        //final Vector3f direction = getDirection(from, to).toVector3f();
+        //final Vector3f directionAdjustedForBukkitWeirdness = new Vector3f(-direction.x, direction.y, -direction.z);
 
-        return new Matrix4f()
-                //.translate(new Vector3f(scale).div(-2))   
-                .scale(scale)
-                .lookAlong(directionAdjustedForBukkitWeirdness, UP_VECTOR);
-
+        //return new Matrix4f()
+        //        //.translate(new Vector3f(scale).div(-2))
+        //        .scale(scale)
+        //        .lookAlong(directionAdjustedForBukkitWeirdness, UP_VECTOR);
     }
 
     public static Matrix4f simpleScaleTransformation(Vector3f scale) {
