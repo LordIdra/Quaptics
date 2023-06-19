@@ -20,7 +20,7 @@ public class ScaryMathsTicker extends BukkitRunnable {
 
         if (display == null || display.isDead()) {
             display = DisplayUtils.spawnBlockDisplay(location, Material.DISPENSER,
-                    DisplayUtils.faceTargetTransformation(location, target, new Vector3f(1.0F, 1.0F, 1.0F)));
+                    DisplayUtils.faceTargetTransformation(location, target, new Vector3f(0.2F, 0.2F, 1.0F)));
         } else {
             display.setTransformationMatrix(DisplayUtils.faceTargetTransformation(location, target, new Vector3f(1.0F, 1.0F, 1.0F)));
         }
