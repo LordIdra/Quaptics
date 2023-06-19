@@ -108,8 +108,8 @@ public class TargetingWand extends SlimefunItem {
             return;
         }
 
-        if (!Items.linearTimeEmitter.connectionValid(sourcePoint, targetPoint) || !Items.linearTimeEmitter.connectionValid(targetPoint, sourcePoint)) {
-            player.sendMessage(Language.getLanguageEntry("targeting-wand.cannot-correct"));
+        if (Items.linearTimeEmitter.connectionInvalid(sourcePoint, targetPoint) || Items.linearTimeEmitter.connectionInvalid(targetPoint, sourcePoint)) {
+            player.sendMessage(Language.getLanguageEntry("targeting-wand.connection-invalid"));
             return;
         }
 
