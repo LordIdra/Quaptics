@@ -90,6 +90,9 @@ public class ConnectionPointOutput extends ConnectionPoint {
         this.target = target;
         this.target.link(this);
         blockDisplay.setBrightness(connectedBrightness);
+
+        final ConnectionGroup sourceGroup = ConnectionPointStorage.getGroupFromPointLocation(location);
+        sourceGroup.getBlock().onNodeUpdated(this);
     }
 
     public void unlink() {
@@ -98,5 +101,8 @@ public class ConnectionPointOutput extends ConnectionPoint {
         blockDisplay.setBrightness(disconnectedBrightness);
         DeprecatedBeams.add(beam);
         beam = null;
+
+        final ConnectionGroup sourceGroup = ConnectionPointStorage.getGroupFromPointLocation(location);
+        sourceGroup.getBlock().onNodeUpdated(this);
     }
 }

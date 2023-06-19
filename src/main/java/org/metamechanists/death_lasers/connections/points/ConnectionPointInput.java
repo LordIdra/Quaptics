@@ -18,7 +18,6 @@ public class ConnectionPointInput extends ConnectionPoint {
                 new Display.Brightness(2, 2));
     }
 
-
     @Override
     public void tick() {}
 
@@ -33,7 +32,6 @@ public class ConnectionPointInput extends ConnectionPoint {
         }
     }
 
-
     public boolean hasLink() {
         return source != null;
     }
@@ -41,12 +39,16 @@ public class ConnectionPointInput extends ConnectionPoint {
     public void link(ConnectionPointOutput source) {
         this.source = source;
         blockDisplay.setBrightness(connectedBrightness);
-        final ConnectionGroup sourceGroup = ConnectionPointStorage.getGroupFromPointLocation(source.getLocation());
-        sourceGroup.getBlock().onNodeUpdated(source);
+
+        final ConnectionGroup sourceGroup = ConnectionPointStorage.getGroupFromPointLocation(location);
+        sourceGroup.getBlock().onNodeUpdated(this);
     }
 
     public void unlink() {
         this.source = null;
         blockDisplay.setBrightness(disconnectedBrightness);
+
+        final ConnectionGroup sourceGroup = ConnectionPointStorage.getGroupFromPointLocation(location);
+        sourceGroup.getBlock().onNodeUpdated(this);
     }
 }
