@@ -79,8 +79,8 @@ public class DisplayUtils {
         float angleY = (float) Math.atan2(direction.x, direction.z);
         float angleX = (float) Math.atan2(direction.y, Math.sqrt(direction.x * direction.x + direction.z * direction.z));
 
-        Matrix4f rotationYMatrix = new Matrix4f().rotateY(-angleY);
-        Matrix4f rotationXMatrix = new Matrix4f().rotateX(angleX);
+        Matrix4f rotationYMatrix = new Matrix4f().rotateY(angleY);
+        Matrix4f rotationXMatrix = new Matrix4f().rotateX(-angleX);
 
         return new Matrix4f().mul(rotationYMatrix).mul(rotationXMatrix).translate(new Vector3f(scale).div(-2));
     }
