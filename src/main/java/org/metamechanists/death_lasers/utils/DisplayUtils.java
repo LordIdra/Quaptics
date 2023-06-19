@@ -69,12 +69,20 @@ public class DisplayUtils {
         //final float horizontalRotation = DisplayUtils.getHorizontalRotation(from, to);
 
         final Vector3f direction = getDirection(from, to).toVector3f();
-        final Vector3f directionAdjustedForBukkitWeirdness = new Vector3f(-direction.x, direction.y, -direction.z);
+        //final Vector3f directionAdjustedForBukkitWeirdness = new Vector3f(direction.x, direction.y, direction.z);
 
-        return new Matrix4f()
-                .scale(scale)
-                .lookAt(new Vector3f(), new Vector3f().add(directionAdjustedForBukkitWeirdness), new Vector3f(0, 1, 0))
-                .translate(new Vector3f(scale).div(-2));
+        //return new Matrix4f()
+        //        .scale(scale)
+        //        .lookAt(new Vector3f(), new Vector3f().add(directionAdjustedForBukkitWeirdness), new Vector3f(0, 1, 0))
+        //        .translate(new Vector3f(scale).div(-2));
+
+        float angleY = (float) Math.atan2(direction.x, direction.z);
+        float angleX = (float) Math.atan2(direction.y, Math.sqrt(direction.x * direction.x + direction.z * direction.z));
+
+        Matrix4f rotationYMatrix = new Matrix4f().rotateY(-angleY);
+        Matrix4f rotationXMatrix = new Matrix4f().rotateX(-angleX);
+
+        return new Matrix4f().mul(rotationYMatrix).mul(rotationXMatrix);
     }
 
     public static Matrix4f simpleScaleTransformation(Vector3f scale) {
