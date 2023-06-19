@@ -38,7 +38,7 @@ public class Emitter extends ConnectedBlock {
     private BlockDisplay generateMainBlockDisplay(Location from, Location to) {
         return DisplayUtils.spawnBlockDisplay(
                 from.clone().add(0.5, 0.5, 0.5),
-                Material.GLASS,
+                Material.PURPLE_CONCRETE,
                 DisplayUtils.faceTargetTransformation(from, to, new Vector3f(0.3F, 0.3F, 0.9F)));
     }
 
@@ -89,7 +89,7 @@ public class Emitter extends ConnectedBlock {
         final Location toGroupLocation = ConnectionPointStorage.getGroupLocationFromPointLocation(to.getLocation());
         final DisplayGroup fromDisplayGroup = getDisplayGroup(fromGroupLocation);
 
-        fromDisplayGroup.removeDisplay("main");
+        fromDisplayGroup.removeDisplay("main").remove();
         fromDisplayGroup.addDisplay("main", generateMainBlockDisplay(fromGroupLocation, toGroupLocation));
     }
 
