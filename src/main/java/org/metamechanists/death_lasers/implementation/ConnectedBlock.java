@@ -16,6 +16,7 @@ import org.metamechanists.death_lasers.connections.ConnectionGroup;
 import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
 
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.util.Map;
 
 public abstract class ConnectedBlock extends EnergyDisplayGroupBlock {
@@ -54,6 +55,14 @@ public abstract class ConnectedBlock extends EnergyDisplayGroupBlock {
         }
     }
 
-    public abstract boolean connectionInvalid(ConnectionPoint from, ConnectionPoint to);
+    @OverridingMethodsMustInvokeSuper
+    public boolean connectionInvalid(Location blockLocation, ConnectionPoint from, ConnectionPoint to) {
+        if (blockLocation == calculateNewLocation(from, to)) {
+            return false;
+        }
+        return ConnectionPointStorage.hasConnectionPoint(calculateNewLocation(from, to));
+    }
+
+    protected abstract Location calculateNewLocation(ConnectionPoint from, ConnectionPoint to);
     public abstract void connect(ConnectionPoint from, ConnectionPoint to);
 }

@@ -58,16 +58,12 @@ public class LaserEmitter extends ConnectedBlock {
         return displayGroup;
     }
 
-    private Location calculateNewLocation(ConnectionPoint from, ConnectionPoint to) {
+    @Override
+    protected Location calculateNewLocation(ConnectionPoint from, ConnectionPoint to) {
         final Location fromGroupLocation = ConnectionPointStorage.getGroupLocationFromPointLocation(from.getLocation());
         final Location toGroupLocation = ConnectionPointStorage.getGroupLocationFromPointLocation(to.getLocation());
         final Vector radiusDirection = DisplayUtils.getDirection(fromGroupLocation, toGroupLocation).multiply(RADIUS);
         return fromGroupLocation.clone().add(0.5, 0.5, 0.5).add(radiusDirection);
-    }
-
-    @Override
-    public boolean connectionInvalid(ConnectionPoint from, ConnectionPoint to) {
-        return ConnectionPointStorage.hasConnectionPoint(calculateNewLocation(from, to));
     }
 
     @Override
