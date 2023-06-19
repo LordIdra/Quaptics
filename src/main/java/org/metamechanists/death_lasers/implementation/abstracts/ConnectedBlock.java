@@ -48,7 +48,7 @@ public abstract class ConnectedBlock extends EnergyDisplayGroupBlock {
     @OverridingMethodsMustInvokeSuper
     public boolean connectionInvalid(ConnectionPoint from, ConnectionPoint to) {
         Location x = calculateNewLocation(from, to);
-        if (from.getLocation() == calculateNewLocation(from, to)) {
+        if (from.getLocation().distance(calculateNewLocation(from, to)) < 0.000001F) {
             return false;
         }
         return ConnectionPointStorage.hasConnectionPoint(calculateNewLocation(from, to));
