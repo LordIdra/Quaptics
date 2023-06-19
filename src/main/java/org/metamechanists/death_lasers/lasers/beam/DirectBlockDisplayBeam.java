@@ -20,17 +20,23 @@ public class DirectBlockDisplayBeam extends Beam {
     public void remove() {
         if (ticker != null) {
             ticker.remove();
+            ticker = null;
         }
     }
 
     @Override
-    public void tick() {
+    public void setPowered(boolean powered) {
+        super.setPowered(powered);
+
         if (powered && ticker == null) {
             ticker = tickerFactory.build();
         }
 
         if (!powered && ticker != null) {
-            ticker = null;
+            remove();
         }
     }
+
+    @Override
+    public void tick() {}
 }
