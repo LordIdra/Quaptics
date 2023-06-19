@@ -34,19 +34,15 @@ public class DisplayUtils {
     }
 
     public static Matrix4f faceTargetTransformation(Location from, Location to, Vector3f scale) {
-        final Vector3f direction = getDirection(from, to).toVector3f();
-        direction.mul(-1);
+        final Vector3f direction = getDirection(to, from).toVector3f();
 
-        float angleY = (float) Math.atan2(direction.x, direction.z);
-        float angleX = (float) Math.atan2(direction.y, Math.sqrt(direction.x * direction.x + direction.z * direction.z));
-
-        Matrix4f rotationYMatrix = new Matrix4f().rotateY(angleY);
-        Matrix4f rotationXMatrix = new Matrix4f().rotateX(-angleX);
+        final float angleY = (float) Math.atan2(direction.x, direction.z);
+        final float angleX = (float) Math.atan2(direction.y, Math.sqrt(direction.x*direction.x + direction.z*direction.z));
 
         return new Matrix4f()
-                .translate(calculateHitboxAdjustmentTranslation(scale, new Matrix4f().mul(rotationYMatrix).mul(rotationXMatrix).scale(scale)))
-                .mul(rotationYMatrix)
-                .mul(rotationXMatrix)
+                .translate(calculateHitboxAdjustmentTranslation(scale, new Matrix4f().rotateY(angleY).rotateX(-angleX).scale(scale)))
+                .rotateY(angleY)
+                .rotateX(-angleX)
                 .scale(scale);
     }
 
