@@ -48,19 +48,28 @@ public class ConnectionPointOutput extends ConnectionPoint {
     }
 
     public void setPowered(boolean powered) {
-        if (!powered || !hasLink()) {
+        if (!hasLink()) {
             return;
         }
 
-        this.beam = new DirectBlockDisplayBeam(
-                new DirectSinglePulseTickerFactory(
-                        Material.WHITE_CONCRETE,
-                        this.location,
-                        this.target.location));
-        this.beam.setPowered(true);
+        if (!powered) {
+            if (beam != null) {
+                DeprecatedBeams.add(beam);
+                beam = null;
+            }
+            return;
+        }
 
-        final ConnectionGroup targetGroup = ConnectionPointStorage.getGroupFromPointLocation(target.location);
-        targetGroup.getBlock().onInputUpdated(target);
+        if (beam == null) {
+            this.beam = new DirectBlockDisplayBeam(
+                    new DirectSinglePulseTickerFactory(
+                            Material.WHITE_CONCRETE,
+                            this.location,
+                            this.target.location));
+            this.beam.setPowered(true);
+            final ConnectionGroup targetGroup = ConnectionPointStorage.getGroupFromPointLocation(target.location);
+            targetGroup.getBlock().onInputUpdated(target);
+        }
     }
 
     public boolean isPowered() {
