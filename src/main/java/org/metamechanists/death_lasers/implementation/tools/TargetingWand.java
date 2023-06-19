@@ -108,7 +108,13 @@ public class TargetingWand extends SlimefunItem {
             return;
         }
 
-        if (Items.linearTimeEmitter.connectionInvalid(sourcePoint, targetPoint) || Items.linearTimeEmitter.connectionInvalid(targetPoint, sourcePoint)) {
+        // TODO make Items.linearTimeEmitter generic
+        final Location newLocation1 = Items.linearTimeEmitter.calculateNewLocation(sourcePoint, targetPoint);
+        final Location newLocation2 = Items.linearTimeEmitter.calculateNewLocation(sourcePoint, targetPoint);
+
+        if (ConnectionPointStorage.hasConnectionPoint(newLocation1)
+                || ConnectionPointStorage.hasConnectionPoint(newLocation2)
+                || newLocation1 == newLocation2) {
             player.sendMessage(Language.getLanguageEntry("targeting-wand.connection-invalid"));
             return;
         }
