@@ -108,7 +108,7 @@ public class TargetingWand extends SlimefunItem {
             return;
         }
 
-        if (!Items.linearTimeEmitter.canConnect(sourcePoint, targetPoint) || !Items.linearTimeEmitter.canConnect(targetPoint, sourcePoint)) {
+        if (!Items.linearTimeEmitter.connectionValid(sourcePoint, targetPoint) || !Items.linearTimeEmitter.connectionValid(targetPoint, sourcePoint)) {
             player.sendMessage(Language.getLanguageEntry("targeting-wand.cannot-correct"));
             return;
         }

@@ -65,7 +65,7 @@ public class LaserEmitter extends ConnectedBlock {
     }
 
     @Override
-    public boolean canConnect(ConnectionPoint from, ConnectionPoint to) {
+    public boolean connectionValid(ConnectionPoint from, ConnectionPoint to) {
         return ConnectionPointStorage.hasConnectionPoint(calculateNewLocation(from, to));
     }
 
