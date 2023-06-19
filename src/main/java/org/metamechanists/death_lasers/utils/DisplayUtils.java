@@ -72,7 +72,7 @@ public class DisplayUtils {
         return new Matrix4f()
                 //.translate(new Vector3f(scale).div(-2))   
                 .scale(scale)
-                .lookAt(new Vector3f(0, 0, 0).add(direction), new Vector3f(0, 0, 0), UP_VECTOR);
+                .lookAlong(direction, UP_VECTOR);
 
     }
 
