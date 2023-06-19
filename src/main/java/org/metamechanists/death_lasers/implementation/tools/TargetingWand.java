@@ -69,7 +69,7 @@ public class TargetingWand extends SlimefunItem {
                 player.sendMessage(Language.getLanguageEntry("targeting-wand.not-linked"));
                 return;
             }
-            final ConnectionPointOutput outputPoint = (ConnectionPointOutput) ConnectionPointStorage.getPointFromPointLocation(inputPoint.getSource());
+            final ConnectionPointOutput outputPoint = inputPoint.getSource();
             if (outputPoint != null) {
                 outputPoint.unlink();
             }
