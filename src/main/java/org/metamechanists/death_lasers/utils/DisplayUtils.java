@@ -68,11 +68,13 @@ public class DisplayUtils {
         // -z not fine
         //
 
-        final Vector3f direction = getDirection(from, to).toVector3f().cross(UP_VECTOR);
+        final Vector3f direction = getDirection(from, to).toVector3f();
+        final Vector3f directionAdjustedForBukkitWeirdness = new Vector3f(direction.z, direction.y, direction.x);
+
         return new Matrix4f()
                 //.translate(new Vector3f(scale).div(-2))   
                 .scale(scale)
-                .lookAlong(direction, UP_VECTOR);
+                .lookAlong(directionAdjustedForBukkitWeirdness, UP_VECTOR);
 
     }
 
