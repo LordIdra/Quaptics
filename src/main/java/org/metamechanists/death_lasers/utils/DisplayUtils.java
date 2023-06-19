@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DisplayUtils {
-    private static final Vector3f UP_VECTOR = new Vector3f(0, -1, 0);
+    private static final Vector3f UP_VECTOR = new Vector3f(0, 1, 0);
     private static final List<Vector3f> BLOCK_VERTICES = new ArrayList<>();
     static {{
         BLOCK_VERTICES.add(new Vector3f(0, 0, 0));
@@ -72,7 +72,7 @@ public class DisplayUtils {
         return new Matrix4f()
                 //.translate(new Vector3f(scale).div(-2))   
                 .scale(scale)
-                .lookAt(new Vector3f(0, 0, 0), new Vector3f(0, 0, 0).add(direction), UP_VECTOR);
+                .lookAt(new Vector3f(0, 0, 0).add(direction), new Vector3f(0, 0, 0), UP_VECTOR);
 
     }
 
