@@ -74,7 +74,7 @@ public class DisplayUtils {
         return new Matrix4f()
                 .scale(scale)
                 .lookAt(new Vector3f(), new Vector3f().add(direction), new Vector3f(0, 1, 0))
-                .translate(new Vector3f(scale).div(2));
+                .translate(new Vector3f(scale).div(-2));
     }
 
     public static Matrix4f simpleScaleTransformation(Vector3f scale) {
