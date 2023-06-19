@@ -1,9 +1,8 @@
-package org.metamechanists.death_lasers.lasers.ticker.factory.direct;
+package org.metamechanists.death_lasers.lasers.ticker.factory;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.metamechanists.death_lasers.lasers.ticker.factory.LaserBlockDisplayTickerFactory;
-import org.metamechanists.death_lasers.lasers.ticker.ticker.direct.DirectSinglePulseTicker;
+import org.metamechanists.death_lasers.lasers.ticker.ticker.DirectSinglePulseTicker;
 
 public class DirectSinglePulseTickerFactory implements LaserBlockDisplayTickerFactory {
     private final Material material;

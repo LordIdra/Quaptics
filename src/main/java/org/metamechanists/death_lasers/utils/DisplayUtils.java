@@ -33,23 +33,6 @@ public class DisplayUtils {
         return getDisplacement(from, to).normalize();
     }
 
-    public static Matrix4f faceTargetTransformation(Location from, Location to, Vector3f scale) {
-        final Vector3f direction = getDirection(to, from).toVector3f();
-
-        final float angleY = (float) Math.atan2(direction.x, direction.z);
-        final float angleX = (float) Math.atan2(direction.y, Math.sqrt(direction.x*direction.x + direction.z*direction.z));
-
-        return new Matrix4f()
-                .translate(calculateHitboxAdjustmentTranslation(scale, new Matrix4f().rotateY(angleY).rotateX(-angleX).scale(scale)))
-                .rotateY(angleY)
-                .rotateX(-angleX)
-                .scale(scale);
-    }
-
-    public static Matrix4f simpleScaleTransformation(Vector3f scale) {
-        return new Matrix4f().translate(-scale.x/2, -scale.y/2, -scale.z/2).scale(scale);
-    }
-
     private static Vector3f calculateHitboxAdjustmentTranslation(Vector3f scale, Matrix4f matrix) {
         // When we rotate a block, the hitbox in X, Y, and Z changes
         // We need to account for this change to center the block
@@ -73,6 +56,22 @@ public class DisplayUtils {
         });
 
         return max.add(min).div(-2);
+    }
+
+    public static Matrix4f faceTargetTransformation(Location from, Location to, Vector3f scale) {
+        final Vector3f direction = getDirection(to, from).toVector3f();
+        final float angleY = (float) Math.atan2(direction.x, direction.z);
+        final float angleX = (float) Math.atan2(direction.y, Math.sqrt(direction.x*direction.x + direction.z*direction.z));
+        final Matrix4f hitboxMatrix = new Matrix4f().rotateY(angleY).rotateX(-angleX).scale(scale);
+        return new Matrix4f()
+                .translate(calculateHitboxAdjustmentTranslation(scale, hitboxMatrix))
+                .rotateY(angleY)
+                .rotateX(-angleX)
+                .scale(scale);
+    }
+
+    public static Matrix4f simpleScaleTransformation(Vector3f scale) {
+        return new Matrix4f().translate(-scale.x/2, -scale.y/2, -scale.z/2).scale(scale);
     }
 
     public static Matrix4f rotationTransformation(Vector3f scale, Vector3f rotationInRadians) {

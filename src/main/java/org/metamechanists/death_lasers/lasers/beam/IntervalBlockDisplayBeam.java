@@ -2,7 +2,7 @@ package org.metamechanists.death_lasers.lasers.beam;
 
 import org.metamechanists.death_lasers.lasers.SpawnTimer;
 import org.metamechanists.death_lasers.lasers.ticker.factory.LaserBlockDisplayTickerFactory;
-import org.metamechanists.death_lasers.lasers.ticker.factory.interval.IntervalLinearTimeTickerFactory;
+import org.metamechanists.death_lasers.lasers.ticker.factory.IntervalLinearTimeTickerFactory;
 import org.metamechanists.death_lasers.lasers.ticker.ticker.LaserBlockDisplayTicker;
 
 import java.util.Queue;

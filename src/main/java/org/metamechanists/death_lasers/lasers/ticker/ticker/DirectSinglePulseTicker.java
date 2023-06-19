@@ -1,10 +1,9 @@
-package org.metamechanists.death_lasers.lasers.ticker.ticker.direct;
+package org.metamechanists.death_lasers.lasers.ticker.ticker;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.BlockDisplay;
 import org.joml.Vector3f;
-import org.metamechanists.death_lasers.lasers.ticker.ticker.LaserBlockDisplayTicker;
 import org.metamechanists.death_lasers.utils.DisplayUtils;
 
 public class DirectSinglePulseTicker implements LaserBlockDisplayTicker {
@@ -14,8 +13,9 @@ public class DirectSinglePulseTicker implements LaserBlockDisplayTicker {
 
     public DirectSinglePulseTicker(Material material, Location source, Location target) {
         final Location midpoint = source.clone().add(target).multiply(0.5);
+        final Vector3f scale = new Vector3f(SCALE, SCALE, (float)(source.distance(target)));
         this.display = DisplayUtils.spawnBlockDisplay(midpoint, material,
-                DisplayUtils.faceTargetTransformation(midpoint, target, new Vector3f(SCALE, SCALE, (float) (source.distance(target)))));
+                DisplayUtils.faceTargetTransformation(midpoint, target, scale));
     }
 
     @Override

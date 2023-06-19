@@ -1,9 +1,8 @@
-package org.metamechanists.death_lasers.lasers.ticker.factory.interval;
+package org.metamechanists.death_lasers.lasers.ticker.factory;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.metamechanists.death_lasers.lasers.ticker.factory.LaserBlockDisplayTickerFactory;
-import org.metamechanists.death_lasers.lasers.ticker.ticker.interval.IntervalLinearTimeTicker;
+import org.metamechanists.death_lasers.lasers.ticker.ticker.IntervalLinearTimeTicker;
 
 public class IntervalLinearTimeTickerFactory implements LaserBlockDisplayTickerFactory {
     private final Material material;

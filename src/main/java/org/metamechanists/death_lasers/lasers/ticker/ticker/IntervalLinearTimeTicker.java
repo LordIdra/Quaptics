@@ -1,4 +1,4 @@
-package org.metamechanists.death_lasers.lasers.ticker.ticker.interval;
+package org.metamechanists.death_lasers.lasers.ticker.ticker;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
