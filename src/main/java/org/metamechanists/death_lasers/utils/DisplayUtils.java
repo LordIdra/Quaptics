@@ -68,7 +68,7 @@ public class DisplayUtils {
         // -z not fine
         //
 
-        final Vector3f direction = getDirection(from, to).toVector3f();
+        final Vector3f direction = getDirection(from, to).toVector3f().mul(-1);
         return new Matrix4f()
                 //.translate(new Vector3f(scale).div(-2))   
                 .scale(scale)
