@@ -62,7 +62,7 @@ public class ConnectionPointOutput extends ConnectionPoint {
         beam = new IntervalBlockDisplayBeam(
                 new IntervalLinearTimeTickerFactory(
                         Material.WHITE_CONCRETE,
-                        this.location.clone().subtract(new Vector(SCALE/2, SCALE/2, SCALE/2)),
+                        this.location.clone().add(new Vector(SCALE/2, -SCALE/2, SCALE/2)),
                         target.location,
                         100),
                 new SpawnTimer(20));
