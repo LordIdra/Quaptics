@@ -26,6 +26,7 @@ public class LaserEmitter extends ConnectedBlock {
     private final EnergyNetComponentType energyComponentType = EnergyNetComponentType.CONSUMER;
     private static final Vector INPUT_VECTOR = new Vector(0.5F, 0.5F, 0.0F);
     private static final Vector OUTPUT_VECTOR = new Vector(0.5F, 0.5F, 1.0F);
+    private static final float RADIUS = 0.45F;
     private static final float SCALE = 0.3F;
 
     public LaserEmitter(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, int capacity, int consumption) {
@@ -57,12 +58,16 @@ public class LaserEmitter extends ConnectedBlock {
         return displayGroup;
     }
 
-    @Override
-    public Location calculateNewLocation(ConnectionPoint from, ConnectionPoint to) {
+    private Location calculateNewLocation(ConnectionPoint from, ConnectionPoint to) {
         final Location fromGroupLocation = ConnectionPointStorage.getGroupLocationFromPointLocation(from.getLocation());
         final Location toGroupLocation = ConnectionPointStorage.getGroupLocationFromPointLocation(to.getLocation());
-        final Vector radiusDirection = DisplayUtils.getDirection(fromGroupLocation, toGroupLocation).multiply(0.5);
+        final Vector radiusDirection = DisplayUtils.getDirection(fromGroupLocation, toGroupLocation).multiply(RADIUS);
         return fromGroupLocation.clone().add(0.5, 0.5, 0.5).add(radiusDirection);
+    }
+
+    @Override
+    public boolean connectionInvalid(ConnectionPoint from, ConnectionPoint to) {
+        return ConnectionPointStorage.hasConnectionPoint(calculateNewLocation(from, to));
     }
 
     @Override

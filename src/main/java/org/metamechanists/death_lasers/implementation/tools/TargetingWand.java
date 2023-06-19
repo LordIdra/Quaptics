@@ -112,12 +112,7 @@ public class TargetingWand extends SlimefunItem {
         final ConnectedBlock block1 = ConnectionPointStorage.getGroupFromPointLocation(sourcePointLocation).getBlock();
         final ConnectedBlock block2 = ConnectionPointStorage.getGroupFromPointLocation(targetPointLocation).getBlock();
 
-        final Location newLocation1 = block1.calculateNewLocation(sourcePoint, targetPoint);
-        final Location newLocation2 = block2.calculateNewLocation(targetPoint, sourcePoint);
-
-        if (ConnectionPointStorage.hasConnectionPoint(newLocation1)
-                || ConnectionPointStorage.hasConnectionPoint(newLocation2)
-                || newLocation1 == newLocation2) {
+        if (block1.connectionInvalid(sourcePoint, targetPoint) || block2.connectionInvalid(targetPoint, sourcePoint)) {
             player.sendMessage(Language.getLanguageEntry("targeting-wand.connection-invalid"));
             return;
         }

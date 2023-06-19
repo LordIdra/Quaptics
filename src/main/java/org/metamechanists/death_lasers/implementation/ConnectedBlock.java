@@ -54,6 +54,6 @@ public abstract class ConnectedBlock extends EnergyDisplayGroupBlock {
         }
     }
 
-    public abstract Location calculateNewLocation(ConnectionPoint from, ConnectionPoint to);
+    public abstract boolean connectionInvalid(ConnectionPoint from, ConnectionPoint to);
     public abstract void connect(ConnectionPoint from, ConnectionPoint to);
 }
