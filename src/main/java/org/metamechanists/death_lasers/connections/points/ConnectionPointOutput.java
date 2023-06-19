@@ -48,7 +48,15 @@ public class ConnectionPointOutput extends ConnectionPoint {
     }
 
     public void setPowered(boolean powered) {
-        this.beam.setPowered(powered);
+        if (powered && hasLink()) {
+            this.beam = new DirectBlockDisplayBeam(
+                    new DirectSinglePulseTickerFactory(
+                            Material.WHITE_CONCRETE,
+                            this.location,
+                            target.location));
+            this.beam.setPowered(true);
+        }
+
         final ConnectionGroup targetGroup = ConnectionPointStorage.getGroupFromPointLocation(target.location);
         targetGroup.getBlock().onInputUpdated(target);
     }
@@ -71,11 +79,6 @@ public class ConnectionPointOutput extends ConnectionPoint {
         this.target = target;
         this.target.link(this.location);
         blockDisplay.setBrightness(connectedBrightness);
-        beam = new DirectBlockDisplayBeam(
-                new DirectSinglePulseTickerFactory(
-                        Material.WHITE_CONCRETE,
-                        this.location,
-                        target.location));
     }
 
     public void unlink() {
