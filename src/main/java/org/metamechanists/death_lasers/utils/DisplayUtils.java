@@ -47,7 +47,7 @@ public class DisplayUtils {
                 .mul(rotationYMatrix)
                 .mul(rotationXMatrix)
                 .scale(scale)
-                .translate(new Vector3f(scale).div(-2));
+                .translate(calculateHitboxAdjustmentTranslation(scale, new Vector3f(angleX, angleY, 0)));
     }
 
     public static Matrix4f simpleScaleTransformation(Vector3f scale) {
