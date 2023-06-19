@@ -8,7 +8,6 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.attributes.EnergyNetComponent;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
-import io.github.thebusybiscuit.slimefun4.implementation.items.SimpleSlimefunItem;
 import lombok.Getter;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
@@ -29,7 +28,7 @@ import java.util.UUID;
 
 import static dev.sefiraat.sefilib.slimefun.blocks.DisplayGroupBlock.KEY_UUID;
 
-public abstract class EnergyDisplayGroupBlock extends SimpleSlimefunItem<BlockTicker> implements EnergyNetComponent {
+public abstract class EnergyDisplayGroupBlock extends SlimefunItem implements EnergyNetComponent {
     @Getter
     protected final int capacity;
     protected final int consumption;
@@ -50,21 +49,6 @@ public abstract class EnergyDisplayGroupBlock extends SimpleSlimefunItem<BlockTi
     protected abstract void onBreak(BlockBreakEvent event);
 
     protected void onSlimefunTick(Block block, SlimefunItem item, Config data) {}
-
-    @Override
-    public @NotNull BlockTicker getItemHandler() {
-        return new BlockTicker() {
-            @Override
-            public void tick(Block block, SlimefunItem item, Config data) {
-                onSlimefunTick(block, item, data);
-            }
-
-            @Override
-            public boolean isSynchronized() {
-                return true;
-            }
-        };
-    }
 
     @Override
     @OverridingMethodsMustInvokeSuper
@@ -93,6 +77,18 @@ public abstract class EnergyDisplayGroupBlock extends SimpleSlimefunItem<BlockTi
                         displayGroup.remove();
                         event.getBlock().setType(Material.AIR);
                         onBreak(event);
+                    }
+                },
+
+                new BlockTicker() {
+                    @Override
+                    public void tick(Block block, SlimefunItem item, Config data) {
+                        onSlimefunTick(block, item, data);
+                    }
+
+                    @Override
+                    public boolean isSynchronized() {
+                        return true;
                     }
                 }
         );
