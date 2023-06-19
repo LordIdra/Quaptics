@@ -85,9 +85,9 @@ public class DisplayUtils {
         Matrix4f rotationXMatrix = new Matrix4f().rotateX(-angleX);
 
         return new Matrix4f()
-                .scale(scale)
                 .mul(rotationYMatrix)
                 .mul(rotationXMatrix)
+                .scale(scale)
                 .translate(new Vector3f(scale).div(-2));
     }
 
