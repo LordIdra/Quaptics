@@ -73,7 +73,7 @@ public class DisplayUtils {
 
         return new Matrix4f()
                 .scale(scale)
-                .lookAt(new Vector3f(), new Vector3f().add(direction), new Vector3f(0, -1, 0))
+                .lookAtLH(new Vector3f(), new Vector3f().add(direction), new Vector3f(0, 1, 0))
                 .translate(new Vector3f(scale).div(-2));
     }
 
