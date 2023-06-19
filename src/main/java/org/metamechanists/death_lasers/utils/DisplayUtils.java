@@ -74,7 +74,7 @@ public class DisplayUtils {
 
         return new Matrix4f()
                 .scale(scale)
-                .translate(new Vector3f(scale).div(-2))
+                .translate(new Vector3f(scale).div(2))
                 .lookAlong(directionAdjustedForBukkitWeirdness, UP_VECTOR);
     }
 
