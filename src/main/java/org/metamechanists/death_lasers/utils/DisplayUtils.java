@@ -69,11 +69,11 @@ public class DisplayUtils {
         //final float horizontalRotation = DisplayUtils.getHorizontalRotation(from, to);
 
         final Vector3f direction = getDirection(from, to).toVector3f();
-        //final Vector3f directionAdjustedForBukkitWeirdness = new Vector3f(direction.x, direction.y, direction.z);
+        final Vector3f directionAdjustedForBukkitWeirdness = new Vector3f(-direction.x, direction.y, -direction.z);
 
         return new Matrix4f()
                 .scale(scale)
-                .lookAtLH(new Vector3f(), new Vector3f().add(direction), new Vector3f(0, 1, 0))
+                .lookAtLH(new Vector3f(), new Vector3f().add(directionAdjustedForBukkitWeirdness), new Vector3f(0, 1, 0))
                 .translate(new Vector3f(scale).div(-2));
     }
 
