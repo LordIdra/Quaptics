@@ -4,10 +4,15 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import org.bukkit.Material;
 
 public class ItemStacks {
-    public static final SlimefunItemStack LINEAR_TIME_EMITTER = new SlimefunItemStack(
-            "LINEAR_TIME_EMITTER",
+    public static final SlimefunItemStack EMITTER = new SlimefunItemStack(
+            "EMITTER",
             Material.GLASS,
-            "&4&lLinear Time Emitter");
+            "&4Emitter");
+    public static final SlimefunItemStack LENS = new SlimefunItemStack(
+            "LENS",
+            Material.GLASS,
+            "&4Lens");
+
     public static final SlimefunItemStack TARGETING_WAND = new SlimefunItemStack(
             "TARGETING_WAND",
             Material.BLAZE_ROD,
