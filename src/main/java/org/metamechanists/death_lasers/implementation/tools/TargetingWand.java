@@ -16,6 +16,7 @@ import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointInput;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointOutput;
+import org.metamechanists.death_lasers.implementation.ConnectedBlock;
 import org.metamechanists.death_lasers.implementation.LaserEmitter;
 import org.metamechanists.death_lasers.utils.Language;
 import org.metamechanists.death_lasers.utils.PersistentDataUtils;
@@ -108,9 +109,11 @@ public class TargetingWand extends SlimefunItem {
             return;
         }
 
-        // TODO make Items.linearTimeEmitter generic
-        final Location newLocation1 = Items.linearTimeEmitter.calculateNewLocation(sourcePoint, targetPoint);
-        final Location newLocation2 = Items.linearTimeEmitter.calculateNewLocation(sourcePoint, targetPoint);
+        final ConnectedBlock block1 = ConnectionPointStorage.getGroupFromPointLocation(sourcePointLocation).getBlock();
+        final ConnectedBlock block2 = ConnectionPointStorage.getGroupFromPointLocation(targetPointLocation).getBlock();
+
+        final Location newLocation1 = block1.calculateNewLocation(sourcePoint, targetPoint);
+        final Location newLocation2 = block2.calculateNewLocation(targetPoint, sourcePoint);
 
         if (ConnectionPointStorage.hasConnectionPoint(newLocation1)
                 || ConnectionPointStorage.hasConnectionPoint(newLocation2)
@@ -119,8 +122,8 @@ public class TargetingWand extends SlimefunItem {
             return;
         }
 
-        Items.linearTimeEmitter.connect(sourcePoint, targetPoint);
-        Items.linearTimeEmitter.connect(targetPoint, sourcePoint);
+        block1.connect(sourcePoint, targetPoint);
+        block2.connect(targetPoint, sourcePoint);
 
         setSourceConnectionPoint(player, outputSourcePoint.getLocation(), stack);
         outputSourcePoint.link(inputTargetPoint);

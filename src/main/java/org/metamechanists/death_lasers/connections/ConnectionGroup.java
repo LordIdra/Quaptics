@@ -1,17 +1,22 @@
 package org.metamechanists.death_lasers.connections;
 
+import lombok.Getter;
 import org.bukkit.Location;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
+import org.metamechanists.death_lasers.implementation.ConnectedBlock;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
 public class ConnectionGroup {
+    @Getter
+    private final ConnectedBlock block;
     private final Map<Location, ConnectionPoint> points = new HashMap<>();
     private final Map<String, Location> pointLocations = new HashMap<>();
 
-    public ConnectionGroup(Map<String, ConnectionPoint> inputPoints) {
+    public ConnectionGroup(ConnectedBlock block, Map<String, ConnectionPoint> inputPoints) {
+        this.block = block;
         inputPoints.forEach((name, point) -> {
             points.put(point.getLocation(), point);
             pointLocations.put(name, point.getLocation());
