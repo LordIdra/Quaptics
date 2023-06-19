@@ -19,7 +19,6 @@ import org.joml.Vector3f;
 import org.metamechanists.death_lasers.connections.ConnectionGroup;
 import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
-import org.metamechanists.death_lasers.connections.points.ConnectionPointInput;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointOutput;
 import org.metamechanists.death_lasers.implementation.abstracts.ConnectedBlock;
 import org.metamechanists.death_lasers.utils.DisplayUtils;
@@ -72,7 +71,7 @@ public class Emitter extends ConnectedBlock {
     }
 
     @Override
-    public void onInputUpdated(ConnectionPointInput input) {}
+    public void onNodeUpdated(ConnectionPoint input) {}
 
     @Override
     protected Location calculateNewLocation(ConnectionPoint from, ConnectionPoint to) {

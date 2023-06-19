@@ -12,7 +12,6 @@ import org.bukkit.inventory.ItemStack;
 import org.metamechanists.death_lasers.connections.ConnectionGroup;
 import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
-import org.metamechanists.death_lasers.connections.points.ConnectionPointInput;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.util.Map;
@@ -59,6 +58,6 @@ public abstract class ConnectedBlock extends EnergyDisplayGroupBlock {
         ConnectionPointStorage.updateLocation(from.getLocation(), calculateNewLocation(from, to));
     }
 
-    public abstract void onInputUpdated(ConnectionPointInput input);
+    public abstract void onNodeUpdated(ConnectionPoint input);
     protected abstract Location calculateNewLocation(ConnectionPoint from, ConnectionPoint to);
 }

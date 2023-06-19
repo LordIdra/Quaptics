@@ -57,10 +57,11 @@ public class Lens extends ConnectedBlock {
     }
 
     @Override
-    public void onInputUpdated(ConnectionPointInput input) {
-        final ConnectionGroup group = ConnectionPointStorage.getGroupFromPointLocation(input.getLocation());
+    public void onNodeUpdated(ConnectionPoint point) {
+        final ConnectionGroup group = ConnectionPointStorage.getGroupFromPointLocation(point.getLocation());
+        final ConnectionPointInput input = (ConnectionPointInput) group.getPoint("input");
         final ConnectionPointOutput output = (ConnectionPointOutput) group.getPoint("output");
-        output.setPowered(input.getSourcePoint().isPowered());
+        output.setPowered(input.getSource().isPowered());
     }
 
     @Override

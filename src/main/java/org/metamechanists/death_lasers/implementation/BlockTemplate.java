@@ -13,7 +13,6 @@ import org.jetbrains.annotations.NotNull;
 import org.metamechanists.death_lasers.connections.ConnectionGroup;
 import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
-import org.metamechanists.death_lasers.connections.points.ConnectionPointInput;
 import org.metamechanists.death_lasers.implementation.abstracts.ConnectedBlock;
 
 import java.util.HashMap;
@@ -29,7 +28,7 @@ public class BlockTemplate extends ConnectedBlock {
 
 
     @Override
-    public void onInputUpdated(ConnectionPointInput input) {
+    public void onNodeUpdated(ConnectionPoint input) {
         final ConnectionGroup group = ConnectionPointStorage.getGroupFromPointLocation(input.getLocation());
         // TODO logic when an input is updated
     }

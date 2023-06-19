@@ -4,11 +4,12 @@ import lombok.Getter;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Display;
+import org.metamechanists.death_lasers.connections.ConnectionGroup;
 import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
 
 public class ConnectionPointInput extends ConnectionPoint {
     @Getter
-    private Location source;
+    private ConnectionPointOutput source;
 
     public ConnectionPointInput(String name, Location location) {
         super(name, location,
@@ -17,9 +18,6 @@ public class ConnectionPointInput extends ConnectionPoint {
                 new Display.Brightness(2, 2));
     }
 
-    public ConnectionPointOutput getSourcePoint() {
-        return (ConnectionPointOutput) ConnectionPointStorage.getPointFromPointLocation(source);
-    }
 
     @Override
     public void tick() {}
@@ -29,9 +27,8 @@ public class ConnectionPointInput extends ConnectionPoint {
         blockDisplay.remove();
         interaction.remove();
         if (source != null) {
-            ConnectionPointOutput sourcePoint = (ConnectionPointOutput) ConnectionPointStorage.getPointFromPointLocation(source);
-            if (sourcePoint.hasLink()) {
-                sourcePoint.unlink();
+            if (source.hasLink()) {
+                source.unlink();
             }
         }
     }
@@ -41,9 +38,11 @@ public class ConnectionPointInput extends ConnectionPoint {
         return source != null;
     }
 
-    public void link(Location source) {
+    public void link(ConnectionPointOutput source) {
         this.source = source;
         blockDisplay.setBrightness(connectedBrightness);
+        final ConnectionGroup sourceGroup = ConnectionPointStorage.getGroupFromPointLocation(source.getLocation());
+        sourceGroup.getBlock().onNodeUpdated(source);
     }
 
     public void unlink() {

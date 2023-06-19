@@ -68,7 +68,7 @@ public class ConnectionPointOutput extends ConnectionPoint {
                             this.target.location));
             this.beam.setPowered(true);
             final ConnectionGroup targetGroup = ConnectionPointStorage.getGroupFromPointLocation(target.location);
-            targetGroup.getBlock().onInputUpdated(target);
+            targetGroup.getBlock().onNodeUpdated(target);
         }
     }
 
@@ -88,7 +88,7 @@ public class ConnectionPointOutput extends ConnectionPoint {
             unlink();
         }
         this.target = target;
-        this.target.link(this.location);
+        this.target.link(this);
         blockDisplay.setBrightness(connectedBrightness);
     }
 
