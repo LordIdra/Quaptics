@@ -59,7 +59,7 @@ public class Emitter extends ConnectedBlock {
 
     @Override
     public void onSlimefunTick(Block block, SlimefunItem item, Config data) {
-        final ConnectionGroup group = ConnectionPointStorage.getGroupFromGroupLocation(block.getLocation());
+        final ConnectionGroup group = ConnectionPointStorage.getGroupFromBlock(block);
         final ConnectionPointOutput output = (ConnectionPointOutput) group.getPoint("output");
         final int charge = getCharge(block.getLocation(), data);
 
