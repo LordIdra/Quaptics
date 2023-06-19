@@ -1,6 +1,7 @@
 package org.metamechanists.death_lasers.connections;
 
 import org.bukkit.Location;
+import org.bukkit.block.Block;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
 
 import java.io.Serializable;
@@ -61,6 +62,11 @@ public class ConnectionPointStorage implements Serializable {
             return null;
         }
         return group.getPoint(pointLocation);
+    }
+
+    public static ConnectionGroup getGroupFromBlock(Block block) {
+        final Location location = block.getLocation();
+        return ConnectionPointStorage.getGroupFromGroupLocation(new Location(location.getWorld(), location.x(), location.y(), location.z()));
     }
 
     public static void updateLocation(Location oldLocation, Location newLocation) {
