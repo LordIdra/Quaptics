@@ -44,7 +44,7 @@ public class DisplayUtils {
         Matrix4f rotationXMatrix = new Matrix4f().rotateX(-angleX);
 
         return new Matrix4f()
-                .translate(calculateHitboxAdjustmentTranslation(scale, new Vector3f(-angleX, angleY, 0)))
+                .translate(calculateHitboxAdjustmentTranslation(scale, new Matrix4f().mul(rotationYMatrix).mul(rotationXMatrix)))
                 .mul(rotationYMatrix)
                 .mul(rotationXMatrix)
                 .scale(scale);
@@ -54,12 +54,10 @@ public class DisplayUtils {
         return new Matrix4f().translate(-scale.x/2, -scale.y/2, -scale.z/2).scale(scale);
     }
 
-    private static Vector3f calculateHitboxAdjustmentTranslation(Vector3f scale, Vector3f rotationInRadians) {
+    private static Vector3f calculateHitboxAdjustmentTranslation(Vector3f scale, Matrix4f matrix) {
         // When we rotate a block, the hitbox in X, Y, and Z changes
         // We need to account for this change to center the block
         final List<Vector3f> transformedVertices = new ArrayList<>();
-
-        final Matrix4f matrix = new Matrix4f().rotateXYZ(rotationInRadians).scale(scale);
 
         for (Vector3f vertex : BLOCK_VERTICES) {
             transformedVertices.add(new Vector3f(vertex).mulDirection(matrix));
@@ -85,8 +83,9 @@ public class DisplayUtils {
         // - Translate the block so that the center is where its location is set to
         // - Scale the block by scale
         // - Rotate the block by rotationInDegrees
+        final Matrix4f hitboxMatrix = new Matrix4f().rotateXYZ(rotationInRadians).scale(scale);
         return new Matrix4f()
-                .translate(calculateHitboxAdjustmentTranslation(scale, rotationInRadians))
+                .translate(calculateHitboxAdjustmentTranslation(scale, hitboxMatrix))
                 .rotateXYZ(rotationInRadians)
                 .scale(scale);
     }
