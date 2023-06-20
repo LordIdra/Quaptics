@@ -24,6 +24,8 @@ public class Link {
     public Link(ConnectionPointInput input, ConnectionPointOutput output) {
         this.input = input;
         this.output = output;
+        input.link(this);
+        output.link(this);
         update();
     }
 
