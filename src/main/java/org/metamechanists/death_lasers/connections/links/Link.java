@@ -42,8 +42,8 @@ public class Link {
     private void update() {
         final ConnectionGroup inputGroup = ConnectionPointStorage.getGroupFromPointLocation(input.getLocation());
         final ConnectionGroup outputGroup = ConnectionPointStorage.getGroupFromPointLocation(output.getLocation());
-        inputGroup.getBlock().onLinkUpdated(inputGroup);
-        outputGroup.getBlock().onLinkUpdated(outputGroup);
+        BlockUpdater.scheduleUpdate(inputGroup);
+        BlockUpdater.scheduleUpdate(outputGroup);
     }
 
     public void killBeam() {

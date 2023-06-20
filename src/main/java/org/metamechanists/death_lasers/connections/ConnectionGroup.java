@@ -56,7 +56,7 @@ public class ConnectionGroup {
         return points.keySet();
     }
 
-    public void updateLocation(Location oldLocation, Location newLocation) {
+    public void changeLocation(Location oldLocation, Location newLocation) {
         final ConnectionPoint point = points.get(oldLocation);
         points.remove(oldLocation);
         points.put(newLocation, point);

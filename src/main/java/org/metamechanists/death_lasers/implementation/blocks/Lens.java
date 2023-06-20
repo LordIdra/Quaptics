@@ -60,10 +60,8 @@ public class Lens extends ConnectedBlock {
     public void onLinkUpdated(ConnectionGroup group) {
         final ConnectionPointInput input = (ConnectionPointInput) group.getPoint("input");
         final ConnectionPointOutput output = (ConnectionPointOutput) group.getPoint("output");
-        if (output.hasLink() && input.hasLink()) {
-            output.getLink().setPowered(input.getLink().isPowered());
-        } else {
-            output.getLink().setPowered(false);
+        if (output.hasLink()) {
+            output.getLink().setPowered(input.hasLink() && input.getLink().isPowered());
         }
     }
 
