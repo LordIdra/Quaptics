@@ -14,6 +14,8 @@ import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import org.metamechanists.death_lasers.connections.ConnectionGroup;
 import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
+import org.metamechanists.death_lasers.connections.links.Link;
+import org.metamechanists.death_lasers.connections.links.LinkProperties;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointInput;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointOutput;
@@ -24,11 +26,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Lens extends ConnectedBlock {
+    private final double maxPower;
+    private final double powerLoss;
     @Getter
     private final EnergyNetComponentType energyComponentType = EnergyNetComponentType.CONSUMER;
 
-    public Lens(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, int capacity, int consumption) {
+    public Lens(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe,
+            int capacity, int consumption, double maxPower, double powerLoss) {
         super(group, item, recipeType, recipe, capacity, consumption);
+        this.maxPower = maxPower;
+        this.powerLoss = powerLoss;
+        // TODO burnout when max power exceeded
     }
 
     @Override
@@ -60,9 +68,21 @@ public class Lens extends ConnectedBlock {
     public void onLinkUpdated(ConnectionGroup group) {
         final ConnectionPointInput input = (ConnectionPointInput) group.getPoint("input");
         final ConnectionPointOutput output = (ConnectionPointOutput) group.getPoint("output");
-        if (output.hasLink()) {
-            output.getLink().setPowered(input.hasLink() && input.getLink().isPowered());
+
+        if (!output.hasLink()) {
+            return;
         }
+
+        if (!input.hasLink() || !input.getLink().isEnabled()) {
+            output.getLink().setEnabled(false);
+            return;
+        }
+
+        final Link inputLink = input.getLink();
+        final Link outputLink = output.getLink();
+
+        outputLink.setPower(LinkProperties.calculatePower(inputLink, maxPower, powerLoss));
+        outputLink.setEnabled(true);
     }
 
     @Override

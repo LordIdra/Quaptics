@@ -18,6 +18,7 @@ import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import org.metamechanists.death_lasers.connections.ConnectionGroup;
 import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
+import org.metamechanists.death_lasers.connections.links.Link;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointOutput;
 import org.metamechanists.death_lasers.implementation.abstracts.ConnectedBlock;
@@ -29,9 +30,12 @@ import java.util.Map;
 public class Emitter extends ConnectedBlock {
     @Getter
     private final EnergyNetComponentType energyComponentType = EnergyNetComponentType.CONSUMER;
+    private final double transmissionPower;
 
-    public Emitter(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, int capacity, int consumption) {
+    public Emitter(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe,
+                   int capacity, int consumption, double transmissionPower) {
         super(group, item, recipeType, recipe, capacity, consumption);
+        this.transmissionPower = transmissionPower;
     }
 
     private BlockDisplay generateMainBlockDisplay(Location from, Location to) {
@@ -65,11 +69,15 @@ public class Emitter extends ConnectedBlock {
         if (charge >= consumption) {
             removeCharge(block.getLocation(), consumption);
             if (output.hasLink()) {
-                output.getLink().setPowered(true);
+                final Link link = output.getLink();
+                link.setPower(transmissionPower);
+                link.setEnabled(true);
+
             }
         } else {
             if (output.hasLink()) {
-                output.getLink().setPowered(false);
+                final Link link = output.getLink();
+                link.setEnabled(false);
             }
         }
     }

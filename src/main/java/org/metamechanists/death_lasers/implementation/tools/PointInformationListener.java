@@ -35,7 +35,7 @@ public class PointInformationListener {
 
         final Link link = ConnectionPointStorage.getPointFromPointLocation(connectionPointLocation).getLink();
 
-        event.getPlayer().sendMessage(Language.getLanguageEntry("point-information.transmission-power"), Objects.toString(link.getTransmissionPower()));
+        event.getPlayer().sendMessage(Language.getLanguageEntry("point-information.transmission-power"), Objects.toString(link.getPower()));
         event.getPlayer().sendMessage(Language.getLanguageEntry("point-information.frequency"), Objects.toString(link.getFrequency()));
         event.getPlayer().sendMessage(Language.getLanguageEntry("point-information.phase"), Objects.toString(link.getPhase()));
     }

@@ -22,14 +22,17 @@ public class Items {
             RecipeType.NULL,
             new ItemStack[] {},
             1000,
-            100);
+            100,
+            10);
     public static final Lens lens = new Lens(
             Groups.DEATH_LASER_GROUP,
             LENS,
             RecipeType.NULL,
             new ItemStack[] {},
             1000,
-            100);
+            100,
+            20,
+            0.2);
 
     public static void initialize() {
         final SlimefunAddon addon = DEATH_LASERS.getInstance();

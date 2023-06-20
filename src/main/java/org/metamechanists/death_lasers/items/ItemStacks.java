@@ -1,17 +1,22 @@
 package org.metamechanists.death_lasers.items;
 
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
+import io.github.thebusybiscuit.slimefun4.utils.LoreBuilder;
 import org.bukkit.Material;
 
 public class ItemStacks {
     public static final SlimefunItemStack EMITTER = new SlimefunItemStack(
             "EMITTER",
             Material.GLASS,
-            "&4Emitter");
+            "&4Emitter",
+            LoreBuilder.powerPerSecond(100),
+            Lore.emissionPower(10));
     public static final SlimefunItemStack LENS = new SlimefunItemStack(
             "LENS",
             Material.GLASS,
-            "&4Lens");
+            "&4Lens",
+            Lore.maxPower(20),
+            Lore.powerLoss(0.2));
 
     public static final SlimefunItemStack TARGETING_WAND = new SlimefunItemStack(
             "TARGETING_WAND",

@@ -58,7 +58,6 @@ public abstract class ConnectedBlock extends EnergyDisplayGroupBlock {
         ConnectionPointStorage.updateLocation(from.getLocation(), calculateNewLocation(from, to));
     }
 
-    @OverridingMethodsMustInvokeSuper
     public void onLinkUpdated(ConnectionGroup group) {}
 
     protected abstract Location calculateNewLocation(ConnectionPoint from, ConnectionPoint to);

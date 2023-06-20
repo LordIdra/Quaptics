@@ -1,6 +1,7 @@
 package org.metamechanists.death_lasers.connections.links;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Material;
 import org.metamechanists.death_lasers.connections.BlockUpdateScheduler;
 import org.metamechanists.death_lasers.connections.ConnectionGroup;
@@ -14,12 +15,15 @@ import org.metamechanists.death_lasers.beams.ticker.factory.DirectSinglePulseTic
 
 public class Link {
     @Getter
-    private boolean powered;
+    private boolean enabled;
     @Getter
-    private double transmissionPower;
+    @Setter
+    private double power;
     @Getter
+    @Setter
     private double frequency;
     @Getter
+    @Setter
     private int phase;
 
     @Getter
@@ -64,21 +68,28 @@ public class Link {
             DeprecatedBeamStorage.add(beam);
             beam = null;
         }
+
         input.unlink();
         output.unlink();
+
+        setEnabled(false);
+        power = 0;
+        frequency = 0;
+        phase = 0;
+
         update();
     }
 
-    public void setPowered(boolean powered) {
-        this.powered = powered;
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
 
-        if (!powered && hasBeam()) {
+        if (!enabled && hasBeam()) {
             beam.deprecate();
             beam = null;
             update();
         }
 
-        else if (powered && !hasBeam()) {
+        else if (enabled && !hasBeam()) {
             this.beam = new DirectBlockDisplayBeam(
                     new DirectSinglePulseTickerFactory(
                             Material.WHITE_CONCRETE,
