@@ -62,6 +62,8 @@ public class Lens extends ConnectedBlock {
         final ConnectionPointOutput output = (ConnectionPointOutput) group.getPoint("output");
         if (output.hasLink() && input.hasLink()) {
             output.getLink().setPowered(input.getLink().isPowered());
+        } else {
+            output.getLink().setPowered(false);
         }
     }
 
