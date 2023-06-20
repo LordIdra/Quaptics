@@ -25,23 +25,18 @@ public class ConnectionGroup {
     }
 
     public void tick() {
-        for (ConnectionPoint point : points.values()) {
-            point.tick();
-        }
+        points.values().forEach(ConnectionPoint::tick);
     }
 
     public void removeAllPoints() {
-        for (ConnectionPoint point : points.values()) {
-            point.remove();
-        }
+        points.values().forEach(ConnectionPoint::remove);
     }
 
     public void killAllBeams() {
-        for (ConnectionPoint point : points.values()) {
-            if (point instanceof ConnectionPointOutput output) {
-                output.getLink().killBeam();
-            }
-        }
+        points.values().stream()
+                .filter(point -> point instanceof ConnectionPointOutput)
+                .map(point -> (ConnectionPointOutput) point)
+                .forEach(output -> output.getLink().killBeam());
     }
 
     public ConnectionPoint getPoint(Location location) {

@@ -13,30 +13,24 @@ public class ConnectionPointStorage implements Serializable {
     private static final Map<Location, Location> groupIdFromPointLocation = new HashMap<>();
 
     public static void tick() {
-        for (ConnectionGroup group : groups.values()) {
-            group.tick();
-        }
+        groups.values().forEach(ConnectionGroup::tick);
     }
 
     public static void addConnectionPointGroup(Location groupLocation, ConnectionGroup group) {
         groups.put(groupLocation, group);
-        for (Location pointLocation : group.getPointLocations()) {
-            groupIdFromPointLocation.put(pointLocation, groupLocation);
-        }
+        group.getPointLocations().forEach(pointLocation -> groupIdFromPointLocation.put(pointLocation, groupLocation));
     }
 
     public static void removeConnectionPointGroup(Location groupLocation) {
         final ConnectionGroup group = groups.remove(groupLocation);
-        for (Location pointLocation : group.getPointLocations()) {
+        group.getPointLocations().forEach(pointLocation -> {
             group.removeAllPoints();
             groupIdFromPointLocation.remove(pointLocation);
-        }
+        });
     }
 
     public static void killAllBeams() {
-        for (ConnectionGroup group : groups.values()) {
-            group.killAllBeams();
-        }
+        groups.values().forEach(ConnectionGroup::killAllBeams);
     }
 
     public static boolean hasConnectionPoint(Location pointLocation) {

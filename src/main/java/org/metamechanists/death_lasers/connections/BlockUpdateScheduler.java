@@ -22,10 +22,10 @@ public class BlockUpdateScheduler {
     }
 
     public static void tick() {
-        for (ConnectionGroup group : groupsToUpdate) {
+        groupsToUpdate.forEach(group -> {
             groupsUpdatedThisTick.add(group);
             group.getBlock().onLinkUpdated(group);
-        }
+        });
 
         groupsToUpdate.clear();
         groupsUpdatedThisTick.clear();
