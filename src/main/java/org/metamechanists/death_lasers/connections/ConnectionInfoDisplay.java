@@ -9,7 +9,7 @@ import org.metamechanists.death_lasers.items.Lore;
 import org.metamechanists.death_lasers.utils.DisplayUtils;
 
 public class ConnectionInfoDisplay {
-    private boolean hidden;
+    private boolean hidden = true;
     private final ConnectionPoint point;
     private final DisplayGroup displayGroup;
 
