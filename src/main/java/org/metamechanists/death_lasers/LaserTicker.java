@@ -2,6 +2,7 @@ package org.metamechanists.death_lasers;
 
 import org.bukkit.scheduler.BukkitRunnable;
 import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
+import org.metamechanists.death_lasers.connections.links.BlockUpdater;
 import org.metamechanists.death_lasers.lasers.DeprecatedBeams;
 
 public class LaserTicker extends BukkitRunnable {
@@ -10,5 +11,6 @@ public class LaserTicker extends BukkitRunnable {
     public void run() {
         ConnectionPointStorage.tick();
         DeprecatedBeams.tick();
+        BlockUpdater.tick();
     }
 }

@@ -25,8 +25,10 @@ public class BlockUpdater {
 
     public static void tick() {
         for (ConnectionGroup group : groupsToUpdate) {
+            groupsUpdatedThisTick.add(group);
             group.getBlock().onLinkUpdated(group);
         }
+
         groupsToUpdate.clear();
         groupsUpdatedThisTick.clear();
     }
