@@ -23,6 +23,12 @@ public class ConnectionInfoDisplay {
         displayGroup.getParentDisplay().setInteractionHeight(0);
     }
 
+    private void changeDisplayText(String displayName, String newText) {
+        final TextDisplay display = (TextDisplay)displayGroup.removeDisplay(displayName);
+        display.setText(newText);
+        displayGroup.addDisplay(displayName, display);
+    }
+
     public void update() {
         if (!point.hasLink()) {
             displayGroup.getDisplays().values().forEach(Display::remove);
@@ -32,7 +38,7 @@ public class ConnectionInfoDisplay {
         final Link link = point.getLink();
 
         if (!displayGroup.getDisplays().isEmpty()) {
-            ((TextDisplay)displayGroup.removeDisplay("power")).setText(ChatColors.color(Lore.powerWithoutAttributeSymbol(link.getPower())));
+            changeDisplayText("power", ChatColors.color(Lore.powerWithoutAttributeSymbol(link.getPower())));
             return;
         }
 
