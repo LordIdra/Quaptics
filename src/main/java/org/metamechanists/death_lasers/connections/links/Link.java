@@ -15,6 +15,7 @@ import org.metamechanists.death_lasers.beams.ticker.factory.DirectSinglePulseTic
 public class Link {
     @Getter
     private boolean powered;
+    private double power;
 
     @Getter
     private final ConnectionPointOutput output;

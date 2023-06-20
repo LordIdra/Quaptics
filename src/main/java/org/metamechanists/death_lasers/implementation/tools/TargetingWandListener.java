@@ -7,6 +7,7 @@ import org.bukkit.entity.Interaction;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.inventory.ItemStack;
 import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
@@ -29,6 +30,14 @@ public class TargetingWandListener implements Listener {
 
         if (SlimefunItem.getByItem(heldItem) instanceof TargetingWand wand) {
             wand.use(event.getPlayer(), connectionPointLocation, heldItem);
+        }
+    }
+
+    @EventHandler
+    public void scrollEvent(PlayerItemHeldEvent event) {
+        final ItemStack heldItem = event.getPlayer().getInventory().getItem(event.getPreviousSlot());
+        if (SlimefunItem.getByItem(heldItem) instanceof TargetingWand wand) {
+            wand.unsetSourceConnectionPoint(heldItem);
         }
     }
 }
