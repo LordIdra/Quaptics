@@ -1,13 +1,14 @@
-package org.metamechanists.death_lasers;
+package org.metamechanists.death_lasers.items;
 
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import org.bukkit.inventory.ItemStack;
+import org.metamechanists.death_lasers.DEATH_LASERS;
 import org.metamechanists.death_lasers.implementation.blocks.Emitter;
 import org.metamechanists.death_lasers.implementation.blocks.Lens;
 import org.metamechanists.death_lasers.implementation.tools.TargetingWand;
 
-import static org.metamechanists.death_lasers.ItemStacks.*;
+import static org.metamechanists.death_lasers.items.ItemStacks.*;
 
 public class Items {
     public static final TargetingWand targetingWand = new TargetingWand(

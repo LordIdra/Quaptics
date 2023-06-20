@@ -1,7 +1,7 @@
-package org.metamechanists.death_lasers.lasers.beam;
+package org.metamechanists.death_lasers.beams.beam;
 
-import org.metamechanists.death_lasers.lasers.ticker.factory.DirectSinglePulseTickerFactory;
-import org.metamechanists.death_lasers.lasers.ticker.ticker.DirectSinglePulseTicker;
+import org.metamechanists.death_lasers.beams.ticker.factory.DirectSinglePulseTickerFactory;
+import org.metamechanists.death_lasers.beams.ticker.ticker.DirectSinglePulseTicker;
 
 public class DirectBlockDisplayBeam extends Beam {
     private DirectSinglePulseTicker ticker;

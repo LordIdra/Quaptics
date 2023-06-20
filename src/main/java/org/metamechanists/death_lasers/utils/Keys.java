@@ -1,6 +1,7 @@
-package org.metamechanists.death_lasers;
+package org.metamechanists.death_lasers.utils;
 
 import org.bukkit.NamespacedKey;
+import org.metamechanists.death_lasers.DEATH_LASERS;
 
 public class Keys {
     public static NamespacedKey newKey(String key) {

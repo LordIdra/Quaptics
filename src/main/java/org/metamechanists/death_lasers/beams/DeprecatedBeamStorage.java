@@ -1,11 +1,11 @@
-package org.metamechanists.death_lasers.lasers;
+package org.metamechanists.death_lasers.beams;
 
-import org.metamechanists.death_lasers.lasers.beam.Beam;
+import org.metamechanists.death_lasers.beams.beam.Beam;
 
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-public class DeprecatedBeams {
+public class DeprecatedBeamStorage {
     private static final Queue<Beam> beams = new ConcurrentLinkedQueue<>();
 
     public static void add(Beam beam) {

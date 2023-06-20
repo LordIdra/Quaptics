@@ -1,4 +1,4 @@
-package org.metamechanists.death_lasers.lasers.beam;
+package org.metamechanists.death_lasers.beams.beam;
 
 
 public abstract class Beam {

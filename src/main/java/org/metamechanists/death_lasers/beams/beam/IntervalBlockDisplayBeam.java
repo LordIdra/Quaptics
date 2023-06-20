@@ -1,10 +1,10 @@
-package org.metamechanists.death_lasers.lasers.beam;
+package org.metamechanists.death_lasers.beams.beam;
 
-import org.metamechanists.death_lasers.lasers.DeprecatedBeams;
-import org.metamechanists.death_lasers.lasers.SpawnTimer;
-import org.metamechanists.death_lasers.lasers.ticker.factory.LaserBlockDisplayTickerFactory;
-import org.metamechanists.death_lasers.lasers.ticker.factory.IntervalLinearTimeTickerFactory;
-import org.metamechanists.death_lasers.lasers.ticker.ticker.LaserBlockDisplayTicker;
+import org.metamechanists.death_lasers.beams.DeprecatedBeamStorage;
+import org.metamechanists.death_lasers.beams.SpawnTimer;
+import org.metamechanists.death_lasers.beams.ticker.factory.LaserBlockDisplayTickerFactory;
+import org.metamechanists.death_lasers.beams.ticker.factory.IntervalLinearTimeTickerFactory;
+import org.metamechanists.death_lasers.beams.ticker.ticker.LaserBlockDisplayTicker;
 
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -32,7 +32,7 @@ public class IntervalBlockDisplayBeam extends Beam {
 
     @Override
     public void deprecate() {
-        DeprecatedBeams.add(this);deprecated = true;
+        DeprecatedBeamStorage.add(this);deprecated = true;
     }
 
     @Override

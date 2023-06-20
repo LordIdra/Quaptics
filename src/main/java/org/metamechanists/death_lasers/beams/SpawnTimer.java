@@ -1,4 +1,4 @@
-package org.metamechanists.death_lasers.lasers;
+package org.metamechanists.death_lasers.beams;
 
 public class SpawnTimer {
     private final int interval;

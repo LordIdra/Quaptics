@@ -1,4 +1,4 @@
-package org.metamechanists.death_lasers;
+package org.metamechanists.death_lasers.items;
 
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import org.bukkit.Material;

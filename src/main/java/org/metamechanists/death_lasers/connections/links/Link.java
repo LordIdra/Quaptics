@@ -2,14 +2,15 @@ package org.metamechanists.death_lasers.connections.links;
 
 import lombok.Getter;
 import org.bukkit.Material;
+import org.metamechanists.death_lasers.connections.BlockUpdateScheduler;
 import org.metamechanists.death_lasers.connections.ConnectionGroup;
 import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointInput;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointOutput;
-import org.metamechanists.death_lasers.lasers.DeprecatedBeams;
-import org.metamechanists.death_lasers.lasers.beam.Beam;
-import org.metamechanists.death_lasers.lasers.beam.DirectBlockDisplayBeam;
-import org.metamechanists.death_lasers.lasers.ticker.factory.DirectSinglePulseTickerFactory;
+import org.metamechanists.death_lasers.beams.DeprecatedBeamStorage;
+import org.metamechanists.death_lasers.beams.beam.Beam;
+import org.metamechanists.death_lasers.beams.beam.DirectBlockDisplayBeam;
+import org.metamechanists.death_lasers.beams.ticker.factory.DirectSinglePulseTickerFactory;
 
 public class Link {
     @Getter
@@ -42,8 +43,8 @@ public class Link {
     private void update() {
         final ConnectionGroup inputGroup = ConnectionPointStorage.getGroupFromPointLocation(input.getLocation());
         final ConnectionGroup outputGroup = ConnectionPointStorage.getGroupFromPointLocation(output.getLocation());
-        BlockUpdater.scheduleUpdate(inputGroup);
-        BlockUpdater.scheduleUpdate(outputGroup);
+        BlockUpdateScheduler.scheduleUpdate(inputGroup);
+        BlockUpdateScheduler.scheduleUpdate(outputGroup);
     }
 
     public void killBeam() {
@@ -54,7 +55,7 @@ public class Link {
 
     public void remove() {
         if (hasBeam()) {
-            DeprecatedBeams.add(beam);
+            DeprecatedBeamStorage.add(beam);
             beam = null;
         }
         input.unlink();
