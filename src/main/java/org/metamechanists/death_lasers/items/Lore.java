@@ -13,7 +13,7 @@ public class Lore {
         return "&8⇨ " + Colors.MAX_POWER.getString() + "⏻ &7Max Power &e" + Objects.toString(maxPower) + " &8W";
     }
 
-    public static String powerLoss(double powerLoss) {
-        return "&8⇨ " + Colors.POWER_LOSS.getString() + "⏻ &7Power Loss &e" + Objects.toString(powerLoss) + " &8W";
+    public static String powerLoss(int powerLossPercentage) {
+        return "&8⇨ " + Colors.POWER_LOSS.getString() + "⏻ &7Max Power Loss &e" + Objects.toString(powerLossPercentage) + " &8%";
     }
 }

@@ -15,8 +15,9 @@ public class ItemStacks {
             "LENS",
             Material.GLASS,
             "&4Lens",
+            "&7Power loss increases with input power",
             Lore.maxPower(20),
-            Lore.powerLoss(0.2));
+            Lore.powerLoss(50));
 
     public static final SlimefunItemStack TARGETING_WAND = new SlimefunItemStack(
             "TARGETING_WAND",

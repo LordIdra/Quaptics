@@ -32,7 +32,7 @@ public class Items {
             1000,
             100,
             20,
-            0.2);
+            0.5);
 
     public static void initialize() {
         final SlimefunAddon addon = DEATH_LASERS.getInstance();
