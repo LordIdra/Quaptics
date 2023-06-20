@@ -33,6 +33,7 @@ public class ConnectionGroup {
     }
 
     public void removeAllPoints() {
+        points.values().forEach(ConnectionPoint::update);
         points.values().forEach(ConnectionPoint::remove);
     }
 
