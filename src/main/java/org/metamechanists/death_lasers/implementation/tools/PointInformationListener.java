@@ -5,6 +5,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Interaction;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
@@ -14,7 +15,7 @@ import org.metamechanists.death_lasers.utils.Language;
 
 import java.util.Objects;
 
-public class PointInformationListener {
+public class PointInformationListener implements Listener {
     @EventHandler
     public void interactEvent(PlayerInteractEntityEvent event) {
         final Entity clickedEntity = event.getRightClicked();
