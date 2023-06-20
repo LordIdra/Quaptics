@@ -69,15 +69,15 @@ public class Link {
             beam = null;
         }
 
-        input.unlink();
-        output.unlink();
-
         setEnabled(false);
         power = 0;
         frequency = 0;
         phase = 0;
 
         update();
+
+        input.unlink();
+        output.unlink();
     }
 
     public void setEnabled(boolean enabled) {
