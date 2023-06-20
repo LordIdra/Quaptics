@@ -64,9 +64,13 @@ public class Emitter extends ConnectedBlock {
 
         if (charge >= consumption) {
             removeCharge(block.getLocation(), consumption);
-            output.getLink().setPowered(true);
+            if (output.hasLink()) {
+                output.getLink().setPowered(true);
+            }
         } else {
-            output.getLink().setPowered(false);
+            if (output.hasLink()) {
+                output.getLink().setPowered(false);
+            }
         }
     }
 
