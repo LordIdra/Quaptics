@@ -66,6 +66,8 @@ public class Lens extends ConnectedBlock {
 
     @Override
     public void onLinkUpdated(ConnectionGroup group) {
+        super.onLinkUpdated(group);
+
         final ConnectionPointInput input = (ConnectionPointInput) group.getPoint("input");
         final ConnectionPointOutput output = (ConnectionPointOutput) group.getPoint("output");
 

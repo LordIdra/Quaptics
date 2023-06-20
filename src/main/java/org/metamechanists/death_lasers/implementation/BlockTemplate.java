@@ -28,6 +28,7 @@ public class BlockTemplate extends ConnectedBlock {
 
     @Override
     public void onLinkUpdated(ConnectionGroup group) {
+        super.onLinkUpdated(group);
         // TODO logic when an input is updated
     }
 
