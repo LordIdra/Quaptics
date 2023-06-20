@@ -4,11 +4,10 @@ import org.metamechanists.death_lasers.lasers.ticker.factory.DirectSinglePulseTi
 import org.metamechanists.death_lasers.lasers.ticker.ticker.DirectSinglePulseTicker;
 
 public class DirectBlockDisplayBeam extends Beam {
-    private final DirectSinglePulseTickerFactory tickerFactory;
-    private DirectSinglePulseTicker ticker = null;
+    private DirectSinglePulseTicker ticker;
 
     public DirectBlockDisplayBeam(DirectSinglePulseTickerFactory tickerFactory) {
-        this.tickerFactory = tickerFactory;
+        this.ticker = tickerFactory.build();
     }
 
     @Override
