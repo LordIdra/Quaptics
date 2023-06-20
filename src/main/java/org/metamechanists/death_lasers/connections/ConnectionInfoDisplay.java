@@ -37,8 +37,8 @@ public class ConnectionInfoDisplay {
         final Link link = point.getLink();
 
         displayGroup.addDisplay("power", DisplayUtils.spawnTextDisplay(
-                point.getLocation(),
-                ChatColors.color(Lore.power(link.getPower())),
+                point.getLocation().clone().add(0, 0.3, 0),
+                ChatColors.color(Lore.powerWithoutAttributeSymbol(link.getPower())),
                 0.25F,
                 new Display.Brightness(15, 0)));
     }
