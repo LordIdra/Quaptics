@@ -4,9 +4,7 @@ import lombok.Getter;
 import org.metamechanists.metalib.utils.ColorUtils;
 
 public enum Colors {
-    EMISSION_POWER("990000"),
-    MAX_POWER("FF0000"),
-    POWER_LOSS("FF6666");
+    POWER("FF0000");
 
     @Getter
     private final String string;

@@ -24,6 +24,10 @@ public class ConnectionGroup {
         });
     }
 
+    public void update() {
+        points.values().forEach(ConnectionPoint::update);
+    }
+
     public void tick() {
         points.values().forEach(ConnectionPoint::tick);
     }

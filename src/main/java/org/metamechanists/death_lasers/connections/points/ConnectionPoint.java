@@ -9,6 +9,7 @@ import org.bukkit.entity.Display;
 import org.bukkit.entity.Interaction;
 import org.bukkit.util.Vector;
 import org.joml.Vector3f;
+import org.metamechanists.death_lasers.connections.ConnectionInfoDisplay;
 import org.metamechanists.death_lasers.connections.links.Link;
 import org.metamechanists.death_lasers.utils.DisplayUtils;
 
@@ -23,6 +24,7 @@ public abstract class ConnectionPoint {
     protected final Display.Brightness connectedBrightness;
     @Getter
     protected final Display.Brightness disconnectedBrightness;
+    private final ConnectionInfoDisplay infoDisplay;
     protected BlockDisplay blockDisplay;
     protected Interaction interaction;
     protected final static float SCALE = 0.1F;
@@ -33,13 +35,43 @@ public abstract class ConnectionPoint {
         this.location = location;
         this.connectedBrightness = connectedBrightness;
         this.disconnectedBrightness = disconnectedBrightness;
+        this.infoDisplay = new ConnectionInfoDisplay(this);
         this.blockDisplay = DisplayUtils.spawnBlockDisplay(location, material, DisplayUtils.simpleScaleTransformation(new Vector3f(SCALE, SCALE, SCALE)));
         this.interaction = DisplayUtils.spawnInteraction(location.clone().add(INTERACTION_OFFSET), SCALE, SCALE);
         this.blockDisplay.setBrightness(disconnectedBrightness);
     }
 
     public abstract void tick();
-    public abstract void remove();
+
+    public void update() {
+        infoDisplay.update();
+    }
+
+    public void remove() {
+        infoDisplay.remove();
+        blockDisplay.remove();
+        interaction.remove();
+        if (hasLink()) {
+            link.remove();
+        }
+    }
+
+    public boolean hasLink() {
+        return link != null;
+    }
+
+    public void link(Link link) {
+        if (hasLink()) {
+            unlink();
+        }
+        this.link = link;
+        blockDisplay.setBrightness(connectedBrightness);
+    }
+
+    public void unlink() {
+        link = null;
+        blockDisplay.setBrightness(disconnectedBrightness);
+    }
 
     public void select() {
         blockDisplay.setGlowing(true);

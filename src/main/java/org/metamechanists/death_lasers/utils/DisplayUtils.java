@@ -3,7 +3,9 @@ package org.metamechanists.death_lasers.utils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.BlockDisplay;
+import org.bukkit.entity.Display;
 import org.bukkit.entity.Interaction;
+import org.bukkit.entity.TextDisplay;
 import org.bukkit.util.Transformation;
 import org.bukkit.util.Vector;
 import org.joml.Matrix4f;
@@ -108,5 +110,15 @@ public class DisplayUtils {
         interaction.setInteractionWidth(width);
         interaction.setInteractionHeight(height);
         return interaction;
+    }
+
+    public static TextDisplay spawnTextDisplay(Location location, String text, float scale, Display.Brightness brightness) {
+        final TextDisplay display = location.getWorld().spawn(location, TextDisplay.class);
+        display.setDisplayHeight(scale);
+        display.setDisplayWidth(scale);
+        display.setSeeThrough(true);
+        display.setBrightness(brightness);
+        display.setText(text);
+        return display;
     }
 }
