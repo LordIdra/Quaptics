@@ -9,7 +9,6 @@ public class DeprecatedBeams {
     private static final Queue<Beam> beams = new ConcurrentLinkedQueue<>();
 
     public static void add(Beam beam) {
-        beam.setPowered(false);
         beams.add(beam);
     }
 

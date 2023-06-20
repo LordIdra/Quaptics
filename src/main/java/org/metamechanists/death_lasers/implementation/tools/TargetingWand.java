@@ -13,6 +13,7 @@ import org.bukkit.inventory.ItemStack;
 import org.metamechanists.death_lasers.Items;
 import org.metamechanists.death_lasers.Keys;
 import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
+import org.metamechanists.death_lasers.connections.links.Link;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointInput;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointOutput;
@@ -52,27 +53,16 @@ public class TargetingWand extends SlimefunItem {
         PersistentDataUtils.clear(stack, Keys.SOURCE);
     }
 
-    private void removeLink(Player player, Location pointLocation) {
+    private void removeLink(Location pointLocation) {
         final ConnectionPoint sourcePoint = ConnectionPointStorage.getPointFromPointLocation(pointLocation);
 
-        if (sourcePoint instanceof ConnectionPointOutput outputPoint) {
-            if (!outputPoint.hasLink()) {
-                player.sendMessage(Language.getLanguageEntry("targeting-wand.not-linked"));
-                return;
-            }
-            outputPoint.unlink();
+        if (sourcePoint instanceof ConnectionPointOutput outputPoint && outputPoint.hasLink()) {
+            outputPoint.getLink().remove();
             return;
         }
 
-        if (sourcePoint instanceof ConnectionPointInput inputPoint) {
-            if (!inputPoint.hasLink()) {
-                player.sendMessage(Language.getLanguageEntry("targeting-wand.not-linked"));
-                return;
-            }
-            final ConnectionPointOutput outputPoint = inputPoint.getSource();
-            if (outputPoint != null) {
-                outputPoint.unlink();
-            }
+        if (sourcePoint instanceof ConnectionPointInput inputPoint && inputPoint.hasLink()) {
+            inputPoint.getLink().remove();
         }
     }
 
@@ -120,7 +110,10 @@ public class TargetingWand extends SlimefunItem {
         block2.connect(targetPoint, sourcePoint);
 
         setSourceConnectionPoint(player, outputSourcePoint.getLocation(), stack);
-        outputSourcePoint.link(inputTargetPoint);
+
+        final Link link = new Link(inputTargetPoint, outputSourcePoint);
+        inputTargetPoint.link(link);
+        outputSourcePoint.link(link);
     }
 
     public void use(Player player, Location pointLocation, ItemStack stack) {
@@ -133,7 +126,7 @@ public class TargetingWand extends SlimefunItem {
         }
 
         if (player.isSneaking()) {
-            removeLink(player, pointLocation);
+            removeLink(pointLocation);
             unsetSourceConnectionPoint(stack);
         } else if (isSourceSet(stack)) {
             createLink(player, pointLocation, stack);

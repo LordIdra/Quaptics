@@ -9,7 +9,7 @@ public class SpawnTimer {
         this.tick = interval;
     }
 
-    public boolean Update() {
+    public boolean update() {
         tick++;
 
         if (tick >= interval) {

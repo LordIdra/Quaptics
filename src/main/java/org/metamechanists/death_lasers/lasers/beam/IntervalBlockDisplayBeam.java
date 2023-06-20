@@ -1,5 +1,6 @@
 package org.metamechanists.death_lasers.lasers.beam;
 
+import org.metamechanists.death_lasers.lasers.DeprecatedBeams;
 import org.metamechanists.death_lasers.lasers.SpawnTimer;
 import org.metamechanists.death_lasers.lasers.ticker.factory.LaserBlockDisplayTickerFactory;
 import org.metamechanists.death_lasers.lasers.ticker.factory.IntervalLinearTimeTickerFactory;
@@ -9,6 +10,7 @@ import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class IntervalBlockDisplayBeam extends Beam {
+    private boolean deprecated = false;
     private final LaserBlockDisplayTickerFactory tickerFactory;
     private final SpawnTimer timer;
     private final Queue<LaserBlockDisplayTicker> tickers = new ConcurrentLinkedQueue<>();
@@ -29,8 +31,13 @@ public class IntervalBlockDisplayBeam extends Beam {
     }
 
     @Override
+    public void deprecate() {
+        DeprecatedBeams.add(this);deprecated = true;
+    }
+
+    @Override
     public void tick() {
-        if (powered && timer.Update()) {
+        if (!deprecated && timer.update()) {
             tickers.add(tickerFactory.build());
         }
 

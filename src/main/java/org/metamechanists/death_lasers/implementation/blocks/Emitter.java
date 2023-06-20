@@ -64,14 +64,14 @@ public class Emitter extends ConnectedBlock {
 
         if (charge >= consumption) {
             removeCharge(block.getLocation(), consumption);
-            output.setPowered(true);
+            output.getLink().setPowered(true);
         } else {
-            output.setPowered(false);
+            output.getLink().setPowered(false);
         }
     }
 
     @Override
-    public void onNodeUpdated(ConnectionPoint input) {}
+    public void onIncomingLinkUpdated(ConnectionPoint input) {}
 
     @Override
     protected Location calculateNewLocation(ConnectionPoint from, ConnectionPoint to) {

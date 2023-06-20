@@ -39,7 +39,7 @@ public class ConnectionGroup {
     public void killAllBeams() {
         for (ConnectionPoint point : points.values()) {
             if (point instanceof ConnectionPointOutput output) {
-                output.killBeam();
+                output.getLink().killBeam();
             }
         }
     }

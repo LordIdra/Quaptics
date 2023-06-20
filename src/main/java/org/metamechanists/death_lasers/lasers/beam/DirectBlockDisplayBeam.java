@@ -25,16 +25,8 @@ public class DirectBlockDisplayBeam extends Beam {
     }
 
     @Override
-    public void setPowered(boolean powered) {
-        super.setPowered(powered);
-
-        if (powered && ticker == null) {
-            ticker = tickerFactory.build();
-        }
-
-        if (!powered && ticker != null) {
-            remove();
-        }
+    public void deprecate() {
+        remove();
     }
 
     @Override

@@ -28,7 +28,7 @@ public class BlockTemplate extends ConnectedBlock {
 
 
     @Override
-    public void onNodeUpdated(ConnectionPoint input) {
+    public void onIncomingLinkUpdated(ConnectionPoint input) {
         final ConnectionGroup group = ConnectionPointStorage.getGroupFromPointLocation(input.getLocation());
         // TODO logic when an input is updated
     }

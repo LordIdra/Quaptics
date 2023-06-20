@@ -1,18 +1,14 @@
 package org.metamechanists.death_lasers.connections.points;
 
+import lombok.Getter;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Display;
-import org.metamechanists.death_lasers.connections.ConnectionGroup;
-import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
-import org.metamechanists.death_lasers.lasers.DeprecatedBeams;
-import org.metamechanists.death_lasers.lasers.beam.Beam;
-import org.metamechanists.death_lasers.lasers.beam.DirectBlockDisplayBeam;
-import org.metamechanists.death_lasers.lasers.ticker.factory.DirectSinglePulseTickerFactory;
+import org.metamechanists.death_lasers.connections.links.Link;
 
 public class ConnectionPointOutput extends ConnectionPoint {
-    private ConnectionPointInput target;
-    private Beam beam;
+    @Getter
+    private Link link;
 
     public ConnectionPointOutput(String name, Location location) {
         super(name, location,
@@ -21,10 +17,14 @@ public class ConnectionPointOutput extends ConnectionPoint {
                 new Display.Brightness(3, 3));
     }
 
+    public boolean hasLink() {
+        return link != null;
+    }
+
     @Override
     public void tick() {
-        if (beam != null) {
-            beam.tick();
+        if (hasLink()) {
+            link.tick();
         }
     }
 
@@ -32,77 +32,19 @@ public class ConnectionPointOutput extends ConnectionPoint {
     public void remove() {
         blockDisplay.remove();
         interaction.remove();
-        if (target != null) {
-            target.unlink();
-        }
-        if (beam != null) {
-            DeprecatedBeams.add(beam);
-            beam = null;
-        }
+        link.remove();
     }
 
-    public void killBeam() {
-        if (beam != null) {
-            beam.remove();
-        }
-    }
-
-    public void setPowered(boolean powered) {
-        if (!hasLink()) {
-            return;
-        }
-
-        if (!powered) {
-            if (beam != null) {
-                DeprecatedBeams.add(beam);
-                beam = null;
-            }
-            return;
-        }
-
-        if (beam == null) {
-            this.beam = new DirectBlockDisplayBeam(
-                    new DirectSinglePulseTickerFactory(
-                            Material.WHITE_CONCRETE,
-                            this.location,
-                            this.target.location));
-            this.beam.setPowered(true);
-            final ConnectionGroup targetGroup = ConnectionPointStorage.getGroupFromPointLocation(target.location);
-            targetGroup.getBlock().onNodeUpdated(target);
-        }
-    }
-
-    public boolean isPowered() {
-        if (beam == null) {
-            return false;
-        }
-        return beam.isPowered();
-    }
-
-    public boolean hasLink() {
-        return target != null;
-    }
-
-    public void link(ConnectionPointInput target) {
-        if (this.target != null) {
+    public void link(Link link) {
+        if (this.link != null) {
             unlink();
         }
-        this.target = target;
-        this.target.link(this);
+        this.link = link;
         blockDisplay.setBrightness(connectedBrightness);
-
-        final ConnectionGroup sourceGroup = ConnectionPointStorage.getGroupFromPointLocation(location);
-        sourceGroup.getBlock().onNodeUpdated(this);
     }
 
     public void unlink() {
-        target.unlink();
-        target = null;
+        link = null;
         blockDisplay.setBrightness(disconnectedBrightness);
-        DeprecatedBeams.add(beam);
-        beam = null;
-
-        final ConnectionGroup sourceGroup = ConnectionPointStorage.getGroupFromPointLocation(location);
-        sourceGroup.getBlock().onNodeUpdated(this);
     }
 }
