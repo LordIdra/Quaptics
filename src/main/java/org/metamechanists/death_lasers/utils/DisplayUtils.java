@@ -1,5 +1,7 @@
 package org.metamechanists.death_lasers.utils;
 
+import dev.sefiraat.sefilib.misc.TransformationBuilder;
+import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.BlockDisplay;
@@ -114,9 +116,9 @@ public class DisplayUtils {
 
     public static TextDisplay spawnTextDisplay(Location location, String text, float scale, Display.Brightness brightness) {
         final TextDisplay display = location.getWorld().spawn(location, TextDisplay.class);
-        display.setDisplayHeight(scale);
-        display.setDisplayWidth(scale);
-        display.setSeeThrough(true);
+        display.setTransformation(new TransformationBuilder().scale(scale, scale, scale).build());
+        display.setBackgroundColor(Color.fromARGB(0, 0, 0, 0));
+        display.setBillboard(Display.Billboard.CENTER);
         display.setBrightness(brightness);
         display.setText(text);
         return display;

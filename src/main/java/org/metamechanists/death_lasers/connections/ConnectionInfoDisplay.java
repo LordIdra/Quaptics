@@ -1,6 +1,8 @@
 package org.metamechanists.death_lasers.connections;
 
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
+import io.github.bakedlibs.dough.common.ChatColors;
+import lombok.Setter;
 import org.bukkit.entity.Display;
 import org.metamechanists.death_lasers.connections.links.Link;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
@@ -8,8 +10,10 @@ import org.metamechanists.death_lasers.items.Lore;
 import org.metamechanists.death_lasers.utils.DisplayUtils;
 
 public class ConnectionInfoDisplay {
-    final ConnectionPoint point;
-    final DisplayGroup displayGroup;
+    @Setter
+    private boolean hidden;
+    private final ConnectionPoint point;
+    private final DisplayGroup displayGroup;
 
     public ConnectionInfoDisplay(ConnectionPoint point) {
         this.point = point;
@@ -34,7 +38,7 @@ public class ConnectionInfoDisplay {
 
         displayGroup.addDisplay("power", DisplayUtils.spawnTextDisplay(
                 point.getLocation(),
-                Lore.power(link.getPower()),
+                ChatColors.color(Lore.power(link.getPower())),
                 0.25F,
                 new Display.Brightness(15, 0)));
     }
