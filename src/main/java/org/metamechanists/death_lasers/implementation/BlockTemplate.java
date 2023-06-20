@@ -11,7 +11,6 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.death_lasers.connections.ConnectionGroup;
-import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
 import org.metamechanists.death_lasers.implementation.abstracts.ConnectedBlock;
 
@@ -28,8 +27,7 @@ public class BlockTemplate extends ConnectedBlock {
 
 
     @Override
-    public void onIncomingLinkUpdated(ConnectionPoint input) {
-        final ConnectionGroup group = ConnectionPointStorage.getGroupFromPointLocation(input.getLocation());
+    public void onLinkUpdated(ConnectionGroup group) {
         // TODO logic when an input is updated
     }
 
