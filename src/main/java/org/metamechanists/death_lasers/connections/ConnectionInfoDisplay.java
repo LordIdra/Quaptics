@@ -14,6 +14,10 @@ public class ConnectionInfoDisplay {
     public ConnectionInfoDisplay(ConnectionPoint point) {
         this.point = point;
         displayGroup = new DisplayGroup(point.getLocation());
+
+        // Prevent bounding box obscuring Interactions
+        displayGroup.getParentDisplay().setInteractionWidth(0);
+        displayGroup.getParentDisplay().setInteractionHeight(0);
     }
 
     public void update() {
