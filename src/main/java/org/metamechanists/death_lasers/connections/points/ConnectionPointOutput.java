@@ -1,15 +1,11 @@
 package org.metamechanists.death_lasers.connections.points;
 
-import lombok.Getter;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Display;
 import org.metamechanists.death_lasers.connections.links.Link;
 
 public class ConnectionPointOutput extends ConnectionPoint {
-    @Getter
-    private Link link;
-
     public ConnectionPointOutput(String name, Location location) {
         super(name, location,
                 Material.LIME_STAINED_GLASS,

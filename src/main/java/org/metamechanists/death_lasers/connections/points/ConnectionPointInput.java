@@ -7,9 +7,6 @@ import org.bukkit.entity.Display;
 import org.metamechanists.death_lasers.connections.links.Link;
 
 public class ConnectionPointInput extends ConnectionPoint {
-    @Getter
-    private Link link;
-
     public ConnectionPointInput(String name, Location location) {
         super(name, location,
                 Material.RED_STAINED_GLASS,

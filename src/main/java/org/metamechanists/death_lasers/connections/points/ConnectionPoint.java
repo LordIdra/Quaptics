@@ -9,9 +9,12 @@ import org.bukkit.entity.Display;
 import org.bukkit.entity.Interaction;
 import org.bukkit.util.Vector;
 import org.joml.Vector3f;
+import org.metamechanists.death_lasers.connections.links.Link;
 import org.metamechanists.death_lasers.utils.DisplayUtils;
 
 public abstract class ConnectionPoint {
+    @Getter
+    protected Link link;
     @Getter
     private final String name;
     @Getter
