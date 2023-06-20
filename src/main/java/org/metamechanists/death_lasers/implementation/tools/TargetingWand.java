@@ -112,8 +112,8 @@ public class TargetingWand extends SlimefunItem {
         setSourceConnectionPoint(player, outputSourcePoint.getLocation(), stack);
 
         final Link link = new Link(inputTargetPoint, outputSourcePoint);
-        inputTargetPoint.link(link);
         outputSourcePoint.link(link);
+        inputTargetPoint.link(link);
     }
 
     public void use(Player player, Location pointLocation, ItemStack stack) {

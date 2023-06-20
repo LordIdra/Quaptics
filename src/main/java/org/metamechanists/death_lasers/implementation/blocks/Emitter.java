@@ -75,9 +75,6 @@ public class Emitter extends ConnectedBlock {
     }
 
     @Override
-    public void onIncomingLinkUpdated(ConnectionPoint input) {}
-
-    @Override
     protected Location calculateNewLocation(ConnectionPoint from, ConnectionPoint to) {
         final Location fromGroupLocation = ConnectionPointStorage.getGroupLocationFromPointLocation(from.getLocation());
         final Location toGroupLocation = ConnectionPointStorage.getGroupLocationFromPointLocation(to.getLocation());
