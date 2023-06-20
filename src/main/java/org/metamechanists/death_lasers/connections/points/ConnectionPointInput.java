@@ -28,11 +28,13 @@ public class ConnectionPointInput extends ConnectionPoint {
     public void remove() {
         blockDisplay.remove();
         interaction.remove();
-        link.remove();
+        if (hasLink()) {
+            link.remove();
+        }
     }
 
     public void link(Link link) {
-        if (this.link != null) {
+        if (hasLink()) {
             unlink();
         }
         this.link = link;
