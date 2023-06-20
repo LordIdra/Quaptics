@@ -3,6 +3,7 @@ package org.metamechanists.death_lasers.connections;
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import io.github.bakedlibs.dough.common.ChatColors;
 import org.bukkit.entity.Display;
+import org.bukkit.entity.TextDisplay;
 import org.metamechanists.death_lasers.connections.links.Link;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
 import org.metamechanists.death_lasers.items.Lore;
@@ -28,11 +29,12 @@ public class ConnectionInfoDisplay {
             return;
         }
 
+        final Link link = point.getLink();
+
         if (!displayGroup.getDisplays().isEmpty()) {
+            ((TextDisplay)displayGroup.removeDisplay("power")).setText(ChatColors.color(Lore.powerWithoutAttributeSymbol(link.getPower())));
             return;
         }
-
-        final Link link = point.getLink();
 
         displayGroup.addDisplay("power", DisplayUtils.spawnTextDisplay(
                 point.getLocation().clone().add(0, 0.3, 0),
