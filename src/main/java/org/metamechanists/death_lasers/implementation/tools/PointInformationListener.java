@@ -9,11 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
-import org.metamechanists.death_lasers.connections.links.Link;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
-import org.metamechanists.death_lasers.utils.Language;
-
-import java.util.Objects;
 
 public class PointInformationListener implements Listener {
     @EventHandler
@@ -34,10 +30,6 @@ public class PointInformationListener implements Listener {
             return;
         }
 
-        final Link link = ConnectionPointStorage.getPointFromPointLocation(connectionPointLocation).getLink();
-
-        event.getPlayer().sendMessage(Language.getLanguageEntry("point-information.transmission-power", Objects.toString(link.getPower())));
-        event.getPlayer().sendMessage(Language.getLanguageEntry("point-information.frequency", Objects.toString(link.getFrequency())));
-        event.getPlayer().sendMessage(Language.getLanguageEntry("point-information.phase", Objects.toString(link.getPhase())));
+        ConnectionPointStorage.getPointFromPointLocation(connectionPointLocation).toggleInfoDisplayVisibility();
     }
 }

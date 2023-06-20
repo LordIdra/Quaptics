@@ -87,4 +87,8 @@ public abstract class ConnectionPoint {
         blockDisplay.teleport(location);
         interaction.teleport(location.clone().add(INTERACTION_OFFSET));
     }
+
+    public void toggleInfoDisplayVisibility() {
+        infoDisplay.toggleVisibility();
+    }
 }

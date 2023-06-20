@@ -2,7 +2,6 @@ package org.metamechanists.death_lasers.connections;
 
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import io.github.bakedlibs.dough.common.ChatColors;
-import lombok.Setter;
 import org.bukkit.entity.Display;
 import org.metamechanists.death_lasers.connections.links.Link;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
@@ -10,7 +9,6 @@ import org.metamechanists.death_lasers.items.Lore;
 import org.metamechanists.death_lasers.utils.DisplayUtils;
 
 public class ConnectionInfoDisplay {
-    @Setter
     private boolean hidden;
     private final ConnectionPoint point;
     private final DisplayGroup displayGroup;
@@ -41,6 +39,11 @@ public class ConnectionInfoDisplay {
                 ChatColors.color(Lore.powerWithoutAttributeSymbol(link.getPower())),
                 0.25F,
                 new Display.Brightness(15, 0)));
+    }
+
+    public void toggleVisibility() {
+        hidden = !hidden;
+        displayGroup.getDisplays().values().forEach(display -> display.setViewRange(hidden ? 0 : 15));
     }
 
     public void remove() {
