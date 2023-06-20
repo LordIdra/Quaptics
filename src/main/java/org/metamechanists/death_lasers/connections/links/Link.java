@@ -27,8 +27,14 @@ public class Link {
         update();
     }
 
+    private boolean hasBeam() {
+        return beam != null;
+    }
+
     public void tick() {
-        beam.tick();
+        if (hasBeam()) {
+            beam.tick();
+        }
     }
 
     private void update() {
@@ -37,13 +43,13 @@ public class Link {
     }
 
     public void killBeam() {
-        if (beam != null) {
+        if (hasBeam()) {
             beam.remove();
         }
     }
 
     public void remove() {
-        if (beam != null) {
+        if (hasBeam()) {
             DeprecatedBeams.add(beam);
             beam = null;
         }
@@ -55,13 +61,13 @@ public class Link {
     public void setPowered(boolean powered) {
         this.powered = powered;
 
-        if (!powered && beam != null) {
+        if (!powered && hasBeam()) {
             beam.deprecate();
             beam = null;
             update();
         }
 
-        else if (powered && beam == null) {
+        else if (powered && !hasBeam()) {
             this.beam = new DirectBlockDisplayBeam(
                     new DirectSinglePulseTickerFactory(
                             Material.WHITE_CONCRETE,
