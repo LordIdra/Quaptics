@@ -56,7 +56,7 @@ public class Emitter extends ConnectedBlock {
     @Override
     protected Map<String, ConnectionPoint> generateConnectionPoints(Location location) {
         final Map<String, ConnectionPoint> points = new HashMap<>();
-        points.put("output", new ConnectionPointOutput("output", location.clone().add(new Vector(0.5F, 0.5F, 1.0F))));
+        points.put("output", new ConnectionPointOutput("output", location.clone().add(new Vector(0.5F, 0.5F, 0.95F))));
         return points;
     }
 
