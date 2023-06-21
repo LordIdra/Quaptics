@@ -1,6 +1,7 @@
 package org.metamechanists.death_lasers.connections.points;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -9,11 +10,15 @@ import org.bukkit.entity.Display;
 import org.bukkit.entity.Interaction;
 import org.bukkit.util.Vector;
 import org.joml.Vector3f;
+import org.metamechanists.death_lasers.connections.ConnectionGroup;
 import org.metamechanists.death_lasers.connections.info.ConnectionInfoDisplay;
 import org.metamechanists.death_lasers.connections.links.Link;
 import org.metamechanists.death_lasers.utils.DisplayUtils;
 
 public abstract class ConnectionPoint {
+    @Getter
+    @Setter
+    protected ConnectionGroup group;
     @Getter
     protected Link link;
     @Getter

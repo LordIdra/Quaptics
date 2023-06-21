@@ -90,8 +90,8 @@ public class Lens extends ConnectedBlock {
 
     @Override
     protected Location calculateNewLocation(ConnectionPoint from, ConnectionPoint to) {
-        final Location fromGroupLocation = ConnectionPointStorage.getGroupLocationFromPointLocation(from.getLocation());
-        final Location toGroupLocation = ConnectionPointStorage.getGroupLocationFromPointLocation(to.getLocation());
+        final Location fromGroupLocation = ConnectionPointStorage.getGroup(from.getLocation());
+        final Location toGroupLocation = ConnectionPointStorage.getGroup(to.getLocation());
         final Vector radiusDirection = DisplayUtils.getDirection(fromGroupLocation, toGroupLocation).multiply(0.45F);
         return fromGroupLocation.clone().add(0.5, 0.5, 0.5).add(radiusDirection);
     }

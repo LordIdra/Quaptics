@@ -31,7 +31,7 @@ public class TargetingWand extends SlimefunItem {
     }
 
     private void setSourceConnectionPoint(Player player, Location sourcePointLocation, ItemStack stack) {
-        final ConnectionPoint sourceOutputPoint = ConnectionPointStorage.getPointFromPointLocation(sourcePointLocation);
+        final ConnectionPoint sourceOutputPoint = ConnectionPointStorage.getPoint(sourcePointLocation);
         if (!(sourceOutputPoint instanceof ConnectionPointOutput)) {
             player.sendMessage(Language.getLanguageEntry("targeting-wand.source-must-be-output"));
             return;
@@ -43,7 +43,7 @@ public class TargetingWand extends SlimefunItem {
     public void unsetSourceConnectionPoint(ItemStack stack) {
         if (isSourceSet(stack)) {
             final Location sourcePointLocation = PersistentDataUtils.getLocation(stack, Keys.SOURCE);
-            final ConnectionPoint sourcePoint = ConnectionPointStorage.getPointFromPointLocation(sourcePointLocation);
+            final ConnectionPoint sourcePoint = ConnectionPointStorage.getPoint(sourcePointLocation);
             final ConnectionPointOutput outputSourcePoint = (ConnectionPointOutput)sourcePoint;
             if (outputSourcePoint != null) {
                 outputSourcePoint.deselect();
@@ -54,7 +54,7 @@ public class TargetingWand extends SlimefunItem {
     }
 
     private void removeLink(Location pointLocation) {
-        final ConnectionPoint sourcePoint = ConnectionPointStorage.getPointFromPointLocation(pointLocation);
+        final ConnectionPoint sourcePoint = ConnectionPointStorage.getPoint(pointLocation);
 
         if (sourcePoint instanceof ConnectionPointOutput outputPoint && outputPoint.hasLink()) {
             outputPoint.getLink().remove();
@@ -79,8 +79,8 @@ public class TargetingWand extends SlimefunItem {
             return;
         }
 
-        final ConnectionPoint sourcePoint = ConnectionPointStorage.getPointFromPointLocation(sourcePointLocation);
-        final ConnectionPoint targetPoint = ConnectionPointStorage.getPointFromPointLocation(targetPointLocation);
+        final ConnectionPoint sourcePoint = ConnectionPointStorage.getPoint(sourcePointLocation);
+        final ConnectionPoint targetPoint = ConnectionPointStorage.getPoint(targetPointLocation);
 
         if (!(targetPoint instanceof ConnectionPointInput inputTargetPoint)) {
             player.sendMessage(Language.getLanguageEntry("targeting-wand.target-must-be-input"));
@@ -98,8 +98,8 @@ public class TargetingWand extends SlimefunItem {
             return;
         }
 
-        final ConnectedBlock block1 = ConnectionPointStorage.getGroupFromPointLocation(sourcePointLocation).getBlock();
-        final ConnectedBlock block2 = ConnectionPointStorage.getGroupFromPointLocation(targetPointLocation).getBlock();
+        final ConnectedBlock block1 = ConnectionPointStorage.getPoint(sourcePointLocation).getGroup().getBlock();
+        final ConnectedBlock block2 = ConnectionPointStorage.getPoint(targetPointLocation).getGroup().getBlock();
 
         if (block1.connectionInvalid(sourcePoint, targetPoint) || block2.connectionInvalid(targetPoint, sourcePoint)) {
             player.sendMessage(Language.getLanguageEntry("targeting-wand.connection-invalid"));
@@ -115,7 +115,7 @@ public class TargetingWand extends SlimefunItem {
     }
 
     public void use(Player player, Location pointLocation, ItemStack stack) {
-        final Location groupLocation = ConnectionPointStorage.getGroupLocationFromPointLocation(pointLocation);
+        final Location groupLocation = ConnectionPointStorage.getGroup(pointLocation);
         if (!BlockStorage.hasBlockInfo(groupLocation)
                 || !(BlockStorage.check(groupLocation) instanceof ConnectedBlock)
                 || !Items.targetingWand.canUse(player, false)

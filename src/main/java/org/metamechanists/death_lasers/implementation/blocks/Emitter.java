@@ -63,7 +63,7 @@ public class Emitter extends ConnectedBlock {
 
     @Override
     public void onSlimefunTick(Block block, SlimefunItem item, Config data) {
-        final ConnectionGroup group = ConnectionPointStorage.getGroupFromBlock(block);
+        final ConnectionGroup group = ConnectionPointStorage.getGroup(block);
         final ConnectionPointOutput output = (ConnectionPointOutput) group.getPoint("output");
         final int charge = getCharge(block.getLocation(), data);
 
@@ -85,8 +85,8 @@ public class Emitter extends ConnectedBlock {
 
     @Override
     protected Location calculateNewLocation(ConnectionPoint from, ConnectionPoint to) {
-        final Location fromGroupLocation = ConnectionPointStorage.getGroupLocationFromPointLocation(from.getLocation());
-        final Location toGroupLocation = ConnectionPointStorage.getGroupLocationFromPointLocation(to.getLocation());
+        final Location fromGroupLocation = ConnectionPointStorage.getPoint(from.getLocation()).getGroup().getLocation();
+        final Location toGroupLocation = ConnectionPointStorage.getPoint(to.getLocation()).getGroup().getLocation();
         final Vector radiusDirection = DisplayUtils.getDirection(fromGroupLocation, toGroupLocation).multiply(0.45F);
         return fromGroupLocation.clone().add(0.5, 0.5, 0.5).add(radiusDirection);
     }
@@ -94,8 +94,8 @@ public class Emitter extends ConnectedBlock {
     @Override
     public void connect(ConnectionPoint from, ConnectionPoint to) {
         super.connect(from, to);
-        final Location fromGroupLocation = ConnectionPointStorage.getGroupLocationFromPointLocation(from.getLocation());
-        final Location toGroupLocation = ConnectionPointStorage.getGroupLocationFromPointLocation(to.getLocation());
+        final Location fromGroupLocation = ConnectionPointStorage.getPoint(from.getLocation()).getGroup().getLocation();
+        final Location toGroupLocation = ConnectionPointStorage.getPoint(to.getLocation()).getGroup().getLocation();
         final DisplayGroup fromDisplayGroup = getDisplayGroup(fromGroupLocation);
 
         fromDisplayGroup.removeDisplay("main").remove();

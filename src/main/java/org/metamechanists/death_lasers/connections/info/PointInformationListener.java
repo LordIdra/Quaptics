@@ -1,4 +1,4 @@
-package org.metamechanists.death_lasers.implementation.tools;
+package org.metamechanists.death_lasers.connections.info;
 
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import org.bukkit.Location;
@@ -10,6 +10,7 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
+import org.metamechanists.death_lasers.implementation.tools.TargetingWand;
 
 public class PointInformationListener implements Listener {
     @EventHandler
@@ -30,6 +31,6 @@ public class PointInformationListener implements Listener {
             return;
         }
 
-        ConnectionPointStorage.getPointFromPointLocation(connectionPointLocation).toggleInfoDisplayVisibility();
+        ConnectionPointStorage.getPoint(connectionPointLocation).toggleInfoDisplayVisibility();
     }
 }

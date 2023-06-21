@@ -3,15 +3,13 @@ package org.metamechanists.death_lasers.connections.links;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Material;
-import org.metamechanists.death_lasers.connections.BlockUpdateScheduler;
-import org.metamechanists.death_lasers.connections.ConnectionGroup;
-import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
-import org.metamechanists.death_lasers.connections.points.ConnectionPointInput;
-import org.metamechanists.death_lasers.connections.points.ConnectionPointOutput;
 import org.metamechanists.death_lasers.beams.DeprecatedBeamStorage;
 import org.metamechanists.death_lasers.beams.beam.Beam;
 import org.metamechanists.death_lasers.beams.beam.DirectBlockDisplayBeam;
 import org.metamechanists.death_lasers.beams.ticker.factory.DirectSinglePulseTickerFactory;
+import org.metamechanists.death_lasers.connections.BlockUpdateScheduler;
+import org.metamechanists.death_lasers.connections.points.ConnectionPointInput;
+import org.metamechanists.death_lasers.connections.points.ConnectionPointOutput;
 
 public class Link {
     @Getter
@@ -51,10 +49,8 @@ public class Link {
     }
 
     private void update() {
-        final ConnectionGroup inputGroup = ConnectionPointStorage.getGroupFromPointLocation(input.getLocation());
-        final ConnectionGroup outputGroup = ConnectionPointStorage.getGroupFromPointLocation(output.getLocation());
-        BlockUpdateScheduler.scheduleUpdate(inputGroup);
-        BlockUpdateScheduler.scheduleUpdate(outputGroup);
+        BlockUpdateScheduler.scheduleUpdate(input.getGroup());
+        BlockUpdateScheduler.scheduleUpdate(output.getGroup());
     }
 
     public void killBeam() {
@@ -69,14 +65,11 @@ public class Link {
             beam = null;
         }
 
-        final ConnectionGroup inputGroup = ConnectionPointStorage.getGroupFromPointLocation(input.getLocation());
-        final ConnectionGroup outputGroup = ConnectionPointStorage.getGroupFromPointLocation(output.getLocation());
-
         input.unlink();
         output.unlink();
 
-        BlockUpdateScheduler.scheduleUpdate(inputGroup);
-        BlockUpdateScheduler.scheduleUpdate(outputGroup);
+        BlockUpdateScheduler.scheduleUpdate(input.getGroup());
+        BlockUpdateScheduler.scheduleUpdate(output.getGroup());
     }
 
     public void setEnabled(boolean enabled) {

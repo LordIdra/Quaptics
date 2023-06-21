@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.metamechanists.death_lasers.beams.DeprecatedBeamStorage;
 import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
-import org.metamechanists.death_lasers.implementation.tools.PointInformationListener;
+import org.metamechanists.death_lasers.connections.info.PointInformationListener;
 import org.metamechanists.death_lasers.implementation.tools.TargetingWandListener;
 import org.metamechanists.death_lasers.items.Groups;
 import org.metamechanists.death_lasers.items.Items;

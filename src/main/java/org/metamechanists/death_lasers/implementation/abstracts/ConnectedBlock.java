@@ -36,7 +36,7 @@ public abstract class ConnectedBlock extends EnergyDisplayGroupBlock {
     protected void onPlace(BlockPlaceEvent event) {
         final Location location = event.getBlock().getLocation();
         final Map<String, ConnectionPoint> points = generateConnectionPoints(event.getPlayer(), location);
-        ConnectionPointStorage.addConnectionPointGroup(location, new ConnectionGroup(this, points));
+        ConnectionPointStorage.addConnectionPointGroup(location, new ConnectionGroup(location, this, points));
     }
 
     @Override
@@ -56,7 +56,7 @@ public abstract class ConnectedBlock extends EnergyDisplayGroupBlock {
 
     @OverridingMethodsMustInvokeSuper
     public void connect(ConnectionPoint from, ConnectionPoint to) {
-        ConnectionPointStorage.updateLocation(from.getLocation(), calculateNewLocation(from, to));
+        ConnectionPointStorage.updatePointLocation(from.getLocation(), calculateNewLocation(from, to));
     }
 
     @OverridingMethodsMustInvokeSuper

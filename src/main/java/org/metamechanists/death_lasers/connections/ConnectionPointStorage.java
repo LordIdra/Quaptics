@@ -12,6 +12,10 @@ public class ConnectionPointStorage implements Serializable {
     private static final Map<Location, ConnectionGroup> groups = new HashMap<>();
     private static final Map<Location, Location> groupIdFromPointLocation = new HashMap<>();
 
+    private static ConnectionGroup getGroupFromGroupLocation(Location groupLocation) {
+        return groups.get(groupLocation);
+    }
+
     public static void tick() {
         groups.values().forEach(ConnectionGroup::tick);
     }
@@ -23,10 +27,16 @@ public class ConnectionPointStorage implements Serializable {
 
     public static void removeConnectionPointGroup(Location groupLocation) {
         final ConnectionGroup group = groups.remove(groupLocation);
-        group.getPointLocations().forEach(pointLocation -> {
-            group.removeAllPoints();
-            groupIdFromPointLocation.remove(pointLocation);
-        });
+        group.removeAllPoints();
+        group.getPointLocations().forEach(groupIdFromPointLocation::remove);
+    }
+
+    public static void updatePointLocation(Location oldLocation, Location newLocation) {
+        final Location groupLocation = groupIdFromPointLocation.get(oldLocation);
+        final ConnectionGroup group = groups.get(groupLocation);
+        groupIdFromPointLocation.remove(oldLocation);
+        groupIdFromPointLocation.put(newLocation, groupLocation);
+        group.changeLocation(oldLocation, newLocation);
     }
 
     public static void killAllBeams() {
@@ -37,37 +47,21 @@ public class ConnectionPointStorage implements Serializable {
         return groupIdFromPointLocation.containsKey(pointLocation);
     }
 
-    public static Location getGroupLocationFromPointLocation(Location pointLocation) {
+    public static Location getGroup(Location pointLocation) {
         return groupIdFromPointLocation.get(pointLocation);
     }
 
-    public static ConnectionGroup getGroupFromGroupLocation(Location groupLocation) {
-        return groups.get(groupLocation);
-    }
-
-    public static ConnectionGroup getGroupFromPointLocation(Location pointLocation) {
-        final Location groupLocation = groupIdFromPointLocation.get(pointLocation);
-        return getGroupFromGroupLocation(groupLocation);
-    }
-
-    public static ConnectionPoint getPointFromPointLocation(Location pointLocation) {
-        ConnectionGroup group = getGroupFromPointLocation(pointLocation);
-        if (group == null) {
-            return null;
-        }
-        return group.getPoint(pointLocation);
-    }
-
-    public static ConnectionGroup getGroupFromBlock(Block block) {
+    public static ConnectionGroup getGroup(Block block) {
         final Location location = block.getLocation();
         return ConnectionPointStorage.getGroupFromGroupLocation(new Location(location.getWorld(), location.x(), location.y(), location.z()));
     }
 
-    public static void updateLocation(Location oldLocation, Location newLocation) {
-        final Location groupLocation = groupIdFromPointLocation.get(oldLocation);
-        final ConnectionGroup group = groups.get(groupLocation);
-        groupIdFromPointLocation.remove(oldLocation);
-        groupIdFromPointLocation.put(newLocation, groupLocation);
-        group.changeLocation(oldLocation, newLocation);
+    public static ConnectionPoint getPoint(Location pointLocation) {
+        final Location groupLocation = groupIdFromPointLocation.get(pointLocation);
+        final ConnectionGroup group = getGroupFromGroupLocation(groupLocation);
+        if (group == null) {
+            return null;
+        }
+        return group.getPoint(pointLocation);
     }
 }
