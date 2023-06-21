@@ -4,7 +4,9 @@ import com.destroystokyo.paper.ParticleBuilder;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -64,7 +66,10 @@ public abstract class ConnectedBlock extends EnergyDisplayGroupBlock {
         getDisplayGroup(location).getDisplays().values().forEach(Entity::remove);
         getDisplayGroup(location).remove();
 
-        location.createExplosion(1.5F, true, false);
+        BlockStorage.clearBlockInfo(location);
+        location.getBlock().setBlockData(Material.AIR.createBlockData());
+
+        location.createExplosion(3F, true, false);
         location.getWorld().spawnParticle(
                 new ParticleBuilder(Particle.CAMPFIRE_COSY_SMOKE).location(location).particle(),
                 0.05, 0.05, 0.05,
@@ -73,6 +78,7 @@ public abstract class ConnectedBlock extends EnergyDisplayGroupBlock {
                 new ParticleBuilder(Particle.FLASH).location(location).count(1).particle(),
                 location,
                 20);
+
         // TODO breaking sound?
     }
 
