@@ -27,7 +27,7 @@ public class ConnectionInfoDisplay {
     }
 
     private String formatName(ConnectionPoint point) {
-        return ChatColors.color((point.getLink().isEnabled() ? "&a" : "&c") + point.getName().toUpperCase());
+        return ChatColors.color((point.hasLink() ? "&a" : "&c") + point.getName().toUpperCase());
     }
     private String formatPower(Link link) {
         return ChatColors.color(Lore.powerWithoutAttributeSymbol(roundTo2Dp(link.getPower())));
@@ -40,12 +40,12 @@ public class ConnectionInfoDisplay {
     }
 
     public void update() {
-        if (displayGroup != null) {
-            removeDisplays();
-        }
-
         if (!point.hasLink()) {
             return;
+        }
+
+        if (displayGroup != null) {
+            removeDisplays();
         }
 
         final Link link = point.getLink();
