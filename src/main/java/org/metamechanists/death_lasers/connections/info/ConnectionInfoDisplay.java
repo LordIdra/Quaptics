@@ -55,9 +55,9 @@ public class ConnectionInfoDisplay {
             return;
         }
 
-        if (point.getLink().getPower() == 0) { showText("power"); }
-        if (point.getLink().getFrequency() == 0) { showText("frequency"); }
-        if (point.getLink().getPhase() == 0) { showText("phase"); }
+        if (point.getLink().getPower() != 0) { showText("power"); }
+        if (point.getLink().getFrequency() != 0) { showText("frequency"); }
+        if (point.getLink().getPhase() != 0) { showText("phase"); }
     }
 
     public void update() {
