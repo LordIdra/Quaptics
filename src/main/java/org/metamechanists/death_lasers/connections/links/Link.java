@@ -82,10 +82,15 @@ public class Link {
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
 
-        if (!enabled && hasBeam()) {
-            beam.deprecate();
-            beam = null;
-            update();
+        if (!enabled) {
+            power = 0;
+            frequency = 0;
+            phase = 0;
+            if (hasBeam()) {
+                beam.deprecate();
+                beam = null;
+                update();
+            }
         }
 
         else if (enabled && !hasBeam()) {
