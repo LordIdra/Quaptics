@@ -64,7 +64,7 @@ public abstract class EnergyDisplayGroupBlock extends SlimefunItem implements En
     protected Location formatRelativeLocation(Player player, Location location, Vector vector) {
         vector = accountForPlayerYaw(player, vector);
         vector.add(new Vector(0.5, 0.5, 0.5));
-        return location.add(vector);
+        return location.clone().add(vector);
     }
 
     @Override
