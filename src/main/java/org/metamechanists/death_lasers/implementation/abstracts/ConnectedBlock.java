@@ -66,7 +66,7 @@ public abstract class ConnectedBlock extends EnergyDisplayGroupBlock {
 
         location.createExplosion(1.5F, true, false);
         location.getWorld().spawnParticle(
-                new ParticleBuilder(Particle.CAMPFIRE_COSY_SMOKE).location(location).count(0).particle(),
+                new ParticleBuilder(Particle.CAMPFIRE_COSY_SMOKE).location(location).particle(),
                 0.05, 0.05, 0.05,
                 20);
         location.getWorld().spawnParticle(
