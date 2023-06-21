@@ -27,7 +27,14 @@ public class ConnectionInfoDisplay {
         return ((double)Math.round(value*Math.pow(10, 2))) / Math.pow(10, 2);
     }
 
-    private void updateText(String key, String text) {
+    private void updateText(String key, boolean show) {
+        if (show) {
+            showText(key);
+            return;
+        }
+        hideText(key);
+    }
+    private void setText(String key, String text) {
         final TextDisplay display = (TextDisplay) displayGroup.getDisplays().get(key);
         display.setText(text);
     }
@@ -40,12 +47,8 @@ public class ConnectionInfoDisplay {
         display.setViewRange(0);
     }
     private void doVisibilityCheck() {
-        hideText("name");
-        hideText("power");
-        hideText("frequency");
-        hideText("phase");
-
         if (hidden) {
+            hideText("name");
             return;
         }
 
@@ -55,9 +58,9 @@ public class ConnectionInfoDisplay {
             return;
         }
 
-        if (point.getLink().getPower() != 0) { showText("power"); }
-        if (point.getLink().getFrequency() != 0) { showText("frequency"); }
-        if (point.getLink().getPhase() != 0) { showText("phase"); }
+        updateText("power", point.getLink().getPower() != 0);
+        updateText("frequency", point.getLink().getFrequency() != 0);
+        updateText("phase", point.getLink().getPhase() != 0);
     }
 
     public void update() {
@@ -69,16 +72,16 @@ public class ConnectionInfoDisplay {
 
         doVisibilityCheck();
 
-        updateText("name", ChatColors.color((point.hasLink() ? "&a" : "&c") + point.getName().toUpperCase()));
+        setText("name", ChatColors.color((point.hasLink() ? "&a" : "&c") + point.getName().toUpperCase()));
 
         if (!point.hasLink()) {
             return;
         }
 
         final Link link = point.getLink();
-        updateText("power", ChatColors.color(Lore.powerWithoutAttributeSymbol(roundTo2dp(link.getPower()))));
-        updateText("frequency", ChatColors.color(Lore.frequencyWithoutAttributeSymbol(roundTo2dp(link.getFrequency()))));
-        updateText("phase", ChatColors.color(Lore.phaseWithoutAttributeSymbol(link.getPhase())));
+        setText("power", ChatColors.color(Lore.powerWithoutAttributeSymbol(roundTo2dp(link.getPower()))));
+        setText("frequency", ChatColors.color(Lore.frequencyWithoutAttributeSymbol(roundTo2dp(link.getFrequency()))));
+        setText("phase", ChatColors.color(Lore.phaseWithoutAttributeSymbol(link.getPhase())));
     }
 
     public void toggleVisibility() {
