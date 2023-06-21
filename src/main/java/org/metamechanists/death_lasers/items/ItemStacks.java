@@ -25,11 +25,11 @@ public class ItemStacks {
     public static final SlimefunItemStack DARK_PRISM = new SlimefunItemStack(
             "DARK_PRISM",
             Material.GRAY_STAINED_GLASS,
-            "&8Black Prism",
+            "&8Dark Prism",
             "&7● &bConstitutes &7multiple laser beams into one",
             "&7● Power loss increases with input power",
             Lore.maxPower(40),
-            Lore.powerLoss(50));
+            Lore.powerLoss(40));
 
     public static final SlimefunItemStack WHITE_PRISM = new SlimefunItemStack(
             "WHITE_PRISM",
