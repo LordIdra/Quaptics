@@ -4,6 +4,7 @@ import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import io.github.bakedlibs.dough.common.ChatColors;
 import org.bukkit.entity.Display;
 import org.bukkit.entity.TextDisplay;
+import org.metamechanists.death_lasers.connections.links.Link;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
 import org.metamechanists.death_lasers.items.Lore;
 
@@ -22,7 +23,7 @@ public class ConnectionInfoDisplay {
         displayGroup = new InfoDisplayBuilder(point.getLocation()).add("phase").add("frequency").add("power").add("name").build();
     }
 
-    private double roundTo2Dp(double value) {
+    private double roundTo2dp(double value) {
         return ((double)Math.round(value*Math.pow(10, 2))) / Math.pow(10, 2);
     }
 
@@ -69,9 +70,15 @@ public class ConnectionInfoDisplay {
         doVisibilityCheck();
 
         updateText("name", ChatColors.color((point.hasLink() ? "&a" : "&c") + point.getName().toUpperCase()));
-        updateText("power", ChatColors.color(Lore.powerWithoutAttributeSymbol(roundTo2Dp(point.getLink().getPower()))));
-        updateText("frequency", ChatColors.color(Lore.frequencyWithoutAttributeSymbol(roundTo2Dp(point.getLink().getFrequency()))));
-        updateText("phase", ChatColors.color(Lore.phaseWithoutAttributeSymbol(point.getLink().getPhase())));
+
+        if (!point.hasLink()) {
+            return;
+        }
+
+        final Link link = point.getLink();
+        updateText("power", ChatColors.color(Lore.powerWithoutAttributeSymbol(roundTo2dp(link.getPower()))));
+        updateText("frequency", ChatColors.color(Lore.frequencyWithoutAttributeSymbol(roundTo2dp(link.getFrequency()))));
+        updateText("phase", ChatColors.color(Lore.phaseWithoutAttributeSymbol(link.getPhase())));
     }
 
     public void toggleVisibility() {
