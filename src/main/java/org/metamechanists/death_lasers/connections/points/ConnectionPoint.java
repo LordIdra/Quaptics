@@ -53,12 +53,13 @@ public abstract class ConnectionPoint {
     }
 
     public void remove() {
-        infoDisplay.remove();
-        blockDisplay.remove();
-        interaction.remove();
         if (hasLink()) {
             link.remove();
         }
+
+        infoDisplay.remove();
+        blockDisplay.remove();
+        interaction.remove();
     }
 
     public boolean hasLink() {
