@@ -46,10 +46,10 @@ public class ConnectionInfoDisplay {
         final Link link = point.getLink();
         final InfoDisplayBuilder builder = new InfoDisplayBuilder(point.getLocation());
 
-        builder.add("name", formatName(point), hidden);
-        if (link.getPower() != 0) { builder.add("power", formatPower(link), hidden); }
-        if (link.getFrequency() != 0) { builder.add("frequency", formatFrequency(link), hidden); }
         if (link.getPhase() != 0) { builder.add("phase", formatPhase(link), hidden); }
+        if (link.getFrequency() != 0) { builder.add("frequency", formatFrequency(link), hidden); }
+        if (link.getPower() != 0) { builder.add("power", formatPower(link), hidden); }
+        builder.add("name", formatName(point), hidden);
 
         displayGroup = builder.build();
     }

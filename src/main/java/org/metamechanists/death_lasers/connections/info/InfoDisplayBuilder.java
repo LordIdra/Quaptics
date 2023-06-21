@@ -10,13 +10,13 @@ public class InfoDisplayBuilder {
     private final Location location;
 
     public InfoDisplayBuilder(Location location) {
+        this.location = location.clone();
         this.group = new DisplayGroup(location.clone().add(0, 0.2, 0), 0, 0);
-        this.location = location.clone().set(0, 0, 0);
     }
 
     public void add(String key, String text, boolean hidden) {
-        location.add(0, 0.07, 0);
         group.addDisplay(key, DisplayUtils.spawnTextDisplay(location, text, 0.25F, new Display.Brightness(15, 0), hidden));
+        location.add(0, 0.07, 0);
     }
 
     public DisplayGroup build() {
