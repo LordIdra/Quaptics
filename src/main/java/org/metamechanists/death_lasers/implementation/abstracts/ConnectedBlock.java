@@ -66,14 +66,18 @@ public abstract class ConnectedBlock extends EnergyDisplayGroupBlock {
 
         location.createExplosion(1.5F, true, false);
         location.getWorld().spawnParticle(
-                new ParticleBuilder(Particle.CAMPFIRE_COSY_SMOKE).location(location).particle(),
-                location, 20);
+                new ParticleBuilder(Particle.CAMPFIRE_COSY_SMOKE).location(location).count(0).particle(),
+                0.05, 0.05, 0.05,
+                20);
+        location.getWorld().spawnParticle(
+                new ParticleBuilder(Particle.FLASH).location(location).count(1).particle(),
+                location,
+                20);
     }
 
     public void doBurnoutCheck(ConnectionGroup group, ConnectionPoint point, double maxPower) {
         if (point.hasLink() && point.getLink().getPower() > maxPower) {
             burnout(group.getLocation());
-            return;
         }
     }
 
