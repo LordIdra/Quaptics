@@ -69,7 +69,6 @@ public class Emitter extends ConnectedBlock {
                 final Link link = output.getLink();
                 link.setPower(transmissionPower);
                 link.setEnabled(true);
-
             }
         } else {
             if (output.hasLink()) {

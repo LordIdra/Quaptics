@@ -24,11 +24,11 @@ import org.metamechanists.death_lasers.utils.DisplayUtils;
 import java.util.HashMap;
 import java.util.Map;
 
-public class WhitePrism extends ConnectedBlock {
+public class DarkPrism extends ConnectedBlock {
     private final double maxPower;
     private final double powerLoss;
 
-    public WhitePrism(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, double maxPower, double powerLoss) {
+    public DarkPrism(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, double maxPower, double powerLoss) {
         super(group, item, recipeType, recipe);
         this.maxPower = maxPower;
         this.powerLoss = powerLoss;
@@ -44,7 +44,7 @@ public class WhitePrism extends ConnectedBlock {
                 "main",
                 DisplayUtils.spawnBlockDisplay(
                         location.clone().add(0.5, 0.5, 0.5),
-                        Material.WHITE_STAINED_GLASS,
+                        Material.GRAY_STAINED_GLASS,
                         DisplayUtils.rotationTransformation(
                                 new Vector3f(0.4F, 0.4F, 0.4F),
                                 new Vector3f((float)(Math.PI/4), (float)(Math.PI/4), 0))));
@@ -56,57 +56,43 @@ public class WhitePrism extends ConnectedBlock {
     protected Map<String, ConnectionPoint> generateConnectionPoints(Player player, Location location) {
         final Map<String, ConnectionPoint> points = new HashMap<>();
 
-        points.put("input", new ConnectionPointInput("input",
-                formatRelativeLocation(player, location, new Vector(0.0F, 0.0F, -0.54F))));
+        points.put("input 1", new ConnectionPointInput("input 1",
+                formatRelativeLocation(player, location, new Vector(0.0F, 0.0F, -0.54F).rotateAroundY(-Math.PI/8))));
 
-        points.put("output 1", new ConnectionPointOutput("output 1",
-                formatRelativeLocation(player, location, new Vector(0.0F, 0.0F, 0.54F).rotateAroundY(-Math.PI/8))));
+        points.put("input 2", new ConnectionPointInput("input 2",
+                formatRelativeLocation(player, location, new Vector(0.0F, 0.0F, -0.54F).rotateAroundY(Math.PI/8))));
 
-        points.put("output 2", new ConnectionPointOutput("output 2",
-                formatRelativeLocation(player, location, new Vector(0.0F, 0.0F, 0.54F).rotateAroundY(Math.PI/8))));
+        points.put("output", new ConnectionPointOutput("output",
+                formatRelativeLocation(player, location, new Vector(0.0F, 0.0F, 0.54F))));
 
         return points;
     }
 
     @Override
     public void onInputLinkUpdated(ConnectionGroup group) {
-        final ConnectionPointInput input = (ConnectionPointInput) group.getPoint("input");
-        final ConnectionPointOutput output1 = (ConnectionPointOutput) group.getPoint("output 1");
-        final ConnectionPointOutput output2 = (ConnectionPointOutput) group.getPoint("output 2");
+        final ConnectionPointInput input1 = (ConnectionPointInput) group.getPoint("input 1");
+        final ConnectionPointInput input2 = (ConnectionPointInput) group.getPoint("input 2");
+        final ConnectionPointOutput output = (ConnectionPointOutput) group.getPoint("output");
 
-        if (!output1.hasLink() && !output2.hasLink()) {
+        if (!output.hasLink()) {
             return;
         }
 
-        final boolean inputOn = input.hasLink() && input.getLink().isEnabled();
-        if (!inputOn) {
-            if (output1.hasLink()) {
-                final Link link = output1.getLink();
-                link.setEnabled(false);
-            }
-            if (output2.hasLink()) {
-                final Link link = output2.getLink();
-                link.setEnabled(false);
-            }
+        final boolean input1On = input1.hasLink() && input1.getLink().isEnabled();
+        final boolean input2On = input2.hasLink() && input2.getLink().isEnabled();
+        if (!input1On && !input2On) {
+            final Link link = output.getLink();
+            link.setEnabled(false);
             return;
         }
 
-        double outputPower = LinkProperties.calculatePower(input.getLink().getPower(), maxPower, powerLoss);
-        if (output1.hasLink() && output2.hasLink()) {
-            outputPower /= 2.0;
-        }
+        double inputPower = 0;
+        if (input1On) { inputPower += input1.getLink().getPower(); }
+        if (input2On) { inputPower += input2.getLink().getPower(); }
 
-        if (output1.hasLink()) {
-            final Link link = output1.getLink();
-            link.setPower(outputPower);
-            link.setEnabled(true);
-        }
-
-        if (output2.hasLink()) {
-            final Link link = output2.getLink();
-            link.setPower(outputPower);
-            link.setEnabled(true);
-        }
+        final Link outputLink = output.getLink();
+        outputLink.setPower(LinkProperties.calculatePower(inputPower, maxPower, powerLoss));
+        outputLink.setEnabled(true);
     }
 
     @Override

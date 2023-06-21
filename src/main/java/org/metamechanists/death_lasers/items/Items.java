@@ -6,7 +6,7 @@ import org.bukkit.inventory.ItemStack;
 import org.metamechanists.death_lasers.DEATH_LASERS;
 import org.metamechanists.death_lasers.implementation.blocks.Emitter;
 import org.metamechanists.death_lasers.implementation.blocks.Lens;
-import org.metamechanists.death_lasers.implementation.blocks.WhitePrism;
+import org.metamechanists.death_lasers.implementation.blocks.DarkPrism;
 import org.metamechanists.death_lasers.implementation.tools.TargetingWand;
 
 import static org.metamechanists.death_lasers.items.ItemStacks.*;
@@ -32,9 +32,9 @@ public class Items {
             new ItemStack[] {},
             40,
             0.3);
-    public static final WhitePrism whitePrism = new WhitePrism(
+    public static final DarkPrism darkPrism = new DarkPrism(
             Groups.DEATH_LASER_GROUP,
-            WHITE_PRISM,
+            DARK_PRISM,
             RecipeType.NULL,
             new ItemStack[] {},
             40,
@@ -46,6 +46,6 @@ public class Items {
         targetingWand.register(addon);
         emitter.register(addon);
         lens.register(addon);
-        whitePrism.register(addon);
+        darkPrism.register(addon);
     }
 }
