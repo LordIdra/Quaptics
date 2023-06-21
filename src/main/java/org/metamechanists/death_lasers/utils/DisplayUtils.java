@@ -8,7 +8,6 @@ import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Display;
 import org.bukkit.entity.Interaction;
 import org.bukkit.entity.TextDisplay;
-import org.bukkit.util.Transformation;
 import org.bukkit.util.Vector;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
@@ -37,7 +36,7 @@ public class DisplayUtils {
         return getDisplacement(from, to).normalize();
     }
 
-    private static Vector3f calculateHitboxAdjustmentTranslation(Vector3f scale, Matrix4f matrix) {
+    private static Vector3f calculateHitboxAdjustmentTranslation(Matrix4f matrix) {
         // When we rotate a block, the hitbox in X, Y, and Z changes
         // We need to account for this change to center the block
         final List<Vector3f> transformedVertices = new ArrayList<>();
@@ -68,7 +67,7 @@ public class DisplayUtils {
         final float angleX = (float) Math.atan2(direction.y, Math.sqrt(direction.x*direction.x + direction.z*direction.z));
         final Matrix4f hitboxMatrix = new Matrix4f().rotateY(angleY).rotateX(-angleX).scale(scale);
         return new Matrix4f()
-                .translate(calculateHitboxAdjustmentTranslation(scale, hitboxMatrix))
+                .translate(calculateHitboxAdjustmentTranslation(hitboxMatrix))
                 .rotateY(angleY)
                 .rotateX(-angleX)
                 .scale(scale);
@@ -84,46 +83,37 @@ public class DisplayUtils {
         // - Rotate the block by rotationInDegrees
         final Matrix4f hitboxMatrix = new Matrix4f().rotateXYZ(rotationInRadians).scale(scale);
         return new Matrix4f()
-                .translate(calculateHitboxAdjustmentTranslation(scale, hitboxMatrix))
+                .translate(calculateHitboxAdjustmentTranslation(hitboxMatrix))
                 .rotateXYZ(rotationInRadians)
                 .scale(scale);
     }
 
     public static BlockDisplay spawnBlockDisplay(Location location, Material material, Matrix4f transformation) {
-        final BlockDisplay display = location.getWorld().spawn(location, BlockDisplay.class);
-        display.setBlock(material.createBlockData());
-        display.setTransformationMatrix(transformation);
-        display.setDisplayWidth(0);
-        display.setDisplayHeight(0);
-        return display;
-    }
-
-    public static BlockDisplay spawnBlockDisplay(Location location, Material material, Transformation transformation) {
-        final BlockDisplay display = location.getWorld().spawn(location, BlockDisplay.class);
-        display.setBlock(material.createBlockData());
-        display.setTransformation(transformation);
-        display.setDisplayWidth(0);
-        display.setDisplayHeight(0);
-        return display;
+        return location.getWorld().spawn(location, BlockDisplay.class, display -> {
+            display.setBlock(material.createBlockData());
+            display.setTransformationMatrix(transformation);
+            display.setDisplayWidth(0);
+            display.setDisplayHeight(0);
+        });
     }
 
     public static Interaction spawnInteraction(Location location, float width, float height) {
-        final Interaction interaction = location.getWorld().spawn(location, Interaction.class);
-        interaction.setInteractionWidth(width);
-        interaction.setInteractionHeight(height);
-        return interaction;
+        return location.getWorld().spawn(location, Interaction.class, interaction -> {
+            interaction.setInteractionWidth(width);
+            interaction.setInteractionHeight(height);
+        });
     }
 
     public static TextDisplay spawnTextDisplay(Location location, String text, float scale, Display.Brightness brightness, boolean hide) {
-        final TextDisplay display = location.getWorld().spawn(location, TextDisplay.class);
-        display.setTransformation(new TransformationBuilder().scale(scale, scale, scale).build());
-        display.setBackgroundColor(Color.fromARGB(0, 0, 0, 0));
-        display.setBillboard(Display.Billboard.VERTICAL);
-        display.setBrightness(brightness);
-        display.setText(text);
-        if (hide) {
-            display.setViewRange(0);
-        }
-        return display;
+        return location.getWorld().spawn(location, TextDisplay.class, display -> {
+            display.setTransformation(new TransformationBuilder().scale(scale, scale, scale).build());
+            display.setBackgroundColor(Color.fromARGB(0, 0, 0, 0));
+            display.setBillboard(Display.Billboard.VERTICAL);
+            display.setBrightness(brightness);
+            display.setText(text);
+            if (hide) {
+                display.setViewRange(0);
+            }
+        });
     }
 }
