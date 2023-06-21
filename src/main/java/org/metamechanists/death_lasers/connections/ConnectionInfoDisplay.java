@@ -11,7 +11,7 @@ import org.metamechanists.death_lasers.utils.DisplayUtils;
 public class ConnectionInfoDisplay {
     private boolean hidden = true;
     private final ConnectionPoint point;
-    private final DisplayGroup displayGroup;
+    private DisplayGroup displayGroup;
 
     public ConnectionInfoDisplay(ConnectionPoint point) {
         this.point = point;
@@ -42,7 +42,8 @@ public class ConnectionInfoDisplay {
 
         final Link link = point.getLink();
 
-        displayGroup.getDisplays().keySet().forEach(displayGroup::removeDisplay);
+        displayGroup.remove();
+        displayGroup = new DisplayGroup(point.getLocation(), 0, 0);
 
         displayGroup.addDisplay("power", DisplayUtils.spawnTextDisplay(
                 point.getLocation().clone().add(0, 0.34, 0),
