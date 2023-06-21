@@ -69,8 +69,14 @@ public class Link {
             beam = null;
         }
 
+        final ConnectionGroup inputGroup = ConnectionPointStorage.getGroupFromPointLocation(input.getLocation());
+        final ConnectionGroup outputGroup = ConnectionPointStorage.getGroupFromPointLocation(output.getLocation());
+
         input.unlink();
         output.unlink();
+
+        BlockUpdateScheduler.scheduleUpdate(inputGroup);
+        BlockUpdateScheduler.scheduleUpdate(outputGroup);
     }
 
     public void setEnabled(boolean enabled) {
