@@ -16,11 +16,7 @@ public class ConnectionInfoDisplay {
 
     public ConnectionInfoDisplay(ConnectionPoint point) {
         this.point = point;
-        displayGroup = new DisplayGroup(point.getLocation());
-
-        // Prevent bounding box obscuring Interactions
-        displayGroup.getParentDisplay().setInteractionWidth(0);
-        displayGroup.getParentDisplay().setInteractionHeight(0);
+        displayGroup = new DisplayGroup(point.getLocation(), 0, 0);
     }
 
     private void changeDisplayText(String displayName, String newText) {
@@ -59,23 +55,23 @@ public class ConnectionInfoDisplay {
         }
 
         displayGroup.addDisplay("power", DisplayUtils.spawnTextDisplay(
-                point.getLocation().clone().add(0, 0.3, 0),
+                point.getLocation().clone().add(0, 0.34, 0),
                 formatPower(link),
-                0.2F,
+                0.25F,
                 new Display.Brightness(15, 0),
                 true));
 
         displayGroup.addDisplay("frequency", DisplayUtils.spawnTextDisplay(
-                point.getLocation().clone().add(0, 0.25, 0),
+                point.getLocation().clone().add(0, 0.27, 0),
                 formatFrequency(link),
-                0.2F,
+                0.25F,
                 new Display.Brightness(15, 0),
                 true));
 
         displayGroup.addDisplay("phase", DisplayUtils.spawnTextDisplay(
                 point.getLocation().clone().add(0, 0.2, 0),
                 formatPhase(link),
-                0.2F,
+                0.25F,
                 new Display.Brightness(15, 0),
                 true));
     }

@@ -12,6 +12,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.BlockDisplay;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
@@ -54,9 +55,9 @@ public class Emitter extends ConnectedBlock {
     }
 
     @Override
-    protected Map<String, ConnectionPoint> generateConnectionPoints(Location location) {
+    protected Map<String, ConnectionPoint> generateConnectionPoints(Player player, Location location) {
         final Map<String, ConnectionPoint> points = new HashMap<>();
-        points.put("output", new ConnectionPointOutput("output", location.clone().add(new Vector(0.5F, 0.5F, 0.95F))));
+        points.put("output", new ConnectionPointOutput("output", location.clone().add(adjustVector(player, new Vector(0.45F, 0.0F, 0.0F)))));
         return points;
     }
 

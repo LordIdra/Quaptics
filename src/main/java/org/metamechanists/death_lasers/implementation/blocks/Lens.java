@@ -8,6 +8,7 @@ import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNetComponen
 import lombok.Getter;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
@@ -57,10 +58,10 @@ public class Lens extends ConnectedBlock {
     }
 
     @Override
-    protected Map<String, ConnectionPoint> generateConnectionPoints(Location location) {
+    protected Map<String, ConnectionPoint> generateConnectionPoints(Player player, Location location) {
         final Map<String, ConnectionPoint> points = new HashMap<>();
-        points.put("input", new ConnectionPointInput("input", location.clone().add(new Vector(0.5F, 0.5F, 0.0F))));
-        points.put("output", new ConnectionPointOutput("output", location.clone().add(new Vector(0.5F, 0.5F, 0.95F))));
+        points.put("input", new ConnectionPointInput("input", location.clone().add(adjustVector(player, new Vector(0.0F, 0.0F, -0.45F)))));
+        points.put("output", new ConnectionPointOutput("output", location.clone().add(adjustVector(player, new Vector(0.0F, 0.0F, 0.45F)))));
         return points;
     }
 

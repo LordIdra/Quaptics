@@ -4,7 +4,10 @@ import lombok.Getter;
 import org.metamechanists.metalib.utils.ColorUtils;
 
 public enum Colors {
-    POWER("FF0000");
+    COUNT("9494B8"),
+    POWER("FF0000"),
+    FREQUENCY("00ff00"),
+    PHASE("FFCC00");
 
     @Getter
     private final String string;

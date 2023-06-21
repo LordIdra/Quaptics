@@ -6,13 +6,21 @@ import java.util.Objects;
 
 public class Lore {
     private final static String attributeSymbol = "&8⇨ ";
+    private final static String countSymbol = Colors.COUNT.getString() + "→";
     private final static String powerSymbol = Colors.POWER.getString() + "⏻ ";
-    private final static String powerSuffix = Colors.POWER.getString() + " &8W";
-    private final static String frequencySymbol = Colors.POWER.getString() + "λ ";
-    private final static String frequencySuffix = Colors.POWER.getString() + " &8Hz";
-    private final static String phaseSymbol = Colors.POWER.getString() + "◎ ";
-    private final static String phaseSuffix = Colors.POWER.getString() + " &8°";
-    private final static String percentageSuffix = Colors.POWER.getString() + " &8%";
+
+    private final static String frequencySymbol = Colors.FREQUENCY.getString() + "λ ";
+    private final static String phaseSymbol = Colors.PHASE.getString() + "◎ ";
+
+
+    private final static String percentageSuffix = " &8%";
+    private final static String powerSuffix = " &8W";
+    private final static String frequencySuffix = " &8Hz";
+    private final static String phaseSuffix = " &8°";
+
+    public static String maxConnections(int connections) {
+        return countSymbol + "&7Max Connections &e" + Objects.toString(connections);
+    }
 
     public static String powerWithoutAttributeSymbol(double power) {
         return powerSymbol + "&7Power &e" + Objects.toString(power) + powerSuffix;

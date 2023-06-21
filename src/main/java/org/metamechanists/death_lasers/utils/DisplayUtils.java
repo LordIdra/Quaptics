@@ -118,7 +118,7 @@ public class DisplayUtils {
         final TextDisplay display = location.getWorld().spawn(location, TextDisplay.class);
         display.setTransformation(new TransformationBuilder().scale(scale, scale, scale).build());
         display.setBackgroundColor(Color.fromARGB(0, 0, 0, 0));
-        display.setBillboard(Display.Billboard.CENTER);
+        display.setBillboard(Display.Billboard.VERTICAL);
         display.setBrightness(brightness);
         display.setText(text);
         if (hide) {

@@ -6,17 +6,23 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNetComponentType;
 import lombok.Getter;
 import org.bukkit.Location;
+import org.bukkit.block.BlockFace;
+import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.Vector;
 import org.metamechanists.death_lasers.connections.ConnectionGroup;
 import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public abstract class ConnectedBlock extends EnergyDisplayGroupBlock {
+    private static final List<BlockFace> AXIS = new ArrayList<>(List.of(BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST));
     @Getter
     private final EnergyNetComponentType energyComponentType = EnergyNetComponentType.CONSUMER;
     @Getter
@@ -29,12 +35,23 @@ public abstract class ConnectedBlock extends EnergyDisplayGroupBlock {
         this.capacity = capacity;
     }
 
-    protected abstract Map<String, ConnectionPoint> generateConnectionPoints(Location location);
+    private BlockFace yawToFace(float yaw) {
+        return AXIS.get(Math.round(yaw / 90f) & 0x3);
+    }
+
+    protected Vector adjustVector(Player player, Vector vector) {
+        final double rotationAngle = yawToFace(player.getEyeLocation().getYaw()).getDirection().angle(new Vector(1, 0, 0));
+        vector.rotateAroundY(rotationAngle);
+        vector.add(new Vector(0.5, 0.5, 0.5));
+        return vector;
+    }
+
+    protected abstract Map<String, ConnectionPoint> generateConnectionPoints(Player player, Location location);
 
     @Override
     protected void onPlace(BlockPlaceEvent event) {
         final Location location = event.getBlock().getLocation();
-        final Map<String, ConnectionPoint> points = generateConnectionPoints(location);
+        final Map<String, ConnectionPoint> points = generateConnectionPoints(event.getPlayer(), location);
         ConnectionPointStorage.addConnectionPointGroup(location, new ConnectionGroup(this, points));
     }
 
