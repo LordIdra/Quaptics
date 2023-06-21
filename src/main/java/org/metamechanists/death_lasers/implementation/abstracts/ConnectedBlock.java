@@ -51,7 +51,7 @@ public abstract class ConnectedBlock extends EnergyDisplayGroupBlock {
         if (from.getLocation().distance(newFrom) < 0.000001F) {
             return false;
         }
-        return ConnectionPointStorage.hasConnectionPoint(newFrom);
+        return ConnectionPointStorage.hasPoint(newFrom);
     }
 
     @OverridingMethodsMustInvokeSuper

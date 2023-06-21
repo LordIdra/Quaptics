@@ -23,7 +23,7 @@ public class PointInformationListener implements Listener {
             return;
         }
 
-        if (!ConnectionPointStorage.hasConnectionPoint(connectionPointLocation)) {
+        if (!ConnectionPointStorage.hasPoint(connectionPointLocation)) {
             return;
         }
 

@@ -43,8 +43,12 @@ public class ConnectionPointStorage implements Serializable {
         groups.values().forEach(ConnectionGroup::killAllBeams);
     }
 
-    public static boolean hasConnectionPoint(Location pointLocation) {
+    public static boolean hasPoint(Location pointLocation) {
         return groupIdFromPointLocation.containsKey(pointLocation);
+    }
+
+    public static boolean hasGroup(Location groupLocation) {
+        return groups.containsKey(groupLocation);
     }
 
     public static Location getGroup(Location pointLocation) {
