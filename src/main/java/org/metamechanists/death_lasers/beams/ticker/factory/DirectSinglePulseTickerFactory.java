@@ -8,14 +8,16 @@ public class DirectSinglePulseTickerFactory implements LaserBlockDisplayTickerFa
     private final Material material;
     private final Location source;
     private final Location target;
+    private final float size;
 
-    public DirectSinglePulseTickerFactory(Material material, Location source, Location target) {
+    public DirectSinglePulseTickerFactory(Material material, Location source, Location target, float size) {
         this.material = material;
         this.source = source.clone();
         this.target = target.clone();
+        this.size = size;
     }
 
     public DirectSinglePulseTicker build() {
-        return new DirectSinglePulseTicker(material, source.clone(), target.clone());
+        return new DirectSinglePulseTicker(material, source.clone(), target.clone(), size);
     }
 }

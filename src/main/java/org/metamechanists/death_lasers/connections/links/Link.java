@@ -3,7 +3,6 @@ package org.metamechanists.death_lasers.connections.links;
 import lombok.Getter;
 import org.bukkit.Material;
 import org.metamechanists.death_lasers.beams.DeprecatedBeamStorage;
-import org.metamechanists.death_lasers.beams.beam.Beam;
 import org.metamechanists.death_lasers.beams.beam.DirectBlockDisplayBeam;
 import org.metamechanists.death_lasers.beams.ticker.factory.DirectSinglePulseTickerFactory;
 import org.metamechanists.death_lasers.connections.BlockUpdateScheduler;
@@ -25,7 +24,7 @@ public class Link {
     private final ConnectionPointOutput output;
     @Getter
     private final ConnectionPointInput input;
-    private Beam beam;
+    private DirectBlockDisplayBeam beam;
 
     public Link(ConnectionPointInput input, ConnectionPointOutput output) {
         this.input = input;
@@ -34,6 +33,25 @@ public class Link {
         output.link(this);
         BlockUpdateScheduler.scheduleUpdate(output.getGroup());
         update();
+    }
+
+    private void updateBeam() {
+        if (hasBeam()) {
+            beam.deprecate();
+            beam = null;
+        }
+
+        if (!enabled) {
+            return;
+        }
+
+        // TODO dynamically update beam max size
+        this.beam = new DirectBlockDisplayBeam(
+                new DirectSinglePulseTickerFactory(
+                        Material.WHITE_CONCRETE,
+                        this.output.getLocation(),
+                        this.input.getLocation(),
+                        (float) (power / 80.0F)));
     }
 
     private boolean hasBeam() {
@@ -86,22 +104,10 @@ public class Link {
             power = 0;
             frequency = 0;
             phase = 0;
-            if (hasBeam()) {
-                beam.deprecate();
-                beam = null;
-            }
-            update();
-            return;
         }
 
-        if (!hasBeam()) {
-            this.beam = new DirectBlockDisplayBeam(
-                    new DirectSinglePulseTickerFactory(
-                            Material.WHITE_CONCRETE,
-                            this.output.getLocation(),
-                            this.input.getLocation()));
-            update();
-        }
+        updateBeam();
+        update();
     }
 
     public void setPower(double power) {
@@ -111,6 +117,8 @@ public class Link {
         }
 
         this.power = power;
+
+        updateBeam();
         update();
     }
 }
