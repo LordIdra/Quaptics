@@ -11,7 +11,7 @@ public class ItemStacks {
             "&bEmitter",
             "&7● Uses energy to &bemit &7a beam",
             LoreBuilder.powerPerSecond(100),
-            Lore.emissionPower(5));
+            Lore.emissionPower(20));
 
     public static final SlimefunItemStack LENS = new SlimefunItemStack(
             "LENS",

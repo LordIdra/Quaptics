@@ -27,12 +27,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Emitter extends ConnectedBlock {
-    private final double transmissionPower;
+    private final double emissionPowe;
 
     public Emitter(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe,
-                   int capacity, int consumption, double transmissionPower) {
+                   int capacity, int consumption, double emissionPower) {
         super(group, item, recipeType, recipe, capacity, consumption);
-        this.transmissionPower = transmissionPower;
+        this.emissionPowe = emissionPower;
     }
 
     private BlockDisplay generateMainBlockDisplay(Location from, Location to) {
@@ -67,7 +67,7 @@ public class Emitter extends ConnectedBlock {
             removeCharge(block.getLocation(), consumption);
             if (output.hasLink()) {
                 final Link link = output.getLink();
-                link.setPower(transmissionPower);
+                link.setPower(emissionPowe);
                 link.setEnabled(true);
             }
         } else {

@@ -25,7 +25,7 @@ public class Items {
             new ItemStack[] {},
             1000,
             100,
-            10);
+            20);
     public static final Lens lens = new Lens(
             Groups.DEATH_LASER_GROUP,
             LENS,
