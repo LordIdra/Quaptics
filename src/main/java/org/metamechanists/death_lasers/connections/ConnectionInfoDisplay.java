@@ -3,7 +3,6 @@ package org.metamechanists.death_lasers.connections;
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import io.github.bakedlibs.dough.common.ChatColors;
 import org.bukkit.entity.Display;
-import org.bukkit.entity.TextDisplay;
 import org.metamechanists.death_lasers.connections.links.Link;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
 import org.metamechanists.death_lasers.items.Lore;
@@ -17,12 +16,6 @@ public class ConnectionInfoDisplay {
     public ConnectionInfoDisplay(ConnectionPoint point) {
         this.point = point;
         displayGroup = new DisplayGroup(point.getLocation(), 0, 0);
-    }
-
-    private void changeDisplayText(String displayName, String newText) {
-        final TextDisplay display = (TextDisplay)displayGroup.removeDisplay(displayName);
-        display.setText(newText);
-        displayGroup.addDisplay(displayName, display);
     }
 
     private double roundToDp(double value, int decimalPlaces) {
@@ -49,10 +42,7 @@ public class ConnectionInfoDisplay {
 
         final Link link = point.getLink();
 
-        if (!displayGroup.getDisplays().isEmpty()) {
-            changeDisplayText("power", formatPower(link));
-            return;
-        }
+        displayGroup.getDisplays().clear();
 
         displayGroup.addDisplay("power", DisplayUtils.spawnTextDisplay(
                 point.getLocation().clone().add(0, 0.34, 0),
