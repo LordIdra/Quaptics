@@ -51,7 +51,7 @@ public class Link {
                         Material.WHITE_CONCRETE,
                         this.output.getLocation(),
                         this.input.getLocation(),
-                        (float) (power / 80.0F)));
+                        (float) (power / 40.0F)));
     }
 
     private boolean hasBeam() {
