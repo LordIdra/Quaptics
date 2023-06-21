@@ -20,6 +20,7 @@ public class ConnectionInfoDisplay {
 
     private void spawnDisplayGroup() {
         displayGroup = new InfoDisplayBuilder(point.getLocation()).add("phase").add("frequency").add("power").add("name").build();
+        showText("name");
     }
 
     private double roundTo2Dp(double value) {
