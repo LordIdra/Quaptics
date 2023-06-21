@@ -66,6 +66,7 @@ public class Link {
 
         if (ConnectionPointStorage.hasGroup(output.getGroup().getLocation())) {
             output.unlink();
+            BlockUpdateScheduler.scheduleUpdate(output.getGroup());
         }
 
         if (ConnectionPointStorage.hasGroup(input.getGroup().getLocation())) {
