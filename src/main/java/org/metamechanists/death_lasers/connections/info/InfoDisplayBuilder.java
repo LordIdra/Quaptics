@@ -10,8 +10,8 @@ public class InfoDisplayBuilder {
     private final Location location;
 
     public InfoDisplayBuilder(Location location) {
-        this.location = location.clone().add(0, 0.2, 0);
         this.group = new DisplayGroup(location.clone(), 0, 0);
+        this.location = location.clone().add(0, 0.2, 0);
     }
 
     public InfoDisplayBuilder add(String key) {
