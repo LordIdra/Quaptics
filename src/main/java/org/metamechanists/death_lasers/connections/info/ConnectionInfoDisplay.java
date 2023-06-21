@@ -35,11 +35,13 @@ public class ConnectionInfoDisplay {
 
     public void update() {
         if (!point.hasLink()) {
-            displayGroup.getDisplays().values().forEach(Display::remove);
             return;
         }
 
-        displayGroup.remove();
+        if (displayGroup != null) {
+            displayGroup.getDisplays().values().forEach(Display::remove);
+            displayGroup.remove();
+        }
 
         final Link link = point.getLink();
         final InfoDisplayBuilder builder = new InfoDisplayBuilder(point.getLocation());
