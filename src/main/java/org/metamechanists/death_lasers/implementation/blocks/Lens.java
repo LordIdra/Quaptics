@@ -32,7 +32,6 @@ public class Lens extends ConnectedBlock {
         super(group, item, recipeType, recipe);
         this.maxPower = maxPower;
         this.powerLoss = powerLoss;
-        // TODO burnout when max power exceeded
     }
 
     @Override
@@ -71,6 +70,11 @@ public class Lens extends ConnectedBlock {
 
         if (!input.hasLink() || !input.getLink().isEnabled()) {
             output.getLink().setEnabled(false);
+            return;
+        }
+
+        if (input.getLink().getPower() > maxPower) {
+            burnout(input.getLocation());
             return;
         }
 

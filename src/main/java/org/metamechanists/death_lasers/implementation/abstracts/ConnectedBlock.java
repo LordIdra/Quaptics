@@ -1,9 +1,12 @@
 package org.metamechanists.death_lasers.implementation.abstracts;
 
+import com.destroystokyo.paper.ParticleBuilder;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import org.bukkit.Location;
+import org.bukkit.Particle;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -33,10 +36,13 @@ public abstract class ConnectedBlock extends EnergyDisplayGroupBlock {
         ConnectionPointStorage.addConnectionPointGroup(location, new ConnectionGroup(location, this, points));
     }
 
+    protected void onBreak(Location location) {
+        ConnectionPointStorage.removeConnectionPointGroup(location);
+    }
+
     @Override
     protected void onBreak(BlockBreakEvent event) {
-        final Location location = event.getBlock().getLocation();
-        ConnectionPointStorage.removeConnectionPointGroup(location);
+        onBreak(event.getBlock().getLocation());
     }
 
     @OverridingMethodsMustInvokeSuper
@@ -51,6 +57,17 @@ public abstract class ConnectedBlock extends EnergyDisplayGroupBlock {
     @OverridingMethodsMustInvokeSuper
     public void connect(ConnectionPoint from, ConnectionPoint to) {
         ConnectionPointStorage.updatePointLocation(from.getLocation(), calculateNewLocation(from, to));
+    }
+
+    public void burnout(Location location) {
+        onBreak(location);
+        getDisplayGroup(location).getDisplays().values().forEach(Entity::remove);
+        getDisplayGroup(location).remove();
+
+        location.createExplosion(1.5F, true, false);
+        location.getWorld().spawnParticle(
+                new ParticleBuilder(Particle.CAMPFIRE_COSY_SMOKE).location(location).particle(),
+                location, 20);
     }
 
     public void onInputLinkUpdated(ConnectionGroup group) {}
