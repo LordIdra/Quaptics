@@ -22,15 +22,6 @@ public class ItemStacks {
             Lore.maxPower(20),
             Lore.powerLoss(30));
 
-    public static final SlimefunItemStack WHITE_PRISM = new SlimefunItemStack(
-            "WHITE_PRISM",
-            Material.WHITE_STAINED_GLASS,
-            "&fWhite Prism",
-            "&7● &bSplits &7one laser beam into multiple",
-            "&7● Power loss increases with input power",
-            Lore.maxPower(40),
-            Lore.powerLoss(40));
-
     public static final SlimefunItemStack DARK_PRISM = new SlimefunItemStack(
             "DARK_PRISM",
             Material.GRAY_STAINED_GLASS,
@@ -39,6 +30,15 @@ public class ItemStacks {
             "&7● Power loss increases with input power",
             Lore.maxPower(40),
             Lore.powerLoss(50));
+
+    public static final SlimefunItemStack WHITE_PRISM = new SlimefunItemStack(
+            "WHITE_PRISM",
+            Material.WHITE_STAINED_GLASS,
+            "&fWhite Prism",
+            "&7● &bSplits &7one laser beam into multiple",
+            "&7● Power loss increases with input power",
+            Lore.maxPower(40),
+            Lore.powerLoss(40));
 
     public static final SlimefunItemStack TARGETING_WAND = new SlimefunItemStack(
             "TARGETING_WAND",
