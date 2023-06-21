@@ -73,6 +73,7 @@ public abstract class ConnectedBlock extends EnergyDisplayGroupBlock {
                 new ParticleBuilder(Particle.FLASH).location(location).count(1).particle(),
                 location,
                 20);
+        // TODO breaking sound?
     }
 
     public void doBurnoutCheck(ConnectionGroup group, ConnectionPoint point, double maxPower) {
