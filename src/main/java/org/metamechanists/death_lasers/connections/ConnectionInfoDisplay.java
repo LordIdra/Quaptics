@@ -42,7 +42,7 @@ public class ConnectionInfoDisplay {
 
         final Link link = point.getLink();
 
-        displayGroup.getDisplays().clear();
+        displayGroup.getDisplays().keySet().forEach(displayGroup::removeDisplay);
 
         displayGroup.addDisplay("power", DisplayUtils.spawnTextDisplay(
                 point.getLocation().clone().add(0, 0.34, 0),
