@@ -48,7 +48,7 @@ public class ConnectionInfoDisplay {
 
         displayGroup.addDisplay("name", DisplayUtils.spawnTextDisplay(
                 point.getLocation().clone().add(0, 0.41, 0),
-                formatName(point.getName()),
+                formatName(point),
                 0.25F,
                 new Display.Brightness(15, 0),
                 hidden));
