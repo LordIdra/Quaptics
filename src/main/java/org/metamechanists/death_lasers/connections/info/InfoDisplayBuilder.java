@@ -14,9 +14,10 @@ public class InfoDisplayBuilder {
         this.group = new DisplayGroup(location.clone(), 0, 0);
     }
 
-    public void add(String key, String text, boolean hidden) {
-        group.addDisplay(key, DisplayUtils.spawnTextDisplay(location, text, 0.25F, new Display.Brightness(15, 0), hidden));
+    public InfoDisplayBuilder add(String key) {
+        group.addDisplay(key, DisplayUtils.spawnTextDisplay(location, "", 0.25F, new Display.Brightness(15, 0), true));
         location.add(0, 0.07, 0);
+        return this;
     }
 
     public DisplayGroup build() {
