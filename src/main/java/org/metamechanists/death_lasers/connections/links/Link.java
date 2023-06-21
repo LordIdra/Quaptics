@@ -104,7 +104,7 @@ public class Link {
     }
 
     public void setPower(double power) {
-        if (power == this.power) {
+        if ((power - this.power) < 0.01) {
             return;
         }
 
