@@ -114,13 +114,16 @@ public class DisplayUtils {
         return interaction;
     }
 
-    public static TextDisplay spawnTextDisplay(Location location, String text, float scale, Display.Brightness brightness) {
+    public static TextDisplay spawnTextDisplay(Location location, String text, float scale, Display.Brightness brightness, boolean hide) {
         final TextDisplay display = location.getWorld().spawn(location, TextDisplay.class);
         display.setTransformation(new TransformationBuilder().scale(scale, scale, scale).build());
         display.setBackgroundColor(Color.fromARGB(0, 0, 0, 0));
         display.setBillboard(Display.Billboard.CENTER);
         display.setBrightness(brightness);
         display.setText(text);
+        if (hide) {
+            display.setViewRange(0);
+        }
         return display;
     }
 }

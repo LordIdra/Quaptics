@@ -29,6 +29,22 @@ public class ConnectionInfoDisplay {
         displayGroup.addDisplay(displayName, display);
     }
 
+    private double roundToDp(double value, int decimalPlaces) {
+        return ((double)Math.round(value*Math.pow(10, decimalPlaces))) / Math.pow(10, decimalPlaces);
+    }
+
+    private String formatPower(Link link) {
+        return ChatColors.color(Lore.powerWithoutAttributeSymbol(roundToDp(link.getPower(), 2)));
+    }
+
+    private String formatFrequency(Link link) {
+        return ChatColors.color(Lore.frequencyWithoutAttributeSymbol(roundToDp(link.getFrequency(), 2)));
+    }
+
+    private String formatPhase(Link link) {
+        return ChatColors.color(Lore.phaseWithoutAttributeSymbol(link.getPhase()));
+    }
+
     public void update() {
         if (!point.hasLink()) {
             displayGroup.getDisplays().values().forEach(Display::remove);
@@ -38,15 +54,30 @@ public class ConnectionInfoDisplay {
         final Link link = point.getLink();
 
         if (!displayGroup.getDisplays().isEmpty()) {
-            changeDisplayText("power", ChatColors.color(Lore.powerWithoutAttributeSymbol(link.getPower())));
+            changeDisplayText("power", formatPower(link));
             return;
         }
 
         displayGroup.addDisplay("power", DisplayUtils.spawnTextDisplay(
+                point.getLocation().clone().add(0, 0.5, 0),
+                formatPower(link),
+                0.2F,
+                new Display.Brightness(15, 0),
+                true));
+
+        displayGroup.addDisplay("frequency", DisplayUtils.spawnTextDisplay(
                 point.getLocation().clone().add(0, 0.3, 0),
-                ChatColors.color(Lore.powerWithoutAttributeSymbol(link.getPower())),
-                0.25F,
-                new Display.Brightness(15, 0)));
+                formatFrequency(link),
+                0.2F,
+                new Display.Brightness(15, 0),
+                true));
+
+        displayGroup.addDisplay("phase", DisplayUtils.spawnTextDisplay(
+                point.getLocation().clone().add(0, 0.1, 0),
+                formatPhase(link),
+                0.2F,
+                new Display.Brightness(15, 0),
+                true));
     }
 
     public void toggleVisibility() {
