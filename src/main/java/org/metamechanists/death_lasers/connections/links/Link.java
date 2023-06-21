@@ -105,10 +105,10 @@ public class Link {
     }
 
     public void setPower(double power) {
-        // TODO how can we limit this?
-        //if (Math.abs(power - this.power) < 0.01) {
-        //    return;
-        //}
+        // TODO how can we limit the size of power changes?
+        if (this.power == power) {
+            return;
+        }
 
         this.power = power;
         update();
