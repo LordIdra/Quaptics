@@ -104,9 +104,10 @@ public class Link {
     }
 
     public void setPower(double power) {
-        if (Math.abs(power - this.power) < 0.01) {
-            return;
-        }
+        // TODO how can we limit this?
+        //if (Math.abs(power - this.power) < 0.01) {
+        //    return;
+        //}
 
         this.power = power;
         update();
