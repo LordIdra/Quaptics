@@ -32,70 +32,46 @@ public class ConnectionInfoDisplay {
     }
     private void showText(String key) {
         final TextDisplay display = (TextDisplay) displayGroup.getDisplays().get(key);
-        if (!hidden) {
-            display.setViewRange(15);
-        }
+        display.setViewRange(15);
     }
     private void hideText(String key) {
         final TextDisplay display = (TextDisplay) displayGroup.getDisplays().get(key);
         display.setViewRange(0);
     }
-    private void updateName() {
+    private void doVisibilityCheck() {
+        hideText("name");
+        hideText("power");
+        hideText("frequency");
+        hideText("phase");
+
         if (hidden) {
-            hideText("name");
             return;
         }
 
         showText("name");
-        updateText("name", ChatColors.color((point.hasLink() ? "&a" : "&c") + point.getName().toUpperCase()));
-    }
-    private void updatePower() {
-        if (point.getLink().getPower() == 0) {
-            hideText("power");
+
+        if (!point.hasLink()) {
             return;
         }
 
-        showText("power");
-        updateText("power", ChatColors.color(Lore.powerWithoutAttributeSymbol(roundTo2Dp(point.getLink().getPower()))));
-    }
-    private void updateFrequency() {
-        if (point.getLink().getFrequency() == 0) {
-            hideText("frequency");
-            return;
-        }
-
-        showText("frequency");
-        updateText("frequency", ChatColors.color(Lore.frequencyWithoutAttributeSymbol(roundTo2Dp(point.getLink().getFrequency()))));
-    }
-    private void updatePhase() {
-        if (point.getLink().getPhase() == 0) {
-            hideText("phase");
-            return;
-        }
-
-        showText("phase");
-        updateText("phase", ChatColors.color(Lore.phaseWithoutAttributeSymbol(point.getLink().getPhase())));
+        if (point.getLink().getPower() == 0) { showText("power"); }
+        if (point.getLink().getFrequency() == 0) { showText("frequency"); }
+        if (point.getLink().getPhase() == 0) { showText("phase"); }
     }
 
     public void update() {
-        updateName();
-
         // Point location has changed, so display location will also need to change
         if (displayGroup.getLocation() != point.getLocation()) {
             remove();
             spawnDisplayGroup();
         }
 
-        if (!point.hasLink()) {
-            hideText("power");
-            hideText("frequency");
-            hideText("phase");
-            return;
-        }
+        doVisibilityCheck();
 
-        updatePower();
-        updateFrequency();
-        updatePhase();
+        updateText("name", ChatColors.color((point.hasLink() ? "&a" : "&c") + point.getName().toUpperCase()));
+        updateText("power", ChatColors.color(Lore.powerWithoutAttributeSymbol(roundTo2Dp(point.getLink().getPower()))));
+        updateText("frequency", ChatColors.color(Lore.frequencyWithoutAttributeSymbol(roundTo2Dp(point.getLink().getFrequency()))));
+        updateText("phase", ChatColors.color(Lore.phaseWithoutAttributeSymbol(point.getLink().getPhase())));
     }
 
     public void toggleVisibility() {
