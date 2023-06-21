@@ -14,8 +14,12 @@ public class ConnectionInfoDisplay {
 
     public ConnectionInfoDisplay(ConnectionPoint point) {
         this.point = point;
-        displayGroup = new InfoDisplayBuilder(point.getLocation()).add("phase").add("frequency").add("power").add("name").build();
+        spawnDisplayGroup();
         update();
+    }
+
+    private void spawnDisplayGroup() {
+        displayGroup = new InfoDisplayBuilder(point.getLocation()).add("phase").add("frequency").add("power").add("name").build();
     }
 
     private double roundTo2Dp(double value) {
@@ -68,11 +72,21 @@ public class ConnectionInfoDisplay {
     }
 
     public void update() {
+        updateName();
+
+        // Point location has changed, so display location will also need to change
+        if (displayGroup.getLocation() != point.getLocation()) {
+            remove();
+            spawnDisplayGroup();
+        }
+
         if (!point.hasLink()) {
+            hideText("power");
+            hideText("frequency");
+            hideText("phase");
             return;
         }
 
-        updateName();
         updatePower();
         updateFrequency();
         updatePhase();
