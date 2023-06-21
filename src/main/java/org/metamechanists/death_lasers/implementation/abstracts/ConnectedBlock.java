@@ -6,7 +6,6 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNetComponentType;
 import lombok.Getter;
 import org.bukkit.Location;
-import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -17,12 +16,9 @@ import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 public abstract class ConnectedBlock extends EnergyDisplayGroupBlock {
-    private static final List<BlockFace> AXIS = new ArrayList<>(List.of(BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST));
     @Getter
     private final EnergyNetComponentType energyComponentType = EnergyNetComponentType.CONSUMER;
     @Getter
@@ -35,15 +31,15 @@ public abstract class ConnectedBlock extends EnergyDisplayGroupBlock {
         this.capacity = capacity;
     }
 
-    private BlockFace yawToFace(float yaw) {
-        return AXIS.get(Math.round(yaw / 90f) & 0x3);
+    private double yawToCardinalDirection(float yaw) {
+        return Math.round(yaw / 90F) * (Math.PI/2);
     }
 
-    protected Vector adjustVector(Player player, Vector vector) {
-        final double rotationAngle = yawToFace(player.getEyeLocation().getYaw()).getDirection().angle(new Vector(1, 0, 0));
+    protected Location formatRelativeLocation(Player player, Location location, Vector vector) {
+        final double rotationAngle = yawToCardinalDirection(player.getEyeLocation().getYaw());
         vector.rotateAroundY(rotationAngle);
         vector.add(new Vector(0.5, 0.5, 0.5));
-        return vector;
+        return location.add(vector);
     }
 
     protected abstract Map<String, ConnectionPoint> generateConnectionPoints(Player player, Location location);
