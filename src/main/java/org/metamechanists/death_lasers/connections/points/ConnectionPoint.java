@@ -9,7 +9,7 @@ import org.bukkit.entity.Display;
 import org.bukkit.entity.Interaction;
 import org.bukkit.util.Vector;
 import org.joml.Vector3f;
-import org.metamechanists.death_lasers.connections.ConnectionInfoDisplay;
+import org.metamechanists.death_lasers.connections.info.ConnectionInfoDisplay;
 import org.metamechanists.death_lasers.connections.links.Link;
 import org.metamechanists.death_lasers.utils.DisplayUtils;
 

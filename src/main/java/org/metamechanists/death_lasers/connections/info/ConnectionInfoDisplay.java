@@ -1,4 +1,4 @@
-package org.metamechanists.death_lasers.connections;
+package org.metamechanists.death_lasers.connections.info;
 
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import io.github.bakedlibs.dough.common.ChatColors;
@@ -6,7 +6,6 @@ import org.bukkit.entity.Display;
 import org.metamechanists.death_lasers.connections.links.Link;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
 import org.metamechanists.death_lasers.items.Lore;
-import org.metamechanists.death_lasers.utils.DisplayUtils;
 
 public class ConnectionInfoDisplay {
     private boolean hidden = true;
@@ -15,7 +14,6 @@ public class ConnectionInfoDisplay {
 
     public ConnectionInfoDisplay(ConnectionPoint point) {
         this.point = point;
-        displayGroup = new DisplayGroup(point.getLocation(), 0, 0);
     }
 
     private double roundTo2Dp(double value) {
@@ -41,38 +39,17 @@ public class ConnectionInfoDisplay {
             return;
         }
 
-        final Link link = point.getLink();
-
         displayGroup.remove();
-        displayGroup = new DisplayGroup(point.getLocation(), 0, 0);
 
-        displayGroup.addDisplay("name", DisplayUtils.spawnTextDisplay(
-                point.getLocation().clone().add(0, 0.41, 0),
-                formatName(point),
-                0.25F,
-                new Display.Brightness(15, 0),
-                hidden));
+        final Link link = point.getLink();
+        final InfoDisplayBuilder builder = new InfoDisplayBuilder(point.getLocation());
 
-        displayGroup.addDisplay("power", DisplayUtils.spawnTextDisplay(
-                point.getLocation().clone().add(0, 0.34, 0),
-                formatPower(link),
-                0.25F,
-                new Display.Brightness(15, 0),
-                hidden));
+        builder.add("name", formatName(point), hidden);
+        builder.add("power", formatPower(link), hidden);
+        builder.add("frequency", formatFrequency(link), hidden);
+        builder.add("phase", formatPhase(link), hidden);
 
-        displayGroup.addDisplay("frequency", DisplayUtils.spawnTextDisplay(
-                point.getLocation().clone().add(0, 0.27, 0),
-                formatFrequency(link),
-                0.25F,
-                new Display.Brightness(15, 0),
-                hidden));
-
-        displayGroup.addDisplay("phase", DisplayUtils.spawnTextDisplay(
-                point.getLocation().clone().add(0, 0.2, 0),
-                formatPhase(link),
-                0.25F,
-                new Display.Brightness(15, 0),
-                hidden));
+        displayGroup = builder.build();
     }
 
     public void toggleVisibility() {
