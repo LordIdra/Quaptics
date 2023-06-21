@@ -47,7 +47,7 @@ public class ConnectionInfoDisplay {
 
         final InfoDisplayBuilder builder = new InfoDisplayBuilder(point.getLocation());
 
-        if (!point.hasLink()) {
+        if (point.hasLink()) {
             final Link link = point.getLink();
             if (link.getPhase() != 0) { builder.add("phase", formatPhase(link), hidden); }
             if (link.getFrequency() != 0) { builder.add("frequency", formatFrequency(link), hidden); }
