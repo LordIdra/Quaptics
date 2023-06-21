@@ -72,11 +72,13 @@ public abstract class ConnectionPoint {
         }
         this.link = link;
         blockDisplay.setBrightness(connectedBrightness);
+        updateInfoDisplay();
     }
 
     public void unlink() {
         link = null;
         blockDisplay.setBrightness(disconnectedBrightness);
+        updateInfoDisplay();
     }
 
     public void select() {
