@@ -20,7 +20,6 @@ public class ConnectionInfoDisplay {
 
     private void spawnDisplayGroup() {
         displayGroup = new InfoDisplayBuilder(point.getLocation()).add("phase").add("frequency").add("power").add("name").build();
-        showText("name");
     }
 
     private double roundTo2Dp(double value) {
@@ -42,6 +41,12 @@ public class ConnectionInfoDisplay {
         display.setViewRange(0);
     }
     private void updateName() {
+        if (hidden) {
+            hideText("name");
+            return;
+        }
+
+        showText("name");
         updateText("name", ChatColors.color((point.hasLink() ? "&a" : "&c") + point.getName().toUpperCase()));
     }
     private void updatePower() {
