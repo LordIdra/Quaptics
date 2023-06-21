@@ -8,6 +8,7 @@ import org.metamechanists.death_lasers.beams.beam.Beam;
 import org.metamechanists.death_lasers.beams.beam.DirectBlockDisplayBeam;
 import org.metamechanists.death_lasers.beams.ticker.factory.DirectSinglePulseTickerFactory;
 import org.metamechanists.death_lasers.connections.BlockUpdateScheduler;
+import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointInput;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointOutput;
 
@@ -49,7 +50,8 @@ public class Link {
     }
 
     private void update() {
-        BlockUpdateScheduler.scheduleUpdate(output.getGroup());
+        input.getGroup().updateInfoDisplays();
+        output.getGroup().updateInfoDisplays();
         BlockUpdateScheduler.scheduleUpdate(input.getGroup());
     }
 
@@ -65,10 +67,14 @@ public class Link {
             beam = null;
         }
 
-        input.unlink();
-        output.unlink();
+        if (ConnectionPointStorage.hasGroup(output.getGroup().getLocation())) {
+            output.unlink();
+        }
 
-        update();
+        if (ConnectionPointStorage.hasGroup(input.getGroup().getLocation())) {
+            input.unlink();
+            BlockUpdateScheduler.scheduleUpdate(input.getGroup());
+        }
     }
 
     public void setEnabled(boolean enabled) {

@@ -48,7 +48,7 @@ public abstract class ConnectionPoint {
 
     public abstract void tick();
 
-    public void update() {
+    public void updateInfoDisplay() {
         infoDisplay.update();
     }
 

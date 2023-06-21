@@ -70,8 +70,6 @@ public class WhitePrism extends ConnectedBlock {
 
     @Override
     public void onInputLinkUpdated(ConnectionGroup group) {
-        super.onInputLinkUpdated(group);
-
         final ConnectionPointInput input1 = (ConnectionPointInput) group.getPoint("input 1");
         final ConnectionPointInput input2 = (ConnectionPointInput) group.getPoint("input 2");
         final ConnectionPointOutput output = (ConnectionPointOutput) group.getPoint("output");
