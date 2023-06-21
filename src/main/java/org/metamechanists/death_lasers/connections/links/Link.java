@@ -75,6 +75,10 @@ public class Link {
     }
 
     public void setEnabled(boolean enabled) {
+        if (enabled == this.enabled) {
+            return;
+        }
+
         this.enabled = enabled;
 
         if (!enabled) {
@@ -100,6 +104,10 @@ public class Link {
     }
 
     public void setPower(double power) {
+        if (power == this.power) {
+            return;
+        }
+
         this.power = power;
         update();
     }
