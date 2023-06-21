@@ -16,6 +16,12 @@ public class ConnectionInfoDisplay {
         this.point = point;
     }
 
+    private void removeDisplays() {
+        displayGroup.getDisplays().values().forEach(Display::remove);
+        displayGroup.remove();
+        displayGroup = null;
+    }
+
     private double roundTo2Dp(double value) {
         return ((double)Math.round(value*Math.pow(10, 2))) / Math.pow(10, 2);
     }
@@ -34,13 +40,12 @@ public class ConnectionInfoDisplay {
     }
 
     public void update() {
-        if (!point.hasLink()) {
-            return;
+        if (displayGroup != null) {
+            removeDisplays();
         }
 
-        if (displayGroup != null) {
-            displayGroup.getDisplays().values().forEach(Display::remove);
-            displayGroup.remove();
+        if (!point.hasLink()) {
+            return;
         }
 
         final Link link = point.getLink();
@@ -60,7 +65,8 @@ public class ConnectionInfoDisplay {
     }
 
     public void remove() {
-        displayGroup.getDisplays().values().forEach(Display::remove);
-        displayGroup.remove();
+        if (displayGroup != null) {
+            removeDisplays();
+        }
     }
 }
