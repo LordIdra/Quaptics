@@ -20,7 +20,7 @@ public class ItemStacks {
             "&7● &bRedirects &7a laser beam",
             "&7● Power loss increases with input power",
             Lore.maxPower(20),
-            Lore.powerLoss(30));
+            Lore.powerLoss(10));
 
     public static final SlimefunItemStack DARK_PRISM = new SlimefunItemStack(
             "DARK_PRISM",
@@ -29,7 +29,7 @@ public class ItemStacks {
             "&7● &bConstitutes &7multiple laser beams into one",
             "&7● Power loss increases with input power",
             Lore.maxPower(40),
-            Lore.powerLoss(40));
+            Lore.powerLoss(20));
 
     public static final SlimefunItemStack WHITE_PRISM = new SlimefunItemStack(
             "WHITE_PRISM",
@@ -38,7 +38,7 @@ public class ItemStacks {
             "&7● &bSplits &7one laser beam into multiple",
             "&7● Power loss increases with input power",
             Lore.maxPower(40),
-            Lore.powerLoss(40));
+            Lore.powerLoss(20));
 
     public static final SlimefunItemStack TARGETING_WAND = new SlimefunItemStack(
             "TARGETING_WAND",

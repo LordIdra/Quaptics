@@ -32,14 +32,14 @@ public class Items {
             RecipeType.NULL,
             new ItemStack[] {},
             40,
-            0.3);
+            0.1);
     public static final DarkPrism darkPrism = new DarkPrism(
             Groups.DEATH_LASER_GROUP,
             DARK_PRISM,
             RecipeType.NULL,
             new ItemStack[] {},
             40,
-            0.4);
+            0.2);
 
     public static final WhitePrism whitePrism = new WhitePrism(
             Groups.DEATH_LASER_GROUP,
@@ -47,7 +47,7 @@ public class Items {
             RecipeType.NULL,
             new ItemStack[] {},
             40,
-            0.4);
+            0.2);
 
     public static void initialize() {
         final SlimefunAddon addon = DEATH_LASERS.getInstance();
