@@ -34,7 +34,7 @@ public class BlockTemplate extends ConnectedBlock {
     }
 
     @Override
-    protected DisplayGroup generateDisplayGroup(Location location) {
+    protected DisplayGroup generateDisplayGroup(Player player, Location location) {
         // Height/width are zero to prevent the large interaction entity from obstructing the player
         final DisplayGroup displayGroup = new DisplayGroup(location, 0, 0);
 
