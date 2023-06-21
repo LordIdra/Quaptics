@@ -14,6 +14,7 @@ public class ConnectionInfoDisplay {
 
     public ConnectionInfoDisplay(ConnectionPoint point) {
         this.point = point;
+        update();
     }
 
     private void removeDisplays() {
