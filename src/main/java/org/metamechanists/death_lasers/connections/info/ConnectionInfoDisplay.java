@@ -40,20 +40,19 @@ public class ConnectionInfoDisplay {
     }
 
     public void update() {
-        if (!point.hasLink()) {
-            return;
-        }
-
         if (displayGroup != null) {
             removeDisplays();
         }
 
-        final Link link = point.getLink();
         final InfoDisplayBuilder builder = new InfoDisplayBuilder(point.getLocation());
 
-        if (link.getPhase() != 0) { builder.add("phase", formatPhase(link), hidden); }
-        if (link.getFrequency() != 0) { builder.add("frequency", formatFrequency(link), hidden); }
-        if (link.getPower() != 0) { builder.add("power", formatPower(link), hidden); }
+        if (!point.hasLink()) {
+            final Link link = point.getLink();
+            if (link.getPhase() != 0) { builder.add("phase", formatPhase(link), hidden); }
+            if (link.getFrequency() != 0) { builder.add("frequency", formatFrequency(link), hidden); }
+            if (link.getPower() != 0) { builder.add("power", formatPower(link), hidden); }
+        }
+
         builder.add("name", formatName(point), hidden);
 
         displayGroup = builder.build();
