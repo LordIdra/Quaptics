@@ -3,7 +3,6 @@ package org.metamechanists.death_lasers.connections;
 import lombok.Getter;
 import org.bukkit.Location;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
-import org.metamechanists.death_lasers.connections.points.ConnectionPointInput;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointOutput;
 import org.metamechanists.death_lasers.implementation.abstracts.ConnectedBlock;
 
@@ -38,8 +37,8 @@ public class ConnectionGroup {
     }
 
     public void removeAllPoints() {
-        points.values().stream().filter(point -> point instanceof ConnectionPointInput).forEach(ConnectionPoint::update);
-        points.values().stream().filter(point -> point instanceof ConnectionPointOutput).forEach(ConnectionPoint::update);
+        //points.values().stream().filter(point -> point instanceof ConnectionPointInput).forEach(ConnectionPoint::update);
+        //points.values().stream().filter(point -> point instanceof ConnectionPointOutput).forEach(ConnectionPoint::update);
         points.values().forEach(ConnectionPoint::remove);
     }
 
