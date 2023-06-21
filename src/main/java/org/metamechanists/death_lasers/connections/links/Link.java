@@ -67,6 +67,9 @@ public class Link {
 
         input.unlink();
         output.unlink();
+
+        BlockUpdateScheduler.scheduleUpdate(input.getGroup());
+        BlockUpdateScheduler.scheduleUpdate(output.getGroup());
     }
 
     public void setEnabled(boolean enabled) {
