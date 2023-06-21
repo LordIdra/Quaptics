@@ -91,9 +91,10 @@ public class Link {
                 beam = null;
                 update();
             }
+            return;
         }
 
-        else if (enabled && !hasBeam()) {
+        if (!hasBeam()) {
             this.beam = new DirectBlockDisplayBeam(
                     new DirectSinglePulseTickerFactory(
                             Material.WHITE_CONCRETE,

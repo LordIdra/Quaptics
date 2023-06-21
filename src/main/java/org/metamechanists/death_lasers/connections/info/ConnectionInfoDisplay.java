@@ -60,6 +60,7 @@ public class ConnectionInfoDisplay {
     }
 
     public void remove() {
+        displayGroup.getDisplays().values().forEach(Display::remove);
         displayGroup.remove();
     }
 }
