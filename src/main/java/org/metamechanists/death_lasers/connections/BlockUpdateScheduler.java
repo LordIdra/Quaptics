@@ -12,21 +12,26 @@ public class BlockUpdateScheduler {
     private static final Queue<ConnectionGroup> groupsToUpdate = new ConcurrentLinkedQueue<>();
     private static final Set<ConnectionGroup> groupsUpdatedThisTick = new HashSet<>();
 
+    private static void tickGroup(ConnectionGroup group) {
+        // If group no longer exists, don't tick it
+        if (ConnectionPointStorage.getGroup(group.getLocation()) == null) {
+            return;
+        }
+
+        groupsUpdatedThisTick.add(group);
+        group.getBlock().onLinkUpdated(group);
+    }
+
     public static void scheduleUpdate(ConnectionGroup group) {
         if (!groupsUpdatedThisTick.contains(group)) {
-            groupsUpdatedThisTick.add(group);
-            group.getBlock().onLinkUpdated(group);
+            tickGroup(group);
         } else {
             groupsToUpdate.add(group);
         }
     }
 
     public static void tick() {
-        groupsToUpdate.forEach(group -> {
-            groupsUpdatedThisTick.add(group);
-            group.getBlock().onLinkUpdated(group);
-        });
-
+        groupsToUpdate.forEach(BlockUpdateScheduler::tickGroup);
         groupsToUpdate.clear();
         groupsUpdatedThisTick.clear();
     }
