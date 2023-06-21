@@ -59,21 +59,21 @@ public class ConnectionInfoDisplay {
         }
 
         displayGroup.addDisplay("power", DisplayUtils.spawnTextDisplay(
-                point.getLocation().clone().add(0, 0.5, 0),
+                point.getLocation().clone().add(0, 0.3, 0),
                 formatPower(link),
                 0.2F,
                 new Display.Brightness(15, 0),
                 true));
 
         displayGroup.addDisplay("frequency", DisplayUtils.spawnTextDisplay(
-                point.getLocation().clone().add(0, 0.3, 0),
+                point.getLocation().clone().add(0, 0.25, 0),
                 formatFrequency(link),
                 0.2F,
                 new Display.Brightness(15, 0),
                 true));
 
         displayGroup.addDisplay("phase", DisplayUtils.spawnTextDisplay(
-                point.getLocation().clone().add(0, 0.1, 0),
+                point.getLocation().clone().add(0, 0.2, 0),
                 formatPhase(link),
                 0.2F,
                 new Display.Brightness(15, 0),
