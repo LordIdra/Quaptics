@@ -49,8 +49,8 @@ public class Link {
     }
 
     private void update() {
-        BlockUpdateScheduler.scheduleUpdate(input.getGroup());
         BlockUpdateScheduler.scheduleUpdate(output.getGroup());
+        BlockUpdateScheduler.scheduleUpdate(input.getGroup());
     }
 
     public void killBeam() {
@@ -68,8 +68,7 @@ public class Link {
         input.unlink();
         output.unlink();
 
-        BlockUpdateScheduler.scheduleUpdate(input.getGroup());
-        BlockUpdateScheduler.scheduleUpdate(output.getGroup());
+        update();
     }
 
     public void setEnabled(boolean enabled) {
@@ -82,8 +81,8 @@ public class Link {
             if (hasBeam()) {
                 beam.deprecate();
                 beam = null;
-                update();
             }
+            update();
             return;
         }
 

@@ -44,7 +44,7 @@ public class WhitePrism extends ConnectedBlock {
                 "main",
                 DisplayUtils.spawnBlockDisplay(
                         location.clone().add(0.5, 0.5, 0.5),
-                        Material.GLASS,
+                        Material.WHITE_STAINED_GLASS,
                         DisplayUtils.rotationTransformation(
                                 new Vector3f(0.4F, 0.4F, 0.4F),
                                 new Vector3f((float)(Math.PI/4), (float)(Math.PI/4), 0))));
@@ -69,8 +69,8 @@ public class WhitePrism extends ConnectedBlock {
     }
 
     @Override
-    public void onLinkUpdated(ConnectionGroup group) {
-        super.onLinkUpdated(group);
+    public void onInputLinkUpdated(ConnectionGroup group) {
+        super.onInputLinkUpdated(group);
 
         final ConnectionPointInput input1 = (ConnectionPointInput) group.getPoint("input 1");
         final ConnectionPointInput input2 = (ConnectionPointInput) group.getPoint("input 2");

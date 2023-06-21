@@ -54,7 +54,7 @@ public abstract class ConnectedBlock extends EnergyDisplayGroupBlock {
     }
 
     @OverridingMethodsMustInvokeSuper
-    public void onLinkUpdated(ConnectionGroup group) {
+    public void onInputLinkUpdated(ConnectionGroup group) {
         group.update();
     }
 

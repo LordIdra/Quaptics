@@ -46,7 +46,7 @@ public class Lens extends ConnectedBlock {
                         location.clone().add(0.5, 0.5, 0.5),
                         Material.GLASS,
                         DisplayUtils.rotationTransformation(
-                                new Vector3f(0.3F, 0.3F, 0.3F),
+                                new Vector3f(0.2F, 0.2F, 0.2F),
                                 new Vector3f((float)(Math.PI/4), (float)(Math.PI/4), 0))));
 
         return displayGroup;
@@ -55,14 +55,14 @@ public class Lens extends ConnectedBlock {
     @Override
     protected Map<String, ConnectionPoint> generateConnectionPoints(Player player, Location location) {
         final Map<String, ConnectionPoint> points = new HashMap<>();
-        points.put("input", new ConnectionPointInput("input", formatRelativeLocation(player, location, new Vector(0.0F, 0.0F, -0.45F))));
-        points.put("output", new ConnectionPointOutput("output", formatRelativeLocation(player, location, new Vector(0.0F, 0.0F, 0.45F))));
+        points.put("input", new ConnectionPointInput("input", formatRelativeLocation(player, location, new Vector(0.0F, 0.0F, -0.35F))));
+        points.put("output", new ConnectionPointOutput("output", formatRelativeLocation(player, location, new Vector(0.0F, 0.0F, 0.35F))));
         return points;
     }
 
     @Override
-    public void onLinkUpdated(ConnectionGroup group) {
-        super.onLinkUpdated(group);
+    public void onInputLinkUpdated(ConnectionGroup group) {
+        super.onInputLinkUpdated(group);
 
         final ConnectionPointInput input = (ConnectionPointInput) group.getPoint("input");
         final ConnectionPointOutput output = (ConnectionPointOutput) group.getPoint("output");
@@ -87,7 +87,7 @@ public class Lens extends ConnectedBlock {
     protected Location calculateNewLocation(ConnectionPoint from, ConnectionPoint to) {
         final Location fromGroupLocation = ConnectionPointStorage.getGroup(from.getLocation());
         final Location toGroupLocation = ConnectionPointStorage.getGroup(to.getLocation());
-        final Vector radiusDirection = DisplayUtils.getDirection(fromGroupLocation, toGroupLocation).multiply(0.45F);
+        final Vector radiusDirection = DisplayUtils.getDirection(fromGroupLocation, toGroupLocation).multiply(0.35F);
         return fromGroupLocation.clone().add(0.5, 0.5, 0.5).add(radiusDirection);
     }
 

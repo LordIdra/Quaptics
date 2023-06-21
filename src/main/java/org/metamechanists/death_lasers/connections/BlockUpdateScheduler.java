@@ -19,7 +19,7 @@ public class BlockUpdateScheduler {
         }
 
         groupsUpdatedThisTick.add(group);
-        group.getBlock().onLinkUpdated(group);
+        group.getBlock().onInputLinkUpdated(group);
     }
 
     public static void scheduleUpdate(ConnectionGroup group) {
