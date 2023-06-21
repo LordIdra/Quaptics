@@ -47,10 +47,10 @@ public class Emitter extends ConnectedBlock {
     }
 
     @Override
-    protected DisplayGroup generateDisplayGroup(Location location) {
+    protected DisplayGroup generateDisplayGroup(Player player, Location location) {
         // Height/width are zero to prevent the large interaction entity from obstructing the player
         final DisplayGroup displayGroup = new DisplayGroup(location, 0, 0);
-        displayGroup.addDisplay("main", generateMainBlockDisplay(location, location.clone().add(0, 0, 1)));
+        displayGroup.addDisplay("main", generateMainBlockDisplay(location, location.clone().add(accountForPlayerYaw(player, new Vector(0, 0, 1)))));
         return displayGroup;
     }
 

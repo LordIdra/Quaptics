@@ -10,7 +10,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.util.Vector;
 import org.metamechanists.death_lasers.connections.ConnectionGroup;
 import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
@@ -29,17 +28,6 @@ public abstract class ConnectedBlock extends EnergyDisplayGroupBlock {
         super(group, item, recipeType, recipe, capacity, consumption);
         this.consumption = consumption;
         this.capacity = capacity;
-    }
-
-    private double yawToCardinalDirection(float yaw) {
-        return Math.round(yaw / 90F) * (Math.PI/2);
-    }
-
-    protected Location formatRelativeLocation(Player player, Location location, Vector vector) {
-        final double rotationAngle = yawToCardinalDirection(player.getEyeLocation().getYaw());
-        vector.rotateAroundY(rotationAngle);
-        vector.add(new Vector(0.5, 0.5, 0.5));
-        return location.add(vector);
     }
 
     protected abstract Map<String, ConnectionPoint> generateConnectionPoints(Player player, Location location);

@@ -15,9 +15,11 @@ import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
@@ -42,13 +44,28 @@ public abstract class EnergyDisplayGroupBlock extends SlimefunItem implements En
         this.capacity = capacity;
     }
 
-    protected abstract DisplayGroup generateDisplayGroup(Location location);
+    protected abstract DisplayGroup generateDisplayGroup(Player player, Location location);
     @NotNull
     protected abstract Material getBaseMaterial();
     protected abstract void onPlace(BlockPlaceEvent event);
     protected abstract void onBreak(BlockBreakEvent event);
 
     protected void onSlimefunTick(Block block, SlimefunItem item, Config data) {}
+
+    private double yawToCardinalDirection(float yaw) {
+        return -Math.round(yaw / 90F) * (Math.PI/2);
+    }
+
+    protected Vector accountForPlayerYaw(Player player, Vector vector) {
+        final double rotationAngle = yawToCardinalDirection(player.getEyeLocation().getYaw());
+        return vector.rotateAroundY(rotationAngle);
+    }
+
+    protected Location formatRelativeLocation(Player player, Location location, Vector vector) {
+        vector = accountForPlayerYaw(player, vector);
+        vector.add(new Vector(0.5, 0.5, 0.5));
+        return location.add(vector);
+    }
 
     @Override
     @OverridingMethodsMustInvokeSuper
@@ -58,7 +75,7 @@ public abstract class EnergyDisplayGroupBlock extends SlimefunItem implements En
                     @Override
                     public void onPlayerPlace(@Nonnull BlockPlaceEvent event) {
                         final Location location = event.getBlock().getLocation();
-                        final DisplayGroup displayGroup = generateDisplayGroup(location.clone());
+                        final DisplayGroup displayGroup = generateDisplayGroup(event.getPlayer(), location.clone());
                         setUUID(displayGroup, location);
                         event.getBlock().setType(getBaseMaterial());
                         onPlace(event);
