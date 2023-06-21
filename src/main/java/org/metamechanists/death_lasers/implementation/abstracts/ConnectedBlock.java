@@ -70,6 +70,13 @@ public abstract class ConnectedBlock extends EnergyDisplayGroupBlock {
                 location, 20);
     }
 
+    public void doBurnoutCheck(ConnectionGroup group, ConnectionPoint point, double maxPower) {
+        if (point.hasLink() && point.getLink().getPower() > maxPower) {
+            burnout(group.getLocation());
+            return;
+        }
+    }
+
     public void onInputLinkUpdated(ConnectionGroup group) {}
 
     protected abstract Location calculateNewLocation(ConnectionPoint from, ConnectionPoint to);

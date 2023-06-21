@@ -74,6 +74,8 @@ public class WhitePrism extends ConnectedBlock {
         final ConnectionPointOutput output1 = (ConnectionPointOutput) group.getPoint("output 1");
         final ConnectionPointOutput output2 = (ConnectionPointOutput) group.getPoint("output 2");
 
+        doBurnoutCheck(group, input, maxPower);
+
         if (!output1.hasLink() && !output2.hasLink()) {
             return;
         }

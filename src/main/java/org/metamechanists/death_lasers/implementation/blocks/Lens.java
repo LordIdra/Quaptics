@@ -64,17 +64,14 @@ public class Lens extends ConnectedBlock {
         final ConnectionPointInput input = (ConnectionPointInput) group.getPoint("input");
         final ConnectionPointOutput output = (ConnectionPointOutput) group.getPoint("output");
 
+        doBurnoutCheck(group, input, maxPower);
+
         if (!output.hasLink()) {
             return;
         }
 
         if (!input.hasLink() || !input.getLink().isEnabled()) {
             output.getLink().setEnabled(false);
-            return;
-        }
-
-        if (input.getLink().getPower() > maxPower) {
-            burnout(input.getLocation());
             return;
         }
 

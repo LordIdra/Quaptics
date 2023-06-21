@@ -74,6 +74,9 @@ public class DarkPrism extends ConnectedBlock {
         final ConnectionPointInput input2 = (ConnectionPointInput) group.getPoint("input 2");
         final ConnectionPointOutput output = (ConnectionPointOutput) group.getPoint("output");
 
+        doBurnoutCheck(group, input1, maxPower);
+        doBurnoutCheck(group, input2, maxPower);
+
         if (!output.hasLink()) {
             return;
         }
