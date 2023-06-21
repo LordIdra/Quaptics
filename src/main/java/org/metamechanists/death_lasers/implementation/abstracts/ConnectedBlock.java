@@ -3,8 +3,6 @@ package org.metamechanists.death_lasers.implementation.abstracts;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
-import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNetComponentType;
-import lombok.Getter;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -18,16 +16,12 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.util.Map;
 
 public abstract class ConnectedBlock extends EnergyDisplayGroupBlock {
-    @Getter
-    private final EnergyNetComponentType energyComponentType = EnergyNetComponentType.CONSUMER;
-    @Getter
-    private final int capacity;
-    protected final int consumption;
-
     public ConnectedBlock(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, int capacity, int consumption) {
         super(group, item, recipeType, recipe, capacity, consumption);
-        this.consumption = consumption;
-        this.capacity = capacity;
+    }
+
+    public ConnectedBlock(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+        super(group, item, recipeType, recipe);
     }
 
     protected abstract Map<String, ConnectionPoint> generateConnectionPoints(Player player, Location location);

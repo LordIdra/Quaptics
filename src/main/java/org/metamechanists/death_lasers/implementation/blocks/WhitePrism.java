@@ -24,11 +24,11 @@ import org.metamechanists.death_lasers.utils.DisplayUtils;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Lens extends ConnectedBlock {
+public class WhitePrism extends ConnectedBlock {
     private final double maxPower;
     private final double powerLoss;
 
-    public Lens(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, double maxPower, double powerLoss) {
+    public WhitePrism(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, double maxPower, double powerLoss) {
         super(group, item, recipeType, recipe);
         this.maxPower = maxPower;
         this.powerLoss = powerLoss;
@@ -46,7 +46,7 @@ public class Lens extends ConnectedBlock {
                         location.clone().add(0.5, 0.5, 0.5),
                         Material.GLASS,
                         DisplayUtils.rotationTransformation(
-                                new Vector3f(0.3F, 0.3F, 0.3F),
+                                new Vector3f(0.4F, 0.4F, 0.4F),
                                 new Vector3f((float)(Math.PI/4), (float)(Math.PI/4), 0))));
 
         return displayGroup;
@@ -55,8 +55,16 @@ public class Lens extends ConnectedBlock {
     @Override
     protected Map<String, ConnectionPoint> generateConnectionPoints(Player player, Location location) {
         final Map<String, ConnectionPoint> points = new HashMap<>();
-        points.put("input", new ConnectionPointInput("input", formatRelativeLocation(player, location, new Vector(0.0F, 0.0F, -0.45F))));
-        points.put("output", new ConnectionPointOutput("output", formatRelativeLocation(player, location, new Vector(0.0F, 0.0F, 0.45F))));
+
+        points.put("input 1", new ConnectionPointInput("input 1",
+                formatRelativeLocation(player, location, new Vector(0.0F, 0.0F, -0.54F).rotateAroundY(-Math.PI/8))));
+
+        points.put("input 2", new ConnectionPointInput("input 2",
+                formatRelativeLocation(player, location, new Vector(0.0F, 0.0F, -0.54F).rotateAroundY(Math.PI/8))));
+
+        points.put("output", new ConnectionPointOutput("output",
+                formatRelativeLocation(player, location, new Vector(0.0F, 0.0F, 0.54F))));
+
         return points;
     }
 
@@ -64,22 +72,27 @@ public class Lens extends ConnectedBlock {
     public void onLinkUpdated(ConnectionGroup group) {
         super.onLinkUpdated(group);
 
-        final ConnectionPointInput input = (ConnectionPointInput) group.getPoint("input");
+        final ConnectionPointInput input1 = (ConnectionPointInput) group.getPoint("input 1");
+        final ConnectionPointInput input2 = (ConnectionPointInput) group.getPoint("input 2");
         final ConnectionPointOutput output = (ConnectionPointOutput) group.getPoint("output");
 
         if (!output.hasLink()) {
             return;
         }
 
-        if (!input.hasLink() || !input.getLink().isEnabled()) {
+        final boolean input1On = input1.hasLink() && input1.getLink().isEnabled();
+        final boolean input2On = input2.hasLink() && input2.getLink().isEnabled();
+        if (!input1On && !input2On) {
             output.getLink().setEnabled(false);
             return;
         }
 
-        final Link inputLink = input.getLink();
-        final Link outputLink = output.getLink();
+        double inputPower = 0;
+        if (input1On) { inputPower += input1.getLink().getPower(); }
+        if (input2On) { inputPower += input2.getLink().getPower(); }
 
-        outputLink.setPower(LinkProperties.calculatePower(inputLink.getPower(), maxPower, powerLoss));
+        final Link outputLink = output.getLink();
+        outputLink.setPower(LinkProperties.calculatePower(inputPower, maxPower, powerLoss));
         outputLink.setEnabled(true);
     }
 
@@ -87,7 +100,7 @@ public class Lens extends ConnectedBlock {
     protected Location calculateNewLocation(ConnectionPoint from, ConnectionPoint to) {
         final Location fromGroupLocation = ConnectionPointStorage.getGroup(from.getLocation());
         final Location toGroupLocation = ConnectionPointStorage.getGroup(to.getLocation());
-        final Vector radiusDirection = DisplayUtils.getDirection(fromGroupLocation, toGroupLocation).multiply(0.45F);
+        final Vector radiusDirection = DisplayUtils.getDirection(fromGroupLocation, toGroupLocation).multiply(0.55F);
         return fromGroupLocation.clone().add(0.5, 0.5, 0.5).add(radiusDirection);
     }
 

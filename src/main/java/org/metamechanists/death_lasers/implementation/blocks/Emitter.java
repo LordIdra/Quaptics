@@ -5,8 +5,6 @@ import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
-import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNetComponentType;
-import lombok.Getter;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -29,8 +27,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Emitter extends ConnectedBlock {
-    @Getter
-    private final EnergyNetComponentType energyComponentType = EnergyNetComponentType.CONSUMER;
     private final double transmissionPower;
 
     public Emitter(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe,

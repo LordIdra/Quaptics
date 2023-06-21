@@ -8,6 +8,7 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.attributes.EnergyNetComponent;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
+import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNetComponentType;
 import lombok.Getter;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
@@ -32,6 +33,8 @@ import static dev.sefiraat.sefilib.slimefun.blocks.DisplayGroupBlock.KEY_UUID;
 
 public abstract class EnergyDisplayGroupBlock extends SlimefunItem implements EnergyNetComponent {
     @Getter
+    private final EnergyNetComponentType energyComponentType;
+    @Getter
     protected final int capacity;
     protected final int consumption;
 
@@ -40,8 +43,18 @@ public abstract class EnergyDisplayGroupBlock extends SlimefunItem implements En
             RecipeType recipeType, ItemStack[] recipe,
             int capacity, int consumption) {
         super(group, item, recipeType, recipe);
+        this.energyComponentType = EnergyNetComponentType.CONSUMER;
         this.consumption = consumption;
         this.capacity = capacity;
+    }
+
+    public EnergyDisplayGroupBlock(
+            ItemGroup group, SlimefunItemStack item,
+            RecipeType recipeType, ItemStack[] recipe) {
+        super(group, item, recipeType, recipe);
+        this.energyComponentType = EnergyNetComponentType.NONE;
+        this.consumption = 0;
+        this.capacity = 0;
     }
 
     protected abstract DisplayGroup generateDisplayGroup(Player player, Location location);

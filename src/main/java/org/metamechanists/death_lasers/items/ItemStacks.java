@@ -7,15 +7,36 @@ import org.bukkit.Material;
 public class ItemStacks {
     public static final SlimefunItemStack EMITTER = new SlimefunItemStack(
             "EMITTER",
-            Material.GLASS,
-            "&4Emitter",
+            Material.PURPLE_CONCRETE,
+            "&bEmitter",
+            "&7● Uses energy to create a beam",
             LoreBuilder.powerPerSecond(100),
-            Lore.emissionPower(10));
+            Lore.emissionPower(5));
+
     public static final SlimefunItemStack LENS = new SlimefunItemStack(
             "LENS",
             Material.GLASS,
-            "&4Lens",
-            "&7Power loss increases with input power",
+            "&9Lens",
+            "&7● &bRedirects &7a laser beam",
+            "&7● Power loss increases with input power",
+            Lore.maxPower(20),
+            Lore.powerLoss(40));
+
+    public static final SlimefunItemStack WHITE_PRISM = new SlimefunItemStack(
+            "WHITE_PRISM",
+            Material.WHITE_STAINED_GLASS,
+            "&fWhite Prism",
+            "&7● &bSplits &7one laser beam into multiple",
+            "&7● Power loss increases with input power",
+            Lore.maxPower(20),
+            Lore.powerLoss(50));
+
+    public static final SlimefunItemStack DARK_PRISM = new SlimefunItemStack(
+            "DARK_PRISM",
+            Material.GRAY_STAINED_GLASS,
+            "&8Black Prism",
+            "&7● &bConstitutes &7multiple laser beams into one",
+            "&7● Power loss increases with input power",
             Lore.maxPower(20),
             Lore.powerLoss(50));
 
@@ -23,7 +44,7 @@ public class ItemStacks {
             "TARGETING_WAND",
             Material.BLAZE_ROD,
             "&6Targeting Wand",
-            "&eRight Click &7to select a source",
-            "&eRight Click &7again to create a link",
-            "&eShift Right Click &7to remove a link");
+            "&7● &eRight Click &7to select a source",
+            "&7● &eRight Click &7again to create a link",
+            "&7● &eShift Right Click &7to remove a link");
 }
