@@ -1,7 +1,6 @@
 package org.metamechanists.death_lasers.connections.links;
 
 import lombok.Getter;
-import lombok.Setter;
 import org.bukkit.Material;
 import org.metamechanists.death_lasers.beams.DeprecatedBeamStorage;
 import org.metamechanists.death_lasers.beams.beam.Beam;
@@ -16,13 +15,10 @@ public class Link {
     @Getter
     private boolean enabled;
     @Getter
-    @Setter
     private double power;
     @Getter
-    @Setter
     private double frequency;
     @Getter
-    @Setter
     private int phase;
 
     @Getter
@@ -36,6 +32,7 @@ public class Link {
         this.output = output;
         input.link(this);
         output.link(this);
+        BlockUpdateScheduler.scheduleUpdate(output.getGroup());
         update();
     }
 
@@ -100,5 +97,10 @@ public class Link {
                             this.input.getLocation()));
             update();
         }
+    }
+
+    public void setPower(double power) {
+        this.power = power;
+        update();
     }
 }
