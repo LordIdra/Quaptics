@@ -1,5 +1,6 @@
 package org.metamechanists.death_lasers.beams.ticker.ticker;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -52,7 +53,7 @@ public class DirectSinglePulseTicker implements LaserBlockDisplayTicker, Configu
 
     public static DirectSinglePulseTicker deserialize(Map<String, Object> map) {
         final World world = DEATH_LASERS.getInstance().getServer().getWorld(SerializationUtils.deserializeUUID((Map<String, Object>) map.get("world")));
-        final BlockDisplay display = (BlockDisplay) world.getEntity(SerializationUtils.deserializeUUID((Map<String, Object>) map.get("display")));
+        final BlockDisplay display = (BlockDisplay) Bukkit.getEntity(SerializationUtils.deserializeUUID((Map<String, Object>) map.get("display")));
         return new DirectSinglePulseTicker(display);
     }
 }

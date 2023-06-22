@@ -1,5 +1,6 @@
 package org.metamechanists.death_lasers.connections.points;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.BlockDisplay;
@@ -31,8 +32,8 @@ public class ConnectionPointOutput extends ConnectionPoint {
     public static ConnectionPointOutput deserialize(Map<String, Object> map) {
         final Location location = (Location) map.get("location");
         final UUID blockDisplayUUID = SerializationUtils.deserializeUUID((Map<String, Object>) map.get("blockDisplay"));
-        final BlockDisplay blockDisplay = (BlockDisplay) location.getWorld().getEntity(blockDisplayUUID);
-        final Interaction interaction = (Interaction) location.getWorld().getEntity(SerializationUtils.deserializeUUID((Map<String, Object>) map.get("interaction")));
+        final BlockDisplay blockDisplay = (BlockDisplay) Bukkit.getEntity(blockDisplayUUID);
+        final Interaction interaction = (Interaction) Bukkit.getEntity(SerializationUtils.deserializeUUID((Map<String, Object>) map.get("interaction")));
         return new ConnectionPointOutput(
                 (Link) map.get("link"),
                 (String) map.get("name"),
