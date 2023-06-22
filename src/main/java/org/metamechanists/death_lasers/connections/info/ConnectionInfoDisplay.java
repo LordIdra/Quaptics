@@ -16,6 +16,7 @@ import org.metamechanists.death_lasers.storage.v1.SerializationUtils;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 public class ConnectionInfoDisplay implements ConfigurationSerializable {
@@ -61,7 +62,9 @@ public class ConnectionInfoDisplay implements ConfigurationSerializable {
     }
     private void setText(String key, String text) {
         final TextDisplay display = (TextDisplay) getDisplayGroup().getDisplays().get(key);
-        display.setText(text);
+        if (!Objects.equals(display.getText(), (text))) {
+            display.setText(text);
+        }
     }
     private void showText(String key) {
         final TextDisplay display = (TextDisplay) getDisplayGroup().getDisplays().get(key);
