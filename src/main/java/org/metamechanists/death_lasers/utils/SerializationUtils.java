@@ -1,23 +1,18 @@
 package org.metamechanists.death_lasers.utils;
 
-import java.lang.reflect.Field;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
 public class SerializationUtils {
+    private static final Gson gson = new Gson();
     private static Map<String, Object> objectToMap(Object object) {
-        final Map<String, Object> map = new HashMap<>();
-        for (Field field : object.getClass().getDeclaredFields()) {
-            field.setAccessible(true);
-            try {
-                map.put(field.getName(), field.get(object));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return map;
+        final String json = gson.toJson(object);
+        return gson.fromJson(json, new TypeToken<Map<String, Object>>() {}.getType());
     }
 
     public static <T, U> Map<String, Object> serializeMap(Map<T, U> input, String keyName, String valueName) {
