@@ -74,7 +74,7 @@ public class ConnectionGroup implements ConfigurationSerializable {
     @Override
     public @NotNull Map<String, Object> serialize() {
         Map<String, Object> map = new HashMap<>();
-        map.put("id", id.toString());
+        map.put("id", id);
         map.put("location", location);
         map.put("block",  block.getId());
         map.put("points", SerializationUtils.serializeMap(points, "UUID", "ConnectionPoint"));
