@@ -3,12 +3,20 @@ package org.metamechanists.death_lasers;
 import co.aikar.commands.PaperCommandManager;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import lombok.Getter;
+import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.metamechanists.death_lasers.beams.DeprecatedBeamStorage;
+import org.metamechanists.death_lasers.beams.beam.DirectBlockDisplayBeam;
+import org.metamechanists.death_lasers.beams.ticker.ticker.DirectSinglePulseTicker;
+import org.metamechanists.death_lasers.connections.ConnectionGroup;
+import org.metamechanists.death_lasers.connections.info.ConnectionInfoDisplay;
 import org.metamechanists.death_lasers.connections.info.PointInformationListener;
+import org.metamechanists.death_lasers.connections.links.Link;
+import org.metamechanists.death_lasers.connections.points.ConnectionPointInput;
+import org.metamechanists.death_lasers.connections.points.ConnectionPointOutput;
 import org.metamechanists.death_lasers.connections.storage.ConnectionPointStorage;
 import org.metamechanists.death_lasers.connections.storage.StorageLoad;
 import org.metamechanists.death_lasers.connections.storage.StorageSave;
@@ -20,6 +28,16 @@ import org.metamechanists.death_lasers.utils.Language;
 public final class DEATH_LASERS extends JavaPlugin implements SlimefunAddon {
     @Getter
     private static DEATH_LASERS instance;
+
+    private void initializeSerializables() {
+        ConfigurationSerialization.registerClass(ConnectionGroup.class, "ConnectionGroup");
+        ConfigurationSerialization.registerClass(ConnectionPointOutput.class, "ConnectionPointOutput");
+        ConfigurationSerialization.registerClass(ConnectionPointInput.class, "ConnectionPointInput");
+        ConfigurationSerialization.registerClass(ConnectionInfoDisplay.class, "ConnectionInfoDisplay");
+        ConfigurationSerialization.registerClass(Link.class, "Link");
+        ConfigurationSerialization.registerClass(DirectBlockDisplayBeam.class, "DirectBlockDisplayBeam");
+        ConfigurationSerialization.registerClass(DirectSinglePulseTicker.class, "DirectSinglePulseTicker");
+    }
 
     private void initializeListeners() {
         final PluginManager pluginManager = this.getServer().getPluginManager();
@@ -43,6 +61,7 @@ public final class DEATH_LASERS extends JavaPlugin implements SlimefunAddon {
         Language.initialize();
         Groups.initialize();
         Items.initialize();
+        initializeSerializables();
         StorageLoad.load();
         initializeListeners();
         initializeRunnables();
