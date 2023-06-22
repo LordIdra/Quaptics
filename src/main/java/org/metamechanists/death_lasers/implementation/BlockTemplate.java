@@ -23,8 +23,8 @@ public class BlockTemplate extends ConnectedBlock {
     @Getter
     private final EnergyNetComponentType energyComponentType = EnergyNetComponentType.CONSUMER;
 
-    public BlockTemplate(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, int capacity, int consumption) {
-        super(group, item, recipeType, recipe, capacity, consumption);
+    public BlockTemplate(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, double maxPower, int capacity, int consumption) {
+        super(group, item, recipeType, recipe, maxPower, capacity, consumption);
     }
 
 
