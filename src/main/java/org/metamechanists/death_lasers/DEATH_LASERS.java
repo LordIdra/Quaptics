@@ -19,8 +19,8 @@ import org.metamechanists.death_lasers.connections.points.ConnectionPointOutput;
 import org.metamechanists.death_lasers.implementation.tools.TargetingWandListener;
 import org.metamechanists.death_lasers.items.Groups;
 import org.metamechanists.death_lasers.items.Items;
-import org.metamechanists.death_lasers.storage.StorageLoad;
-import org.metamechanists.death_lasers.storage.StorageSave;
+import org.metamechanists.death_lasers.storage.SaveRunnable;
+import org.metamechanists.death_lasers.storage.Storage;
 import org.metamechanists.death_lasers.utils.Language;
 
 public final class DEATH_LASERS extends JavaPlugin implements SlimefunAddon {
@@ -45,7 +45,7 @@ public final class DEATH_LASERS extends JavaPlugin implements SlimefunAddon {
 
     public void initializeRunnables() {
         new LaserTicker().runTaskTimer(instance, 0, LaserTicker.INTERVAl_TICKS);
-        new StorageSave().runTaskTimer(instance, StorageSave.INTERVAl_TICKS, StorageSave.INTERVAl_TICKS);
+        new SaveRunnable().runTaskTimer(instance, SaveRunnable.INTERVAL_TICKS, SaveRunnable.INTERVAL_TICKS);
     }
 
     public void initializeCommands() {
@@ -60,7 +60,7 @@ public final class DEATH_LASERS extends JavaPlugin implements SlimefunAddon {
         Groups.initialize();
         Items.initialize();
         initializeSerializables();
-        StorageLoad.load();
+        Storage.load();
         initializeListeners();
         initializeRunnables();
         initializeCommands();
