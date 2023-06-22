@@ -1,5 +1,6 @@
 package org.metamechanists.death_lasers.connections.storage;
 
+import io.github.bakedlibs.dough.common.ChatColors;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -37,7 +38,10 @@ public class StorageSave extends BukkitRunnable {
 
             if (attempt == 10) {
                 DEATH_LASERS.getInstance().getLogger().severe(Language.getLanguageEntry("save.failed-you-are-screwed"));
+                return;
             }
         }
+
+        DEATH_LASERS.getInstance().getLogger().warning(ChatColors.color(Language.getLanguageEntry("save.success")));
     }
 }

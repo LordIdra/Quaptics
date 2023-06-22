@@ -28,8 +28,8 @@ public class WhitePrism extends ConnectedBlock {
     private final double maxPower;
     private final double powerLoss;
 
-    public WhitePrism(String id, ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, double maxPower, double powerLoss) {
-        super(id, group, item, recipeType, recipe);
+    public WhitePrism(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, double maxPower, double powerLoss) {
+        super(group, item, recipeType, recipe);
         this.maxPower = maxPower;
         this.powerLoss = powerLoss;
         // TODO burnout when max power exceeded

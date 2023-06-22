@@ -33,7 +33,6 @@ public class Items {
 
     static {{
         blocks.put("EMITTER", new Emitter(
-                "EMITTER",
                 Groups.DEATH_LASER_GROUP,
                 EMITTER,
                 RecipeType.NULL,
@@ -43,7 +42,6 @@ public class Items {
                 20));
 
         blocks.put("LENS", new Lens(
-                "LENS",
                 Groups.DEATH_LASER_GROUP,
                 LENS,
                 RecipeType.NULL,
@@ -52,7 +50,6 @@ public class Items {
                 0.1));
 
         blocks.put("DARK_PRISM", new DarkPrism(
-                "DARK_PRISM",
                 Groups.DEATH_LASER_GROUP,
                 DARK_PRISM,
                 RecipeType.NULL,
@@ -61,7 +58,6 @@ public class Items {
                 0.2));
 
         blocks.put("WHITE_PRISM", new WhitePrism(
-                "WHITE_PRISM",
                 Groups.DEATH_LASER_GROUP,
                 WHITE_PRISM,
                 RecipeType.NULL,

@@ -29,9 +29,9 @@ import java.util.Map;
 public class Emitter extends ConnectedBlock {
     private final double emissionPowe;
 
-    public Emitter(String id, ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe,
+    public Emitter(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe,
                    int capacity, int consumption, double emissionPower) {
-        super(id, group, item, recipeType, recipe, capacity, consumption);
+        super(group, item, recipeType, recipe, capacity, consumption);
         this.emissionPowe = emissionPower;
     }
 

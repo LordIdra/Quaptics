@@ -28,8 +28,8 @@ public class Lens extends ConnectedBlock {
     private final double maxPower;
     private final double powerLoss;
 
-    public Lens(String id, ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, double maxPower, double powerLoss) {
-        super(id, group, item, recipeType, recipe);
+    public Lens(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, double maxPower, double powerLoss) {
+        super(group, item, recipeType, recipe);
         this.maxPower = maxPower;
         this.powerLoss = powerLoss;
     }

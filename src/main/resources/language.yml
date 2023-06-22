@@ -12,5 +12,7 @@ point-information.phase: "&7Phase &8- &e{1}"
 
 save.failed-retrying: "&cFailed to save laser data. Retrying..."
 save.failed-you-are-screwed: "&cFailed to save laser data after 10 attempts. Check that permissions are set up correctly!"
+save.success: "Saved laser data"
 load.no-data-file: "&cCould not load laser data, assuming that this is the first time the plugin is being run."
 load.failed: "&cFailed to laser load data."
+load.success: "Loaded laser data"
