@@ -1,4 +1,4 @@
-package org.metamechanists.death_lasers.storage;
+package org.metamechanists.death_lasers.storage.v1;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.MemorySection;

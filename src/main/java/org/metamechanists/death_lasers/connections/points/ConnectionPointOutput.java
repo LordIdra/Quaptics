@@ -4,7 +4,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.metamechanists.death_lasers.connections.info.ConnectionInfoDisplay;
 import org.metamechanists.death_lasers.connections.links.Link;
-import org.metamechanists.death_lasers.storage.SerializationUtils;
+import org.metamechanists.death_lasers.storage.v1.SerializationUtils;
 
 import java.util.Map;
 import java.util.UUID;

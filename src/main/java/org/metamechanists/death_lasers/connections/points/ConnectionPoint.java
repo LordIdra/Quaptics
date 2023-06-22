@@ -16,7 +16,7 @@ import org.metamechanists.death_lasers.connections.ConnectionGroup;
 import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
 import org.metamechanists.death_lasers.connections.info.ConnectionInfoDisplay;
 import org.metamechanists.death_lasers.connections.links.Link;
-import org.metamechanists.death_lasers.storage.SerializationUtils;
+import org.metamechanists.death_lasers.storage.v1.SerializationUtils;
 import org.metamechanists.death_lasers.utils.DisplayUtils;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;

@@ -10,9 +10,9 @@ point-information.transmission-power: "&7Transmission Power &8- &e{1}"
 point-information.frequency: "&7Frequency &8- &e{1}"
 point-information.phase: "&7Phase &8- &e{1}"
 
-save.failed-retrying: "&cFailed to save laser data. Retrying..."
-save.failed-you-are-screwed: "&cFailed to save laser data after 10 attempts. Check that permissions are set up correctly!"
+save.failed: "Failed to save laser data; check that file permissions are set up correctly"
 save.success: "Saved laser data"
-load.no-data-file: "&cCould not load laser data, assuming that this is the first time the plugin is being run."
-load.failed: "&cFailed to laser load data."
+
+load.file-not-found: "Could not load laser data; assuming that this is the first time the plugin is being run"
+load.invalid-config-version: "Invalid config version '{1}'; failed to load laser data"
 load.success: "Loaded laser data"

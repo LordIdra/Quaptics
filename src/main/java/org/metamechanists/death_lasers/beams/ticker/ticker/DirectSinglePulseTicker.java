@@ -8,7 +8,7 @@ import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Display;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
-import org.metamechanists.death_lasers.storage.SerializationUtils;
+import org.metamechanists.death_lasers.storage.v1.SerializationUtils;
 import org.metamechanists.death_lasers.utils.DisplayUtils;
 
 import java.util.HashMap;
