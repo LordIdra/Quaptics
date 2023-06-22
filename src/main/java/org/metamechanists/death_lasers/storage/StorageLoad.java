@@ -24,15 +24,14 @@ public class StorageLoad {
         }
 
         try {
-            final Map<String, Object> objects = data.getValues(true);
             final Map<Location, ConnectionGroup> groups = SerializationUtils.deserializeMap(
-                    (Map<String, Object>) objects.get("groups"),
+                    data.getConfigurationSection("groups").getValues(true),
                     "location", "connectionGroup");
 
 
 
             final Map<Location, Location> groupIdsFromPointLocations = SerializationUtils.deserializeMap(
-                    (Map<String, Object>) objects.get("groupIdsFromPointLocations"),
+                    data.getConfigurationSection("groupIdsFromPointLocations").getValues(true),
                     "groupLocation", "pointLocation");
 
             groups.remove(null);
