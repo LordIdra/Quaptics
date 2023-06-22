@@ -75,14 +75,12 @@ public class ConnectionInfoDisplay implements ConfigurationSerializable {
         display.setViewRange(0);
     }
     private void doVisibilityCheck() {
-        if (hidden) {
-            hideText("name");
-            return;
-        }
-
-        showText("name");
+        updateText("name", true);
 
         if (!getPoint().hasLink()) {
+            hideText("power");
+            hideText("frequency");
+            hideText("phase");
             return;
         }
 
