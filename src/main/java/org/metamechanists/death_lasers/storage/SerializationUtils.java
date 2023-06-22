@@ -1,8 +1,10 @@
 package org.metamechanists.death_lasers.storage;
 
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.MemorySection;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
@@ -29,9 +31,14 @@ public class SerializationUtils {
     public static <T, U> Map<T, U> deserializeMap(Map<String, Object> inputMap, String keyName, String valueName) {
         final Map<T, U> outputMap = new HashMap<>();
 
+        Bukkit.getLogger().severe("Deserializing " + keyName + " " + valueName);
+
         for (Map.Entry<String, Object> inputEntry : inputMap.entrySet()) {
-            final MemorySection mapEntry = (MemorySection) inputEntry.getValue();
-            outputMap.put((T) mapEntry.get(keyName), (U) mapEntry.get(valueName));
+            if (inputEntry.getValue() instanceof MemorySection section) {
+                outputMap.put((T) section.get(keyName), (U) section.get(valueName));
+            } else if (inputEntry.getValue() instanceof LinkedHashMap map) {
+                outputMap.put((T) map.get(keyName), (U) map.get(valueName));
+            }
         }
 
         return outputMap;
