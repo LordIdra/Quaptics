@@ -102,7 +102,7 @@ public class TargetingWand extends SlimefunItem {
         }
 
         if (inputTargetPoint.hasLink()) {
-            inputTargetPoint.unlink();
+            inputTargetPoint.getLink().remove();
         }
 
         block1.connect(sourcePoint, targetPoint);
