@@ -54,7 +54,7 @@ public class ConnectionInfoDisplay implements ConfigurationSerializable {
     }
 
     private void updateText(String key, boolean show) {
-        if (show) {
+        if (show && !hidden) {
             showText(key);
             return;
         }
