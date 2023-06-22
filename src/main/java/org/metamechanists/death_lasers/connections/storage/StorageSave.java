@@ -19,10 +19,10 @@ public class StorageSave extends BukkitRunnable {
         final FileConfiguration data = new YamlConfiguration();
 
         data.set("groups", SerializationUtils.serializeMap(ConnectionPointStorage.getGroups(),
-                "location", "connectionGroup"));
+                "Location", "ConnectionGroup"));
 
         data.set("groupIdsFromPointLocations", SerializationUtils.serializeMap(ConnectionPointStorage.getGroupIdsFromPointLocations(),
-                "groupLocation", "pointLocation"));
+                "GroupLocation", "PointLocation"));
 
         int attempt = 0;
         while (attempt < MAX_ATTEMPTS) {

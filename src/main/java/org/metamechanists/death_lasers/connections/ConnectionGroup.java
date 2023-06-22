@@ -8,6 +8,7 @@ import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointOutput;
 import org.metamechanists.death_lasers.implementation.abstracts.ConnectedBlock;
 import org.metamechanists.death_lasers.items.Items;
+import org.metamechanists.death_lasers.utils.SerializationUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -82,9 +83,9 @@ public class ConnectionGroup implements ConfigurationSerializable {
     public @NotNull Map<String, Object> serialize() {
         Map<String, Object> map = new HashMap<>();
         map.put("location", location);
-        map.put("block", block.getId());
-        map.put("points", points);
-        map.put("pointLocations", pointLocations);
+        map.put("block",  block.getId());
+        map.put("points", SerializationUtils.serializeMap(points, "Location", "ConnectionPoint"));
+        map.put("pointLocations", SerializationUtils.serializeMap(pointLocations, "String", "Location"));
         return map;
     }
 
@@ -92,7 +93,7 @@ public class ConnectionGroup implements ConfigurationSerializable {
         return new ConnectionGroup(
                 (Location) map.get("location"),
                 Items.getBlocks().get((String) map.get("block")),
-                (Map<Location, ConnectionPoint>) map.get("points"),
-                (Map<String, Location>) map.get("pointLocations"));
+                SerializationUtils.deserializeMap((Map<String, Object>) map.get("points"), "Location", "ConnectionPoint"),
+                SerializationUtils.deserializeMap((Map<String, Object>) map.get("pointLocations"), "String", "Location"));
     }
 }
