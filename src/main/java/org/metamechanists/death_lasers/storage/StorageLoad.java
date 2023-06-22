@@ -26,13 +26,13 @@ public class StorageLoad {
         try {
             final Map<Location, ConnectionGroup> groups = SerializationUtils.deserializeMap(
                     data.getConfigurationSection("groups").getValues(true),
-                    "location", "connectionGroup");
+                    "Location", "ConnectionGroup");
 
 
 
             final Map<Location, Location> groupIdsFromPointLocations = SerializationUtils.deserializeMap(
                     data.getConfigurationSection("groupIdsFromPointLocations").getValues(true),
-                    "groupLocation", "pointLocation");
+                    "GroupLocation", "PointLocation");
 
             groups.remove(null);
             groupIdsFromPointLocations.remove(null);
