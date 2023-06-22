@@ -32,7 +32,7 @@ public abstract class ConnectionPoint implements ConfigurationSerializable {
     protected final int connectedBrightness;
     @Getter
     protected final int disconnectedBrightness;
-    private final ConnectionInfoDisplay infoDisplay;
+    private ConnectionInfoDisplay infoDisplay;
     protected BlockDisplay blockDisplay;
     protected Interaction interaction;
     protected final static float SCALE = 0.1F;
@@ -44,13 +44,14 @@ public abstract class ConnectionPoint implements ConfigurationSerializable {
         this.connectedBrightness = connectedBrightness;
         this.disconnectedBrightness = disconnectedBrightness;
         this.infoDisplay = new ConnectionInfoDisplay(this);
-        this.blockDisplay = DisplayUtils.spawnBlockDisplay(location, material, DisplayUtils.simpleScaleTransformation(new Vector3f(SCALE, SCALE, SCALE)));
+        this.blockDisplay = DisplayUtils.spawnBlockDisplay(location, material,
+                DisplayUtils.simpleScaleTransformation(new Vector3f(SCALE, SCALE, SCALE)));
         this.interaction = DisplayUtils.spawnInteraction(location.clone().add(INTERACTION_OFFSET), SCALE, SCALE);
         this.blockDisplay.setBrightness(new Display.Brightness(disconnectedBrightness, 0));
     }
 
     protected ConnectionPoint(Link link, final String name, Location location, final int connectedBrightness, final int disconnectedBrightness,
-                            final ConnectionInfoDisplay infoDisplay, BlockDisplay blockDisplay, Interaction interaction) {
+                              final ConnectionInfoDisplay infoDisplay, BlockDisplay blockDisplay, Interaction interaction) {
         this.link = link;
         this.name = name;
         this.location = location;
@@ -113,6 +114,8 @@ public abstract class ConnectionPoint implements ConfigurationSerializable {
         this.location = location;
         blockDisplay.teleport(location);
         interaction.teleport(location.clone().add(INTERACTION_OFFSET));
+        infoDisplay.remove();
+        infoDisplay = new ConnectionInfoDisplay(this);
     }
 
     public void toggleInfoDisplayVisibility() {
