@@ -10,10 +10,10 @@ import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import org.metamechanists.death_lasers.DEATH_LASERS;
 import org.metamechanists.death_lasers.utils.DisplayUtils;
+import org.metamechanists.death_lasers.utils.SerializationUtils;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 public class DirectSinglePulseTicker implements LaserBlockDisplayTicker, ConfigurationSerializable {
     private final BlockDisplay display;
@@ -44,15 +44,15 @@ public class DirectSinglePulseTicker implements LaserBlockDisplayTicker, Configu
     }
 
     public @NotNull Map<String, Object> serialize() {
-        Map<String, Object> map = new HashMap<>();
-        map.put("world", display.getWorld().getUID());
-        map.put("display", display.getUniqueId());
+        final Map<String, Object> map = new HashMap<>();
+        map.put("world", SerializationUtils.serializeUUID(display.getWorld().getUID()));
+        map.put("display", SerializationUtils.serializeUUID(display.getUniqueId()));
         return map;
     }
 
     public static DirectSinglePulseTicker deserialize(Map<String, Object> map) {
-        final World world = DEATH_LASERS.getInstance().getServer().getWorld((UUID) map.get("world"));
-        final BlockDisplay display = (BlockDisplay) world.getEntity((UUID) map.get("display"));
+        final World world = DEATH_LASERS.getInstance().getServer().getWorld(SerializationUtils.deserializeUUID((Map<String, Object>) map.get("world")));
+        final BlockDisplay display = (BlockDisplay) world.getEntity(SerializationUtils.deserializeUUID((Map<String, Object>) map.get("display")));
         return new DirectSinglePulseTicker(display);
     }
 }

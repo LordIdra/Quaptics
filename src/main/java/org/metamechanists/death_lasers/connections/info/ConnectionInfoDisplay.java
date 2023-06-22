@@ -11,10 +11,10 @@ import org.metamechanists.death_lasers.connections.links.Link;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
 import org.metamechanists.death_lasers.connections.storage.ConnectionPointStorage;
 import org.metamechanists.death_lasers.items.Lore;
+import org.metamechanists.death_lasers.utils.SerializationUtils;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 public class ConnectionInfoDisplay implements ConfigurationSerializable {
     private boolean hidden = true;
@@ -117,13 +117,13 @@ public class ConnectionInfoDisplay implements ConfigurationSerializable {
         Map<String, Object> map = new HashMap<>();
         map.put("hidden", hidden);
         map.put("pointLocation", pointLocation);
-        map.put("displayGroup", displayGroup.getParentUUID());
+        map.put("displayGroup", SerializationUtils.serializeUUID(displayGroup.getParentUUID()));
         return map;
     }
 
     public static ConnectionInfoDisplay deserialize(Map<String, Object> map) {
         final Location pointLocation = (Location) map.get("pointLocation");
-        final DisplayGroup displayGroup = DisplayGroup.fromUUID((UUID) map.get("displayGroup"));
+        final DisplayGroup displayGroup = DisplayGroup.fromUUID(SerializationUtils.deserializeUUID((Map<String, Object>) map.get("displayGroup")));
         return new ConnectionInfoDisplay(
                 (Boolean) map.get("hidden"),
                 pointLocation,

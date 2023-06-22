@@ -6,9 +6,9 @@ import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Interaction;
 import org.metamechanists.death_lasers.connections.info.ConnectionInfoDisplay;
 import org.metamechanists.death_lasers.connections.links.Link;
+import org.metamechanists.death_lasers.utils.SerializationUtils;
 
 import java.util.Map;
-import java.util.UUID;
 
 public class ConnectionPointOutput extends ConnectionPoint {
     public ConnectionPointOutput(String name, Location location) {
@@ -29,8 +29,8 @@ public class ConnectionPointOutput extends ConnectionPoint {
 
     public static ConnectionPointOutput deserialize(Map<String, Object> map) {
         final Location location = (Location) map.get("location");
-        final BlockDisplay blockDisplay = (BlockDisplay) location.getWorld().getEntity((UUID) map.get("blockDisplay"));
-        final Interaction interaction = (Interaction) location.getWorld().getEntity((UUID) map.get("interaction"));
+        final BlockDisplay blockDisplay = (BlockDisplay) location.getWorld().getEntity(SerializationUtils.deserializeUUID((Map<String, Object>) map.get("blockDisplay")));
+        final Interaction interaction = (Interaction) location.getWorld().getEntity(SerializationUtils.deserializeUUID((Map<String, Object>) map.get("interaction")));
         return new ConnectionPointOutput(
                 (Link) map.get("link"),
                 (String) map.get("name"),

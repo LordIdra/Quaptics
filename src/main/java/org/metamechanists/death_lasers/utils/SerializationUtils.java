@@ -3,6 +3,7 @@ package org.metamechanists.death_lasers.utils;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.UUID;
 
 public class SerializationUtils {
 
@@ -32,5 +33,16 @@ public class SerializationUtils {
         }
 
         return outputMap;
+    }
+
+    public static Map<String, Object> serializeUUID(UUID uuid) {
+        final Map<String, Object> map = new HashMap<>();
+        map.put("mostSignificant", uuid.getMostSignificantBits());
+        map.put("leastSignificant", uuid.getLeastSignificantBits());
+        return map;
+    }
+
+    public static UUID deserializeUUID(Map<String, Object> map) {
+        return new UUID((Long) map.get("mostSignificant"), (Long) map.get("leastSignificant"));
     }
 }

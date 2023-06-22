@@ -16,6 +16,7 @@ import org.metamechanists.death_lasers.connections.info.ConnectionInfoDisplay;
 import org.metamechanists.death_lasers.connections.links.Link;
 import org.metamechanists.death_lasers.connections.storage.ConnectionPointStorage;
 import org.metamechanists.death_lasers.utils.DisplayUtils;
+import org.metamechanists.death_lasers.utils.SerializationUtils;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.util.HashMap;
@@ -132,8 +133,8 @@ public abstract class ConnectionPoint implements ConfigurationSerializable {
         map.put("connectedBrightness", connectedBrightness);
         map.put("disconnectedBrightness", disconnectedBrightness);
         map.put("infoDisplay", infoDisplay);
-        map.put("blockDisplay", blockDisplay.getUniqueId());
-        map.put("interaction", interaction.getUniqueId());
+        map.put("blockDisplay", SerializationUtils.serializeUUID(blockDisplay.getUniqueId()));
+        map.put("interaction", SerializationUtils.serializeUUID(interaction.getUniqueId()));
         return map;
     }
 }
