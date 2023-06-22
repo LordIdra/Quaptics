@@ -15,8 +15,8 @@ import org.metamechanists.death_lasers.connections.ConnectionGroup;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
 import org.metamechanists.death_lasers.implementation.abstracts.ConnectedBlock;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BlockTemplate extends ConnectedBlock {
     @Getter
@@ -43,8 +43,8 @@ public class BlockTemplate extends ConnectedBlock {
     }
 
     @Override
-    protected Map<String, ConnectionPoint> generateConnectionPoints(Player player, Location location) {
-        final Map<String, ConnectionPoint> points = new HashMap<>();
+    protected List<ConnectionPoint> generateConnectionPoints(Player player, Location location) {
+        final List<ConnectionPoint> points = new ArrayList<>();
 
         // TODO create connection points for this component
 
@@ -52,9 +52,9 @@ public class BlockTemplate extends ConnectedBlock {
     }
 
     @Override
-    protected Location calculateNewLocation(ConnectionPoint from, ConnectionPoint to) {
-        // TODO connection point position update logic
-        return null;
+    protected float getRadius() {
+        // TODO set radius
+        return 0;
     }
 
     @Override

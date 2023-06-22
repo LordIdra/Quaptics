@@ -6,6 +6,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
+import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -22,9 +23,11 @@ import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointOutput;
 import org.metamechanists.death_lasers.implementation.abstracts.ConnectedBlock;
 import org.metamechanists.death_lasers.utils.DisplayUtils;
+import org.metamechanists.death_lasers.utils.Keys;
+import org.metamechanists.death_lasers.utils.id.ConnectionGroupID;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Emitter extends ConnectedBlock {
     private final double emissionPowe;
@@ -39,7 +42,7 @@ public class Emitter extends ConnectedBlock {
         return DisplayUtils.spawnBlockDisplay(
                 from.clone().add(0.5, 0.5, 0.5),
                 Material.PURPLE_CONCRETE,
-                DisplayUtils.faceTargetTransformation(from, to, new Vector3f(0.3F, 0.3F, 0.9F)));
+                DisplayUtils.faceTargetTransformation(from, to, new Vector3f(0.3F, 0.3F, (2*getRadius()))));
     }
 
     @Override
@@ -51,15 +54,16 @@ public class Emitter extends ConnectedBlock {
     }
 
     @Override
-    protected Map<String, ConnectionPoint> generateConnectionPoints(Player player, Location location) {
-        final Map<String, ConnectionPoint> points = new HashMap<>();
-        points.put("output", new ConnectionPointOutput("output", formatRelativeLocation(player, location, new Vector(0.0F, 0.0F, 0.45F))));
+    protected List<ConnectionPoint> generateConnectionPoints(Player player, Location location) {
+        final List<ConnectionPoint> points = new ArrayList<>();
+        points.add(new ConnectionPointOutput("output", formatRelativeLocation(player, location, new Vector(0.0F, 0.0F, getRadius()))));
         return points;
     }
 
     @Override
     public void onSlimefunTick(Block block, SlimefunItem item, Config data) {
-        final ConnectionGroup group = ConnectionPointStorage.getGroupLocation(block);
+        final ConnectionGroupID id = new ConnectionGroupID(BlockStorage.getLocationInfo(block.getLocation(), Keys.CONNECTION_GROUP_ID));
+        final ConnectionGroup group = ConnectionPointStorage.getGroup(id);
         final ConnectionPointOutput output = (ConnectionPointOutput) group.getPoint("output");
         final int charge = getCharge(block.getLocation(), data);
 
@@ -79,22 +83,19 @@ public class Emitter extends ConnectedBlock {
     }
 
     @Override
-    protected Location calculateNewLocation(ConnectionPoint from, ConnectionPoint to) {
-        final Location fromGroupLocation = ConnectionPointStorage.getPoint(from.getLocation()).getGroup().getLocation();
-        final Location toGroupLocation = ConnectionPointStorage.getPoint(to.getLocation()).getGroup().getLocation();
-        final Vector radiusDirection = DisplayUtils.getDirection(fromGroupLocation, toGroupLocation).multiply(0.45F);
-        return fromGroupLocation.clone().add(0.5, 0.5, 0.5).add(radiusDirection);
-    }
-
-    @Override
     public void connect(ConnectionPoint from, ConnectionPoint to) {
         super.connect(from, to);
-        final Location fromGroupLocation = ConnectionPointStorage.getPoint(from.getLocation()).getGroup().getLocation();
-        final Location toGroupLocation = ConnectionPointStorage.getPoint(to.getLocation()).getGroup().getLocation();
+        final Location fromGroupLocation = from.getGroup().getLocation();
+        final Location toGroupLocation = to.getGroup().getLocation();
         final DisplayGroup fromDisplayGroup = getDisplayGroup(fromGroupLocation);
 
         fromDisplayGroup.removeDisplay("main").remove();
         fromDisplayGroup.addDisplay("main", generateMainBlockDisplay(fromGroupLocation, toGroupLocation));
+    }
+
+    @Override
+    protected float getRadius() {
+        return 0.45F;
     }
 
     @Override

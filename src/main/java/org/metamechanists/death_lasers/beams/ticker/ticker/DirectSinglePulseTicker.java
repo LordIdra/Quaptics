@@ -8,31 +8,31 @@ import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Display;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
-import org.metamechanists.death_lasers.storage.v1.SerializationUtils;
 import org.metamechanists.death_lasers.utils.DisplayUtils;
+import org.metamechanists.death_lasers.utils.id.BlockDisplayID;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 public class DirectSinglePulseTicker implements LaserBlockDisplayTicker, ConfigurationSerializable {
-    private final UUID display;
+    private final BlockDisplayID displayID;
 
     public DirectSinglePulseTicker(Material material, Location source, Location target, float size) {
         final float scale = size * 0.095F;
         final Location midpoint = source.clone().add(target).multiply(0.5);
         final Vector3f scaleVector = new Vector3f(scale, scale, (float)(source.distance(target)));
-        this.display = DisplayUtils.spawnBlockDisplay(midpoint, material, DisplayUtils.faceTargetTransformation(midpoint, target, scaleVector)).getUniqueId();
+        this.displayID = new BlockDisplayID(
+                DisplayUtils.spawnBlockDisplay(midpoint, material, DisplayUtils.faceTargetTransformation(midpoint, target, scaleVector)).getUniqueId());
         getDisplay().setBrightness(new Display.Brightness(15, 15));
     }
 
-    private DirectSinglePulseTicker(UUID display) {
-        this.display = display;
+    private DirectSinglePulseTicker(BlockDisplayID displayID) {
+        this.displayID = displayID;
     }
 
     private BlockDisplay getDisplay() {
-        return (BlockDisplay) Bukkit.getEntity(display);
-    };
+        return (BlockDisplay) Bukkit.getEntity(displayID.get());
+    }
 
     @Override
     public void tick() {}
@@ -49,12 +49,12 @@ public class DirectSinglePulseTicker implements LaserBlockDisplayTicker, Configu
 
     public @NotNull Map<String, Object> serialize() {
         final Map<String, Object> map = new HashMap<>();
-        map.put("display", SerializationUtils.serializeUUID(getDisplay().getUniqueId()));
+        map.put("display", displayID);
         return map;
     }
 
     public static DirectSinglePulseTicker deserialize(Map<String, Object> map) {
-        return new DirectSinglePulseTicker(SerializationUtils.deserializeUUID((Map<String, Object>) map.get("display")));
+        return new DirectSinglePulseTicker((BlockDisplayID) map.get("display"));
     }
 }
 

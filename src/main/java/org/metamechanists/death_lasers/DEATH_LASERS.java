@@ -22,17 +22,24 @@ import org.metamechanists.death_lasers.items.Items;
 import org.metamechanists.death_lasers.storage.SaveRunnable;
 import org.metamechanists.death_lasers.storage.Storage;
 import org.metamechanists.death_lasers.utils.Language;
+import org.metamechanists.death_lasers.utils.id.ConnectionGroupID;
+import org.metamechanists.death_lasers.utils.id.CustomID;
 
 public final class DEATH_LASERS extends JavaPlugin implements SlimefunAddon {
     @Getter
     private static DEATH_LASERS instance;
 
     private void initializeSerializables() {
+        ConfigurationSerialization.registerClass(CustomID.class, "CustomID");
+        ConfigurationSerialization.registerClass(ConnectionGroupID.class, "ConnectionGroupID");
+
         ConfigurationSerialization.registerClass(ConnectionGroup.class, "ConnectionGroup");
         ConfigurationSerialization.registerClass(ConnectionPointOutput.class, "ConnectionPointOutput");
         ConfigurationSerialization.registerClass(ConnectionPointInput.class, "ConnectionPointInput");
         ConfigurationSerialization.registerClass(ConnectionInfoDisplay.class, "ConnectionInfoDisplay");
+
         ConfigurationSerialization.registerClass(Link.class, "Link");
+
         ConfigurationSerialization.registerClass(DirectBlockDisplayBeam.class, "DirectBlockDisplayBeam");
         ConfigurationSerialization.registerClass(DirectSinglePulseTicker.class, "DirectSinglePulseTicker");
     }

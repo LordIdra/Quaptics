@@ -12,7 +12,6 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import org.metamechanists.death_lasers.connections.ConnectionGroup;
-import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
 import org.metamechanists.death_lasers.connections.links.Link;
 import org.metamechanists.death_lasers.connections.links.LinkProperties;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
@@ -21,8 +20,8 @@ import org.metamechanists.death_lasers.connections.points.ConnectionPointOutput;
 import org.metamechanists.death_lasers.implementation.abstracts.ConnectedBlock;
 import org.metamechanists.death_lasers.utils.DisplayUtils;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Lens extends ConnectedBlock {
     private final double maxPower;
@@ -52,10 +51,10 @@ public class Lens extends ConnectedBlock {
     }
 
     @Override
-    protected Map<String, ConnectionPoint> generateConnectionPoints(Player player, Location location) {
-        final Map<String, ConnectionPoint> points = new HashMap<>();
-        points.put("input", new ConnectionPointInput("input", formatRelativeLocation(player, location, new Vector(0.0F, 0.0F, -0.35F))));
-        points.put("output", new ConnectionPointOutput("output", formatRelativeLocation(player, location, new Vector(0.0F, 0.0F, 0.35F))));
+    protected List<ConnectionPoint> generateConnectionPoints(Player player, Location location) {
+        final List<ConnectionPoint> points = new ArrayList<>();
+        points.add(new ConnectionPointInput("input", formatRelativeLocation(player, location, new Vector(0.0F, 0.0F, -0.35F))));
+        points.add(new ConnectionPointOutput("output", formatRelativeLocation(player, location, new Vector(0.0F, 0.0F, 0.35F))));
         return points;
     }
 
@@ -83,11 +82,8 @@ public class Lens extends ConnectedBlock {
     }
 
     @Override
-    protected Location calculateNewLocation(ConnectionPoint from, ConnectionPoint to) {
-        final Location fromGroupLocation = ConnectionPointStorage.getGroupLocation(from.getLocation());
-        final Location toGroupLocation = ConnectionPointStorage.getGroupLocation(to.getLocation());
-        final Vector radiusDirection = DisplayUtils.getDirection(fromGroupLocation, toGroupLocation).multiply(0.35F);
-        return fromGroupLocation.clone().add(0.5, 0.5, 0.5).add(radiusDirection);
+    protected float getRadius() {
+        return 0.35F;
     }
 
     @Override

@@ -13,15 +13,21 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.Vector;
 import org.metamechanists.death_lasers.connections.ConnectionGroup;
-import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
 import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
+import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
+import org.metamechanists.death_lasers.utils.DisplayUtils;
+import org.metamechanists.death_lasers.utils.Keys;
+import org.metamechanists.death_lasers.utils.Language;
+import org.metamechanists.death_lasers.utils.id.ConnectionGroupID;
+import org.metamechanists.metalib.utils.RadiusUtils;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
-import java.util.Map;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public abstract class ConnectedBlock extends EnergyDisplayGroupBlock {
-
     public ConnectedBlock(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, int capacity, int consumption) {
         super(group, item, recipeType, recipe, capacity, consumption);
     }
@@ -30,17 +36,41 @@ public abstract class ConnectedBlock extends EnergyDisplayGroupBlock {
         super(group, item, recipeType, recipe);
     }
 
-    protected abstract Map<String, ConnectionPoint> generateConnectionPoints(Player player, Location location);
+    protected abstract List<ConnectionPoint> generateConnectionPoints(Player player, Location location);
 
     @Override
     protected void onPlace(BlockPlaceEvent event) {
         final Location location = event.getBlock().getLocation();
-        final Map<String, ConnectionPoint> points = generateConnectionPoints(event.getPlayer(), location);
-        ConnectionPointStorage.addConnectionPointGroup(location, new ConnectionGroup(location, this, points));
+        final List<ConnectionPoint> points = generateConnectionPoints(event.getPlayer(), location);
+        final ConnectionGroup group = new ConnectionGroup(location, this, points);
+
+        final AtomicBoolean valid = new AtomicBoolean(false);
+        RadiusUtils.forEachSphereRadius(group.getLocation().getBlock(), (int)(getRadius()+0.5F), block -> {
+            if (block.getLocation().equals(group.getLocation())) {
+                return false;
+            }
+
+            if (BlockStorage.check(block) instanceof ConnectedBlock) {
+                valid.set(false);
+                return true;
+            }
+
+            return false;
+        });
+
+        if (!valid.get()) {
+            event.getPlayer().sendMessage(Language.getLanguageEntry("too-close"));
+            event.setCancelled(true);
+            return;
+        }
+
+        ConnectionPointStorage.addGroup(group);
+        BlockStorage.addBlockInfo(location, Keys.CONNECTION_GROUP_ID,group.getId().toString());
     }
 
     protected void onBreak(Location location) {
-        ConnectionPointStorage.removeConnectionPointGroup(location);
+        final ConnectionGroupID id = new ConnectionGroupID(BlockStorage.getLocationInfo(location, Keys.CONNECTION_GROUP_ID));
+        ConnectionPointStorage.removeGroup(id);
     }
 
     @Override
@@ -49,17 +79,8 @@ public abstract class ConnectedBlock extends EnergyDisplayGroupBlock {
     }
 
     @OverridingMethodsMustInvokeSuper
-    public boolean connectionInvalid(ConnectionPoint from, ConnectionPoint to) {
-        Location newFrom = calculateNewLocation(from, to);
-        if (from.getLocation().distance(newFrom) < 0.000001F) {
-            return false;
-        }
-        return ConnectionPointStorage.hasPoint(newFrom);
-    }
-
-    @OverridingMethodsMustInvokeSuper
     public void connect(ConnectionPoint from, ConnectionPoint to) {
-        ConnectionPointStorage.updatePointLocation(from.getLocation(), calculateNewLocation(from, to));
+        ConnectionPointStorage.updatePointLocation(from.getId(), calculateNewLocation(from, to));
     }
 
     public void burnout(Location location) {
@@ -91,5 +112,12 @@ public abstract class ConnectedBlock extends EnergyDisplayGroupBlock {
 
     public void onInputLinkUpdated(ConnectionGroup group) {}
 
-    protected abstract Location calculateNewLocation(ConnectionPoint from, ConnectionPoint to);
+    public Location calculateNewLocation(ConnectionPoint from, ConnectionPoint to) {
+        final Location fromGroupLocation = from.getGroup().getLocation();
+        final Location toGroupLocation = to.getGroup().getLocation();
+        final Vector radiusDirection = DisplayUtils.getDirection(fromGroupLocation, toGroupLocation).multiply(getRadius());
+        return fromGroupLocation.clone().add(0.5, 0.5, 0.5).add(radiusDirection);
+    }
+
+    protected abstract float getRadius();
 }

@@ -7,19 +7,20 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.metamechanists.death_lasers.items.Items;
-import org.metamechanists.death_lasers.utils.Keys;
+import org.metamechanists.death_lasers.connections.ConnectionGroup;
 import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
 import org.metamechanists.death_lasers.connections.links.Link;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointInput;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointOutput;
 import org.metamechanists.death_lasers.implementation.abstracts.ConnectedBlock;
+import org.metamechanists.death_lasers.items.Items;
+import org.metamechanists.death_lasers.utils.Keys;
 import org.metamechanists.death_lasers.utils.Language;
 import org.metamechanists.death_lasers.utils.PersistentDataUtils;
+import org.metamechanists.death_lasers.utils.id.ConnectionPointID;
 
 public class TargetingWand extends SlimefunItem {
     public TargetingWand(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
@@ -30,106 +31,103 @@ public class TargetingWand extends SlimefunItem {
         return stack.getItemMeta().getPersistentDataContainer().has(Keys.SOURCE);
     }
 
-    private void setSourceConnectionPoint(Player player, Location sourcePointLocation, ItemStack stack) {
-        final ConnectionPoint sourceOutputPoint = ConnectionPointStorage.getPoint(sourcePointLocation);
-        if (!(sourceOutputPoint instanceof ConnectionPointOutput)) {
+    private void setSourceConnectionPoint(Player player, ConnectionPointID sourceID, ItemStack stack) {
+        ConnectionPoint source = ConnectionPointStorage.getPoint(sourceID);
+        if (!(source instanceof ConnectionPointOutput)) {
             player.sendMessage(Language.getLanguageEntry("targeting-wand.source-must-be-output"));
             return;
         }
-        sourceOutputPoint.select();
-        PersistentDataUtils.setLocation(stack, Keys.SOURCE, sourcePointLocation);
+
+        source.select();
+        PersistentDataUtils.setString(stack, Keys.SOURCE, source.toString());
     }
 
     public void unsetSourceConnectionPoint(ItemStack stack) {
         if (isSourceSet(stack)) {
-            final Location sourcePointLocation = PersistentDataUtils.getLocation(stack, Keys.SOURCE);
-            final ConnectionPoint sourcePoint = ConnectionPointStorage.getPoint(sourcePointLocation);
-            final ConnectionPointOutput outputSourcePoint = (ConnectionPointOutput)sourcePoint;
-            if (outputSourcePoint != null) {
-                outputSourcePoint.deselect();
+            final ConnectionPointID sourcePointID = new ConnectionPointID(PersistentDataUtils.getString(stack, Keys.SOURCE));
+            final ConnectionPointOutput sourcePoint = (ConnectionPointOutput)ConnectionPointStorage.getPoint(sourcePointID);
+
+            if (sourcePoint != null) {
+                sourcePoint.deselect();
             }
         }
 
         PersistentDataUtils.clear(stack, Keys.SOURCE);
     }
 
-    private void removeLink(Location pointLocation) {
-        final ConnectionPoint sourcePoint = ConnectionPointStorage.getPoint(pointLocation);
+    private void removeLink(ConnectionPointID pointID) {
+        final ConnectionPoint point = ConnectionPointStorage.getPoint(pointID);
 
-        if (sourcePoint instanceof ConnectionPointOutput outputPoint && outputPoint.hasLink()) {
+        if (point instanceof ConnectionPointOutput outputPoint && outputPoint.hasLink()) {
             outputPoint.getLink().remove();
             return;
         }
 
-        if (sourcePoint instanceof ConnectionPointInput inputPoint && inputPoint.hasLink()) {
+        if (point instanceof ConnectionPointInput inputPoint && inputPoint.hasLink()) {
             inputPoint.getLink().remove();
         }
     }
 
-    private void createLink(Player player, Location targetPointLocation, ItemStack stack) {
-        final Location sourcePointLocation = PersistentDataUtils.getLocation(stack, Keys.SOURCE);
+    private void createLink(Player player, ConnectionPointID inputID, ItemStack stack) {
+        final ConnectionPointID outputID = new ConnectionPointID(PersistentDataUtils.getString(stack, Keys.SOURCE));
+        final ConnectionPointOutput output = (ConnectionPointOutput) ConnectionPointStorage.getPoint(outputID);
 
-        if (sourcePointLocation.getWorld().getUID() != targetPointLocation.getWorld().getUID()) {
-            player.sendMessage(Language.getLanguageEntry("targeting-wand.different-worlds"));
+        if (output == null) {
             return;
         }
 
-        if (sourcePointLocation.distance(targetPointLocation) < 0.0001F) {
-            player.sendMessage(Language.getLanguageEntry("targeting-wand.same-connection-point"));
-            return;
-        }
-
-        final ConnectionPoint sourcePoint = ConnectionPointStorage.getPoint(sourcePointLocation);
-        final ConnectionPoint targetPoint = ConnectionPointStorage.getPoint(targetPointLocation);
-
-        if (!(targetPoint instanceof ConnectionPointInput inputTargetPoint)) {
+        if (!(ConnectionPointStorage.getPoint(inputID) instanceof ConnectionPointInput input)) {
             player.sendMessage(Language.getLanguageEntry("targeting-wand.target-must-be-input"));
             return;
         }
 
-        final ConnectionPointOutput outputSourcePoint = (ConnectionPointOutput) sourcePoint;
-
-        if (outputSourcePoint == null) {
+        if (output.getLocation().getWorld().getUID() != input.getLocation().getWorld().getUID()) {
+            player.sendMessage(Language.getLanguageEntry("targeting-wand.different-worlds"));
             return;
         }
 
-        final ConnectedBlock block1 = ConnectionPointStorage.getPoint(sourcePointLocation).getGroup().getBlock();
-        final ConnectedBlock block2 = ConnectionPointStorage.getPoint(targetPointLocation).getGroup().getBlock();
-
-        if (block1.connectionInvalid(sourcePoint, targetPoint) || block2.connectionInvalid(targetPoint, sourcePoint)) {
-            player.sendMessage(Language.getLanguageEntry("targeting-wand.connection-invalid"));
+        if (output.getLocation().distance(input.getLocation()) < 0.0001F) {
+            player.sendMessage(Language.getLanguageEntry("targeting-wand.same-connection-point"));
             return;
         }
 
-        if (inputTargetPoint.hasLink()) {
-            inputTargetPoint.getLink().remove();
+        final ConnectedBlock block1 = output.getGroup().getBlock();
+        final ConnectedBlock block2 = input.getGroup().getBlock();
+
+        if (block1.calculateNewLocation(output, input).equals(block2.calculateNewLocation(input, output))) {
+            player.sendMessage(Language.getLanguageEntry("targeting-wand.connection-overlaps"));
+            return;
         }
 
-        block1.connect(sourcePoint, targetPoint);
-        block2.connect(targetPoint, sourcePoint);
+        if (input.hasLink()) {
+            input.getLink().remove();
+        }
 
-        setSourceConnectionPoint(player, outputSourcePoint.getLocation(), stack);
+        block1.connect(output, input);
+        block2.connect(input, output);
 
-        new Link(inputTargetPoint, outputSourcePoint);
+        setSourceConnectionPoint(player, output.getId(), stack);
+
+        new Link(input, output);
     }
 
-    public void use(Player player, Location pointLocation, ItemStack stack) {
-        final Location groupLocation = ConnectionPointStorage.getGroupLocation(pointLocation);
-        if (!BlockStorage.hasBlockInfo(groupLocation)
-                || !(BlockStorage.check(groupLocation) instanceof ConnectedBlock)
+    public void use(Player player, ConnectionPointID pointId, ItemStack stack) {
+        final ConnectionGroup group = ConnectionPointStorage.getGroup(pointId);
+        if (!BlockStorage.hasBlockInfo(group.getLocation())
+                || !(BlockStorage.check(group.getLocation()) instanceof ConnectedBlock)
                 || !Items.targetingWand.canUse(player, false)
                 || !Slimefun.getProtectionManager().hasPermission(player, player.getLocation(), Interaction.INTERACT_BLOCK)) {
             return;
         }
 
         if (player.isSneaking()) {
-            removeLink(pointLocation);
+            removeLink(pointId);
             unsetSourceConnectionPoint(stack);
         } else if (isSourceSet(stack)) {
-            createLink(player, pointLocation, stack);
+            createLink(player, pointId, stack);
             unsetSourceConnectionPoint(stack);
         } else {
-            setSourceConnectionPoint(player, pointLocation, stack);
+            setSourceConnectionPoint(player, pointId, stack);
         }
     }
 }

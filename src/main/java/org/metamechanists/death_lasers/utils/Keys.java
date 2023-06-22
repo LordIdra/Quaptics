@@ -9,10 +9,8 @@ public class Keys {
     }
 
     public static final NamespacedKey MAIN_GROUP = newKey("DEATH_LASER_GROUP");
-
     public static final NamespacedKey SOURCE = newKey("SOURCE");
-    public static final NamespacedKey LOCATION_X = newKey("LOCATION_X");
-    public static final NamespacedKey LOCATION_Y = newKey("LOCATION_Y");
-    public static final NamespacedKey LOCATION_Z = newKey("LOCATION_Z");
+    public static final NamespacedKey CONNECTION_POINT_ID = newKey("CONNECTION_POINT_ID");
+    public static final String CONNECTION_GROUP_ID = "CONNECTION_GROUP_ID";
 
 }

@@ -14,7 +14,7 @@ public class Storage {
     public static void write(FileConfiguration data) {
         data.set("groups", SerializationUtils.serializeMap(ConnectionPointStorage.getGroups(),
                 "Location", "ConnectionGroup"));
-        data.set("groupIdsFromPointLocations", SerializationUtils.serializeMap(ConnectionPointStorage.getGroupIdsFromPointLocations(),
+        data.set("groupIdsFromPointLocations", SerializationUtils.serializeMap(ConnectionPointStorage.getPointIdsToGroupIds(),
                 "GroupLocation", "PointLocation"));
     }
 
@@ -28,6 +28,6 @@ public class Storage {
                 "GroupLocation", "PointLocation");
 
         ConnectionPointStorage.setGroups(groups);
-        ConnectionPointStorage.setGroupIdsFromPointLocations(groupIdsFromPointLocations);
+        ConnectionPointStorage.setPointIdsToGroupIds(groupIdsFromPointLocations);
     }
 }

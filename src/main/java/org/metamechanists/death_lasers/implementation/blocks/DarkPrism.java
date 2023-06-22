@@ -12,7 +12,6 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import org.metamechanists.death_lasers.connections.ConnectionGroup;
-import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
 import org.metamechanists.death_lasers.connections.links.Link;
 import org.metamechanists.death_lasers.connections.links.LinkProperties;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
@@ -21,8 +20,8 @@ import org.metamechanists.death_lasers.connections.points.ConnectionPointOutput;
 import org.metamechanists.death_lasers.implementation.abstracts.ConnectedBlock;
 import org.metamechanists.death_lasers.utils.DisplayUtils;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DarkPrism extends ConnectedBlock {
     private final double maxPower;
@@ -52,17 +51,17 @@ public class DarkPrism extends ConnectedBlock {
     }
 
     @Override
-    protected Map<String, ConnectionPoint> generateConnectionPoints(Player player, Location location) {
-        final Map<String, ConnectionPoint> points = new HashMap<>();
+    protected List<ConnectionPoint> generateConnectionPoints(Player player, Location location) {
+        final List<ConnectionPoint> points = new ArrayList<>();
 
-        points.put("input 1", new ConnectionPointInput("input 1",
-                formatRelativeLocation(player, location, new Vector(0.0F, 0.0F, -0.54F).rotateAroundY(-Math.PI/8))));
+        points.add(new ConnectionPointInput("input 1",
+                formatRelativeLocation(player, location, new Vector(0.0F, 0.0F, -getRadius()).rotateAroundY(-Math.PI/8))));
 
-        points.put("input 2", new ConnectionPointInput("input 2",
-                formatRelativeLocation(player, location, new Vector(0.0F, 0.0F, -0.54F).rotateAroundY(Math.PI/8))));
+        points.add(new ConnectionPointInput("input 2",
+                formatRelativeLocation(player, location, new Vector(0.0F, 0.0F, -getRadius()).rotateAroundY(Math.PI/8))));
 
-        points.put("output", new ConnectionPointOutput("output",
-                formatRelativeLocation(player, location, new Vector(0.0F, 0.0F, 0.54F))));
+        points.add(new ConnectionPointOutput("output",
+                formatRelativeLocation(player, location, new Vector(0.0F, 0.0F, getRadius()))));
 
         return points;
     }
@@ -98,11 +97,8 @@ public class DarkPrism extends ConnectedBlock {
     }
 
     @Override
-    protected Location calculateNewLocation(ConnectionPoint from, ConnectionPoint to) {
-        final Location fromGroupLocation = ConnectionPointStorage.getGroupLocation(from.getLocation());
-        final Location toGroupLocation = ConnectionPointStorage.getGroupLocation(to.getLocation());
-        final Vector radiusDirection = DisplayUtils.getDirection(fromGroupLocation, toGroupLocation).multiply(0.55F);
-        return fromGroupLocation.clone().add(0.5, 0.5, 0.5).add(radiusDirection);
+    protected float getRadius() {
+        return 0.55F;
     }
 
     @Override

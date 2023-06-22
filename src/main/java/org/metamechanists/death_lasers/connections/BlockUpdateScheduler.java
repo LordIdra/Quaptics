@@ -11,7 +11,7 @@ public class BlockUpdateScheduler {
 
     private static void tickGroup(ConnectionGroup group) {
         // If group no longer exists, don't tick it
-        if (!ConnectionPointStorage.hasGroup(group.getLocation())) {
+        if (!ConnectionPointStorage.hasGroup(group.getId())) {
             return;
         }
 
