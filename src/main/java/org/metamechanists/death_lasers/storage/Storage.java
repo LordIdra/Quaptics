@@ -3,6 +3,7 @@ package org.metamechanists.death_lasers.storage;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.metamechanists.death_lasers.DEATH_LASERS;
+import org.metamechanists.death_lasers.storage.versions.StorageV1;
 import org.metamechanists.death_lasers.utils.Language;
 
 import java.io.File;
@@ -17,8 +18,8 @@ public class Storage {
         final FileConfiguration data = new YamlConfiguration();
         final File file = new File(DEATH_LASERS.getInstance().getDataFolder(), FILE_NAME);
 
-        data.set("version", org.metamechanists.death_lasers.storage.v1.Storage.VERSION);
-        org.metamechanists.death_lasers.storage.v1.Storage.write(data);
+        data.set("version", StorageV1.VERSION);
+        StorageV1.write(data);
 
         try {
             data.save(file);
@@ -41,7 +42,7 @@ public class Storage {
         final int version = data.getInt("version");
 
         switch (version) {
-            case 1 -> org.metamechanists.death_lasers.storage.v1.Storage.read(data);
+            case 1 -> StorageV1.read(data);
             default -> {
                 logger.severe(Language.getLanguageEntry("load.invalid-config-version", version));
                 return;

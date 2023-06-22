@@ -18,6 +18,7 @@ import org.metamechanists.death_lasers.implementation.abstracts.ConnectedBlock;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("ALL")
 public class BlockTemplate extends ConnectedBlock {
     @Getter
     private final EnergyNetComponentType energyComponentType = EnergyNetComponentType.CONSUMER;

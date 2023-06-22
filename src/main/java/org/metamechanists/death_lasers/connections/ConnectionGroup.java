@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
 import org.metamechanists.death_lasers.implementation.abstracts.ConnectedBlock;
 import org.metamechanists.death_lasers.items.Items;
-import org.metamechanists.death_lasers.storage.v1.SerializationUtils;
+import org.metamechanists.death_lasers.storage.SerializationUtils;
 import org.metamechanists.death_lasers.utils.id.ConnectionGroupID;
 import org.metamechanists.death_lasers.utils.id.ConnectionPointID;
 

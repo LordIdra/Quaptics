@@ -1,4 +1,4 @@
-package org.metamechanists.death_lasers.storage.v1;
+package org.metamechanists.death_lasers.storage;
 
 import org.bukkit.configuration.MemorySection;
 
@@ -8,18 +8,6 @@ import java.util.Map;
 import java.util.Objects;
 
 public class SerializationUtils {
-
-//    public static <T> Map<String, Object> serializeUUIDKeyMap(Map<UUID, T> input, String keyName, String valueName) {
-//        final Map<String, T> output = new HashMap<>();
-//        input.forEach((key, value) -> output.put(key.toString(), value));
-//        return serializeMap(output, keyName, valueName);
-//    }
-//
-//    public static <T> Map<String, Object> serializeUUIDValueMap(Map<T, UUID> input, String keyName, String valueName) {
-//        final Map<T, String> output = new HashMap<>();
-//        input.forEach((key, value) -> output.put(key, value.toString()));
-//        return serializeMap(output, keyName, valueName);
-//    }
 
     public static <T, U> Map<String, Object> serializeMap(Map<T, U> input, String keyName, String valueName) {
         int i = 0;

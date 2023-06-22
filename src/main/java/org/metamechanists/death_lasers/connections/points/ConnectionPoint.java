@@ -41,10 +41,10 @@ public abstract class ConnectionPoint implements ConfigurationSerializable {
     @Getter
     protected final int disconnectedBrightness;
     private ConnectionInfoDisplay infoDisplay;
-    protected BlockDisplayID blockDisplayID;
-    protected InteractionID interactionID;
+    protected final BlockDisplayID blockDisplayID;
+    protected final InteractionID interactionID;
     protected final static float SCALE = 0.1F;
-    public static Vector INTERACTION_OFFSET = new Vector(0, -SCALE/2, 0);
+    public static final Vector INTERACTION_OFFSET = new Vector(0, -SCALE/2, 0);
 
     public ConnectionPoint(String name, Location location, Material material, int connectedBrightness, int disconnectedBrightness) {
         this.id = new ConnectionPointID();
