@@ -1,10 +1,7 @@
 package org.metamechanists.death_lasers.connections.points;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.entity.BlockDisplay;
-import org.bukkit.entity.Interaction;
 import org.metamechanists.death_lasers.connections.info.ConnectionInfoDisplay;
 import org.metamechanists.death_lasers.connections.links.Link;
 import org.metamechanists.death_lasers.storage.SerializationUtils;
@@ -18,7 +15,7 @@ public class ConnectionPointOutput extends ConnectionPoint {
     }
 
     private ConnectionPointOutput(Link link, final String name, Location location, final int connectedBrightness, final int disconnectedBrightness,
-                                 final ConnectionInfoDisplay infoDisplay, BlockDisplay blockDisplay, Interaction interaction) {
+                                 final ConnectionInfoDisplay infoDisplay, UUID blockDisplay, UUID interaction) {
         super(link, name, location, connectedBrightness, disconnectedBrightness, infoDisplay, blockDisplay, interaction);
     }
 
@@ -30,18 +27,14 @@ public class ConnectionPointOutput extends ConnectionPoint {
     }
 
     public static ConnectionPointOutput deserialize(Map<String, Object> map) {
-        final Location location = (Location) map.get("location");
-        final UUID blockDisplayUUID = SerializationUtils.deserializeUUID((Map<String, Object>) map.get("blockDisplay"));
-        final BlockDisplay blockDisplay = (BlockDisplay) Bukkit.getEntity(blockDisplayUUID);
-        final Interaction interaction = (Interaction) Bukkit.getEntity(SerializationUtils.deserializeUUID((Map<String, Object>) map.get("interaction")));
         return new ConnectionPointOutput(
                 (Link) map.get("link"),
                 (String) map.get("name"),
-                location,
+                (Location) map.get("location"),
                 (int) map.get("connectedBrightness"),
                 (int) map.get("disconnectedBrightness"),
                 (ConnectionInfoDisplay) map.get("infoDisplay"),
-                blockDisplay,
-                interaction);
+                SerializationUtils.deserializeUUID((Map<String, Object>) map.get("blockDisplay")),
+                SerializationUtils.deserializeUUID((Map<String, Object>) map.get("interaction")));
     }
 }

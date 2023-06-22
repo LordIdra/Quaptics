@@ -7,29 +7,34 @@ import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.entity.Display;
 import org.bukkit.entity.TextDisplay;
 import org.jetbrains.annotations.NotNull;
+import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
 import org.metamechanists.death_lasers.connections.links.Link;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
-import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
 import org.metamechanists.death_lasers.items.Lore;
 import org.metamechanists.death_lasers.storage.SerializationUtils;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class ConnectionInfoDisplay implements ConfigurationSerializable {
     private boolean hidden = true;
     private final Location pointLocation;
-    private DisplayGroup displayGroup;
+    private UUID displayGroup;
 
     public ConnectionInfoDisplay(ConnectionPoint point) {
         this.pointLocation = point.getLocation();
         spawnDisplayGroup();
     }
 
-    private ConnectionInfoDisplay(boolean hidden, Location pointLocation, DisplayGroup displayGroup) {
+    private ConnectionInfoDisplay(boolean hidden, Location pointLocation, UUID displayGroup) {
         this.hidden = hidden;
         this.pointLocation = pointLocation;
         this.displayGroup = displayGroup;
+    }
+
+    private DisplayGroup getDisplayGroup() {
+        return DisplayGroup.fromUUID(displayGroup);
     }
 
     private ConnectionPoint getPoint() {
@@ -37,7 +42,7 @@ public class ConnectionInfoDisplay implements ConfigurationSerializable {
     }
 
     private void spawnDisplayGroup() {
-        displayGroup = new InfoDisplayBuilder(pointLocation).add("phase").add("frequency").add("power").add("name").build();
+        displayGroup = new InfoDisplayBuilder(pointLocation).add("phase").add("frequency").add("power").add("name").build().getParentUUID();
     }
 
     private double roundTo2dp(double value) {
@@ -52,15 +57,15 @@ public class ConnectionInfoDisplay implements ConfigurationSerializable {
         hideText(key);
     }
     private void setText(String key, String text) {
-        final TextDisplay display = (TextDisplay) displayGroup.getDisplays().get(key);
+        final TextDisplay display = (TextDisplay) getDisplayGroup().getDisplays().get(key);
         display.setText(text);
     }
     private void showText(String key) {
-        final TextDisplay display = (TextDisplay) displayGroup.getDisplays().get(key);
+        final TextDisplay display = (TextDisplay) getDisplayGroup().getDisplays().get(key);
         display.setViewRange(15);
     }
     private void hideText(String key) {
-        final TextDisplay display = (TextDisplay) displayGroup.getDisplays().get(key);
+        final TextDisplay display = (TextDisplay) getDisplayGroup().getDisplays().get(key);
         display.setViewRange(0);
     }
     private void doVisibilityCheck() {
@@ -82,7 +87,7 @@ public class ConnectionInfoDisplay implements ConfigurationSerializable {
 
     public void update() {
         // Point location has changed, so display location will also need to change
-        if (displayGroup.getLocation() != pointLocation) {
+        if (getDisplayGroup().getLocation() != pointLocation) {
             remove();
             spawnDisplayGroup();
         }
@@ -107,8 +112,8 @@ public class ConnectionInfoDisplay implements ConfigurationSerializable {
     }
 
     public void remove() {
-        displayGroup.getDisplays().values().forEach(Display::remove);
-        displayGroup.remove();
+        getDisplayGroup().getDisplays().values().forEach(Display::remove);
+        getDisplayGroup().remove();
         displayGroup = null;
     }
 
@@ -117,16 +122,14 @@ public class ConnectionInfoDisplay implements ConfigurationSerializable {
         Map<String, Object> map = new HashMap<>();
         map.put("hidden", hidden);
         map.put("pointLocation", pointLocation);
-        map.put("displayGroup", SerializationUtils.serializeUUID(displayGroup.getParentUUID()));
+        map.put("displayGroup", SerializationUtils.serializeUUID(getDisplayGroup().getParentUUID()));
         return map;
     }
 
     public static ConnectionInfoDisplay deserialize(Map<String, Object> map) {
-        final Location pointLocation = (Location) map.get("pointLocation");
-        final DisplayGroup displayGroup = DisplayGroup.fromUUID(SerializationUtils.deserializeUUID((Map<String, Object>) map.get("displayGroup")));
         return new ConnectionInfoDisplay(
                 (Boolean) map.get("hidden"),
-                pointLocation,
-                displayGroup);
+                (Location) map.get("pointLocation"),
+                SerializationUtils.deserializeUUID((Map<String, Object>) map.get("displayGroup")));
     }
 }
