@@ -68,7 +68,7 @@ public final class DEATH_LASERS extends JavaPlugin implements SlimefunAddon {
 
     @Override
     public void onDisable() {
-
+        Storage.save();
     }
 
     @NotNull
