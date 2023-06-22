@@ -32,6 +32,9 @@ public class StorageLoad {
                     data.getConfigurationSection("groupIdsFromPointLocations").getValues(true),
                     "groupLocation", "pointLocation");
 
+            groups.remove(null);
+            groupIdsFromPointLocations.remove(null);
+
             ConnectionPointStorage.setGroups(groups);
             ConnectionPointStorage.setGroupIdsFromPointLocations(groupIdsFromPointLocations);
 
