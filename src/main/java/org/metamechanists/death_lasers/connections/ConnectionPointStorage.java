@@ -44,10 +44,6 @@ public class ConnectionPointStorage {
         group.changeLocation(oldLocation, newLocation);
     }
 
-    public static void killAllBeams() {
-        groups.values().forEach(ConnectionGroup::killAllBeams);
-    }
-
     public static boolean hasPoint(Location pointLocation) {
         return groupIdsFromPointLocations.containsKey(pointLocation);
     }

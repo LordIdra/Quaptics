@@ -5,7 +5,6 @@ import org.bukkit.Location;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
-import org.metamechanists.death_lasers.connections.points.ConnectionPointOutput;
 import org.metamechanists.death_lasers.implementation.abstracts.ConnectedBlock;
 import org.metamechanists.death_lasers.items.Items;
 import org.metamechanists.death_lasers.storage.SerializationUtils;
@@ -50,13 +49,6 @@ public class ConnectionGroup implements ConfigurationSerializable {
 
     public void removeAllPoints() {
         points.values().forEach(ConnectionPoint::remove);
-    }
-
-    public void killAllBeams() {
-        points.values().stream()
-                .filter(point -> point instanceof ConnectionPointOutput)
-                .map(point -> (ConnectionPointOutput) point)
-                .forEach(output -> output.getLink().killBeam());
     }
 
     public ConnectionPoint getPoint(Location location) {

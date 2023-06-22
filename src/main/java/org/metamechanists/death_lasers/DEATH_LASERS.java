@@ -8,7 +8,6 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.metamechanists.death_lasers.beams.DeprecatedBeamStorage;
 import org.metamechanists.death_lasers.beams.beam.DirectBlockDisplayBeam;
 import org.metamechanists.death_lasers.beams.ticker.ticker.DirectSinglePulseTicker;
 import org.metamechanists.death_lasers.connections.ConnectionGroup;
@@ -17,12 +16,11 @@ import org.metamechanists.death_lasers.connections.info.PointInformationListener
 import org.metamechanists.death_lasers.connections.links.Link;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointInput;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointOutput;
-import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
-import org.metamechanists.death_lasers.storage.StorageLoad;
-import org.metamechanists.death_lasers.storage.StorageSaveRunnable;
 import org.metamechanists.death_lasers.implementation.tools.TargetingWandListener;
 import org.metamechanists.death_lasers.items.Groups;
 import org.metamechanists.death_lasers.items.Items;
+import org.metamechanists.death_lasers.storage.StorageLoad;
+import org.metamechanists.death_lasers.storage.StorageSaveRunnable;
 import org.metamechanists.death_lasers.utils.Language;
 
 public final class DEATH_LASERS extends JavaPlugin implements SlimefunAddon {
@@ -70,8 +68,7 @@ public final class DEATH_LASERS extends JavaPlugin implements SlimefunAddon {
 
     @Override
     public void onDisable() {
-        DeprecatedBeamStorage.killAllBeams();
-        ConnectionPointStorage.killAllBeams();
+
     }
 
     @NotNull
