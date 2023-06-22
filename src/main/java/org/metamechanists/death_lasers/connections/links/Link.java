@@ -105,12 +105,12 @@ public class Link implements ConfigurationSerializable {
             beam = null;
         }
 
-        if (ConnectionPointStorage.hasGroup(getOutput().getGroup().getLocation())) {
+        if (getOutput() != null && ConnectionPointStorage.hasGroup(getOutput().getGroup().getLocation())) {
             getOutput().unlink();
             BlockUpdateScheduler.scheduleUpdate(getOutput().getGroup());
         }
 
-        if (ConnectionPointStorage.hasGroup(getInput().getGroup().getLocation())) {
+        if (getInput() != null && ConnectionPointStorage.hasGroup(getInput().getGroup().getLocation())) {
             getInput().unlink();
             BlockUpdateScheduler.scheduleUpdate(getInput().getGroup());
         }
