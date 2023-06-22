@@ -26,6 +26,19 @@ public abstract class CustomID implements ConfigurationSerializable {
     }
 
     @Override
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+
+        if (!(other instanceof CustomID customID)) {
+            return false;
+        }
+
+        return this.uuid.equals(customID.uuid);
+    }
+
+    @Override
     public int hashCode() {
         return uuid.hashCode();
     }

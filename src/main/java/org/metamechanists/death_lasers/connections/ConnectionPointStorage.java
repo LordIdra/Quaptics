@@ -23,7 +23,7 @@ public class ConnectionPointStorage {
         groups.values().forEach(ConnectionGroup::tick);
     }
 
-    public static void addGroup( ConnectionGroup group) {
+    public static void addGroup(ConnectionGroup group) {
         groups.put(group.getId(), group);
         group.getPoints().keySet().forEach(pointID -> pointIdsToGroupIds.put(pointID, group.getId()));
     }
