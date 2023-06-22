@@ -40,6 +40,6 @@ public class StorageSave extends BukkitRunnable {
             }
         }
 
-        DEATH_LASERS.getInstance().getLogger().warning(ChatColors.color(Language.getLanguageEntry("save.success")));
+        DEATH_LASERS.getInstance().getLogger().info(ChatColors.color(Language.getLanguageEntry("save.success")));
     }
 }

@@ -41,6 +41,6 @@ public class StorageLoad {
             throw new RuntimeException("Failed to load laser data");
         }
 
-        DEATH_LASERS.getInstance().getLogger().warning(ChatColors.color(Language.getLanguageEntry("load.success")));
+        DEATH_LASERS.getInstance().getLogger().info(ChatColors.color(Language.getLanguageEntry("load.success")));
     }
 }
