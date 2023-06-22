@@ -25,11 +25,11 @@ public class StorageLoad {
 
         try {
             Map<Location, ConnectionGroup> groups = SerializationUtils.deserializeMap(
-                    data.getConfigurationSection("groups"),
+                    data.getConfigurationSection("groups").getValues(true),
                     "location", "connectionGroup");
 
             Map<Location, Location> groupIdsFromPointLocations = SerializationUtils.deserializeMap(
-                    data.getConfigurationSection("groupIdsFromPointLocations"),
+                    data.getConfigurationSection("groupIdsFromPointLocations").getValues(true),
                     "groupLocation", "pointLocation");
 
             ConnectionPointStorage.setGroups(groups);
