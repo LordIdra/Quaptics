@@ -41,12 +41,10 @@ public abstract class ConnectedBlock extends EnergyDisplayGroupBlock {
     @Override
     protected void onPlace(BlockPlaceEvent event) {
         final Location location = event.getBlock().getLocation();
-        final List<ConnectionPoint> points = generateConnectionPoints(event.getPlayer(), location);
-        final ConnectionGroup group = new ConnectionGroup(location, this, points);
 
-        final AtomicBoolean valid = new AtomicBoolean(false);
-        RadiusUtils.forEachSphereRadius(group.getLocation().getBlock(), (int)(getRadius()+0.5F), block -> {
-            if (block.getLocation().equals(group.getLocation())) {
+        final AtomicBoolean valid = new AtomicBoolean(true);
+        RadiusUtils.forEachSphereRadius(location.getBlock(), (int)(getRadius()+0.5F), block -> {
+            if (block.getLocation().equals(location)) {
                 return false;
             }
 
@@ -63,6 +61,9 @@ public abstract class ConnectedBlock extends EnergyDisplayGroupBlock {
             event.setCancelled(true);
             return;
         }
+
+        final List<ConnectionPoint> points = generateConnectionPoints(event.getPlayer(), location);
+        final ConnectionGroup group = new ConnectionGroup(location, this, points);
 
         ConnectionPointStorage.addGroup(group);
         BlockStorage.addBlockInfo(location, Keys.CONNECTION_GROUP_ID,group.getId().toString());
