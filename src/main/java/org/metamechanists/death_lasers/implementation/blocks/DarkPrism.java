@@ -32,7 +32,6 @@ public class DarkPrism extends ConnectedBlock {
         super(group, item, recipeType, recipe);
         this.maxPower = maxPower;
         this.powerLoss = powerLoss;
-        // TODO burnout when max power exceeded
     }
 
     @Override
@@ -57,13 +56,13 @@ public class DarkPrism extends ConnectedBlock {
         final Map<String, ConnectionPoint> points = new HashMap<>();
 
         points.put("input 1", new ConnectionPointInput("input 1",
-                formatRelativeLocation(player, location, new Vector(0.0F, 0.0F, 0.54F).rotateAroundY(-Math.PI/8))));
+                formatRelativeLocation(player, location, new Vector(0.0F, 0.0F, -0.54F).rotateAroundY(-Math.PI/8))));
 
         points.put("input 2", new ConnectionPointInput("input 2",
-                formatRelativeLocation(player, location, new Vector(0.0F, 0.0F, 0.54F).rotateAroundY(Math.PI/8))));
+                formatRelativeLocation(player, location, new Vector(0.0F, 0.0F, -0.54F).rotateAroundY(Math.PI/8))));
 
         points.put("output", new ConnectionPointOutput("output",
-                formatRelativeLocation(player, location, new Vector(0.0F, 0.0F, -0.54F))));
+                formatRelativeLocation(player, location, new Vector(0.0F, 0.0F, 0.54F))));
 
         return points;
     }
