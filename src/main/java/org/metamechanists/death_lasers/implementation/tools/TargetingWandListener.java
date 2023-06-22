@@ -9,7 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.inventory.ItemStack;
-import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
+import org.metamechanists.death_lasers.connections.storage.ConnectionPointStorage;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
 
 public class TargetingWandListener implements Listener {

@@ -1,16 +1,22 @@
 package org.metamechanists.death_lasers.connections.links;
 
 import lombok.Getter;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.configuration.serialization.ConfigurationSerializable;
+import org.jetbrains.annotations.NotNull;
 import org.metamechanists.death_lasers.beams.DeprecatedBeamStorage;
 import org.metamechanists.death_lasers.beams.beam.DirectBlockDisplayBeam;
 import org.metamechanists.death_lasers.beams.ticker.factory.DirectSinglePulseTickerFactory;
 import org.metamechanists.death_lasers.connections.BlockUpdateScheduler;
-import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointInput;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointOutput;
+import org.metamechanists.death_lasers.connections.storage.ConnectionPointStorage;
 
-public class Link {
+import java.util.HashMap;
+import java.util.Map;
+
+public class Link implements ConfigurationSerializable {
     @Getter
     private boolean enabled;
     @Getter
@@ -19,20 +25,37 @@ public class Link {
     private double frequency;
     @Getter
     private int phase;
-
-    @Getter
-    private final ConnectionPointOutput output;
-    @Getter
-    private final ConnectionPointInput input;
+    private final Location outputLocation;
+    private final Location inputLocation;
     private DirectBlockDisplayBeam beam;
 
+
     public Link(ConnectionPointInput input, ConnectionPointOutput output) {
-        this.input = input;
-        this.output = output;
+        this.inputLocation = input.getLocation();
+        this.outputLocation = output.getLocation();
         input.link(this);
         output.link(this);
         BlockUpdateScheduler.scheduleUpdate(output.getGroup());
         update();
+    }
+
+    private Link(boolean enabled, double power, double frequency, int phase,
+                 Location outputLocation, Location inputLocation, DirectBlockDisplayBeam beam) {
+        this.enabled = enabled;
+        this.power = power;
+        this.frequency = frequency;
+        this.phase = phase;
+        this.outputLocation = outputLocation;
+        this.inputLocation = inputLocation;
+        this.beam = beam;
+    }
+
+    public ConnectionPointOutput getOutput() {
+        return (ConnectionPointOutput) ConnectionPointStorage.getPoint(outputLocation);
+    }
+
+    public ConnectionPointInput getInput() {
+        return (ConnectionPointInput) ConnectionPointStorage.getPoint(inputLocation);
     }
 
     private void updateBeam() {
@@ -49,8 +72,8 @@ public class Link {
         this.beam = new DirectBlockDisplayBeam(
                 new DirectSinglePulseTickerFactory(
                         Material.WHITE_CONCRETE,
-                        this.output.getLocation(),
-                        this.input.getLocation(),
+                        outputLocation,
+                        inputLocation,
                         (float) (power / 40.0F)));
     }
 
@@ -65,9 +88,9 @@ public class Link {
     }
 
     private void update() {
-        input.getGroup().updateInfoDisplays();
-        output.getGroup().updateInfoDisplays();
-        BlockUpdateScheduler.scheduleUpdate(input.getGroup());
+        getInput().getGroup().updateInfoDisplays();
+        getOutput().getGroup().updateInfoDisplays();
+        BlockUpdateScheduler.scheduleUpdate(getInput().getGroup());
     }
 
     public void killBeam() {
@@ -82,14 +105,14 @@ public class Link {
             beam = null;
         }
 
-        if (ConnectionPointStorage.hasGroup(output.getGroup().getLocation())) {
-            output.unlink();
-            BlockUpdateScheduler.scheduleUpdate(output.getGroup());
+        if (ConnectionPointStorage.hasGroup(getOutput().getGroup().getLocation())) {
+            getOutput().unlink();
+            BlockUpdateScheduler.scheduleUpdate(getOutput().getGroup());
         }
 
-        if (ConnectionPointStorage.hasGroup(input.getGroup().getLocation())) {
-            input.unlink();
-            BlockUpdateScheduler.scheduleUpdate(input.getGroup());
+        if (ConnectionPointStorage.hasGroup(getInput().getGroup().getLocation())) {
+            getInput().unlink();
+            BlockUpdateScheduler.scheduleUpdate(getInput().getGroup());
         }
     }
 
@@ -120,5 +143,29 @@ public class Link {
 
         updateBeam();
         update();
+    }
+
+    @Override
+    public @NotNull Map<String, Object> serialize() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("enabled", enabled);
+        map.put("power", power);
+        map.put("frequency", frequency);
+        map.put("phase", phase);
+        map.put("outputLocation", outputLocation);
+        map.put("inputLocation", inputLocation);
+        map.put("beam", beam);
+        return map;
+    }
+
+    public static Link deserialize(Map<String, Object> map) {
+        return new Link(
+                (boolean) map.get("enabled"),
+                (double) map.get("power"),
+                (double) map.get("frequency"),
+                (int) map.get("phase"),
+                (Location) map.get("outputLocation"),
+                (Location) map.get("inputLocation"),
+                (DirectBlockDisplayBeam) map.get("beam"));
     }
 }

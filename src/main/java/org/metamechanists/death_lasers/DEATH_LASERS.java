@@ -8,8 +8,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.metamechanists.death_lasers.beams.DeprecatedBeamStorage;
-import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
 import org.metamechanists.death_lasers.connections.info.PointInformationListener;
+import org.metamechanists.death_lasers.connections.storage.ConnectionPointStorage;
+import org.metamechanists.death_lasers.connections.storage.StorageLoad;
+import org.metamechanists.death_lasers.connections.storage.StorageSave;
 import org.metamechanists.death_lasers.implementation.tools.TargetingWandListener;
 import org.metamechanists.death_lasers.items.Groups;
 import org.metamechanists.death_lasers.items.Items;
@@ -27,6 +29,7 @@ public final class DEATH_LASERS extends JavaPlugin implements SlimefunAddon {
 
     public void initializeRunnables() {
         new LaserTicker().runTaskTimer(instance, 0, 1);
+        new StorageSave().runTaskTimer(instance, 200, 200);
     }
 
     public void initializeCommands() {
@@ -40,6 +43,7 @@ public final class DEATH_LASERS extends JavaPlugin implements SlimefunAddon {
         Language.initialize();
         Groups.initialize();
         Items.initialize();
+        StorageLoad.load();
         initializeListeners();
         initializeRunnables();
         initializeCommands();

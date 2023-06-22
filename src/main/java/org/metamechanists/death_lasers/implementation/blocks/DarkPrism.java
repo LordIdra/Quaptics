@@ -12,7 +12,7 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import org.metamechanists.death_lasers.connections.ConnectionGroup;
-import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
+import org.metamechanists.death_lasers.connections.storage.ConnectionPointStorage;
 import org.metamechanists.death_lasers.connections.links.Link;
 import org.metamechanists.death_lasers.connections.links.LinkProperties;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
@@ -28,8 +28,8 @@ public class DarkPrism extends ConnectedBlock {
     private final double maxPower;
     private final double powerLoss;
 
-    public DarkPrism(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, double maxPower, double powerLoss) {
-        super(group, item, recipeType, recipe);
+    public DarkPrism(String id, ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, double maxPower, double powerLoss) {
+        super(id, group, item, recipeType, recipe);
         this.maxPower = maxPower;
         this.powerLoss = powerLoss;
         // TODO burnout when max power exceeded
@@ -100,8 +100,8 @@ public class DarkPrism extends ConnectedBlock {
 
     @Override
     protected Location calculateNewLocation(ConnectionPoint from, ConnectionPoint to) {
-        final Location fromGroupLocation = ConnectionPointStorage.getGroup(from.getLocation());
-        final Location toGroupLocation = ConnectionPointStorage.getGroup(to.getLocation());
+        final Location fromGroupLocation = ConnectionPointStorage.getGroupLocation(from.getLocation());
+        final Location toGroupLocation = ConnectionPointStorage.getGroupLocation(to.getLocation());
         final Vector radiusDirection = DisplayUtils.getDirection(fromGroupLocation, toGroupLocation).multiply(0.55F);
         return fromGroupLocation.clone().add(0.5, 0.5, 0.5).add(radiusDirection);
     }

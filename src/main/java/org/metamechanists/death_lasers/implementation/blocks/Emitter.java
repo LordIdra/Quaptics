@@ -16,7 +16,7 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import org.metamechanists.death_lasers.connections.ConnectionGroup;
-import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
+import org.metamechanists.death_lasers.connections.storage.ConnectionPointStorage;
 import org.metamechanists.death_lasers.connections.links.Link;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointOutput;
@@ -29,9 +29,9 @@ import java.util.Map;
 public class Emitter extends ConnectedBlock {
     private final double emissionPowe;
 
-    public Emitter(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe,
+    public Emitter(String id, ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe,
                    int capacity, int consumption, double emissionPower) {
-        super(group, item, recipeType, recipe, capacity, consumption);
+        super(id, group, item, recipeType, recipe, capacity, consumption);
         this.emissionPowe = emissionPower;
     }
 
@@ -59,7 +59,7 @@ public class Emitter extends ConnectedBlock {
 
     @Override
     public void onSlimefunTick(Block block, SlimefunItem item, Config data) {
-        final ConnectionGroup group = ConnectionPointStorage.getGroup(block);
+        final ConnectionGroup group = ConnectionPointStorage.getGroupLocation(block);
         final ConnectionPointOutput output = (ConnectionPointOutput) group.getPoint("output");
         final int charge = getCharge(block.getLocation(), data);
 

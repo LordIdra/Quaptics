@@ -4,6 +4,7 @@ import com.destroystokyo.paper.ParticleBuilder;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import lombok.Getter;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -14,19 +15,24 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.metamechanists.death_lasers.connections.ConnectionGroup;
-import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
+import org.metamechanists.death_lasers.connections.storage.ConnectionPointStorage;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.util.Map;
 
 public abstract class ConnectedBlock extends EnergyDisplayGroupBlock {
-    public ConnectedBlock(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, int capacity, int consumption) {
+    @Getter
+    private final String id;
+
+    public ConnectedBlock(String id, ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, int capacity, int consumption) {
         super(group, item, recipeType, recipe, capacity, consumption);
+        this.id = id;
     }
 
-    public ConnectedBlock(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+    public ConnectedBlock(String connectedBlockType, ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(group, item, recipeType, recipe);
+        this.id = connectedBlockType;
     }
 
     protected abstract Map<String, ConnectionPoint> generateConnectionPoints(Player player, Location location);

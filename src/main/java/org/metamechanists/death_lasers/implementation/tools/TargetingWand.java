@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.metamechanists.death_lasers.items.Items;
 import org.metamechanists.death_lasers.utils.Keys;
-import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
+import org.metamechanists.death_lasers.connections.storage.ConnectionPointStorage;
 import org.metamechanists.death_lasers.connections.links.Link;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointInput;
@@ -115,7 +115,7 @@ public class TargetingWand extends SlimefunItem {
     }
 
     public void use(Player player, Location pointLocation, ItemStack stack) {
-        final Location groupLocation = ConnectionPointStorage.getGroup(pointLocation);
+        final Location groupLocation = ConnectionPointStorage.getGroupLocation(pointLocation);
         if (!BlockStorage.hasBlockInfo(groupLocation)
                 || !(BlockStorage.check(groupLocation) instanceof ConnectedBlock)
                 || !Items.targetingWand.canUse(player, false)
