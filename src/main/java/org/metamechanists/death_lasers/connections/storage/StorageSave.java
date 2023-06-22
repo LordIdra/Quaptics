@@ -6,7 +6,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.metamechanists.death_lasers.DEATH_LASERS;
 import org.metamechanists.death_lasers.utils.Language;
-import org.metamechanists.death_lasers.utils.Serializationutils;
+import org.metamechanists.death_lasers.utils.SerializationUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,10 +18,11 @@ public class StorageSave extends BukkitRunnable {
         final int MAX_ATTEMPTS = 10;
         final FileConfiguration data = new YamlConfiguration();
 
-        Serializationutils.serializeMap(data.createSection("groups"),
-                "location", "connectionGroup", ConnectionPointStorage.getGroups());
-        Serializationutils.serializeMap(data.createSection("groupIdsFromPointLocations"),
-                "groupLocation", "pointLocation", ConnectionPointStorage.getGroupIdsFromPointLocations());
+        data.set("groups", SerializationUtils.serializeMap(ConnectionPointStorage.getGroups(),
+                "location", "connectionGroup"));
+
+        data.set("groupIdsFromPointLocations", SerializationUtils.serializeMap(ConnectionPointStorage.getGroupIdsFromPointLocations(),
+                "groupLocation", "pointLocation"));
 
         int attempt = 0;
         while (attempt < MAX_ATTEMPTS) {

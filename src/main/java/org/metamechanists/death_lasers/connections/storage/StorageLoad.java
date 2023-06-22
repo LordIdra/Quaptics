@@ -7,7 +7,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.metamechanists.death_lasers.DEATH_LASERS;
 import org.metamechanists.death_lasers.connections.ConnectionGroup;
 import org.metamechanists.death_lasers.utils.Language;
-import org.metamechanists.death_lasers.utils.Serializationutils;
+import org.metamechanists.death_lasers.utils.SerializationUtils;
 
 import java.io.File;
 import java.util.Map;
@@ -24,12 +24,12 @@ public class StorageLoad {
         }
 
         try {
-            Map<Location, ConnectionGroup> groups = Serializationutils.deserializeMap(
-                    data.getConfigurationSection("groups"),
+            Map<Location, ConnectionGroup> groups = SerializationUtils.deserializeMap(
+                    data.getConfigurationSection("groups").getValues(false),
                     "location", "connectionGroup");
 
-            Map<Location, Location> groupIdsFromPointLocations = Serializationutils.deserializeMap(
-                    data.getConfigurationSection("groupIdsFromPointLocations"),
+            Map<Location, Location> groupIdsFromPointLocations = SerializationUtils.deserializeMap(
+                    data.getConfigurationSection("groupIdsFromPointLocations").getValues(false),
                     "groupLocation", "pointLocation");
 
             ConnectionPointStorage.setGroups(groups);
