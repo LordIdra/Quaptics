@@ -143,7 +143,7 @@ public abstract class ConnectionPoint implements ConfigurationSerializable {
         map.put("disconnectedBrightness", disconnectedBrightness);
         map.put("infoDisplay", infoDisplay);
         map.put("blockDisplay", SerializationUtils.serializeUUID(getBlockDisplay().getUniqueId()));
-        map.put("interaction", SerializationUtils.serializeUUID(getBlockDisplay().getUniqueId()));
+        map.put("interaction", SerializationUtils.serializeUUID(getInteraction().getUniqueId()));
         return map;
     }
 }
