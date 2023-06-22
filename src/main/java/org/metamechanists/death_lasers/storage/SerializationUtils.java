@@ -1,8 +1,6 @@
 package org.metamechanists.death_lasers.storage;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import org.metamechanists.death_lasers.DEATH_LASERS;
+import org.bukkit.configuration.MemorySection;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,12 +8,6 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class SerializationUtils {
-    private static final Gson gson = new Gson();
-    private static Map<String, Object> objectToMap(Object object) {
-        final String json = gson.toJson(object);
-        DEATH_LASERS.getInstance().getLogger().info(json);
-        return gson.fromJson(json, new TypeToken<Map<String, Object>>() {}.getType());
-    }
 
     public static <T, U> Map<String, Object> serializeMap(Map<T, U> input, String keyName, String valueName) {
         int i = 0;
@@ -38,8 +30,7 @@ public class SerializationUtils {
         final Map<T, U> outputMap = new HashMap<>();
 
         for (Map.Entry<String, Object> inputEntry : inputMap.entrySet()) {
-            DEATH_LASERS.getInstance().getLogger().severe(inputEntry.getValue().getClass().getTypeName());
-            final Map<String, Object> mapEntry = objectToMap(inputEntry.getValue());
+            final MemorySection mapEntry = (MemorySection) inputEntry.getValue();
             outputMap.put((T) mapEntry.get(keyName), (U) mapEntry.get(valueName));
         }
 
