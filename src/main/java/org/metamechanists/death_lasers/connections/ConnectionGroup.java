@@ -5,7 +5,7 @@ import org.bukkit.Location;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
-import org.metamechanists.death_lasers.implementation.abstracts.ConnectedBlock;
+import org.metamechanists.death_lasers.implementation.base.ConnectedBlock;
 import org.metamechanists.death_lasers.items.Items;
 import org.metamechanists.death_lasers.storage.SerializationUtils;
 import org.metamechanists.death_lasers.utils.id.ConnectionGroupID;

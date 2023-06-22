@@ -15,7 +15,7 @@ import org.metamechanists.death_lasers.connections.links.Link;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointInput;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointOutput;
-import org.metamechanists.death_lasers.implementation.abstracts.ConnectedBlock;
+import org.metamechanists.death_lasers.implementation.base.ConnectedBlock;
 import org.metamechanists.death_lasers.items.Items;
 import org.metamechanists.death_lasers.utils.Keys;
 import org.metamechanists.death_lasers.utils.Language;

@@ -17,19 +17,17 @@ import org.metamechanists.death_lasers.connections.links.LinkProperties;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointInput;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointOutput;
-import org.metamechanists.death_lasers.implementation.abstracts.ConnectedBlock;
+import org.metamechanists.death_lasers.implementation.base.ConnectedBlock;
 import org.metamechanists.death_lasers.utils.DisplayUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class WhitePrism extends ConnectedBlock {
-    private final double maxPower;
     private final double powerLoss;
 
     public WhitePrism(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, double maxPower, double powerLoss) {
-        super(group, item, recipeType, recipe);
-        this.maxPower = maxPower;
+        super(group, item, recipeType, recipe, maxPower);
         this.powerLoss = powerLoss;
     }
 

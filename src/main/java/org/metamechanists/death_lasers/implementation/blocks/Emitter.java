@@ -21,7 +21,7 @@ import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
 import org.metamechanists.death_lasers.connections.links.Link;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointOutput;
-import org.metamechanists.death_lasers.implementation.abstracts.ConnectedBlock;
+import org.metamechanists.death_lasers.implementation.base.ConnectedBlock;
 import org.metamechanists.death_lasers.utils.DisplayUtils;
 import org.metamechanists.death_lasers.utils.Keys;
 import org.metamechanists.death_lasers.utils.id.ConnectionGroupID;
@@ -30,12 +30,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Emitter extends ConnectedBlock {
-    private final double emissionPowe;
+    private final double emissionPower;
 
     public Emitter(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe,
                    int capacity, int consumption, double emissionPower) {
-        super(group, item, recipeType, recipe, capacity, consumption);
-        this.emissionPowe = emissionPower;
+        super(group, item, recipeType, recipe, 0, capacity, consumption);
+        this.emissionPower = emissionPower;
     }
 
     private BlockDisplay generateMainBlockDisplay(Location from, Location to) {
@@ -71,7 +71,7 @@ public class Emitter extends ConnectedBlock {
             removeCharge(block.getLocation(), consumption);
             if (output.hasLink()) {
                 final Link link = output.getLink();
-                link.setPower(emissionPowe);
+                link.setPower(emissionPower);
                 link.setEnabled(true);
             }
         } else {

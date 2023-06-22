@@ -1,4 +1,4 @@
-package org.metamechanists.death_lasers.implementation.abstracts;
+package org.metamechanists.death_lasers.implementation.base;
 
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;

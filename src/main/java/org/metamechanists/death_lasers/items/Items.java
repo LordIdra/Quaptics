@@ -5,7 +5,7 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import lombok.Getter;
 import org.bukkit.inventory.ItemStack;
 import org.metamechanists.death_lasers.DEATH_LASERS;
-import org.metamechanists.death_lasers.implementation.abstracts.ConnectedBlock;
+import org.metamechanists.death_lasers.implementation.base.ConnectedBlock;
 import org.metamechanists.death_lasers.implementation.blocks.DarkPrism;
 import org.metamechanists.death_lasers.implementation.blocks.Emitter;
 import org.metamechanists.death_lasers.implementation.blocks.Lens;

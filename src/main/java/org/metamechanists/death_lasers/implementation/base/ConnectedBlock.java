@@ -1,4 +1,4 @@
-package org.metamechanists.death_lasers.implementation.abstracts;
+package org.metamechanists.death_lasers.implementation.base;
 
 import com.destroystokyo.paper.ParticleBuilder;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
@@ -28,12 +28,16 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public abstract class ConnectedBlock extends EnergyDisplayGroupBlock {
-    public ConnectedBlock(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, int capacity, int consumption) {
+    public final double maxPower;
+
+    public ConnectedBlock(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, double maxPower, int capacity, int consumption) {
         super(group, item, recipeType, recipe, capacity, consumption);
+        this.maxPower = maxPower;
     }
 
-    public ConnectedBlock(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+    public ConnectedBlock(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, double maxPower) {
         super(group, item, recipeType, recipe);
+        this.maxPower = maxPower;
     }
 
     protected abstract List<ConnectionPoint> generateConnectionPoints(Player player, Location location);
@@ -92,20 +96,14 @@ public abstract class ConnectedBlock extends EnergyDisplayGroupBlock {
         BlockStorage.clearBlockInfo(location);
         location.getBlock().setBlockData(Material.AIR.createBlockData());
 
-        location.createExplosion(3F, true, false);
-        location.getWorld().spawnParticle(
-                new ParticleBuilder(Particle.CAMPFIRE_COSY_SMOKE).location(location).particle(),
-                0.05, 0.05, 0.05,
-                20);
+        location.createExplosion(1.5F, true, false);
         location.getWorld().spawnParticle(
                 new ParticleBuilder(Particle.FLASH).location(location).count(1).particle(),
                 location,
                 20);
-
-        // TODO breaking sound?
     }
 
-    public void doBurnoutCheck(ConnectionGroup group, ConnectionPoint point, double maxPower) {
+    public void doBurnoutCheck(ConnectionGroup group, ConnectionPoint point) {
         if (point.hasLink() && point.getLink().getPower() > maxPower) {
             burnout(group.getLocation());
         }
