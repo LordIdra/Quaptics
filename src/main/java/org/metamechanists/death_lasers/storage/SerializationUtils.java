@@ -2,6 +2,7 @@ package org.metamechanists.death_lasers.storage;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import org.metamechanists.death_lasers.DEATH_LASERS;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,6 +13,7 @@ public class SerializationUtils {
     private static final Gson gson = new Gson();
     private static Map<String, Object> objectToMap(Object object) {
         final String json = gson.toJson(object);
+        DEATH_LASERS.getInstance().getLogger().info(json);
         return gson.fromJson(json, new TypeToken<Map<String, Object>>() {}.getType());
     }
 
