@@ -24,7 +24,6 @@ public class ConnectionInfoDisplay implements ConfigurationSerializable {
     public ConnectionInfoDisplay(ConnectionPoint point) {
         this.pointLocation = point.getLocation();
         spawnDisplayGroup();
-        update();
     }
 
     private ConnectionInfoDisplay(boolean hidden, Location pointLocation, DisplayGroup displayGroup) {
