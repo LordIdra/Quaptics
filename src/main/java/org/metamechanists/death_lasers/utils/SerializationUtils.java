@@ -1,11 +1,24 @@
 package org.metamechanists.death_lasers.utils;
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
 public class SerializationUtils {
+    private static Map<String, Object> objectToMap(Object object) {
+        final Map<String, Object> map = new HashMap<>();
+        for (Field field : object.getClass().getDeclaredFields()) {
+            field.setAccessible(true);
+            try {
+                map.put(field.getName(), field.get(object));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return map;
+    }
 
     public static <T, U> Map<String, Object> serializeMap(Map<T, U> input, String keyName, String valueName) {
         int i = 0;
@@ -28,7 +41,7 @@ public class SerializationUtils {
         final Map<T, U> outputMap = new HashMap<>();
 
         for (Map.Entry<String, Object> inputEntry : inputMap.entrySet()) {
-            final Map<String, Object> mapEntry = (Map<String, Object>) inputEntry.getValue();
+            final Map<String, Object> mapEntry = objectToMap(inputEntry.getValue());
             outputMap.put((T) mapEntry.get(keyName), (U) mapEntry.get(valueName));
         }
 

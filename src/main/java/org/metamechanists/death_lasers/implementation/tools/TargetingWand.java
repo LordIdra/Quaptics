@@ -111,10 +111,6 @@ public class TargetingWand extends SlimefunItem {
 
         setSourceConnectionPoint(player, outputSourcePoint.getLocation(), stack);
 
-        if (inputTargetPoint.hasLink()) {
-            inputTargetPoint.getLink().remove();
-        }
-
         new Link(inputTargetPoint, outputSourcePoint);
     }
 
