@@ -25,14 +25,14 @@ public class Link implements ConfigurationSerializable {
     private double frequency;
     @Getter
     private int phase;
-    private final Location outputLocation;
+    private final ConnectionPointOutput output;
     private final Location inputLocation;
     private DirectBlockDisplayBeam beam;
 
 
     public Link(ConnectionPointInput input, ConnectionPointOutput output) {
         this.inputLocation = input.getLocation();
-        this.outputLocation = output.getLocation();
+        this.output = output;
         input.link(this);
         output.link(this);
         BlockUpdateScheduler.scheduleUpdate(output.getGroup());
@@ -40,18 +40,18 @@ public class Link implements ConfigurationSerializable {
     }
 
     private Link(boolean enabled, double power, double frequency, int phase,
-                 Location outputLocation, Location inputLocation, DirectBlockDisplayBeam beam) {
+                 ConnectionPointOutput output, Location inputLocation, DirectBlockDisplayBeam beam) {
         this.enabled = enabled;
         this.power = power;
         this.frequency = frequency;
         this.phase = phase;
-        this.outputLocation = outputLocation;
+        this.output = output;
         this.inputLocation = inputLocation;
         this.beam = beam;
     }
 
     public ConnectionPointOutput getOutput() {
-        return (ConnectionPointOutput) ConnectionPointStorage.getPoint(outputLocation);
+        return output;
     }
 
     public ConnectionPointInput getInput() {
@@ -72,7 +72,7 @@ public class Link implements ConfigurationSerializable {
         this.beam = new DirectBlockDisplayBeam(
                 new DirectSinglePulseTickerFactory(
                         Material.WHITE_CONCRETE,
-                        outputLocation,
+                        output.getLocation(),
                         inputLocation,
                         (float) (power / 40.0F)));
     }
@@ -152,7 +152,7 @@ public class Link implements ConfigurationSerializable {
         map.put("power", power);
         map.put("frequency", frequency);
         map.put("phase", phase);
-        map.put("outputLocation", outputLocation);
+        map.put("output", output);
         map.put("inputLocation", inputLocation);
         map.put("beam", beam);
         return map;
@@ -164,7 +164,7 @@ public class Link implements ConfigurationSerializable {
                 (double) map.get("power"),
                 (double) map.get("frequency"),
                 (int) map.get("phase"),
-                (Location) map.get("outputLocation"),
+                (ConnectionPointOutput) map.get("output"),
                 (Location) map.get("inputLocation"),
                 (DirectBlockDisplayBeam) map.get("beam"));
     }
