@@ -38,6 +38,7 @@ public class SerializationUtils {
         final Map<T, U> outputMap = new HashMap<>();
 
         for (Map.Entry<String, Object> inputEntry : inputMap.entrySet()) {
+            DEATH_LASERS.getInstance().getLogger().severe(inputEntry.getValue().getClass().getTypeName());
             final Map<String, Object> mapEntry = objectToMap(inputEntry.getValue());
             outputMap.put((T) mapEntry.get(keyName), (U) mapEntry.get(valueName));
         }
