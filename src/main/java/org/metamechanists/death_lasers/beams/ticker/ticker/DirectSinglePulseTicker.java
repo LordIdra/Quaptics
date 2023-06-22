@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import org.metamechanists.death_lasers.DEATH_LASERS;
 import org.metamechanists.death_lasers.utils.DisplayUtils;
-import org.metamechanists.death_lasers.utils.SerializationUtils;
+import org.metamechanists.death_lasers.storage.SerializationUtils;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,10 +1,9 @@
-package org.metamechanists.death_lasers.connections.storage;
+package org.metamechanists.death_lasers.connections;
 
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
-import org.metamechanists.death_lasers.connections.ConnectionGroup;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
 
 import java.util.HashMap;

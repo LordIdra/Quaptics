@@ -11,7 +11,7 @@ import org.metamechanists.death_lasers.beams.ticker.factory.DirectSinglePulseTic
 import org.metamechanists.death_lasers.connections.BlockUpdateScheduler;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointInput;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointOutput;
-import org.metamechanists.death_lasers.connections.storage.ConnectionPointStorage;
+import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
 
 import java.util.HashMap;
 import java.util.Map;

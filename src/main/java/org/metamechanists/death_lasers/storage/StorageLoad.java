@@ -1,4 +1,4 @@
-package org.metamechanists.death_lasers.connections.storage;
+package org.metamechanists.death_lasers.storage;
 
 import io.github.bakedlibs.dough.common.ChatColors;
 import org.bukkit.Location;
@@ -6,8 +6,8 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.metamechanists.death_lasers.DEATH_LASERS;
 import org.metamechanists.death_lasers.connections.ConnectionGroup;
+import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
 import org.metamechanists.death_lasers.utils.Language;
-import org.metamechanists.death_lasers.utils.SerializationUtils;
 
 import java.io.File;
 import java.util.Map;
@@ -15,7 +15,7 @@ import java.util.Map;
 public class StorageLoad {
     public static void load() {
 
-        final File file = new File(DEATH_LASERS.getInstance().getDataFolder(), StorageSave.FILE_NAME);
+        final File file = new File(DEATH_LASERS.getInstance().getDataFolder(), StorageSaveRunnable.FILE_NAME);
         final FileConfiguration data = YamlConfiguration.loadConfiguration(file);
 
         if (!file.exists()) {
@@ -25,11 +25,11 @@ public class StorageLoad {
 
         try {
             Map<Location, ConnectionGroup> groups = SerializationUtils.deserializeMap(
-                    data.getConfigurationSection("groups").getValues(false),
+                    data.getConfigurationSection("groups"),
                     "location", "connectionGroup");
 
             Map<Location, Location> groupIdsFromPointLocations = SerializationUtils.deserializeMap(
-                    data.getConfigurationSection("groupIdsFromPointLocations").getValues(false),
+                    data.getConfigurationSection("groupIdsFromPointLocations"),
                     "groupLocation", "pointLocation");
 
             ConnectionPointStorage.setGroups(groups);

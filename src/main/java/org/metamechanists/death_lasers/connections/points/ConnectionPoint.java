@@ -14,9 +14,9 @@ import org.joml.Vector3f;
 import org.metamechanists.death_lasers.connections.ConnectionGroup;
 import org.metamechanists.death_lasers.connections.info.ConnectionInfoDisplay;
 import org.metamechanists.death_lasers.connections.links.Link;
-import org.metamechanists.death_lasers.connections.storage.ConnectionPointStorage;
+import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
 import org.metamechanists.death_lasers.utils.DisplayUtils;
-import org.metamechanists.death_lasers.utils.SerializationUtils;
+import org.metamechanists.death_lasers.storage.SerializationUtils;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.util.HashMap;

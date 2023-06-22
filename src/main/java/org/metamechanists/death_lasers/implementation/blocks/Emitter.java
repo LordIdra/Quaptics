@@ -16,7 +16,7 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import org.metamechanists.death_lasers.connections.ConnectionGroup;
-import org.metamechanists.death_lasers.connections.storage.ConnectionPointStorage;
+import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
 import org.metamechanists.death_lasers.connections.links.Link;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointOutput;

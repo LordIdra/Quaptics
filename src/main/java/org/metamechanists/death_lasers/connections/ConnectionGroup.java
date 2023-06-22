@@ -8,7 +8,7 @@ import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointOutput;
 import org.metamechanists.death_lasers.implementation.abstracts.ConnectedBlock;
 import org.metamechanists.death_lasers.items.Items;
-import org.metamechanists.death_lasers.utils.SerializationUtils;
+import org.metamechanists.death_lasers.storage.SerializationUtils;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.metamechanists.death_lasers.items.Items;
 import org.metamechanists.death_lasers.utils.Keys;
-import org.metamechanists.death_lasers.connections.storage.ConnectionPointStorage;
+import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
 import org.metamechanists.death_lasers.connections.links.Link;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointInput;

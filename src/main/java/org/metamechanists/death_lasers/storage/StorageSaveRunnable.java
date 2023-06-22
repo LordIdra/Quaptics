@@ -1,17 +1,17 @@
-package org.metamechanists.death_lasers.connections.storage;
+package org.metamechanists.death_lasers.storage;
 
 import io.github.bakedlibs.dough.common.ChatColors;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.metamechanists.death_lasers.DEATH_LASERS;
+import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
 import org.metamechanists.death_lasers.utils.Language;
-import org.metamechanists.death_lasers.utils.SerializationUtils;
 
 import java.io.File;
 import java.io.IOException;
 
-public class StorageSave extends BukkitRunnable {
+public class StorageSaveRunnable extends BukkitRunnable {
     public static final String FILE_NAME = "data_DO_NOT_EDIT.yml";
 
     public void run() {

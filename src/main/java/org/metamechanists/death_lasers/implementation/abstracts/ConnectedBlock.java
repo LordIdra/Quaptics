@@ -15,7 +15,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.metamechanists.death_lasers.connections.ConnectionGroup;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
-import org.metamechanists.death_lasers.connections.storage.ConnectionPointStorage;
+import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.util.Map;

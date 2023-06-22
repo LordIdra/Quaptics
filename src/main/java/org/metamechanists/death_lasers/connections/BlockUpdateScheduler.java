@@ -1,7 +1,5 @@
 package org.metamechanists.death_lasers.connections;
 
-import org.metamechanists.death_lasers.connections.storage.ConnectionPointStorage;
-
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 

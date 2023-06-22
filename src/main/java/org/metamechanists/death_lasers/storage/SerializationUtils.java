@@ -1,4 +1,4 @@
-package org.metamechanists.death_lasers.utils;
+package org.metamechanists.death_lasers.storage;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;

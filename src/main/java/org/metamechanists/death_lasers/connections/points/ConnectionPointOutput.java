@@ -6,7 +6,7 @@ import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Interaction;
 import org.metamechanists.death_lasers.connections.info.ConnectionInfoDisplay;
 import org.metamechanists.death_lasers.connections.links.Link;
-import org.metamechanists.death_lasers.utils.SerializationUtils;
+import org.metamechanists.death_lasers.storage.SerializationUtils;
 
 import java.util.Map;
 

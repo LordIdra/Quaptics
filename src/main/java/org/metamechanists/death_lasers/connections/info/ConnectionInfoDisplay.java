@@ -9,9 +9,9 @@ import org.bukkit.entity.TextDisplay;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.death_lasers.connections.links.Link;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
-import org.metamechanists.death_lasers.connections.storage.ConnectionPointStorage;
+import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
 import org.metamechanists.death_lasers.items.Lore;
-import org.metamechanists.death_lasers.utils.SerializationUtils;
+import org.metamechanists.death_lasers.storage.SerializationUtils;
 
 import java.util.HashMap;
 import java.util.Map;
