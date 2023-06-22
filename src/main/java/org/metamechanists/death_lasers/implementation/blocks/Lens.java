@@ -54,8 +54,8 @@ public class Lens extends ConnectedBlock {
     @Override
     protected Map<String, ConnectionPoint> generateConnectionPoints(Player player, Location location) {
         final Map<String, ConnectionPoint> points = new HashMap<>();
-        points.put("input", new ConnectionPointInput("input", formatRelativeLocation(player, location, new Vector(0.0F, 0.0F, -0.35F))));
-        points.put("output", new ConnectionPointOutput("output", formatRelativeLocation(player, location, new Vector(0.0F, 0.0F, 0.35F))));
+        points.put("input", new ConnectionPointInput("input", formatRelativeLocation(player, location, new Vector(0.0F, 0.0F, 0.35F))));
+        points.put("output", new ConnectionPointOutput("output", formatRelativeLocation(player, location, new Vector(0.0F, 0.0F, -0.35F))));
         return points;
     }
 

@@ -57,13 +57,13 @@ public class WhitePrism extends ConnectedBlock {
         final Map<String, ConnectionPoint> points = new HashMap<>();
 
         points.put("input", new ConnectionPointInput("input",
-                formatRelativeLocation(player, location, new Vector(0.0F, 0.0F, -0.54F))));
+                formatRelativeLocation(player, location, new Vector(0.0F, 0.0F, 0.54F))));
 
         points.put("output 1", new ConnectionPointOutput("output 1",
-                formatRelativeLocation(player, location, new Vector(0.0F, 0.0F, 0.54F).rotateAroundY(-Math.PI/8))));
+                formatRelativeLocation(player, location, new Vector(0.0F, 0.0F, -0.54F).rotateAroundY(-Math.PI/8))));
 
         points.put("output 2", new ConnectionPointOutput("output 2",
-                formatRelativeLocation(player, location, new Vector(0.0F, 0.0F, 0.54F).rotateAroundY(Math.PI/8))));
+                formatRelativeLocation(player, location, new Vector(0.0F, 0.0F, -0.54F).rotateAroundY(Math.PI/8))));
 
         return points;
     }
