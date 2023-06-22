@@ -87,12 +87,7 @@ public class TargetingWand extends SlimefunItem {
             return;
         }
 
-        if (inputTargetPoint.hasLink()) {
-            player.sendMessage(Language.getLanguageEntry("targeting-wand.target-already-linked"));
-            return;
-        }
-
-        final ConnectionPointOutput outputSourcePoint = (ConnectionPointOutput)sourcePoint;
+        final ConnectionPointOutput outputSourcePoint = (ConnectionPointOutput) sourcePoint;
 
         if (outputSourcePoint == null) {
             return;
@@ -104,6 +99,10 @@ public class TargetingWand extends SlimefunItem {
         if (block1.connectionInvalid(sourcePoint, targetPoint) || block2.connectionInvalid(targetPoint, sourcePoint)) {
             player.sendMessage(Language.getLanguageEntry("targeting-wand.connection-invalid"));
             return;
+        }
+
+        if (inputTargetPoint.hasLink()) {
+            inputTargetPoint.unlink();
         }
 
         block1.connect(sourcePoint, targetPoint);
