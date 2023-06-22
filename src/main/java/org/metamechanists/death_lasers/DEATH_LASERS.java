@@ -22,16 +22,23 @@ import org.metamechanists.death_lasers.items.Items;
 import org.metamechanists.death_lasers.storage.SaveRunnable;
 import org.metamechanists.death_lasers.storage.Storage;
 import org.metamechanists.death_lasers.utils.Language;
+import org.metamechanists.death_lasers.utils.id.BlockDisplayID;
 import org.metamechanists.death_lasers.utils.id.ConnectionGroupID;
-import org.metamechanists.death_lasers.utils.id.CustomID;
+import org.metamechanists.death_lasers.utils.id.ConnectionPointID;
+import org.metamechanists.death_lasers.utils.id.DisplayGroupID;
+import org.metamechanists.death_lasers.utils.id.InteractionID;
 
 public final class DEATH_LASERS extends JavaPlugin implements SlimefunAddon {
     @Getter
     private static DEATH_LASERS instance;
 
     private void initializeSerializables() {
-        ConfigurationSerialization.registerClass(CustomID.class, "CustomID");
+        ConfigurationSerialization.registerClass(BlockDisplayID.class, "BlockDisplayID");
         ConfigurationSerialization.registerClass(ConnectionGroupID.class, "ConnectionGroupID");
+        ConfigurationSerialization.registerClass(ConnectionPointID.class, "ConnectionPointID");
+        ConfigurationSerialization.registerClass(DisplayGroupID.class, "DisplayGroupID");
+        ConfigurationSerialization.registerClass(InteractionID.class, "InteractionID");
+
 
         ConfigurationSerialization.registerClass(ConnectionGroup.class, "ConnectionGroup");
         ConfigurationSerialization.registerClass(ConnectionPointOutput.class, "ConnectionPointOutput");
