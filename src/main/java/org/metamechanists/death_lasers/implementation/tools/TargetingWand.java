@@ -39,7 +39,7 @@ public class TargetingWand extends SlimefunItem {
         }
 
         source.select();
-        PersistentDataUtils.setString(stack, Keys.SOURCE, source.toString());
+        PersistentDataUtils.setString(stack, Keys.SOURCE, sourceID.toString());
     }
 
     public void unsetSourceConnectionPoint(ItemStack stack) {
