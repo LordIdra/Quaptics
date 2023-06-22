@@ -51,8 +51,8 @@ public class Lens extends ConnectedBlock {
     @Override
     protected List<ConnectionPoint> generateConnectionPoints(Player player, Location location) {
         final List<ConnectionPoint> points = new ArrayList<>();
-        points.add(new ConnectionPointInput("input", formatRelativeLocation(player, location, new Vector(0.0F, 0.0F, -0.35F))));
-        points.add(new ConnectionPointOutput("output", formatRelativeLocation(player, location, new Vector(0.0F, 0.0F, 0.35F))));
+        points.add(new ConnectionPointInput("input", formatRelativeLocation(player, location, new Vector(0.0F, 0.0F, -getRadius()))));
+        points.add(new ConnectionPointOutput("output", formatRelativeLocation(player, location, new Vector(0.0F, 0.0F, getRadius()))));
         return points;
     }
 

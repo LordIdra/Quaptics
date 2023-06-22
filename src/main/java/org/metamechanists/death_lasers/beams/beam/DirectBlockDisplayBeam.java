@@ -2,6 +2,7 @@ package org.metamechanists.death_lasers.beams.beam;
 
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.jetbrains.annotations.NotNull;
+import org.metamechanists.death_lasers.beams.DeprecatedTickerStorage;
 import org.metamechanists.death_lasers.beams.ticker.factory.DirectSinglePulseTickerFactory;
 import org.metamechanists.death_lasers.beams.ticker.ticker.DirectSinglePulseTicker;
 
@@ -9,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DirectBlockDisplayBeam extends Beam implements ConfigurationSerializable {
-    private DirectSinglePulseTicker ticker;
+    private final DirectSinglePulseTicker ticker;
 
     public DirectBlockDisplayBeam(DirectSinglePulseTickerFactory factory) {
         this.ticker = factory.build();
@@ -20,21 +21,8 @@ public class DirectBlockDisplayBeam extends Beam implements ConfigurationSeriali
     }
 
     @Override
-    public boolean readyToRemove() {
-        return true;
-    }
-
-    @Override
-    public void remove() {
-        if (ticker != null) {
-            ticker.remove();
-            ticker = null;
-        }
-    }
-
-    @Override
     public void deprecate() {
-        remove();
+        DeprecatedTickerStorage.deprecate(ticker);
     }
 
     @Override

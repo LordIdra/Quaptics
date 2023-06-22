@@ -19,13 +19,10 @@ import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
 import org.metamechanists.death_lasers.utils.DisplayUtils;
 import org.metamechanists.death_lasers.utils.Keys;
-import org.metamechanists.death_lasers.utils.Language;
 import org.metamechanists.death_lasers.utils.id.ConnectionGroupID;
-import org.metamechanists.metalib.utils.RadiusUtils;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public abstract class ConnectedBlock extends EnergyDisplayGroupBlock {
     public final double maxPower;
@@ -45,26 +42,6 @@ public abstract class ConnectedBlock extends EnergyDisplayGroupBlock {
     @Override
     protected void onPlace(BlockPlaceEvent event) {
         final Location location = event.getBlock().getLocation();
-
-        final AtomicBoolean valid = new AtomicBoolean(true);
-        RadiusUtils.forEachSphereRadius(location.getBlock(), (int)(getRadius()+0.5F), block -> {
-            if (block.getLocation().equals(location)) {
-                return false;
-            }
-
-            if (BlockStorage.check(block) instanceof ConnectedBlock) {
-                valid.set(false);
-                return true;
-            }
-
-            return false;
-        });
-
-        if (!valid.get()) {
-            event.getPlayer().sendMessage(Language.getLanguageEntry("too-close"));
-            event.setCancelled(true);
-            return;
-        }
 
         final List<ConnectionPoint> points = generateConnectionPoints(event.getPlayer(), location);
         final ConnectionGroup group = new ConnectionGroup(location, this, points);
@@ -97,10 +74,7 @@ public abstract class ConnectedBlock extends EnergyDisplayGroupBlock {
         location.getBlock().setBlockData(Material.AIR.createBlockData());
 
         location.createExplosion(1.5F, true, false);
-        location.getWorld().spawnParticle(
-                new ParticleBuilder(Particle.FLASH).location(location).count(1).particle(),
-                location,
-                20);
+        location.getWorld().spawnParticle(new ParticleBuilder(Particle.FLASH).location(location).count(1).particle(), location, 20);
     }
 
     public void doBurnoutCheck(ConnectionGroup group, ConnectionPoint point) {

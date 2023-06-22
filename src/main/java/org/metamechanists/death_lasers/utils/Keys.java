@@ -12,5 +12,7 @@ public class Keys {
     public static final NamespacedKey SOURCE = newKey("SOURCE");
     public static final NamespacedKey CONNECTION_POINT_ID = newKey("CONNECTION_POINT_ID");
     public static final String CONNECTION_GROUP_ID = "CONNECTION_GROUP_ID";
+    public static final String POWERED = "POWERED";
+    public static final String TARGET = "TARGET";
 
 }

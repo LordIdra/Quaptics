@@ -53,6 +53,7 @@ public class ConnectionGroup implements ConfigurationSerializable {
 
     public void tick() {
         points.values().forEach(ConnectionPoint::tick);
+        block.onLaserTick(this);
     }
 
     public void removeAllPoints() {

@@ -22,6 +22,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
+import org.metamechanists.death_lasers.connections.ConnectionGroup;
 
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
@@ -64,6 +65,8 @@ public abstract class EnergyDisplayGroupBlock extends SlimefunItem implements En
     protected abstract void onBreak(BlockBreakEvent event);
 
     protected void onSlimefunTick(Block block, SlimefunItem item, Config data) {}
+
+    public void onLaserTick(ConnectionGroup group) {}
 
     private double yawToCardinalDirection(float yaw) {
         return -Math.round(yaw / 90F) * (Math.PI/2);

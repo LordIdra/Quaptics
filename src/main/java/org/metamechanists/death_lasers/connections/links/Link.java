@@ -4,7 +4,6 @@ import lombok.Getter;
 import org.bukkit.Material;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.jetbrains.annotations.NotNull;
-import org.metamechanists.death_lasers.beams.DeprecatedBeamStorage;
 import org.metamechanists.death_lasers.beams.beam.DirectBlockDisplayBeam;
 import org.metamechanists.death_lasers.beams.ticker.factory.DirectSinglePulseTickerFactory;
 import org.metamechanists.death_lasers.connections.BlockUpdateScheduler;
@@ -35,7 +34,7 @@ public class Link implements ConfigurationSerializable {
         this.outputID = output.getId();
         input.link(this);
         output.link(this);
-        BlockUpdateScheduler.scheduleUpdate(output.getGroup());
+        BlockUpdateScheduler.scheduleUpdate(output.getGroup().getId());
         update();
     }
 
@@ -90,23 +89,23 @@ public class Link implements ConfigurationSerializable {
     private void update() {
         getInput().getGroup().updateInfoDisplays();
         getOutput().getGroup().updateInfoDisplays();
-        BlockUpdateScheduler.scheduleUpdate(getInput().getGroup());
+        BlockUpdateScheduler.scheduleUpdate(getInput().getGroup().getId());
     }
 
     public void remove() {
         if (hasBeam()) {
-            DeprecatedBeamStorage.add(beam);
+            beam.deprecate();
             beam = null;
         }
 
         if (getOutput() != null && ConnectionPointStorage.hasGroup(getOutput().getGroup().getId())) {
             getOutput().unlink();
-            BlockUpdateScheduler.scheduleUpdate(getOutput().getGroup());
+            BlockUpdateScheduler.scheduleUpdate(getOutput().getGroup().getId());
         }
 
         if (getInput() != null && ConnectionPointStorage.hasGroup(getInput().getGroup().getId())) {
             getInput().unlink();
-            BlockUpdateScheduler.scheduleUpdate(getInput().getGroup());
+            BlockUpdateScheduler.scheduleUpdate(getInput().getGroup().getId());
         }
     }
 
