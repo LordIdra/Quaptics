@@ -1,5 +1,6 @@
 package org.metamechanists.death_lasers.implementation.blocks;
 
+import com.google.common.base.Objects;
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
@@ -152,7 +153,7 @@ public class Turret extends ConnectedBlock {
 
     @Override
     protected void onSlimefunTick(Block block, SlimefunItem item, Config data) {
-        if (BlockStorage.getLocationInfo(block.getLocation(), Keys.POWERED).equals("true")) {
+        if (Objects.equal(BlockStorage.getLocationInfo(block.getLocation(), Keys.POWERED), "true")) {
             retarget(block.getLocation());
             shoot(block.getLocation());
         }
