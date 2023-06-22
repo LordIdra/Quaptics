@@ -2,6 +2,7 @@ package org.metamechanists.death_lasers.connections.info;
 
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import io.github.bakedlibs.dough.common.ChatColors;
+import lombok.Getter;
 import org.bukkit.Location;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.entity.Display;
@@ -18,12 +19,14 @@ import java.util.Map;
 import java.util.UUID;
 
 public class ConnectionInfoDisplay implements ConfigurationSerializable {
+    @Getter
     private boolean hidden = true;
     private final Location pointLocation;
     private UUID displayGroup;
 
-    public ConnectionInfoDisplay(ConnectionPoint point) {
+    public ConnectionInfoDisplay(ConnectionPoint point, boolean hidden) {
         this.pointLocation = point.getLocation();
+        this.hidden = hidden;
         spawnDisplayGroup();
     }
 
