@@ -20,6 +20,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
+import org.metamechanists.death_lasers.beams.DeprecatedTickerStorage;
 import org.metamechanists.death_lasers.beams.ticker.ticker.IntervalLinearTimeTicker;
 import org.metamechanists.death_lasers.connections.ConnectionGroup;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
@@ -142,11 +143,11 @@ public class Turret extends ConnectedBlock {
             return;
         }
 
-        new IntervalLinearTimeTicker(
+        DeprecatedTickerStorage.deprecate(new IntervalLinearTimeTicker(
                 Material.LIGHT_BLUE_CONCRETE,
                 location.clone().add(0.5, 0.5, 0.5),
                 target.getLocation(),
-                10);
+                10));
 
         target.damage(damagePerSlimefunTick);
     }
