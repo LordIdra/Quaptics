@@ -3,6 +3,7 @@ package org.metamechanists.death_lasers.connections.info;
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import io.github.bakedlibs.dough.common.ChatColors;
 import lombok.Getter;
+import org.bukkit.Location;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.entity.Display;
 import org.bukkit.entity.TextDisplay;
@@ -24,10 +25,10 @@ public class ConnectionInfoDisplay implements ConfigurationSerializable {
     private final ConnectionPointID pointID;
     private DisplayGroupID displayGroupID;
 
-    public ConnectionInfoDisplay(ConnectionPointID pointID, boolean hidden) {
+    public ConnectionInfoDisplay(ConnectionPointID pointID, Location location, boolean hidden) {
         this.pointID = pointID;
         this.hidden = hidden;
-        spawnDisplayGroup();
+        spawnDisplayGroup(location);
     }
 
     private ConnectionInfoDisplay(boolean hidden, ConnectionPointID pointID, DisplayGroupID displayGroupID) {
@@ -44,9 +45,8 @@ public class ConnectionInfoDisplay implements ConfigurationSerializable {
         return ConnectionPointStorage.getPoint(pointID);
     }
 
-    private void spawnDisplayGroup() {
-        displayGroupID = new DisplayGroupID(new InfoDisplayBuilder(getPoint().getLocation())
-                .add("phase").add("frequency").add("power").add("name").build().getParentUUID());
+    private void spawnDisplayGroup(Location location) {
+        displayGroupID = new DisplayGroupID(new InfoDisplayBuilder(location).add("phase").add("frequency").add("power").add("name").build().getParentUUID());
     }
 
     private double roundTo2dp(double value) {
@@ -95,7 +95,7 @@ public class ConnectionInfoDisplay implements ConfigurationSerializable {
         // Point location has changed, so display location will also need to change
         if (!getDisplayGroupID().getLocation().equals(getPoint().getLocation())) {
             remove();
-            spawnDisplayGroup();
+            spawnDisplayGroup(getPoint().getLocation());
         }
 
         doVisibilityCheck();

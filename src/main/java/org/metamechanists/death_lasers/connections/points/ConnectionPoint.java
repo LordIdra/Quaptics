@@ -52,7 +52,7 @@ public abstract class ConnectionPoint implements ConfigurationSerializable {
         this.location = location;
         this.connectedBrightness = connectedBrightness;
         this.disconnectedBrightness = disconnectedBrightness;
-        this.infoDisplay = new ConnectionInfoDisplay(id, true);
+        this.infoDisplay = new ConnectionInfoDisplay(id, location, true);
 
         final BlockDisplay blockDisplay = DisplayUtils.spawnBlockDisplay(location, material, DisplayUtils.simpleScaleTransformation(new Vector3f(SCALE, SCALE, SCALE)));
         this.blockDisplayID = new BlockDisplayID(blockDisplay.getUniqueId());
@@ -139,7 +139,7 @@ public abstract class ConnectionPoint implements ConfigurationSerializable {
         getInteraction().teleport(location.clone().add(INTERACTION_OFFSET));
         boolean wasDisplayHidden = infoDisplay.isHidden();
         infoDisplay.remove();
-        infoDisplay = new ConnectionInfoDisplay(id, wasDisplayHidden);
+        infoDisplay = new ConnectionInfoDisplay(id, location, wasDisplayHidden);
     }
 
     public void toggleInfoDisplayVisibility() {
