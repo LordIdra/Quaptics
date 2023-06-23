@@ -52,7 +52,7 @@ public class Turret extends ConnectedBlock {
         return DisplayUtils.spawnBlockDisplay(
                 from.clone().add(0.5, 0.5, 0.5),
                 Material.GRAY_CONCRETE,
-                DisplayUtils.faceTargetTransformation(from, to, new Vector3f(0.14F, 0.14F, getRadius())));
+                DisplayUtils.faceTargetTransformation(from, to, new Vector3f(0.14F, 0.14F, getRadius()*1.5F)));
     }
 
     @Override
@@ -160,7 +160,7 @@ public class Turret extends ConnectedBlock {
                 Material.LIGHT_BLUE_CONCRETE,
                 location.clone().add(0.5, 0.5, 0.5),
                 target.getOrigin(),
-                10));
+                1));
 
         target.damage(damagePerSlimefunTick);
     }
