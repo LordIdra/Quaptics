@@ -8,8 +8,8 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.metamechanists.death_lasers.beams.beam.DirectBlockDisplayBeam;
-import org.metamechanists.death_lasers.beams.ticker.ticker.DirectSinglePulseTicker;
+import org.metamechanists.death_lasers.beams.beam.DirectBeam;
+import org.metamechanists.death_lasers.beams.ticker.ticker.DirectTicker;
 import org.metamechanists.death_lasers.connections.ConnectionGroup;
 import org.metamechanists.death_lasers.connections.info.ConnectionInfoDisplay;
 import org.metamechanists.death_lasers.connections.info.PointInformationListener;
@@ -47,8 +47,8 @@ public final class DEATH_LASERS extends JavaPlugin implements SlimefunAddon {
 
         ConfigurationSerialization.registerClass(Link.class, "Link");
 
-        ConfigurationSerialization.registerClass(DirectBlockDisplayBeam.class, "DirectBlockDisplayBeam");
-        ConfigurationSerialization.registerClass(DirectSinglePulseTicker.class, "DirectSinglePulseTicker");
+        ConfigurationSerialization.registerClass(DirectBeam.class, "DirectBlockDisplayBeam");
+        ConfigurationSerialization.registerClass(DirectTicker.class, "DirectSinglePulseTicker");
     }
 
     private void initializeListeners() {

@@ -4,8 +4,8 @@ import lombok.Getter;
 import org.bukkit.Material;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.jetbrains.annotations.NotNull;
-import org.metamechanists.death_lasers.beams.beam.DirectBlockDisplayBeam;
-import org.metamechanists.death_lasers.beams.ticker.factory.DirectSinglePulseTickerFactory;
+import org.metamechanists.death_lasers.beams.beam.DirectBeam;
+import org.metamechanists.death_lasers.beams.ticker.factory.DirectTickerFactory;
 import org.metamechanists.death_lasers.connections.BlockUpdateScheduler;
 import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointInput;
@@ -27,7 +27,7 @@ public class Link implements ConfigurationSerializable {
     private double maxPower;
     private final ConnectionPointID outputID;
     private final ConnectionPointID inputID;
-    private DirectBlockDisplayBeam beam;
+    private DirectBeam beam;
 
 
     public Link(ConnectionPointInput input, ConnectionPointOutput output) {
@@ -41,7 +41,7 @@ public class Link implements ConfigurationSerializable {
     }
 
     private Link(boolean enabled, double power, double frequency, int phase,
-                 ConnectionPointID outputID, ConnectionPointID inputID, DirectBlockDisplayBeam beam) {
+                 ConnectionPointID outputID, ConnectionPointID inputID, DirectBeam beam) {
         this.enabled = enabled;
         this.power = power;
         this.frequency = frequency;
@@ -69,9 +69,7 @@ public class Link implements ConfigurationSerializable {
             return;
         }
 
-        // TODO dynamically update beam max size
-        this.beam = new DirectBlockDisplayBeam(
-                new DirectSinglePulseTickerFactory(
+        this.beam = new DirectBeam(new DirectTickerFactory(
                         Material.WHITE_CONCRETE,
                         getOutput().getLocation(),
                         getInput().getLocation(),
@@ -161,6 +159,6 @@ public class Link implements ConfigurationSerializable {
                 (int) map.get("phase"),
                 (ConnectionPointID) map.get("outputID"),
                 (ConnectionPointID) map.get("inputID"),
-                (DirectBlockDisplayBeam) map.get("beam"));
+                (DirectBeam) map.get("beam"));
     }
 }

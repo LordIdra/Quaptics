@@ -3,20 +3,19 @@ package org.metamechanists.death_lasers.beams.beam;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.death_lasers.beams.DeprecatedTickerStorage;
-import org.metamechanists.death_lasers.beams.ticker.factory.DirectSinglePulseTickerFactory;
-import org.metamechanists.death_lasers.beams.ticker.ticker.DirectSinglePulseTicker;
+import org.metamechanists.death_lasers.beams.ticker.factory.DirectTickerFactory;
+import org.metamechanists.death_lasers.beams.ticker.ticker.DirectTicker;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class DirectBlockDisplayBeam extends Beam implements ConfigurationSerializable {
-    private final DirectSinglePulseTicker ticker;
+public class DirectBeam extends Beam implements ConfigurationSerializable {
+    private final DirectTicker ticker;
 
-    public DirectBlockDisplayBeam(DirectSinglePulseTickerFactory factory) {
+    public DirectBeam(DirectTickerFactory factory) {
         this.ticker = factory.build();
     }
-
-    private DirectBlockDisplayBeam(DirectSinglePulseTicker ticker) {
+    private DirectBeam(DirectTicker ticker) {
         this.ticker = ticker;
     }
 
@@ -35,7 +34,7 @@ public class DirectBlockDisplayBeam extends Beam implements ConfigurationSeriali
         return map;
     }
 
-    public static DirectBlockDisplayBeam deserialize(Map<String, Object> map) {
-        return new DirectBlockDisplayBeam((DirectSinglePulseTicker) map.get("ticker"));
+    public static DirectBeam deserialize(Map<String, Object> map) {
+        return new DirectBeam((DirectTicker) map.get("ticker"));
     }
 }

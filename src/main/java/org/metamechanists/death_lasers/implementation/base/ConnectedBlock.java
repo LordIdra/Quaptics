@@ -88,7 +88,7 @@ public abstract class ConnectedBlock extends EnergyDisplayGroupBlock {
     public Location calculateNewLocation(ConnectionPoint from, ConnectionPoint to) {
         final Location fromGroupLocation = from.getGroup().getLocation();
         final Location toGroupLocation = to.getGroup().getLocation();
-        final Vector radiusDirection = Transformations.getDirection(fromGroupLocation, toGroupLocation).multiply(getRadius());
+        final Vector radiusDirection = Vector.fromJOML(Transformations.getDirection(fromGroupLocation, toGroupLocation).mul(getRadius()));
         return fromGroupLocation.clone().add(0.5, 0.5, 0.5).add(radiusDirection);
     }
 

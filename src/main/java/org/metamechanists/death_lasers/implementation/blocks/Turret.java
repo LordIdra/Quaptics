@@ -24,7 +24,7 @@ import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.metamechanists.death_lasers.beams.DeprecatedTickerStorage;
-import org.metamechanists.death_lasers.beams.ticker.ticker.IntervalLinearVelocityTicker;
+import org.metamechanists.death_lasers.beams.ticker.ticker.IntervalVelocityTicker;
 import org.metamechanists.death_lasers.connections.ConnectionGroup;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointInput;
@@ -158,7 +158,7 @@ public class Turret extends ConnectedBlock {
 
         getDisplayGroup(location).getDisplays().get("barrel").setTransformationMatrix(getBarrelMatrix(location, target.getEyeLocation()));
 
-        DeprecatedTickerStorage.deprecate(new IntervalLinearVelocityTicker(
+        DeprecatedTickerStorage.deprecate(new IntervalVelocityTicker(
                 Material.LIGHT_BLUE_CONCRETE,
                 location.clone().add(0.5, 0.7, 0.5),
                 target.getEyeLocation(),

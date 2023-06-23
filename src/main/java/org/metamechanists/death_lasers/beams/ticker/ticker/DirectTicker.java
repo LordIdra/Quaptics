@@ -1,5 +1,6 @@
 package org.metamechanists.death_lasers.beams.ticker.ticker;
 
+import lombok.Builder;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -14,10 +15,11 @@ import org.metamechanists.death_lasers.utils.id.BlockDisplayID;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DirectSinglePulseTicker implements LaserBlockDisplayTicker, ConfigurationSerializable {
+@Builder
+public class DirectTicker implements DisplayTicker, ConfigurationSerializable {
     private final BlockDisplayID displayID;
 
-    public DirectSinglePulseTicker(Material material, Location source, Location target, float size) {
+    public DirectTicker(Material material, Location source, Location target, float size) {
         final Location midpoint = source.clone().add(target).multiply(0.5);
         final Vector3f scale = new Vector3f(size * 0.095F, size * 0.095F, (float)(source.distance(target)));
         this.displayID = new BlockDisplayID(new BlockDisplayBuilder(midpoint)
@@ -28,7 +30,7 @@ public class DirectSinglePulseTicker implements LaserBlockDisplayTicker, Configu
                         .getUniqueId());
     }
 
-    private DirectSinglePulseTicker(BlockDisplayID displayID) {
+    private DirectTicker(BlockDisplayID displayID) {
         this.displayID = displayID;
     }
 
@@ -55,8 +57,8 @@ public class DirectSinglePulseTicker implements LaserBlockDisplayTicker, Configu
         return map;
     }
 
-    public static DirectSinglePulseTicker deserialize(Map<String, Object> map) {
-        return new DirectSinglePulseTicker((BlockDisplayID) map.get("display"));
+    public static DirectTicker deserialize(Map<String, Object> map) {
+        return new DirectTicker((BlockDisplayID) map.get("display"));
     }
 }
 
