@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPointStorage;
-import org.metamechanists.quaptics.connections.links.Link;
+import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;

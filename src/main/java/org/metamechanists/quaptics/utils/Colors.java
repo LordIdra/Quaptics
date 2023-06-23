@@ -4,9 +4,9 @@ import lombok.Getter;
 import org.metamechanists.metalib.utils.ColorUtils;
 
 public enum Colors {
+    QUAPTICS("66CCFF"),
     COUNT("9494B8"),
-    RANGE("66CCFF"),
-    DAMAGE("990073"),
+    TURRET("993366"),
     POWER("FF0000"),
     FREQUENCY("00ff00"),
     PHASE("FFCC00");

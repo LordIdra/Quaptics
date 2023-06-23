@@ -62,7 +62,7 @@ public abstract class DisplayGroupTickerBlock extends SlimefunItem {
 
     protected void onSlimefunTick(Block block, SlimefunItem item, Config data) {}
 
-    public void onLaserTick(ConnectionGroup group) {}
+    public void onQuapticTick(ConnectionGroup group) {}
 
     @Override
     @OverridingMethodsMustInvokeSuper

@@ -7,8 +7,8 @@ import java.util.Objects;
 public class Lore {
     private final static String attributeSymbol = "&8⇨ ";
     private final static String countSymbol = Colors.COUNT.getString() + "→ ";
-    private final static String rangeSymbol = Colors.RANGE.getString() + "↔ ";
-    private final static String damageSymbol = Colors.DAMAGE.getString() + "🗡 ";
+    private final static String rangeSymbol = Colors.TURRET.getString() + "↔ ";
+    private final static String damageSymbol = Colors.TURRET.getString() + "🗡 ";
     private final static String powerSymbol = Colors.POWER.getString() + "⏻ ";
     private final static String frequencySymbol = Colors.FREQUENCY.getString() + "λ ";
     private final static String phaseSymbol = Colors.PHASE.getString() + "◎ ";

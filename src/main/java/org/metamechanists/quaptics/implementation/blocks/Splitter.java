@@ -12,7 +12,6 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
-import org.metamechanists.quaptics.connections.links.LinkAttributes;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
@@ -23,7 +22,7 @@ import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WhitePrism extends ConnectedBlock {
+public class Splitter extends ConnectedBlock {
     private final Vector INPUT_LOCATION = new Vector(0.0F, 0.0F, -getRadius());
     private final Vector OUTPUT_1_LOCATION = new Vector(0.0F, 0.0F, getRadius()).rotateAroundY(-Math.PI/8);
     private final Vector OUTPUT_2_LOCATION = new Vector(0.0F, 0.0F, getRadius()).rotateAroundY(Math.PI/8);
@@ -31,7 +30,7 @@ public class WhitePrism extends ConnectedBlock {
     private final Vector3f MAIN_DISPLAY_ROTATION = new Vector3f((float)(Math.PI/4), (float)(Math.PI/4), 0);
     private final double powerLoss;
 
-    public WhitePrism(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, double maxPower, double powerLoss) {
+    public Splitter(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, double maxPower, double powerLoss) {
         super(group, item, recipeType, recipe, maxPower);
         this.powerLoss = powerLoss;
     }
@@ -39,7 +38,7 @@ public class WhitePrism extends ConnectedBlock {
     @Override
     protected void addDisplays(DisplayGroup displayGroup, Location location, Player player) {
         displayGroup.addDisplay("main", new BlockDisplayBuilder(location.clone().add(RELATIVE_CENTER))
-                        .setMaterial(Material.WHITE_STAINED_GLASS)
+                        .setMaterial(Material.LIGHT_GRAY_STAINED_GLASS)
                         .setTransformation(Transformations.rotateAndScale(MAIN_DISPLAY_SIZE, MAIN_DISPLAY_ROTATION))
                         .build());
     }
@@ -71,7 +70,7 @@ public class WhitePrism extends ConnectedBlock {
             return;
         }
 
-        double outputPower = LinkAttributes.powerLoss(input.getLink().getPower(), maxPower, powerLoss);
+        double outputPower = powerLoss(input.getLink().getPower(), maxPower, powerLoss);
         if (output1.hasLink() && output2.hasLink()) {
             outputPower /= 2.0;
         }

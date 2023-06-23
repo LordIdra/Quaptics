@@ -16,7 +16,7 @@ import org.joml.Vector3f;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPointStorage;
 import org.metamechanists.quaptics.connections.info.ConnectionInfoDisplay;
-import org.metamechanists.quaptics.connections.links.Link;
+import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;

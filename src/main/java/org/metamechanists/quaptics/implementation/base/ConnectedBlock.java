@@ -35,6 +35,10 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
     protected abstract float getRadius();
     protected abstract List<ConnectionPoint> generateConnectionPoints(Player player, Location location);
 
+    protected static double powerLoss(double inputPower, double maxPower, double powerLoss) {
+        return inputPower - ((powerLoss/maxPower) * Math.pow(inputPower, 2));
+    }
+
     @Override
     protected void onPlace(BlockPlaceEvent event) {
         final Location location = event.getBlock().getLocation();

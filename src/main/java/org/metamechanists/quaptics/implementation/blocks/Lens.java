@@ -12,7 +12,6 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
-import org.metamechanists.quaptics.connections.links.LinkAttributes;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
@@ -67,7 +66,7 @@ public class Lens extends ConnectedBlock {
             return;
         }
 
-        output.getLink().setPower(LinkAttributes.powerLoss(input.getLink().getPower(), maxPower, powerLoss));
+        output.getLink().setPower(powerLoss(input.getLink().getPower(), maxPower, powerLoss));
         output.getLink().setEnabled(true);
     }
 

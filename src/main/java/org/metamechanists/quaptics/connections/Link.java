@@ -1,4 +1,4 @@
-package org.metamechanists.quaptics.connections.links;
+package org.metamechanists.quaptics.connections;
 
 import lombok.Getter;
 import org.bukkit.Material;
@@ -6,8 +6,6 @@ import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.beams.beam.DirectBeam;
 import org.metamechanists.quaptics.beams.ticker.factory.DirectTickerFactory;
-import org.metamechanists.quaptics.connections.BlockUpdateScheduler;
-import org.metamechanists.quaptics.connections.ConnectionPointStorage;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
 import org.metamechanists.quaptics.utils.id.ConnectionPointID;

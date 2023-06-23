@@ -13,7 +13,7 @@ import org.metamechanists.quaptics.beams.ticker.ticker.DirectTicker;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.info.ConnectionInfoDisplay;
 import org.metamechanists.quaptics.connections.info.PointInformationListener;
-import org.metamechanists.quaptics.connections.links.Link;
+import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
 import org.metamechanists.quaptics.implementation.tools.TargetingWandListener;
@@ -58,7 +58,7 @@ public final class Quaptics extends JavaPlugin implements SlimefunAddon {
     }
 
     public void initializeRunnables() {
-        new LaserTicker().runTaskTimer(instance, 0, LaserTicker.INTERVAl_TICKS);
+        new QuapticTicker().runTaskTimer(instance, 0, QuapticTicker.INTERVAl_TICKS);
         new SaveRunnable().runTaskTimer(instance, SaveRunnable.INTERVAL_TICKS, SaveRunnable.INTERVAL_TICKS);
     }
 

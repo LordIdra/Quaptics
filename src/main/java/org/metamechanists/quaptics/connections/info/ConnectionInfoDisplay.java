@@ -9,7 +9,7 @@ import org.bukkit.entity.Display;
 import org.bukkit.entity.TextDisplay;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.connections.ConnectionPointStorage;
-import org.metamechanists.quaptics.connections.links.Link;
+import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.utils.id.ConnectionPointID;

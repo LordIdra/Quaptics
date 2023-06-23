@@ -51,7 +51,7 @@ public class ConnectionGroup implements ConfigurationSerializable {
 
     public void tick() {
         points.values().forEach(ConnectionPoint::tick);
-        block.onLaserTick(this);
+        block.onQuapticTick(this);
     }
 
     public void updateInfoDisplays() {

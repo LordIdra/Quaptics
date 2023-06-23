@@ -6,26 +6,21 @@ import lombok.Getter;
 import org.bukkit.inventory.ItemStack;
 import org.metamechanists.quaptics.Quaptics;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
-import org.metamechanists.quaptics.implementation.blocks.DarkPrism;
+import org.metamechanists.quaptics.implementation.blocks.Combiner;
 import org.metamechanists.quaptics.implementation.blocks.Emitter;
 import org.metamechanists.quaptics.implementation.blocks.Lens;
 import org.metamechanists.quaptics.implementation.blocks.Turret;
-import org.metamechanists.quaptics.implementation.blocks.WhitePrism;
+import org.metamechanists.quaptics.implementation.blocks.Splitter;
 import org.metamechanists.quaptics.implementation.tools.TargetingWand;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.metamechanists.quaptics.items.ItemStacks.DARK_PRISM;
-import static org.metamechanists.quaptics.items.ItemStacks.EMITTER;
-import static org.metamechanists.quaptics.items.ItemStacks.LENS;
-import static org.metamechanists.quaptics.items.ItemStacks.TARGETING_WAND;
-import static org.metamechanists.quaptics.items.ItemStacks.TURRET;
-import static org.metamechanists.quaptics.items.ItemStacks.WHITE_PRISM;
+import static org.metamechanists.quaptics.items.ItemStacks.*;
 
 public class Items {
     public static final TargetingWand targetingWand = new TargetingWand(
-            Groups.DEATH_LASER_GROUP,
+            Groups.MAIN_GROUP,
             TARGETING_WAND,
             RecipeType.NULL,
             new ItemStack[] {});
@@ -35,7 +30,7 @@ public class Items {
 
     static {{
         blocks.put("EMITTER", new Emitter(
-                Groups.DEATH_LASER_GROUP,
+                Groups.MAIN_GROUP,
                 EMITTER,
                 RecipeType.NULL,
                 new ItemStack[]{},
@@ -44,31 +39,31 @@ public class Items {
                 20));
 
         blocks.put("LENS", new Lens(
-                Groups.DEATH_LASER_GROUP,
+                Groups.MAIN_GROUP,
                 LENS,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 40,
                 0.1));
 
-        blocks.put("DARK_PRISM", new DarkPrism(
-                Groups.DEATH_LASER_GROUP,
-                DARK_PRISM,
+        blocks.put("COMBINER", new Combiner(
+                Groups.MAIN_GROUP,
+                COMBINER,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 40,
                 0.2));
 
-        blocks.put("WHITE_PRISM", new WhitePrism(
-                Groups.DEATH_LASER_GROUP,
-                WHITE_PRISM,
+        blocks.put("SPLITTER", new Splitter(
+                Groups.MAIN_GROUP,
+                SPLITTER,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 40,
                 0.2));
 
         blocks.put("TURRET", new Turret(
-                Groups.DEATH_LASER_GROUP,
+                Groups.MAIN_GROUP,
                 TURRET,
                 RecipeType.NULL,
                 new ItemStack[]{},

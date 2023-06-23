@@ -12,7 +12,6 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
-import org.metamechanists.quaptics.connections.links.LinkAttributes;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
@@ -23,7 +22,7 @@ import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DarkPrism extends ConnectedBlock {
+public class Combiner extends ConnectedBlock {
     private final Vector INPUT_1_LOCATION = new Vector(0.0F, 0.0F, -getRadius()).rotateAroundY(-Math.PI/8);
     private final Vector INPUT_2_LOCATION = new Vector(0.0F, 0.0F, -getRadius()).rotateAroundY(Math.PI/8);
     private final Vector OUTPUT_LOCATION = new Vector(0.0F, 0.0F, getRadius());
@@ -31,7 +30,7 @@ public class DarkPrism extends ConnectedBlock {
     private final Vector3f MAIN_DISPLAY_ROTATION = new Vector3f((float)(Math.PI/4), (float)(Math.PI/4), 0);
     private final double powerLoss;
 
-    public DarkPrism(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, double maxPower, double powerLoss) {
+    public Combiner(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, double maxPower, double powerLoss) {
         super(group, item, recipeType, recipe, maxPower);
         this.powerLoss = powerLoss;
     }
@@ -77,7 +76,7 @@ public class DarkPrism extends ConnectedBlock {
         if (input1On) { inputPower += input1.getLink().getPower(); }
         if (input2On) { inputPower += input2.getLink().getPower(); }
 
-        output.getLink().setPower(LinkAttributes.powerLoss(inputPower, maxPower, powerLoss));
+        output.getLink().setPower(powerLoss(inputPower, maxPower, powerLoss));
         output.getLink().setEnabled(true);
     }
 
