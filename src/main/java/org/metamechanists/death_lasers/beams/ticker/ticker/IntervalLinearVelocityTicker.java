@@ -1,6 +1,7 @@
 package org.metamechanists.death_lasers.beams.ticker.ticker;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.BlockDisplay;
@@ -22,6 +23,9 @@ public class IntervalLinearVelocityTicker implements LaserBlockDisplayTicker {
         this.velocity = DisplayUtils.getDisplacement(source, target).normalize().multiply(speed);
         lifespanTicks = (int)(DisplayUtils.getDisplacement(source, target).length() / speed) + 1;
         final BlockDisplay display = DisplayUtils.spawnBlockDisplay(source, material, DisplayUtils.faceTargetTransformation(source, target, SCALE));
+        // TODO make a proper builder for this
+        display.setGlowing(true);
+        display.setGlowColorOverride(Color.AQUA);
         display.setBrightness(new Display.Brightness(15, 15));
         this.displayID = new BlockDisplayID(display.getUniqueId());
     }
