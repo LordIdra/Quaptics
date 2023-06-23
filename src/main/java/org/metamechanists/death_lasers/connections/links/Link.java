@@ -73,7 +73,7 @@ public class Link implements ConfigurationSerializable {
                         Material.WHITE_CONCRETE,
                         getOutput().getLocation(),
                         getInput().getLocation(),
-                        (float) (power / maxPower)));
+                        (float)(power / maxPower) * 0.095F));
     }
 
     private boolean hasBeam() {

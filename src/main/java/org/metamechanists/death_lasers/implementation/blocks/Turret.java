@@ -162,6 +162,7 @@ public class Turret extends ConnectedBlock {
                 Material.LIGHT_BLUE_CONCRETE,
                 location.clone().add(0.5, 0.7, 0.5),
                 target.getEyeLocation(),
+                new Vector3f(0.095F, 0.095F, 0.20F),
                 1));
 
         target.damage(damagePerSlimefunTick);

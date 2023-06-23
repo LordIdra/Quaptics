@@ -19,9 +19,9 @@ import java.util.Map;
 public class DirectTicker implements DisplayTicker, ConfigurationSerializable {
     private final BlockDisplayID displayID;
 
-    public DirectTicker(Material material, Location source, Location target, float size) {
+    public DirectTicker(Material material, Location source, Location target, float radius) {
         final Location midpoint = source.clone().add(target).multiply(0.5);
-        final Vector3f scale = new Vector3f(size * 0.095F, size * 0.095F, (float)(source.distance(target)));
+        final Vector3f scale = new Vector3f(radius, radius, (float)(source.distance(target)));
         this.displayID = new BlockDisplayID(new BlockDisplayBuilder(midpoint)
                         .setMaterial(material)
                         .setTransformation(Transformations.lookAlong(scale, Transformations.getDirection(midpoint, target)))

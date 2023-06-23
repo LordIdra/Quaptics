@@ -11,19 +11,17 @@ import org.metamechanists.death_lasers.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.death_lasers.utils.id.BlockDisplayID;
 
 public class IntervalTimeTicker implements DisplayTicker {
-    // Not quite 1 to prevent Z-fighting with connection points
-    private static final Vector3f DISPLAY_SIZE = new Vector3f(0.095F, 0.095F, 0.20F);
     private final int lifespanTicks;
     private final Vector3f velocity;
     private final BlockDisplayID displayID;
     private int ageTicks = 0;
 
-    public IntervalTimeTicker(Material material, Location source, Location target, int lifespanTicks) {
+    public IntervalTimeTicker(Material material, Location source, Location target, Vector3f scale, int lifespanTicks) {
         this.lifespanTicks = lifespanTicks;
         this.velocity = Transformations.getDisplacement(source, target).mul(1.0F/lifespanTicks);
         this.displayID = new BlockDisplayID(new BlockDisplayBuilder(source)
                 .setMaterial(material)
-                .setTransformation(Transformations.lookAlong(DISPLAY_SIZE, Transformations.getDirection(source, target)))
+                .setTransformation(Transformations.lookAlong(scale, Transformations.getDirection(source, target)))
                 .setBrightness(15)
                 .build()
                 .getUniqueId());
