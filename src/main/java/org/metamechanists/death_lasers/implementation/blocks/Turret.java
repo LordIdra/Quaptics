@@ -154,7 +154,7 @@ public class Turret extends ConnectedBlock {
         }
 
         getDisplayGroup(location).removeDisplay("barrel").remove();
-        getDisplayGroup(location).addDisplay("barrel", generateBarrel(location, target.getLocation()));
+        getDisplayGroup(location).addDisplay("barrel", generateBarrel(location, target.getEyeLocation()));
 
         DeprecatedTickerStorage.deprecate(new IntervalLinearVelocityTicker(
                 Material.LIGHT_BLUE_CONCRETE,
