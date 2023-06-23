@@ -15,6 +15,7 @@ import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
+import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
 import org.metamechanists.quaptics.implementation.base.EnergyConnectedBlock;
 import org.metamechanists.quaptics.items.Items;
 import org.metamechanists.quaptics.utils.Keys;
@@ -91,8 +92,8 @@ public class TargetingWand extends SlimefunItem {
             return;
         }
 
-        final EnergyConnectedBlock block1 = output.getGroup().getBlock();
-        final EnergyConnectedBlock block2 = input.getGroup().getBlock();
+        final ConnectedBlock block1 = output.getGroup().getBlock();
+        final ConnectedBlock block2 = input.getGroup().getBlock();
 
         if (input.hasLink()) {
             input.getLink().remove();
