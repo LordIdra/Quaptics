@@ -5,29 +5,30 @@ import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.BlockDisplay;
-import org.bukkit.entity.Display;
 import org.bukkit.util.Vector;
 import org.joml.Vector3f;
-import org.metamechanists.death_lasers.utils.DisplayUtils;
+import org.metamechanists.death_lasers.utils.Transformations;
+import org.metamechanists.death_lasers.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.death_lasers.utils.id.BlockDisplayID;
 
 public class IntervalLinearVelocityTicker implements LaserBlockDisplayTicker {
     // Not quite 1 to prevent Z-fighting with connection points
     private static final Vector3f SCALE = new Vector3f(0.095F, 0.095F, 0.20F);
-    private final Vector velocity;
+    private final Vector3f velocity;
     private final BlockDisplayID displayID;
     private final int lifespanTicks;
     private int ageTicks = 0;
 
-    public IntervalLinearVelocityTicker(Material material, Location source, Location target, double speed) {
-        this.velocity = DisplayUtils.getDisplacement(source, target).normalize().multiply(speed);
-        lifespanTicks = (int)(DisplayUtils.getDisplacement(source, target).length() / speed) + 1;
-        final BlockDisplay display = DisplayUtils.spawnBlockDisplay(source, material, DisplayUtils.faceTargetTransformation(source, target, SCALE));
-        // TODO make a proper builder for this
-        display.setGlowing(true);
-        display.setGlowColorOverride(Color.AQUA);
-        display.setBrightness(new Display.Brightness(15, 15));
-        this.displayID = new BlockDisplayID(display.getUniqueId());
+    public IntervalLinearVelocityTicker(Material material, Location source, Location target, float speed) {
+        this.velocity = Transformations.getDisplacement(source, target).normalize().mul(speed);
+        this.lifespanTicks = (int)(Transformations.getDisplacement(source, target).length() / speed) + 1;
+        this.displayID = new BlockDisplayID(new BlockDisplayBuilder(source)
+                .setMaterial(material)
+                .setTransformation(Transformations.lookAlong(SCALE, Transformations.getDirection(source, target)))
+                .setGlow(Color.AQUA)
+                .setBrightness(15)
+                .build()
+                .getUniqueId());
     }
 
     private BlockDisplay getDisplay() {
@@ -36,7 +37,7 @@ public class IntervalLinearVelocityTicker implements LaserBlockDisplayTicker {
 
     @Override
     public void tick() {
-        getDisplay().teleport(getDisplay().getLocation().add(velocity));
+        getDisplay().teleport(getDisplay().getLocation().add(Vector.fromJOML(velocity)));
         ageTicks++;
     }
 

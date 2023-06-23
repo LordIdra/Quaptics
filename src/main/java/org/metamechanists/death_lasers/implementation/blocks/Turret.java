@@ -29,8 +29,9 @@ import org.metamechanists.death_lasers.connections.ConnectionGroup;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointInput;
 import org.metamechanists.death_lasers.implementation.base.ConnectedBlock;
-import org.metamechanists.death_lasers.utils.DisplayUtils;
+import org.metamechanists.death_lasers.utils.Transformations;
 import org.metamechanists.death_lasers.utils.Keys;
+import org.metamechanists.death_lasers.utils.builders.BlockDisplayBuilder;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -51,31 +52,28 @@ public class Turret extends ConnectedBlock {
     }
 
     private Matrix4f getBarrelMatrix(Location from, Location to) {
-        return DisplayUtils.faceTargetTransformation(from.clone().add(0.5, 0.7, 0.5), to,
-                new Vector3f(0.18F, 0.18F, getRadius())).translate(0, 0, -getRadius()*0.8F);
+        return Transformations.lookAlong(new Vector3f(0.18F, 0.18F, getRadius()), Transformations.getDirection(from.clone().add(0.5, 0.7, 0.5), to))
+                .translate(0, 0, -getRadius()*0.8F);
     }
 
     private BlockDisplay generateBarrel(Location from, Location to) {
-        return DisplayUtils.spawnBlockDisplay(
-                from.clone().add(0.5, 0.7, 0.5),
-                Material.GRAY_CONCRETE,
-                getBarrelMatrix(from, to));
+        return new BlockDisplayBuilder(from.clone().add(0.5, 0.7, 0.5))
+                .setMaterial(Material.GRAY_CONCRETE)
+                .setTransformation(getBarrelMatrix(from, to))
+                .build();
     }
 
     @Override
     protected DisplayGroup generateDisplayGroup(Player player, Location location) {
         // Height/width are zero to prevent the large interaction entity from obstructing the player
         final DisplayGroup displayGroup = new DisplayGroup(location, 0, 0);
-
         displayGroup.addDisplay(
                 "main",
-                DisplayUtils.spawnBlockDisplay(
-                        location.clone().add(0.5, 0.5, 0.5),
-                        Material.POLISHED_ANDESITE,
-                        DisplayUtils.simpleScaleTransformation(new Vector3f(0.6F, 0.6F, 0.6F))));
-
+                new BlockDisplayBuilder(location.clone().add(0.5, 0.5, 0.5))
+                        .setMaterial(Material.POLISHED_ANDESITE)
+                        .setTransformation(Transformations.scale(new Vector3f(0.6F, 0.6F, 0.6F)))
+                        .build());
         displayGroup.addDisplay("barrel", generateBarrel(location, location.clone().add(0, 0, 1)));
-
         return displayGroup;
     }
 

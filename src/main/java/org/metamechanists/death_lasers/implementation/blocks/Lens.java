@@ -18,7 +18,8 @@ import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointInput;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointOutput;
 import org.metamechanists.death_lasers.implementation.base.ConnectedBlock;
-import org.metamechanists.death_lasers.utils.DisplayUtils;
+import org.metamechanists.death_lasers.utils.Transformations;
+import org.metamechanists.death_lasers.utils.builders.BlockDisplayBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,16 +36,12 @@ public class Lens extends ConnectedBlock {
     protected DisplayGroup generateDisplayGroup(Player player, Location location) {
         // Height/width are zero to prevent the large interaction entity from obstructing the player
         final DisplayGroup displayGroup = new DisplayGroup(location, 0, 0);
-
-        displayGroup.addDisplay(
-                "main",
-                DisplayUtils.spawnBlockDisplay(
-                        location.clone().add(0.5, 0.5, 0.5),
-                        Material.GLASS,
-                        DisplayUtils.rotationTransformation(
+        displayGroup.addDisplay("main", new BlockDisplayBuilder(location.clone().add(0.5, 0.5, 0.5))
+                        .setMaterial(Material.GLASS)
+                        .setTransformation(Transformations.rotateAndScale(
                                 new Vector3f(0.2F, 0.2F, 0.2F),
-                                new Vector3f((float)(Math.PI/4), (float)(Math.PI/4), 0))));
-
+                                new Vector3f((float)(Math.PI/4), (float)(Math.PI/4), 0)))
+                        .build());
         return displayGroup;
     }
 

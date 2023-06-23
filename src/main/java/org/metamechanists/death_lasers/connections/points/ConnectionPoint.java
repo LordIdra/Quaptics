@@ -17,8 +17,10 @@ import org.metamechanists.death_lasers.connections.ConnectionGroup;
 import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
 import org.metamechanists.death_lasers.connections.info.ConnectionInfoDisplay;
 import org.metamechanists.death_lasers.connections.links.Link;
-import org.metamechanists.death_lasers.utils.DisplayUtils;
+import org.metamechanists.death_lasers.utils.Transformations;
 import org.metamechanists.death_lasers.utils.Keys;
+import org.metamechanists.death_lasers.utils.builders.BlockDisplayBuilder;
+import org.metamechanists.death_lasers.utils.builders.InteractionBuilder;
 import org.metamechanists.death_lasers.utils.id.BlockDisplayID;
 import org.metamechanists.death_lasers.utils.id.ConnectionPointID;
 import org.metamechanists.death_lasers.utils.id.InteractionID;
@@ -53,15 +55,18 @@ public abstract class ConnectionPoint implements ConfigurationSerializable {
         this.connectedBrightness = connectedBrightness;
         this.disconnectedBrightness = disconnectedBrightness;
         this.infoDisplay = new ConnectionInfoDisplay(id, location, true);
-
-        final BlockDisplay blockDisplay = DisplayUtils.spawnBlockDisplay(location, material, DisplayUtils.simpleScaleTransformation(new Vector3f(SCALE, SCALE, SCALE)));
-        this.blockDisplayID = new BlockDisplayID(blockDisplay.getUniqueId());
-
-        final Interaction interaction = DisplayUtils.spawnInteraction(location.clone().add(INTERACTION_OFFSET), SCALE, SCALE);
+        this.blockDisplayID = new BlockDisplayID(new BlockDisplayBuilder(location)
+                .setMaterial(material)
+                .setTransformation(Transformations.scale(new Vector3f(SCALE, SCALE, SCALE)))
+                .setBrightness(disconnectedBrightness)
+                .build()
+                .getUniqueId());
+        final Interaction interaction = new InteractionBuilder(location.clone().add(INTERACTION_OFFSET))
+                .setWidth(SCALE)
+                .setHeight(SCALE)
+                .build();
         PersistentDataAPI.setString(interaction, Keys.CONNECTION_POINT_ID, id.toString());
         this.interactionID = new InteractionID(interaction.getUniqueId());
-
-        getBlockDisplay().setBrightness(new Display.Brightness(disconnectedBrightness, 0));
     }
 
     protected ConnectionPoint(ConnectionPointID id, Link link, final String name, Location location, final int connectedBrightness, final int disconnectedBrightness,

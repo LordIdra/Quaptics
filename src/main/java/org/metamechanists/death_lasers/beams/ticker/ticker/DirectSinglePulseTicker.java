@@ -5,10 +5,10 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.entity.BlockDisplay;
-import org.bukkit.entity.Display;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
-import org.metamechanists.death_lasers.utils.DisplayUtils;
+import org.metamechanists.death_lasers.utils.Transformations;
+import org.metamechanists.death_lasers.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.death_lasers.utils.id.BlockDisplayID;
 
 import java.util.HashMap;
@@ -18,12 +18,14 @@ public class DirectSinglePulseTicker implements LaserBlockDisplayTicker, Configu
     private final BlockDisplayID displayID;
 
     public DirectSinglePulseTicker(Material material, Location source, Location target, float size) {
-        final float scale = size * 0.095F;
         final Location midpoint = source.clone().add(target).multiply(0.5);
-        final Vector3f scaleVector = new Vector3f(scale, scale, (float)(source.distance(target)));
-        this.displayID = new BlockDisplayID(
-                DisplayUtils.spawnBlockDisplay(midpoint, material, DisplayUtils.faceTargetTransformation(midpoint, target, scaleVector)).getUniqueId());
-        getDisplay().setBrightness(new Display.Brightness(15, 15));
+        final Vector3f scale = new Vector3f(size * 0.095F, size * 0.095F, (float)(source.distance(target)));
+        this.displayID = new BlockDisplayID(new BlockDisplayBuilder(midpoint)
+                        .setMaterial(material)
+                        .setTransformation(Transformations.lookAlong(scale, Transformations.getDirection(midpoint, target)))
+                        .setBrightness(15)
+                        .build()
+                        .getUniqueId());
     }
 
     private DirectSinglePulseTicker(BlockDisplayID displayID) {

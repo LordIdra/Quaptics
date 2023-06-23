@@ -1,9 +1,12 @@
 package org.metamechanists.death_lasers.connections.info;
 
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
+import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.entity.Display;
-import org.metamechanists.death_lasers.utils.DisplayUtils;
+import org.joml.Vector3f;
+import org.metamechanists.death_lasers.utils.Transformations;
+import org.metamechanists.death_lasers.utils.builders.TextDisplayBuilder;
 
 public class InfoDisplayBuilder {
     private final DisplayGroup group;
@@ -15,7 +18,13 @@ public class InfoDisplayBuilder {
     }
 
     public InfoDisplayBuilder add(String key) {
-        group.addDisplay(key, DisplayUtils.spawnTextDisplay(location, "", 0.25F, new Display.Brightness(15, 0), true));
+        group.addDisplay(key, new TextDisplayBuilder(location)
+                .setTransformation(Transformations.scale(new Vector3f(0.25F, 0.25F, 0.25F)))
+                .setBrightness(15)
+                .setViewRange(0)
+                .setBillboard(Display.Billboard.VERTICAL)
+                .setBackgroundColor(Color.fromARGB(0, 0, 0, 0))
+                .build());
         location.add(0, 0.07, 0);
         return this;
     }

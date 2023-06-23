@@ -22,8 +22,9 @@ import org.metamechanists.death_lasers.connections.links.Link;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointOutput;
 import org.metamechanists.death_lasers.implementation.base.ConnectedBlock;
-import org.metamechanists.death_lasers.utils.DisplayUtils;
+import org.metamechanists.death_lasers.utils.Transformations;
 import org.metamechanists.death_lasers.utils.Keys;
+import org.metamechanists.death_lasers.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.death_lasers.utils.id.ConnectionGroupID;
 
 import java.util.ArrayList;
@@ -39,10 +40,10 @@ public class Emitter extends ConnectedBlock {
     }
 
     private BlockDisplay generateMainBlockDisplay(Location from, Location to) {
-        return DisplayUtils.spawnBlockDisplay(
-                from.clone().add(0.5, 0.5, 0.5),
-                Material.PURPLE_CONCRETE,
-                DisplayUtils.faceTargetTransformation(from, to, new Vector3f(0.3F, 0.3F, (2*getRadius()))));
+        return new BlockDisplayBuilder(from.clone().add(0.5, 0.5, 0.5))
+                .setMaterial(Material.PURPLE_CONCRETE)
+                .setTransformation(Transformations.lookAlong(new Vector3f(0.3F, 0.3F, (2*getRadius())), Transformations.getDirection(from, to)))
+                .build();
     }
 
     @Override

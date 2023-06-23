@@ -17,7 +17,7 @@ import org.bukkit.util.Vector;
 import org.metamechanists.death_lasers.connections.ConnectionGroup;
 import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
-import org.metamechanists.death_lasers.utils.DisplayUtils;
+import org.metamechanists.death_lasers.utils.Transformations;
 import org.metamechanists.death_lasers.utils.Keys;
 import org.metamechanists.death_lasers.utils.id.ConnectionGroupID;
 
@@ -88,7 +88,7 @@ public abstract class ConnectedBlock extends EnergyDisplayGroupBlock {
     public Location calculateNewLocation(ConnectionPoint from, ConnectionPoint to) {
         final Location fromGroupLocation = from.getGroup().getLocation();
         final Location toGroupLocation = to.getGroup().getLocation();
-        final Vector radiusDirection = DisplayUtils.getDirection(fromGroupLocation, toGroupLocation).multiply(getRadius());
+        final Vector radiusDirection = Transformations.getDirection(fromGroupLocation, toGroupLocation).multiply(getRadius());
         return fromGroupLocation.clone().add(0.5, 0.5, 0.5).add(radiusDirection);
     }
 
