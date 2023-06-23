@@ -21,6 +21,7 @@ import org.bukkit.entity.SpawnCategory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
+import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.metamechanists.death_lasers.beams.DeprecatedTickerStorage;
 import org.metamechanists.death_lasers.beams.ticker.ticker.IntervalLinearVelocityTicker;
@@ -49,12 +50,16 @@ public class Turret extends ConnectedBlock {
         this.damagePerSlimefunTick = damagePerSlimefunTick;
     }
 
+    private Matrix4f getBarrelMatrix(Location from, Location to) {
+        return DisplayUtils.faceTargetTransformation(from.clone().add(0.5, 0.7, 0.5), to,
+                new Vector3f(0.18F, 0.18F, getRadius())).translate(0, 0, -getRadius()*0.8F);
+    }
+
     private BlockDisplay generateBarrel(Location from, Location to) {
         return DisplayUtils.spawnBlockDisplay(
                 from.clone().add(0.5, 0.7, 0.5),
                 Material.GRAY_CONCRETE,
-                DisplayUtils.faceTargetTransformation(from.clone().add(0.5, 0.7, 0.5), to,
-                        new Vector3f(0.18F, 0.18F, getRadius())).translate(0, 0, -getRadius()*0.8F));
+                getBarrelMatrix(from, to));
     }
 
     @Override
@@ -153,8 +158,7 @@ public class Turret extends ConnectedBlock {
             return;
         }
 
-        getDisplayGroup(location).removeDisplay("barrel").remove();
-        getDisplayGroup(location).addDisplay("barrel", generateBarrel(location, target.getEyeLocation()));
+        getDisplayGroup(location).getDisplays().get("barrel").setTransformationMatrix(getBarrelMatrix(location, target.getEyeLocation()));
 
         DeprecatedTickerStorage.deprecate(new IntervalLinearVelocityTicker(
                 Material.LIGHT_BLUE_CONCRETE,
