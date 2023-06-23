@@ -54,8 +54,9 @@ public class Turret extends ConnectedBlock {
         return DisplayUtils.spawnBlockDisplay(
                 from.clone().add(0.5, 0.7, 0.5),
                 Material.GRAY_CONCRETE,
-                new Matrix4f().translate(0, 0, -getRadius()*0.8F).mul(
-                    DisplayUtils.faceTargetTransformation(from, to, new Vector3f(0.18F, 0.18F, getRadius()))));
+                new Matrix4f()
+                        .translate(0, 0, -getRadius()*0.8F)
+                        .mul(DisplayUtils.faceTargetTransformation(from, to, new Vector3f(0.18F, 0.18F, getRadius()))));
     }
 
     @Override
