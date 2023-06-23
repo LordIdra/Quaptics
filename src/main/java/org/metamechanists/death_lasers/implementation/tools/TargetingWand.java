@@ -94,11 +94,6 @@ public class TargetingWand extends SlimefunItem {
         final ConnectedBlock block1 = output.getGroup().getBlock();
         final ConnectedBlock block2 = input.getGroup().getBlock();
 
-        if (block1.calculateNewLocation(output, input).equals(block2.calculateNewLocation(input, output))) {
-            player.sendMessage(Language.getLanguageEntry("targeting-wand.connection-overlaps"));
-            return;
-        }
-
         if (input.hasLink()) {
             input.getLink().remove();
         }
