@@ -27,7 +27,7 @@ public class Lore {
         return attributeSymbol + rangeSymbol + "&7Range &e" + Objects.toString(range) + rangeSuffix;
     }
     public static String damage(double damage) {
-        return attributeSymbol + damageSymbol + "&7Range &e" + Objects.toString(damage) + damageSuffix;
+        return attributeSymbol + damageSymbol + "&7Damage &e" + Objects.toString(damage) + damageSuffix;
     }
 
     public static String powerWithoutAttributeSymbol(double power) {

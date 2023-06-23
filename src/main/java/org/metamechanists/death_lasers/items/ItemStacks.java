@@ -42,12 +42,12 @@ public class ItemStacks {
 
     public static final SlimefunItemStack TURRET = new SlimefunItemStack(
             "TURRET",
-            Material.ORANGE_STAINED_GLASS,
+            Material.SMOOTH_STONE_SLAB,
             "&4Turret",
             "&7● Shoots at nearby entities",
             Lore.powerConsumption(30),
-            Lore.range(10),
-            Lore.damage(4));
+            Lore.damage(4),
+            Lore.range(10));
 
     public static final SlimefunItemStack TARGETING_WAND = new SlimefunItemStack(
             "TARGETING_WAND",

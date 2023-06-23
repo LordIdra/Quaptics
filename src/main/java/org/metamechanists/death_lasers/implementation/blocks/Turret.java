@@ -21,7 +21,6 @@ import org.bukkit.entity.SpawnCategory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
-import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.metamechanists.death_lasers.beams.DeprecatedTickerStorage;
 import org.metamechanists.death_lasers.beams.ticker.ticker.IntervalLinearVelocityTicker;
@@ -54,9 +53,7 @@ public class Turret extends ConnectedBlock {
         return DisplayUtils.spawnBlockDisplay(
                 from.clone().add(0.5, 0.7, 0.5),
                 Material.GRAY_CONCRETE,
-                new Matrix4f()
-                        .translate(0, 0, -getRadius()*0.8F)
-                        .mul(DisplayUtils.faceTargetTransformation(from, to, new Vector3f(0.18F, 0.18F, getRadius()))));
+                DisplayUtils.faceTargetTransformation(from, to, new Vector3f(0.18F, 0.18F, getRadius())).translate(0, 0, -getRadius()*0.8F));
     }
 
     @Override
@@ -156,7 +153,7 @@ public class Turret extends ConnectedBlock {
         }
 
         getDisplayGroup(location).removeDisplay("barrel").remove();
-        getDisplayGroup(location).addDisplay("barrel", generateBarrel(location, target.getEyeLocation()));
+        getDisplayGroup(location).addDisplay("barrel", generateBarrel(location.clone().add(0.5, 0.7, 0.5), target.getEyeLocation()));
 
         DeprecatedTickerStorage.deprecate(new IntervalLinearVelocityTicker(
                 Material.LIGHT_BLUE_CONCRETE,

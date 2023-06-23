@@ -6,7 +6,7 @@ import org.metamechanists.metalib.utils.ColorUtils;
 public enum Colors {
     COUNT("9494B8"),
     RANGE("66CCFF"),
-    DAMAGE("CC0099"),
+    DAMAGE("990073"),
     POWER("FF0000"),
     FREQUENCY("00ff00"),
     PHASE("FFCC00");
