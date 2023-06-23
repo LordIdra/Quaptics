@@ -24,6 +24,7 @@ public class Link implements ConfigurationSerializable {
     private double frequency;
     @Getter
     private int phase;
+    private double maxPower;
     private final ConnectionPointID outputID;
     private final ConnectionPointID inputID;
     private DirectBlockDisplayBeam beam;
@@ -32,6 +33,7 @@ public class Link implements ConfigurationSerializable {
     public Link(ConnectionPointInput input, ConnectionPointOutput output) {
         this.inputID = input.getId();
         this.outputID = output.getId();
+        this.maxPower = input.getGroup().getBlock().maxPower;
         input.link(this);
         output.link(this);
         BlockUpdateScheduler.scheduleUpdate(output.getGroup().getId());
@@ -73,7 +75,7 @@ public class Link implements ConfigurationSerializable {
                         Material.WHITE_CONCRETE,
                         getOutput().getLocation(),
                         getInput().getLocation(),
-                        (float) (power / 40.0F)));
+                        (float) (power / maxPower)));
     }
 
     private boolean hasBeam() {
