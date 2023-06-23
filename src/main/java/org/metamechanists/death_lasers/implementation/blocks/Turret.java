@@ -53,7 +53,8 @@ public class Turret extends ConnectedBlock {
         return DisplayUtils.spawnBlockDisplay(
                 from.clone().add(0.5, 0.7, 0.5),
                 Material.GRAY_CONCRETE,
-                DisplayUtils.faceTargetTransformation(from, to, new Vector3f(0.18F, 0.18F, getRadius())).translate(0, 0, -getRadius()*0.8F));
+                DisplayUtils.faceTargetTransformation(from.clone().add(0.5, 0.7, 0.5), to,
+                        new Vector3f(0.18F, 0.18F, getRadius())).translate(0, 0, -getRadius()*0.8F));
     }
 
     @Override
@@ -153,7 +154,7 @@ public class Turret extends ConnectedBlock {
         }
 
         getDisplayGroup(location).removeDisplay("barrel").remove();
-        getDisplayGroup(location).addDisplay("barrel", generateBarrel(location.clone().add(0.5, 0.7, 0.5), target.getEyeLocation()));
+        getDisplayGroup(location).addDisplay("barrel", generateBarrel(location, target.getEyeLocation()));
 
         DeprecatedTickerStorage.deprecate(new IntervalLinearVelocityTicker(
                 Material.LIGHT_BLUE_CONCRETE,
