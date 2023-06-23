@@ -15,6 +15,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.SpawnCategory;
 import org.bukkit.inventory.ItemStack;
@@ -50,9 +51,10 @@ public class Turret extends ConnectedBlock {
 
     private BlockDisplay generateBarrel(Location from, Location to) {
         return DisplayUtils.spawnBlockDisplay(
-                from.clone().add(0.5, 0.5, 0.5),
-                Material.GRAY_CONCRETE,
-                DisplayUtils.faceTargetTransformation(from, to, new Vector3f(0.14F, 0.14F, getRadius()*1.5F)));
+                from.clone().add(0.5, 0.4, 0.5),
+                Material.POLISHED_DEEPSLATE,
+                DisplayUtils.faceTargetTransformation(from, to, new Vector3f(0.14F, 0.14F, getRadius()))
+                        .translate(0, 0, getRadius()*0.5F));
     }
 
     @Override
@@ -64,10 +66,8 @@ public class Turret extends ConnectedBlock {
                 "main",
                 DisplayUtils.spawnBlockDisplay(
                         location.clone().add(0.5, 0.5, 0.5),
-                        Material.WHITE_CONCRETE,
-                        DisplayUtils.rotationTransformation(
-                                new Vector3f(0.4F, 0.4F, 0.4F),
-                                new Vector3f((float)(Math.PI/4), (float)(Math.PI/4), 0))));
+                        Material.POLISHED_ANDESITE,
+                        DisplayUtils.simpleScaleTransformation(new Vector3f(0.4F, 0.5F, 0.4F))));
 
         displayGroup.addDisplay("barrel", generateBarrel(location, location.clone().add(0, 0, 1)));
 
@@ -104,13 +104,13 @@ public class Turret extends ConnectedBlock {
         BlockStorage.addBlockInfo(location, Keys.TARGET, null);
     }
 
-    private Damageable getTarget(Location location) {
+    private LivingEntity getTarget(Location location) {
         final String targetString =  BlockStorage.getLocationInfo(location, Keys.TARGET);
         if (targetString == null) {
             return null;
         }
 
-        return (Damageable) Bukkit.getEntity(UUID.fromString(targetString));
+        return (LivingEntity) Bukkit.getEntity(UUID.fromString(targetString));
     }
 
     private void retarget(Location location) {
@@ -130,12 +130,12 @@ public class Turret extends ConnectedBlock {
             return;
         }
 
-        Damageable target = null;
+        LivingEntity target = null;
         double targetDistance = 9999999;
         for (Entity entity : targetableEntities) {
             final double distance = entity.getLocation().distance(location.clone().add(0.5, 0.5, 0.5));
             if (distance < targetDistance) {
-                target = (Damageable) entity;
+                target = (LivingEntity) entity;
                 targetDistance = distance;
             }
         }
@@ -144,7 +144,7 @@ public class Turret extends ConnectedBlock {
     }
 
     private void shoot(Location location) {
-        Damageable target = getTarget(location);
+        LivingEntity target = getTarget(location);
 
         if (target == null
                 || target.isDead()
@@ -159,7 +159,7 @@ public class Turret extends ConnectedBlock {
         DeprecatedTickerStorage.deprecate(new IntervalLinearVelocityTicker(
                 Material.LIGHT_BLUE_CONCRETE,
                 location.clone().add(0.5, 0.5, 0.5),
-                target.getOrigin(),
+                target.getEyeLocation(),
                 1));
 
         target.damage(damagePerSlimefunTick);
