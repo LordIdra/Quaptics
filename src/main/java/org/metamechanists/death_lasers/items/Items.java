@@ -74,7 +74,8 @@ public class Items {
                 new ItemStack[]{},
                 40,
                 30,
-                10, 2));
+                10,
+                2));
     }}
 
     public static void initialize() {

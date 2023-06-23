@@ -45,8 +45,9 @@ public class ItemStacks {
             Material.ORANGE_STAINED_GLASS,
             "&4Turret",
             "&7● Shoots at nearby entities",
-            Lore.maxPower(40),
-            Lore.powerLoss(20));
+            Lore.powerConsumption(30),
+            Lore.range(10),
+            Lore.damage(4));
 
     public static final SlimefunItemStack TARGETING_WAND = new SlimefunItemStack(
             "TARGETING_WAND",
