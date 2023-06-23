@@ -39,7 +39,7 @@ public class TargetingWandListener implements Listener {
     public void scrollEvent(PlayerItemHeldEvent event) {
         final ItemStack heldItem = event.getPlayer().getInventory().getItem(event.getPreviousSlot());
         if (SlimefunItem.getByItem(heldItem) instanceof TargetingWand wand) {
-            wand.unsetSourceConnectionPoint(heldItem);
+            wand.unsetSource(heldItem);
         }
     }
 }

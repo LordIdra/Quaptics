@@ -29,8 +29,8 @@ import org.metamechanists.death_lasers.connections.ConnectionGroup;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointInput;
 import org.metamechanists.death_lasers.implementation.base.ConnectedBlock;
-import org.metamechanists.death_lasers.utils.Transformations;
 import org.metamechanists.death_lasers.utils.Keys;
+import org.metamechanists.death_lasers.utils.Transformations;
 import org.metamechanists.death_lasers.utils.builders.BlockDisplayBuilder;
 
 import java.util.ArrayList;
@@ -39,6 +39,12 @@ import java.util.List;
 import java.util.UUID;
 
 public class Turret extends ConnectedBlock {
+    private final Vector3f MAIN_DISPLAY_SIZE = new Vector3f(0.6F, 0.6F, 0.6F);
+    private final Vector3f BARREL_SIZE = new Vector3f(0.18F, 0.18F, getRadius());
+    private final Vector3f BARREL_TRANSLATION = new Vector3f(0, 0, -getRadius()*0.8F);
+    private final Vector BARREL_LOCATION = new Vector(0.5, 0.7, 0.5);
+    private final Vector3f PROJECTILE_SIZE = new Vector3f(0.095F, 0.095F, 0.20F);
+    private final Vector INPUT_LOCATION = new Vector(0.0F, 0.0F, -getRadius());
     private final double powerConsumption;
     private final double range;
     private final double damagePerSlimefunTick;
@@ -52,35 +58,29 @@ public class Turret extends ConnectedBlock {
     }
 
     private Matrix4f getBarrelMatrix(Location from, Location to) {
-        return Transformations.lookAlong(new Vector3f(0.18F, 0.18F, getRadius()), Transformations.getDirection(from.clone().add(0.5, 0.7, 0.5), to))
-                .translate(0, 0, -getRadius()*0.8F);
+        return Transformations.lookAlong(BARREL_SIZE, Transformations.getDirection(from.clone().add(BARREL_LOCATION), to)).translate(BARREL_TRANSLATION);
     }
 
     private BlockDisplay generateBarrel(Location from, Location to) {
-        return new BlockDisplayBuilder(from.clone().add(0.5, 0.7, 0.5))
+        return new BlockDisplayBuilder(from.clone().add(BARREL_LOCATION))
                 .setMaterial(Material.GRAY_CONCRETE)
                 .setTransformation(getBarrelMatrix(from, to))
                 .build();
     }
 
     @Override
-    protected DisplayGroup generateDisplayGroup(Player player, Location location) {
-        // Height/width are zero to prevent the large interaction entity from obstructing the player
-        final DisplayGroup displayGroup = new DisplayGroup(location, 0, 0);
-        displayGroup.addDisplay(
-                "main",
-                new BlockDisplayBuilder(location.clone().add(0.5, 0.5, 0.5))
+    protected void addDisplays(DisplayGroup displayGroup, Location location, Player player) {
+        displayGroup.addDisplay("main", new BlockDisplayBuilder(location.clone().add(RELATIVE_CENTER))
                         .setMaterial(Material.POLISHED_ANDESITE)
-                        .setTransformation(Transformations.scale(new Vector3f(0.6F, 0.6F, 0.6F)))
+                        .setTransformation(Transformations.scale(MAIN_DISPLAY_SIZE))
                         .build());
-        displayGroup.addDisplay("barrel", generateBarrel(location, location.clone().add(0, 0, 1)));
-        return displayGroup;
+        displayGroup.addDisplay("barrel", generateBarrel(location, location.clone().add(INITIAL_LINE)));
     }
 
     @Override
     protected List<ConnectionPoint> generateConnectionPoints(Player player, Location location) {
         final List<ConnectionPoint> points = new ArrayList<>();
-        points.add(new ConnectionPointInput("input", formatRelativeLocation(player, location, new Vector(0.0F, 0.0F, -getRadius()))));
+        points.add(new ConnectionPointInput("input", formatPointLocation(player, location, INPUT_LOCATION)));
         return points;
     }
 
@@ -122,12 +122,10 @@ public class Turret extends ConnectedBlock {
         }
 
         final Collection<Entity> entities = location.getWorld().getNearbyEntities(location, range, range, range);
-        final Collection<Entity> targetableEntities = entities.stream().filter(entity -> {
-            final boolean hostile = entity.getSpawnCategory().equals(SpawnCategory.MONSTER);
-            final boolean damageable = entity instanceof Damageable;
-            final boolean inRange = entity.getLocation().distance(location) < range;
-            return hostile && inRange && damageable;
-        }).toList();
+        final Collection<Entity> targetableEntities = entities.stream().filter(entity ->
+                entity.getSpawnCategory().equals(SpawnCategory.MONSTER)
+                        && entity instanceof Damageable
+                        && entity.getLocation().distance(location) < range).toList();
 
         if (targetableEntities.isEmpty()) {
             return;
@@ -136,7 +134,7 @@ public class Turret extends ConnectedBlock {
         LivingEntity target = null;
         double targetDistance = 9999999;
         for (Entity entity : targetableEntities) {
-            final double distance = entity.getLocation().distance(location.clone().add(0.5, 0.5, 0.5));
+            final double distance = entity.getLocation().distance(location.clone().add(RELATIVE_CENTER));
             if (distance < targetDistance) {
                 target = (LivingEntity) entity;
                 targetDistance = distance;
@@ -151,7 +149,7 @@ public class Turret extends ConnectedBlock {
 
         if (target == null
                 || target.isDead()
-                || location.clone().add(0.5, 0.5, 0.5).distance(target.getLocation()) > range) {
+                || location.clone().add(RELATIVE_CENTER).distance(target.getLocation()) > range) {
             clearTarget(location);
             return;
         }
@@ -160,9 +158,9 @@ public class Turret extends ConnectedBlock {
 
         DeprecatedTickerStorage.deprecate(new IntervalVelocityTicker(
                 Material.LIGHT_BLUE_CONCRETE,
-                location.clone().add(0.5, 0.7, 0.5),
+                location.clone().add(BARREL_LOCATION),
                 target.getEyeLocation(),
-                new Vector3f(0.095F, 0.095F, 0.20F),
+                PROJECTILE_SIZE,
                 1));
 
         target.damage(damagePerSlimefunTick);

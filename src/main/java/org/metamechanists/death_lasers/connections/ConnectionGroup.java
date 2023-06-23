@@ -5,6 +5,8 @@ import org.bukkit.Location;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
+import org.metamechanists.death_lasers.connections.points.ConnectionPointInput;
+import org.metamechanists.death_lasers.connections.points.ConnectionPointOutput;
 import org.metamechanists.death_lasers.implementation.base.ConnectedBlock;
 import org.metamechanists.death_lasers.items.Items;
 import org.metamechanists.death_lasers.storage.SerializationUtils;
@@ -47,17 +49,21 @@ public class ConnectionGroup implements ConfigurationSerializable {
         this.pointUuidsFromNames = pointUuidsFromNames;
     }
 
-    public void updateInfoDisplays() {
-        points.values().forEach(ConnectionPoint::updateInfoDisplay);
-    }
-
     public void tick() {
         points.values().forEach(ConnectionPoint::tick);
         block.onLaserTick(this);
     }
 
+    public void updateInfoDisplays() {
+        points.values().forEach(ConnectionPoint::updateInfoDisplay);
+    }
+
     public void removeAllPoints() {
         points.values().forEach(ConnectionPoint::remove);
+    }
+
+    public void changePointLocation(ConnectionPointID pointId, Location newLocation) {
+        points.get(pointId).changeLocation(newLocation);
     }
 
     public ConnectionPoint getPoint(ConnectionPointID uuid) {
@@ -67,9 +73,11 @@ public class ConnectionGroup implements ConfigurationSerializable {
     public ConnectionPoint getPoint(String name) {
         return points.get(pointUuidsFromNames.get(name));
     }
-
-    public void changePointLocation(ConnectionPointID pointId, Location newLocation) {
-        points.get(pointId).updateLocation(newLocation);
+    public ConnectionPointInput getInput(String name) {
+        return (ConnectionPointInput) getPoint(name);
+    }
+    public ConnectionPointOutput getOutput(String name) {
+        return (ConnectionPointOutput) getPoint(name);
     }
 
     @Override

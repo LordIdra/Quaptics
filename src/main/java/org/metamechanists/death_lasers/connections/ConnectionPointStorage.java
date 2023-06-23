@@ -27,12 +27,15 @@ public class ConnectionPointStorage {
         groups.put(group.getId(), group);
         group.getPoints().keySet().forEach(pointID -> pointIdsToGroupIds.put(pointID, group.getId()));
     }
+
     public static boolean hasGroup(ConnectionGroupID id) {
         return groups.containsKey(id);
     }
+
     public static ConnectionGroup getGroup(ConnectionGroupID id) {
         return groups.get(id);
     }
+
     public static ConnectionGroup getGroup(ConnectionPointID id) {
         return groups.get(pointIdsToGroupIds.get(id));
     }
@@ -40,6 +43,7 @@ public class ConnectionPointStorage {
     public static boolean hasPoint(ConnectionPointID id) {
         return pointIdsToGroupIds.containsKey(id);
     }
+
     public static ConnectionPoint getPoint(ConnectionPointID id) {
         final ConnectionGroupID groupId = pointIdsToGroupIds.get(id);
         final ConnectionGroup group = getGroup(groupId);
@@ -54,6 +58,7 @@ public class ConnectionPointStorage {
         group.removeAllPoints();
         group.getPoints().forEach(pointIdsToGroupIds::remove);
     }
+
     public static void updatePointLocation(ConnectionPointID id, Location newLocation) {
         final ConnectionGroupID groupId = pointIdsToGroupIds.get(id);
         final ConnectionGroup group = groups.get(groupId);

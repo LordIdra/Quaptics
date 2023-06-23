@@ -37,11 +37,11 @@ public class Link implements ConfigurationSerializable {
         input.link(this);
         output.link(this);
         BlockUpdateScheduler.scheduleUpdate(output.getGroup().getId());
-        update();
+        BlockUpdateScheduler.scheduleUpdate(input.getGroup().getId());
+        updateInfoPanels();
     }
 
-    private Link(boolean enabled, double power, double frequency, int phase,
-                 ConnectionPointID outputID, ConnectionPointID inputID, DirectBeam beam) {
+    private Link(boolean enabled, double power, double frequency, int phase, ConnectionPointID outputID, ConnectionPointID inputID, DirectBeam beam) {
         this.enabled = enabled;
         this.power = power;
         this.frequency = frequency;
@@ -59,23 +59,6 @@ public class Link implements ConfigurationSerializable {
         return (ConnectionPointInput) ConnectionPointStorage.getPoint(inputID);
     }
 
-    private void updateBeam() {
-        if (hasBeam()) {
-            beam.deprecate();
-            beam = null;
-        }
-
-        if (!enabled) {
-            return;
-        }
-
-        this.beam = new DirectBeam(new DirectTickerFactory(
-                        Material.WHITE_CONCRETE,
-                        getOutput().getLocation(),
-                        getInput().getLocation(),
-                        (float)(power / maxPower) * 0.095F));
-    }
-
     private boolean hasBeam() {
         return beam != null;
     }
@@ -84,12 +67,6 @@ public class Link implements ConfigurationSerializable {
         if (hasBeam()) {
             beam.tick();
         }
-    }
-
-    private void update() {
-        getInput().getGroup().updateInfoDisplays();
-        getOutput().getGroup().updateInfoDisplays();
-        BlockUpdateScheduler.scheduleUpdate(getInput().getGroup().getId());
     }
 
     public void remove() {
@@ -109,6 +86,28 @@ public class Link implements ConfigurationSerializable {
         }
     }
 
+    private void updateBeam() {
+        if (hasBeam()) {
+            beam.deprecate();
+            beam = null;
+        }
+
+        if (!enabled) {
+            return;
+        }
+
+        this.beam = new DirectBeam(new DirectTickerFactory(
+                        Material.WHITE_CONCRETE,
+                        getOutput().getLocation(),
+                        getInput().getLocation(),
+                        (float)(power / maxPower) * 0.095F));
+    }
+
+    private void updateInfoPanels() {
+        getInput().getGroup().updateInfoDisplays();
+        getOutput().getGroup().updateInfoDisplays();
+    }
+
     public void setEnabled(boolean enabled) {
         if (enabled == this.enabled) {
             return;
@@ -123,7 +122,8 @@ public class Link implements ConfigurationSerializable {
         }
 
         updateBeam();
-        update();
+        updateInfoPanels();
+        BlockUpdateScheduler.scheduleUpdate(getInput().getGroup().getId());
     }
 
     public void setPower(double power) {
@@ -135,7 +135,8 @@ public class Link implements ConfigurationSerializable {
         this.power = power;
 
         updateBeam();
-        update();
+        updateInfoPanels();
+        BlockUpdateScheduler.scheduleUpdate(getInput().getGroup().getId());
     }
 
     @Override

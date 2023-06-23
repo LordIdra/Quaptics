@@ -30,23 +30,23 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class ConnectionPoint implements ConfigurationSerializable {
+    protected final static float SIZE = 0.1F;
+    private static final Vector INTERACTION_OFFSET = new Vector(0, -SIZE /2, 0);
     @Getter
     private final ConnectionPointID id;
-    @Getter
-    protected Link link;
+    protected final BlockDisplayID blockDisplayID;
+    protected final InteractionID interactionID;
     @Getter
     private final String name;
-    @Getter
-    protected Location location;
     @Getter
     protected final int connectedBrightness;
     @Getter
     protected final int disconnectedBrightness;
+    @Getter
+    protected Link link;
+    @Getter
+    protected Location location;
     private ConnectionInfoDisplay infoDisplay;
-    protected final BlockDisplayID blockDisplayID;
-    protected final InteractionID interactionID;
-    protected final static float SCALE = 0.1F;
-    public static final Vector INTERACTION_OFFSET = new Vector(0, -SCALE/2, 0);
 
     public ConnectionPoint(String name, Location location, Material material, int connectedBrightness, int disconnectedBrightness) {
         this.id = new ConnectionPointID();
@@ -57,13 +57,13 @@ public abstract class ConnectionPoint implements ConfigurationSerializable {
         this.infoDisplay = new ConnectionInfoDisplay(id, location, true);
         this.blockDisplayID = new BlockDisplayID(new BlockDisplayBuilder(location)
                 .setMaterial(material)
-                .setTransformation(Transformations.scale(new Vector3f(SCALE, SCALE, SCALE)))
+                .setTransformation(Transformations.scale(new Vector3f(SIZE, SIZE, SIZE)))
                 .setBrightness(disconnectedBrightness)
                 .build()
                 .getUniqueId());
         final Interaction interaction = new InteractionBuilder(location.clone().add(INTERACTION_OFFSET))
-                .setWidth(SCALE)
-                .setHeight(SCALE)
+                .setWidth(SIZE)
+                .setHeight(SIZE)
                 .build();
         PersistentDataAPI.setString(interaction, Keys.CONNECTION_POINT_ID, id.toString());
         this.interactionID = new InteractionID(interaction.getUniqueId());
@@ -96,10 +96,6 @@ public abstract class ConnectionPoint implements ConfigurationSerializable {
 
     public abstract void tick();
 
-    public void updateInfoDisplay() {
-        infoDisplay.update();
-    }
-
     public void remove() {
         if (hasLink()) {
             link.remove();
@@ -108,6 +104,23 @@ public abstract class ConnectionPoint implements ConfigurationSerializable {
         infoDisplay.remove();
         getBlockDisplay().remove();
         getInteraction().remove();
+    }
+
+    public void changeLocation(Location location) {
+        this.location = location;
+        getBlockDisplay().teleport(location);
+        getInteraction().teleport(location.clone().add(INTERACTION_OFFSET));
+        boolean wasDisplayHidden = infoDisplay.isHidden();
+        infoDisplay.remove();
+        infoDisplay = new ConnectionInfoDisplay(id, location, wasDisplayHidden);
+    }
+
+    public void updateInfoDisplay() {
+        infoDisplay.update();
+    }
+
+    public void toggleInfoDisplayVisibility() {
+        infoDisplay.toggleVisibility();
     }
 
     public boolean hasLink() {
@@ -136,19 +149,6 @@ public abstract class ConnectionPoint implements ConfigurationSerializable {
 
     public void deselect() {
         getBlockDisplay().setGlowing(false);
-    }
-
-    public void updateLocation(Location location) {
-        this.location = location;
-        getBlockDisplay().teleport(location);
-        getInteraction().teleport(location.clone().add(INTERACTION_OFFSET));
-        boolean wasDisplayHidden = infoDisplay.isHidden();
-        infoDisplay.remove();
-        infoDisplay = new ConnectionInfoDisplay(id, location, wasDisplayHidden);
-    }
-
-    public void toggleInfoDisplayVisibility() {
-        infoDisplay.toggleVisibility();
     }
 
     @Override

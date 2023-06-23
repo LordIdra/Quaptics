@@ -12,8 +12,7 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import org.metamechanists.death_lasers.connections.ConnectionGroup;
-import org.metamechanists.death_lasers.connections.links.Link;
-import org.metamechanists.death_lasers.connections.links.LinkProperties;
+import org.metamechanists.death_lasers.connections.links.LinkAttributes;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointInput;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointOutput;
@@ -25,6 +24,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Lens extends ConnectedBlock {
+    private final Vector3f MAIN_DISPLAY_SIZE = new Vector3f(0.2F, 0.2F, 0.2F);
+    private final Vector3f MAIN_DISPLAY_ROTATION = new Vector3f((float)(Math.PI/4), (float)(Math.PI/4), 0);
+    private final Vector INPUT_POINT_LOCATION = new Vector(0.0F, 0.0F, -getRadius());
+    private final Vector OUTPUT_POINT_LOCATION = new Vector(0.0F, 0.0F, getRadius());
     private final double powerLoss;
 
     public Lens(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, double maxPower, double powerLoss) {
@@ -33,30 +36,25 @@ public class Lens extends ConnectedBlock {
     }
 
     @Override
-    protected DisplayGroup generateDisplayGroup(Player player, Location location) {
-        // Height/width are zero to prevent the large interaction entity from obstructing the player
-        final DisplayGroup displayGroup = new DisplayGroup(location, 0, 0);
-        displayGroup.addDisplay("main", new BlockDisplayBuilder(location.clone().add(0.5, 0.5, 0.5))
-                        .setMaterial(Material.GLASS)
-                        .setTransformation(Transformations.rotateAndScale(
-                                new Vector3f(0.2F, 0.2F, 0.2F),
-                                new Vector3f((float)(Math.PI/4), (float)(Math.PI/4), 0)))
-                        .build());
-        return displayGroup;
+    protected void addDisplays(DisplayGroup displayGroup, Location location, Player player) {
+        displayGroup.addDisplay("main", new BlockDisplayBuilder(location.clone().add(RELATIVE_CENTER))
+                .setMaterial(Material.GLASS)
+                .setTransformation(Transformations.rotateAndScale(MAIN_DISPLAY_SIZE, MAIN_DISPLAY_ROTATION))
+                .build());
     }
 
     @Override
     protected List<ConnectionPoint> generateConnectionPoints(Player player, Location location) {
         final List<ConnectionPoint> points = new ArrayList<>();
-        points.add(new ConnectionPointInput("input", formatRelativeLocation(player, location, new Vector(0.0F, 0.0F, -getRadius()))));
-        points.add(new ConnectionPointOutput("output", formatRelativeLocation(player, location, new Vector(0.0F, 0.0F, getRadius()))));
+        points.add(new ConnectionPointInput("input", formatPointLocation(player, location, INPUT_POINT_LOCATION)));
+        points.add(new ConnectionPointOutput("output", formatPointLocation(player, location, OUTPUT_POINT_LOCATION)));
         return points;
     }
 
     @Override
     public void onInputLinkUpdated(ConnectionGroup group) {
-        final ConnectionPointInput input = (ConnectionPointInput) group.getPoint("input");
-        final ConnectionPointOutput output = (ConnectionPointOutput) group.getPoint("output");
+        final ConnectionPointInput input = group.getInput("input");
+        final ConnectionPointOutput output = group.getOutput("output");
 
         doBurnoutCheck(group, input);
 
@@ -69,11 +67,8 @@ public class Lens extends ConnectedBlock {
             return;
         }
 
-        final Link inputLink = input.getLink();
-        final Link outputLink = output.getLink();
-
-        outputLink.setPower(LinkProperties.calculatePower(inputLink.getPower(), maxPower, powerLoss));
-        outputLink.setEnabled(true);
+        output.getLink().setPower(LinkAttributes.powerLoss(input.getLink().getPower(), maxPower, powerLoss));
+        output.getLink().setEnabled(true);
     }
 
     @Override

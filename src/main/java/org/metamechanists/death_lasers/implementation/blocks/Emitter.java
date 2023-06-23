@@ -18,19 +18,20 @@ import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import org.metamechanists.death_lasers.connections.ConnectionGroup;
 import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
-import org.metamechanists.death_lasers.connections.links.Link;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointOutput;
-import org.metamechanists.death_lasers.implementation.base.ConnectedBlock;
-import org.metamechanists.death_lasers.utils.Transformations;
+import org.metamechanists.death_lasers.implementation.base.EnergyConnectedBlock;
 import org.metamechanists.death_lasers.utils.Keys;
+import org.metamechanists.death_lasers.utils.Transformations;
 import org.metamechanists.death_lasers.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.death_lasers.utils.id.ConnectionGroupID;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Emitter extends ConnectedBlock {
+public class Emitter extends EnergyConnectedBlock {
+    private final Vector OUTPUT_LOCATION = new Vector(0.0F, 0.0F, getRadius());
+    private final Vector3f MAIN_DISPLAY_SIZE = new Vector3f(0.3F, 0.3F, (2*getRadius()));
     private final double emissionPower;
 
     public Emitter(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe,
@@ -40,58 +41,50 @@ public class Emitter extends ConnectedBlock {
     }
 
     private BlockDisplay generateMainBlockDisplay(Location from, Location to) {
-        return new BlockDisplayBuilder(from.clone().add(0.5, 0.5, 0.5))
+        return new BlockDisplayBuilder(from.clone().add(RELATIVE_CENTER))
                 .setMaterial(Material.PURPLE_CONCRETE)
-                .setTransformation(Transformations.lookAlong(new Vector3f(0.3F, 0.3F, (2*getRadius())), Transformations.getDirection(from, to)))
+                .setTransformation(Transformations.lookAlong(MAIN_DISPLAY_SIZE, Transformations.getDirection(from, to)))
                 .build();
     }
 
     @Override
-    protected DisplayGroup generateDisplayGroup(Player player, Location location) {
-        // Height/width are zero to prevent the large interaction entity from obstructing the player
-        final DisplayGroup displayGroup = new DisplayGroup(location, 0, 0);
-        displayGroup.addDisplay("main", generateMainBlockDisplay(location, location.clone().add(accountForPlayerYaw(player, new Vector(0, 0, 1)))));
-        return displayGroup;
+    protected void addDisplays(DisplayGroup displayGroup, Location location, Player player) {
+        displayGroup.addDisplay("main", generateMainBlockDisplay(location, location.clone().add(rotateVectorByEyeDirection(player, INITIAL_LINE))));
     }
 
     @Override
     protected List<ConnectionPoint> generateConnectionPoints(Player player, Location location) {
         final List<ConnectionPoint> points = new ArrayList<>();
-        points.add(new ConnectionPointOutput("output", formatRelativeLocation(player, location, new Vector(0.0F, 0.0F, getRadius()))));
+        points.add(new ConnectionPointOutput("output", formatPointLocation(player, location, OUTPUT_LOCATION)));
         return points;
     }
 
     @Override
     public void onSlimefunTick(Block block, SlimefunItem item, Config data) {
+        super.onSlimefunTick(block, item, data);
         final ConnectionGroupID id = new ConnectionGroupID(BlockStorage.getLocationInfo(block.getLocation(), Keys.CONNECTION_GROUP_ID));
         final ConnectionGroup group = ConnectionPointStorage.getGroup(id);
         final ConnectionPointOutput output = (ConnectionPointOutput) group.getPoint("output");
-        final int charge = getCharge(block.getLocation(), data);
 
-        if (charge >= consumption) {
-            removeCharge(block.getLocation(), consumption);
-            if (output.hasLink()) {
-                final Link link = output.getLink();
-                link.setPower(emissionPower);
-                link.setEnabled(true);
-            }
-        } else {
-            if (output.hasLink()) {
-                final Link link = output.getLink();
-                link.setEnabled(false);
-            }
+        if (!output.hasLink()) {
+            return;
         }
+
+        if (powered) {
+            output.getLink().setPower(emissionPower);
+            output.getLink().setEnabled(true);
+            return;
+        }
+
+        output.getLink().setEnabled(false);
     }
 
     @Override
     public void connect(ConnectionPoint from, ConnectionPoint to) {
         super.connect(from, to);
-        final Location fromGroupLocation = from.getGroup().getLocation();
-        final Location toGroupLocation = to.getGroup().getLocation();
-        final DisplayGroup fromDisplayGroup = getDisplayGroup(fromGroupLocation);
-
+        final DisplayGroup fromDisplayGroup = getDisplayGroup(from.getGroup().getLocation());
         fromDisplayGroup.removeDisplay("main").remove();
-        fromDisplayGroup.addDisplay("main", generateMainBlockDisplay(fromGroupLocation, toGroupLocation));
+        fromDisplayGroup.addDisplay("main", generateMainBlockDisplay(from.getGroup().getLocation(), to.getGroup().getLocation()));
     }
 
     @Override

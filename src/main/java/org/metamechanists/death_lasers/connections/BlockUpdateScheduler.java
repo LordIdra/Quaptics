@@ -7,7 +7,6 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class BlockUpdateScheduler {
     // DANGER - this class is responsible for ensuring no update loops occur, which could crash the server and then make restarting it apallingly difficult
-    // Think VERY carefully before modifying
 
     private static Queue<ConnectionGroupID> newGroupsToTick = new ConcurrentLinkedQueue<>();
 
@@ -28,7 +27,6 @@ public class BlockUpdateScheduler {
     public static void tick() {
         final Queue<ConnectionGroupID> oldGroupsToTick = newGroupsToTick;
         newGroupsToTick = new ConcurrentLinkedQueue<>();
-
         while (!oldGroupsToTick.isEmpty()) {
             tickGroup(oldGroupsToTick.remove());
         }

@@ -20,14 +20,6 @@ public class Transformations {
         BLOCK_VERTICES.add(new Vector3f(1, 1, 1));
     }}
 
-    public static Vector3f getDisplacement(Location from, Location to) {
-        return to.clone().subtract(from).toVector().toVector3f();
-    }
-
-    public static Vector3f getDirection(Location from, Location to) {
-        return getDisplacement(from, to).normalize();
-    }
-
     private static Vector3f calculateHitboxAdjustmentTranslation(Matrix4f matrix) {
         // When we rotate a block, the hitbox in X, Y, and Z changes
         // We need to account for this change to center the block
@@ -51,6 +43,18 @@ public class Transformations {
         });
 
         return max.add(min).div(-2);
+    }
+
+    public static double yawToCardinalDirection(float yaw) {
+        return -Math.round(yaw / 90F) * (Math.PI/2);
+    }
+
+    public static Vector3f getDisplacement(Location from, Location to) {
+        return to.clone().subtract(from).toVector().toVector3f();
+    }
+
+    public static Vector3f getDirection(Location from, Location to) {
+        return getDisplacement(from, to).normalize();
     }
 
     public static Matrix4f lookAlong(Vector3f scale, Vector3f direction) {

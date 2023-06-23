@@ -11,12 +11,10 @@ public class SpawnTimer {
 
     public boolean update() {
         tick++;
-
         if (tick >= interval) {
             tick = 0;
             return true;
         }
-
         return false;
     }
 }

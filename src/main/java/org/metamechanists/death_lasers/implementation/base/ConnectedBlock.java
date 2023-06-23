@@ -17,26 +17,22 @@ import org.bukkit.util.Vector;
 import org.metamechanists.death_lasers.connections.ConnectionGroup;
 import org.metamechanists.death_lasers.connections.ConnectionPointStorage;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
-import org.metamechanists.death_lasers.utils.Transformations;
 import org.metamechanists.death_lasers.utils.Keys;
+import org.metamechanists.death_lasers.utils.Transformations;
 import org.metamechanists.death_lasers.utils.id.ConnectionGroupID;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.util.List;
 
-public abstract class ConnectedBlock extends EnergyDisplayGroupBlock {
+public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
     public final double maxPower;
-
-    public ConnectedBlock(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, double maxPower, int capacity, int consumption) {
-        super(group, item, recipeType, recipe, capacity, consumption);
-        this.maxPower = maxPower;
-    }
 
     public ConnectedBlock(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, double maxPower) {
         super(group, item, recipeType, recipe);
         this.maxPower = maxPower;
     }
 
+    protected abstract float getRadius();
     protected abstract List<ConnectionPoint> generateConnectionPoints(Player player, Location location);
 
     @Override
@@ -91,6 +87,4 @@ public abstract class ConnectedBlock extends EnergyDisplayGroupBlock {
         final Vector radiusDirection = Vector.fromJOML(Transformations.getDirection(fromGroupLocation, toGroupLocation).mul(getRadius()));
         return fromGroupLocation.clone().add(0.5, 0.5, 0.5).add(radiusDirection);
     }
-
-    protected abstract float getRadius();
 }

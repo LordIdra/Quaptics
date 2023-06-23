@@ -12,8 +12,7 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import org.metamechanists.death_lasers.connections.ConnectionGroup;
-import org.metamechanists.death_lasers.connections.links.Link;
-import org.metamechanists.death_lasers.connections.links.LinkProperties;
+import org.metamechanists.death_lasers.connections.links.LinkAttributes;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointInput;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointOutput;
@@ -25,6 +24,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DarkPrism extends ConnectedBlock {
+    private final Vector INPUT_1_LOCATION = new Vector(0.0F, 0.0F, -getRadius()).rotateAroundY(-Math.PI/8);
+    private final Vector INPUT_2_LOCATION = new Vector(0.0F, 0.0F, -getRadius()).rotateAroundY(Math.PI/8);
+    private final Vector OUTPUT_LOCATION = new Vector(0.0F, 0.0F, getRadius());
+    private final Vector3f MAIN_DISPLAY_SIZE = new Vector3f(0.4F, 0.4F, 0.4F);
+    private final Vector3f MAIN_DISPLAY_ROTATION = new Vector3f((float)(Math.PI/4), (float)(Math.PI/4), 0);
     private final double powerLoss;
 
     public DarkPrism(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, double maxPower, double powerLoss) {
@@ -33,31 +37,19 @@ public class DarkPrism extends ConnectedBlock {
     }
 
     @Override
-    protected DisplayGroup generateDisplayGroup(Player player, Location location) {
-        // Height/width are zero to prevent the large interaction entity from obstructing the player
-        final DisplayGroup displayGroup = new DisplayGroup(location, 0, 0);
-        displayGroup.addDisplay("main", new BlockDisplayBuilder(location.clone().add(0.5, 0.5, 0.5))
+    protected void addDisplays(DisplayGroup displayGroup, Location location, Player player) {
+        displayGroup.addDisplay("main", new BlockDisplayBuilder(location.clone().add(RELATIVE_CENTER))
                         .setMaterial(Material.GRAY_STAINED_GLASS)
-                        .setTransformation(Transformations.rotateAndScale(
-                                new Vector3f(0.4F, 0.4F, 0.4F),
-                                new Vector3f((float)(Math.PI/4), (float)(Math.PI/4), 0)))
+                        .setTransformation(Transformations.rotateAndScale(MAIN_DISPLAY_SIZE, MAIN_DISPLAY_ROTATION))
                         .build());
-        return displayGroup;
     }
 
     @Override
     protected List<ConnectionPoint> generateConnectionPoints(Player player, Location location) {
         final List<ConnectionPoint> points = new ArrayList<>();
-
-        points.add(new ConnectionPointInput("input 1",
-                formatRelativeLocation(player, location, new Vector(0.0F, 0.0F, -getRadius()).rotateAroundY(-Math.PI/8))));
-
-        points.add(new ConnectionPointInput("input 2",
-                formatRelativeLocation(player, location, new Vector(0.0F, 0.0F, -getRadius()).rotateAroundY(Math.PI/8))));
-
-        points.add(new ConnectionPointOutput("output",
-                formatRelativeLocation(player, location, new Vector(0.0F, 0.0F, getRadius()))));
-
+        points.add(new ConnectionPointInput("input 1", formatPointLocation(player, location, INPUT_1_LOCATION)));
+        points.add(new ConnectionPointInput("input 2", formatPointLocation(player, location, INPUT_2_LOCATION)));
+        points.add(new ConnectionPointOutput("output", formatPointLocation(player, location, OUTPUT_LOCATION)));
         return points;
     }
 
@@ -77,8 +69,7 @@ public class DarkPrism extends ConnectedBlock {
         final boolean input1On = input1.hasLink() && input1.getLink().isEnabled();
         final boolean input2On = input2.hasLink() && input2.getLink().isEnabled();
         if (!input1On && !input2On) {
-            final Link link = output.getLink();
-            link.setEnabled(false);
+            output.getLink().setEnabled(false);
             return;
         }
 
@@ -86,9 +77,8 @@ public class DarkPrism extends ConnectedBlock {
         if (input1On) { inputPower += input1.getLink().getPower(); }
         if (input2On) { inputPower += input2.getLink().getPower(); }
 
-        final Link outputLink = output.getLink();
-        outputLink.setPower(LinkProperties.calculatePower(inputPower, maxPower, powerLoss));
-        outputLink.setEnabled(true);
+        output.getLink().setPower(LinkAttributes.powerLoss(inputPower, maxPower, powerLoss));
+        output.getLink().setEnabled(true);
     }
 
     @Override

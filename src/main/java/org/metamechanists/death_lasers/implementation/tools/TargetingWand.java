@@ -15,7 +15,7 @@ import org.metamechanists.death_lasers.connections.links.Link;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointInput;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointOutput;
-import org.metamechanists.death_lasers.implementation.base.ConnectedBlock;
+import org.metamechanists.death_lasers.implementation.base.EnergyConnectedBlock;
 import org.metamechanists.death_lasers.items.Items;
 import org.metamechanists.death_lasers.utils.Keys;
 import org.metamechanists.death_lasers.utils.Language;
@@ -31,7 +31,7 @@ public class TargetingWand extends SlimefunItem {
         return stack.getItemMeta().getPersistentDataContainer().has(Keys.SOURCE);
     }
 
-    private void setSourceConnectionPoint(Player player, ConnectionPointID sourceID, ItemStack stack) {
+    private void setSource(Player player, ConnectionPointID sourceID, ItemStack stack) {
         ConnectionPoint source = ConnectionPointStorage.getPoint(sourceID);
         if (!(source instanceof ConnectionPointOutput)) {
             player.sendMessage(Language.getLanguageEntry("targeting-wand.source-must-be-output"));
@@ -42,7 +42,7 @@ public class TargetingWand extends SlimefunItem {
         PersistentDataUtils.setString(stack, Keys.SOURCE, sourceID.toString());
     }
 
-    public void unsetSourceConnectionPoint(ItemStack stack) {
+    public void unsetSource(ItemStack stack) {
         if (isSourceSet(stack)) {
             final ConnectionPointID sourcePointID = new ConnectionPointID(PersistentDataUtils.getString(stack, Keys.SOURCE));
             final ConnectionPointOutput sourcePoint = (ConnectionPointOutput)ConnectionPointStorage.getPoint(sourcePointID);
@@ -91,8 +91,8 @@ public class TargetingWand extends SlimefunItem {
             return;
         }
 
-        final ConnectedBlock block1 = output.getGroup().getBlock();
-        final ConnectedBlock block2 = input.getGroup().getBlock();
+        final EnergyConnectedBlock block1 = output.getGroup().getBlock();
+        final EnergyConnectedBlock block2 = input.getGroup().getBlock();
 
         if (input.hasLink()) {
             input.getLink().remove();
@@ -105,7 +105,7 @@ public class TargetingWand extends SlimefunItem {
         block1.connect(output, input);
         block2.connect(input, output);
 
-        setSourceConnectionPoint(player, output.getId(), stack);
+        setSource(player, output.getId(), stack);
 
         new Link(input, output);
     }
@@ -113,7 +113,7 @@ public class TargetingWand extends SlimefunItem {
     public void use(Player player, ConnectionPointID pointId, ItemStack stack) {
         final ConnectionGroup group = ConnectionPointStorage.getGroup(pointId);
         if (!BlockStorage.hasBlockInfo(group.getLocation())
-                || !(BlockStorage.check(group.getLocation()) instanceof ConnectedBlock)
+                || !(BlockStorage.check(group.getLocation()) instanceof EnergyConnectedBlock)
                 || !Items.targetingWand.canUse(player, false)
                 || !Slimefun.getProtectionManager().hasPermission(player, player.getLocation(), Interaction.INTERACT_BLOCK)) {
             return;
@@ -121,12 +121,12 @@ public class TargetingWand extends SlimefunItem {
 
         if (player.isSneaking()) {
             removeLink(pointId);
-            unsetSourceConnectionPoint(stack);
+            unsetSource(stack);
         } else if (isSourceSet(stack)) {
             createLink(player, pointId, stack);
-            unsetSourceConnectionPoint(stack);
+            unsetSource(stack);
         } else {
-            setSourceConnectionPoint(player, pointId, stack);
+            setSource(player, pointId, stack);
         }
     }
 }
