@@ -1,6 +1,6 @@
-name: DEATH_LASERS
+name: Quaptics
 version: '${project.version}'
-main: org.metamechanists.death_lasers.DEATH_LASERS
+main: org.metamechanists.death_lasers.Quaptics
 api-version: 1.19
 
 depend:

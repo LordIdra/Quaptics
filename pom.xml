@@ -5,7 +5,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.metamechanists</groupId>
-    <artifactId>DEATH_LASERS</artifactId>
+    <artifactId>Quaptics</artifactId>
     <version>0</version>
 
     <name>DEATH_LASERS</name>
@@ -35,7 +35,7 @@
                     <relocations>
                         <relocation>
                             <pattern>dev.sefiraat.sefilib</pattern>
-                            <shadedPattern>org.metamechanists.death_lasers.sefilib</shadedPattern>
+                            <shadedPattern>org.metamechanists.quaptics.sefilib</shadedPattern>
                         </relocation>
                     </relocations>
                     <filters>
