@@ -12,6 +12,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -21,7 +22,7 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import org.metamechanists.death_lasers.beams.DeprecatedTickerStorage;
-import org.metamechanists.death_lasers.beams.ticker.ticker.IntervalLinearTimeTicker;
+import org.metamechanists.death_lasers.beams.ticker.ticker.IntervalLinearVelocityTicker;
 import org.metamechanists.death_lasers.connections.ConnectionGroup;
 import org.metamechanists.death_lasers.connections.points.ConnectionPoint;
 import org.metamechanists.death_lasers.connections.points.ConnectionPointInput;
@@ -47,6 +48,13 @@ public class Turret extends ConnectedBlock {
         this.damagePerSlimefunTick = damagePerSlimefunTick;
     }
 
+    private BlockDisplay generateBarrel(Location from, Location to) {
+        return DisplayUtils.spawnBlockDisplay(
+                from.clone().add(0.5, 0.5, 0.5),
+                Material.GRAY_CONCRETE,
+                DisplayUtils.faceTargetTransformation(from, to, new Vector3f(0.14F, 0.14F, getRadius())));
+    }
+
     @Override
     protected DisplayGroup generateDisplayGroup(Player player, Location location) {
         // Height/width are zero to prevent the large interaction entity from obstructing the player
@@ -56,10 +64,12 @@ public class Turret extends ConnectedBlock {
                 "main",
                 DisplayUtils.spawnBlockDisplay(
                         location.clone().add(0.5, 0.5, 0.5),
-                        Material.ORANGE_STAINED_GLASS,
+                        Material.WHITE_CONCRETE,
                         DisplayUtils.rotationTransformation(
-                                new Vector3f(0.2F, 0.2F, 0.2F),
+                                new Vector3f(0.4F, 0.4F, 0.4F),
                                 new Vector3f((float)(Math.PI/4), (float)(Math.PI/4), 0))));
+
+        displayGroup.addDisplay("barrel", generateBarrel(location, location.clone().add(0, 0, 1)));
 
         return displayGroup;
     }
@@ -123,7 +133,7 @@ public class Turret extends ConnectedBlock {
         Damageable target = null;
         double targetDistance = 9999999;
         for (Entity entity : targetableEntities) {
-            final double distance = entity.getLocation().distance(location);
+            final double distance = entity.getLocation().distance(location.clone().add(0.5, 0.5, 0.5));
             if (distance < targetDistance) {
                 target = (Damageable) entity;
                 targetDistance = distance;
@@ -138,15 +148,18 @@ public class Turret extends ConnectedBlock {
 
         if (target == null
                 || target.isDead()
-                || location.distance(target.getLocation()) > range) {
+                || location.clone().add(0.5, 0.5, 0.5).distance(target.getLocation()) > range) {
             clearTarget(location);
             return;
         }
 
-        DeprecatedTickerStorage.deprecate(new IntervalLinearTimeTicker(
+        getDisplayGroup(location).removeDisplay("barrel");
+        getDisplayGroup(location).addDisplay("barrel", generateBarrel(location, target.getLocation()));
+
+        DeprecatedTickerStorage.deprecate(new IntervalLinearVelocityTicker(
                 Material.LIGHT_BLUE_CONCRETE,
                 location.clone().add(0.5, 0.5, 0.5),
-                target.getLocation(),
+                target.getOrigin(),
                 10));
 
         target.damage(damagePerSlimefunTick);
@@ -162,11 +175,11 @@ public class Turret extends ConnectedBlock {
 
     @Override
     protected float getRadius() {
-        return 0.35F;
+        return 0.55F;
     }
 
     @Override
     protected @NotNull Material getBaseMaterial() {
-        return Material.STRUCTURE_VOID;
+        return Material.SMOOTH_STONE_SLAB;
     }
 }
