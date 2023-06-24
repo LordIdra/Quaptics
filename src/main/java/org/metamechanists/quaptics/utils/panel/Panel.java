@@ -1,6 +1,7 @@
 package org.metamechanists.quaptics.utils.panel;
 
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
+import io.github.bakedlibs.dough.common.ChatColors;
 import io.github.bakedlibs.dough.data.persistent.PersistentDataAPI;
 import lombok.Getter;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
@@ -64,7 +65,7 @@ public class Panel implements ConfigurationSerializable {
     public void setText(String name, String text) {
         final String currentText = getAttribute(name).getText();
         if (!text.equals(currentText)) {
-            getAttribute(name).setText(text);
+            getAttribute(name).setText(ChatColors.color(text));
         }
     }
 

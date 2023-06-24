@@ -57,6 +57,7 @@ public class ConnectionPointStorage {
         final ConnectionGroup group = groups.remove(id);
         group.removeAllPoints();
         group.getPoints().forEach(pointIdsToGroupIds::remove);
+        // TODO investigate not removing from other map
     }
 
     public static void updatePointLocation(ConnectionPointID id, Location newLocation) {
