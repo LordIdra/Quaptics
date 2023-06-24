@@ -45,6 +45,7 @@ public class Panel implements ConfigurationSerializable {
 
     public void setPanelHidden(boolean panelHidden) {
         if (this.panelHidden != panelHidden) {
+            this.panelHidden = panelHidden;
             getDisplayGroup().getDisplays().keySet().forEach(this::updateAttributeVisibility);
         }
     }
