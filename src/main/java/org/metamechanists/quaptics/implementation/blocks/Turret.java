@@ -41,7 +41,7 @@ import java.util.UUID;
 public class Turret extends ConnectedBlock {
     private final Vector3f MAIN_DISPLAY_SIZE = new Vector3f(0.6F, 0.6F, 0.6F);
     private final Vector3f BARREL_SIZE = new Vector3f(0.18F, 0.18F, getRadius());
-    private final Vector3f BARREL_TRANSLATION = new Vector3f(0, 0, -getRadius()*0.8F);
+    private final Vector3f BARREL_TRANSLATION = new Vector3f(0, 0, getRadius()*0.8F);
     private final Vector BARREL_LOCATION = new Vector(0.5, 0.7, 0.5);
     private final Vector3f PROJECTILE_SIZE = new Vector3f(0.095F, 0.095F, 0.20F);
     private final Vector INPUT_LOCATION = new Vector(0.0F, 0.0F, -getRadius());
