@@ -57,7 +57,7 @@ public abstract class ConnectionPoint implements ConfigurationSerializable {
         this.panel = new PointPanel(location, id);
         this.blockDisplayID = new BlockDisplayID(new BlockDisplayBuilder(location)
                 .setMaterial(material)
-                .setTransformation(Transformations.scale(new Vector3f(SIZE, SIZE, SIZE)))
+                .setTransformation(Transformations.adjustedScale(new Vector3f(SIZE, SIZE, SIZE)))
                 .setBrightness(disconnectedBrightness)
                 .build()
                 .getUniqueId());

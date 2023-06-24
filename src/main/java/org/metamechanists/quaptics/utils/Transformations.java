@@ -71,7 +71,11 @@ public class Transformations {
                 .scale(scale);
     }
 
-    public static Matrix4f scale(Vector3f scale) {
+    public static Matrix4f unadjustedScale(Vector3f scale) {
+        return new Matrix4f().scale(scale);
+    }
+
+    public static Matrix4f adjustedScale(Vector3f scale) {
         return new Matrix4f().translate(-scale.x/2, -scale.y/2, -scale.z/2).scale(scale);
     }
 

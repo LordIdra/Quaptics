@@ -72,7 +72,7 @@ public class Turret extends ConnectedBlock {
     protected void addDisplays(DisplayGroup displayGroup, Location location, Player player) {
         displayGroup.addDisplay("main", new BlockDisplayBuilder(location.clone().add(RELATIVE_CENTER))
                         .setMaterial(Material.POLISHED_ANDESITE)
-                        .setTransformation(Transformations.scale(MAIN_DISPLAY_SIZE))
+                        .setTransformation(Transformations.adjustedScale(MAIN_DISPLAY_SIZE))
                         .build());
         displayGroup.addDisplay("barrel", generateBarrel(location, location.clone().add(INITIAL_LINE)));
     }

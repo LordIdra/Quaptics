@@ -32,7 +32,7 @@ public class PanelBuilder {
 
     public PanelBuilder addAttribute(String name) {
         final TextDisplay display = new TextDisplayBuilder(nextAttributeLocation)
-                .setTransformation(Transformations.scale(displaySize))
+                .setTransformation(Transformations.unadjustedScale(displaySize))
                 .setBrightness(15)
                 .setViewRange(0)
                 .setBillboard(Display.Billboard.VERTICAL)
