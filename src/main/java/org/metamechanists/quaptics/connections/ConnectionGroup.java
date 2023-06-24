@@ -54,8 +54,8 @@ public class ConnectionGroup implements ConfigurationSerializable {
         block.onQuapticTick(this);
     }
 
-    public void updateInfoDisplays() {
-        points.values().forEach(ConnectionPoint::updateInfoDisplay);
+    public void updatePanels() {
+        points.values().forEach(ConnectionPoint::updatePanel);
     }
 
     public void removeAllPoints() {

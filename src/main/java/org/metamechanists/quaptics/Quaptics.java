@@ -11,9 +11,8 @@ import org.jetbrains.annotations.Nullable;
 import org.metamechanists.quaptics.beams.beam.DirectBeam;
 import org.metamechanists.quaptics.beams.ticker.ticker.DirectTicker;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
-import org.metamechanists.quaptics.connections.info.ConnectionInfoDisplay;
-import org.metamechanists.quaptics.connections.info.PointInformationListener;
 import org.metamechanists.quaptics.connections.Link;
+import org.metamechanists.quaptics.connections.panels.PointPanelListener;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
 import org.metamechanists.quaptics.implementation.tools.TargetingWandListener;
@@ -27,6 +26,8 @@ import org.metamechanists.quaptics.utils.id.ConnectionGroupID;
 import org.metamechanists.quaptics.utils.id.ConnectionPointID;
 import org.metamechanists.quaptics.utils.id.DisplayGroupID;
 import org.metamechanists.quaptics.utils.id.InteractionID;
+import org.metamechanists.quaptics.utils.panel.Panel;
+import org.metamechanists.quaptics.connections.panels.PointPanel;
 
 public final class Quaptics extends JavaPlugin implements SlimefunAddon {
     @Getter
@@ -43,7 +44,9 @@ public final class Quaptics extends JavaPlugin implements SlimefunAddon {
         ConfigurationSerialization.registerClass(ConnectionGroup.class, "ConnectionGroup");
         ConfigurationSerialization.registerClass(ConnectionPointOutput.class, "ConnectionPointOutput");
         ConfigurationSerialization.registerClass(ConnectionPointInput.class, "ConnectionPointInput");
-        ConfigurationSerialization.registerClass(ConnectionInfoDisplay.class, "ConnectionInfoDisplay");
+
+        ConfigurationSerialization.registerClass(PointPanel.class, "PointPanel");
+        ConfigurationSerialization.registerClass(Panel.class, "Panel");
 
         ConfigurationSerialization.registerClass(Link.class, "Link");
 
@@ -54,7 +57,7 @@ public final class Quaptics extends JavaPlugin implements SlimefunAddon {
     private void initializeListeners() {
         final PluginManager pluginManager = this.getServer().getPluginManager();
         pluginManager.registerEvents(new TargetingWandListener(), this);
-        pluginManager.registerEvents(new PointInformationListener(), this);
+        pluginManager.registerEvents(new PointPanelListener(), this);
     }
 
     public void initializeRunnables() {

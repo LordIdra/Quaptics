@@ -36,7 +36,7 @@ public class Link implements ConfigurationSerializable {
         output.link(this);
         BlockUpdateScheduler.scheduleUpdate(output.getGroup().getId());
         BlockUpdateScheduler.scheduleUpdate(input.getGroup().getId());
-        updateInfoPanels();
+        updatePanels();
     }
 
     private Link(boolean enabled, double power, double frequency, int phase, ConnectionPointID outputID, ConnectionPointID inputID, DirectBeam beam) {
@@ -101,9 +101,9 @@ public class Link implements ConfigurationSerializable {
                         (float)(power / maxPower) * 0.095F));
     }
 
-    private void updateInfoPanels() {
-        getInput().getGroup().updateInfoDisplays();
-        getOutput().getGroup().updateInfoDisplays();
+    private void updatePanels() {
+        getInput().getGroup().updatePanels();
+        getOutput().getGroup().updatePanels();
     }
 
     public void setEnabled(boolean enabled) {
@@ -120,7 +120,7 @@ public class Link implements ConfigurationSerializable {
         }
 
         updateBeam();
-        updateInfoPanels();
+        updatePanels();
         BlockUpdateScheduler.scheduleUpdate(getInput().getGroup().getId());
     }
 
@@ -133,7 +133,7 @@ public class Link implements ConfigurationSerializable {
         this.power = power;
 
         updateBeam();
-        updateInfoPanels();
+        updatePanels();
         BlockUpdateScheduler.scheduleUpdate(getInput().getGroup().getId());
     }
 

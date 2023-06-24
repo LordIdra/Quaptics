@@ -1,4 +1,4 @@
-package org.metamechanists.quaptics.utils.panel;
+package org.metamechanists.quaptics.connections.panels;
 
 import io.github.bakedlibs.dough.common.ChatColors;
 import org.bukkit.Location;
@@ -10,6 +10,8 @@ import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.utils.id.ConnectionPointID;
+import org.metamechanists.quaptics.utils.panel.Panel;
+import org.metamechanists.quaptics.utils.panel.PanelBuilder;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -23,7 +23,7 @@ import org.metamechanists.quaptics.utils.builders.InteractionBuilder;
 import org.metamechanists.quaptics.utils.id.BlockDisplayID;
 import org.metamechanists.quaptics.utils.id.ConnectionPointID;
 import org.metamechanists.quaptics.utils.id.InteractionID;
-import org.metamechanists.quaptics.utils.panel.PointPanel;
+import org.metamechanists.quaptics.connections.panels.PointPanel;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.util.HashMap;
@@ -116,8 +116,12 @@ public abstract class ConnectionPoint implements ConfigurationSerializable {
         panel.setPanelHidden(wasHidden);
     }
 
-    public void updateInfoDisplay() {
+    public void updatePanel() {
         panel.update();
+    }
+
+    public void togglePanelVisibility() {
+        panel.toggleVisibility();
     }
 
     public boolean hasLink() {
@@ -130,13 +134,13 @@ public abstract class ConnectionPoint implements ConfigurationSerializable {
         }
         this.link = link;
         getBlockDisplay().setBrightness(new Display.Brightness(connectedBrightness, 0));
-        updateInfoDisplay();
+        updatePanel();
     }
 
     public void unlink() {
         link = null;
         getBlockDisplay().setBrightness(new Display.Brightness(disconnectedBrightness, 0));
-        updateInfoDisplay();
+        updatePanel();
     }
 
     public void select() {
