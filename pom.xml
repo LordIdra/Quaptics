@@ -8,7 +8,7 @@
     <artifactId>Quaptics</artifactId>
     <version>0</version>
 
-    <name>DEATH_LASERS</name>
+    <name>Quaptics</name>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -16,7 +16,7 @@
     </properties>
 
     <build>
-        <finalName>DEATH_LASERS</finalName>
+        <finalName>Quaptics</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
