@@ -30,7 +30,7 @@ public class Lore {
         return attributeSymbol + damageSymbol + "&7Damage &e" + Objects.toString(damage) + damageSuffix;
     }
 
-    public static String powerWithoutAttributeSymbol(double power) {
+    public static String powerNoArrow(double power) {
         return powerSymbol + "&7Power &e" + Objects.toString(power) + powerSuffix;
     }
     public static String emissionPower(double emissionPower) {
@@ -46,11 +46,11 @@ public class Lore {
         return attributeSymbol + powerSymbol + "&7Max Power Loss &e" + Objects.toString(powerLossPercentage) + percentageSuffix;
     }
 
-    public static String frequencyWithoutAttributeSymbol(double frequency) {
+    public static String frequencyNoArrow(double frequency) {
         return frequencySymbol + "&7Frequency &e" + Objects.toString(frequency) + frequencySuffix;
     }
 
-    public static String phaseWithoutAttributeSymbol(int phase) {
+    public static String phaseNoArrow(int phase) {
         return phaseSymbol + "&7Phase &e" + Objects.toString(phase) + phaseSuffix;
     }
 }

@@ -15,15 +15,15 @@ import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPointStorage;
-import org.metamechanists.quaptics.connections.info.ConnectionInfoDisplay;
 import org.metamechanists.quaptics.connections.Link;
-import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.Keys;
+import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.builders.InteractionBuilder;
 import org.metamechanists.quaptics.utils.id.BlockDisplayID;
 import org.metamechanists.quaptics.utils.id.ConnectionPointID;
 import org.metamechanists.quaptics.utils.id.InteractionID;
+import org.metamechanists.quaptics.utils.panel.PointPanel;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.util.HashMap;
@@ -46,7 +46,7 @@ public abstract class ConnectionPoint implements ConfigurationSerializable {
     protected Link link;
     @Getter
     protected Location location;
-    private ConnectionInfoDisplay infoDisplay;
+    private PointPanel panel;
 
     public ConnectionPoint(String name, Location location, Material material, int connectedBrightness, int disconnectedBrightness) {
         this.id = new ConnectionPointID();
@@ -54,7 +54,7 @@ public abstract class ConnectionPoint implements ConfigurationSerializable {
         this.location = location;
         this.connectedBrightness = connectedBrightness;
         this.disconnectedBrightness = disconnectedBrightness;
-        this.infoDisplay = new ConnectionInfoDisplay(id, location, true);
+        this.panel = new PointPanel(location, id);
         this.blockDisplayID = new BlockDisplayID(new BlockDisplayBuilder(location)
                 .setMaterial(material)
                 .setTransformation(Transformations.scale(new Vector3f(SIZE, SIZE, SIZE)))
@@ -70,14 +70,14 @@ public abstract class ConnectionPoint implements ConfigurationSerializable {
     }
 
     protected ConnectionPoint(ConnectionPointID id, Link link, final String name, Location location, final int connectedBrightness, final int disconnectedBrightness,
-                              final ConnectionInfoDisplay infoDisplay, BlockDisplayID blockDisplayID, InteractionID interactionID) {
+                              final PointPanel panel, BlockDisplayID blockDisplayID, InteractionID interactionID) {
         this.id = id;
         this.link = link;
         this.name = name;
         this.location = location;
         this.connectedBrightness = connectedBrightness;
         this.disconnectedBrightness = disconnectedBrightness;
-        this.infoDisplay = infoDisplay;
+        this.panel = panel;
         this.blockDisplayID = blockDisplayID;
         this.interactionID = interactionID;
     }
@@ -101,7 +101,7 @@ public abstract class ConnectionPoint implements ConfigurationSerializable {
             link.remove();
         }
 
-        infoDisplay.remove();
+        panel.remove();
         getBlockDisplay().remove();
         getInteraction().remove();
     }
@@ -110,17 +110,14 @@ public abstract class ConnectionPoint implements ConfigurationSerializable {
         this.location = location;
         getBlockDisplay().teleport(location);
         getInteraction().teleport(location.clone().add(INTERACTION_OFFSET));
-        boolean wasDisplayHidden = infoDisplay.isHidden();
-        infoDisplay.remove();
-        infoDisplay = new ConnectionInfoDisplay(id, location, wasDisplayHidden);
+        boolean wasHidden = panel.isPanelHidden();
+        panel.remove();
+        panel = new PointPanel(location, id);
+        panel.setPanelHidden(wasHidden);
     }
 
     public void updateInfoDisplay() {
-        infoDisplay.update();
-    }
-
-    public void toggleInfoDisplayVisibility() {
-        infoDisplay.toggleVisibility();
+        panel.update();
     }
 
     public boolean hasLink() {
@@ -161,7 +158,7 @@ public abstract class ConnectionPoint implements ConfigurationSerializable {
         map.put("location", location);
         map.put("connectedBrightness", connectedBrightness);
         map.put("disconnectedBrightness", disconnectedBrightness);
-        map.put("infoDisplay", infoDisplay);
+        map.put("panel", panel);
         map.put("blockDisplayID", blockDisplayID);
         map.put("interactionID", interactionID);
         return map;
