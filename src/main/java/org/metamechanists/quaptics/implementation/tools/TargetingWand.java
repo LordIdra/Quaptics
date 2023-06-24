@@ -91,6 +91,13 @@ public class TargetingWand extends SlimefunItem {
             return;
         }
 
+        if (input.hasLink()
+                && output.hasLink()
+                && input.getLink().getInput().getId() == inputID
+                && output.getLink().getOutput().getId() == outputID) {
+            return;
+        }
+
         final ConnectedBlock block1 = output.getGroup().getBlock();
         final ConnectedBlock block2 = input.getGroup().getBlock();
 
