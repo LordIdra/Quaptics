@@ -16,7 +16,6 @@ import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
-import org.metamechanists.quaptics.implementation.base.EnergyConnectedBlock;
 import org.metamechanists.quaptics.items.Items;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Language;
@@ -114,7 +113,7 @@ public class TargetingWand extends SlimefunItem {
     public void use(Player player, ConnectionPointID pointId, ItemStack stack) {
         final ConnectionGroup group = ConnectionPointStorage.getGroup(pointId);
         if (!BlockStorage.hasBlockInfo(group.getLocation())
-                || !(BlockStorage.check(group.getLocation()) instanceof EnergyConnectedBlock)
+                || !(BlockStorage.check(group.getLocation()) instanceof ConnectedBlock)
                 || !Items.targetingWand.canUse(player, false)
                 || !Slimefun.getProtectionManager().hasPermission(player, player.getLocation(), Interaction.INTERACT_BLOCK)) {
             return;
