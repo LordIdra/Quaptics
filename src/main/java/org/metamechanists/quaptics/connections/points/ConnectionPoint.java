@@ -108,7 +108,7 @@ public abstract class ConnectionPoint {
     }
 
     public boolean hasLink() {
-        return linkID != null;
+        return linkID != null && getLink() != null;
     }
 
     public Link getLink() {

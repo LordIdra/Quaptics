@@ -3,9 +3,11 @@ package org.metamechanists.quaptics.connections;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import lombok.Getter;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.metamechanists.metalib.sefilib.entity.display.DisplayGroup;
 import org.metamechanists.quaptics.beams.DirectBeam;
 import org.metamechanists.quaptics.beams.ticker.DirectTicker;
@@ -63,8 +65,10 @@ public class Link {
     }
 
     @Contract("_ -> new")
-    public static @NotNull Link fromID(LinkID ID) {
-        return new Link(ID);
+    public static @Nullable Link fromID(@NotNull LinkID ID) {
+        return Bukkit.getEntity(ID.get()) == null
+                ? null
+                : new Link(ID);
     }
 
     public void saveData() {
