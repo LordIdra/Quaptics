@@ -51,6 +51,7 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
 
     @Override
     protected void onBreak(BlockBreakEvent event) {
+        ConnectionGroup.fromID(new ConnectionGroupID(getID(event.getBlock().getLocation()).get())).remove();
         onBreak(event.getBlock().getLocation());
     }
 
