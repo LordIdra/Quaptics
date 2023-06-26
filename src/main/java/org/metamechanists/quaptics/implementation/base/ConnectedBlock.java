@@ -77,9 +77,9 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
         location.getWorld().spawnParticle(new ParticleBuilder(Particle.FLASH).location(location).count(1).particle(), location, 20);
     }
 
-    public void doBurnoutCheck(ConnectionGroupID group, ConnectionPointID point) {
-        if (ConnectionPoint.fromID(point).hasLink() && ConnectionPoint.fromID(point).getLink().getPower() > maxPower) {
-            burnout(ConnectionGroup.fromID(group).getLocation());
+    public void doBurnoutCheck(ConnectionGroup group, ConnectionPoint point) {
+        if (point.hasLink() && point.getLink().getPower() > maxPower) {
+            burnout(group.getLocation());
         }
     }
 
