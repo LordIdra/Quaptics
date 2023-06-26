@@ -1,6 +1,5 @@
 package org.metamechanists.quaptics.connections.panels;
 
-import io.github.bakedlibs.dough.data.persistent.PersistentDataAPI;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Interaction;
@@ -10,7 +9,6 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.implementation.tools.TargetingWand;
-import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.id.ConnectionPointID;
 
 public class PointPanelListener implements Listener {
@@ -26,7 +24,7 @@ public class PointPanelListener implements Listener {
             return;
         }
 
-        final ConnectionPointID pointID = new ConnectionPointID(PersistentDataAPI.getString(clickedEntity, Keys.CONNECTION_POINT_ID));
+        final ConnectionPointID pointID = new ConnectionPointID(clickedEntity.getUniqueId());
         final ConnectionPoint point = ConnectionPoint.fromID(pointID);
         if (point == null) {
             return;
