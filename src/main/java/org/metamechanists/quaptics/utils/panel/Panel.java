@@ -52,6 +52,10 @@ public class Panel {
         traverser.save();
     }
 
+    public PanelID getID() {
+        return new PanelID(displayGroupID.get());
+    }
+
     private DisplayGroup getDisplayGroup() {
         return DisplayGroup.fromUUID(displayGroupID.get());
     }

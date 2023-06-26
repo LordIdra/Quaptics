@@ -24,7 +24,7 @@ import org.metamechanists.quaptics.utils.id.ConnectionGroupID;
 import org.metamechanists.quaptics.utils.id.ConnectionPointID;
 import org.metamechanists.quaptics.utils.id.InteractionID;
 import org.metamechanists.quaptics.utils.id.LinkID;
-import org.metamechanists.quaptics.utils.id.PointPanelID;
+import org.metamechanists.quaptics.utils.id.PanelID;
 
 public abstract class ConnectionPoint {
     private final static float SIZE = 0.1F;
@@ -33,7 +33,7 @@ public abstract class ConnectionPoint {
     @Getter
     private final InteractionID interactionID;
     private final BlockDisplayID blockDisplayID;
-    private PointPanelID panelID;
+    private PanelID panelID;
     private LinkID linkID;
     @Getter
     private final String name;
@@ -69,7 +69,7 @@ public abstract class ConnectionPoint {
         this.groupID = new ConnectionGroupID(mainSection.get("groupID").getAsString());
         this.blockDisplayID = new BlockDisplayID(mainSection.get("blockDisplayID").getAsString());
         this.interactionID = new InteractionID(mainSection.get("interactionID").getAsString());
-        this.panelID = new PointPanelID(mainSection.get("panelID").getAsString());
+        this.panelID = new PanelID(mainSection.get("panelID").getAsString());
         this.linkID = linkIDString.equals("null") ? null : new LinkID(linkIDString);
         this.name = mainSection.get("name").getAsString();
         this.connectedBrightness = mainSection.get("connectedBrightness").getAsInt();

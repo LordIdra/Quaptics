@@ -8,7 +8,6 @@ import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.utils.id.ConnectionPointID;
 import org.metamechanists.quaptics.utils.id.PanelID;
-import org.metamechanists.quaptics.utils.id.PointPanelID;
 import org.metamechanists.quaptics.utils.panel.Panel;
 import org.metamechanists.quaptics.utils.panel.PanelBuilder;
 
@@ -29,13 +28,13 @@ public class PointPanel {
         panel.getAttribute("name").setHidden(false);
     }
 
-    public PointPanel(PointPanelID panelID, ConnectionPointID pointID) {
+    public PointPanel(PanelID panelID, ConnectionPointID pointID) {
         this.pointID = pointID;
-        this.panel = Panel.fromID(new PanelID(panelID.get()));
+        this.panel = Panel.fromID(panelID);
     }
 
-    public PointPanelID getID() {
-        return new PointPanelID(panel.getDisplayGroupID().get());
+    public PanelID getID() {
+        return panel.getID();
     }
 
     private ConnectionPoint getPoint() {
