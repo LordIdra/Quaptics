@@ -50,7 +50,7 @@ public class Link {
         this.ID = ID;
         this.outputID = new ConnectionPointID(mainSection.get("outputID").getAsString());
         this.inputID = new ConnectionPointID(mainSection.get("inputID").getAsString());
-        this.beamID = new BeamID(mainSection.get("beamID").getAsString());
+        this.beamID = new BeamID(mainSection.get("beamID") == null ? null : mainSection.get("beamID").getAsString());
         this.enabled = mainSection.get("enabled").getAsBoolean();
         this.power = mainSection.get("power").getAsDouble();
         this.frequency = mainSection.get("frequency").getAsDouble();
