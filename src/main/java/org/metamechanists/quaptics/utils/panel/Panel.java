@@ -15,13 +15,13 @@ import java.util.Map;
 public class Panel {
 
     @Getter
-    private final DisplayGroupID ID;
+    private final DisplayGroupID displayGroupID;
     @Getter
     private boolean hidden = true;
     private final Map<String, PanelAttributeID> attributes;
 
-    public Panel(DisplayGroupID ID, Map<String, PanelAttributeID> attributes) {
-        this.ID = ID;
+    public Panel(DisplayGroupID displayGroupID, Map<String, PanelAttributeID> attributes) {
+        this.displayGroupID = displayGroupID;
         this.attributes = attributes;
         saveData();
     }
@@ -30,7 +30,7 @@ public class Panel {
         final DataTraverser traverser = new DataTraverser(panelID);
         final JsonObject mainSection = traverser.getData();
         final JsonObject attributeSection = mainSection.get("attributes").getAsJsonObject();
-        this.ID = new DisplayGroupID(panelID.get());
+        this.displayGroupID = new DisplayGroupID(panelID.get());
         this.hidden = mainSection.get("hidden").getAsBoolean();
         this.attributes = new HashMap<>();
         attributeSection.asMap().forEach(
@@ -42,7 +42,7 @@ public class Panel {
     }
 
     public void saveData() {
-        final DataTraverser traverser = new DataTraverser(ID);
+        final DataTraverser traverser = new DataTraverser(displayGroupID);
         final JsonObject mainSection = traverser.getData();
         final JsonObject attributeSection = new JsonObject();
         mainSection.add("hidden", new JsonPrimitive(hidden));
@@ -53,7 +53,7 @@ public class Panel {
     }
 
     private DisplayGroup getDisplayGroup() {
-        return DisplayGroup.fromUUID(ID.get());
+        return DisplayGroup.fromUUID(displayGroupID.get());
     }
 
     public PanelAttribute getAttribute(String name) {

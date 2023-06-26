@@ -35,7 +35,7 @@ public class PointPanel {
     }
 
     public PointPanelID getID() {
-        return new PointPanelID(panel.getID().get());
+        return new PointPanelID(panel.getDisplayGroupID().get());
     }
 
     private ConnectionPoint getPoint() {

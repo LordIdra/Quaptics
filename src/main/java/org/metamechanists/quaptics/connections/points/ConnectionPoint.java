@@ -100,7 +100,7 @@ public abstract class ConnectionPoint {
     }
 
     public ConnectionPointID getID() {
-        return new ConnectionPointID(blockDisplayID.get());
+        return new ConnectionPointID(interactionID.get());
     }
 
     public boolean hasLink() {

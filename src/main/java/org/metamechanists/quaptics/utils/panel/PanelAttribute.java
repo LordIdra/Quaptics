@@ -14,17 +14,18 @@ import org.metamechanists.quaptics.storage.DataTraverser;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.TextDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.PanelAttributeID;
+import org.metamechanists.quaptics.utils.id.TextDisplayID;
 
 public class PanelAttribute {
     private static final float HIDDEN_VIEW_RANGE = 0;
     private static final float SHOWN_VIEW_RANGE = 15;
 
     @Getter
-    private final PanelAttributeID ID;
+    private final TextDisplayID textDisplayID;
     private boolean hidden;
 
     public PanelAttribute(Location location, Vector3f displaySize) {
-        this.ID = new PanelAttributeID(new TextDisplayBuilder(location)
+        this.textDisplayID = new TextDisplayID(new TextDisplayBuilder(location)
                 .setTransformation(Transformations.unadjustedScale(displaySize))
                 .setBrightness(15)
                 .setViewRange(0)
@@ -35,10 +36,10 @@ public class PanelAttribute {
         saveData();
     }
 
-    private PanelAttribute(PanelAttributeID ID) {
-        final DataTraverser traverser = new DataTraverser(ID);
+    private PanelAttribute(PanelAttributeID textDisplayID) {
+        final DataTraverser traverser = new DataTraverser(textDisplayID);
         final JsonObject mainSection = traverser.getData();
-        this.ID = ID;
+        this.textDisplayID = new TextDisplayID(textDisplayID.get());
         this.hidden = mainSection.get("hidden").getAsBoolean();
     }
 
@@ -47,10 +48,14 @@ public class PanelAttribute {
     }
 
     public void saveData() {
-        final DataTraverser traverser = new DataTraverser(ID);
+        final DataTraverser traverser = new DataTraverser(textDisplayID);
         final JsonObject mainSection = traverser.getData();
         mainSection.add("hidden", new JsonPrimitive(hidden));
         traverser.save();
+    }
+
+    public PanelAttributeID getID() {
+        return new PanelAttributeID(textDisplayID.get());
     }
 
     public void updateVisibility(boolean panelHidden) {
@@ -58,7 +63,7 @@ public class PanelAttribute {
     }
 
     private TextDisplay getTextDisplay() {
-        return (TextDisplay) Bukkit.getEntity(ID.get());
+        return (TextDisplay) Bukkit.getEntity(textDisplayID.get());
     }
 
     public void setHidden(boolean hidden) {
