@@ -31,15 +31,15 @@ public class Link {
     private int phase;
     private double maxPower;
 
-    public Link(ConnectionPointInput input, ConnectionPointOutput output) {
-        this.ID = new LinkID(new DisplayGroup(input.getLocation(), 0, 0).getParentUUID());
-        this.inputID = input.getID();
-        this.outputID = output.getID();
-        this.maxPower = input.getGroup().getBlock().maxPower;
-        input.link(getID());
-        output.link(getID());
-        BlockUpdateScheduler.scheduleUpdate(output.getGroup().getID());
-        BlockUpdateScheduler.scheduleUpdate(input.getGroup().getID());
+    public Link(ConnectionPointID inputID, ConnectionPointID outputID) {
+        this.inputID = inputID;
+        this.outputID = outputID;
+        this.ID = new LinkID(new DisplayGroup(getInput().getLocation(), 0, 0).getParentUUID());
+        this.maxPower = getInput().getGroup().getBlock().maxPower;
+        getInput().link(getID());
+        getOutput().link(getID());
+        BlockUpdateScheduler.scheduleUpdate(getOutput().getGroup().getID());
+        BlockUpdateScheduler.scheduleUpdate(getInput().getGroup().getID());
         updatePanels();
         saveData();
     }
