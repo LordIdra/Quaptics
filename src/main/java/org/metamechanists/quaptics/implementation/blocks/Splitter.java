@@ -18,6 +18,7 @@ import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
+import org.metamechanists.quaptics.utils.id.ConnectionGroupID;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,11 +45,11 @@ public class Splitter extends ConnectedBlock {
     }
 
     @Override
-    protected List<ConnectionPoint> generateConnectionPoints(Player player, Location location) {
+    protected List<ConnectionPoint> generateConnectionPoints(ConnectionGroupID groupID, Player player, Location location) {
         final List<ConnectionPoint> points = new ArrayList<>();
-        points.add(new ConnectionPointInput("input", formatPointLocation(player, location, INPUT_LOCATION)));
-        points.add(new ConnectionPointOutput("output 1", formatPointLocation(player, location, OUTPUT_1_LOCATION)));
-        points.add(new ConnectionPointOutput("output 2", formatPointLocation(player, location, OUTPUT_2_LOCATION)));
+        points.add(new ConnectionPointInput(groupID, "input", formatPointLocation(player, location, INPUT_LOCATION)));
+        points.add(new ConnectionPointOutput(groupID, "output 1", formatPointLocation(player, location, OUTPUT_1_LOCATION)));
+        points.add(new ConnectionPointOutput(groupID, "output 2", formatPointLocation(player, location, OUTPUT_2_LOCATION)));
         return points;
     }
 

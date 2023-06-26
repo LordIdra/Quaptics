@@ -1,91 +1,78 @@
 package org.metamechanists.quaptics.utils.panel;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
-import io.github.bakedlibs.dough.common.ChatColors;
-import io.github.bakedlibs.dough.data.persistent.PersistentDataAPI;
 import lombok.Getter;
-import org.bukkit.configuration.serialization.ConfigurationSerializable;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.TextDisplay;
-import org.jetbrains.annotations.NotNull;
-import org.metamechanists.quaptics.utils.Keys;
+import org.metamechanists.quaptics.storage.DataTraverser;
 import org.metamechanists.quaptics.utils.id.DisplayGroupID;
+import org.metamechanists.quaptics.utils.id.PanelAttributeID;
+import org.metamechanists.quaptics.utils.id.PanelID;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class Panel implements ConfigurationSerializable {
-    private static final float HIDDEN_VIEW_RANGE = 0;
-    private static final float SHOWN_VIEW_RANGE = 15;
-    private final DisplayGroupID displayGroupID;
-    @Getter
-    private boolean panelHidden = true;
+public class Panel {
 
-    public Panel(DisplayGroupID displayGroupID) {
-        this.displayGroupID = displayGroupID;
+    @Getter
+    private final DisplayGroupID ID;
+    @Getter
+    private boolean hidden = true;
+    private final Map<String, PanelAttributeID> attributes;
+
+    public Panel(DisplayGroupID ID, Map<String, PanelAttributeID> attributes) {
+        this.ID = ID;
+        this.attributes = attributes;
+        saveData();
     }
 
-    private Panel(DisplayGroupID displayGroupID, boolean panelHidden) {
-        this.displayGroupID = displayGroupID;
-        this.panelHidden = panelHidden;
+    private Panel(PanelID panelID) {
+        final DataTraverser traverser = new DataTraverser(panelID);
+        final JsonObject mainSection = traverser.getData();
+        final JsonObject attributeSection = mainSection.get("attributes").getAsJsonObject();
+        this.ID = new DisplayGroupID(panelID.get());
+        this.hidden = mainSection.get("hidden").getAsBoolean();
+        this.attributes = new HashMap<>();
+        attributeSection.asMap().forEach(
+                (key, value) -> attributes.put(key, new PanelAttributeID(value.getAsString())));
+    }
+
+    public static Panel fromID(PanelID panelID) {
+        return new Panel(panelID);
+    }
+
+    public void saveData() {
+        final DataTraverser traverser = new DataTraverser(ID);
+        final JsonObject mainSection = traverser.getData();
+        final JsonObject attributeSection = new JsonObject();
+        mainSection.add("hidden", new JsonPrimitive(hidden));
+        this.attributes.forEach(
+                (key, value) -> attributeSection.add(key, new JsonPrimitive(value.get().toString())));
+        mainSection.add("attributes", attributeSection);
+        traverser.save();
     }
 
     private DisplayGroup getDisplayGroup() {
-        return DisplayGroup.fromUUID(displayGroupID.get());
+        return DisplayGroup.fromUUID(ID.get());
     }
 
-    private TextDisplay getAttribute(String name) {
-        return (TextDisplay) getDisplayGroup().getDisplays().get(name);
+    public PanelAttribute getAttribute(String name) {
+        return PanelAttribute.fromID(attributes.get(name));
     }
 
-    private void updateAttributeVisibility(String name) {
-        final boolean attributeHidden = PersistentDataAPI.getBoolean(getAttribute(name), Keys.ATTRIBUTE_HIDDEN);
-        getAttribute(name).setViewRange(panelHidden || attributeHidden ? HIDDEN_VIEW_RANGE : SHOWN_VIEW_RANGE);
-    }
-
-    public void setPanelHidden(boolean panelHidden) {
-        if (this.panelHidden != panelHidden) {
-            this.panelHidden = panelHidden;
-            getDisplayGroup().getDisplays().keySet().forEach(this::updateAttributeVisibility);
+    public void setHidden(boolean hidden) {
+        if (this.hidden != hidden) {
+            this.hidden = hidden;
+            attributes.values().forEach(ID -> PanelAttribute.fromID(ID).updateVisibility(hidden));
         }
     }
 
-    public void toggleVisibility() {
-        this.panelHidden = !panelHidden;
-        getDisplayGroup().getDisplays().keySet().forEach(this::updateAttributeVisibility);
-    }
-
-    public void setAttributeHidden(String name, boolean hidden) {
-        final boolean currentHidden = PersistentDataAPI.getBoolean(getAttribute(name), Keys.ATTRIBUTE_HIDDEN);
-        if (currentHidden != hidden) {
-            PersistentDataAPI.setBoolean(getAttribute(name), Keys.ATTRIBUTE_HIDDEN, hidden);
-            updateAttributeVisibility(name);
-        }
-    }
-
-    public void setText(String name, String text) {
-        final String currentText = getAttribute(name).getText();
-        if (!text.equals(currentText)) {
-            getAttribute(name).setText(ChatColors.color(text));
-        }
+    public void toggleHidden() {
+        setHidden(!hidden);
     }
 
     public void remove() {
-        getDisplayGroup().getDisplays().values().forEach(Entity::remove);
+        attributes.values().forEach(ID -> PanelAttribute.fromID(ID).remove());
         getDisplayGroup().remove();
-    }
-
-    @Override
-    public @NotNull Map<String, Object> serialize() {
-        Map<String, Object> map = new HashMap<>();
-        map.put("displayGroupID", displayGroupID);
-        map.put("panelHidden", panelHidden);
-        return map;
-    }
-
-    public static Panel deserialize(Map<String, Object> map) {
-        return new Panel(
-                (DisplayGroupID) map.get("displayGroupID"),
-                (boolean) map.get("panelHidden"));
     }
 }

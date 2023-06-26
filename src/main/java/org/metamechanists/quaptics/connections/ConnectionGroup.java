@@ -1,102 +1,97 @@
 package org.metamechanists.quaptics.connections;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import lombok.Getter;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.configuration.serialization.ConfigurationSerializable;
-import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
 import org.metamechanists.quaptics.items.Items;
-import org.metamechanists.quaptics.storage.SerializationUtils;
+import org.metamechanists.quaptics.storage.DataTraverser;
 import org.metamechanists.quaptics.utils.id.ConnectionGroupID;
 import org.metamechanists.quaptics.utils.id.ConnectionPointID;
+import org.metamechanists.quaptics.utils.id.DisplayGroupID;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ConnectionGroup implements ConfigurationSerializable {
+public class ConnectionGroup {
     @Getter
-    private final ConnectionGroupID id;
+    private final ConnectionGroupID ID;
+    private final String blockID;
     @Getter
-    private final Location location;
-    @Getter
-    private final ConnectedBlock block;
-    @Getter
-    private final Map<ConnectionPointID, ConnectionPoint> points;
-    private final Map<String, ConnectionPointID> pointUuidsFromNames;
+    private final Map<String, ConnectionPointID> points = new HashMap<>();
 
-    public ConnectionGroup(Location location, ConnectedBlock block, List<ConnectionPoint> inputPoints) {
-        this.id = new ConnectionGroupID();
-        this.location = location;
-        this.block = block;
-        this.points = new HashMap<>();
-        this.pointUuidsFromNames = new HashMap<>();
-        inputPoints.forEach(point -> {
-            points.put(point.getId(), point);
-            pointUuidsFromNames.put(point.getName(), point.getId());
-        });
+    public ConnectionGroup(DisplayGroupID displayGroupID, ConnectedBlock block, List<ConnectionPoint> pointsIn) {
+        this.ID = new ConnectionGroupID(displayGroupID.get());
+        this.blockID = block.getId();
+        pointsIn.forEach(point -> points.put(point.getName(), point.getID()));
+        saveData();
     }
 
-    private ConnectionGroup(ConnectionGroupID id, Location location, ConnectedBlock block,
-                            Map<ConnectionPointID, ConnectionPoint> points, Map<String, ConnectionPointID> pointUuidsFromNames) {
-        this.id = id;
-        this.location = location;
-        this.block = block;
-        this.points = points;
-        this.pointUuidsFromNames = pointUuidsFromNames;
+    private ConnectionGroup(ConnectionGroupID ID) {
+        final DataTraverser traverser = new DataTraverser(ID);
+        final JsonObject mainSection = traverser.getData();
+        final JsonObject pointSection = mainSection.get("points").getAsJsonObject();
+        this.ID = ID;
+        this.blockID = mainSection.get("blockID").getAsString();
+        pointSection.asMap().forEach(
+                (key, value) -> points.put(key, new ConnectionPointID(value.getAsString())));
     }
 
-    public void tick() {
-        points.values().forEach(ConnectionPoint::tick);
-        block.onQuapticTick(this);
+    public static ConnectionGroup fromID(ConnectionGroupID ID) {
+        if (Bukkit.getEntity(ID.get()) == null) { return null; }
+        return new ConnectionGroup(ID);
     }
 
-    public void updatePanels() {
-        points.values().forEach(ConnectionPoint::updatePanel);
+    private void saveData() {
+        final DataTraverser traverser = new DataTraverser(ID);
+        final JsonObject mainSection = traverser.getData();
+        final JsonObject pointSection = new JsonObject();
+        mainSection.add("blockID", new JsonPrimitive(blockID));
+        points.forEach(
+                (key, value) -> pointSection.add(key, new JsonPrimitive(value.get().toString())));
+        mainSection.add("points", pointSection);
+        traverser.save();
     }
 
-    public void removeAllPoints() {
-        points.values().forEach(ConnectionPoint::remove);
+    private ConnectionPoint getPoint(ConnectionPointID key) {
+        return ConnectionPoint.fromID(key);
     }
-
-    public void changePointLocation(ConnectionPointID pointId, Location newLocation) {
-        points.get(pointId).changeLocation(newLocation);
-    }
-
-    public ConnectionPoint getPoint(ConnectionPointID uuid) {
-        return points.get(uuid);
-    }
-
     public ConnectionPoint getPoint(String name) {
-        return points.get(pointUuidsFromNames.get(name));
-    }
-    public ConnectionPointInput getInput(String name) {
-        return (ConnectionPointInput) getPoint(name);
+        return ConnectionPoint.fromID(points.get(name));
     }
     public ConnectionPointOutput getOutput(String name) {
         return (ConnectionPointOutput) getPoint(name);
     }
-
-    @Override
-    public @NotNull Map<String, Object> serialize() {
-        Map<String, Object> map = new HashMap<>();
-        map.put("id", id);
-        map.put("location", location);
-        map.put("block",  block.getId());
-        map.put("points", SerializationUtils.serializeMap(points, "UUID", "ConnectionPoint"));
-        map.put("pointLocations", SerializationUtils.serializeMap(pointUuidsFromNames, "String", "UUID"));
-        return map;
+    public ConnectionPointInput getInput(String name) {
+        return (ConnectionPointInput) getPoint(name);
+    }
+    public ConnectedBlock getBlock() {
+        return Items.getBlocks().get(blockID);
+    }
+    public Location getLocation() {
+        return Bukkit.getEntity(getID().get()).getLocation();
     }
 
-    public static ConnectionGroup deserialize(Map<String, Object> map) {
-        return new ConnectionGroup(
-                (ConnectionGroupID) map.get("id"),
-                (Location) map.get("location"),
-                Items.getBlocks().get((String) map.get("block")),
-                SerializationUtils.deserializeMap((Map<String, Object>) map.get("points"), "UUID", "ConnectionPoint"),
-                SerializationUtils.deserializeMap((Map<String, Object>) map.get("pointLocations"), "String", "UUID"));
+    public void tick() {
+        points.values().forEach(ID -> getPoint(ID).tick());
+        getBlock().onQuapticTick(this);
+    }
+
+    public void updatePanels() {
+        points.values().forEach(ID -> getPoint(ID).updatePanel());
+    }
+
+    public void remove() {
+        points.values().forEach(ID -> getPoint(ID).remove());
+    }
+
+    public void changePointLocation(ConnectionPointID pointId, Location newLocation) {
+        getPoint(pointId).changeLocation(newLocation);
     }
 }

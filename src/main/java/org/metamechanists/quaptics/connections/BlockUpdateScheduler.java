@@ -11,12 +11,11 @@ public class BlockUpdateScheduler {
     private static Queue<ConnectionGroupID> newGroupsToTick = new ConcurrentLinkedQueue<>();
 
     private static void tickGroup(ConnectionGroupID groupID) {
-        // If group no longer exists, don't tick it
-        if (!ConnectionPointStorage.hasGroup(groupID)) {
+        final ConnectionGroup group = ConnectionGroup.fromID(groupID);
+        if (group == null) {
             return;
         }
 
-        final ConnectionGroup group = ConnectionPointStorage.getGroup(groupID);
         group.getBlock().onInputLinkUpdated(group);
     }
 
