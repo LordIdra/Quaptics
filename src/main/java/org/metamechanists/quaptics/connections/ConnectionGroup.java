@@ -78,7 +78,6 @@ public class ConnectionGroup {
     }
 
     public void tick() {
-        points.values().forEach(ID -> getPoint(ID).tick());
         getBlock().onQuapticTick(this);
     }
 

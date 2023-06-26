@@ -1,15 +1,13 @@
-package org.metamechanists.quaptics.beams.beam;
+package org.metamechanists.quaptics.beams;
 
-import org.metamechanists.quaptics.beams.DeprecatedTickerStorage;
-import org.metamechanists.quaptics.beams.ticker.factory.DirectTickerFactory;
-import org.metamechanists.quaptics.beams.ticker.ticker.DirectTicker;
+import org.metamechanists.quaptics.beams.ticker.DirectTicker;
 import org.metamechanists.quaptics.utils.id.TickerID;
 
-public class DirectBeam extends Beam {
+public class DirectBeam {
     private final DirectTicker ticker;
 
-    public DirectBeam(DirectTickerFactory factory) {
-        this.ticker = factory.build();
+    public DirectBeam(DirectTicker ticker) {
+        this.ticker = ticker;
     }
     private DirectBeam(TickerID ID) {
         this.ticker = DirectTicker.fromID(new TickerID(ID.get()));
@@ -23,11 +21,7 @@ public class DirectBeam extends Beam {
         return new TickerID(ticker.getID().get());
     }
 
-    @Override
     public void deprecate() {
         DeprecatedTickerStorage.deprecate(ticker);
     }
-
-    @Override
-    public void tick() {}
 }

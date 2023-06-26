@@ -5,8 +5,8 @@ import com.google.gson.JsonPrimitive;
 import lombok.Getter;
 import org.bukkit.Material;
 import org.metamechanists.metalib.sefilib.entity.display.DisplayGroup;
-import org.metamechanists.quaptics.beams.beam.DirectBeam;
-import org.metamechanists.quaptics.beams.ticker.factory.DirectTickerFactory;
+import org.metamechanists.quaptics.beams.DirectBeam;
+import org.metamechanists.quaptics.beams.ticker.DirectTicker;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
@@ -94,12 +94,6 @@ public class Link {
         return DirectBeam.fromID(tickerID);
     }
 
-    public void tick() {
-        if (hasBeam()) {
-            getBeam().tick();
-        }
-    }
-
     public void remove() {
         if (hasBeam()) {
             getBeam().deprecate();
@@ -127,11 +121,11 @@ public class Link {
             return;
         }
 
-        this.tickerID = new DirectBeam(new DirectTickerFactory(
-                        Material.WHITE_CONCRETE,
-                        getOutput().getLocation(),
-                        getInput().getLocation(),
-                        (float)(power / maxPower) * 0.095F))
+        this.tickerID = new DirectBeam(new DirectTicker(
+                Material.WHITE_CONCRETE,
+                getOutput().getLocation(),
+                getInput().getLocation(),
+                (float)(power / maxPower) * 0.095F))
                 .getID();
     }
 

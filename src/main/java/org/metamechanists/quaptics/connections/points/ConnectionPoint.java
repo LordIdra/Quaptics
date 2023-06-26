@@ -132,8 +132,6 @@ public abstract class ConnectionPoint {
         return ConnectionGroup.fromID(groupID);
     }
 
-    public void tick() {}
-
     public void remove() {
         if (hasLink()) {
             getLink().remove();

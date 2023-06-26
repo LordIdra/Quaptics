@@ -1,6 +1,6 @@
 package org.metamechanists.quaptics.beams;
 
-import org.metamechanists.quaptics.beams.ticker.ticker.DisplayTicker;
+import org.metamechanists.quaptics.beams.ticker.DisplayTicker;
 
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;

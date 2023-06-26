@@ -24,7 +24,7 @@ import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.beams.DeprecatedTickerStorage;
-import org.metamechanists.quaptics.beams.ticker.ticker.IntervalVelocityTicker;
+import org.metamechanists.quaptics.beams.ticker.IntervalVelocityTicker;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;

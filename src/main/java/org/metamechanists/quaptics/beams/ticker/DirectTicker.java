@@ -1,4 +1,4 @@
-package org.metamechanists.quaptics.beams.ticker.ticker;
+package org.metamechanists.quaptics.beams.ticker;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

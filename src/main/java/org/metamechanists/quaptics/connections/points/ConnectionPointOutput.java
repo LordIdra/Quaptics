@@ -17,13 +17,6 @@ public class ConnectionPointOutput extends ConnectionPoint {
         super(ID);
     }
 
-    @Override
-    public void tick() {
-        if (hasLink()) {
-            getLink().tick();
-        }
-    }
-
     protected void saveData() {
         final DataTraverser traverser = new DataTraverser(getID());
         final JsonObject mainSection = traverser.getData();
