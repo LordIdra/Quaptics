@@ -1,6 +1,5 @@
 package org.metamechanists.quaptics.beams.ticker.ticker;
 
-import lombok.Builder;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -11,7 +10,6 @@ import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.BlockDisplayID;
 import org.metamechanists.quaptics.utils.id.TickerID;
 
-@Builder
 public class DirectTicker implements DisplayTicker {
     private final BlockDisplayID displayID;
 
