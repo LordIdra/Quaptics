@@ -19,6 +19,7 @@ import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.storage.QuapticStorage;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.id.ConnectionGroupID;
+import org.metamechanists.quaptics.utils.id.ConnectionPointID;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.util.List;
@@ -60,8 +61,8 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
     }
 
     @OverridingMethodsMustInvokeSuper
-    public void connect(ConnectionPoint from, ConnectionPoint to) {
-        from.getGroup().changePointLocation(from.getID(), calculateNewLocation(from, to));
+    public void connect(ConnectionPointID from, ConnectionPointID to) {
+        ConnectionPoint.fromID(from).getGroup().changePointLocation(from, calculateNewLocation(from, to));
     }
 
     public void burnout(Location location) {
@@ -76,17 +77,17 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
         location.getWorld().spawnParticle(new ParticleBuilder(Particle.FLASH).location(location).count(1).particle(), location, 20);
     }
 
-    public void doBurnoutCheck(ConnectionGroup group, ConnectionPoint point) {
-        if (point.hasLink() && point.getLink().getPower() > maxPower) {
-            burnout(group.getLocation());
+    public void doBurnoutCheck(ConnectionGroupID group, ConnectionPointID point) {
+        if (ConnectionPoint.fromID(point).hasLink() && ConnectionPoint.fromID(point).getLink().getPower() > maxPower) {
+            burnout(ConnectionGroup.fromID(group).getLocation());
         }
     }
 
     public void onInputLinkUpdated(ConnectionGroup group) {}
 
-    public Location calculateNewLocation(ConnectionPoint from, ConnectionPoint to) {
-        final Location fromGroupLocation = from.getGroup().getLocation();
-        final Location toGroupLocation = to.getGroup().getLocation();
+    public Location calculateNewLocation(ConnectionPointID from, ConnectionPointID to) {
+        final Location fromGroupLocation =  ConnectionPoint.fromID(from).getGroup().getLocation();
+        final Location toGroupLocation =  ConnectionPoint.fromID(to).getGroup().getLocation();
         final Vector radiusDirection = Vector.fromJOML(Transformations.getDirection(fromGroupLocation, toGroupLocation).mul(getRadius()));
         return fromGroupLocation.clone().add(0.5, 0.5, 0.5).add(radiusDirection);
     }

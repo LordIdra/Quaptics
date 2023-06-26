@@ -21,6 +21,7 @@ import org.metamechanists.quaptics.implementation.base.EnergyConnectedBlock;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.ConnectionGroupID;
+import org.metamechanists.quaptics.utils.id.ConnectionPointID;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,11 +77,13 @@ public class Emitter extends EnergyConnectedBlock {
     }
 
     @Override
-    public void connect(ConnectionPoint from, ConnectionPoint to) {
+    public void connect(ConnectionPointID from, ConnectionPointID to) {
         super.connect(from, to);
-        final DisplayGroup fromDisplayGroup = getDisplayGroup(from.getGroup().getLocation());
+        final DisplayGroup fromDisplayGroup = getDisplayGroup(ConnectionPoint.fromID(from).getGroup().getLocation());
         fromDisplayGroup.removeDisplay("main").remove();
-        fromDisplayGroup.addDisplay("main", generateMainBlockDisplay(from.getGroup().getLocation(), to.getGroup().getLocation()));
+        fromDisplayGroup.addDisplay("main", generateMainBlockDisplay(
+                ConnectionPoint.fromID(from).getGroup().getLocation(),
+                ConnectionPoint.fromID(to).getGroup().getLocation()));
     }
 
     @Override
