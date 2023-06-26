@@ -13,7 +13,6 @@ import org.metamechanists.quaptics.items.Items;
 import org.metamechanists.quaptics.storage.DataTraverser;
 import org.metamechanists.quaptics.utils.id.ConnectionGroupID;
 import org.metamechanists.quaptics.utils.id.ConnectionPointID;
-import org.metamechanists.quaptics.utils.id.DisplayGroupID;
 
 import java.util.HashMap;
 import java.util.List;
@@ -26,8 +25,8 @@ public class ConnectionGroup {
     @Getter
     private final Map<String, ConnectionPointID> points = new HashMap<>();
 
-    public ConnectionGroup(DisplayGroupID displayGroupID, ConnectedBlock block, List<ConnectionPoint> pointsIn) {
-        this.ID = new ConnectionGroupID(displayGroupID.get());
+    public ConnectionGroup(ConnectionGroupID ID, ConnectedBlock block, List<ConnectionPoint> pointsIn) {
+        this.ID = ID;
         this.blockID = block.getId();
         pointsIn.forEach(point -> points.put(point.getName(), point.getID()));
         saveData();

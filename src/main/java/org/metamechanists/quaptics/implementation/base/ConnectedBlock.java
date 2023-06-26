@@ -43,7 +43,7 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
         final Location location = event.getBlock().getLocation();
         final ConnectionGroupID groupID = new ConnectionGroupID(getID(location).get());
         final List<ConnectionPoint> points = generateConnectionPoints(groupID, event.getPlayer(), location);
-        new ConnectionGroup(getID(location), this, points);
+        new ConnectionGroup(groupID, this, points);
         QuapticStorage.addGroup(groupID);
     }
 
@@ -51,7 +51,8 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
 
     @Override
     protected void onBreak(BlockBreakEvent event) {
-        ConnectionGroup.fromID(new ConnectionGroupID(getID(event.getBlock().getLocation()).get())).remove();
+        final ConnectionGroupID groupID = new ConnectionGroupID(getID(event.getBlock().getLocation()).get());
+        ConnectionGroup.fromID(groupID).remove();
         onBreak(event.getBlock().getLocation());
     }
 
