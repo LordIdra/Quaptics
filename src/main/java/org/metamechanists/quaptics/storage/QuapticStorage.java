@@ -3,11 +3,12 @@ package org.metamechanists.quaptics.storage;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.utils.id.ConnectionGroupID;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 public class QuapticStorage {
-    public static Set<ConnectionGroupID> groupIDs;
+    public static Set<ConnectionGroupID> groupIDs = new HashSet<>();
 
     public static void addGroup(ConnectionGroupID groupID) {
         groupIDs.add(groupID);
