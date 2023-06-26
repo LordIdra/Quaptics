@@ -64,6 +64,7 @@ public class Panel {
         if (this.hidden != hidden) {
             this.hidden = hidden;
             attributes.values().forEach(ID -> PanelAttribute.fromID(ID).updateVisibility(hidden));
+            saveData();
         }
     }
 
