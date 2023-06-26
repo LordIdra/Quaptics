@@ -20,6 +20,7 @@ public class Link {
     private final LinkID ID;
     private final ConnectionPointID outputID;
     private final ConnectionPointID inputID;
+    private final double maxPower;
     private BeamID beamID;
     @Getter
     private boolean enabled;
@@ -29,7 +30,6 @@ public class Link {
     private double frequency;
     @Getter
     private int phase;
-    private double maxPower;
 
     public Link(ConnectionPointID inputID, ConnectionPointID outputID) {
         this.inputID = inputID;

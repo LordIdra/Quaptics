@@ -26,6 +26,7 @@ public class PointPanel {
                 .addAttribute("name")
                 .build();
         panel.getAttribute("name").setHidden(false);
+        update();
     }
 
     public PointPanel(PanelID panelID, ConnectionPointID pointID) {
