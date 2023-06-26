@@ -32,7 +32,7 @@ public class PanelAttribute {
                 .setBillboard(Display.Billboard.VERTICAL)
                 .setBackgroundColor(Color.fromARGB(0, 0, 0, 0))
                 .build().getUniqueId());
-        this.hidden = true;
+        this.hidden = false;
         saveData();
     }
 
