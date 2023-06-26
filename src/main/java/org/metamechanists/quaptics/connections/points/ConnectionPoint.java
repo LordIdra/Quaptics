@@ -60,6 +60,7 @@ public abstract class ConnectionPoint {
         this.connectedBrightness = connectedBrightness;
         this.disconnectedBrightness = disconnectedBrightness;
         saveData();
+        getPointPanel().update();
     }
 
     protected ConnectionPoint(ConnectionPointID pointID) {
