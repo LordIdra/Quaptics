@@ -63,8 +63,17 @@ public class Panel {
         return DisplayGroup.fromUUID(displayGroupID.get());
     }
 
-    public PanelAttribute getAttribute(String name) {
+    private PanelAttribute getAttribute(String name) {
         return PanelAttribute.fromID(attributes.get(name));
+    }
+
+    public void setAttributeHidden(String name, boolean attributeHidden) {
+        getAttribute(name).setHidden(attributeHidden);
+        getAttribute(name).updateVisibility(hidden);
+    }
+
+    public void setText(String name, String text) {
+        getAttribute(name).setText(text);
     }
 
     public void setHidden(boolean hidden) {

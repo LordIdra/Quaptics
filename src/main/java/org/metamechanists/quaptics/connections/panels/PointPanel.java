@@ -25,7 +25,7 @@ public class PointPanel {
                 .addAttribute("power")
                 .addAttribute("name")
                 .build();
-        panel.getAttribute("name").setHidden(false);
+        panel.setAttributeHidden("name", false);
     }
 
     public PointPanel(PanelID panelID, ConnectionPointID pointID) {
@@ -57,7 +57,7 @@ public class PointPanel {
     }
 
     public void update() {
-        panel.getAttribute("name").setText(ChatColors.color((getPoint().hasLink() ? "&a" : "&c") + getPoint().getName().toUpperCase()));
+        panel.setText("name", ChatColors.color((getPoint().hasLink() ? "&a" : "&c") + getPoint().getName().toUpperCase()));
 
         if (!getPoint().hasLink()) {
             return;
@@ -65,13 +65,13 @@ public class PointPanel {
 
         final Link link = getPoint().getLink();
 
-        panel.getAttribute("power").setHidden(link.getPower() == 0);
-        panel.getAttribute("frequency").setHidden(link.getFrequency() == 0);
-        panel.getAttribute("phase").setHidden(link.getPhase() == 0);
+        panel.setAttributeHidden("power", link.getPower() == 0);
+        panel.setAttributeHidden("frequency", link.getFrequency() == 0);
+        panel.setAttributeHidden("phase", link.getPhase() == 0);
 
-        panel.getAttribute("power").setText(Lore.powerNoArrow(roundTo2dp(link.getPower())));
-        panel.getAttribute("frequency").setText(Lore.frequencyNoArrow(roundTo2dp(link.getFrequency())));
-        panel.getAttribute("phase").setText(Lore.phaseNoArrow(link.getPhase()));
+        panel.setText("power", Lore.powerNoArrow(roundTo2dp(link.getPower())));
+        panel.setText("frequency", Lore.frequencyNoArrow(roundTo2dp(link.getFrequency())));
+        panel.setText("phase", Lore.phaseNoArrow(link.getPhase()));
     }
 
     public void remove() {
