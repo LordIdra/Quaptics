@@ -57,7 +57,7 @@ public class Link {
         this.power = mainSection.get("power").getAsDouble();
         this.frequency = mainSection.get("frequency").getAsDouble();
         this.phase = mainSection.get("phase").getAsInt();
-        this.frequency = mainSection.get("maxPower").getAsDouble();
+        this.maxPower = mainSection.get("maxPower").getAsDouble();
     }
 
     public static Link fromID(LinkID ID) {

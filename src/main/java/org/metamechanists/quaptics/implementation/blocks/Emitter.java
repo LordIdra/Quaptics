@@ -6,6 +6,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
+import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -15,9 +16,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
+import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
 import org.metamechanists.quaptics.implementation.base.EnergyConnectedBlock;
+import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.ConnectionGroupID;
@@ -58,22 +61,22 @@ public class Emitter extends EnergyConnectedBlock {
 
     @Override
     public void onSlimefunTick(Block block, SlimefunItem item, Config data) {
-//        super.onSlimefunTick(block, item, data);
-//        final ConnectionGroupID ID = new ConnectionGroupID(BlockStorage.getLocationInfo(block.getLocation(), Keys.CONNECTION_GROUP_ID));
-//        final ConnectionGroup group = ConnectionGroup.fromID(ID);
-//        final ConnectionPointOutput output = (ConnectionPointOutput) group.getPoint("output");
-//
-//        if (!output.hasLink()) {
-//            return;
-//        }
-//
-//        if (powered) {
-//            output.getLink().setPower(emissionPower);
-//            output.getLink().setEnabled(true);
-//            return;
-//        }
-//
-//        output.getLink().setEnabled(false);
+        super.onSlimefunTick(block, item, data);
+        final ConnectionGroupID ID = new ConnectionGroupID(BlockStorage.getLocationInfo(block.getLocation(), Keys.CONNECTION_GROUP_ID));
+        final ConnectionGroup group = ConnectionGroup.fromID(ID);
+        final ConnectionPointOutput output = (ConnectionPointOutput) group.getPoint("output");
+
+        if (!output.hasLink()) {
+            return;
+        }
+
+        if (powered) {
+            output.getLink().setPower(emissionPower);
+            output.getLink().setEnabled(true);
+            return;
+        }
+
+        output.getLink().setEnabled(false);
     }
 
     @Override
