@@ -154,10 +154,10 @@ public class Link {
             phase = 0;
         }
 
+        saveData();
         updateBeam();
         updatePanels();
         BlockUpdateScheduler.scheduleUpdate(getInput().getGroup().getID());
-        saveData();
     }
 
     public void setPower(double power) {
@@ -168,9 +168,9 @@ public class Link {
 
         this.power = power;
 
+        saveData();
         updateBeam();
         updatePanels();
         BlockUpdateScheduler.scheduleUpdate(getInput().getGroup().getID());
-        saveData();
     }
 }
