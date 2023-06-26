@@ -36,12 +36,12 @@ public class Link {
         this.outputID = outputID;
         this.ID = new LinkID(new DisplayGroup(getInput().getLocation(), 0, 0).getParentUUID());
         this.maxPower = getInput().getGroup().getBlock().maxPower;
-        saveData();
+        saveData(); // the points being linked will not be able to Link.fromID() without this line
         getInput().link(getID());
         getOutput().link(getID());
         BlockUpdateScheduler.scheduleUpdate(getOutput().getGroup().getID());
         BlockUpdateScheduler.scheduleUpdate(getInput().getGroup().getID());
-        updatePanels();
+        update();
     }
 
     private Link(LinkID ID) {
@@ -133,10 +133,11 @@ public class Link {
                         getInput().getLocation(),
                         (float)(power / maxPower) * 0.095F))
                 .getID();
-        saveData();
     }
 
-    private void updatePanels() {
+    private void update() {
+        updateBeam();
+        saveData();
         getInput().getGroup().updatePanels();
         getOutput().getGroup().updatePanels();
     }
@@ -154,9 +155,7 @@ public class Link {
             phase = 0;
         }
 
-        updateBeam();
-        saveData();
-        updatePanels();
+        update();
         BlockUpdateScheduler.scheduleUpdate(getInput().getGroup().getID());
     }
 
@@ -168,9 +167,7 @@ public class Link {
 
         this.power = power;
 
-        updateBeam();
-        saveData();
-        updatePanels();
+        update();
         BlockUpdateScheduler.scheduleUpdate(getInput().getGroup().getID());
     }
 }
