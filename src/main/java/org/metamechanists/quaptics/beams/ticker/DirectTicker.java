@@ -4,6 +4,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.BlockDisplay;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
@@ -13,7 +15,7 @@ import org.metamechanists.quaptics.utils.id.TickerID;
 public class DirectTicker implements DisplayTicker {
     private final BlockDisplayID displayID;
 
-    public DirectTicker(Material material, Location source, Location target, float radius) {
+    public DirectTicker(Material material, @NotNull Location source, Location target, float radius) {
         final Location midpoint = source.clone().add(target).multiply(0.5);
         final Vector3f scale = new Vector3f(radius, radius, (float)(source.distance(target)));
         this.displayID = new BlockDisplayID(new BlockDisplayBuilder(midpoint)
@@ -24,16 +26,17 @@ public class DirectTicker implements DisplayTicker {
                         .getUniqueId());
     }
 
-    private DirectTicker(TickerID ID) {
-        this.displayID = new BlockDisplayID(ID.get());
+    private DirectTicker(@NotNull TickerID ID) {
+        this.displayID = new BlockDisplayID(ID);
     }
 
-    public static DirectTicker fromID(TickerID ID) {
+    @Contract("_ -> new")
+    public static @NotNull DirectTicker fromID(TickerID ID) {
         return new DirectTicker(ID);
     }
 
     public TickerID getID() {
-        return new TickerID(displayID.get());
+        return new TickerID(displayID);
     }
 
     private BlockDisplay getDisplay() {

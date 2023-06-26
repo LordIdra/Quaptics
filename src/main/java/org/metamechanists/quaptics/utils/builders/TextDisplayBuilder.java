@@ -6,6 +6,7 @@ import org.bukkit.entity.Display;
 import org.bukkit.entity.TextDisplay;
 import org.joml.Matrix4f;
 
+@SuppressWarnings("unused")
 public class TextDisplayBuilder {
     private final Location location;
     private String text;

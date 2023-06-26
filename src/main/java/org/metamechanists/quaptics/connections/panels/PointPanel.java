@@ -3,6 +3,7 @@ package org.metamechanists.quaptics.connections.panels;
 import io.github.bakedlibs.dough.common.ChatColors;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
+import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.items.Lore;
@@ -17,7 +18,7 @@ public class PointPanel {
     private final ConnectionPointID pointID;
     private final Panel panel;
 
-    public PointPanel(Location location, ConnectionPointID pointID) {
+    public PointPanel(@NotNull Location location, ConnectionPointID pointID) {
         this.pointID = pointID;
         this.panel = new PanelBuilder(location.clone().add(POINT_OFFSET), SIZE)
                 .addAttribute("phase")

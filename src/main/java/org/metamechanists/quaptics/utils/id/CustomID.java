@@ -12,11 +12,12 @@ public abstract class CustomID implements ConfigurationSerializable {
     public CustomID() {
         this.uuid = UUID.randomUUID();
     }
-
     public CustomID(String string) {
         this.uuid = UUID.fromString(string);
     }
-
+    protected CustomID(CustomID ID) {
+        this.uuid = ID.uuid;
+    }
     protected CustomID(UUID uuid) {
         this.uuid = uuid;
     }

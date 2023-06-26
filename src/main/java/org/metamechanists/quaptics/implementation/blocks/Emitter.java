@@ -40,7 +40,7 @@ public class Emitter extends EnergyConnectedBlock {
         this.emissionPower = emissionPower;
     }
 
-    private BlockDisplay generateMainBlockDisplay(Location from, Location to) {
+    private BlockDisplay generateMainBlockDisplay(@NotNull Location from, Location to) {
         return new BlockDisplayBuilder(from.clone().add(RELATIVE_CENTER))
                 .setMaterial(Material.PURPLE_CONCRETE)
                 .setTransformation(Transformations.lookAlong(MAIN_DISPLAY_SIZE, Transformations.getDirection(from, to)))
@@ -48,7 +48,7 @@ public class Emitter extends EnergyConnectedBlock {
     }
 
     @Override
-    protected void addDisplays(DisplayGroup displayGroup, Location location, Player player) {
+    protected void addDisplays(@NotNull DisplayGroup displayGroup, Location location, Player player) {
         displayGroup.addDisplay("main", generateMainBlockDisplay(location, location.clone().add(rotateVectorByEyeDirection(player, INITIAL_LINE))));
     }
 
@@ -60,7 +60,7 @@ public class Emitter extends EnergyConnectedBlock {
     }
 
     @Override
-    public void onSlimefunTick(Block block, SlimefunItem item, Config data) {
+    public void onSlimefunTick(@NotNull Block block, SlimefunItem item, Config data) {
         super.onSlimefunTick(block, item, data);
         final ConnectionGroupID ID = new ConnectionGroupID(BlockStorage.getLocationInfo(block.getLocation(), Keys.CONNECTION_GROUP_ID));
         final ConnectionGroup group = ConnectionGroup.fromID(ID);

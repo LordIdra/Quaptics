@@ -10,6 +10,7 @@ import lombok.Getter;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 
@@ -30,7 +31,7 @@ public abstract class EnergyConnectedBlock extends ConnectedBlock implements Ene
 
     @OverridingMethodsMustInvokeSuper
     @Override
-    public void onSlimefunTick(Block block, SlimefunItem item, Config data) {
+    public void onSlimefunTick(@NotNull Block block, SlimefunItem item, Config data) {
         if (getCharge(block.getLocation(), data) >= consumption) {
             removeCharge(block.getLocation(), consumption);
             powered = true;

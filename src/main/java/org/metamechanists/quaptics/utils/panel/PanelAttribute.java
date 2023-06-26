@@ -9,6 +9,8 @@ import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.entity.Display;
 import org.bukkit.entity.TextDisplay;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.storage.DataTraverser;
 import org.metamechanists.quaptics.utils.Transformations;
@@ -39,11 +41,12 @@ public class PanelAttribute {
     private PanelAttribute(PanelAttributeID textDisplayID) {
         final DataTraverser traverser = new DataTraverser(textDisplayID);
         final JsonObject mainSection = traverser.getData();
-        this.textDisplayID = new TextDisplayID(textDisplayID.get());
+        this.textDisplayID = new TextDisplayID(textDisplayID);
         this.hidden = mainSection.get("hidden").getAsBoolean();
     }
 
-    public static PanelAttribute fromID(PanelAttributeID ID) {
+    @Contract("_ -> new")
+    public static @NotNull PanelAttribute fromID(PanelAttributeID ID) {
         return new PanelAttribute(ID);
     }
 
@@ -55,7 +58,7 @@ public class PanelAttribute {
     }
 
     public PanelAttributeID getID() {
-        return new PanelAttributeID(textDisplayID.get());
+        return new PanelAttributeID(textDisplayID);
     }
 
     public void updateVisibility(boolean panelHidden) {
@@ -71,7 +74,7 @@ public class PanelAttribute {
         saveData();
     }
 
-    public void setText(String text) {
+    public void setText(@NotNull String text) {
         final String currentText = getTextDisplay().getText();
         if (!text.equals(currentText)) {
             getTextDisplay().setText(ChatColors.color(text));

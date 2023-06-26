@@ -21,6 +21,7 @@ import org.bukkit.entity.SpawnCategory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.beams.DeprecatedTickerStorage;
@@ -58,11 +59,11 @@ public class Turret extends ConnectedBlock {
         this.damagePerSlimefunTick = damagePerSlimefunTick;
     }
 
-    private Matrix4f getBarrelMatrix(Location from, Location to) {
+    private Matrix4f getBarrelMatrix(@NotNull Location from, Location to) {
         return Transformations.lookAlong(BARREL_SIZE, Transformations.getDirection(from.clone().add(BARREL_LOCATION), to)).translate(BARREL_TRANSLATION);
     }
 
-    private BlockDisplay generateBarrel(Location from, Location to) {
+    private BlockDisplay generateBarrel(@NotNull Location from, Location to) {
         return new BlockDisplayBuilder(from.clone().add(BARREL_LOCATION))
                 .setMaterial(Material.GRAY_CONCRETE)
                 .setTransformation(getBarrelMatrix(from, to))
@@ -70,7 +71,7 @@ public class Turret extends ConnectedBlock {
     }
 
     @Override
-    protected void addDisplays(DisplayGroup displayGroup, Location location, Player player) {
+    protected void addDisplays(@NotNull DisplayGroup displayGroup, @NotNull Location location, Player player) {
         displayGroup.addDisplay("main", new BlockDisplayBuilder(location.clone().add(RELATIVE_CENTER))
                         .setMaterial(Material.POLISHED_ANDESITE)
                         .setTransformation(Transformations.adjustedScale(MAIN_DISPLAY_SIZE))
@@ -86,7 +87,7 @@ public class Turret extends ConnectedBlock {
     }
 
     @Override
-    public void onInputLinkUpdated(ConnectionGroup group) {
+    public void onInputLinkUpdated(@NotNull ConnectionGroup group) {
         final ConnectionPointInput input = (ConnectionPointInput) group.getPoint("input");
 
         doBurnoutCheck(group, input);
@@ -100,7 +101,7 @@ public class Turret extends ConnectedBlock {
         }
     }
 
-    private void setTarget(Location location, Damageable entity) {
+    private void setTarget(Location location, @NotNull Damageable entity) {
         BlockStorage.addBlockInfo(location, Keys.TARGET, entity.getUniqueId().toString());
     }
 
@@ -108,7 +109,7 @@ public class Turret extends ConnectedBlock {
         BlockStorage.addBlockInfo(location, Keys.TARGET, null);
     }
 
-    private LivingEntity getTarget(Location location) {
+    private @Nullable LivingEntity getTarget(Location location) {
         final String targetString =  BlockStorage.getLocationInfo(location, Keys.TARGET);
         if (targetString == null) {
             return null;
@@ -168,7 +169,7 @@ public class Turret extends ConnectedBlock {
     }
 
     @Override
-    protected void onSlimefunTick(Block block, SlimefunItem item, Config data) {
+    protected void onSlimefunTick(@NotNull Block block, SlimefunItem item, Config data) {
         if (Objects.equal(BlockStorage.getLocationInfo(block.getLocation(), Keys.POWERED), "true")) {
             retarget(block.getLocation());
             shoot(block.getLocation());

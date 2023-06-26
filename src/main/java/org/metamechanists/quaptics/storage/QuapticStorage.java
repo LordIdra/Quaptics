@@ -15,9 +15,8 @@ public class QuapticStorage {
     }
 
     public static Set<ConnectionGroupID> getLoadedGroups() {
-        final Set<ConnectionGroupID> loadedGroups = groupIDs.stream()
+        return groupIDs.stream()
                 .filter(ID -> ConnectionGroup.fromID(ID) != null)
                 .collect(Collectors.toSet());
-        return loadedGroups;
     }
 }

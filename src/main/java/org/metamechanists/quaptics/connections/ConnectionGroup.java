@@ -5,6 +5,8 @@ import com.google.gson.JsonPrimitive;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
@@ -25,7 +27,7 @@ public class ConnectionGroup {
     @Getter
     private final Map<String, ConnectionPointID> points = new HashMap<>();
 
-    public ConnectionGroup(ConnectionGroupID ID, ConnectedBlock block, List<ConnectionPoint> pointsIn) {
+    public ConnectionGroup(ConnectionGroupID ID, @NotNull ConnectedBlock block, @NotNull List<ConnectionPoint> pointsIn) {
         this.ID = ID;
         this.blockID = block.getId();
         pointsIn.forEach(point -> points.put(point.getName(), point.getID()));
@@ -42,7 +44,7 @@ public class ConnectionGroup {
                 (key, value) -> points.put(key, new ConnectionPointID(value.getAsString())));
     }
 
-    public static ConnectionGroup fromID(ConnectionGroupID ID) {
+    public static @Nullable ConnectionGroup fromID(@NotNull ConnectionGroupID ID) {
         if (Bukkit.getEntity(ID.get()) == null) { return null; }
         return new ConnectionGroup(ID);
     }

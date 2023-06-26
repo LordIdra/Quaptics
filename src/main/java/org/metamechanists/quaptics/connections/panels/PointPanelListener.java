@@ -7,13 +7,14 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.implementation.tools.TargetingWand;
 import org.metamechanists.quaptics.utils.id.ConnectionPointID;
 
 public class PointPanelListener implements Listener {
     @EventHandler
-    public void interactEvent(PlayerInteractEntityEvent event) {
+    public void interactEvent(@NotNull PlayerInteractEntityEvent event) {
         final Entity clickedEntity = event.getRightClicked();
         if (!(clickedEntity instanceof Interaction)) {
             return;

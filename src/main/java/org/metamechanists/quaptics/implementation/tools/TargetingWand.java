@@ -9,6 +9,7 @@ import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
@@ -26,7 +27,7 @@ public class TargetingWand extends SlimefunItem {
         super(itemGroup, item, recipeType, recipe);
     }
 
-    private boolean isSourceSet(ItemStack stack) {
+    private boolean isSourceSet(@NotNull ItemStack stack) {
         return stack.getItemMeta().getPersistentDataContainer().has(Keys.SOURCE);
     }
 

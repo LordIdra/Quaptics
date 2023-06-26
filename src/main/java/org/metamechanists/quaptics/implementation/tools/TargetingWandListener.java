@@ -8,13 +8,14 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.utils.id.ConnectionPointID;
 
 public class TargetingWandListener implements Listener {
 
     @EventHandler
-    public void interactEvent(PlayerInteractEntityEvent event) {
+    public void interactEvent(@NotNull PlayerInteractEntityEvent event) {
         final Entity clickedEntity = event.getRightClicked();
         if (!(clickedEntity instanceof Interaction)) {
             return;
@@ -34,7 +35,7 @@ public class TargetingWandListener implements Listener {
     }
 
     @EventHandler
-    public void scrollEvent(PlayerItemHeldEvent event) {
+    public void scrollEvent(@NotNull PlayerItemHeldEvent event) {
         final ItemStack heldItem = event.getPlayer().getInventory().getItem(event.getPreviousSlot());
         if (SlimefunItem.getByItem(heldItem) instanceof TargetingWand wand) {
             wand.unsetSource(heldItem);

@@ -37,7 +37,7 @@ public class Combiner extends ConnectedBlock {
     }
 
     @Override
-    protected void addDisplays(DisplayGroup displayGroup, Location location, Player player) {
+    protected void addDisplays(@NotNull DisplayGroup displayGroup, @NotNull Location location, Player player) {
         displayGroup.addDisplay("main", new BlockDisplayBuilder(location.clone().add(RELATIVE_CENTER))
                         .setMaterial(Material.GRAY_STAINED_GLASS)
                         .setTransformation(Transformations.rotateAndScale(MAIN_DISPLAY_SIZE, MAIN_DISPLAY_ROTATION))
@@ -54,7 +54,7 @@ public class Combiner extends ConnectedBlock {
     }
 
     @Override
-    public void onInputLinkUpdated(ConnectionGroup group) {
+    public void onInputLinkUpdated(@NotNull ConnectionGroup group) {
         final ConnectionPointInput input1 = (ConnectionPointInput) group.getPoint("input 1");
         final ConnectionPointInput input2 = (ConnectionPointInput) group.getPoint("input 2");
         final ConnectionPointOutput output = (ConnectionPointOutput) group.getPoint("output");

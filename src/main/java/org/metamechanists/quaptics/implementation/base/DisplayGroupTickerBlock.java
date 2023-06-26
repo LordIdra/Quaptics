@@ -10,11 +10,9 @@ import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -30,7 +28,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
-import java.util.UUID;
 
 import static dev.sefiraat.sefilib.slimefun.blocks.DisplayGroupBlock.KEY_UUID;
 
@@ -49,12 +46,12 @@ public abstract class DisplayGroupTickerBlock extends SlimefunItem {
 
     protected abstract void addDisplays(DisplayGroup displayGroup, Location location, Player player);
 
-    protected Vector rotateVectorByEyeDirection(Player player, Vector vector) {
+    protected Vector rotateVectorByEyeDirection(@NotNull Player player, @NotNull Vector vector) {
         final double rotationAngle = Transformations.yawToCardinalDirection(player.getEyeLocation().getYaw());
         return vector.clone().rotateAroundY(rotationAngle);
     }
 
-    protected Location formatPointLocation(Player player, Location location, Vector relativeLocation) {
+    protected Location formatPointLocation(Player player, @NotNull Location location, Vector relativeLocation) {
         final Vector newRelativeLocation = rotateVectorByEyeDirection(player, relativeLocation);
         newRelativeLocation.add(new Vector(0.5, 0.5, 0.5));
         return location.clone().add(newRelativeLocation);
@@ -66,6 +63,7 @@ public abstract class DisplayGroupTickerBlock extends SlimefunItem {
 
     protected void onSlimefunTick(Block block, SlimefunItem item, Config data) {}
 
+    @SuppressWarnings("unused")
     public void onQuapticTick(ConnectionGroup group) {}
 
     @Override
@@ -111,13 +109,12 @@ public abstract class DisplayGroupTickerBlock extends SlimefunItem {
         );
     }
 
-    private void setID(DisplayGroup displayGroup, Location location) {
+    private void setID(@NotNull DisplayGroup displayGroup, Location location) {
         BlockStorage.addBlockInfo(location, KEY_UUID, displayGroup.getParentUUID().toString());
     }
 
     public DisplayGroupID getID(Location location) {
         final String uuid = BlockStorage.getLocationInfo(location, KEY_UUID);
-        final Entity e = Bukkit.getEntity(UUID.fromString(uuid));
         return new DisplayGroupID(uuid);
     }
 

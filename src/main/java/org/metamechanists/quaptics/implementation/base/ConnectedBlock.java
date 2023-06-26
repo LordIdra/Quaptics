@@ -14,6 +14,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
+import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.storage.QuapticStorage;
@@ -33,7 +34,7 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
     }
 
     private ConnectionGroup getGroup(Location location) {
-        return ConnectionGroup.fromID(new ConnectionGroupID(getID(location).get()));
+        return ConnectionGroup.fromID(new ConnectionGroupID(getID(location)));
     }
 
     protected abstract float getRadius();
@@ -44,18 +45,19 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
     }
 
     @Override
-    protected void onPlace(BlockPlaceEvent event) {
+    protected void onPlace(@NotNull BlockPlaceEvent event) {
         final Location location = event.getBlock().getLocation();
-        final ConnectionGroupID groupID = new ConnectionGroupID(getID(location).get());
+        final ConnectionGroupID groupID = new ConnectionGroupID(getID(location));
         final List<ConnectionPoint> points = generateConnectionPoints(groupID, event.getPlayer(), location);
         new ConnectionGroup(groupID, this, points);
         QuapticStorage.addGroup(groupID);
     }
 
+    @SuppressWarnings("unused")
     protected void onBreak(Location location) {}
 
     @Override
-    protected void onBreak(BlockBreakEvent event) {
+    protected void onBreak(@NotNull BlockBreakEvent event) {
         getGroup(event.getBlock().getLocation()).remove();
         onBreak(event.getBlock().getLocation());
     }
@@ -77,7 +79,7 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
         location.getWorld().spawnParticle(new ParticleBuilder(Particle.FLASH).location(location).count(1).particle(), location, 20);
     }
 
-    public void doBurnoutCheck(ConnectionGroup group, ConnectionPoint point) {
+    public void doBurnoutCheck(ConnectionGroup group, @NotNull ConnectionPoint point) {
         if (point.hasLink() && point.getLink().getPower() > maxPower) {
             burnout(group.getLocation());
         }

@@ -6,6 +6,8 @@ import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.storage.DataTraverser;
 import org.metamechanists.quaptics.utils.id.DisplayGroupID;
 import org.metamechanists.quaptics.utils.id.PanelAttributeID;
@@ -28,19 +30,20 @@ public class Panel {
         saveData();
     }
 
-    private Panel(PanelID panelID) {
+    private Panel(@NotNull PanelID panelID) {
         final Entity e = Bukkit.getEntity(panelID.get());
         final DataTraverser traverser = new DataTraverser(panelID);
         final JsonObject mainSection = traverser.getData();
         final JsonObject attributeSection = mainSection.get("attributes").getAsJsonObject();
-        this.displayGroupID = new DisplayGroupID(panelID.get());
+        this.displayGroupID = new DisplayGroupID(panelID);
         this.hidden = mainSection.get("hidden").getAsBoolean();
         this.attributes = new HashMap<>();
         attributeSection.asMap().forEach(
                 (key, value) -> attributes.put(key, new PanelAttributeID(value.getAsString())));
     }
 
-    public static Panel fromID(PanelID panelID) {
+    @Contract("_ -> new")
+    public static @NotNull Panel fromID(PanelID panelID) {
         return new Panel(panelID);
     }
 
@@ -56,14 +59,15 @@ public class Panel {
     }
 
     public PanelID getID() {
-        return new PanelID(displayGroupID.get());
+        return new PanelID(displayGroupID);
     }
 
     private DisplayGroup getDisplayGroup() {
         return DisplayGroup.fromUUID(displayGroupID.get());
     }
 
-    private PanelAttribute getAttribute(String name) {
+    @Contract("_ -> new")
+    private @NotNull PanelAttribute getAttribute(String name) {
         return PanelAttribute.fromID(attributes.get(name));
     }
 

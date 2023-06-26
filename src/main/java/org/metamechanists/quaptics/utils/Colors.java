@@ -1,6 +1,7 @@
 package org.metamechanists.quaptics.utils;
 
 import lombok.Getter;
+import org.jetbrains.annotations.NotNull;
 import org.metamechanists.metalib.utils.ColorUtils;
 
 public enum Colors {
@@ -14,7 +15,7 @@ public enum Colors {
     @Getter
     private final String string;
 
-    Colors(String rawHex) {
+    Colors(@NotNull String rawHex) {
         // "#ffffff" -> "&x&f&f&f&f&f&f
         // "#123456" -> "&x&1&2&3&4&5&6
         final StringBuilder colorStringBuilder = new StringBuilder("&x");

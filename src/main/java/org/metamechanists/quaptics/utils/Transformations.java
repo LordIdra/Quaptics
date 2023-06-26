@@ -1,6 +1,7 @@
 package org.metamechanists.quaptics.utils;
 
 import org.bukkit.Location;
+import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
@@ -49,7 +50,7 @@ public class Transformations {
         return -Math.round(yaw / 90F) * (Math.PI/2);
     }
 
-    public static Vector3f getDisplacement(Location from, Location to) {
+    public static @NotNull Vector3f getDisplacement(Location from, @NotNull Location to) {
         return to.clone().subtract(from).toVector().toVector3f();
     }
 
@@ -57,7 +58,7 @@ public class Transformations {
         return getDisplacement(from, to).normalize();
     }
 
-    public static Matrix4f lookAlong(Vector3f scale, Vector3f direction) {
+    public static Matrix4f lookAlong(Vector3f scale, @NotNull Vector3f direction) {
         final float angleY = (float) Math.atan2(direction.x, direction.z);
         final float angleX = (float) Math.atan2(direction.y, Math.sqrt(direction.x*direction.x + direction.z*direction.z));
         final Matrix4f hitboxMatrix = new Matrix4f()
@@ -75,7 +76,7 @@ public class Transformations {
         return new Matrix4f().scale(scale);
     }
 
-    public static Matrix4f adjustedScale(Vector3f scale) {
+    public static Matrix4f adjustedScale(@NotNull Vector3f scale) {
         return new Matrix4f().translate(-scale.x/2, -scale.y/2, -scale.z/2).scale(scale);
     }
 
