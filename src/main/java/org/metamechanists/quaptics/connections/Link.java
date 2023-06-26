@@ -36,12 +36,12 @@ public class Link {
         this.outputID = outputID;
         this.ID = new LinkID(new DisplayGroup(getInput().getLocation(), 0, 0).getParentUUID());
         this.maxPower = getInput().getGroup().getBlock().maxPower;
+        saveData();
         getInput().link(getID());
         getOutput().link(getID());
         BlockUpdateScheduler.scheduleUpdate(getOutput().getGroup().getID());
         BlockUpdateScheduler.scheduleUpdate(getInput().getGroup().getID());
         updatePanels();
-        saveData();
     }
 
     private Link(LinkID ID) {
