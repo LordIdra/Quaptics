@@ -165,16 +165,16 @@ public abstract class ConnectionPoint {
     public void unlink() {
         linkID = null;
         getBlockDisplay().setBrightness(new Display.Brightness(disconnectedBrightness, 0));
-        updatePanel();
         saveData();
+        updatePanel();
     }
 
     public void link(LinkID linkID) {
         unlink();
         this.linkID = linkID;
         getBlockDisplay().setBrightness(new Display.Brightness(connectedBrightness, 0));
-        updatePanel();
         saveData();
+        updatePanel();
     }
 
     public void select() {
