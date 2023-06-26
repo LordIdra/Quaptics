@@ -16,6 +16,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
+import org.metamechanists.quaptics.storage.QuapticStorage;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.id.ConnectionGroupID;
 
@@ -43,6 +44,7 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
         final ConnectionGroupID groupID = new ConnectionGroupID(getID(location).get());
         final List<ConnectionPoint> points = generateConnectionPoints(groupID, event.getPlayer(), location);
         new ConnectionGroup(getID(location), this, points);
+        QuapticStorage.addGroup(groupID);
     }
 
     protected void onBreak(Location location) {}
