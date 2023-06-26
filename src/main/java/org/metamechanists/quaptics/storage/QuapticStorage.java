@@ -8,7 +8,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class QuapticStorage {
-    public static Set<ConnectionGroupID> groupIDs = new HashSet<>();
+    public static final Set<ConnectionGroupID> groupIDs = new HashSet<>();
 
     public static void addGroup(ConnectionGroupID groupID) {
         groupIDs.add(groupID);

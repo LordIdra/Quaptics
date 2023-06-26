@@ -2,6 +2,7 @@ package org.metamechanists.quaptics.utils.id;
 
 import java.util.UUID;
 
+@SuppressWarnings("unused")
 public class PanelAttributeID extends CustomID {
     public PanelAttributeID() {
         super();

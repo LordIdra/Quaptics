@@ -20,9 +20,6 @@ public class Lore {
     private final static String frequencySuffix = " &8Hz";
     private final static String phaseSuffix = " &8°";
 
-    public static String maxConnections(int connections) {
-        return countSymbol + "&7Max Connections &e" + Objects.toString(connections);
-    }
     public static String range(int range) {
         return attributeSymbol + rangeSymbol + "&7Range &e" + Objects.toString(range) + rangeSuffix;
     }
