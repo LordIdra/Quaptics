@@ -10,9 +10,11 @@ import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -118,7 +120,8 @@ public abstract class DisplayGroupTickerBlock extends SlimefunItem {
 
     public DisplayGroupID getID(Location location) {
         final String uuid = BlockStorage.getLocationInfo(location, KEY_UUID);
-        return new DisplayGroupID(UUID.fromString(uuid));
+        final Entity e = Bukkit.getEntity(UUID.fromString(uuid));
+        return new DisplayGroupID(uuid);
     }
 
     public DisplayGroup getDisplayGroup(Location location) {

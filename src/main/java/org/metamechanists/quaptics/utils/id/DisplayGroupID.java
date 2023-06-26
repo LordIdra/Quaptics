@@ -7,7 +7,9 @@ public class DisplayGroupID extends CustomID {
     public DisplayGroupID() {
         super();
     }
-
+    public DisplayGroupID(String string) {
+        super(string);
+    }
     public DisplayGroupID(UUID uuid) {
         super(uuid);
     }
