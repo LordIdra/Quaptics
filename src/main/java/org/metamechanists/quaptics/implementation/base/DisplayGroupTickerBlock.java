@@ -76,7 +76,7 @@ public abstract class DisplayGroupTickerBlock extends SlimefunItem {
                         final Location location = event.getBlock().getLocation();
                         final DisplayGroup displayGroup = new DisplayGroup(location, 0, 0);
                         addDisplays(displayGroup, location, event.getPlayer());
-                        setUUID(displayGroup, location);
+                        setID(displayGroup, location);
                         event.getBlock().setType(getBaseMaterial());
                         BlockStorage.addBlockInfo(location, Keys.CONNECTION_GROUP_ID, displayGroup.getParentUUID().toString());
                         onPlace(event);
@@ -112,7 +112,7 @@ public abstract class DisplayGroupTickerBlock extends SlimefunItem {
         );
     }
 
-    private void setUUID(DisplayGroup displayGroup, Location location) {
+    private void setID(DisplayGroup displayGroup, Location location) {
         BlockStorage.addBlockInfo(location, KEY_UUID, displayGroup.getParentUUID().toString());
     }
 

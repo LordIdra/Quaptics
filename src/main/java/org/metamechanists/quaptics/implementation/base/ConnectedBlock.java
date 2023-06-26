@@ -31,6 +31,10 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
         this.maxPower = maxPower;
     }
 
+    private ConnectionGroup getGroup(Location location) {
+        return ConnectionGroup.fromID(new ConnectionGroupID(getID(location).get()));
+    }
+
     protected abstract float getRadius();
     protected abstract List<ConnectionPoint> generateConnectionPoints(ConnectionGroupID groupID, Player player, Location location);
 
@@ -51,8 +55,7 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
 
     @Override
     protected void onBreak(BlockBreakEvent event) {
-        final ConnectionGroupID groupID = new ConnectionGroupID(getID(event.getBlock().getLocation()).get());
-        ConnectionGroup.fromID(groupID).remove();
+        getGroup(event.getBlock().getLocation()).remove();
         onBreak(event.getBlock().getLocation());
     }
 
