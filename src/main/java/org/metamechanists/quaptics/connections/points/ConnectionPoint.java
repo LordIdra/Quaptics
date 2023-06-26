@@ -65,11 +65,12 @@ public abstract class ConnectionPoint {
     protected ConnectionPoint(ConnectionPointID pointID) {
         final DataTraverser traverser = new DataTraverser(pointID);
         final JsonObject mainSection = traverser.getData();
+        final String linkIDString = mainSection.get("linkID").getAsString();
         this.groupID = new ConnectionGroupID(mainSection.get("groupID").getAsString());
         this.blockDisplayID = new BlockDisplayID(mainSection.get("blockDisplayID").getAsString());
         this.interactionID = new InteractionID(mainSection.get("interactionID").getAsString());
         this.panelID = new PointPanelID(mainSection.get("panelID").getAsString());
-        this.linkID = new LinkID(mainSection.get("linkID").getAsString());
+        this.linkID = linkIDString.equals("null") ? null : new LinkID(linkIDString);
         this.name = mainSection.get("name").getAsString();
         this.connectedBrightness = mainSection.get("connectedBrightness").getAsInt();
         this.disconnectedBrightness = mainSection.get("disconnectedBrightness").getAsInt();
@@ -80,7 +81,7 @@ public abstract class ConnectionPoint {
         mainSection.add("blockDisplayID", new JsonPrimitive(blockDisplayID.get().toString()));
         mainSection.add("interactionID", new JsonPrimitive(interactionID.get().toString()));
         mainSection.add("panelID", new JsonPrimitive(panelID.get().toString()));
-        mainSection.add("linkID", new JsonPrimitive(linkID.get().toString()));
+        mainSection.add("linkID", new JsonPrimitive(linkID == null ? "null" : linkID.get().toString()));
         mainSection.add("name", new JsonPrimitive(name));
         mainSection.add("connectedBrightness", new JsonPrimitive(connectedBrightness));
         mainSection.add("disconnectedBrightness", new JsonPrimitive(disconnectedBrightness));
