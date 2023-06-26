@@ -60,6 +60,9 @@ public class PointPanel {
         panel.setText("name", ChatColors.color((getPoint().hasLink() ? "&a" : "&c") + getPoint().getName().toUpperCase()));
 
         if (!getPoint().hasLink()) {
+            panel.setAttributeHidden("power", true);
+            panel.setAttributeHidden("frequency", true);
+            panel.setAttributeHidden("phase", true);
             return;
         }
 
