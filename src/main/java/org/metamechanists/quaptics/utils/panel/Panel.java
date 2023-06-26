@@ -4,6 +4,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import lombok.Getter;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Entity;
 import org.metamechanists.quaptics.storage.DataTraverser;
 import org.metamechanists.quaptics.utils.id.DisplayGroupID;
 import org.metamechanists.quaptics.utils.id.PanelAttributeID;
@@ -27,6 +29,7 @@ public class Panel {
     }
 
     private Panel(PanelID panelID) {
+        final Entity e = Bukkit.getEntity(panelID.get());
         final DataTraverser traverser = new DataTraverser(panelID);
         final JsonObject mainSection = traverser.getData();
         final JsonObject attributeSection = mainSection.get("attributes").getAsJsonObject();
