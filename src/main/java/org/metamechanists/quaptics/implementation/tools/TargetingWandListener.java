@@ -9,7 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.inventory.ItemStack;
-import org.metamechanists.quaptics.connections.ConnectionPointStorage;
+import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.id.ConnectionPointID;
 
@@ -28,7 +28,7 @@ public class TargetingWandListener implements Listener {
         }
 
         final ConnectionPointID pointID = new ConnectionPointID(PersistentDataAPI.getString(clickedEntity, Keys.CONNECTION_POINT_ID));
-        if (!ConnectionPointStorage.hasPoint(pointID)) {
+        if (ConnectionPoint.fromID(pointID) == null) {
             return;
         }
 

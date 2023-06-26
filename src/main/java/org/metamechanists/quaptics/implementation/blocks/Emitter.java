@@ -17,7 +17,6 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
-import org.metamechanists.quaptics.connections.ConnectionPointStorage;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
 import org.metamechanists.quaptics.implementation.base.EnergyConnectedBlock;
@@ -53,17 +52,17 @@ public class Emitter extends EnergyConnectedBlock {
     }
 
     @Override
-    protected List<ConnectionPoint> generateConnectionPoints(Player player, Location location) {
+    protected List<ConnectionPoint> generateConnectionPoints(ConnectionGroupID groupID, Player player, Location location) {
         final List<ConnectionPoint> points = new ArrayList<>();
-        points.add(new ConnectionPointOutput("output", formatPointLocation(player, location, OUTPUT_LOCATION)));
+        points.add(new ConnectionPointOutput(groupID, "output", formatPointLocation(player, location, OUTPUT_LOCATION)));
         return points;
     }
 
     @Override
     public void onSlimefunTick(Block block, SlimefunItem item, Config data) {
         super.onSlimefunTick(block, item, data);
-        final ConnectionGroupID id = new ConnectionGroupID(BlockStorage.getLocationInfo(block.getLocation(), Keys.CONNECTION_GROUP_ID));
-        final ConnectionGroup group = ConnectionPointStorage.getGroup(id);
+        final ConnectionGroupID ID = new ConnectionGroupID(BlockStorage.getLocationInfo(block.getLocation(), Keys.CONNECTION_GROUP_ID));
+        final ConnectionGroup group = ConnectionGroup.fromID(ID);
         final ConnectionPointOutput output = (ConnectionPointOutput) group.getPoint("output");
 
         if (!output.hasLink()) {

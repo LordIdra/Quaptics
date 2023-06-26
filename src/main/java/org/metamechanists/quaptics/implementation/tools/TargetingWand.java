@@ -10,7 +10,6 @@ import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
-import org.metamechanists.quaptics.connections.ConnectionPointStorage;
 import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
@@ -32,7 +31,7 @@ public class TargetingWand extends SlimefunItem {
     }
 
     private void setSource(Player player, ConnectionPointID sourceID, ItemStack stack) {
-        ConnectionPoint source = ConnectionPointStorage.getPoint(sourceID);
+        final ConnectionPoint source = ConnectionPoint.fromID(sourceID);
         if (!(source instanceof ConnectionPointOutput)) {
             player.sendMessage(Language.getLanguageEntry("targeting-wand.source-must-be-output"));
             return;
@@ -45,7 +44,7 @@ public class TargetingWand extends SlimefunItem {
     public void unsetSource(ItemStack stack) {
         if (isSourceSet(stack)) {
             final ConnectionPointID sourcePointID = new ConnectionPointID(PersistentDataUtils.getString(stack, Keys.SOURCE));
-            final ConnectionPointOutput sourcePoint = (ConnectionPointOutput)ConnectionPointStorage.getPoint(sourcePointID);
+            final ConnectionPointOutput sourcePoint = (ConnectionPointOutput) ConnectionPoint.fromID(sourcePointID);
 
             if (sourcePoint != null) {
                 sourcePoint.deselect();
@@ -56,7 +55,7 @@ public class TargetingWand extends SlimefunItem {
     }
 
     private void removeLink(ConnectionPointID pointID) {
-        final ConnectionPoint point = ConnectionPointStorage.getPoint(pointID);
+        final ConnectionPoint point = ConnectionPoint.fromID(pointID);
 
         if (point instanceof ConnectionPointOutput outputPoint && outputPoint.hasLink()) {
             outputPoint.getLink().remove();
@@ -70,13 +69,13 @@ public class TargetingWand extends SlimefunItem {
 
     private void createLink(Player player, ConnectionPointID inputID, ItemStack stack) {
         final ConnectionPointID outputID = new ConnectionPointID(PersistentDataUtils.getString(stack, Keys.SOURCE));
-        final ConnectionPointOutput output = (ConnectionPointOutput) ConnectionPointStorage.getPoint(outputID);
+        final ConnectionPointOutput output = (ConnectionPointOutput) ConnectionPoint.fromID(outputID);
 
         if (output == null) {
             return;
         }
 
-        if (!(ConnectionPointStorage.getPoint(inputID) instanceof ConnectionPointInput input)) {
+        if (!(ConnectionPoint.fromID(inputID) instanceof ConnectionPointInput input)) {
             player.sendMessage(Language.getLanguageEntry("targeting-wand.target-must-be-input"));
             return;
         }
@@ -93,8 +92,8 @@ public class TargetingWand extends SlimefunItem {
 
         if (input.hasLink()
                 && output.hasLink()
-                && input.getLink().getInput().getId() == inputID
-                && output.getLink().getOutput().getId() == outputID) {
+                && input.getLink().getInput().getID().equals(inputID)
+                && output.getLink().getOutput().getID().equals(outputID)) {
             return;
         }
 
@@ -112,13 +111,13 @@ public class TargetingWand extends SlimefunItem {
         block1.connect(output, input);
         block2.connect(input, output);
 
-        setSource(player, output.getId(), stack);
+        setSource(player, output.getID(), stack);
 
         new Link(input, output);
     }
 
     public void use(Player player, ConnectionPointID pointId, ItemStack stack) {
-        final ConnectionGroup group = ConnectionPointStorage.getGroup(pointId);
+        final ConnectionGroup group = ConnectionPoint.fromID(pointId).getGroup();
         if (!BlockStorage.hasBlockInfo(group.getLocation())
                 || !(BlockStorage.check(group.getLocation()) instanceof ConnectedBlock)
                 || !Items.targetingWand.canUse(player, false)

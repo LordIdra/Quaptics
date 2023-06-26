@@ -32,6 +32,7 @@ import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
+import org.metamechanists.quaptics.utils.id.ConnectionGroupID;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -78,9 +79,9 @@ public class Turret extends ConnectedBlock {
     }
 
     @Override
-    protected List<ConnectionPoint> generateConnectionPoints(Player player, Location location) {
+    protected List<ConnectionPoint> generateConnectionPoints(ConnectionGroupID groupID, Player player, Location location) {
         final List<ConnectionPoint> points = new ArrayList<>();
-        points.add(new ConnectionPointInput("input", formatPointLocation(player, location, INPUT_LOCATION)));
+        points.add(new ConnectionPointInput(groupID, "input", formatPointLocation(player, location, INPUT_LOCATION)));
         return points;
     }
 

@@ -1,22 +1,27 @@
 package org.metamechanists.quaptics.beams.beam;
 
-import org.bukkit.configuration.serialization.ConfigurationSerializable;
-import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.beams.DeprecatedTickerStorage;
 import org.metamechanists.quaptics.beams.ticker.factory.DirectTickerFactory;
 import org.metamechanists.quaptics.beams.ticker.ticker.DirectTicker;
+import org.metamechanists.quaptics.utils.id.BeamID;
+import org.metamechanists.quaptics.utils.id.TickerID;
 
-import java.util.HashMap;
-import java.util.Map;
-
-public class DirectBeam extends Beam implements ConfigurationSerializable {
+public class DirectBeam extends Beam {
     private final DirectTicker ticker;
 
     public DirectBeam(DirectTickerFactory factory) {
         this.ticker = factory.build();
     }
-    private DirectBeam(DirectTicker ticker) {
-        this.ticker = ticker;
+    private DirectBeam(BeamID ID) {
+        this.ticker = DirectTicker.fromID(new TickerID(ID.get()));
+    }
+
+    public static DirectBeam fromID(BeamID ID) {
+        return new DirectBeam(ID);
+    }
+
+    public BeamID getID() {
+        return new BeamID(ticker.getID().get());
     }
 
     @Override
@@ -26,15 +31,4 @@ public class DirectBeam extends Beam implements ConfigurationSerializable {
 
     @Override
     public void tick() {}
-
-    @Override
-    public @NotNull Map<String, Object> serialize() {
-        Map<String, Object> map = new HashMap<>();
-        map.put("ticker", ticker);
-        return map;
-    }
-
-    public static DirectBeam deserialize(Map<String, Object> map) {
-        return new DirectBeam((DirectTicker) map.get("ticker"));
-    }
 }

@@ -1,19 +1,26 @@
 package org.metamechanists.quaptics.connections;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import lombok.Getter;
 import org.bukkit.Material;
-import org.bukkit.configuration.serialization.ConfigurationSerializable;
-import org.jetbrains.annotations.NotNull;
+import org.metamechanists.metalib.sefilib.entity.display.DisplayGroup;
 import org.metamechanists.quaptics.beams.beam.DirectBeam;
 import org.metamechanists.quaptics.beams.ticker.factory.DirectTickerFactory;
+import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
+import org.metamechanists.quaptics.storage.DataTraverser;
+import org.metamechanists.quaptics.utils.id.BeamID;
 import org.metamechanists.quaptics.utils.id.ConnectionPointID;
+import org.metamechanists.quaptics.utils.id.LinkID;
 
-import java.util.HashMap;
-import java.util.Map;
-
-public class Link implements ConfigurationSerializable {
+public class Link {
+    @Getter
+    private final LinkID ID;
+    private final ConnectionPointID outputID;
+    private final ConnectionPointID inputID;
+    private BeamID beamID;
     @Getter
     private boolean enabled;
     @Getter
@@ -23,82 +30,108 @@ public class Link implements ConfigurationSerializable {
     @Getter
     private int phase;
     private double maxPower;
-    private final ConnectionPointID outputID;
-    private final ConnectionPointID inputID;
-    private DirectBeam beam;
-
 
     public Link(ConnectionPointInput input, ConnectionPointOutput output) {
-        this.inputID = input.getId();
-        this.outputID = output.getId();
+        this.ID = new LinkID(new DisplayGroup(input.getLocation(), 0, 0).getParentUUID());
+        this.inputID = input.getID();
+        this.outputID = output.getID();
         this.maxPower = input.getGroup().getBlock().maxPower;
-        input.link(this);
-        output.link(this);
-        BlockUpdateScheduler.scheduleUpdate(output.getGroup().getId());
-        BlockUpdateScheduler.scheduleUpdate(input.getGroup().getId());
+        input.link(getID());
+        output.link(getID());
+        BlockUpdateScheduler.scheduleUpdate(output.getGroup().getID());
+        BlockUpdateScheduler.scheduleUpdate(input.getGroup().getID());
         updatePanels();
+        saveData();
     }
 
-    private Link(boolean enabled, double power, double frequency, int phase, ConnectionPointID outputID, ConnectionPointID inputID, DirectBeam beam) {
-        this.enabled = enabled;
-        this.power = power;
-        this.frequency = frequency;
-        this.phase = phase;
-        this.outputID = outputID;
-        this.inputID = inputID;
-        this.beam = beam;
+    private Link(LinkID ID) {
+        final DataTraverser traverser = new DataTraverser(ID);
+        final JsonObject mainSection = traverser.getData();
+        this.ID = ID;
+        this.outputID = new ConnectionPointID(mainSection.get("outputID").getAsString());
+        this.inputID = new ConnectionPointID(mainSection.get("inputID").getAsString());
+        this.beamID = new BeamID(mainSection.get("beamID").getAsString());
+        this.enabled = mainSection.get("enabled").getAsBoolean();
+        this.power = mainSection.get("power").getAsDouble();
+        this.frequency = mainSection.get("frequency").getAsDouble();
+        this.phase = mainSection.get("phase").getAsInt();
+        this.frequency = mainSection.get("maxPower").getAsDouble();
+    }
+
+    public static Link fromID(LinkID ID) {
+        return new Link(ID);
+    }
+
+    public void saveData() {
+        final DataTraverser traverser = new DataTraverser(getID());
+        final JsonObject mainSection = traverser.getData();
+        mainSection.add("outputID", new JsonPrimitive(outputID.toString()));
+        mainSection.add("inputID", new JsonPrimitive(inputID.toString()));
+        mainSection.add("beamID", new JsonPrimitive(beamID.toString()));
+        mainSection.add("enabled", new JsonPrimitive(enabled));
+        mainSection.add("power", new JsonPrimitive(power));
+        mainSection.add("frequency", new JsonPrimitive(frequency));
+        mainSection.add("phase", new JsonPrimitive(phase));
+        mainSection.add("maxPower", new JsonPrimitive(maxPower));
+        traverser.save();
     }
 
     public ConnectionPointOutput getOutput() {
-        return (ConnectionPointOutput) ConnectionPointStorage.getPoint(outputID);
+        return (ConnectionPointOutput) ConnectionPoint.fromID(outputID);
     }
 
     public ConnectionPointInput getInput() {
-        return (ConnectionPointInput) ConnectionPointStorage.getPoint(inputID);
+        return (ConnectionPointInput) ConnectionPoint.fromID(inputID);
     }
 
     private boolean hasBeam() {
-        return beam != null;
+        return beamID != null;
+    }
+
+    private DirectBeam getBeam() {
+        return DirectBeam.fromID(beamID);
     }
 
     public void tick() {
         if (hasBeam()) {
-            beam.tick();
+            getBeam().tick();
         }
     }
 
     public void remove() {
         if (hasBeam()) {
-            beam.deprecate();
-            beam = null;
+            getBeam().deprecate();
+            beamID = null;
         }
 
-        if (getOutput() != null && ConnectionPointStorage.hasGroup(getOutput().getGroup().getId())) {
+        if (getOutput() != null && getOutput().getGroup() != null) {
             getOutput().unlink();
-            BlockUpdateScheduler.scheduleUpdate(getOutput().getGroup().getId());
+            BlockUpdateScheduler.scheduleUpdate(getOutput().getGroup().getID());
         }
 
-        if (getInput() != null && ConnectionPointStorage.hasGroup(getInput().getGroup().getId())) {
+        if (getInput() != null && getInput().getGroup() != null) {
             getInput().unlink();
-            BlockUpdateScheduler.scheduleUpdate(getInput().getGroup().getId());
+            BlockUpdateScheduler.scheduleUpdate(getInput().getGroup().getID());
         }
     }
 
     private void updateBeam() {
         if (hasBeam()) {
-            beam.deprecate();
-            beam = null;
+            getBeam().deprecate();
+            beamID = null;
         }
 
         if (!enabled) {
             return;
         }
 
-        this.beam = new DirectBeam(new DirectTickerFactory(
+        this.beamID = new DirectBeam(new DirectTickerFactory(
                         Material.WHITE_CONCRETE,
                         getOutput().getLocation(),
                         getInput().getLocation(),
-                        (float)(power / maxPower) * 0.095F));
+                        (float)(power / maxPower) * 0.095F))
+                .getID();
+        saveData();
     }
 
     private void updatePanels() {
@@ -121,7 +154,8 @@ public class Link implements ConfigurationSerializable {
 
         updateBeam();
         updatePanels();
-        BlockUpdateScheduler.scheduleUpdate(getInput().getGroup().getId());
+        BlockUpdateScheduler.scheduleUpdate(getInput().getGroup().getID());
+        saveData();
     }
 
     public void setPower(double power) {
@@ -134,30 +168,7 @@ public class Link implements ConfigurationSerializable {
 
         updateBeam();
         updatePanels();
-        BlockUpdateScheduler.scheduleUpdate(getInput().getGroup().getId());
-    }
-
-    @Override
-    public @NotNull Map<String, Object> serialize() {
-        Map<String, Object> map = new HashMap<>();
-        map.put("enabled", enabled);
-        map.put("power", power);
-        map.put("frequency", frequency);
-        map.put("phase", phase);
-        map.put("outputID", outputID);
-        map.put("inputID", inputID);
-        map.put("beam", beam);
-        return map;
-    }
-
-    public static Link deserialize(Map<String, Object> map) {
-        return new Link(
-                (boolean) map.get("enabled"),
-                (double) map.get("power"),
-                (double) map.get("frequency"),
-                (int) map.get("phase"),
-                (ConnectionPointID) map.get("outputID"),
-                (ConnectionPointID) map.get("inputID"),
-                (DirectBeam) map.get("beam"));
+        BlockUpdateScheduler.scheduleUpdate(getInput().getGroup().getID());
+        saveData();
     }
 }

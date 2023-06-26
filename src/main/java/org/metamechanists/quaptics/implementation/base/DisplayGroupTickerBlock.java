@@ -20,7 +20,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
+import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Transformations;
+import org.metamechanists.quaptics.utils.id.DisplayGroupID;
 
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
@@ -76,6 +78,7 @@ public abstract class DisplayGroupTickerBlock extends SlimefunItem {
                         addDisplays(displayGroup, location, event.getPlayer());
                         setUUID(displayGroup, location);
                         event.getBlock().setType(getBaseMaterial());
+                        BlockStorage.addBlockInfo(location, Keys.CONNECTION_GROUP_ID, displayGroup.getParentUUID().toString());
                         onPlace(event);
                     }
                 },
@@ -109,19 +112,16 @@ public abstract class DisplayGroupTickerBlock extends SlimefunItem {
         );
     }
 
-    private void setUUID(@Nonnull DisplayGroup displayGroup, @Nonnull Location location) {
+    private void setUUID(DisplayGroup displayGroup, Location location) {
         BlockStorage.addBlockInfo(location, KEY_UUID, displayGroup.getParentUUID().toString());
     }
 
-    @OverridingMethodsMustInvokeSuper
-    public UUID getUUID(@Nonnull Location location) {
+    public DisplayGroupID getID(Location location) {
         final String uuid = BlockStorage.getLocationInfo(location, KEY_UUID);
-        return UUID.fromString(uuid);
+        return new DisplayGroupID(UUID.fromString(uuid));
     }
 
-    @OverridingMethodsMustInvokeSuper
-    public DisplayGroup getDisplayGroup(@Nonnull Location location) {
-        final UUID uuid = getUUID(location);
-        return DisplayGroup.fromUUID(uuid);
+    public DisplayGroup getDisplayGroup(Location location) {
+        return DisplayGroup.fromUUID(getID(location).get());
     }
 }

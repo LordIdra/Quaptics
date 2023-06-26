@@ -15,9 +15,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
-import org.metamechanists.quaptics.connections.ConnectionPointStorage;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
-import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.id.ConnectionGroupID;
 
@@ -33,7 +31,7 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
     }
 
     protected abstract float getRadius();
-    protected abstract List<ConnectionPoint> generateConnectionPoints(Player player, Location location);
+    protected abstract List<ConnectionPoint> generateConnectionPoints(ConnectionGroupID groupID, Player player, Location location);
 
     protected static double powerLoss(double inputPower, double maxPower, double powerLoss) {
         return inputPower - ((powerLoss/maxPower) * Math.pow(inputPower, 2));
@@ -42,18 +40,12 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
     @Override
     protected void onPlace(BlockPlaceEvent event) {
         final Location location = event.getBlock().getLocation();
-
-        final List<ConnectionPoint> points = generateConnectionPoints(event.getPlayer(), location);
-        final ConnectionGroup group = new ConnectionGroup(location, this, points);
-
-        ConnectionPointStorage.addGroup(group);
-        BlockStorage.addBlockInfo(location, Keys.CONNECTION_GROUP_ID,group.getId().toString());
+        final ConnectionGroupID groupID = new ConnectionGroupID(getID(location).get());
+        final List<ConnectionPoint> points = generateConnectionPoints(groupID, event.getPlayer(), location);
+        new ConnectionGroup(getID(location), this, points);
     }
 
-    protected void onBreak(Location location) {
-        final ConnectionGroupID id = new ConnectionGroupID(BlockStorage.getLocationInfo(location, Keys.CONNECTION_GROUP_ID));
-        ConnectionPointStorage.removeGroup(id);
-    }
+    protected void onBreak(Location location) {}
 
     @Override
     protected void onBreak(BlockBreakEvent event) {
@@ -62,7 +54,7 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
 
     @OverridingMethodsMustInvokeSuper
     public void connect(ConnectionPoint from, ConnectionPoint to) {
-        ConnectionPointStorage.updatePointLocation(from.getId(), calculateNewLocation(from, to));
+        from.getGroup().changePointLocation(from.getID(), calculateNewLocation(from, to));
     }
 
     public void burnout(Location location) {

@@ -4,19 +4,15 @@ import lombok.Builder;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.entity.BlockDisplay;
-import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.BlockDisplayID;
-
-import java.util.HashMap;
-import java.util.Map;
+import org.metamechanists.quaptics.utils.id.TickerID;
 
 @Builder
-public class DirectTicker implements DisplayTicker, ConfigurationSerializable {
+public class DirectTicker implements DisplayTicker {
     private final BlockDisplayID displayID;
 
     public DirectTicker(Material material, Location source, Location target, float radius) {
@@ -30,8 +26,16 @@ public class DirectTicker implements DisplayTicker, ConfigurationSerializable {
                         .getUniqueId());
     }
 
-    private DirectTicker(BlockDisplayID displayID) {
-        this.displayID = displayID;
+    private DirectTicker(TickerID ID) {
+        this.displayID = new BlockDisplayID(ID.get());
+    }
+
+    public static DirectTicker fromID(TickerID ID) {
+        return new DirectTicker(ID);
+    }
+
+    public TickerID getID() {
+        return new TickerID(displayID.get());
     }
 
     private BlockDisplay getDisplay() {
@@ -49,16 +53,6 @@ public class DirectTicker implements DisplayTicker, ConfigurationSerializable {
     @Override
     public boolean expired() {
         return true;
-    }
-
-    public @NotNull Map<String, Object> serialize() {
-        final Map<String, Object> map = new HashMap<>();
-        map.put("display", displayID);
-        return map;
-    }
-
-    public static DirectTicker deserialize(Map<String, Object> map) {
-        return new DirectTicker((BlockDisplayID) map.get("display"));
     }
 }
 
