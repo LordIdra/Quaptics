@@ -108,8 +108,8 @@ public class TargetingWand extends SlimefunItem {
             output.getLink().remove();
         }
 
-        block1.connect(output, input);
-        block2.connect(input, output);
+        block1.connect(outputID, inputID);
+        block2.connect(inputID, outputID);
 
         setSource(player, outputID, stack);
 
