@@ -11,9 +11,9 @@ import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
 import org.metamechanists.quaptics.storage.DataTraverser;
-import org.metamechanists.quaptics.utils.id.BeamID;
 import org.metamechanists.quaptics.utils.id.ConnectionPointID;
 import org.metamechanists.quaptics.utils.id.LinkID;
+import org.metamechanists.quaptics.utils.id.TickerID;
 
 public class Link {
     @Getter
@@ -21,7 +21,7 @@ public class Link {
     private final ConnectionPointID outputID;
     private final ConnectionPointID inputID;
     private final double maxPower;
-    private BeamID beamID;
+    private TickerID tickerID;
     @Getter
     private boolean enabled;
     @Getter
@@ -50,9 +50,9 @@ public class Link {
         this.ID = ID;
         this.outputID = new ConnectionPointID(mainSection.get("outputID").getAsString());
         this.inputID = new ConnectionPointID(mainSection.get("inputID").getAsString());
-        this.beamID = mainSection.get("beamID").getAsString().equals("null")
+        this.tickerID = mainSection.get("tickerID").getAsString().equals("null")
                 ? null
-                : new BeamID(mainSection.get("beamID").getAsString());
+                : new TickerID(mainSection.get("tickerID").getAsString());
         this.enabled = mainSection.get("enabled").getAsBoolean();
         this.power = mainSection.get("power").getAsDouble();
         this.frequency = mainSection.get("frequency").getAsDouble();
@@ -69,7 +69,7 @@ public class Link {
         final JsonObject mainSection = traverser.getData();
         mainSection.add("outputID", new JsonPrimitive(outputID.toString()));
         mainSection.add("inputID", new JsonPrimitive(inputID.toString()));
-        mainSection.add("beamID", new JsonPrimitive(beamID == null ? "null" : beamID.toString()));
+        mainSection.add("tickerID", new JsonPrimitive(tickerID == null ? "null" : tickerID.toString()));
         mainSection.add("enabled", new JsonPrimitive(enabled));
         mainSection.add("power", new JsonPrimitive(power));
         mainSection.add("frequency", new JsonPrimitive(frequency));
@@ -87,11 +87,11 @@ public class Link {
     }
 
     private boolean hasBeam() {
-        return beamID != null;
+        return tickerID != null;
     }
 
     private DirectBeam getBeam() {
-        return DirectBeam.fromID(beamID);
+        return DirectBeam.fromID(tickerID);
     }
 
     public void tick() {
@@ -103,7 +103,7 @@ public class Link {
     public void remove() {
         if (hasBeam()) {
             getBeam().deprecate();
-            beamID = null;
+            tickerID = null;
         }
 
         if (getOutput() != null && getOutput().getGroup() != null) {
@@ -120,14 +120,14 @@ public class Link {
     private void updateBeam() {
         if (hasBeam()) {
             getBeam().deprecate();
-            beamID = null;
+            tickerID = null;
         }
 
         if (!enabled) {
             return;
         }
 
-        this.beamID = new DirectBeam(new DirectTickerFactory(
+        this.tickerID = new DirectBeam(new DirectTickerFactory(
                         Material.WHITE_CONCRETE,
                         getOutput().getLocation(),
                         getInput().getLocation(),
@@ -154,8 +154,8 @@ public class Link {
             phase = 0;
         }
 
-        saveData();
         updateBeam();
+        saveData();
         updatePanels();
         BlockUpdateScheduler.scheduleUpdate(getInput().getGroup().getID());
     }
@@ -168,8 +168,8 @@ public class Link {
 
         this.power = power;
 
-        saveData();
         updateBeam();
+        saveData();
         updatePanels();
         BlockUpdateScheduler.scheduleUpdate(getInput().getGroup().getID());
     }
