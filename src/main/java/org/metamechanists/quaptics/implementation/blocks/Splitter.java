@@ -71,7 +71,7 @@ public class Splitter extends ConnectedBlock {
             return;
         }
 
-        double outputPower = powerLoss(input.getLink().getPower(), maxPower, powerLoss);
+        double outputPower = powerLoss(input.getLink().getPower(), powerLoss);
         if (output1.hasLink() && output2.hasLink()) {
             outputPower /= 2.0;
         }

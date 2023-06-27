@@ -33,8 +33,8 @@ public class Lore {
     public static String emissionPower(double emissionPower) {
         return attributeSymbol + powerSymbol + "&7Emission Power &e" + Objects.toString(emissionPower) + powerSuffix;
     }
-    public static String powerConsumption(double powerConsumption) {
-        return attributeSymbol + powerSymbol + "&7Power Consumption &e" + Objects.toString(powerConsumption) + powerSuffix;
+    public static String minimumPower(double minimumPower) {
+        return attributeSymbol + powerSymbol + "&7Minimum Power &e" + Objects.toString(minimumPower) + powerSuffix;
     }
     public static String maxPower(double maxPower) {
         return attributeSymbol + powerSymbol + "&7Max Power &e" + Objects.toString(maxPower) + powerSuffix;

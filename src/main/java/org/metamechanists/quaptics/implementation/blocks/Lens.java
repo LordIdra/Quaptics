@@ -67,7 +67,7 @@ public class Lens extends ConnectedBlock {
             return;
         }
 
-        output.getLink().setPower(powerLoss(input.getLink().getPower(), maxPower, powerLoss));
+        output.getLink().setPower(powerLoss(input.getLink().getPower(), powerLoss));
         output.getLink().setEnabled(true);
     }
 

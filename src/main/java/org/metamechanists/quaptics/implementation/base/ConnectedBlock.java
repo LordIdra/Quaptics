@@ -40,8 +40,8 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
     protected abstract float getRadius();
     protected abstract List<ConnectionPoint> generateConnectionPoints(ConnectionGroupID groupID, Player player, Location location);
 
-    protected static double powerLoss(double inputPower, double maxPower, double powerLoss) {
-        return inputPower - ((powerLoss/maxPower) * Math.pow(inputPower, 2));
+    protected static double powerLoss(double inputPower,  double powerLoss) {
+        return inputPower*(1-powerLoss);
     }
 
     @Override
@@ -69,6 +69,7 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
 
     public void burnout(Location location) {
         onBreak(location);
+        getGroup(location).remove();
         getDisplayGroup(location).getDisplays().values().forEach(Entity::remove);
         getDisplayGroup(location).remove();
 

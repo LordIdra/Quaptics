@@ -77,7 +77,7 @@ public class Combiner extends ConnectedBlock {
         if (input1On) { inputPower += input1.getLink().getPower(); }
         if (input2On) { inputPower += input2.getLink().getPower(); }
 
-        output.getLink().setPower(powerLoss(inputPower, maxPower, powerLoss));
+        output.getLink().setPower(powerLoss(inputPower, powerLoss));
         output.getLink().setEnabled(true);
     }
 

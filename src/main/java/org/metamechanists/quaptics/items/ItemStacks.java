@@ -45,7 +45,7 @@ public class ItemStacks {
             Material.SMOOTH_STONE_SLAB,
             "&4Turret",
             "&7● Shoots at nearby entities",
-            Lore.powerConsumption(30),
+            Lore.minimumPower(30),
             Lore.damage(4),
             Lore.range(10));
 
