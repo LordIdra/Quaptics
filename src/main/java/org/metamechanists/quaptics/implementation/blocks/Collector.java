@@ -19,7 +19,7 @@ import org.joml.Vector3f;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
-import org.metamechanists.quaptics.implementation.base.EnergyConnectedBlock;
+import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
@@ -29,20 +29,19 @@ import org.metamechanists.quaptics.utils.id.ConnectionPointID;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Emitter extends EnergyConnectedBlock {
-    private final Vector OUTPUT_LOCATION = new Vector(0.0F, 0.0F, getRadius());
+public class Collector extends ConnectedBlock {
+    private final Vector OUTPUT_LOCATION = new Vector(0.0F, 0.0F, 0.0F);
     private final Vector3f MAIN_DISPLAY_SIZE = new Vector3f(0.3F, 0.3F, (2*getRadius()));
     private final double emissionPower;
 
-    public Emitter(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe,
-                   int capacity, int consumption, double emissionPower) {
-        super(group, item, recipeType, recipe, 0, capacity, consumption);
+    public Collector(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, double emissionPower) {
+        super(group, item, recipeType, recipe, 0);
         this.emissionPower = emissionPower;
     }
 
     private BlockDisplay generateMainBlockDisplay(@NotNull Location from, Location to) {
         return new BlockDisplayBuilder(from.clone().add(RELATIVE_CENTER))
-                .setMaterial(Material.PURPLE_CONCRETE)
+                .setMaterial(Material.GLASS_PANE)
                 .setTransformation(Transformations.lookAlong(MAIN_DISPLAY_SIZE, Transformations.getDirection(from, to)))
                 .build();
     }
@@ -70,7 +69,7 @@ public class Emitter extends EnergyConnectedBlock {
             return;
         }
 
-        if (isPowered(block.getLocation())) {
+        if (block.getWorld().isDayTime()) {
             output.getLink().setPower(emissionPower);
             output.getLink().setEnabled(true);
             return;
@@ -82,16 +81,6 @@ public class Emitter extends EnergyConnectedBlock {
     @Override
     public void connect(ConnectionPointID from, ConnectionPointID to) {
         super.connect(from, to);
-        final DisplayGroup fromDisplayGroup = getDisplayGroup(ConnectionPoint.fromID(from).getGroup().getLocation());
-        fromDisplayGroup.removeDisplay("main").remove();
-        fromDisplayGroup.addDisplay("main", generateMainBlockDisplay(
-                ConnectionPoint.fromID(from).getGroup().getLocation(),
-                ConnectionPoint.fromID(to).getGroup().getLocation()));
-    }
-
-    @Override
-    protected float getRadius() {
-        return 0.45F;
     }
 
     @Override

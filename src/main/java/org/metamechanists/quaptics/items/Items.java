@@ -6,11 +6,7 @@ import lombok.Getter;
 import org.bukkit.inventory.ItemStack;
 import org.metamechanists.quaptics.Quaptics;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
-import org.metamechanists.quaptics.implementation.blocks.Combiner;
-import org.metamechanists.quaptics.implementation.blocks.Emitter;
-import org.metamechanists.quaptics.implementation.blocks.Lens;
-import org.metamechanists.quaptics.implementation.blocks.Turret;
-import org.metamechanists.quaptics.implementation.blocks.Splitter;
+import org.metamechanists.quaptics.implementation.blocks.*;
 import org.metamechanists.quaptics.implementation.tools.TargetingWand;
 
 import java.util.HashMap;

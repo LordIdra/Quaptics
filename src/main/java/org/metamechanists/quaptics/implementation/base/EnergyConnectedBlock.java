@@ -8,9 +8,12 @@ import io.github.thebusybiscuit.slimefun4.core.attributes.EnergyNetComponent;
 import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNetComponentType;
 import lombok.Getter;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
+import me.mrCookieSlime.Slimefun.api.BlockStorage;
+import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import org.metamechanists.quaptics.utils.Keys;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 
@@ -21,12 +24,24 @@ public abstract class EnergyConnectedBlock extends ConnectedBlock implements Ene
     private final int capacity;
     @Getter
     private final int consumption;
-    protected boolean powered = false;
 
-    public EnergyConnectedBlock(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, double maxPower, int capacity, int consumption) {
+    public EnergyConnectedBlock(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe,
+                                double maxPower, int capacity, int consumption) {
         super(group, item, recipeType, recipe, maxPower);
         this.capacity = capacity;
         this.consumption = consumption;
+    }
+
+    protected void setPowered(Location location, boolean powered) {
+        BlockStorage.addBlockInfo(location, Keys.POWERED, powered ? "true" : "false");
+    }
+
+    protected boolean isPowered(Location location) {
+        final String powered = BlockStorage.getLocationInfo(location, Keys.POWERED);
+        if (powered == null) {
+            return false;
+        }
+        return powered.equals("true");
     }
 
     @OverridingMethodsMustInvokeSuper
@@ -34,9 +49,9 @@ public abstract class EnergyConnectedBlock extends ConnectedBlock implements Ene
     public void onSlimefunTick(@NotNull Block block, SlimefunItem item, Config data) {
         if (getCharge(block.getLocation(), data) >= consumption) {
             removeCharge(block.getLocation(), consumption);
-            powered = true;
+            setPowered(block.getLocation(), true);
             return;
         }
-        powered = false;
+        setPowered(block.getLocation(), false);
     }
 }

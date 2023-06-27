@@ -37,7 +37,7 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
         return ConnectionGroup.fromID(new ConnectionGroupID(getID(location)));
     }
 
-    protected abstract float getRadius();
+    protected float getRadius() { return 0.0F; }
     protected abstract List<ConnectionPoint> generateConnectionPoints(ConnectionGroupID groupID, Player player, Location location);
 
     protected static double powerLoss(double inputPower,  double powerLoss) {
