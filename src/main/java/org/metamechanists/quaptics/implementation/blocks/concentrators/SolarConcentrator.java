@@ -26,13 +26,14 @@ import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.ConnectionGroupID;
+import org.metamechanists.quaptics.utils.id.ConnectionPointID;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SolarConcentrator extends ConnectedBlock {
     private final Vector outputLocation = new Vector(0.0F, 0.0F, 0.0F);
-    private final Vector3f mainDisplaySize = new Vector3f(7.0F, 0.05F, 7.0F);
+    private final Vector3f mainDisplaySize = new Vector3f(0.05F, 7.0F, 7.0F);
     private final double emissionPower;
 
     public SolarConcentrator(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, double emissionPower) {
@@ -97,6 +98,16 @@ public class SolarConcentrator extends ConnectedBlock {
         }
 
         output.getLink().setEnabled(false);
+    }
+
+    @Override
+    public void connect(ConnectionPointID from, ConnectionPointID to) {
+        super.connect(from, to);
+        final DisplayGroup fromDisplayGroup = getDisplayGroup(ConnectionPoint.fromID(from).getGroup().getLocation());
+        fromDisplayGroup.removeDisplay("main").remove();
+        fromDisplayGroup.addDisplay("main", generateMainBlockDisplay(
+                ConnectionPoint.fromID(from).getGroup().getLocation(),
+                ConnectionPoint.fromID(to).getGroup().getLocation()));
     }
 
     @Override
