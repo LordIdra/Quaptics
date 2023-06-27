@@ -101,16 +101,6 @@ public class SolarConcentrator extends ConnectedBlock {
     }
 
     @Override
-    public void connect(ConnectionPointID from, ConnectionPointID to) {
-        super.connect(from, to);
-        final DisplayGroup fromDisplayGroup = getDisplayGroup(ConnectionPoint.fromID(from).getGroup().getLocation());
-        fromDisplayGroup.removeDisplay("main").remove();
-        fromDisplayGroup.addDisplay("main", generateMainBlockDisplay(
-                ConnectionPoint.fromID(from).getGroup().getLocation(),
-                ConnectionPoint.fromID(to).getGroup().getLocation()));
-    }
-
-    @Override
     protected @NotNull Material getBaseMaterial() {
         return Material.STRUCTURE_VOID;
     }
