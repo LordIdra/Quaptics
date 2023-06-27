@@ -1,4 +1,4 @@
-package org.metamechanists.quaptics.implementation.blocks;
+package org.metamechanists.quaptics.implementation.blocks.concentrators;
 
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
@@ -29,12 +29,12 @@ import org.metamechanists.quaptics.utils.id.ConnectionPointID;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Collector extends ConnectedBlock {
+public class SolarConcentrator extends ConnectedBlock {
     private final Vector OUTPUT_LOCATION = new Vector(0.0F, 0.0F, 0.0F);
     private final Vector3f MAIN_DISPLAY_SIZE = new Vector3f(0.3F, 0.3F, (2*getRadius()));
     private final double emissionPower;
 
-    public Collector(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, double emissionPower) {
+    public SolarConcentrator(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, double emissionPower) {
         super(group, item, recipeType, recipe, 0);
         this.emissionPower = emissionPower;
     }

@@ -7,6 +7,8 @@ import org.bukkit.inventory.ItemStack;
 import org.metamechanists.quaptics.Quaptics;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
 import org.metamechanists.quaptics.implementation.blocks.*;
+import org.metamechanists.quaptics.implementation.blocks.concentrators.SolarConcentrator;
+import org.metamechanists.quaptics.implementation.blocks.concentrators.EnergyConcentrator;
 import org.metamechanists.quaptics.implementation.tools.TargetingWand;
 
 import java.util.LinkedHashMap;
@@ -25,41 +27,41 @@ public class Items {
     private static final Map<String, ConnectedBlock> blocks = new LinkedHashMap<>();
 
     static {{
-        blocks.put("QP_COLLECTOR_1", new Collector(
+        blocks.put("SOLAR_CONCENTRATOR_1", new SolarConcentrator(
                 Groups.MAIN_GROUP,
-                COLLECTOR_1,
+                SOLAR_CONCENTRATOR_1,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 1));
 
-        blocks.put("QP_COLLECTOR_2", new Collector(
+        blocks.put("SOLAR_CONCENTRATOR_2", new SolarConcentrator(
                 Groups.MAIN_GROUP,
-                COLLECTOR_2,
+                SOLAR_CONCENTRATOR_2,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 10));
 
-        blocks.put("QP_EMITTER_1", new Emitter(
+        blocks.put("ENERGY_CONCENTRATOR_1", new EnergyConcentrator(
                 Groups.MAIN_GROUP,
-                EMITTER_1,
+                ENERGY_CONCENTRATOR_1,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 30,
                 30,
                 15));
 
-        blocks.put("QP_EMITTER_2", new Emitter(
+        blocks.put("ENERGY_CONCENTRATOR_2", new EnergyConcentrator(
                 Groups.MAIN_GROUP,
-                EMITTER_2,
+                ENERGY_CONCENTRATOR_2,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 160,
                 160,
                 200));
 
-        blocks.put("QP_EMITTER_3", new Emitter(
+        blocks.put("ENERGY_CONCENTRATOR_3", new EnergyConcentrator(
                 Groups.MAIN_GROUP,
-                EMITTER_3,
+                ENERGY_CONCENTRATOR_3,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 680,

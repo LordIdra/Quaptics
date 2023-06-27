@@ -5,51 +5,51 @@ import io.github.thebusybiscuit.slimefun4.utils.LoreBuilder;
 import org.bukkit.Material;
 
 public class ItemStacks {
-    public static final SlimefunItemStack COLLECTOR_1 = new SlimefunItemStack(
-            "QP_COLLECTOR_1",
+    public static final SlimefunItemStack SOLAR_CONCENTRATOR_1 = new SlimefunItemStack(
+            "QP_SOLAR_CONCENTRATOR_1",
             Material.GLASS_PANE,
-            "&eCollector &bI",
+            "&eSolar Concentrator &bI",
             Lore.PRIMITIVE,
             "&7● Only works during the day",
-            "&7● &bEmits &7a quaptic ray",
+            "&7● Concentrates sunlight into a quaptic ray",
             Lore.emissionPower(1));
 
-    public static final SlimefunItemStack COLLECTOR_2 = new SlimefunItemStack(
-            "QP_COLLECTOR_2",
+    public static final SlimefunItemStack SOLAR_CONCENTRATOR_2 = new SlimefunItemStack(
+            "QP_SOLAR_CONCENTRATOR_2",
             Material.GLASS_PANE,
-            "&eCollector &bII",
+            "&eSolar Concentrator &bII",
             Lore.BASIC,
             "&7● Only works during the day",
-            "&7● &bEmits &7a quaptic ray",
+            "&7● Concentrates sunlight into a quaptic ray",
             Lore.emissionPower(10));
 
-    public static final SlimefunItemStack EMITTER_1 = new SlimefunItemStack(
-            "QP_EMITTER_1",
+    public static final SlimefunItemStack ENERGY_CONCENTRATOR_1 = new SlimefunItemStack(
+            "QP_ENERGY_CONCENTRATOR_1",
             Material.PURPLE_CONCRETE,
-            "&eEmitter &bI",
+            "&eEnergy Concentrator &bI",
             Lore.BASIC,
             "&7● Consumes energy",
-            "&7● &bEmits &7a quaptic ray",
+            "&7● Concentrates energy into a quaptic ray",
             LoreBuilder.powerPerSecond(30),
             Lore.emissionPower(15));
 
-    public static final SlimefunItemStack EMITTER_2 = new SlimefunItemStack(
-            "QP_EMITTER_2",
+    public static final SlimefunItemStack ENERGY_CONCENTRATOR_2 = new SlimefunItemStack(
+            "QP_ENERGY_CONCENTRATOR_2",
             Material.PURPLE_CONCRETE,
-            "&eEmitter &bII",
+            "&eEnergy Concentrator &bII",
             Lore.MID,
             "&7● Consumes energy",
-            "&7● &bEmits &7a quaptic ray",
+            "&7● Concentrates energy into a quaptic ray",
             LoreBuilder.powerPerSecond(160),
             Lore.emissionPower(200));
 
-    public static final SlimefunItemStack EMITTER_3 = new SlimefunItemStack(
-            "QP_EMITTER_3",
+    public static final SlimefunItemStack ENERGY_CONCENTRATOR_3 = new SlimefunItemStack(
+            "QP_ENERGY_CONCENTRATOR_3",
             Material.PURPLE_CONCRETE,
-            "&eEmitter &bIII",
+            "&eEnergy Concentrator &bIII",
             Lore.ADVANCED,
             "&7● Consumes energy",
-            "&7● &bEmits &7a quaptic ray",
+            "&7● Concentrates energy into a quaptic ray",
             LoreBuilder.powerPerSecond(680),
             Lore.emissionPower(2500));
 
