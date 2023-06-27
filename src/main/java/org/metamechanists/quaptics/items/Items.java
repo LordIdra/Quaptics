@@ -9,7 +9,7 @@ import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
 import org.metamechanists.quaptics.implementation.blocks.*;
 import org.metamechanists.quaptics.implementation.tools.TargetingWand;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static org.metamechanists.quaptics.items.ItemStacks.*;
@@ -22,7 +22,7 @@ public class Items {
             new ItemStack[] {});
 
     @Getter
-    private static final Map<String, ConnectedBlock> blocks = new HashMap<>();
+    private static final Map<String, ConnectedBlock> blocks = new LinkedHashMap<>();
 
     static {{
         blocks.put("QP_COLLECTOR_1", new Collector(
