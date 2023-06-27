@@ -40,7 +40,7 @@ public class Lore {
         return attributeSymbol + powerSymbol + "&7Max Power &e" + Objects.toString(maxPower) + powerSuffix;
     }
     public static String powerLoss(int powerLossPercentage) {
-        return attributeSymbol + powerSymbol + "&7Max Power Loss &e" + Objects.toString(powerLossPercentage) + percentageSuffix;
+        return attributeSymbol + powerSymbol + "&7Power Loss &e" + Objects.toString(powerLossPercentage) + percentageSuffix;
     }
 
     public static String frequencyNoArrow(double frequency) {
