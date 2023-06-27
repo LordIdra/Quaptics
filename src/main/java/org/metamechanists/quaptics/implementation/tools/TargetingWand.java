@@ -121,7 +121,7 @@ public class TargetingWand extends SlimefunItem {
         final ConnectionGroup group = ConnectionPoint.fromID(pointId).getGroup();
         if (!BlockStorage.hasBlockInfo(group.getLocation())
                 || !(BlockStorage.check(group.getLocation()) instanceof ConnectedBlock)
-                || !Items.targetingWand.canUse(player, false)
+                || !canUse(player, false)
                 || !Slimefun.getProtectionManager().hasPermission(player, player.getLocation(), Interaction.INTERACT_BLOCK)) {
             return;
         }
