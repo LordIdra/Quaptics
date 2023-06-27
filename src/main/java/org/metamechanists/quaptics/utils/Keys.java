@@ -11,10 +11,17 @@ public class Keys {
         return new NamespacedKey(Quaptics.getInstance(), key);
     }
 
-    public static final NamespacedKey MAIN_GROUP = newKey("QUAPTICS_GROUP");
-    public static final NamespacedKey SOURCE = newKey("SOURCE");
-    public static final NamespacedKey QUAPTICS_DATA = newKey("QUAPTICS_DATA");
-    public static final String CONNECTION_GROUP_ID = "CONNECTION_GROUP_ID";
-    public static final String POWERED = "POWERED";
-    public static final String TARGET = "TARGET";
+    public static final NamespacedKey MAIN = newKey("QP_MAIN");
+    public static final NamespacedKey TUTORIAL = newKey("QP_TUTORIAL");
+    public static final NamespacedKey TOOLS = newKey("QP_TOOLS");
+    public static final NamespacedKey PRIMITIVE = newKey("QP_PRIMITIVE");
+    public static final NamespacedKey BASIC = newKey("QP_BASIC");
+    public static final NamespacedKey INTERMEDIATE = newKey("QP_INTERMEDIATE");
+    public static final NamespacedKey ADVANCED = newKey("QP_ADVANCED");
+    
+    public static final NamespacedKey SOURCE = newKey("QP_SOURCE");
+    public static final NamespacedKey DATA = newKey("QP_DATA");
+    public static final String CONNECTION_GROUP_ID = "QP_CONNECTION_GROUP_ID";
+    public static final String POWERED = "QP_POWERED";
+    public static final String TARGET = "QP_TARGET";
 }

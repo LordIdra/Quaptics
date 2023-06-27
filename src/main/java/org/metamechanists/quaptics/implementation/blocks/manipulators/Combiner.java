@@ -1,4 +1,4 @@
-package org.metamechanists.quaptics.implementation.blocks;
+package org.metamechanists.quaptics.implementation.blocks.manipulators;
 
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;

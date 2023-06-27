@@ -1,4 +1,4 @@
-package org.metamechanists.quaptics.implementation.blocks;
+package org.metamechanists.quaptics.implementation.blocks.consumers;
 
 import com.google.common.base.Objects;
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
