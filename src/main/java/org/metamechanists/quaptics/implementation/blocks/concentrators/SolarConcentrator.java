@@ -5,6 +5,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import io.github.thebusybiscuit.slimefun4.core.handlers.BlockUseHandler;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Location;
@@ -20,11 +21,11 @@ import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
+import org.metamechanists.quaptics.implementation.tools.TargetingWand;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.ConnectionGroupID;
-import org.metamechanists.quaptics.utils.id.ConnectionPointID;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +38,26 @@ public class SolarConcentrator extends ConnectedBlock {
     public SolarConcentrator(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, double emissionPower) {
         super(group, item, recipeType, recipe, 0);
         this.emissionPower = emissionPower;
+        addItemHandler(onUse());
+    }
+
+    private BlockUseHandler onUse() {
+        return event -> {
+          event.cancel();
+
+          final Block block = event.getClickedBlock().orElse(null);
+          if (block == null) {
+              // I have no clue how this would happen but 🤷
+              return;
+          }
+
+          final ItemStack heldItem = event.getItem();
+          if (!(SlimefunItem.getByItem(heldItem) instanceof TargetingWand wand)) {
+              return;
+          }
+
+          wand.use(event.getPlayer(), getGroup(block.getLocation()).getOutput("output").getID(), heldItem);
+        };
     }
 
     private BlockDisplay generateMainBlockDisplay(@NotNull Location from, Location to) {
@@ -76,11 +97,6 @@ public class SolarConcentrator extends ConnectedBlock {
         }
 
         output.getLink().setEnabled(false);
-    }
-
-    @Override
-    public void connect(ConnectionPointID from, ConnectionPointID to) {
-        super.connect(from, to);
     }
 
     @Override

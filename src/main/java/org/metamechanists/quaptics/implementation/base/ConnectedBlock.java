@@ -28,12 +28,12 @@ import java.util.List;
 public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
     public final double maxPower;
 
-    public ConnectedBlock(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, double maxPower) {
+    protected ConnectedBlock(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, double maxPower) {
         super(group, item, recipeType, recipe);
         this.maxPower = maxPower;
     }
 
-    private ConnectionGroup getGroup(Location location) {
+    protected ConnectionGroup getGroup(Location location) {
         return ConnectionGroup.fromID(new ConnectionGroupID(getID(location)));
     }
 
