@@ -17,10 +17,10 @@ public class Groups {
             Keys.MAIN,
             new CustomItemStack(Material.LIGHT_BLUE_STAINED_GLASS, Colors.QUAPTICS.getString() + "Quaptics"));
 
-    public static final ItemGroup TUTORIAL = new DummyItemGroup(Keys.TUTORIAL,
-            new CustomItemStack(Material.MAP, "&aTutorial"));
+    public static final ItemGroup GUIDE = new DummyItemGroup(Keys.GUIDE,
+            new CustomItemStack(Material.MAP, "&aGuide"));
 
-    public static final ItemGroup TOOLS = new DummyItemGroup(Keys.ADVANCED,
+    public static final ItemGroup TOOLS = new DummyItemGroup(Keys.TOOLS,
             new CustomItemStack(Material.GOLDEN_PICKAXE, "&fTools"));
 
     public static final ItemGroup PRIMITIVE = new DummyItemGroup(Keys.PRIMITIVE,
@@ -37,7 +37,7 @@ public class Groups {
 
     public static void initialize() {
         final SlimefunAddon addon = Quaptics.getInstance();
-        MAIN.addItemGroup(TUTORIAL);
+        MAIN.addItemGroup(GUIDE);
         MAIN.addItemGroup(TOOLS);
         MAIN.addItemGroup(PRIMITIVE);
         MAIN.addItemGroup(BASIC);

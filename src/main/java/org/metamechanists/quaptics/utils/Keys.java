@@ -12,7 +12,7 @@ public class Keys {
     }
 
     public static final NamespacedKey MAIN = newKey("QP_MAIN");
-    public static final NamespacedKey TUTORIAL = newKey("QP_TUTORIAL");
+    public static final NamespacedKey GUIDE = newKey("QP_GUIDE");
     public static final NamespacedKey TOOLS = newKey("QP_TOOLS");
     public static final NamespacedKey PRIMITIVE = newKey("QP_PRIMITIVE");
     public static final NamespacedKey BASIC = newKey("QP_BASIC");
