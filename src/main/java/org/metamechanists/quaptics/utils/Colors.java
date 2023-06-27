@@ -7,10 +7,10 @@ import org.metamechanists.metalib.utils.ColorUtils;
 public enum Colors {
     QUAPTICS("66CCFF"),
 
-    PRIMITIVE("2B191A"),
-    BASIC("2B2B2B"),
-    MID("8A6C0C"),
-    ADVANCED("8A2424"),
+    PRIMITIVE("996633"),
+    BASIC("8C8C8C"),
+    MID("FFCC00"),
+    ADVANCED("FF5050"),
 
     POWER("FF0000"),
     FREQUENCY("00ff00"),
