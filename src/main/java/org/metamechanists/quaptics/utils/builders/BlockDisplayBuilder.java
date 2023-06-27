@@ -3,6 +3,7 @@ package org.metamechanists.quaptics.utils.builders;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Display;
 import org.joml.Matrix4f;
@@ -10,6 +11,7 @@ import org.joml.Matrix4f;
 public class BlockDisplayBuilder {
     private final Location location;
     private Material material;
+    private BlockData blockData;
     private Matrix4f transformation;
     private Integer brightness;
     private Color glowColor;
@@ -21,6 +23,9 @@ public class BlockDisplayBuilder {
         return location.getWorld().spawn(location, BlockDisplay.class, display -> {
             if (material != null) {
                 display.setBlock(material.createBlockData());
+            }
+            if (blockData != null) {
+                display.setBlock(blockData);
             }
             if (transformation != null) {
                 display.setTransformationMatrix(transformation);
@@ -39,6 +44,11 @@ public class BlockDisplayBuilder {
 
     public BlockDisplayBuilder setMaterial(Material material) {
         this.material = material;
+        return this;
+    }
+    public BlockDisplayBuilder setBlockData(BlockData blockData) {
+        // Overrides material
+        this.blockData = blockData;
         return this;
     }
     public BlockDisplayBuilder setTransformation(Matrix4f transformation) {
