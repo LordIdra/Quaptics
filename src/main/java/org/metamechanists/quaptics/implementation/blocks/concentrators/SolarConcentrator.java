@@ -31,7 +31,7 @@ import java.util.List;
 
 public class SolarConcentrator extends ConnectedBlock {
     private final Vector OUTPUT_LOCATION = new Vector(0.0F, 0.0F, 0.0F);
-    private final Vector3f MAIN_DISPLAY_SIZE = new Vector3f(0.3F, 0.3F, (2*getRadius()));
+    private final Vector3f MAIN_DISPLAY_SIZE = new Vector3f(0.9F, 0.2F, 0.9F);
     private final double emissionPower;
 
     public SolarConcentrator(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, double emissionPower) {
@@ -42,7 +42,7 @@ public class SolarConcentrator extends ConnectedBlock {
     private BlockDisplay generateMainBlockDisplay(@NotNull Location from, Location to) {
         return new BlockDisplayBuilder(from.clone().add(RELATIVE_CENTER))
                 .setMaterial(Material.GLASS_PANE)
-                .setTransformation(Transformations.lookAlong(MAIN_DISPLAY_SIZE, Transformations.getDirection(from, to)))
+                .setTransformation(Transformations.adjustedScale(MAIN_DISPLAY_SIZE))
                 .build();
     }
 
