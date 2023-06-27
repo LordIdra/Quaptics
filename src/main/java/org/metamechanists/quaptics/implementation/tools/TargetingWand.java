@@ -16,7 +16,6 @@ import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
-import org.metamechanists.quaptics.items.Items;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Language;
 import org.metamechanists.quaptics.utils.PersistentDataUtils;
@@ -34,7 +33,7 @@ public class TargetingWand extends SlimefunItem {
     private void setSource(Player player, ConnectionPointID sourceID, ItemStack stack) {
         final ConnectionPoint source = ConnectionPoint.fromID(sourceID);
         if (!(source instanceof ConnectionPointOutput)) {
-            player.sendMessage(Language.getLanguageEntry("targeting-wand.source-must-be-output"));
+            Language.sendLanguageMessage(player, "targeting-wand.source-must-be-output");
             return;
         }
 
@@ -77,17 +76,22 @@ public class TargetingWand extends SlimefunItem {
         }
 
         if (!(ConnectionPoint.fromID(inputID) instanceof ConnectionPointInput input)) {
-            player.sendMessage(Language.getLanguageEntry("targeting-wand.target-must-be-input"));
+            Language.sendLanguageMessage(player, "targeting-wand.target-must-be-input");
             return;
         }
 
         if (output.getLocation().getWorld().getUID() != input.getLocation().getWorld().getUID()) {
-            player.sendMessage(Language.getLanguageEntry("targeting-wand.different-worlds"));
+            Language.sendLanguageMessage(player, "targeting-wand.different-worlds");
             return;
         }
 
         if (output.getLocation().distance(input.getLocation()) < 0.0001F) {
-            player.sendMessage(Language.getLanguageEntry("targeting-wand.same-connection-point"));
+            Language.sendLanguageMessage(player, "targeting-wand.same-connection-point");
+            return;
+        }
+
+        if (input.getGroup().getPoints().containsValue(outputID)) {
+            Language.sendLanguageMessage(player, "targeting-wand.same-connection-group");
             return;
         }
 
