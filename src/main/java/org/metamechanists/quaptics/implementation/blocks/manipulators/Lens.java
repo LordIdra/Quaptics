@@ -24,10 +24,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Lens extends ConnectedBlock {
-    private final Vector3f MAIN_DISPLAY_SIZE = new Vector3f(0.2F, 0.2F, 0.2F);
-    private final Vector3f MAIN_DISPLAY_ROTATION = new Vector3f((float)(Math.PI/4), (float)(Math.PI/4), 0);
-    private final Vector INPUT_POINT_LOCATION = new Vector(0.0F, 0.0F, -getRadius());
-    private final Vector OUTPUT_POINT_LOCATION = new Vector(0.0F, 0.0F, getRadius());
+    private final Vector3f mainDisplaySize = new Vector3f(0.2F, 0.2F, 0.2F);
+    private final Vector3f mainDisplayRotation = new Vector3f((float)(Math.PI/4), (float)(Math.PI/4), 0);
+    private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -getRadius());
+    private final Vector outputPointLocation = new Vector(0.0F, 0.0F, getRadius());
     private final double powerLoss;
 
     public Lens(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, double maxPower, double powerLoss) {
@@ -39,15 +39,15 @@ public class Lens extends ConnectedBlock {
     protected void addDisplays(@NotNull DisplayGroup displayGroup, @NotNull Location location, Player player) {
         displayGroup.addDisplay("main", new BlockDisplayBuilder(location.clone().add(RELATIVE_CENTER))
                 .setMaterial(Material.GLASS)
-                .setTransformation(Transformations.rotateAndScale(MAIN_DISPLAY_SIZE, MAIN_DISPLAY_ROTATION))
+                .setTransformation(Transformations.rotateAndScale(mainDisplaySize, mainDisplayRotation))
                 .build());
     }
 
     @Override
     protected List<ConnectionPoint> generateConnectionPoints(ConnectionGroupID groupID, Player player, Location location) {
         final List<ConnectionPoint> points = new ArrayList<>();
-        points.add(new ConnectionPointInput(groupID, "input", formatPointLocation(player, location, INPUT_POINT_LOCATION)));
-        points.add(new ConnectionPointOutput(groupID, "output", formatPointLocation(player, location, OUTPUT_POINT_LOCATION)));
+        points.add(new ConnectionPointInput(groupID, "input", formatPointLocation(player, location, inputPointLocation)));
+        points.add(new ConnectionPointOutput(groupID, "output", formatPointLocation(player, location, outputPointLocation)));
         return points;
     }
 

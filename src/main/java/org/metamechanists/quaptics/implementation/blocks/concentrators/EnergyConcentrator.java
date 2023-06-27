@@ -30,8 +30,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EnergyConcentrator extends EnergyConnectedBlock {
-    private final Vector OUTPUT_LOCATION = new Vector(0.0F, 0.0F, getRadius());
-    private final Vector3f MAIN_DISPLAY_SIZE = new Vector3f(0.3F, 0.3F, (2*getRadius()));
+    private final Vector outputLocation = new Vector(0.0F, 0.0F, getRadius());
+    private final Vector3f mainDisplaySize = new Vector3f(0.3F, 0.3F, (2*getRadius()));
     private final double emissionPower;
 
     public EnergyConcentrator(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe,
@@ -43,7 +43,7 @@ public class EnergyConcentrator extends EnergyConnectedBlock {
     private BlockDisplay generateMainBlockDisplay(@NotNull Location from, Location to) {
         return new BlockDisplayBuilder(from.clone().add(RELATIVE_CENTER))
                 .setMaterial(Material.PURPLE_CONCRETE)
-                .setTransformation(Transformations.lookAlong(MAIN_DISPLAY_SIZE, Transformations.getDirection(from, to)))
+                .setTransformation(Transformations.lookAlong(mainDisplaySize, Transformations.getDirection(from, to)))
                 .build();
     }
 
@@ -55,7 +55,7 @@ public class EnergyConcentrator extends EnergyConnectedBlock {
     @Override
     protected List<ConnectionPoint> generateConnectionPoints(ConnectionGroupID groupID, Player player, Location location) {
         final List<ConnectionPoint> points = new ArrayList<>();
-        points.add(new ConnectionPointOutput(groupID, "output", formatPointLocation(player, location, OUTPUT_LOCATION)));
+        points.add(new ConnectionPointOutput(groupID, "output", formatPointLocation(player, location, outputLocation)));
         return points;
     }
 
