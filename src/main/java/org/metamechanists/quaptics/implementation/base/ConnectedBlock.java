@@ -43,15 +43,10 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
             }
 
             final ConnectionGroup group = getGroup(block.getLocation());
-            if (group == null) {
-                return;
-            }
 
             group.getPoints().values().forEach(id -> {
                 final ConnectionPoint point = ConnectionPoint.fromID(id);
-                if (point != null) {
-                    point.togglePanelVisibility();
-                }
+                point.togglePanelVisibility();
             });
         };
     }
