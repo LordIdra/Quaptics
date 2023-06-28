@@ -29,10 +29,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SolarConcentrator extends ConnectedBlock {
-    private static final float CONNECTION_ADDITIONAL_RADIUS = 0.10F;
+    private static final float CONNECTION_ADDITIONAL_RADIUS = 0.05F;
     private final float rotationY;
     private final Vector outputLocation = new Vector(0.0F, 0.0F, radius+CONNECTION_ADDITIONAL_RADIUS);
-    private final Vector3f mainDisplaySize = new Vector3f(radius, radius, radius);
+    private final Vector3f mainDisplaySize = new Vector3f(radius*2);
     private final double emissionPower;
 
     public SolarConcentrator(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe,
