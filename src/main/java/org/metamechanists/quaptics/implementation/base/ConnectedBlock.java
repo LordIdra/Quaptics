@@ -12,7 +12,6 @@ import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
@@ -61,7 +60,7 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
         return ConnectionGroup.fromID(new ConnectionGroupID(getID(location)));
     }
 
-    protected float getRadius() { return 0.0F; }
+    protected abstract float getRadius();
     protected abstract List<ConnectionPoint> generateConnectionPoints(ConnectionGroupID groupID, Player player, Location location);
 
     protected static double powerLoss(double inputPower,  double powerLoss) {

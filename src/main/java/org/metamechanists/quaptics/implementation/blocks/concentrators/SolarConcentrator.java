@@ -25,12 +25,9 @@ import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.ItemDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.ConnectionGroupID;
-import org.metamechanists.quaptics.utils.id.ConnectionPointID;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static java.lang.Math.abs;
 
 public class SolarConcentrator extends ConnectedBlock {
     private final Vector outputLocation = new Vector(0.0F, 0.0F, 0.45F);
@@ -87,35 +84,12 @@ public class SolarConcentrator extends ConnectedBlock {
     }
 
     @Override
-    public void connect(ConnectionPointID from, ConnectionPointID to) {
-        ConnectionPoint.fromID(from).getGroup().changePointLocation(from, calculatePointLocationSquare(from, to));
-    }
-
-    @Override
     protected @NotNull Material getBaseMaterial() {
         return Material.STRUCTURE_VOID;
     }
 
-    private @NotNull Location calculatePointLocationSquare(ConnectionPointID from, ConnectionPointID to) {
-        final Vector3f direction = Transformations.getDirection(
-                ConnectionPoint.fromID(from).getLocation(),
-                ConnectionPoint.fromID(to).getLocation());
-        Vector3f newDirection = new Vector3f(mainDisplaySize.x, 0.0F, 0.0F);
-
-        if (abs(direction.x) > abs(direction.z)) {
-            direction.mul(direction.x > 0
-                    ? mainDisplaySize.x / direction.x
-                    : mainDisplaySize.z / direction.z);
-            newDirection = new Vector3f(direction.x, 0, direction.z);
-        }
-
-        else if (abs(direction.x) < abs(direction.z)) {
-            direction.mul(direction.z > 0
-                    ? mainDisplaySize.z / direction.z
-                    : mainDisplaySize.x / direction.x);
-            newDirection = new Vector3f(direction.x, 0, direction.z);
-        }
-
-        return ConnectionPoint.fromID(from).getGroup().getLocation().clone().add(0.5, 0.5, 0.5).add(Vector.fromJOML(newDirection));
+    @Override
+    protected float getRadius() {
+        return 0.45F;
     }
 }
