@@ -30,6 +30,8 @@ import org.metamechanists.quaptics.utils.id.ConnectionPointID;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Math.abs;
+
 public class SolarConcentrator extends ConnectedBlock {
     private final Vector outputLocation = new Vector(0.0F, 0.0F, 0.45F);
     private final Vector3f mainDisplayRotation = new Vector3f((float)(Math.PI/2), 0.0F, 0.0F);
@@ -98,10 +100,10 @@ public class SolarConcentrator extends ConnectedBlock {
                 ConnectionPoint.fromID(from).getLocation(),
                 ConnectionPoint.fromID(to).getLocation());
         final Vector3f newDirection = new Vector3f();
-        if (direction.x > direction.z && direction.x > 0) { newDirection.z = 0.45F; }
-        else if (direction.x > direction.z && direction.x < 0) { newDirection.x = -0.45F; }
-        else if (direction.x < direction.z && direction.z > 0) { newDirection.z = 0.45F; }
-        else if (direction.x < direction.z && direction.z < 0) { newDirection.x = -0.45F; }
+        if      (abs(direction.x) >= abs(direction.z) && direction.x > 0) { newDirection.x = 0.45F; }
+        else if (abs(direction.x) >= abs(direction.z) && direction.x < 0) { newDirection.x = -0.45F; }
+        else if (abs(direction.x) <  abs(direction.z) && direction.z > 0) { newDirection.z = 0.45F; }
+        else if (abs(direction.x) <  abs(direction.z) && direction.z < 0) { newDirection.z = -0.45F; }
         return ConnectionPoint.fromID(from).getGroup().getLocation().clone().add(0.5, 0.5, 0.5).add(Vector.fromJOML(newDirection));
     }
 }
