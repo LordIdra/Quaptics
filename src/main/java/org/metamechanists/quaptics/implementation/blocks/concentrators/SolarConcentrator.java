@@ -33,7 +33,7 @@ public class SolarConcentrator extends ConnectedBlock {
     private final Vector outputLocation = new Vector(0.0F, -0.25F, 0.0F);
     private final Vector3f mainDisplayRotation = new Vector3f((float)(Math.PI/2), 0.0F, 0.0F);
     private final Vector3f mainDisplaySize = new Vector3f(0.9F, 0.9F, 0.9F);
-    private final Vector3f mainDisplayOffset = new Vector3f(-0.45F, 0.0F, -0.45F);
+    private final Vector3f mainDisplayOffset = new Vector3f(0, 0.0F, 0.9F);
     private final double emissionPower;
 
     public SolarConcentrator(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, double emissionPower) {
@@ -82,10 +82,24 @@ public class SolarConcentrator extends ConnectedBlock {
     }
 
     @Override
-    public void connect(ConnectionPointID from, ConnectionPointID to) {}
+    public void connect(ConnectionPointID from, ConnectionPointID to) {
+        ConnectionPoint.fromID(from).getGroup().changePointLocation(from, calculatePointLocationSquare(from, to));
+    }
 
     @Override
     protected @NotNull Material getBaseMaterial() {
         return Material.STRUCTURE_VOID;
+    }
+
+    private @NotNull Location calculatePointLocationSquare(ConnectionPointID from, ConnectionPointID to) {
+        final Vector3f direction = Transformations.getDirection(
+                ConnectionPoint.fromID(from).getLocation(),
+                ConnectionPoint.fromID(to).getLocation());
+        final float angleY = (float) Math.atan2(direction.x, direction.z);
+        final Vector3f directionXZ = INITIAL_LINE.clone().toVector3f().rotateY(angleY);
+        directionXZ.mul(directionXZ.x/mainDisplaySize.x > directionXZ.z/mainDisplaySize.z
+                ? mainDisplaySize.x / directionXZ.x
+                : mainDisplaySize.z / directionXZ.z);
+        return ConnectionPoint.fromID(from).getLocation().clone().add(Vector.fromJOML(directionXZ));
     }
 }

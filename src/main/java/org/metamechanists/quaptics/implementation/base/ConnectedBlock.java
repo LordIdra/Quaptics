@@ -86,7 +86,7 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
     }
 
     public void connect(ConnectionPointID from, ConnectionPointID to) {
-        ConnectionPoint.fromID(from).getGroup().changePointLocation(from, calculateNewLocation(from, to));
+        ConnectionPoint.fromID(from).getGroup().changePointLocation(from, calculatePointLocationSphere(from, to));
     }
 
     public void burnout(Location location) {
@@ -110,7 +110,7 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
 
     public void onInputLinkUpdated(ConnectionGroup group) {}
 
-    public Location calculateNewLocation(ConnectionPointID from, ConnectionPointID to) {
+    public Location calculatePointLocationSphere(ConnectionPointID from, ConnectionPointID to) {
         final Location fromGroupLocation =  ConnectionPoint.fromID(from).getGroup().getLocation();
         final Location toGroupLocation =  ConnectionPoint.fromID(to).getGroup().getLocation();
         final Vector radiusDirection = Vector.fromJOML(Transformations.getDirection(fromGroupLocation, toGroupLocation).mul(getRadius()));
