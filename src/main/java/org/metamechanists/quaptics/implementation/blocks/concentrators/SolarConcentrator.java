@@ -5,6 +5,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import io.github.thebusybiscuit.slimefun4.core.handlers.BlockUseHandler;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Location;
@@ -20,18 +21,20 @@ import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
+import org.metamechanists.quaptics.implementation.tools.TargetingWand;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.ConnectionGroupID;
 import org.metamechanists.quaptics.utils.id.ConnectionPointID;
+import org.metamechanists.quaptics.utils.interfaces.ConnectionPointBlock;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SolarConcentrator extends ConnectedBlock {
-    private final Vector OUTPUT_LOCATION = new Vector(0.0F, 0.0F, 0.0F);
-    private final Vector3f MAIN_DISPLAY_SIZE = new Vector3f(7.0F, 0.05F, 7.0F);
+public class SolarConcentrator extends ConnectedBlock implements ConnectionPointBlock {
+    private final Vector outputLocation = new Vector(0.0F, 0.0F, 0.0F);
+    private final Vector3f mainDisplaySize = new Vector3f(1.0F, 0.05F, 1.0F);
     private final double emissionPower;
 
     public SolarConcentrator(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, double emissionPower) {
@@ -41,8 +44,8 @@ public class SolarConcentrator extends ConnectedBlock {
 
     private BlockDisplay generateMainBlockDisplay(@NotNull Location from, Location to) {
         return new BlockDisplayBuilder(from.clone().add(RELATIVE_CENTER))
-                .setMaterial(Material.GLASS_PANE)
-                .setTransformation(Transformations.adjustedScale(MAIN_DISPLAY_SIZE))
+                .setMaterial(Material.GLASS)
+                .setTransformation(Transformations.adjustedScale(mainDisplaySize))
                 .build();
     }
 
@@ -54,7 +57,7 @@ public class SolarConcentrator extends ConnectedBlock {
     @Override
     protected List<ConnectionPoint> generateConnectionPoints(ConnectionGroupID groupID, Player player, Location location) {
         final List<ConnectionPoint> points = new ArrayList<>();
-        points.add(new ConnectionPointOutput(groupID, "output", formatPointLocation(player, location, OUTPUT_LOCATION)));
+        points.add(new ConnectionPointOutput(groupID, "output", formatPointLocation(player, location, outputLocation)));
         return points;
     }
 
@@ -81,10 +84,20 @@ public class SolarConcentrator extends ConnectedBlock {
     @Override
     public void connect(ConnectionPointID from, ConnectionPointID to) {
         super.connect(from, to);
+        final DisplayGroup fromDisplayGroup = getDisplayGroup(ConnectionPoint.fromID(from).getGroup().getLocation());
+        fromDisplayGroup.removeDisplay("main").remove();
+        fromDisplayGroup.addDisplay("main", generateMainBlockDisplay(
+                ConnectionPoint.fromID(from).getGroup().getLocation(),
+                ConnectionPoint.fromID(to).getGroup().getLocation()));
     }
 
     @Override
     protected @NotNull Material getBaseMaterial() {
         return Material.STRUCTURE_VOID;
+    }
+
+    @Override
+    public ConnectionPointID getPointId(Block block) {
+        return getGroup(block.getLocation()).getOutput("output").getID();
     }
 }

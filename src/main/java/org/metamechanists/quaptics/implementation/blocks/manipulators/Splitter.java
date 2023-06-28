@@ -24,11 +24,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Splitter extends ConnectedBlock {
-    private final Vector INPUT_LOCATION = new Vector(0.0F, 0.0F, -getRadius());
-    private final Vector OUTPUT_1_LOCATION = new Vector(0.0F, 0.0F, getRadius()).rotateAroundY(-Math.PI/8);
-    private final Vector OUTPUT_2_LOCATION = new Vector(0.0F, 0.0F, getRadius()).rotateAroundY(Math.PI/8);
-    private final Vector3f MAIN_DISPLAY_SIZE = new Vector3f(0.4F, 0.4F, 0.4F);
-    private final Vector3f MAIN_DISPLAY_ROTATION = new Vector3f((float)(Math.PI/4), (float)(Math.PI/4), 0);
+    private final Vector inputLocation = new Vector(0.0F, 0.0F, -getRadius());
+    private final Vector output1Location = new Vector(0.0F, 0.0F, getRadius()).rotateAroundY(-Math.PI/8);
+    private final Vector output2Location = new Vector(0.0F, 0.0F, getRadius()).rotateAroundY(Math.PI/8);
+    private final Vector3f mainDisplaySize = new Vector3f(0.4F, 0.4F, 0.4F);
+    private final Vector3f mainDisplayRotation = new Vector3f((float)(Math.PI/4), (float)(Math.PI/4), 0);
     private final double powerLoss;
 
     public Splitter(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, double maxPower, double powerLoss) {
@@ -40,16 +40,16 @@ public class Splitter extends ConnectedBlock {
     protected void addDisplays(@NotNull DisplayGroup displayGroup, @NotNull Location location, Player player) {
         displayGroup.addDisplay("main", new BlockDisplayBuilder(location.clone().add(RELATIVE_CENTER))
                         .setMaterial(Material.LIGHT_GRAY_STAINED_GLASS)
-                        .setTransformation(Transformations.rotateAndScale(MAIN_DISPLAY_SIZE, MAIN_DISPLAY_ROTATION))
+                        .setTransformation(Transformations.rotateAndScale(mainDisplaySize, mainDisplayRotation))
                         .build());
     }
 
     @Override
     protected List<ConnectionPoint> generateConnectionPoints(ConnectionGroupID groupID, Player player, Location location) {
         final List<ConnectionPoint> points = new ArrayList<>();
-        points.add(new ConnectionPointInput(groupID, "input", formatPointLocation(player, location, INPUT_LOCATION)));
-        points.add(new ConnectionPointOutput(groupID, "output 1", formatPointLocation(player, location, OUTPUT_1_LOCATION)));
-        points.add(new ConnectionPointOutput(groupID, "output 2", formatPointLocation(player, location, OUTPUT_2_LOCATION)));
+        points.add(new ConnectionPointInput(groupID, "input", formatPointLocation(player, location, inputLocation)));
+        points.add(new ConnectionPointOutput(groupID, "output 1", formatPointLocation(player, location, output1Location)));
+        points.add(new ConnectionPointOutput(groupID, "output 2", formatPointLocation(player, location, output2Location)));
         return points;
     }
 

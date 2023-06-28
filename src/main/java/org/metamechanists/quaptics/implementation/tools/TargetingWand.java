@@ -1,12 +1,15 @@
 package org.metamechanists.quaptics.implementation.tools;
 
+import io.github.thebusybiscuit.slimefun4.api.events.PlayerRightClickEvent;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import io.github.thebusybiscuit.slimefun4.core.handlers.ItemUseHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -16,15 +19,30 @@ import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
-import org.metamechanists.quaptics.items.Items;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Language;
 import org.metamechanists.quaptics.utils.PersistentDataUtils;
 import org.metamechanists.quaptics.utils.id.ConnectionPointID;
+import org.metamechanists.quaptics.utils.interfaces.ConnectionPointBlock;
 
 public class TargetingWand extends SlimefunItem {
     public TargetingWand(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
+        addItemHandler(onUse());
+    }
+
+    private ItemUseHandler onUse() {
+        return event -> {
+            final Block block = event.getClickedBlock().orElse(null);
+            if (block == null) {
+                return;
+            }
+
+            final SlimefunItem slimefunItem = BlockStorage.check(block);
+            if (slimefunItem instanceof ConnectionPointBlock connectionPointBlock) {
+                use(event.getPlayer(), connectionPointBlock.getPointId(block), event.getItem());
+            }
+        };
     }
 
     private boolean isSourceSet(@NotNull ItemStack stack) {
@@ -34,7 +52,7 @@ public class TargetingWand extends SlimefunItem {
     private void setSource(Player player, ConnectionPointID sourceID, ItemStack stack) {
         final ConnectionPoint source = ConnectionPoint.fromID(sourceID);
         if (!(source instanceof ConnectionPointOutput)) {
-            player.sendMessage(Language.getLanguageEntry("targeting-wand.source-must-be-output"));
+            Language.sendLanguageMessage(player, "targeting-wand.source-must-be-output");
             return;
         }
 
@@ -77,17 +95,22 @@ public class TargetingWand extends SlimefunItem {
         }
 
         if (!(ConnectionPoint.fromID(inputID) instanceof ConnectionPointInput input)) {
-            player.sendMessage(Language.getLanguageEntry("targeting-wand.target-must-be-input"));
+            Language.sendLanguageMessage(player, "targeting-wand.target-must-be-input");
             return;
         }
 
         if (output.getLocation().getWorld().getUID() != input.getLocation().getWorld().getUID()) {
-            player.sendMessage(Language.getLanguageEntry("targeting-wand.different-worlds"));
+            Language.sendLanguageMessage(player, "targeting-wand.different-worlds");
             return;
         }
 
         if (output.getLocation().distance(input.getLocation()) < 0.0001F) {
-            player.sendMessage(Language.getLanguageEntry("targeting-wand.same-connection-point"));
+            Language.sendLanguageMessage(player, "targeting-wand.same-connection-point");
+            return;
+        }
+
+        if (input.getGroup().getPoints().containsValue(outputID)) {
+            Language.sendLanguageMessage(player, "targeting-wand.same-connection-group");
             return;
         }
 
@@ -121,7 +144,7 @@ public class TargetingWand extends SlimefunItem {
         final ConnectionGroup group = ConnectionPoint.fromID(pointId).getGroup();
         if (!BlockStorage.hasBlockInfo(group.getLocation())
                 || !(BlockStorage.check(group.getLocation()) instanceof ConnectedBlock)
-                || !Items.targetingWand.canUse(player, false)
+                || !canUse(player, false)
                 || !Slimefun.getProtectionManager().hasPermission(player, player.getLocation(), Interaction.INTERACT_BLOCK)) {
             return;
         }

@@ -1,13 +1,16 @@
 package org.metamechanists.quaptics.implementation.base;
 
 import com.destroystokyo.paper.ParticleBuilder;
+import io.github.thebusybiscuit.slimefun4.api.events.PlayerRightClickEvent;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import io.github.thebusybiscuit.slimefun4.core.handlers.BlockUseHandler;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -28,12 +31,34 @@ import java.util.List;
 public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
     public final double maxPower;
 
-    public ConnectedBlock(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, double maxPower) {
+    protected ConnectedBlock(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, double maxPower) {
         super(group, item, recipeType, recipe);
         this.maxPower = maxPower;
+        addItemHandler(onUse());
     }
 
-    private ConnectionGroup getGroup(Location location) {
+    public BlockUseHandler onUse() {
+        return event -> {
+            final Block block = event.getClickedBlock().orElse(null);
+            if (block == null) {
+                return;
+            }
+
+            final ConnectionGroup group = getGroup(block.getLocation());
+            if (group == null) {
+                return;
+            }
+
+            group.getPoints().values().forEach(id -> {
+                final ConnectionPoint point = ConnectionPoint.fromID(id);
+                if (point != null) {
+                    point.togglePanelVisibility();
+                }
+            });
+        };
+    }
+
+    protected ConnectionGroup getGroup(Location location) {
         return ConnectionGroup.fromID(new ConnectionGroupID(getID(location)));
     }
 

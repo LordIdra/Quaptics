@@ -41,12 +41,12 @@ import java.util.List;
 import java.util.UUID;
 
 public class Turret extends ConnectedBlock {
-    private final Vector3f MAIN_DISPLAY_SIZE = new Vector3f(0.6F, 0.6F, 0.6F);
-    private final Vector3f BARREL_SIZE = new Vector3f(0.18F, 0.18F, getRadius());
-    private final Vector3f BARREL_TRANSLATION = new Vector3f(0, 0, getRadius()*0.8F);
-    private final Vector BARREL_LOCATION = new Vector(0.5, 0.7, 0.5);
-    private final Vector3f PROJECTILE_SIZE = new Vector3f(0.095F, 0.095F, 0.20F);
-    private final Vector INPUT_LOCATION = new Vector(0.0F, 0.0F, -getRadius());
+    private final Vector3f mainDisplaySize = new Vector3f(0.6F, 0.6F, 0.6F);
+    private final Vector3f barrelSize = new Vector3f(0.18F, 0.18F, getRadius());
+    private final Vector3f barrelTranslation = new Vector3f(0, 0, getRadius()*0.8F);
+    private final Vector barrelLocation = new Vector(0.5, 0.7, 0.5);
+    private final Vector3f projectileSize = new Vector3f(0.095F, 0.095F, 0.20F);
+    private final Vector inputLocation = new Vector(0.0F, 0.0F, -getRadius());
     private final double powerConsumption;
     private final double range;
     private final double damagePerSlimefunTick;
@@ -60,11 +60,11 @@ public class Turret extends ConnectedBlock {
     }
 
     private Matrix4f getBarrelMatrix(@NotNull Location from, Location to) {
-        return Transformations.lookAlong(BARREL_SIZE, Transformations.getDirection(from.clone().add(BARREL_LOCATION), to)).translate(BARREL_TRANSLATION);
+        return Transformations.lookAlong(barrelSize, Transformations.getDirection(from.clone().add(barrelLocation), to)).translate(barrelTranslation);
     }
 
     private BlockDisplay generateBarrel(@NotNull Location from, Location to) {
-        return new BlockDisplayBuilder(from.clone().add(BARREL_LOCATION))
+        return new BlockDisplayBuilder(from.clone().add(barrelLocation))
                 .setMaterial(Material.GRAY_CONCRETE)
                 .setTransformation(getBarrelMatrix(from, to))
                 .build();
@@ -74,7 +74,7 @@ public class Turret extends ConnectedBlock {
     protected void addDisplays(@NotNull DisplayGroup displayGroup, @NotNull Location location, Player player) {
         displayGroup.addDisplay("main", new BlockDisplayBuilder(location.clone().add(RELATIVE_CENTER))
                         .setMaterial(Material.POLISHED_ANDESITE)
-                        .setTransformation(Transformations.adjustedScale(MAIN_DISPLAY_SIZE))
+                        .setTransformation(Transformations.adjustedScale(mainDisplaySize))
                         .build());
         displayGroup.addDisplay("barrel", generateBarrel(location, location.clone().add(INITIAL_LINE)));
     }
@@ -82,7 +82,7 @@ public class Turret extends ConnectedBlock {
     @Override
     protected List<ConnectionPoint> generateConnectionPoints(ConnectionGroupID groupID, Player player, Location location) {
         final List<ConnectionPoint> points = new ArrayList<>();
-        points.add(new ConnectionPointInput(groupID, "input", formatPointLocation(player, location, INPUT_LOCATION)));
+        points.add(new ConnectionPointInput(groupID, "input", formatPointLocation(player, location, inputLocation)));
         return points;
     }
 
@@ -160,9 +160,9 @@ public class Turret extends ConnectedBlock {
 
         DeprecatedTickerStorage.deprecate(new IntervalVelocityTicker(
                 Material.LIGHT_BLUE_CONCRETE,
-                location.clone().add(BARREL_LOCATION),
+                location.clone().add(barrelLocation),
                 target.getEyeLocation(),
-                PROJECTILE_SIZE,
+                projectileSize,
                 1));
 
         target.damage(damagePerSlimefunTick);
