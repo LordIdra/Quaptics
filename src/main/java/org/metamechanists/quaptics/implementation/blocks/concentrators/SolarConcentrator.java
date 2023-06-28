@@ -40,6 +40,7 @@ public class SolarConcentrator extends ConnectedBlock implements ConnectionPoint
     public SolarConcentrator(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, double emissionPower) {
         super(group, item, recipeType, recipe, 0);
         this.emissionPower = emissionPower;
+        addItemHandler(onUse());
     }
 
     private BlockDisplay generateMainBlockDisplay(@NotNull Location from, Location to) {
