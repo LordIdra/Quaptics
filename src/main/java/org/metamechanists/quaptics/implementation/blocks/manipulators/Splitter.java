@@ -26,7 +26,7 @@ import java.util.Objects;
 import java.util.stream.IntStream;
 
 public class Splitter extends ConnectedBlock {
-    private static final float CONNECTION_ADDITIONAL_RADIUS = 0.10F;
+    private static final float CONNECTION_ADDITIONAL_RADIUS = 0.25F;
     private final double connectionAngle = Math.PI / 2;
     private final int connections;
     private final Vector inputLocation = new Vector(0.0F, 0.0F, -radius);
