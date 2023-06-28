@@ -26,7 +26,7 @@ import java.util.Objects;
 import java.util.stream.IntStream;
 
 public class Combiner extends ConnectedBlock {
-    private static final float CONNECTION_ADDITIONAL_RADIUS = 0.25F;
+    private final float CONNECTION_ADDITIONAL_RADIUS = radius;
     private final double connectionAngle = Math.PI / 2;
     private final int connections;
     private final Vector inputStartingLocation = new Vector(0.0F, 0.0F, -(radius+CONNECTION_ADDITIONAL_RADIUS));
