@@ -166,7 +166,7 @@ public class ItemStacks {
             Material.SMOOTH_STONE_SLAB,
             "&4Turret",
             "&7● Shoots at nearby entities",
-            Lore.minPower(30),
+            Lore.minPower(5),
             Lore.damage(4),
             Lore.range(10));
 
