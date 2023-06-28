@@ -24,14 +24,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Lens extends ConnectedBlock {
-    private final Vector3f mainDisplaySize = new Vector3f(0.2F, 0.2F, 0.2F);
+    private final Vector3f mainDisplaySize = new Vector3f(radius*1.8F, radius*1.8F, radius*1.8F);
     private final Vector3f mainDisplayRotation = new Vector3f((float)(Math.PI/4), (float)(Math.PI/4), 0);
-    private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -getRadius());
-    private final Vector outputPointLocation = new Vector(0.0F, 0.0F, getRadius());
+    private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -radius);
+    private final Vector outputPointLocation = new Vector(0.0F, 0.0F, radius);
     private final double powerLoss;
 
-    public Lens(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, double maxPower, double powerLoss) {
-        super(group, item, recipeType, recipe, maxPower);
+    public Lens(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe,
+                float radius, double maxPower, double powerLoss) {
+        super(group, item, recipeType, recipe, radius, maxPower);
         this.powerLoss = powerLoss;
     }
 
@@ -69,11 +70,6 @@ public class Lens extends ConnectedBlock {
 
         output.getLink().setPower(powerLoss(input.getLink().getPower(), powerLoss));
         output.getLink().setEnabled(true);
-    }
-
-    @Override
-    protected float getRadius() {
-        return 0.35F;
     }
 
     @Override

@@ -26,8 +26,8 @@ public abstract class EnergyConnectedBlock extends ConnectedBlock implements Ene
     private final int consumption;
 
     public EnergyConnectedBlock(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe,
-                                double maxPower, int capacity, int consumption) {
-        super(group, item, recipeType, recipe, maxPower);
+                                float radius, double maxPower, int capacity, int consumption) {
+        super(group, item, recipeType, recipe, radius, maxPower);
         this.capacity = capacity;
         this.consumption = consumption;
     }

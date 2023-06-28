@@ -6,11 +6,12 @@ import java.util.Objects;
 
 public class Lore {
     private final static String ATTRIBUTE_SYMBOL = "&8⇨ ";
-    private final static String RANGE_SYMBOL = Colors.TURRET.getString() + "↔ ";
-    private final static String DAMAGE_SYMBOL = Colors.TURRET.getString() + "🗡 ";
+    private final static String COUNT_SYMBOL = Colors.COMPONENTS_MISC.getString() + "◎ ";
+    private final static String RANGE_SYMBOL = Colors.COMPONENTS_MISC.getString() + "↔ ";
+    private final static String DAMAGE_SYMBOL = Colors.COMPONENTS_MISC.getString() + "🗡 ";
     private final static String POWER_SYMBOL = Colors.POWER.getString() + "⏻ ";
-    private final static String FREQUENCY_SYMBOL = Colors.FREQUENCY.getString() + "λ ";
-    private final static String PHASE_SYMBOL = Colors.PHASE.getString() + "◎ ";
+    private final static String FREQUENCY_SYMBOL = Colors.FREQUENCY.getString() + "∀ ";
+    private final static String PHASE_SYMBOL = Colors.PHASE.getString() + "۞ ";
 
     private final static String PERCENTAGE_SUFFIX = " &8%";
     private final static String POWER_SUFFIX = " &8W";
@@ -25,6 +26,9 @@ public class Lore {
                 : x);
     }
 
+    public static String maxConnections(int maxConnections) {
+        return ATTRIBUTE_SYMBOL + COUNT_SYMBOL + "&7Max connections: &e" + Objects.toString(maxConnections);
+    }
     public static String range(int range) {
         return ATTRIBUTE_SYMBOL + RANGE_SYMBOL + "&7Range &e" + Objects.toString(range) + RANGE_SUFFIX;
     }

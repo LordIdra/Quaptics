@@ -16,7 +16,7 @@ public enum Colors {
     FREQUENCY("00ff00"),
     PHASE("FFCC00"),
 
-    TURRET("993366");
+    COMPONENTS_MISC("993366");
 
     @Getter
     private final String string;

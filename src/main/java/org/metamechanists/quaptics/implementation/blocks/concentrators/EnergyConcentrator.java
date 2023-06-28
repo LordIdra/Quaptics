@@ -30,13 +30,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EnergyConcentrator extends EnergyConnectedBlock {
-    private final Vector outputLocation = new Vector(0.0F, 0.0F, getRadius());
-    private final Vector3f mainDisplaySize = new Vector3f(0.3F, 0.3F, (2*getRadius()));
+    private final Vector outputLocation = new Vector(0.0F, 0.0F, radius);
+    private final Vector3f mainDisplaySize = new Vector3f(0.3F, 0.3F, (2*radius));
     private final double emissionPower;
 
     public EnergyConcentrator(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe,
                               int capacity, int consumption, double emissionPower, double maxPower) {
-        super(group, item, recipeType, recipe, maxPower, capacity, consumption);
+        super(group, item, recipeType, recipe, 0.45F, maxPower, capacity, consumption);
         this.emissionPower = emissionPower;
     }
 
@@ -87,11 +87,6 @@ public class EnergyConcentrator extends EnergyConnectedBlock {
         fromDisplayGroup.addDisplay("main", generateMainBlockDisplay(
                 from.get().getGroup().getLocation(),
                 to.get().getGroup().getLocation()));
-    }
-
-    @Override
-    protected float getRadius() {
-        return 0.45F;
     }
 
     @Override

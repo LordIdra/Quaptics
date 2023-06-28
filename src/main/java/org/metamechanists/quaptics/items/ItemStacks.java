@@ -96,7 +96,8 @@ public class ItemStacks {
             Tiers.PRIMITIVE.coloredName,
             "&7● &bCombines &7multiple quaptic rays into one",
             Lore.maxPower(Tiers.PRIMITIVE.maxPower),
-            Lore.powerLoss(20));
+            Lore.powerLoss(20),
+            Lore.maxConnections(2));
 
     public static final SlimefunItemStack COMBINER_2 = new SlimefunItemStack(
             "QP_COMBINER_2",
@@ -105,7 +106,8 @@ public class ItemStacks {
             Tiers.BASIC.coloredName,
             "&7● &bCombines &7multiple quaptic rays into one",
             Lore.maxPower(Tiers.BASIC.maxPower),
-            Lore.powerLoss(14));
+            Lore.powerLoss(14),
+            Lore.maxConnections(3));
 
     public static final SlimefunItemStack COMBINER_3 = new SlimefunItemStack(
             "QP_COMBINER_3",
@@ -114,7 +116,8 @@ public class ItemStacks {
             Tiers.INTERMEDIATE.coloredName,
             "&7● &bCombines &7multiple quaptic rays into one",
             Lore.maxPower(Tiers.INTERMEDIATE.maxPower),
-            Lore.powerLoss(8));
+            Lore.powerLoss(8),
+            Lore.maxConnections(4));
 
     public static final SlimefunItemStack COMBINER_4 = new SlimefunItemStack(
             "QP_COMBINER_4",
@@ -123,7 +126,8 @@ public class ItemStacks {
             Tiers.ADVANCED.coloredName,
             "&7● &bCombines &7multiple quaptic rays into one",
             Lore.maxPower(Tiers.ADVANCED.maxPower),
-            Lore.powerLoss(5));
+            Lore.powerLoss(5),
+            Lore.maxConnections(5));
 
     public static final SlimefunItemStack SPLITTER_1 = new SlimefunItemStack(
             "QP_SPLITTER_1",
@@ -132,7 +136,8 @@ public class ItemStacks {
             Tiers.PRIMITIVE.coloredName,
             "&7● &bSplits &7one quaptic ray into multiple",
             Lore.maxPower(Tiers.PRIMITIVE.maxPower),
-            Lore.powerLoss(20));
+            Lore.powerLoss(20),
+            Lore.maxConnections(2));
 
     public static final SlimefunItemStack SPLITTER_2 = new SlimefunItemStack(
             "QP_SPLITTER_2",
@@ -141,7 +146,8 @@ public class ItemStacks {
             Tiers.BASIC.coloredName,
             "&7● &bSplits &7one quaptic ray into multiple",
             Lore.maxPower(Tiers.BASIC.maxPower),
-            Lore.powerLoss(14));
+            Lore.powerLoss(14),
+            Lore.maxConnections(3));
 
     public static final SlimefunItemStack SPLITTER_3 = new SlimefunItemStack(
             "QP_SPLITTER_3",
@@ -150,7 +156,8 @@ public class ItemStacks {
             Tiers.INTERMEDIATE.coloredName,
             "&7● &bSplits &7one quaptic ray into multiple",
             Lore.maxPower(Tiers.INTERMEDIATE.maxPower),
-            Lore.powerLoss(8));
+            Lore.powerLoss(8),
+            Lore.maxConnections(4));
 
     public static final SlimefunItemStack SPLITTER_4 = new SlimefunItemStack(
             "QP_SPLITTER_4",
@@ -159,7 +166,8 @@ public class ItemStacks {
             Tiers.ADVANCED.coloredName,
             "&7● &bSplits &7one quaptic ray into multiple",
             Lore.maxPower(Tiers.ADVANCED.maxPower),
-            Lore.powerLoss(5));
+            Lore.powerLoss(5),
+            Lore.maxConnections(5));
 
     public static final SlimefunItemStack TURRET = new SlimefunItemStack(
             "QP_TURRET",

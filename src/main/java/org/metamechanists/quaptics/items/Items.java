@@ -38,6 +38,8 @@ public class Items {
                 SOLAR_CONCENTRATOR_1,
                 RecipeType.NULL,
                 new ItemStack[]{},
+                0.45F,
+                0.0F,
                 1,
                 Tiers.PRIMITIVE.maxPower).register(addon);
 
@@ -46,6 +48,8 @@ public class Items {
                 SOLAR_CONCENTRATOR_2,
                 RecipeType.NULL,
                 new ItemStack[]{},
+                0.04F,
+                (float)(Math.PI/4),
                 10,
                 Tiers.BASIC.maxPower).register(addon);
 
@@ -84,6 +88,7 @@ public class Items {
                 LENS_1,
                 RecipeType.NULL,
                 new ItemStack[]{},
+                0.25F,
                 Tiers.PRIMITIVE.maxPower,
                 0.1).register(addon);
 
@@ -92,6 +97,7 @@ public class Items {
                 LENS_2,
                 RecipeType.NULL,
                 new ItemStack[]{},
+                0.20F,
                 Tiers.BASIC.maxPower,
                 0.07).register(addon);
 
@@ -100,6 +106,7 @@ public class Items {
                 LENS_3,
                 RecipeType.NULL,
                 new ItemStack[]{},
+                0.15F,
                 Tiers.INTERMEDIATE.maxPower,
                 0.04).register(addon);
 
@@ -108,6 +115,7 @@ public class Items {
                 LENS_4,
                 RecipeType.NULL,
                 new ItemStack[]{},
+                0.10F,
                 Tiers.ADVANCED.maxPower,
                 0.02).register(addon);
 
@@ -116,6 +124,8 @@ public class Items {
                 COMBINER_1,
                 RecipeType.NULL,
                 new ItemStack[]{},
+                0.35F,
+                2,
                 Tiers.PRIMITIVE.maxPower,
                 0.2).register(addon);
 
@@ -124,6 +134,8 @@ public class Items {
                 COMBINER_2,
                 RecipeType.NULL,
                 new ItemStack[]{},
+                0.4F,
+                3,
                 Tiers.BASIC.maxPower,
                 0.14).register(addon);
 
@@ -132,6 +144,8 @@ public class Items {
                 COMBINER_3,
                 RecipeType.NULL,
                 new ItemStack[]{},
+                0.45F,
+                4,
                 Tiers.INTERMEDIATE.maxPower,
                 0.08).register(addon);
 
@@ -140,6 +154,8 @@ public class Items {
                 COMBINER_4,
                 RecipeType.NULL,
                 new ItemStack[]{},
+                0.55F,
+                5,
                 Tiers.ADVANCED.maxPower,
                 0.05).register(addon);
 
@@ -148,6 +164,8 @@ public class Items {
                 SPLITTER_1,
                 RecipeType.NULL,
                 new ItemStack[]{},
+                0.4F,
+                2,
                 Tiers.PRIMITIVE.maxPower,
                 0.2).register(addon);
 
@@ -156,6 +174,8 @@ public class Items {
                 SPLITTER_2,
                 RecipeType.NULL,
                 new ItemStack[]{},
+                0.45F,
+                3,
                 Tiers.BASIC.maxPower,
                 0.14).register(addon);
 
@@ -164,6 +184,8 @@ public class Items {
                 SPLITTER_3,
                 RecipeType.NULL,
                 new ItemStack[]{},
+                0.5F,
+                4,
                 Tiers.INTERMEDIATE.maxPower,
                 0.08).register(addon);
 
@@ -172,6 +194,8 @@ public class Items {
                 SPLITTER_4,
                 RecipeType.NULL,
                 new ItemStack[]{},
+                0.55F,
+                5,
                 Tiers.ADVANCED.maxPower,
                 0.05).register(addon);
 

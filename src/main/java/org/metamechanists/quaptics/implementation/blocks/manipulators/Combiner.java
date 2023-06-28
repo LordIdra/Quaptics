@@ -22,17 +22,20 @@ import org.metamechanists.quaptics.utils.id.ConnectionGroupID;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.IntStream;
 
 public class Combiner extends ConnectedBlock {
-    private final Vector input1Location = new Vector(0.0F, 0.0F, -getRadius()).rotateAroundY(-Math.PI/8);
-    private final Vector input2Location = new Vector(0.0F, 0.0F, -getRadius()).rotateAroundY(Math.PI/8);
-    private final Vector outputLocation = new Vector(0.0F, 0.0F, getRadius());
-    private final Vector3f mainDisplaySize = new Vector3f(0.4F, 0.4F, 0.4F);
+    private final int connections;
+    private final Vector outputLocation = new Vector(0.0F, 0.0F, radius);
+    private final Vector3f mainDisplaySize = new Vector3f(radius*1.8F, radius*1.8F, radius*1.8F);
     private final Vector3f mainDisplayRotation = new Vector3f((float)(Math.PI/4), (float)(Math.PI/4), 0);
     private final double powerLoss;
 
-    public Combiner(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, double maxPower, double powerLoss) {
-        super(group, item, recipeType, recipe, maxPower);
+    public Combiner(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe,
+                    float radius, int connections, double maxPower, double powerLoss) {
+        super(group, item, recipeType, recipe, radius, maxPower);
+        this.connections = connections;
         this.powerLoss = powerLoss;
     }
 
@@ -47,43 +50,45 @@ public class Combiner extends ConnectedBlock {
     @Override
     protected List<ConnectionPoint> generateConnectionPoints(ConnectionGroupID groupID, Player player, Location location) {
         final List<ConnectionPoint> points = new ArrayList<>();
-        points.add(new ConnectionPointInput(groupID, "input 1", formatPointLocation(player, location, input1Location)));
-        points.add(new ConnectionPointInput(groupID, "input 2", formatPointLocation(player, location, input2Location)));
+
+        IntStream.range(0, connections).forEach(i -> {
+            final String name = "input " + Objects.toString(i);
+            final double angle = (-Math.PI / 8) + (Math.PI / 4) * ((double) (i) / connections);
+            final Vector relativeLocation = new Vector(0.0F, 0.0F, -radius).rotateAroundY(angle);
+            points.add(new ConnectionPointOutput(groupID, name, formatPointLocation(player, location, relativeLocation)));
+        });
+
         points.add(new ConnectionPointOutput(groupID, "output", formatPointLocation(player, location, outputLocation)));
         return points;
     }
 
     @Override
     public void onInputLinkUpdated(@NotNull ConnectionGroup group) {
-        final ConnectionPointInput input1 = (ConnectionPointInput) group.getPoint("input 1");
-        final ConnectionPointInput input2 = (ConnectionPointInput) group.getPoint("input 2");
+        final List<ConnectionPointInput> inputs = IntStream.range(0, connections)
+                .mapToObj(i -> (ConnectionPointInput) group.getPoint("input " + Objects.toString(i)))
+                .toList();
         final ConnectionPointOutput output = (ConnectionPointOutput) group.getPoint("output");
 
-        doBurnoutCheck(group, input1);
-        doBurnoutCheck(group, input2);
+        inputs.forEach(input -> doBurnoutCheck(group, input));
 
         if (!output.hasLink()) {
             return;
         }
 
-        final boolean input1On = input1.hasLink() && input1.getLink().isEnabled();
-        final boolean input2On = input2.hasLink() && input2.getLink().isEnabled();
-        if (!input1On && !input2On) {
+        final List<ConnectionPointInput> poweredInputs = inputs.stream()
+                .filter(input -> input.hasLink() && input.getLink().isEnabled())
+                .toList();
+        if (poweredInputs.isEmpty()) {
             output.getLink().setEnabled(false);
             return;
         }
 
-        double inputPower = 0;
-        if (input1On) { inputPower += input1.getLink().getPower(); }
-        if (input2On) { inputPower += input2.getLink().getPower(); }
+        final double inputPower = poweredInputs.stream()
+                .mapToDouble(input -> input.getLink().getPower())
+                .sum();
 
         output.getLink().setPower(powerLoss(inputPower, powerLoss));
         output.getLink().setEnabled(true);
-    }
-
-    @Override
-    protected float getRadius() {
-        return 0.55F;
     }
 
     @Override

@@ -22,17 +22,20 @@ import org.metamechanists.quaptics.utils.id.ConnectionGroupID;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.IntStream;
 
 public class Splitter extends ConnectedBlock {
-    private final Vector inputLocation = new Vector(0.0F, 0.0F, -getRadius());
-    private final Vector output1Location = new Vector(0.0F, 0.0F, getRadius()).rotateAroundY(-Math.PI/8);
-    private final Vector output2Location = new Vector(0.0F, 0.0F, getRadius()).rotateAroundY(Math.PI/8);
-    private final Vector3f mainDisplaySize = new Vector3f(0.4F, 0.4F, 0.4F);
+    private final int connections;
+    private final Vector inputLocation = new Vector(0.0F, 0.0F, -radius);
+    private final Vector3f mainDisplaySize = new Vector3f(radius*1.8F, radius*1.8F, radius*1.8F);
     private final Vector3f mainDisplayRotation = new Vector3f((float)(Math.PI/4), (float)(Math.PI/4), 0);
     private final double powerLoss;
 
-    public Splitter(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, double maxPower, double powerLoss) {
-        super(group, item, recipeType, recipe, maxPower);
+    public Splitter(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe,
+                    float radius, int connections, double maxPower, double powerLoss) {
+        super(group, item, recipeType, recipe, radius, maxPower);
+        this.connections = connections;
         this.powerLoss = powerLoss;
     }
 
@@ -47,49 +50,47 @@ public class Splitter extends ConnectedBlock {
     @Override
     protected List<ConnectionPoint> generateConnectionPoints(ConnectionGroupID groupID, Player player, Location location) {
         final List<ConnectionPoint> points = new ArrayList<>();
+
         points.add(new ConnectionPointInput(groupID, "input", formatPointLocation(player, location, inputLocation)));
-        points.add(new ConnectionPointOutput(groupID, "output 1", formatPointLocation(player, location, output1Location)));
-        points.add(new ConnectionPointOutput(groupID, "output 2", formatPointLocation(player, location, output2Location)));
+        IntStream.range(0, connections).forEach(i -> {
+            final String name = "output " + Objects.toString(i);
+            final double angle = (-Math.PI / 8) + (Math.PI / 4) * ((double) (i) / connections);
+            final Vector relativeLocation = new Vector(0.0F, 0.0F, radius).rotateAroundY(angle);
+            points.add(new ConnectionPointOutput(groupID, name, formatPointLocation(player, location, relativeLocation)));
+        });
+
         return points;
     }
 
     @Override
     public void onInputLinkUpdated(@NotNull ConnectionGroup group) {
         final ConnectionPointInput input = (ConnectionPointInput) group.getPoint("input");
-        final ConnectionPointOutput output1 = (ConnectionPointOutput) group.getPoint("output 1");
-        final ConnectionPointOutput output2 = (ConnectionPointOutput) group.getPoint("output 2");
+        final List<ConnectionPointOutput> outputs = IntStream.range(0, connections)
+                .mapToObj(i -> (ConnectionPointOutput) group.getPoint("output " + Objects.toString(i)))
+                .toList();
 
         doBurnoutCheck(group, input);
 
-        if (!output1.hasLink() && !output2.hasLink()) {
+        if (outputs.stream().noneMatch(ConnectionPoint::hasLink)) {
             return;
         }
 
         if (!input.hasLink() || !input.getLink().isEnabled()) {
-            if (output1.hasLink()) { output1.getLink().setEnabled(false); }
-            if (output2.hasLink()) { output2.getLink().setEnabled(false); }
+            outputs.stream()
+                    .filter(ConnectionPoint::hasLink)
+                    .forEach(output -> output.getLink().setEnabled(false));
             return;
         }
 
-        double outputPower = powerLoss(input.getLink().getPower(), powerLoss);
-        if (output1.hasLink() && output2.hasLink()) {
-            outputPower /= 2.0;
-        }
+        final long numberOfLinkedOutputs = outputs.stream().filter(ConnectionPoint::hasLink).count();
+        final double outputPower = powerLoss(input.getLink().getPower(), powerLoss) / numberOfLinkedOutputs;
 
-        if (output1.hasLink()) {
-            output1.getLink().setPower(outputPower);
-            output1.getLink().setEnabled(true);
-        }
-
-        if (output2.hasLink()) {
-            output2.getLink().setPower(outputPower);
-            output2.getLink().setEnabled(true);
-        }
-    }
-
-    @Override
-    protected float getRadius() {
-        return 0.55F;
+        outputs.stream()
+                .filter(ConnectionPoint::hasLink)
+                .forEach(output -> {
+                    output.getLink().setPower(outputPower);
+                    output.getLink().setEnabled(false);
+                });
     }
 
     @Override

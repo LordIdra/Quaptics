@@ -27,10 +27,13 @@ import org.metamechanists.quaptics.utils.id.ConnectionPointID;
 import java.util.List;
 
 public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
+    protected float radius;
     public final double maxPower;
 
-    protected ConnectedBlock(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, double maxPower) {
+    protected ConnectedBlock(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe,
+                             float radius, double maxPower) {
         super(group, item, recipeType, recipe);
+        this.radius = radius;
         this.maxPower = maxPower;
         addItemHandler(onUse());
     }
@@ -59,7 +62,6 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
         return new ConnectionGroupID(getDisplayGroupID(location)).get();
     }
 
-    protected abstract float getRadius();
     protected abstract List<ConnectionPoint> generateConnectionPoints(ConnectionGroupID groupID, Player player, Location location);
 
     protected static double powerLoss(double inputPower,  double powerLoss) {
@@ -112,7 +114,7 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
     public Location calculatePointLocationSphere(ConnectionPointID from, ConnectionPointID to) {
         final Location fromGroupLocation =  from.get().getGroup().getLocation();
         final Location toGroupLocation =  to.get().getGroup().getLocation();
-        final Vector radiusDirection = Vector.fromJOML(Transformations.getDirection(fromGroupLocation, toGroupLocation).mul(getRadius()));
+        final Vector radiusDirection = Vector.fromJOML(Transformations.getDirection(fromGroupLocation, toGroupLocation).mul(radius));
         return fromGroupLocation.clone().add(0.5, 0.5, 0.5).add(radiusDirection);
     }
 }
