@@ -15,6 +15,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
+import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
@@ -33,7 +34,7 @@ public class SolarConcentrator extends ConnectedBlock {
     private final Vector outputLocation = new Vector(0.0F, -0.25F, 0.0F);
     private final Vector3f mainDisplayRotation = new Vector3f((float)(Math.PI/2), 0.0F, 0.0F);
     private final Vector3f mainDisplaySize = new Vector3f(0.9F, 0.9F, 0.9F);
-    private final Vector3f mainDisplayOffset = new Vector3f(0, 0.0F, 0.9F);
+    private final Vector3f mainDisplayOffset = new Vector3f(-0.45F, 0.0F, 0.45F);
     private final double emissionPower;
 
     public SolarConcentrator(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, double emissionPower) {
@@ -44,8 +45,9 @@ public class SolarConcentrator extends ConnectedBlock {
     private ItemDisplay generateMainBlockDisplay(@NotNull Location from) {
         return new ItemDisplayBuilder(from.clone().add(RELATIVE_CENTER))
                 .setMaterial(Material.GLASS_PANE)
-                .setTransformation(Transformations.rotateAndScale(mainDisplaySize, mainDisplayRotation)
-                        .translate(mainDisplayOffset))
+                .setTransformation(new Matrix4f()
+                        .translate(mainDisplayOffset)
+                        .mul(Transformations.rotateAndScale(mainDisplaySize, mainDisplayRotation)))
                 .build();
     }
 
@@ -98,8 +100,8 @@ public class SolarConcentrator extends ConnectedBlock {
         final float angleY = (float) Math.atan2(direction.x, direction.z);
         final Vector3f directionXZ = INITIAL_LINE.clone().toVector3f().rotateY(angleY);
         directionXZ.mul(directionXZ.x/mainDisplaySize.x > directionXZ.z/mainDisplaySize.z
-                ? mainDisplaySize.x / directionXZ.x
-                : mainDisplaySize.z / directionXZ.z);
+                ? (mainDisplaySize.x/2) / directionXZ.x
+                : (mainDisplaySize.z/2) / directionXZ.z);
         return ConnectionPoint.fromID(from).getLocation().clone().add(Vector.fromJOML(directionXZ));
     }
 }
