@@ -39,7 +39,8 @@ public class SolarConcentrator extends ConnectedBlock {
     private final Vector3f mainDisplayOffset = new Vector3f(0.45F, -0.45F, 0.45F);
     private final double emissionPower;
 
-    public SolarConcentrator(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, double emissionPower) {
+    public SolarConcentrator(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe,
+                             double emissionPower, double maxPower) {
         super(group, item, recipeType, recipe, 0);
         this.emissionPower = emissionPower;
     }

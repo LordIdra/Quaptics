@@ -38,14 +38,16 @@ public class Items {
                 SOLAR_CONCENTRATOR_1,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                1).register(addon);
+                1,
+                10).register(addon);
 
         new SolarConcentrator(
                 Groups.BASIC,
                 SOLAR_CONCENTRATOR_2,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                10).register(addon);
+                10,
+                100).register(addon);
 
         new EnergyConcentrator(
                 Groups.BASIC,
@@ -54,7 +56,8 @@ public class Items {
                 new ItemStack[]{},
                 30,
                 30,
-                15).register(addon);
+                15,
+                100).register(addon);
 
         new EnergyConcentrator(
                 Groups.INTERMEDIATE,
@@ -63,7 +66,8 @@ public class Items {
                 new ItemStack[]{},
                 160,
                 160,
-                200).register(addon);
+                200,
+                1000).register(addon);
 
         new EnergyConcentrator(
                 Groups.ADVANCED,
@@ -72,7 +76,8 @@ public class Items {
                 new ItemStack[]{},
                 680,
                 680,
-                2500).register(addon);
+                2500,
+                10000).register(addon);
 
         new Lens(
                 Groups.PRIMITIVE,
