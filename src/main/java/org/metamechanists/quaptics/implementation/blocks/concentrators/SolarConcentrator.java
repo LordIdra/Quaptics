@@ -27,11 +27,12 @@ import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.ConnectionGroupID;
 import org.metamechanists.quaptics.utils.id.ConnectionPointID;
+import org.metamechanists.quaptics.utils.interfaces.ConnectionPointBlock;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SolarConcentrator extends ConnectedBlock {
+public class SolarConcentrator extends ConnectedBlock implements ConnectionPointBlock {
     private final Vector outputLocation = new Vector(0.0F, 0.0F, 0.0F);
     private final Vector3f mainDisplaySize = new Vector3f(1.0F, 0.05F, 1.0F);
     private final double emissionPower;
@@ -40,25 +41,6 @@ public class SolarConcentrator extends ConnectedBlock {
         super(group, item, recipeType, recipe, 0);
         this.emissionPower = emissionPower;
         addItemHandler(onUse());
-    }
-
-    private BlockUseHandler onUse() {
-        return event -> {
-          event.cancel();
-
-          final Block block = event.getClickedBlock().orElse(null);
-          if (block == null) {
-              // I have no clue how this would happen but 🤷
-              return;
-          }
-
-          final ItemStack heldItem = event.getItem();
-          if (!(SlimefunItem.getByItem(heldItem) instanceof TargetingWand wand)) {
-              return;
-          }
-
-          wand.use(event.getPlayer(), getGroup(block.getLocation()).getOutput("output").getID(), heldItem);
-        };
     }
 
     private BlockDisplay generateMainBlockDisplay(@NotNull Location from, Location to) {
@@ -113,5 +95,10 @@ public class SolarConcentrator extends ConnectedBlock {
     @Override
     protected @NotNull Material getBaseMaterial() {
         return Material.STRUCTURE_VOID;
+    }
+
+    @Override
+    public ConnectionPointID getPointId(Block block) {
+        return getGroup(block.getLocation()).getOutput("output").getID();
     }
 }
