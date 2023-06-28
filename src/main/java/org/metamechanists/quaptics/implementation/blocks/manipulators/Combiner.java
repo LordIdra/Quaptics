@@ -56,9 +56,9 @@ public class Combiner extends ConnectedBlock {
 
         IntStream.range(0, connections).forEach(i -> {
             final String name = "input " + Objects.toString(i);
-            final double angle = (-connectionAngle/2) + connectionAngle*((double)(i-1) / (connections-1));
+            final double angle = (-connectionAngle/2) + connectionAngle*((double)(i) / (connections-1));
             final Vector relativeLocation = inputStartingLocation.clone().rotateAroundY(angle);
-            points.add(new ConnectionPointOutput(groupID, name, formatPointLocation(player, location, relativeLocation)));
+            points.add(new ConnectionPointInput(groupID, name, formatPointLocation(player, location, relativeLocation)));
         });
 
         points.add(new ConnectionPointOutput(groupID, "output", formatPointLocation(player, location, outputLocation)));

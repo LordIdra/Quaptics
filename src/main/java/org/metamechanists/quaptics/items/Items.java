@@ -48,7 +48,7 @@ public class Items {
                 SOLAR_CONCENTRATOR_2,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                0.4F,
+                0.35F,
                 (float)(Math.PI/4),
                 10,
                 Tiers.BASIC.maxPower).register(addon);
