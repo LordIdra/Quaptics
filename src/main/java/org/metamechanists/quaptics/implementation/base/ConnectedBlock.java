@@ -38,10 +38,6 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
 
     public BlockUseHandler onUse() {
         return event -> {
-            if (event.getInteractEvent().useItemInHand() == Event.Result.DENY || event.getInteractEvent().useInteractedBlock() == Event.Result.DENY) {
-                return;
-            }
-            
             final Block block = event.getClickedBlock().orElse(null);
             if (block == null) {
                 return;
