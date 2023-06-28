@@ -39,7 +39,7 @@ public class Link {
         this.inputID = inputID;
         this.outputID = outputID;
         this.ID = new LinkID(new DisplayGroup(getInput().getLocation(), 0, 0).getParentUUID());
-        this.maxPower = getInput().getGroup().getBlock().maxPower;
+        this.maxPower = getOutput().getGroup().getBlock().maxPower;
         saveData(); // the points being linked will not be able to Link.fromID() without this line
         getInput().link(getID());
         getOutput().link(getID());
