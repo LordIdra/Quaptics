@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Lens extends ConnectedBlock {
-    private final Vector3f mainDisplaySize = new Vector3f(radius*1.8F, radius*1.8F, radius*1.8F);
+    private final Vector3f mainDisplaySize = new Vector3f(radius*1.5F, radius*1.5F, radius*1.5F);
     private final Vector3f mainDisplayRotation = new Vector3f((float)(Math.PI/4), (float)(Math.PI/4), 0);
     private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -radius);
     private final Vector outputPointLocation = new Vector(0.0F, 0.0F, radius);

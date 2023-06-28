@@ -26,9 +26,10 @@ import java.util.Objects;
 import java.util.stream.IntStream;
 
 public class Combiner extends ConnectedBlock {
+    private final double connectionAngle = Math.PI / 2;
     private final int connections;
     private final Vector outputLocation = new Vector(0.0F, 0.0F, radius);
-    private final Vector3f mainDisplaySize = new Vector3f(radius*1.8F, radius*1.8F, radius*1.8F);
+    private final Vector3f mainDisplaySize = new Vector3f(radius*1.5F, radius*1.5F, radius*1.5F);
     private final Vector3f mainDisplayRotation = new Vector3f((float)(Math.PI/4), (float)(Math.PI/4), 0);
     private final double powerLoss;
 
@@ -53,7 +54,7 @@ public class Combiner extends ConnectedBlock {
 
         IntStream.range(0, connections).forEach(i -> {
             final String name = "input " + Objects.toString(i);
-            final double angle = (-Math.PI / 8) + (Math.PI / 4) * ((double) (i) / connections);
+            final double angle = (-connectionAngle/2) + connectionAngle*((double)(i-1) / (connections-1));
             final Vector relativeLocation = new Vector(0.0F, 0.0F, -radius).rotateAroundY(angle);
             points.add(new ConnectionPointOutput(groupID, name, formatPointLocation(player, location, relativeLocation)));
         });
