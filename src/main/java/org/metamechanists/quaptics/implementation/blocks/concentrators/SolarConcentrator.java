@@ -94,18 +94,11 @@ public class SolarConcentrator extends ConnectedBlock {
     }
 
     private @NotNull Location calculatePointLocationSquare(ConnectionPointID from, ConnectionPointID to) {
-        final Vector3f direction = Transformations.getDirection(
-                ConnectionPoint.fromID(from).getLocation(),
-                ConnectionPoint.fromID(to).getLocation());
-        final Vector3f directionXZ = new Vector3f(direction.x, 0.0F, direction.z);
-        // Avoid div-by-zero
-        if (directionXZ.x == 0.0F || directionXZ.z == 0.0F) {
-            return ConnectionPoint.fromID(from).getGroup().getLocation();
-        }
-
-        directionXZ.mul(directionXZ.x/mainDisplaySize.x > directionXZ.z/mainDisplaySize.z
-                ? (mainDisplaySize.x/2) / directionXZ.x
-                : (mainDisplaySize.z/2) / directionXZ.z);
-        return ConnectionPoint.fromID(from).getGroup().getLocation().clone().add(Vector.fromJOML(directionXZ));
+        final Vector3f direction = new Vector3f();
+        if (direction.x > direction.z && direction.x > 0) { direction.x = 0.45F; }
+        else if (direction.x > direction.z && direction.x < 0) { direction.x = -0.45F; }
+        else if (direction.x < direction.z && direction.z > 0) { direction.z = 0.45F; }
+        else if (direction.x < direction.z && direction.z < 0) { direction.z = -0.45F; }
+        return ConnectionPoint.fromID(from).getGroup().getLocation().clone().add(0.5, 0.5, 0.5).add(Vector.fromJOML(direction));
     }
 }
