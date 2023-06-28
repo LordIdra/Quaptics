@@ -37,7 +37,7 @@ public class ItemStacks {
             "QP_ENERGY_CONCENTRATOR_2",
             Material.PURPLE_CONCRETE,
             "&eEnergy Concentrator &bII",
-            Lore.MID,
+            Lore.INTERMEDIATE,
             "&7● Consumes energy",
             "&7● Concentrates energy into a quaptic ray",
             LoreBuilder.powerPerSecond(160),
@@ -75,7 +75,7 @@ public class ItemStacks {
             "QP_LENS_3",
             Material.GLASS,
             "&9Lens &bIII",
-            Lore.MID,
+            Lore.INTERMEDIATE,
             "&7● &bRedirects &7a quaptic ray",
             Lore.maxPower(1000),
             Lore.powerLoss(4));
@@ -111,7 +111,7 @@ public class ItemStacks {
             "QP_COMBINER_3",
             Material.GRAY_STAINED_GLASS,
             "&9Combiner &eIII",
-            Lore.MID,
+            Lore.INTERMEDIATE,
             "&7● &bCombines &7multiple quaptic rays into one",
             Lore.maxPower(1000),
             Lore.powerLoss(8));
@@ -147,7 +147,7 @@ public class ItemStacks {
             "QP_SPLITTER_3",
             Material.LIGHT_GRAY_STAINED_GLASS,
             "&9Splitter &eIII",
-            Lore.MID,
+            Lore.INTERMEDIATE,
             "&7● &bSplits &7one quaptic ray into multiple",
             Lore.maxPower(1000),
             Lore.powerLoss(8));

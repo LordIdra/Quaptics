@@ -10,7 +10,7 @@ public enum Colors {
     PRIMITIVE("996633"),
     BASIC("8C8C8C"),
     INTERMEDIATE("FFCC00"),
-    ADVANCED("FF5050"),
+    ADVANCED("FF6600"),
 
     POWER("FF0000"),
     FREQUENCY("00ff00"),

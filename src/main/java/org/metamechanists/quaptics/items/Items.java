@@ -1,15 +1,14 @@
 package org.metamechanists.quaptics.items;
 
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
-import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import lombok.Getter;
 import org.bukkit.inventory.ItemStack;
 import org.metamechanists.quaptics.Quaptics;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
-import org.metamechanists.quaptics.implementation.blocks.concentrators.SolarConcentrator;
 import org.metamechanists.quaptics.implementation.blocks.concentrators.EnergyConcentrator;
+import org.metamechanists.quaptics.implementation.blocks.concentrators.SolarConcentrator;
 import org.metamechanists.quaptics.implementation.blocks.consumers.Turret;
 import org.metamechanists.quaptics.implementation.blocks.manipulators.Combiner;
 import org.metamechanists.quaptics.implementation.blocks.manipulators.Lens;
@@ -181,10 +180,9 @@ public class Items {
                 10,
                 2).register(addon);
 
-        for (SlimefunItem slimefunItem : Slimefun.getRegistry().getAllSlimefunItems()) {
-            if (slimefunItem instanceof ConnectedBlock connectedBlock) {
-                blocks.put(connectedBlock.getId(), connectedBlock);
-            }
-        }
+        Slimefun.getRegistry().getAllSlimefunItems().stream()
+                .filter(slimefunItem -> slimefunItem instanceof ConnectedBlock)
+                .map(slimefunItem -> (ConnectedBlock) slimefunItem)
+                .forEach(connectedBlock -> blocks.put(connectedBlock.getId(), connectedBlock));
     }
 }

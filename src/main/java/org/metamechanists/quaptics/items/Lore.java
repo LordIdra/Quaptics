@@ -21,7 +21,7 @@ public class Lore {
 
     public final static String PRIMITIVE = Colors.PRIMITIVE.getString() + "Primitive";
     public final static String BASIC = Colors.BASIC.getString() + "Basic";
-    public final static String MID = Colors.INTERMEDIATE.getString() + "Mid";
+    public final static String INTERMEDIATE = Colors.INTERMEDIATE.getString() + "Intermediate";
     public final static String ADVANCED = Colors.ADVANCED.getString() + "Advanced";
 
     public static String range(int range) {

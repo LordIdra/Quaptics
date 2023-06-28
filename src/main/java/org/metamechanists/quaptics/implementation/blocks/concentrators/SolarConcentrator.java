@@ -5,13 +5,12 @@ import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
-import io.github.thebusybiscuit.slimefun4.core.handlers.BlockUseHandler;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.entity.BlockDisplay;
+import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
@@ -21,10 +20,9 @@ import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
-import org.metamechanists.quaptics.implementation.tools.TargetingWand;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Transformations;
-import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
+import org.metamechanists.quaptics.utils.builders.ItemDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.ConnectionGroupID;
 import org.metamechanists.quaptics.utils.id.ConnectionPointID;
 import org.metamechanists.quaptics.utils.interfaces.ConnectionPointBlock;
@@ -33,8 +31,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SolarConcentrator extends ConnectedBlock implements ConnectionPointBlock {
-    private final Vector outputLocation = new Vector(0.0F, 0.0F, 0.0F);
-    private final Vector3f mainDisplaySize = new Vector3f(1.0F, 0.05F, 1.0F);
+    private final Vector outputLocation = new Vector(0.0F, -0.25F, 0.0F);
+    private final Vector3f mainDisplayRotation = new Vector3f((float)(Math.PI/2), 0.0F, 0.0F);
+    private final Vector3f mainDisplaySize = new Vector3f(0.9F, 0.9F, 0.9F);
     private final double emissionPower;
 
     public SolarConcentrator(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, double emissionPower) {
@@ -42,16 +41,16 @@ public class SolarConcentrator extends ConnectedBlock implements ConnectionPoint
         this.emissionPower = emissionPower;
     }
 
-    private BlockDisplay generateMainBlockDisplay(@NotNull Location from, Location to) {
-        return new BlockDisplayBuilder(from.clone().add(RELATIVE_CENTER))
-                .setMaterial(Material.GLASS)
-                .setTransformation(Transformations.adjustedScale(mainDisplaySize))
+    private ItemDisplay generateMainBlockDisplay(@NotNull Location from) {
+        return new ItemDisplayBuilder(from.clone().add(RELATIVE_CENTER))
+                .setMaterial(Material.GLASS_PANE)
+                .setTransformation(Transformations.rotateAndScale(mainDisplaySize, mainDisplayRotation))
                 .build();
     }
 
     @Override
     protected void addDisplays(@NotNull DisplayGroup displayGroup, Location location, Player player) {
-        displayGroup.addDisplay("main", generateMainBlockDisplay(location, location.clone().add(rotateVectorByEyeDirection(player, INITIAL_LINE))));
+        displayGroup.addDisplay("main", generateMainBlockDisplay(location));
     }
 
     @Override
@@ -82,14 +81,7 @@ public class SolarConcentrator extends ConnectedBlock implements ConnectionPoint
     }
 
     @Override
-    public void connect(ConnectionPointID from, ConnectionPointID to) {
-        super.connect(from, to);
-        final DisplayGroup fromDisplayGroup = getDisplayGroup(ConnectionPoint.fromID(from).getGroup().getLocation());
-        fromDisplayGroup.removeDisplay("main").remove();
-        fromDisplayGroup.addDisplay("main", generateMainBlockDisplay(
-                ConnectionPoint.fromID(from).getGroup().getLocation(),
-                ConnectionPoint.fromID(to).getGroup().getLocation()));
-    }
+    public void connect(ConnectionPointID from, ConnectionPointID to) {}
 
     @Override
     protected @NotNull Material getBaseMaterial() {

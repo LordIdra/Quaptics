@@ -1,7 +1,6 @@
 package org.metamechanists.quaptics.implementation.base;
 
 import com.destroystokyo.paper.ParticleBuilder;
-import io.github.thebusybiscuit.slimefun4.api.events.PlayerRightClickEvent;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
@@ -25,7 +24,6 @@ import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.id.ConnectionGroupID;
 import org.metamechanists.quaptics.utils.id.ConnectionPointID;
 
-import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.util.List;
 
 public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
@@ -87,7 +85,6 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
         onBreak(event.getBlock().getLocation());
     }
 
-    @OverridingMethodsMustInvokeSuper
     public void connect(ConnectionPointID from, ConnectionPointID to) {
         ConnectionPoint.fromID(from).getGroup().changePointLocation(from, calculateNewLocation(from, to));
     }
