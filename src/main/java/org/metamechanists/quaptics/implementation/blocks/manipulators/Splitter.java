@@ -26,10 +26,12 @@ import java.util.Objects;
 import java.util.stream.IntStream;
 
 public class Splitter extends ConnectedBlock {
+    private static final float CONNECTION_ADDITIONAL_RADIUS = 0.10F;
     private final double connectionAngle = Math.PI / 2;
     private final int connections;
     private final Vector inputLocation = new Vector(0.0F, 0.0F, -radius);
-    private final Vector3f mainDisplaySize = new Vector3f(radius*1.5F, radius*1.5F, radius*1.5F);
+    private final Vector outputStartingLocation = new Vector(0.0F, 0.0F, -(radius+CONNECTION_ADDITIONAL_RADIUS));
+    private final Vector3f mainDisplaySize = new Vector3f(radius*1.5F);
     private final Vector3f mainDisplayRotation = new Vector3f((float)(Math.PI/4), (float)(Math.PI/4), 0);
     private final double powerLoss;
 
@@ -44,7 +46,7 @@ public class Splitter extends ConnectedBlock {
     protected void addDisplays(@NotNull DisplayGroup displayGroup, @NotNull Location location, Player player) {
         displayGroup.addDisplay("main", new BlockDisplayBuilder(location.clone().add(RELATIVE_CENTER))
                         .setMaterial(Material.LIGHT_GRAY_STAINED_GLASS)
-                        .setTransformation(Transformations.rotateAndScale(mainDisplaySize, mainDisplayRotation))
+                        .setTransformation(Transformations.adjustedRotateAndScale(mainDisplaySize, mainDisplayRotation))
                         .build());
     }
 
@@ -56,7 +58,7 @@ public class Splitter extends ConnectedBlock {
         IntStream.range(0, connections).forEach(i -> {
             final String name = "output " + Objects.toString(i);
             final double angle = (-connectionAngle/2) + connectionAngle*((double)(i-1) / (connections-1));
-            final Vector relativeLocation = new Vector(0.0F, 0.0F, radius).rotateAroundY(angle);
+            final Vector relativeLocation = outputStartingLocation.clone().rotateAroundY(angle);
             points.add(new ConnectionPointOutput(groupID, name, formatPointLocation(player, location, relativeLocation)));
         });
 

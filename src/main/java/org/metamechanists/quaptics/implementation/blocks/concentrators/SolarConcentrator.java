@@ -15,7 +15,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
-import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
@@ -33,7 +32,6 @@ public class SolarConcentrator extends ConnectedBlock {
     private final float rotationY;
     private final Vector outputLocation = new Vector(0.0F, 0.0F, radius);
     private final Vector3f mainDisplaySize = new Vector3f(radius*1.8F, radius*1.8F, radius*1.8F);
-    private final Vector3f mainDisplayOffset = new Vector3f(radius, -radius*0.9F, radius*0.9F);
     private final double emissionPower;
 
     public SolarConcentrator(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe,
@@ -47,9 +45,7 @@ public class SolarConcentrator extends ConnectedBlock {
         final Vector3f mainDisplayRotation = new Vector3f((float)(Math.PI/2), 0.0F, rotationY);
         return new ItemDisplayBuilder(from.clone().add(RELATIVE_CENTER))
                 .setMaterial(Material.GLASS_PANE)
-                .setTransformation(new Matrix4f()
-                        .translate(mainDisplayOffset)
-                        .mul(Transformations.rotateAndScale(mainDisplaySize, mainDisplayRotation)))
+                .setTransformation(Transformations.unadjustedRotateAndScale(mainDisplaySize, mainDisplayRotation))
                 .build();
     }
 
