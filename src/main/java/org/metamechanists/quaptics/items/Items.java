@@ -39,7 +39,7 @@ public class Items {
                 RecipeType.NULL,
                 new ItemStack[]{},
                 1,
-                10).register(addon);
+                Tiers.PRIMITIVE.maxPower).register(addon);
 
         new SolarConcentrator(
                 Groups.BASIC,
@@ -47,7 +47,7 @@ public class Items {
                 RecipeType.NULL,
                 new ItemStack[]{},
                 10,
-                100).register(addon);
+                Tiers.BASIC.maxPower).register(addon);
 
         new EnergyConcentrator(
                 Groups.BASIC,
@@ -57,7 +57,7 @@ public class Items {
                 30,
                 30,
                 15,
-                100).register(addon);
+                Tiers.BASIC.maxPower).register(addon);
 
         new EnergyConcentrator(
                 Groups.INTERMEDIATE,
@@ -67,7 +67,7 @@ public class Items {
                 160,
                 160,
                 200,
-                1000).register(addon);
+                Tiers.INTERMEDIATE.maxPower).register(addon);
 
         new EnergyConcentrator(
                 Groups.ADVANCED,
@@ -77,14 +77,14 @@ public class Items {
                 680,
                 680,
                 2500,
-                10000).register(addon);
+                Tiers.ADVANCED.maxPower).register(addon);
 
         new Lens(
                 Groups.PRIMITIVE,
                 LENS_1,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                10,
+                Tiers.PRIMITIVE.maxPower,
                 0.1).register(addon);
 
         new Lens(
@@ -92,7 +92,7 @@ public class Items {
                 LENS_2,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                100,
+                Tiers.BASIC.maxPower,
                 0.07).register(addon);
 
         new Lens(
@@ -100,7 +100,7 @@ public class Items {
                 LENS_3,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                1000,
+                Tiers.INTERMEDIATE.maxPower,
                 0.04).register(addon);
 
         new Lens(
@@ -108,7 +108,7 @@ public class Items {
                 LENS_4,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                10000,
+                Tiers.ADVANCED.maxPower,
                 0.02).register(addon);
 
         new Combiner(
@@ -116,7 +116,7 @@ public class Items {
                 COMBINER_1,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                10,
+                Tiers.PRIMITIVE.maxPower,
                 0.2).register(addon);
 
         new Combiner(
@@ -124,7 +124,7 @@ public class Items {
                 COMBINER_2,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                100,
+                Tiers.BASIC.maxPower,
                 0.14).register(addon);
 
         new Combiner(
@@ -132,7 +132,7 @@ public class Items {
                 COMBINER_3,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                1000,
+                Tiers.INTERMEDIATE.maxPower,
                 0.08).register(addon);
 
         new Combiner(
@@ -140,7 +140,7 @@ public class Items {
                 COMBINER_4,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                10000,
+                Tiers.ADVANCED.maxPower,
                 0.05).register(addon);
 
         new Splitter(
@@ -148,7 +148,7 @@ public class Items {
                 SPLITTER_1,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                10,
+                Tiers.PRIMITIVE.maxPower,
                 0.2).register(addon);
 
         new Splitter(
@@ -156,7 +156,7 @@ public class Items {
                 SPLITTER_2,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                100,
+                Tiers.BASIC.maxPower,
                 0.14).register(addon);
 
         new Splitter(
@@ -164,7 +164,7 @@ public class Items {
                 SPLITTER_3,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                1000,
+                Tiers.INTERMEDIATE.maxPower,
                 0.08).register(addon);
 
         new Splitter(
@@ -172,7 +172,7 @@ public class Items {
                 SPLITTER_4,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                10000,
+                Tiers.ADVANCED.maxPower,
                 0.05).register(addon);
 
         new Turret(
@@ -180,7 +180,7 @@ public class Items {
                 TURRET,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                40,
+                Tiers.PRIMITIVE.maxPower,
                 5,
                 10,
                 2).register(addon);

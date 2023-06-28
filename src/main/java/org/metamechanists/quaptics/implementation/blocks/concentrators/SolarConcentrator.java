@@ -41,7 +41,7 @@ public class SolarConcentrator extends ConnectedBlock {
 
     public SolarConcentrator(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe,
                              double emissionPower, double maxPower) {
-        super(group, item, recipeType, recipe, 0);
+        super(group, item, recipeType, recipe, maxPower);
         this.emissionPower = emissionPower;
     }
 

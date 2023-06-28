@@ -19,11 +19,6 @@ public class Lore {
     private final static String FREQUENCY_SUFFIX = " &8Hz";
     private final static String PHASE_SUFFIX = " &8°";
 
-    public final static String PRIMITIVE = Colors.PRIMITIVE.getString() + "Primitive";
-    public final static String BASIC = Colors.BASIC.getString() + "Basic";
-    public final static String INTERMEDIATE = Colors.INTERMEDIATE.getString() + "Intermediate";
-    public final static String ADVANCED = Colors.ADVANCED.getString() + "Advanced";
-
     public static String range(int range) {
         return ATTRIBUTE_SYMBOL + RANGE_SYMBOL + "&7Range &e" + Objects.toString(range) + RANGE_SUFFIX;
     }
