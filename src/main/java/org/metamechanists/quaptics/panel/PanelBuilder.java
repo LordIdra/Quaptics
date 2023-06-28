@@ -1,4 +1,4 @@
-package org.metamechanists.quaptics.utils.panel;
+package org.metamechanists.quaptics.panel;
 
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import org.bukkit.Location;

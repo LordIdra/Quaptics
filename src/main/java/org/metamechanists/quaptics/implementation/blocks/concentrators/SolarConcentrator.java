@@ -25,15 +25,15 @@ import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.ItemDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.ConnectionGroupID;
 import org.metamechanists.quaptics.utils.id.ConnectionPointID;
-import org.metamechanists.quaptics.utils.interfaces.ConnectionPointBlock;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SolarConcentrator extends ConnectedBlock implements ConnectionPointBlock {
+public class SolarConcentrator extends ConnectedBlock {
     private final Vector outputLocation = new Vector(0.0F, -0.25F, 0.0F);
     private final Vector3f mainDisplayRotation = new Vector3f((float)(Math.PI/2), 0.0F, 0.0F);
     private final Vector3f mainDisplaySize = new Vector3f(0.9F, 0.9F, 0.9F);
+    private final Vector3f mainDisplayOffset = new Vector3f(-0.45F, 0.0F, -0.45F);
     private final double emissionPower;
 
     public SolarConcentrator(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, double emissionPower) {
@@ -44,7 +44,8 @@ public class SolarConcentrator extends ConnectedBlock implements ConnectionPoint
     private ItemDisplay generateMainBlockDisplay(@NotNull Location from) {
         return new ItemDisplayBuilder(from.clone().add(RELATIVE_CENTER))
                 .setMaterial(Material.GLASS_PANE)
-                .setTransformation(Transformations.rotateAndScale(mainDisplaySize, mainDisplayRotation))
+                .setTransformation(Transformations.rotateAndScale(mainDisplaySize, mainDisplayRotation)
+                        .translate(mainDisplayOffset))
                 .build();
     }
 
@@ -86,10 +87,5 @@ public class SolarConcentrator extends ConnectedBlock implements ConnectionPoint
     @Override
     protected @NotNull Material getBaseMaterial() {
         return Material.STRUCTURE_VOID;
-    }
-
-    @Override
-    public ConnectionPointID getPointId(Block block) {
-        return getGroup(block.getLocation()).getOutput("output").getID();
     }
 }

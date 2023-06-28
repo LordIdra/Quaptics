@@ -1,15 +1,12 @@
 package org.metamechanists.quaptics.implementation.tools;
 
-import io.github.thebusybiscuit.slimefun4.api.events.PlayerRightClickEvent;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
-import io.github.thebusybiscuit.slimefun4.core.handlers.ItemUseHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -23,26 +20,10 @@ import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Language;
 import org.metamechanists.quaptics.utils.PersistentDataUtils;
 import org.metamechanists.quaptics.utils.id.ConnectionPointID;
-import org.metamechanists.quaptics.utils.interfaces.ConnectionPointBlock;
 
 public class TargetingWand extends SlimefunItem {
     public TargetingWand(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
-        addItemHandler(onUse());
-    }
-
-    private ItemUseHandler onUse() {
-        return event -> {
-            final Block block = event.getClickedBlock().orElse(null);
-            if (block == null) {
-                return;
-            }
-
-            final SlimefunItem slimefunItem = BlockStorage.check(block);
-            if (slimefunItem instanceof ConnectionPointBlock connectionPointBlock) {
-                use(event.getPlayer(), connectionPointBlock.getPointId(block), event.getItem());
-            }
-        };
     }
 
     private boolean isSourceSet(@NotNull ItemStack stack) {

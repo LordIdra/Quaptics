@@ -1,4 +1,4 @@
-package org.metamechanists.quaptics.utils.panel;
+package org.metamechanists.quaptics.panel;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;

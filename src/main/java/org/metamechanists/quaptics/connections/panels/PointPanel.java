@@ -9,8 +9,8 @@ import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.utils.id.ConnectionPointID;
 import org.metamechanists.quaptics.utils.id.PanelID;
-import org.metamechanists.quaptics.utils.panel.Panel;
-import org.metamechanists.quaptics.utils.panel.PanelBuilder;
+import org.metamechanists.quaptics.panel.Panel;
+import org.metamechanists.quaptics.panel.PanelBuilder;
 
 public class PointPanel {
     private static final Vector POINT_OFFSET = new Vector(0, 0.2, 0);
