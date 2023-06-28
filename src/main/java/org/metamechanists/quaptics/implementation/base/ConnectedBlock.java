@@ -37,6 +37,10 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
 
     public BlockUseHandler onUse() {
         return event -> {
+            if (!event.getPlayer().isSneaking()) {
+                return;
+            }
+
             final Block block = event.getClickedBlock().orElse(null);
             if (block == null) {
                 return;
