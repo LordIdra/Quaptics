@@ -12,6 +12,7 @@ import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
@@ -37,6 +38,10 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
 
     public BlockUseHandler onUse() {
         return event -> {
+            if (event.getInteractEvent().useItemInHand() == Event.Result.DENY || event.getInteractEvent().useInteractedBlock() == Event.Result.DENY) {
+                return;
+            }
+            
             final Block block = event.getClickedBlock().orElse(null);
             if (block == null) {
                 return;
