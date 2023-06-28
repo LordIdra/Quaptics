@@ -31,10 +31,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SolarConcentrator extends ConnectedBlock {
-    private final Vector outputLocation = new Vector(0.0F, -0.25F, 0.0F);
+    private final Vector outputLocation = new Vector(0.0F, 0.0F, 0.45F);
     private final Vector3f mainDisplayRotation = new Vector3f((float)(Math.PI/2), 0.0F, 0.0F);
     private final Vector3f mainDisplaySize = new Vector3f(0.9F, 0.9F, 0.9F);
-    private final Vector3f mainDisplayOffset = new Vector3f(-0.45F, 0.0F, 0.45F);
+    private final Vector3f mainDisplayOffset = new Vector3f(0.45F, -0.45F, 0.45F);
     private final double emissionPower;
 
     public SolarConcentrator(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, double emissionPower) {
