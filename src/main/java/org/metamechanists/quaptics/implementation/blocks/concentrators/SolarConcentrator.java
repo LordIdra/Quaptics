@@ -98,10 +98,10 @@ public class SolarConcentrator extends ConnectedBlock {
                 ConnectionPoint.fromID(from).getLocation(),
                 ConnectionPoint.fromID(to).getLocation());
         final Vector3f newDirection = new Vector3f();
-        if (direction.x > direction.z && direction.x > 0) { newDirection.x = 0.45F; }
-        else if (direction.x > direction.z && direction.x < 0) { newDirection.x = -0.45F; }
-        else if (direction.x < direction.z && direction.z > 0) { newDirection.z = 0.45F; }
-        else if (direction.x < direction.z && direction.z < 0) { newDirection.z = -0.45F; }
+        if (direction.x > direction.z && direction.x > 0) { newDirection.z = 0.45F; }
+        else if (direction.x > direction.z && direction.x < 0) { newDirection.z = -0.45F; }
+        else if (direction.x < direction.z && direction.z > 0) { newDirection.x = 0.45F; }
+        else if (direction.x < direction.z && direction.z < 0) { newDirection.x = -0.45F; }
         return ConnectionPoint.fromID(from).getGroup().getLocation().clone().add(0.5, 0.5, 0.5).add(Vector.fromJOML(newDirection));
     }
 }
