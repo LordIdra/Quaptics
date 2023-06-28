@@ -62,8 +62,8 @@ public class EnergyConcentrator extends EnergyConnectedBlock {
     @Override
     public void onSlimefunTick(@NotNull Block block, SlimefunItem item, Config data) {
         super.onSlimefunTick(block, item, data);
-        final ConnectionGroupID ID = new ConnectionGroupID(BlockStorage.getLocationInfo(block.getLocation(), Keys.CONNECTION_GROUP_ID));
-        final ConnectionGroup group = ConnectionGroup.fromID(ID);
+        final ConnectionGroupID groupID = new ConnectionGroupID(BlockStorage.getLocationInfo(block.getLocation(), Keys.CONNECTION_GROUP_ID));
+        final ConnectionGroup group = groupID.get();
         final ConnectionPointOutput output = (ConnectionPointOutput) group.getPoint("output");
 
         if (!output.hasLink()) {
@@ -82,11 +82,11 @@ public class EnergyConcentrator extends EnergyConnectedBlock {
     @Override
     public void connect(ConnectionPointID from, ConnectionPointID to) {
         super.connect(from, to);
-        final DisplayGroup fromDisplayGroup = getDisplayGroup(ConnectionPoint.fromID(from).getGroup().getLocation());
+        final DisplayGroup fromDisplayGroup = getDisplayGroup(from.get().getGroup().getLocation());
         fromDisplayGroup.removeDisplay("main").remove();
         fromDisplayGroup.addDisplay("main", generateMainBlockDisplay(
-                ConnectionPoint.fromID(from).getGroup().getLocation(),
-                ConnectionPoint.fromID(to).getGroup().getLocation()));
+                from.get().getGroup().getLocation(),
+                to.get().getGroup().getLocation()));
     }
 
     @Override

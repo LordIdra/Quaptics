@@ -11,7 +11,7 @@ public class QuapticTicker extends BukkitRunnable {
 
     @Override
     public void run() {
-        QuapticStorage.getLoadedGroups().forEach(ID -> ConnectionGroup.fromID(ID).tick());
+        QuapticStorage.getLoadedGroups().forEach(ID -> ID.get().tick());
         DeprecatedTickerStorage.tick();
         BlockUpdateScheduler.tick();
     }

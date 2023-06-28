@@ -66,8 +66,8 @@ public class SolarConcentrator extends ConnectedBlock {
     @Override
     public void onSlimefunTick(@NotNull Block block, SlimefunItem item, Config data) {
         super.onSlimefunTick(block, item, data);
-        final ConnectionGroupID ID = new ConnectionGroupID(BlockStorage.getLocationInfo(block.getLocation(), Keys.CONNECTION_GROUP_ID));
-        final ConnectionGroup group = ConnectionGroup.fromID(ID);
+        final ConnectionGroupID groupID = new ConnectionGroupID(BlockStorage.getLocationInfo(block.getLocation(), Keys.CONNECTION_GROUP_ID));
+        final ConnectionGroup group = groupID.get();
         final ConnectionPointOutput output = (ConnectionPointOutput) group.getPoint("output");
 
         if (!output.hasLink()) {

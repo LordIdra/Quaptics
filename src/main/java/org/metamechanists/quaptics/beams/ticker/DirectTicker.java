@@ -4,7 +4,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.BlockDisplay;
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.utils.Transformations;
@@ -26,13 +25,8 @@ public class DirectTicker implements DisplayTicker {
                         .getUniqueId());
     }
 
-    private DirectTicker(@NotNull TickerID ID) {
+    public DirectTicker(@NotNull TickerID ID) {
         this.displayID = new BlockDisplayID(ID);
-    }
-
-    @Contract("_ -> new")
-    public static @NotNull DirectTicker fromID(TickerID ID) {
-        return new DirectTicker(ID);
     }
 
     public TickerID getID() {
@@ -40,7 +34,7 @@ public class DirectTicker implements DisplayTicker {
     }
 
     private BlockDisplay getDisplay() {
-        return (BlockDisplay) Bukkit.getEntity(displayID.get());
+        return (BlockDisplay) Bukkit.getEntity(displayID.getUUID());
     }
 
     @Override

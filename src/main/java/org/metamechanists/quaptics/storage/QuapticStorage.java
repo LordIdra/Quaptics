@@ -1,6 +1,5 @@
 package org.metamechanists.quaptics.storage;
 
-import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.utils.id.ConnectionGroupID;
 
 import java.util.HashSet;
@@ -16,7 +15,7 @@ public class QuapticStorage {
 
     public static Set<ConnectionGroupID> getLoadedGroups() {
         return groupIDs.stream()
-                .filter(ID -> ConnectionGroup.fromID(ID) != null)
+                .filter(ID -> ID.get() != null)
                 .collect(Collectors.toSet());
     }
 }

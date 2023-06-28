@@ -13,7 +13,6 @@ import org.bukkit.entity.Interaction;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.Link;
@@ -22,12 +21,7 @@ import org.metamechanists.quaptics.storage.DataTraverser;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.builders.InteractionBuilder;
-import org.metamechanists.quaptics.utils.id.BlockDisplayID;
-import org.metamechanists.quaptics.utils.id.ConnectionGroupID;
-import org.metamechanists.quaptics.utils.id.ConnectionPointID;
-import org.metamechanists.quaptics.utils.id.InteractionID;
-import org.metamechanists.quaptics.utils.id.LinkID;
-import org.metamechanists.quaptics.utils.id.PanelID;
+import org.metamechanists.quaptics.utils.id.*;
 
 public abstract class ConnectionPoint {
     private final static float SIZE = 0.1F;
@@ -45,7 +39,8 @@ public abstract class ConnectionPoint {
     @Getter
     private final int disconnectedBrightness;
 
-    public ConnectionPoint(ConnectionGroupID groupID, String name, @NotNull Location location, Material material, int connectedBrightness, int disconnectedBrightness) {
+    public ConnectionPoint(ConnectionGroupID groupID, String name, @NotNull Location location, Material material,
+                           int connectedBrightness, int disconnectedBrightness) {
         final Interaction interaction = new InteractionBuilder(location.clone().add(INTERACTION_OFFSET))
                 .setWidth(SIZE)
                 .setHeight(SIZE)
@@ -66,7 +61,7 @@ public abstract class ConnectionPoint {
         getPointPanel().update();
     }
 
-    protected ConnectionPoint(ConnectionPointID pointID) {
+    public ConnectionPoint(ConnectionPointID pointID) {
         final DataTraverser traverser = new DataTraverser(pointID);
         final JsonObject mainSection = traverser.getData();
         final String linkIDString = mainSection.get("linkID").getAsString();
@@ -81,27 +76,17 @@ public abstract class ConnectionPoint {
     }
 
     protected void saveData(@NotNull JsonObject mainSection) {
-        mainSection.add("groupID", new JsonPrimitive(groupID.get().toString()));
-        mainSection.add("blockDisplayID", new JsonPrimitive(blockDisplayID.get().toString()));
-        mainSection.add("interactionID", new JsonPrimitive(interactionID.get().toString()));
-        mainSection.add("panelID", new JsonPrimitive(panelID.get().toString()));
-        mainSection.add("linkID", new JsonPrimitive(linkID == null ? "null" : linkID.get().toString()));
+        mainSection.add("groupID", new JsonPrimitive(groupID.getUUID().toString()));
+        mainSection.add("blockDisplayID", new JsonPrimitive(blockDisplayID.getUUID().toString()));
+        mainSection.add("interactionID", new JsonPrimitive(interactionID.getUUID().toString()));
+        mainSection.add("panelID", new JsonPrimitive(panelID.getUUID().toString()));
+        mainSection.add("linkID", new JsonPrimitive(linkID == null ? "null" : linkID.getUUID().toString()));
         mainSection.add("name", new JsonPrimitive(name));
         mainSection.add("connectedBrightness", new JsonPrimitive(connectedBrightness));
         mainSection.add("disconnectedBrightness", new JsonPrimitive(disconnectedBrightness));
     }
 
     protected abstract void saveData();
-
-    public static @Nullable ConnectionPoint fromID(@NotNull ConnectionPointID id) {
-        if (Bukkit.getEntity(id.get()) == null) { return null; }
-        final DataTraverser traverser = new DataTraverser(id);
-        final JsonObject mainSection = traverser.getData();
-        final String type = mainSection.get("type").getAsString();
-        return type.equals("output")
-                ? new ConnectionPointOutput(id)
-                : new ConnectionPointInput(id);
-    }
 
     public ConnectionPointID getID() {
         return new ConnectionPointID(interactionID);
@@ -112,7 +97,7 @@ public abstract class ConnectionPoint {
     }
 
     public Link getLink() {
-        return Link.fromID(linkID);
+        return linkID.get();
     }
 
     public Location getLocation() {
@@ -120,20 +105,20 @@ public abstract class ConnectionPoint {
     }
 
     @Contract(" -> new")
-    private @NotNull PointPanel getPointPanel() {
+    public @NotNull PointPanel getPointPanel() {
         return new PointPanel(panelID, getID());
     }
 
     private BlockDisplay getBlockDisplay() {
-        return (BlockDisplay) Bukkit.getEntity(blockDisplayID.get());
+        return (BlockDisplay) Bukkit.getEntity(blockDisplayID.getUUID());
     }
 
     private Interaction getInteraction() {
-        return (Interaction) Bukkit.getEntity(interactionID.get());
+        return (Interaction) Bukkit.getEntity(interactionID.getUUID());
     }
 
     public ConnectionGroup getGroup() {
-        return ConnectionGroup.fromID(groupID);
+        return groupID.get();
     }
 
     public void remove() {
@@ -160,8 +145,8 @@ public abstract class ConnectionPoint {
         getPointPanel().update();
     }
 
-    public void togglePanelVisibility() {
-        getPointPanel().toggleVisibility();
+    public void togglePanelHidden() {
+        getPointPanel().toggleHidden();
     }
 
     public void unlink() {

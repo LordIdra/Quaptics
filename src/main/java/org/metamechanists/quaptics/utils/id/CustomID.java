@@ -1,12 +1,8 @@
 package org.metamechanists.quaptics.utils.id;
 
-import org.bukkit.configuration.serialization.ConfigurationSerializable;
-import org.jetbrains.annotations.NotNull;
-
-import java.util.Map;
 import java.util.UUID;
 
-public abstract class CustomID implements ConfigurationSerializable {
+public abstract class CustomID {
     private final UUID uuid;
 
     public CustomID() {
@@ -22,7 +18,9 @@ public abstract class CustomID implements ConfigurationSerializable {
         this.uuid = uuid;
     }
 
-    public UUID get() {
+    public abstract Object get();
+
+    public UUID getUUID() {
         return uuid;
     }
 
@@ -47,10 +45,5 @@ public abstract class CustomID implements ConfigurationSerializable {
     @Override
     public String toString() {
         return uuid.toString();
-    }
-
-    @Override
-    public @NotNull Map<String, Object> serialize() {
-        return Map.of("UUID", uuid.toString());
     }
 }

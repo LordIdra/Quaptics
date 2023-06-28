@@ -25,12 +25,11 @@ public class PointPanelListener implements Listener {
             return;
         }
 
-        final ConnectionPointID pointID = new ConnectionPointID(clickedEntity.getUniqueId());
-        final ConnectionPoint point = ConnectionPoint.fromID(pointID);
+        final ConnectionPoint point = new ConnectionPointID(clickedEntity.getUniqueId()).get();
         if (point == null) {
             return;
         }
 
-        point.togglePanelVisibility();
+        point.togglePanelHidden();
     }
 }

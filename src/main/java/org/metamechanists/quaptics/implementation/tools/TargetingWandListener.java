@@ -9,7 +9,6 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.utils.id.ConnectionPointID;
 
 public class TargetingWandListener implements Listener {
@@ -27,7 +26,7 @@ public class TargetingWandListener implements Listener {
         }
 
         final ConnectionPointID pointID = new ConnectionPointID(clickedEntity.getUniqueId());
-        if (ConnectionPoint.fromID(pointID) == null) {
+        if (pointID.get() == null) {
             return;
         }
 

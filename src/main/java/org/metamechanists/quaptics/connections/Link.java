@@ -40,7 +40,7 @@ public class Link {
         this.outputID = outputID;
         this.ID = new LinkID(new DisplayGroup(getInput().getLocation(), 0, 0).getParentUUID());
         this.maxPower = getOutput().getGroup().getBlock().maxPower;
-        saveData(); // the points being linked will not be able to Link.fromID() without this line
+        saveData(); // the points being linked will not be able to get the link from the ID without this line
         getInput().link(getID());
         getOutput().link(getID());
         BlockUpdateScheduler.scheduleUpdate(getOutput().getGroup().getID());
@@ -48,7 +48,7 @@ public class Link {
         update();
     }
 
-    private Link(LinkID ID) {
+    public Link(LinkID ID) {
         final DataTraverser traverser = new DataTraverser(ID);
         final JsonObject mainSection = traverser.getData();
         this.ID = ID;
@@ -62,13 +62,6 @@ public class Link {
         this.frequency = mainSection.get("frequency").getAsDouble();
         this.phase = mainSection.get("phase").getAsInt();
         this.maxPower = mainSection.get("maxPower").getAsDouble();
-    }
-
-    @Contract("_ -> new")
-    public static @Nullable Link fromID(@NotNull LinkID ID) {
-        return Bukkit.getEntity(ID.get()) == null
-                ? null
-                : new Link(ID);
     }
 
     public void saveData() {
@@ -86,11 +79,11 @@ public class Link {
     }
 
     public ConnectionPointOutput getOutput() {
-        return (ConnectionPointOutput) ConnectionPoint.fromID(outputID);
+        return (ConnectionPointOutput) outputID.get();
     }
 
     public ConnectionPointInput getInput() {
-        return (ConnectionPointInput) ConnectionPoint.fromID(inputID);
+        return (ConnectionPointInput) inputID.get();
     }
 
     private boolean hasBeam() {
@@ -99,7 +92,7 @@ public class Link {
 
     @Contract(" -> new")
     private @NotNull DirectBeam getBeam() {
-        return DirectBeam.fromID(tickerID);
+        return new DirectBeam(tickerID);
     }
 
     public void remove() {

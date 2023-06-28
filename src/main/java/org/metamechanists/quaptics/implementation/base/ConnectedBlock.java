@@ -47,16 +47,16 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
             }
 
             final ConnectionGroup group = getGroup(block.getLocation());
+            final boolean isAnyPanelHidden = group.getPoints().values().stream().anyMatch(
+                    point -> point.get().getPointPanel().isPanelHidden());
 
-            group.getPoints().values().forEach(id -> {
-                final ConnectionPoint point = ConnectionPoint.fromID(id);
-                point.togglePanelVisibility();
-            });
+            group.getPoints().values().forEach(pointID -> pointID.get().getPointPanel().setPanelHidden(!isAnyPanelHidden));
+
         };
     }
 
     protected ConnectionGroup getGroup(Location location) {
-        return ConnectionGroup.fromID(new ConnectionGroupID(getID(location)));
+        return new ConnectionGroupID(getDisplayGroupID(location)).get();
     }
 
     protected abstract float getRadius();
@@ -69,7 +69,7 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
     @Override
     protected void onPlace(@NotNull BlockPlaceEvent event) {
         final Location location = event.getBlock().getLocation();
-        final ConnectionGroupID groupID = new ConnectionGroupID(getID(location));
+        final ConnectionGroupID groupID = new ConnectionGroupID(getDisplayGroupID(location));
         final List<ConnectionPoint> points = generateConnectionPoints(groupID, event.getPlayer(), location);
         new ConnectionGroup(groupID, this, points);
         QuapticStorage.addGroup(groupID);
@@ -85,7 +85,7 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
     }
 
     public void connect(ConnectionPointID from, ConnectionPointID to) {
-        ConnectionPoint.fromID(from).getGroup().changePointLocation(from, calculatePointLocationSphere(from, to));
+        from.get().getGroup().changePointLocation(from, calculatePointLocationSphere(from, to));
     }
 
     public void burnout(Location location) {
@@ -110,8 +110,8 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
     public void onInputLinkUpdated(ConnectionGroup group) {}
 
     public Location calculatePointLocationSphere(ConnectionPointID from, ConnectionPointID to) {
-        final Location fromGroupLocation =  ConnectionPoint.fromID(from).getGroup().getLocation();
-        final Location toGroupLocation =  ConnectionPoint.fromID(to).getGroup().getLocation();
+        final Location fromGroupLocation =  from.get().getGroup().getLocation();
+        final Location toGroupLocation =  to.get().getGroup().getLocation();
         final Vector radiusDirection = Vector.fromJOML(Transformations.getDirection(fromGroupLocation, toGroupLocation).mul(getRadius()));
         return fromGroupLocation.clone().add(0.5, 0.5, 0.5).add(radiusDirection);
     }
