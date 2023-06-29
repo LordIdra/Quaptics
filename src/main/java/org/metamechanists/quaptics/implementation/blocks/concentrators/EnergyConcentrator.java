@@ -30,19 +30,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EnergyConcentrator extends EnergyConnectedBlock {
+    private final Material material;
     private final Vector outputLocation = new Vector(0.0F, 0.0F, connectionRadius);
-    private final Vector3f mainDisplaySize = new Vector3f(0.3F, 0.3F, (2*displayRadius));
+    private final Vector3f mainDisplaySize = new Vector3f(displayRadius, displayRadius, connectionRadius*2);
     private final double emissionPower;
 
     public EnergyConcentrator(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe,
+                              Material material, float width, float length,
                               int capacity, int consumption, double emissionPower, double maxPower) {
-        super(group, item, recipeType, recipe, 0.45F, 0.45F, maxPower, capacity, consumption);
+        super(group, item, recipeType, recipe, width/2, length/2, maxPower, capacity, consumption);
+        this.material = material;
         this.emissionPower = emissionPower;
     }
 
     private BlockDisplay generateMainBlockDisplay(@NotNull Location from, Location to) {
         return new BlockDisplayBuilder(from.clone().add(RELATIVE_CENTER))
-                .setMaterial(Material.PURPLE_CONCRETE)
+                .setMaterial(material)
                 .setTransformation(Transformations.lookAlong(mainDisplaySize, Transformations.getDirection(from, to)))
                 .build();
     }
