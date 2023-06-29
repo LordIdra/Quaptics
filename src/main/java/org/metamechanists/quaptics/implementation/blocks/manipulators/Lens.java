@@ -26,6 +26,7 @@ import java.util.List;
 public class Lens extends ConnectedBlock {
     private static final int BRIGHTNESS_ON = 13;
     private static final int VIEW_RANGE_ON = 64;
+    private static final int VIEW_RANGE_OFF = 0;
     private final Vector3f glassDisplaySize = new Vector3f(displayRadius*2);
     private final Vector3f concreteDisplaySize = new Vector3f(displayRadius);
     private final Vector3f mainDisplayRotation = new Vector3f((float)(Math.PI/4), (float)(Math.PI/4), 0);
@@ -68,8 +69,14 @@ public class Lens extends ConnectedBlock {
 
         doBurnoutCheck(group, input);
 
+        if (input.hasLink() && input.getLink().isEnabled()) {
+            getDisplayGroup(group.getLocation()).getDisplays().get("concrete").setViewRange(VIEW_RANGE_ON);
+        } else {
+            getDisplayGroup(group.getLocation()).getDisplays().get("concrete").setViewRange(VIEW_RANGE_OFF);
+        }
+
         if (!output.hasLink()) {
-            getDisplayGroup(group.getLocation()).getDisplays().get("concrete").setViewRange(0);
+
             return;
         }
 
@@ -83,7 +90,6 @@ public class Lens extends ConnectedBlock {
         output.getLink().setFrequency(input.getLink().getFrequency());
         output.getLink().setPhase(input.getLink().getPhase());
         output.getLink().setEnabled(true);
-        getDisplayGroup(group.getLocation()).getDisplays().get("concrete").setViewRange(VIEW_RANGE_ON);
     }
 
     @Override

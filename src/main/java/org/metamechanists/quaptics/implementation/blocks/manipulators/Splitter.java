@@ -83,13 +83,17 @@ public class Splitter extends ConnectedBlock {
 
         doBurnoutCheck(group, input);
 
-        if (outputs.stream().noneMatch(ConnectionPoint::hasLink)) {
+        if (input.hasLink() && input.getLink().isEnabled()) {
+            getDisplayGroup(group.getLocation()).getDisplays().get("concrete").setBrightness(BRIGHTNESS_ON);
+        } else {
             getDisplayGroup(group.getLocation()).getDisplays().get("concrete").setBrightness(BRIGHTNESS_OFF);
+        }
+
+        if (outputs.stream().noneMatch(ConnectionPoint::hasLink)) {
             return;
         }
 
         if (!input.hasLink() || !input.getLink().isEnabled()) {
-            getDisplayGroup(group.getLocation()).getDisplays().get("concrete").setBrightness(BRIGHTNESS_OFF);
             outputs.stream()
                     .filter(ConnectionPoint::hasLink)
                     .forEach(output -> output.getLink().setEnabled(false));
@@ -109,7 +113,6 @@ public class Splitter extends ConnectedBlock {
                     output.getLink().setPhase(outputPhase);
                     output.getLink().setEnabled(true);
                 });
-        getDisplayGroup(group.getLocation()).getDisplays().get("concrete").setBrightness(BRIGHTNESS_ON);
     }
 
     @Override

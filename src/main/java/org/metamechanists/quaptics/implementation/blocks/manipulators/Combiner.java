@@ -83,8 +83,13 @@ public class Combiner extends ConnectedBlock {
 
         inputs.forEach(input -> doBurnoutCheck(group, input));
 
-        if (!output.hasLink()) {
+        if (inputs.stream().anyMatch(input -> input.hasLink() && input.getLink().isEnabled())) {
+            getDisplayGroup(group.getLocation()).getDisplays().get("concrete").setBrightness(BRIGHTNESS_ON);
+        } else {
             getDisplayGroup(group.getLocation()).getDisplays().get("concrete").setBrightness(BRIGHTNESS_OFF);
+        }
+
+        if (!output.hasLink()) {
             return;
         }
 
@@ -93,7 +98,6 @@ public class Combiner extends ConnectedBlock {
                 .toList();
         if (poweredInputs.isEmpty()) {
             output.getLink().setEnabled(false);
-            getDisplayGroup(group.getLocation()).getDisplays().get("concrete").setBrightness(BRIGHTNESS_OFF);
             return;
         }
 
@@ -111,7 +115,6 @@ public class Combiner extends ConnectedBlock {
         output.getLink().setFrequency(inputFrequency);
         output.getLink().setPhase(inputPhase);
         output.getLink().setEnabled(true);
-        getDisplayGroup(group.getLocation()).getDisplays().get("concrete").setBrightness(BRIGHTNESS_ON);
     }
 
     @Override
