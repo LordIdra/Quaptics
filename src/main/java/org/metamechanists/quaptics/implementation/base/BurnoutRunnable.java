@@ -10,7 +10,10 @@ import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Display;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.metamechanists.metalib.utils.RandomUtils;
 import org.metamechanists.quaptics.Quaptics;
+import org.metamechanists.quaptics.connections.ConnectionGroup;
+import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 
 public class BurnoutRunnable extends BukkitRunnable {
     private final Location location;
@@ -28,12 +31,29 @@ public class BurnoutRunnable extends BukkitRunnable {
             return;
         }
 
+        final DisplayGroup displayGroup = connectedBlock.getDisplayGroup(location.clone());
+        final ConnectionGroup connectionGroup = connectedBlock.getGroup(location);
+        if (displayGroup == null || connectionGroup == null) {
+            return;
+        }
+
+        connectionGroup.getPoints().values().forEach(pointId -> {
+            final ConnectionPoint point = pointId.get();
+            if (point != null && point.hasLink() && RandomUtils.chance(50)) {
+                point.getLink().setEnabled(false);
+            }
+        });
+
         for (int delay = 1; delay < 60; delay++) {
             final int ticks = delay;
             Bukkit.getScheduler().runTaskLater(Quaptics.getInstance(), () -> {
-                final DisplayGroup group = connectedBlock.getDisplayGroup(location.clone());
-                if (group == null) {
-                    return;
+                if (ticks % 2 + RandomUtils.randomInteger(1, 5) == 0) {
+                    connectionGroup.getPoints().values().forEach(pointId -> {
+                        final ConnectionPoint point = pointId.get();
+                        if (point != null && point.hasLink()) {
+                            point.getLink().setEnabled(!point.getLink().isEnabled());
+                        }
+                    });
                 }
 
                 if (ticks % 4 == 0) {
@@ -41,7 +61,7 @@ public class BurnoutRunnable extends BukkitRunnable {
                 }
 
                 if (ticks % 2 == 0) {
-                    group.getDisplays().values().forEach(display -> {
+                    displayGroup.getDisplays().values().forEach(display -> {
                         final Display.Brightness brightness = display.getBrightness();
                         display.setBrightness(new Display.Brightness(
                                 brightness == null ? 14 : Math.max(0, brightness.getBlockLight() - 1),
@@ -56,6 +76,7 @@ public class BurnoutRunnable extends BukkitRunnable {
         }
 
         Bukkit.getScheduler().runTaskLater(Quaptics.getInstance(), () -> {
+            // TODO Drop "Burnt Component" Item
             playSound(Sound.ENTITY_GENERIC_EXPLODE, 2, 1.2f);
             connectedBlock.burnout(block.getLocation());
         }, 60L);
