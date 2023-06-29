@@ -16,7 +16,7 @@ import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.utils.Colors;
 
 public class Intermediate {
-    private static final String TIER_NAME = Colors.INTERMEDIATE + "Intermediate";
+    private static final String TIER_NAME = Colors.INTERMEDIATE.getString() + "Intermediate";
     private static final float MAX_POWER = 1000;
 
     public static final SlimefunItemStack ENERGY_CONCENTRATOR_2 = new SlimefunItemStack(

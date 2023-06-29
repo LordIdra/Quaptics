@@ -17,7 +17,7 @@ import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.utils.Colors;
 
 public class Basic {
-    private static final String TIER_NAME = Colors.BASIC + "Basic";
+    private static final String TIER_NAME = Colors.BASIC.getString() + "Basic";
     private static final float MAX_POWER = 100;
 
     public static final SlimefunItemStack SOLAR_CONCENTRATOR_2 = new SlimefunItemStack(

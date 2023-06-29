@@ -16,7 +16,7 @@ import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.utils.Colors;
 
 public class Advanced {
-    private static final String TIER_NAME = Colors.ADVANCED + "Advanced";
+    private static final String TIER_NAME = Colors.ADVANCED.getString() + "Advanced";
     private static final float MAX_POWER = 10000;
 
     public static final SlimefunItemStack ENERGY_CONCENTRATOR_3 = new SlimefunItemStack(

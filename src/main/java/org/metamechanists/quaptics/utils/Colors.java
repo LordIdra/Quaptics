@@ -29,6 +29,6 @@ public enum Colors {
             colorStringBuilder.append("&").append(character);
         }
 
-        string =  ColorUtils.formatColors(colorStringBuilder.toString());
+        string = ColorUtils.formatColors(colorStringBuilder.toString());
     }
 }

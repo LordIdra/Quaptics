@@ -16,7 +16,7 @@ import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.utils.Colors;
 
 public class Primitive {
-    private static final String TIER_NAME = Colors.PRIMITIVE + "Primitive";
+    private static final String TIER_NAME = Colors.PRIMITIVE.getString() + "Primitive";
     private static final float MAX_POWER = 10;
     public static final SlimefunItemStack SOLAR_CONCENTRATOR_1 = new SlimefunItemStack(
             "QP_SOLAR_CONCENTRATOR_1",
