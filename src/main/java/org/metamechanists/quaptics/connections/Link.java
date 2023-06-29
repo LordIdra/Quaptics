@@ -131,8 +131,8 @@ public class Link {
     private void update() {
         updateBeam();
         saveData();
-        getInput().getGroup().updatePanels();
-        getOutput().getGroup().updatePanels();
+        if (getInput() != null) { getInput().getGroup().updatePanels(); }
+        if (getOutput() != null) { getOutput().getGroup().updatePanels(); }
     }
 
     public void setEnabled(boolean enabled) {
