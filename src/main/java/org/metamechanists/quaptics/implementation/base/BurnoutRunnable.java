@@ -32,7 +32,15 @@ public class BurnoutRunnable extends BukkitRunnable {
             final int ticks = delay;
             Bukkit.getScheduler().runTaskLater(Quaptics.getInstance(), () -> {
                 final DisplayGroup group = connectedBlock.getDisplayGroup(location.clone());
-                if (group != null && ticks % 2 == 0) {
+                if (group == null) {
+                    return;
+                }
+
+                if (ticks % 4 == 0) {
+                    playSound(Sound.BLOCK_LAVA_EXTINGUISH, 1, 1);
+                }
+
+                if (ticks % 2 == 0) {
                     group.getDisplays().values().forEach(display -> {
                         final Display.Brightness brightness = display.getBrightness();
                         display.setBrightness(new Display.Brightness(
@@ -43,19 +51,17 @@ public class BurnoutRunnable extends BukkitRunnable {
                     new ParticleBuilder(Particle.LAVA)
                             .location(centerLocation)
                             .spawn();
-
-                    playSound(Sound.BLOCK_LAVA_EXTINGUISH, 2, 1);
                 }
             }, delay);
         }
 
         Bukkit.getScheduler().runTaskLater(Quaptics.getInstance(), () -> {
-            playSound(Sound.ENTITY_GENERIC_EXPLODE, 2, 2);
+            playSound(Sound.ENTITY_GENERIC_EXPLODE, 2, 1.5f);
             connectedBlock.burnout(block.getLocation());
         }, 60L);
     }
 
-    public void playSound(Sound sound, int volume, int pitch) {
+    public void playSound(Sound sound, float volume, float pitch) {
         location.getWorld().playSound(centerLocation, sound, volume, pitch);
     }
 }
