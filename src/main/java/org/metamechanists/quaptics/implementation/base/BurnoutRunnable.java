@@ -37,7 +37,7 @@ public class BurnoutRunnable extends BukkitRunnable {
                 }
 
                 if (ticks % 4 == 0) {
-                    playSound(Sound.BLOCK_LAVA_EXTINGUISH, 0.5f, 0.6f);
+                    playSound(Sound.BLOCK_LAVA_EXTINGUISH, 0.1f, 0.8f);
                 }
 
                 if (ticks % 2 == 0) {
