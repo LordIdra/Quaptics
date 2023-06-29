@@ -26,15 +26,15 @@ public class BurnoutRunnable extends BukkitRunnable {
 
         for (int delay = 1; delay < 60; delay++) {
             Bukkit.getScheduler().runTaskLater(Quaptics.getInstance(), () -> {
-                final DisplayGroup group = connectedBlock.getDisplayGroup(location);
+                final DisplayGroup group = connectedBlock.getDisplayGroup(location.clone());
                 if (group != null) {
                     group.getDisplays().values().forEach(display -> {
                         final Display.Brightness brightness = display.getBrightness();
                         display.setBrightness(new Display.Brightness(
-                                brightness == null ? 14 : Math.min(0, brightness.getBlockLight() - 1),
-                                brightness == null ? 14 : Math.min(0, brightness.getSkyLight() - 1)));
+                                brightness == null ? 14 : Math.max(0, brightness.getBlockLight() - 1),
+                                brightness == null ? 14 : Math.max(0, brightness.getSkyLight() - 1)));
                     });
-                    location.getWorld().spawnParticle(Particle.LAVA, location.clone().add(ConnectedBlock.RELATIVE_CENTER), 1);
+                    location.clone().getWorld().spawnParticle(Particle.LAVA, location.clone().add(ConnectedBlock.RELATIVE_CENTER), 1);
                 }
             }, delay);
         }
