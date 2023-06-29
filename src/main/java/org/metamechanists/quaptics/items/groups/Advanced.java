@@ -22,7 +22,7 @@ public class Advanced {
 
     public static final SlimefunItemStack ENERGY_CONCENTRATOR_3 = new SlimefunItemStack(
             "QP_ENERGY_CONCENTRATOR_3",
-            Material.PURPLE_CONCRETE,
+            TIER_MATERIAL,
             "&eEnergy Concentrator &bIII",
             TIER_NAME,
             "&7● Consumes energy",
