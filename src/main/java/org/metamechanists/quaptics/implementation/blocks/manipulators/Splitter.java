@@ -26,18 +26,17 @@ import java.util.Objects;
 import java.util.stream.IntStream;
 
 public class Splitter extends ConnectedBlock {
-    private final float CONNECTION_ADDITIONAL_RADIUS = radius;
     private final double connectionAngle = Math.PI / 2;
     private final int connections;
-    private final Vector inputLocation = new Vector(0.0F, 0.0F, radius);
-    private final Vector outputStartingLocation = new Vector(0.0F, 0.0F, -(radius+CONNECTION_ADDITIONAL_RADIUS));
-    private final Vector3f mainDisplaySize = new Vector3f(radius*2);
+    private final Vector inputLocation = new Vector(0.0F, 0.0F, displayRadius *2);
+    private final Vector outputStartingLocation = new Vector(0.0F, 0.0F, -displayRadius *2);
+    private final Vector3f mainDisplaySize = new Vector3f(displayRadius *2);
     private final Vector3f mainDisplayRotation = new Vector3f((float)(Math.PI/4), (float)(Math.PI/4), 0);
     private final double powerLoss;
 
     public Splitter(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe,
                     float radius, int connections, double maxPower, double powerLoss) {
-        super(group, item, recipeType, recipe, radius, maxPower);
+        super(group, item, recipeType, recipe, radius, 2*radius, maxPower);
         this.connections = connections;
         this.powerLoss = powerLoss;
     }

@@ -42,18 +42,18 @@ import java.util.UUID;
 
 public class Turret extends ConnectedBlock {
     private final Vector3f mainDisplaySize = new Vector3f(0.6F, 0.6F, 0.6F);
-    private final Vector3f barrelSize = new Vector3f(0.18F, 0.18F, radius);
-    private final Vector3f barrelTranslation = new Vector3f(0, 0, radius*0.8F);
+    private final Vector3f barrelSize = new Vector3f(0.18F, 0.18F, displayRadius);
+    private final Vector3f barrelTranslation = new Vector3f(0, 0, displayRadius *0.8F);
     private final Vector barrelLocation = new Vector(0.5, 0.7, 0.5);
     private final Vector3f projectileSize = new Vector3f(0.095F, 0.095F, 0.20F);
-    private final Vector inputLocation = new Vector(0.0F, 0.0F, -radius);
+    private final Vector inputLocation = new Vector(0.0F, 0.0F, -displayRadius);
     private final double powerConsumption;
     private final double range;
     private final double damagePerSlimefunTick;
 
     public Turret(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe,
                   double maxPower, double powerConsumption, double range, double damagePerSlimefunTick) {
-        super(group, item, recipeType, recipe, 0.55F, maxPower);
+        super(group, item, recipeType, recipe, 0.55F, 0.55F, maxPower);
         this.powerConsumption = powerConsumption;
         this.range = range;
         this.damagePerSlimefunTick = damagePerSlimefunTick;
