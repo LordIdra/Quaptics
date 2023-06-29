@@ -18,6 +18,7 @@ import org.metamechanists.quaptics.utils.Colors;
 
 public class Basic {
     private static final String TIER_NAME = Colors.BASIC.getString() + "Basic";
+    private static final Material TIER_MATERIAL = Material.GRAY_CONCRETE;
     private static final float MAX_POWER = 100;
 
     public static final SlimefunItemStack SOLAR_CONCENTRATOR_2 = new SlimefunItemStack(
@@ -31,7 +32,7 @@ public class Basic {
 
     public static final SlimefunItemStack ENERGY_CONCENTRATOR_1 = new SlimefunItemStack(
             "QP_ENERGY_CONCENTRATOR_1",
-            Material.PURPLE_CONCRETE,
+            TIER_MATERIAL,
             "&eEnergy Concentrator &bI",
             TIER_NAME,
             "&7● Consumes energy",
@@ -106,7 +107,7 @@ public class Basic {
                 ENERGY_CONCENTRATOR_1,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                Material.GRAY_CONCRETE,
+                TIER_MATERIAL,
                 0.4F,
                 0.6F,
                 30,
@@ -119,6 +120,7 @@ public class Basic {
                 LENS_2,
                 RecipeType.NULL,
                 new ItemStack[]{},
+                TIER_MATERIAL,
                 0.21F,
                 MAX_POWER,
                 0.07).register(addon);
@@ -128,7 +130,7 @@ public class Basic {
                 COMBINER_2_2,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                Material.GRAY_CONCRETE,
+                TIER_MATERIAL,
                 0.35F,
                 2,
                 MAX_POWER,
@@ -139,7 +141,7 @@ public class Basic {
                 COMBINER_2_3,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                Material.GRAY_CONCRETE,
+                TIER_MATERIAL,
                 0.40F,
                 3,
                 MAX_POWER,
@@ -150,7 +152,7 @@ public class Basic {
                 SPLITTER_2_2,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                Material.GRAY_CONCRETE,
+                TIER_MATERIAL,
                 0.35F,
                 2,
                 MAX_POWER,
@@ -161,7 +163,7 @@ public class Basic {
                 SPLITTER_2_3,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                Material.GRAY_CONCRETE,
+                TIER_MATERIAL,
                 0.40F,
                 2,
                 MAX_POWER,

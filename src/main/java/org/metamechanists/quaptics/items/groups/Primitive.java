@@ -17,6 +17,7 @@ import org.metamechanists.quaptics.utils.Colors;
 
 public class Primitive {
     private static final String TIER_NAME = Colors.PRIMITIVE.getString() + "Primitive";
+    private static final Material TIER_MATERIAL = Material.BROWN_CONCRETE;
     private static final float MAX_POWER = 10;
     public static final SlimefunItemStack SOLAR_CONCENTRATOR_1 = new SlimefunItemStack(
             "QP_SOLAR_CONCENTRATOR_1",
@@ -85,6 +86,7 @@ public class Primitive {
                 LENS_1,
                 RecipeType.NULL,
                 new ItemStack[]{},
+                TIER_MATERIAL,
                 0.24F,
                 MAX_POWER,
                 0.1).register(addon);
@@ -94,7 +96,7 @@ public class Primitive {
                 COMBINER_1_2,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                Material.BROWN_CONCRETE,
+                TIER_MATERIAL,
                 0.4F,
                 2,
                 MAX_POWER,
@@ -105,7 +107,7 @@ public class Primitive {
                 SPLITTER_1_2,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                Material.BROWN_CONCRETE,
+                TIER_MATERIAL,
                 0.4F,
                 2,
                 MAX_POWER,

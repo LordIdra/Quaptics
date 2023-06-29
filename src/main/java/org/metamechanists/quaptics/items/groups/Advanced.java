@@ -17,6 +17,7 @@ import org.metamechanists.quaptics.utils.Colors;
 
 public class Advanced {
     private static final String TIER_NAME = Colors.ADVANCED.getString() + "Advanced";
+    private static final Material TIER_MATERIAL = Material.RED_CONCRETE;
     private static final float MAX_POWER = 10000;
 
     public static final SlimefunItemStack ENERGY_CONCENTRATOR_3 = new SlimefunItemStack(
@@ -106,7 +107,7 @@ public class Advanced {
                 ENERGY_CONCENTRATOR_3,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                Material.RED_CONCRETE,
+                TIER_MATERIAL,
                 0.3F,
                 0.8F,
                 680,
@@ -119,6 +120,7 @@ public class Advanced {
                 LENS_4,
                 RecipeType.NULL,
                 new ItemStack[]{},
+                TIER_MATERIAL,
                 0.15F,
                 MAX_POWER,
                 0.02).register(addon);
@@ -128,7 +130,7 @@ public class Advanced {
                 COMBINER_4_2,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                Material.RED_CONCRETE,
+                TIER_MATERIAL,
                 0.25F,
                 2,
                 MAX_POWER,
@@ -139,7 +141,7 @@ public class Advanced {
                 COMBINER_4_3,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                Material.RED_CONCRETE,
+                TIER_MATERIAL,
                 0.30F,
                 3,
                 MAX_POWER,
@@ -150,7 +152,7 @@ public class Advanced {
                 COMBINER_4_4,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                Material.RED_CONCRETE,
+                TIER_MATERIAL,
                 0.35F,
                 4,
                 MAX_POWER,
@@ -161,7 +163,7 @@ public class Advanced {
                 SPLITTER_4_2,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                Material.RED_CONCRETE,
+                TIER_MATERIAL,
                 0.25F,
                 2,
                 MAX_POWER,
@@ -172,7 +174,7 @@ public class Advanced {
                 SPLITTER_4_3,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                Material.RED_CONCRETE,
+                TIER_MATERIAL,
                 0.30F,
                 3,
                 MAX_POWER,
@@ -183,7 +185,7 @@ public class Advanced {
                 SPLITTER_4_4,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                Material.RED_CONCRETE,
+                TIER_MATERIAL,
                 0.35F,
                 4,
                 MAX_POWER,

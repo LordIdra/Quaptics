@@ -17,6 +17,7 @@ import org.metamechanists.quaptics.utils.Colors;
 
 public class Intermediate {
     private static final String TIER_NAME = Colors.INTERMEDIATE.getString() + "Intermediate";
+    private static final Material TIER_MATERIAL = Material.YELLOW_CONCRETE;
     private static final float MAX_POWER = 1000;
 
     public static final SlimefunItemStack ENERGY_CONCENTRATOR_2 = new SlimefunItemStack(
@@ -86,7 +87,7 @@ public class Intermediate {
                 ENERGY_CONCENTRATOR_2,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                Material.YELLOW_CONCRETE,
+                TIER_MATERIAL,
                 0.35F,
                 0.7F,
                 160,
@@ -99,6 +100,7 @@ public class Intermediate {
                 LENS_3,
                 RecipeType.NULL,
                 new ItemStack[]{},
+                TIER_MATERIAL,
                 0.18F,
                 MAX_POWER,
                 0.04).register(addon);
@@ -108,7 +110,7 @@ public class Intermediate {
                 COMBINER_3_2,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                Material.YELLOW_CONCRETE,
+                TIER_MATERIAL,
                 0.30F,
                 2,
                 MAX_POWER,
@@ -119,7 +121,7 @@ public class Intermediate {
                 COMBINER_3_3,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                Material.YELLOW_CONCRETE,
+                TIER_MATERIAL,
                 0.35F,
                 3,
                 MAX_POWER,
@@ -130,7 +132,7 @@ public class Intermediate {
                 SPLITTER_3_2,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                Material.YELLOW_CONCRETE,
+                TIER_MATERIAL,
                 0.30F,
                 2,
                 MAX_POWER,
@@ -141,7 +143,7 @@ public class Intermediate {
                 SPLITTER_3_3,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                Material.YELLOW_CONCRETE,
+                TIER_MATERIAL,
                 0.35F,
                 3,
                 MAX_POWER,

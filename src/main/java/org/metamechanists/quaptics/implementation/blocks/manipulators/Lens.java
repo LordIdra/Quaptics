@@ -27,6 +27,7 @@ public class Lens extends ConnectedBlock {
     private static final int BRIGHTNESS_ON = 15;
     private static final int VIEW_RANGE_ON = 64;
     private static final int VIEW_RANGE_OFF = 0;
+    private final Material concreteMaterial;
     private final Vector3f glassDisplaySize = new Vector3f(displayRadius*2);
     private final Vector3f concreteDisplaySize = new Vector3f(displayRadius);
     private final Vector3f mainDisplayRotation = new Vector3f((float)(Math.PI/4), (float)(Math.PI/4), 0);
@@ -35,8 +36,9 @@ public class Lens extends ConnectedBlock {
     private final double powerLoss;
 
     public Lens(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe,
-                float radius, double maxPower, double powerLoss) {
+                Material concreteMaterial, float radius, double maxPower, double powerLoss) {
         super(group, item, recipeType, recipe, radius, 2*radius, maxPower);
+        this.concreteMaterial = concreteMaterial;
         this.powerLoss = powerLoss;
     }
 
@@ -47,7 +49,7 @@ public class Lens extends ConnectedBlock {
                 .setTransformation(Transformations.adjustedRotateAndScale(glassDisplaySize, mainDisplayRotation))
                 .build());
         displayGroup.addDisplay("concrete", new BlockDisplayBuilder(location.toCenterLocation())
-                .setMaterial(Material.WHITE_CONCRETE)
+                .setMaterial(concreteMaterial)
                 .setTransformation(Transformations.adjustedRotateAndScale(concreteDisplaySize, mainDisplayRotation))
                 .setBrightness(BRIGHTNESS_ON)
                 .setViewRange(VIEW_RANGE_OFF)
