@@ -1,7 +1,7 @@
 package org.metamechanists.quaptics.implementation.base;
 
-import io.github.bakedlibs.dough.blocks.BlockPosition;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
@@ -10,7 +10,6 @@ import org.metamechanists.quaptics.Quaptics;
 
 public class BurnoutRunnable extends BukkitRunnable {
     private final Location location;
-    private int ticks = 1;
 
     public BurnoutRunnable(Location location) {
         this.location = location;
@@ -23,14 +22,13 @@ public class BurnoutRunnable extends BukkitRunnable {
             return;
         }
 
-        if (ticks == 60) {
-            connectedBlock.burnout(block.getLocation());
-            return;
+        for (int delay = 1; delay < 60; delay++) {
+            Bukkit.getScheduler().runTaskLater(
+                    Quaptics.getInstance(),
+                    () -> location.getWorld().spawnParticle(Particle.LAVA, location.clone().add(ConnectedBlock.RELATIVE_CENTER), 1),
+                    delay);
         }
 
-        location.getWorld().spawnParticle(Particle.LAVA, location.clone().add(ConnectedBlock.RELATIVE_CENTER), 1);
-        ticks++;
-
-        runTaskLater(Quaptics.getInstance(), 1L);
+        Bukkit.getScheduler().runTaskLater(Quaptics.getInstance(), () -> connectedBlock.burnout(block.getLocation()), 60L);
     }
 }
