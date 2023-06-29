@@ -24,7 +24,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Lens extends ConnectedBlock {
-    private final Vector3f mainDisplaySize = new Vector3f(displayRadius *2);
+    private static final int BRIGHTNESS_ON = 13;
+    private static final int VIEW_RANGE_ON = 64;
+    private final Vector3f glassDisplaySize = new Vector3f(displayRadius*2);
+    private final Vector3f concreteDisplaySize = new Vector3f(displayRadius);
     private final Vector3f mainDisplayRotation = new Vector3f((float)(Math.PI/4), (float)(Math.PI/4), 0);
     private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -connectionRadius);
     private final Vector outputPointLocation = new Vector(0.0F, 0.0F, connectionRadius);
@@ -40,7 +43,13 @@ public class Lens extends ConnectedBlock {
     protected void addDisplays(@NotNull DisplayGroup displayGroup, @NotNull Location location, Player player) {
         displayGroup.addDisplay("main", new BlockDisplayBuilder(location.clone().add(RELATIVE_CENTER))
                 .setMaterial(Material.GLASS)
-                .setTransformation(Transformations.adjustedRotateAndScale(mainDisplaySize, mainDisplayRotation))
+                .setTransformation(Transformations.adjustedRotateAndScale(glassDisplaySize, mainDisplayRotation))
+                .build());
+        displayGroup.addDisplay("concrete", new BlockDisplayBuilder(location.clone().add(RELATIVE_CENTER))
+                .setMaterial(Material.GLASS)
+                .setTransformation(Transformations.adjustedRotateAndScale(concreteDisplaySize, mainDisplayRotation))
+                .setViewRange(0)
+                .setBrightness(BRIGHTNESS_ON)
                 .build());
     }
 
@@ -64,6 +73,7 @@ public class Lens extends ConnectedBlock {
         }
 
         if (!input.hasLink() || !input.getLink().isEnabled()) {
+            getDisplayGroup(group.getLocation()).getDisplays().get("concrete").setViewRange(0);
             output.getLink().setEnabled(false);
             return;
         }
@@ -72,6 +82,7 @@ public class Lens extends ConnectedBlock {
         output.getLink().setFrequency(input.getLink().getFrequency());
         output.getLink().setPhase(input.getLink().getPhase());
         output.getLink().setEnabled(true);
+        getDisplayGroup(group.getLocation()).getDisplays().get("concrete").setViewRange(VIEW_RANGE_ON);
     }
 
     @Override

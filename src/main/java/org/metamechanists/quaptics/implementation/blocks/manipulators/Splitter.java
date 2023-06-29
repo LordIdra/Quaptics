@@ -6,6 +6,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.Display;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
@@ -26,6 +27,8 @@ import java.util.Objects;
 import java.util.stream.IntStream;
 
 public class Splitter extends ConnectedBlock {
+    private static final Display.Brightness BRIGHTNESS_OFF = new Display.Brightness(5, 0);
+    private static final Display.Brightness BRIGHTNESS_ON = new Display.Brightness(13, 0);
     private final Material concreteMaterial;
     private final double connectionAngle = Math.PI / 2;
     private final int connections;
@@ -85,6 +88,7 @@ public class Splitter extends ConnectedBlock {
         }
 
         if (!input.hasLink() || !input.getLink().isEnabled()) {
+            getDisplayGroup(group.getLocation()).getDisplays().get("concrete").setBrightness(BRIGHTNESS_OFF);
             outputs.stream()
                     .filter(ConnectionPoint::hasLink)
                     .forEach(output -> output.getLink().setEnabled(false));
@@ -104,6 +108,7 @@ public class Splitter extends ConnectedBlock {
                     output.getLink().setPhase(outputPhase);
                     output.getLink().setEnabled(true);
                 });
+        getDisplayGroup(group.getLocation()).getDisplays().get("concrete").setBrightness(BRIGHTNESS_ON);
     }
 
     @Override

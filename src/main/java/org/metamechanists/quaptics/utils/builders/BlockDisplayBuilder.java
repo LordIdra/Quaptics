@@ -13,8 +13,9 @@ public class BlockDisplayBuilder {
     private Material material;
     private BlockData blockData;
     private Matrix4f transformation;
-    private Integer brightness;
     private Color glowColor;
+    private Integer brightness;
+    private Float viewRange;
 
     public BlockDisplayBuilder(Location location) {
         this.location = location;
@@ -36,6 +37,9 @@ public class BlockDisplayBuilder {
             }
             if (brightness != null) {
                 display.setBrightness(new Display.Brightness(brightness, 0));
+            }
+            if (viewRange != null) {
+                display.setViewRange(viewRange);
             }
             display.setDisplayWidth(0);
             display.setDisplayHeight(0);
@@ -61,6 +65,10 @@ public class BlockDisplayBuilder {
     }
     public BlockDisplayBuilder setGlow(Color glowColor) {
         this.glowColor = glowColor;
+        return this;
+    }
+    public BlockDisplayBuilder setViewRange(float viewRange) {
+        this.viewRange = viewRange;
         return this;
     }
 }
