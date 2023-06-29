@@ -91,9 +91,4 @@ public class EnergyConcentrator extends EnergyConnectedBlock {
                 from.get().getGroup().getLocation(),
                 to.get().getGroup().getLocation()));
     }
-
-    @Override
-    protected @NotNull Material getBaseMaterial() {
-        return Material.STRUCTURE_VOID;
-    }
 }

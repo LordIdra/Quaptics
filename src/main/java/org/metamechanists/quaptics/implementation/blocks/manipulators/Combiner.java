@@ -122,9 +122,4 @@ public class Combiner extends ConnectedBlock {
         output.getLink().setPhase(inputPhase);
         output.getLink().setEnabled(true);
     }
-
-    @Override
-    protected @NotNull Material getBaseMaterial() {
-        return Material.STRUCTURE_VOID;
-    }
 }

@@ -95,9 +95,4 @@ public class Lens extends ConnectedBlock {
         output.getLink().setPhase(input.getLink().getPhase());
         output.getLink().setEnabled(true);
     }
-
-    @Override
-    protected @NotNull Material getBaseMaterial() {
-        return Material.STRUCTURE_VOID;
-    }
 }
