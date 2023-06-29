@@ -82,11 +82,7 @@ public class Combiner extends ConnectedBlock {
                 .toList();
         final ConnectionPointOutput output = (ConnectionPointOutput) group.getPoint("output");
 
-        for (ConnectionPointInput input : inputs) {
-            if (doBurnoutCheck(group, input)) {
-                return;
-            }
-        }
+        inputs.forEach(input -> doBurnoutCheck(group, input));
 
         if (inputs.stream().anyMatch(input -> input.hasLink() && input.getLink().isEnabled())) {
             getDisplayGroup(group.getLocation()).getDisplays().get("concrete").setViewRange(VIEW_RANGE_ON);

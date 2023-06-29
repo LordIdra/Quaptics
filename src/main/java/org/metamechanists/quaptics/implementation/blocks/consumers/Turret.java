@@ -90,9 +90,7 @@ public class Turret extends ConnectedBlock {
     public void onInputLinkUpdated(@NotNull ConnectionGroup group) {
         final ConnectionPointInput input = (ConnectionPointInput) group.getPoint("input");
 
-        if (doBurnoutCheck(group, input)) {
-            return;
-        }
+        doBurnoutCheck(group, input);
 
         BlockStorage.addBlockInfo(group.getLocation(), Keys.POWERED, "false");
         if (!input.hasLink()) {

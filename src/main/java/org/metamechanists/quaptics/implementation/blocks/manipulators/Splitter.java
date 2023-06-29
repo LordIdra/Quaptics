@@ -82,9 +82,7 @@ public class Splitter extends ConnectedBlock {
                 .mapToObj(i -> (ConnectionPointOutput) group.getPoint("output " + Objects.toString(i)))
                 .toList();
 
-        if (doBurnoutCheck(group, input)) {
-            return;
-        }
+        doBurnoutCheck(group, input);
 
         if (input.hasLink() && input.getLink().isEnabled()) {
             getDisplayGroup(group.getLocation()).getDisplays().get("concrete").setViewRange(VIEW_RANGE_ON);
