@@ -12,12 +12,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.entity.BlockDisplay;
-import org.bukkit.entity.Damageable;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.SpawnCategory;
+import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
@@ -35,7 +30,6 @@ import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.ConnectionGroupID;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
@@ -81,9 +75,7 @@ public class Turret extends ConnectedBlock {
 
     @Override
     protected List<ConnectionPoint> generateConnectionPoints(ConnectionGroupID groupID, Player player, Location location) {
-        final List<ConnectionPoint> points = new ArrayList<>();
-        points.add(new ConnectionPointInput(groupID, "input", formatPointLocation(player, location, inputLocation)));
-        return points;
+        return List.of(new ConnectionPointInput(groupID, "input", formatPointLocation(player, location, inputLocation)));
     }
 
     @Override

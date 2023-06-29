@@ -20,7 +20,6 @@ import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.ConnectionGroupID;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Lens extends ConnectedBlock {
@@ -58,10 +57,9 @@ public class Lens extends ConnectedBlock {
 
     @Override
     protected List<ConnectionPoint> generateConnectionPoints(ConnectionGroupID groupID, Player player, Location location) {
-        final List<ConnectionPoint> points = new ArrayList<>();
-        points.add(new ConnectionPointInput(groupID, "input", formatPointLocation(player, location, inputPointLocation)));
-        points.add(new ConnectionPointOutput(groupID, "output", formatPointLocation(player, location, outputPointLocation)));
-        return points;
+        return List.of(
+                new ConnectionPointInput(groupID, "input", formatPointLocation(player, location, inputPointLocation)),
+                new ConnectionPointOutput(groupID, "output", formatPointLocation(player, location, outputPointLocation)));
     }
 
     @Override

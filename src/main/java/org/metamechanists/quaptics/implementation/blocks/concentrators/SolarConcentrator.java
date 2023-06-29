@@ -25,7 +25,6 @@ import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.ItemDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.ConnectionGroupID;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SolarConcentrator extends ConnectedBlock {
@@ -56,9 +55,7 @@ public class SolarConcentrator extends ConnectedBlock {
 
     @Override
     protected List<ConnectionPoint> generateConnectionPoints(ConnectionGroupID groupID, Player player, Location location) {
-        final List<ConnectionPoint> points = new ArrayList<>();
-        points.add(new ConnectionPointOutput(groupID, "output", formatPointLocation(player, location, outputLocation)));
-        return points;
+        return List.of(new ConnectionPointOutput(groupID, "output", formatPointLocation(player, location, outputLocation)));
     }
 
     @Override

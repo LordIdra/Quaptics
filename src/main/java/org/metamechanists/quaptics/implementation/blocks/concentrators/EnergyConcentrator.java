@@ -26,7 +26,6 @@ import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.ConnectionGroupID;
 import org.metamechanists.quaptics.utils.id.ConnectionPointID;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class EnergyConcentrator extends EnergyConnectedBlock {
@@ -57,9 +56,7 @@ public class EnergyConcentrator extends EnergyConnectedBlock {
 
     @Override
     protected List<ConnectionPoint> generateConnectionPoints(ConnectionGroupID groupID, Player player, Location location) {
-        final List<ConnectionPoint> points = new ArrayList<>();
-        points.add(new ConnectionPointOutput(groupID, "output", formatPointLocation(player, location, outputLocation)));
-        return points;
+        return List.of(new ConnectionPointOutput(groupID, "output", formatPointLocation(player, location, outputLocation)));
     }
 
     @Override
