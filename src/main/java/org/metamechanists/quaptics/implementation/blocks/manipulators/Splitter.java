@@ -102,7 +102,7 @@ public class Splitter extends ConnectedBlock {
                     output.getLink().setPower(outputPower);
                     output.getLink().setFrequency(outputFrequency);
                     output.getLink().setPhase(outputPhase);
-                    output.getLink().setEnabled(false);
+                    output.getLink().setEnabled(true);
                 });
     }
 
