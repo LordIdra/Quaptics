@@ -46,7 +46,7 @@ public class Turret extends ConnectedBlock {
     private final Vector3f barrelTranslation = new Vector3f(0, 0, displayRadius *0.8F);
     private final Vector barrelLocation = new Vector(0.5, 0.7, 0.5);
     private final Vector3f projectileSize = new Vector3f(0.095F, 0.095F, 0.20F);
-    private final Vector inputLocation = new Vector(0.0F, 0.0F, -displayRadius);
+    private final Vector inputLocation = new Vector(0.0F, 0.0F, -connectionRadius);
     private final double powerConsumption;
     private final double range;
     private final double damagePerSlimefunTick;

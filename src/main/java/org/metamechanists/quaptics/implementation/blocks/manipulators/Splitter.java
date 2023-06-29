@@ -29,8 +29,8 @@ public class Splitter extends ConnectedBlock {
     private final Material concreteMaterial;
     private final double connectionAngle = Math.PI / 2;
     private final int connections;
-    private final Vector inputLocation = new Vector(0.0F, 0.0F, displayRadius*2);
-    private final Vector outputStartingLocation = new Vector(0.0F, 0.0F, -displayRadius*2);
+    private final Vector inputLocation = new Vector(0.0F, 0.0F, connectionRadius);
+    private final Vector outputStartingLocation = new Vector(0.0F, 0.0F, -connectionRadius);
     private final Vector3f glassDisplaySize = new Vector3f(displayRadius*2);
     private final Vector3f concreteDisplaySize = new Vector3f(displayRadius);
     private final Vector3f displayRotation = new Vector3f((float)(Math.PI/4), (float)(Math.PI/4), 0);

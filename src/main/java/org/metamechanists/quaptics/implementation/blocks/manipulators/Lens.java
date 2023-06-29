@@ -26,8 +26,8 @@ import java.util.List;
 public class Lens extends ConnectedBlock {
     private final Vector3f mainDisplaySize = new Vector3f(displayRadius *2);
     private final Vector3f mainDisplayRotation = new Vector3f((float)(Math.PI/4), (float)(Math.PI/4), 0);
-    private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -displayRadius *2);
-    private final Vector outputPointLocation = new Vector(0.0F, 0.0F, displayRadius);
+    private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -connectionRadius);
+    private final Vector outputPointLocation = new Vector(0.0F, 0.0F, connectionRadius);
     private final double powerLoss;
 
     public Lens(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe,

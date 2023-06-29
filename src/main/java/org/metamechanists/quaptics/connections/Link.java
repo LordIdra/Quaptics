@@ -17,6 +17,7 @@ import org.metamechanists.quaptics.utils.id.LinkID;
 import org.metamechanists.quaptics.utils.id.TickerID;
 
 public class Link {
+    private final static float MAX_BEAM_SIZE = 0.095F;
     @Getter
     private final LinkID ID;
     private final ConnectionPointID outputID;
@@ -123,7 +124,7 @@ public class Link {
                 Material.WHITE_CONCRETE,
                 getOutput().getLocation(),
                 getInput().getLocation(),
-                (float)(power / maxPower) * 0.095F))
+                Math.min((float)(power / maxPower) * MAX_BEAM_SIZE, MAX_BEAM_SIZE)))
                 .getID();
     }
 

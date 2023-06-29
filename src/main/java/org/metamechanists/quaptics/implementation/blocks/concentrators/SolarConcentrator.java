@@ -29,9 +29,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SolarConcentrator extends ConnectedBlock {
-    private static final float CONNECTION_ADDITIONAL_RADIUS = 0.05F;
     private final float rotationY;
-    private final Vector outputLocation = new Vector(0.0F, 0.0F, displayRadius +CONNECTION_ADDITIONAL_RADIUS);
+    private final Vector outputLocation = new Vector(0.0F, 0.0F, connectionRadius);
     private final Vector3f mainDisplaySize = new Vector3f(displayRadius*2);
     private final double emissionPower;
 
