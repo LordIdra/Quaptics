@@ -26,27 +26,34 @@ import java.util.Objects;
 import java.util.stream.IntStream;
 
 public class Combiner extends ConnectedBlock {
+    private final Material concreteMaterial;
     private final double connectionAngle = Math.PI / 2;
     private final int connections;
-    private final Vector inputStartingLocation = new Vector(0.0F, 0.0F, -displayRadius *2);
-    private final Vector outputLocation = new Vector(0.0F, 0.0F, displayRadius *2);
-    private final Vector3f mainDisplaySize = new Vector3f(displayRadius *2);
-    private final Vector3f mainDisplayRotation = new Vector3f((float)(Math.PI/4), (float)(Math.PI/4), 0);
+    private final Vector inputStartingLocation = new Vector(0.0F, 0.0F, -displayRadius*2);
+    private final Vector outputLocation = new Vector(0.0F, 0.0F, displayRadius*2);
+    private final Vector3f glassDisplaySize = new Vector3f(displayRadius*2);
+    private final Vector3f concreteDisplaySize = new Vector3f(displayRadius);
+    private final Vector3f displayRotation = new Vector3f((float)(Math.PI/4), (float)(Math.PI/4), 0);
     private final double powerLoss;
 
     public Combiner(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe,
-                    float radius, int connections, double maxPower, double powerLoss) {
+                    Material concreteMaterial, float radius, int connections, double maxPower, double powerLoss) {
         super(group, item, recipeType, recipe, radius, 2*radius, maxPower);
+        this.concreteMaterial = concreteMaterial;
         this.connections = connections;
         this.powerLoss = powerLoss;
     }
 
     @Override
     protected void addDisplays(@NotNull DisplayGroup displayGroup, @NotNull Location location, Player player) {
-        displayGroup.addDisplay("main", new BlockDisplayBuilder(location.clone().add(RELATIVE_CENTER))
-                        .setMaterial(Material.GRAY_STAINED_GLASS)
-                        .setTransformation(Transformations.adjustedRotateAndScale(mainDisplaySize, mainDisplayRotation))
-                        .build());
+        displayGroup.addDisplay("glass", new BlockDisplayBuilder(location.clone().add(RELATIVE_CENTER))
+                .setMaterial(Material.GRAY_STAINED_GLASS)
+                .setTransformation(Transformations.adjustedRotateAndScale(glassDisplaySize, displayRotation))
+                .build());
+        displayGroup.addDisplay("concrete", new BlockDisplayBuilder(location.clone().add(RELATIVE_CENTER))
+                .setMaterial(concreteMaterial)
+                .setTransformation(Transformations.adjustedRotateAndScale(concreteDisplaySize, displayRotation))
+                .build());
     }
 
     @Override
