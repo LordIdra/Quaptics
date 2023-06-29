@@ -84,6 +84,7 @@ public class Combiner extends ConnectedBlock {
         inputs.forEach(input -> doBurnoutCheck(group, input));
 
         if (!output.hasLink()) {
+            getDisplayGroup(group.getLocation()).getDisplays().get("concrete").setBrightness(BRIGHTNESS_OFF);
             return;
         }
 

@@ -46,7 +46,7 @@ public class Lens extends ConnectedBlock {
                 .setTransformation(Transformations.adjustedRotateAndScale(glassDisplaySize, mainDisplayRotation))
                 .build());
         displayGroup.addDisplay("concrete", new BlockDisplayBuilder(location.clone().add(RELATIVE_CENTER))
-                .setMaterial(Material.GLASS)
+                .setMaterial(Material.WHITE_CONCRETE)
                 .setTransformation(Transformations.adjustedRotateAndScale(concreteDisplaySize, mainDisplayRotation))
                 .setViewRange(0)
                 .setBrightness(BRIGHTNESS_ON)
@@ -69,12 +69,13 @@ public class Lens extends ConnectedBlock {
         doBurnoutCheck(group, input);
 
         if (!output.hasLink()) {
+            getDisplayGroup(group.getLocation()).getDisplays().get("concrete").setViewRange(0);
             return;
         }
 
         if (!input.hasLink() || !input.getLink().isEnabled()) {
-            getDisplayGroup(group.getLocation()).getDisplays().get("concrete").setViewRange(0);
             output.getLink().setEnabled(false);
+            getDisplayGroup(group.getLocation()).getDisplays().get("concrete").setViewRange(0);
             return;
         }
 

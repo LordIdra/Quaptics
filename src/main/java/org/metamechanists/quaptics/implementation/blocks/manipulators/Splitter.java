@@ -84,6 +84,7 @@ public class Splitter extends ConnectedBlock {
         doBurnoutCheck(group, input);
 
         if (outputs.stream().noneMatch(ConnectionPoint::hasLink)) {
+            getDisplayGroup(group.getLocation()).getDisplays().get("concrete").setBrightness(BRIGHTNESS_OFF);
             return;
         }
 
