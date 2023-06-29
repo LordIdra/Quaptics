@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Lens extends ConnectedBlock {
-    private static final int BRIGHTNESS_ON = 13;
+    private static final int BRIGHTNESS_ON = 15;
     private static final int VIEW_RANGE_ON = 64;
     private static final int VIEW_RANGE_OFF = 0;
     private final Vector3f glassDisplaySize = new Vector3f(displayRadius*2);

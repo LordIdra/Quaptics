@@ -6,7 +6,6 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.entity.Display;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
@@ -27,8 +26,9 @@ import java.util.Objects;
 import java.util.stream.IntStream;
 
 public class Combiner extends ConnectedBlock {
-    private static final Display.Brightness BRIGHTNESS_OFF = new Display.Brightness(5, 0);
-    private static final Display.Brightness BRIGHTNESS_ON = new Display.Brightness(13, 0);
+    private static final int BRIGHTNESS_ON = 15;
+    private static final int VIEW_RANGE_ON = 64;
+    private static final int VIEW_RANGE_OFF = 0;
     private final Material concreteMaterial;
     private final double connectionAngle = Math.PI / 2;
     private final int connections;
@@ -55,6 +55,7 @@ public class Combiner extends ConnectedBlock {
                 .build());
         displayGroup.addDisplay("concrete", new BlockDisplayBuilder(location.clone().add(RELATIVE_CENTER))
                 .setMaterial(concreteMaterial)
+                .setViewRange(BRIGHTNESS_ON)
                 .setTransformation(Transformations.adjustedRotateAndScale(concreteDisplaySize, displayRotation))
                 .build());
     }
@@ -84,9 +85,9 @@ public class Combiner extends ConnectedBlock {
         inputs.forEach(input -> doBurnoutCheck(group, input));
 
         if (inputs.stream().anyMatch(input -> input.hasLink() && input.getLink().isEnabled())) {
-            getDisplayGroup(group.getLocation()).getDisplays().get("concrete").setBrightness(BRIGHTNESS_ON);
+            getDisplayGroup(group.getLocation()).getDisplays().get("concrete").setViewRange(VIEW_RANGE_ON);
         } else {
-            getDisplayGroup(group.getLocation()).getDisplays().get("concrete").setBrightness(BRIGHTNESS_OFF);
+            getDisplayGroup(group.getLocation()).getDisplays().get("concrete").setViewRange(VIEW_RANGE_OFF);
         }
 
         if (!output.hasLink()) {
