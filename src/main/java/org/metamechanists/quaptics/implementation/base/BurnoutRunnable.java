@@ -29,7 +29,7 @@ public class BurnoutRunnable extends BukkitRunnable {
             final int ticks = delay;
             Bukkit.getScheduler().runTaskLater(Quaptics.getInstance(), () -> {
                 final DisplayGroup group = connectedBlock.getDisplayGroup(location.clone());
-                if (group != null && ticks % 4 == 0) {
+                if (group != null && ticks % 2 == 0) {
                     group.getDisplays().values().forEach(display -> {
                         final Display.Brightness brightness = display.getBrightness();
                         display.setBrightness(new Display.Brightness(
