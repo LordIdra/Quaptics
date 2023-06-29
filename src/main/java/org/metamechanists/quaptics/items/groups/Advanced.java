@@ -13,14 +13,17 @@ import org.metamechanists.quaptics.implementation.blocks.manipulators.Lens;
 import org.metamechanists.quaptics.implementation.blocks.manipulators.Splitter;
 import org.metamechanists.quaptics.items.Groups;
 import org.metamechanists.quaptics.items.Lore;
-import org.metamechanists.quaptics.items.Tiers;
+import org.metamechanists.quaptics.utils.Colors;
 
 public class Advanced {
+    private static final String TIER_NAME = Colors.ADVANCED + "Advanced";
+    private static final float MAX_POWER = 10000;
+
     public static final SlimefunItemStack ENERGY_CONCENTRATOR_3 = new SlimefunItemStack(
             "QP_ENERGY_CONCENTRATOR_3",
             Material.PURPLE_CONCRETE,
             "&eEnergy Concentrator &bIII",
-            Tiers.ADVANCED.coloredName,
+            TIER_NAME,
             "&7● Consumes energy",
             "&7● Concentrates energy into a quaptic ray",
             LoreBuilder.powerPerSecond(680),
@@ -30,18 +33,18 @@ public class Advanced {
             "QP_LENS_4",
             Material.GLASS,
             "&9Lens &bIV",
-            Tiers.ADVANCED.coloredName,
+            TIER_NAME,
             "&7● &bRedirects &7a quaptic ray",
-            Lore.maxPower(Tiers.ADVANCED.maxPower),
+            Lore.maxPower(MAX_POWER),
             Lore.powerLoss(2));
 
     public static final SlimefunItemStack COMBINER_4_2 = new SlimefunItemStack(
             "QP_COMBINER_4_2",
             Material.GRAY_STAINED_GLASS,
             "&9Combiner &eIV &8(2 connections)",
-            Tiers.ADVANCED.coloredName,
+            TIER_NAME,
             "&7● &bCombines &7multiple quaptic rays into one",
-            Lore.maxPower(Tiers.ADVANCED.maxPower),
+            Lore.maxPower(MAX_POWER),
             Lore.powerLoss(5),
             Lore.maxConnections(2));
 
@@ -49,9 +52,9 @@ public class Advanced {
             "QP_COMBINER_4_3",
             Material.GRAY_STAINED_GLASS,
             "&9Combiner &eIV &8(3 connections)",
-            Tiers.ADVANCED.coloredName,
+            TIER_NAME,
             "&7● &bCombines &7multiple quaptic rays into one",
-            Lore.maxPower(Tiers.ADVANCED.maxPower),
+            Lore.maxPower(MAX_POWER),
             Lore.powerLoss(5),
             Lore.maxConnections(3));
 
@@ -59,9 +62,9 @@ public class Advanced {
             "QP_COMBINER_4_4",
             Material.GRAY_STAINED_GLASS,
             "&9Combiner &eIV &8(4 connections)",
-            Tiers.ADVANCED.coloredName,
+            TIER_NAME,
             "&7● &bCombines &7multiple quaptic rays into one",
-            Lore.maxPower(Tiers.ADVANCED.maxPower),
+            Lore.maxPower(MAX_POWER),
             Lore.powerLoss(5),
             Lore.maxConnections(4));
 
@@ -69,9 +72,9 @@ public class Advanced {
             "QP_SPLITTER_4_2",
             Material.LIGHT_GRAY_STAINED_GLASS,
             "&9Splitter &eIV &8(2 connections)",
-            Tiers.ADVANCED.coloredName,
+            TIER_NAME,
             "&7● &bSplits &7one quaptic ray into multiple",
-            Lore.maxPower(Tiers.ADVANCED.maxPower),
+            Lore.maxPower(MAX_POWER),
             Lore.powerLoss(5),
             Lore.maxConnections(2));
 
@@ -79,9 +82,9 @@ public class Advanced {
             "QP_SPLITTER_4_3",
             Material.LIGHT_GRAY_STAINED_GLASS,
             "&9Splitter &eIV &8(3 connections)",
-            Tiers.ADVANCED.coloredName,
+            TIER_NAME,
             "&7● &bSplits &7one quaptic ray into multiple",
-            Lore.maxPower(Tiers.ADVANCED.maxPower),
+            Lore.maxPower(MAX_POWER),
             Lore.powerLoss(5),
             Lore.maxConnections(3));
 
@@ -89,9 +92,9 @@ public class Advanced {
             "QP_SPLITTER_4_4",
             Material.LIGHT_GRAY_STAINED_GLASS,
             "&9Splitter &eIV &8(4 connections)",
-            Tiers.ADVANCED.coloredName,
+            TIER_NAME,
             "&7● &bSplits &7one quaptic ray into multiple",
-            Lore.maxPower(Tiers.ADVANCED.maxPower),
+            Lore.maxPower(MAX_POWER),
             Lore.powerLoss(5),
             Lore.maxConnections(4));
 
@@ -106,7 +109,7 @@ public class Advanced {
                 680,
                 680,
                 2500,
-                Tiers.ADVANCED.maxPower).register(addon);
+                MAX_POWER).register(addon);
 
         new Lens(
                 Groups.ADVANCED,
@@ -114,7 +117,7 @@ public class Advanced {
                 RecipeType.NULL,
                 new ItemStack[]{},
                 0.08F,
-                Tiers.ADVANCED.maxPower,
+                MAX_POWER,
                 0.02).register(addon);
 
         new Combiner(
@@ -124,7 +127,7 @@ public class Advanced {
                 new ItemStack[]{},
                 0.30F,
                 2,
-                Tiers.ADVANCED.maxPower,
+                MAX_POWER,
                 0.05).register(addon);
 
         new Combiner(
@@ -134,7 +137,7 @@ public class Advanced {
                 new ItemStack[]{},
                 0.35F,
                 3,
-                Tiers.ADVANCED.maxPower,
+                MAX_POWER,
                 0.05).register(addon);
 
         new Combiner(
@@ -144,7 +147,7 @@ public class Advanced {
                 new ItemStack[]{},
                 0.40F,
                 4,
-                Tiers.ADVANCED.maxPower,
+                MAX_POWER,
                 0.05).register(addon);
 
         new Splitter(
@@ -154,7 +157,7 @@ public class Advanced {
                 new ItemStack[]{},
                 0.30F,
                 2,
-                Tiers.ADVANCED.maxPower,
+                MAX_POWER,
                 0.05).register(addon);
 
         new Splitter(
@@ -164,7 +167,7 @@ public class Advanced {
                 new ItemStack[]{},
                 0.35F,
                 3,
-                Tiers.ADVANCED.maxPower,
+                MAX_POWER,
                 0.05).register(addon);
 
         new Splitter(
@@ -174,7 +177,7 @@ public class Advanced {
                 new ItemStack[]{},
                 0.40F,
                 4,
-                Tiers.ADVANCED.maxPower,
+                MAX_POWER,
                 0.05).register(addon);
     }
 }
