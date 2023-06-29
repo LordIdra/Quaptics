@@ -41,7 +41,9 @@ public abstract class DisplayGroupTickerBlock extends SlimefunItem {
     }
 
     @NotNull
-    protected abstract Material getBaseMaterial();
+    protected Material getBaseMaterial() {
+        return Material.STRUCTURE_VOID;
+    }
 
     protected abstract void addDisplays(DisplayGroup displayGroup, Location location, Player player);
 

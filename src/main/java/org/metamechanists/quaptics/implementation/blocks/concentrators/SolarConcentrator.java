@@ -80,9 +80,4 @@ public class SolarConcentrator extends ConnectedBlock {
 
         output.getLink().setEnabled(false);
     }
-
-    @Override
-    protected @NotNull Material getBaseMaterial() {
-        return Material.STRUCTURE_VOID;
-    }
 }
