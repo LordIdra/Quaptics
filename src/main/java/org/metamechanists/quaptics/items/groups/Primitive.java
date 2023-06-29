@@ -37,7 +37,7 @@ public class Primitive {
             Lore.powerLoss(10));
 
     public static final SlimefunItemStack COMBINER_1_2 = new SlimefunItemStack(
-            "QP_COMBINER_1",
+            "QP_COMBINER_1_2",
             Material.GRAY_STAINED_GLASS,
             "&9Combiner &eI &8(2 connections)",
             TIER_NAME,
@@ -47,7 +47,7 @@ public class Primitive {
             Lore.maxConnections(2));
 
     public static final SlimefunItemStack SPLITTER_1_2 = new SlimefunItemStack(
-            "QP_SPLITTER_1",
+            "QP_SPLITTER_1_2",
             Material.LIGHT_GRAY_STAINED_GLASS,
             "&9Splitter &eI &8(2 connections)",
             TIER_NAME,
@@ -85,7 +85,7 @@ public class Primitive {
                 LENS_1,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                0.2F,
+                0.24F,
                 MAX_POWER,
                 0.1).register(addon);
 
@@ -95,7 +95,7 @@ public class Primitive {
                 RecipeType.NULL,
                 new ItemStack[]{},
                 Material.BROWN_CONCRETE,
-                0.5F,
+                0.4F,
                 2,
                 MAX_POWER,
                 0.2).register(addon);
@@ -106,7 +106,7 @@ public class Primitive {
                 RecipeType.NULL,
                 new ItemStack[]{},
                 Material.BROWN_CONCRETE,
-                0.5F,
+                0.4F,
                 2,
                 MAX_POWER,
                 0.2).register(addon);

@@ -116,7 +116,7 @@ public class Basic {
                 LENS_2,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                0.16F,
+                0.21F,
                 MAX_POWER,
                 0.07).register(addon);
 
@@ -126,7 +126,7 @@ public class Basic {
                 RecipeType.NULL,
                 new ItemStack[]{},
                 Material.GRAY_CONCRETE,
-                0.45F,
+                0.35F,
                 2,
                 MAX_POWER,
                 0.12).register(addon);
@@ -137,7 +137,7 @@ public class Basic {
                 RecipeType.NULL,
                 new ItemStack[]{},
                 Material.GRAY_CONCRETE,
-                0.50F,
+                0.40F,
                 3,
                 MAX_POWER,
                 0.14).register(addon);
@@ -148,7 +148,7 @@ public class Basic {
                 RecipeType.NULL,
                 new ItemStack[]{},
                 Material.GRAY_CONCRETE,
-                0.45F,
+                0.35F,
                 2,
                 MAX_POWER,
                 0.12).register(addon);
@@ -159,7 +159,7 @@ public class Basic {
                 RecipeType.NULL,
                 new ItemStack[]{},
                 Material.GRAY_CONCRETE,
-                0.50F,
+                0.40F,
                 2,
                 MAX_POWER,
                 0.14).register(addon);

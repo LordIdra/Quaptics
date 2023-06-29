@@ -116,7 +116,7 @@ public class Advanced {
                 LENS_4,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                0.08F,
+                0.15F,
                 MAX_POWER,
                 0.02).register(addon);
 
@@ -126,7 +126,7 @@ public class Advanced {
                 RecipeType.NULL,
                 new ItemStack[]{},
                 Material.RED_CONCRETE,
-                0.35F,
+                0.25F,
                 2,
                 MAX_POWER,
                 0.05).register(addon);
@@ -137,7 +137,7 @@ public class Advanced {
                 RecipeType.NULL,
                 new ItemStack[]{},
                 Material.RED_CONCRETE,
-                0.40F,
+                0.30F,
                 3,
                 MAX_POWER,
                 0.05).register(addon);
@@ -148,7 +148,7 @@ public class Advanced {
                 RecipeType.NULL,
                 new ItemStack[]{},
                 Material.RED_CONCRETE,
-                0.45F,
+                0.35F,
                 4,
                 MAX_POWER,
                 0.05).register(addon);
@@ -159,7 +159,7 @@ public class Advanced {
                 RecipeType.NULL,
                 new ItemStack[]{},
                 Material.RED_CONCRETE,
-                0.35F,
+                0.25F,
                 2,
                 MAX_POWER,
                 0.05).register(addon);
@@ -170,7 +170,7 @@ public class Advanced {
                 RecipeType.NULL,
                 new ItemStack[]{},
                 Material.RED_CONCRETE,
-                0.40F,
+                0.30F,
                 3,
                 MAX_POWER,
                 0.05).register(addon);
@@ -181,7 +181,7 @@ public class Advanced {
                 RecipeType.NULL,
                 new ItemStack[]{},
                 Material.RED_CONCRETE,
-                0.45F,
+                0.35F,
                 4,
                 MAX_POWER,
                 0.05).register(addon);

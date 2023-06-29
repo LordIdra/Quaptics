@@ -96,7 +96,7 @@ public class Intermediate {
                 LENS_3,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                0.12F,
+                0.18F,
                 MAX_POWER,
                 0.04).register(addon);
 
@@ -106,7 +106,7 @@ public class Intermediate {
                 RecipeType.NULL,
                 new ItemStack[]{},
                 Material.YELLOW_CONCRETE,
-                0.40F,
+                0.30F,
                 2,
                 MAX_POWER,
                 0.08).register(addon);
@@ -117,7 +117,7 @@ public class Intermediate {
                 RecipeType.NULL,
                 new ItemStack[]{},
                 Material.YELLOW_CONCRETE,
-                0.45F,
+                0.35F,
                 3,
                 MAX_POWER,
                 0.08).register(addon);
@@ -128,7 +128,7 @@ public class Intermediate {
                 RecipeType.NULL,
                 new ItemStack[]{},
                 Material.YELLOW_CONCRETE,
-                0.40F,
+                0.30F,
                 2,
                 MAX_POWER,
                 0.08).register(addon);
@@ -139,7 +139,7 @@ public class Intermediate {
                 RecipeType.NULL,
                 new ItemStack[]{},
                 Material.YELLOW_CONCRETE,
-                0.45F,
+                0.35F,
                 3,
                 MAX_POWER,
                 0.08).register(addon);
