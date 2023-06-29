@@ -55,7 +55,8 @@ public class Combiner extends ConnectedBlock {
                 .build());
         displayGroup.addDisplay("concrete", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(concreteMaterial)
-                .setViewRange(BRIGHTNESS_ON)
+                .setBrightness(BRIGHTNESS_ON)
+                .setViewRange(VIEW_RANGE_OFF)
                 .setTransformation(Transformations.adjustedRotateAndScale(concreteDisplaySize, displayRotation))
                 .build());
     }

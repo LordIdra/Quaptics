@@ -49,8 +49,8 @@ public class Lens extends ConnectedBlock {
         displayGroup.addDisplay("concrete", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(Material.WHITE_CONCRETE)
                 .setTransformation(Transformations.adjustedRotateAndScale(concreteDisplaySize, mainDisplayRotation))
-                .setViewRange(0)
                 .setBrightness(BRIGHTNESS_ON)
+                .setViewRange(VIEW_RANGE_OFF)
                 .build());
     }
 
