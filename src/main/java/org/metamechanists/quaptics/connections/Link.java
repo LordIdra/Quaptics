@@ -3,15 +3,12 @@ package org.metamechanists.quaptics.connections;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import lombok.Getter;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.metamechanists.metalib.sefilib.entity.display.DisplayGroup;
 import org.metamechanists.quaptics.beams.DirectBeam;
 import org.metamechanists.quaptics.beams.ticker.DirectTicker;
-import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
 import org.metamechanists.quaptics.storage.DataTraverser;
@@ -161,6 +158,29 @@ public class Link {
         }
 
         this.power = power;
+
+        update();
+        BlockUpdateScheduler.scheduleUpdate(getInput().getGroup().getID());
+    }
+
+    public void setFrequency(double frequency) {
+        // TODO how can we limit the size of frequency changes?
+        if (this.frequency == frequency) {
+            return;
+        }
+
+        this.frequency = frequency;
+
+        update();
+        BlockUpdateScheduler.scheduleUpdate(getInput().getGroup().getID());
+    }
+
+    public void setPhase(int phase) {
+        if (this.phase == phase) {
+            return;
+        }
+
+        this.phase = phase;
 
         update();
         BlockUpdateScheduler.scheduleUpdate(getInput().getGroup().getID());

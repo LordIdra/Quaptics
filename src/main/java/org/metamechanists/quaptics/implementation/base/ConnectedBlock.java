@@ -93,6 +93,7 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
     }
 
     public void burnout(Location location) {
+        // TODO send message to player to inform them what happened
         onBreak(location);
         getGroup(location).remove();
         getDisplayGroup(location).getDisplays().values().forEach(Entity::remove);

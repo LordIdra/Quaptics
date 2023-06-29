@@ -126,7 +126,7 @@ public class Basic {
                 RecipeType.NULL,
                 new ItemStack[]{},
                 Material.GRAY_CONCRETE,
-                0.30F,
+                0.45F,
                 2,
                 MAX_POWER,
                 0.12).register(addon);
@@ -137,7 +137,7 @@ public class Basic {
                 RecipeType.NULL,
                 new ItemStack[]{},
                 Material.GRAY_CONCRETE,
-                0.35F,
+                0.50F,
                 3,
                 MAX_POWER,
                 0.14).register(addon);
@@ -148,7 +148,7 @@ public class Basic {
                 RecipeType.NULL,
                 new ItemStack[]{},
                 Material.GRAY_CONCRETE,
-                0.30F,
+                0.45F,
                 2,
                 MAX_POWER,
                 0.12).register(addon);
@@ -159,7 +159,7 @@ public class Basic {
                 RecipeType.NULL,
                 new ItemStack[]{},
                 Material.GRAY_CONCRETE,
-                0.35F,
+                0.50F,
                 2,
                 MAX_POWER,
                 0.14).register(addon);

@@ -95,7 +95,7 @@ public class Primitive {
                 RecipeType.NULL,
                 new ItemStack[]{},
                 Material.BROWN_CONCRETE,
-                0.3F,
+                0.5F,
                 2,
                 MAX_POWER,
                 0.2).register(addon);
@@ -106,7 +106,7 @@ public class Primitive {
                 RecipeType.NULL,
                 new ItemStack[]{},
                 Material.BROWN_CONCRETE,
-                0.3F,
+                0.5F,
                 2,
                 MAX_POWER,
                 0.2).register(addon);

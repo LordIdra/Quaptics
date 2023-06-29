@@ -106,7 +106,7 @@ public class Intermediate {
                 RecipeType.NULL,
                 new ItemStack[]{},
                 Material.YELLOW_CONCRETE,
-                0.30F,
+                0.40F,
                 2,
                 MAX_POWER,
                 0.08).register(addon);
@@ -117,7 +117,7 @@ public class Intermediate {
                 RecipeType.NULL,
                 new ItemStack[]{},
                 Material.YELLOW_CONCRETE,
-                0.35F,
+                0.45F,
                 3,
                 MAX_POWER,
                 0.08).register(addon);
@@ -128,7 +128,7 @@ public class Intermediate {
                 RecipeType.NULL,
                 new ItemStack[]{},
                 Material.YELLOW_CONCRETE,
-                0.30F,
+                0.40F,
                 2,
                 MAX_POWER,
                 0.08).register(addon);
@@ -139,7 +139,7 @@ public class Intermediate {
                 RecipeType.NULL,
                 new ItemStack[]{},
                 Material.YELLOW_CONCRETE,
-                0.35F,
+                0.45F,
                 3,
                 MAX_POWER,
                 0.08).register(addon);
