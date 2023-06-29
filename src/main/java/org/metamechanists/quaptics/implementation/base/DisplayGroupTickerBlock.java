@@ -20,7 +20,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
-import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.id.DisplayGroupID;
 
@@ -79,7 +78,6 @@ public abstract class DisplayGroupTickerBlock extends SlimefunItem {
                         addDisplays(displayGroup, location, event.getPlayer());
                         setID(displayGroup, location);
                         event.getBlock().setType(getBaseMaterial());
-                        BlockStorage.addBlockInfo(location, Keys.CONNECTION_GROUP_ID, displayGroup.getParentUUID().toString());
                         onPlace(event);
                     }
                 },
