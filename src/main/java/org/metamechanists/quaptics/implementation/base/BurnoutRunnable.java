@@ -9,17 +9,11 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Display;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.metamechanists.quaptics.Quaptics;
-import org.metamechanists.quaptics.connections.ConnectionGroup;
-import org.metamechanists.quaptics.connections.points.ConnectionPoint;
-import org.metamechanists.quaptics.storage.QuapticStorage;
-import org.metamechanists.quaptics.utils.id.ConnectionGroupID;
 
 public class BurnoutRunnable extends BukkitRunnable {
-    private final ConnectionGroupID ID;
     private final Location location;
 
-    public BurnoutRunnable(ConnectionGroupID ID, Location location) {
-        this.ID = ID;
+    public BurnoutRunnable(Location location) {
         this.location = location;
     }
 
