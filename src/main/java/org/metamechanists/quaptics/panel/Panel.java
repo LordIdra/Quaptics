@@ -1,4 +1,4 @@
-package org.metamechanists.quaptics.utils.panel;
+package org.metamechanists.quaptics.panel;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
@@ -28,7 +28,7 @@ public class Panel {
         saveData();
     }
 
-    private Panel(@NotNull PanelID panelID) {
+    public Panel(@NotNull PanelID panelID) {
         final DataTraverser traverser = new DataTraverser(panelID);
         final JsonObject mainSection = traverser.getData();
         final JsonObject attributeSection = mainSection.get("attributes").getAsJsonObject();
@@ -39,18 +39,13 @@ public class Panel {
                 (key, value) -> attributes.put(key, new PanelAttributeID(value.getAsString())));
     }
 
-    @Contract("_ -> new")
-    public static @NotNull Panel fromID(PanelID panelID) {
-        return new Panel(panelID);
-    }
-
     public void saveData() {
         final DataTraverser traverser = new DataTraverser(displayGroupID);
         final JsonObject mainSection = traverser.getData();
         final JsonObject attributeSection = new JsonObject();
         mainSection.add("hidden", new JsonPrimitive(hidden));
         this.attributes.forEach(
-                (key, value) -> attributeSection.add(key, new JsonPrimitive(value.get().toString())));
+                (key, value) -> attributeSection.add(key, new JsonPrimitive(value.getUUID().toString())));
         mainSection.add("attributes", attributeSection);
         traverser.save();
     }
@@ -60,12 +55,12 @@ public class Panel {
     }
 
     private DisplayGroup getDisplayGroup() {
-        return DisplayGroup.fromUUID(displayGroupID.get());
+        return DisplayGroup.fromUUID(displayGroupID.getUUID());
     }
 
     @Contract("_ -> new")
-    private @NotNull PanelAttribute getAttribute(String name) {
-        return PanelAttribute.fromID(attributes.get(name));
+    private PanelAttribute getAttribute(String name) {
+        return attributes.get(name).get();
     }
 
     public void setAttributeHidden(String name, boolean attributeHidden) {
@@ -80,7 +75,7 @@ public class Panel {
     public void setHidden(boolean hidden) {
         if (this.hidden != hidden) {
             this.hidden = hidden;
-            attributes.values().forEach(ID -> PanelAttribute.fromID(ID).updateVisibility(hidden));
+            attributes.values().forEach(attributeID -> attributeID.get().updateVisibility(hidden));
             saveData();
         }
     }
@@ -90,7 +85,7 @@ public class Panel {
     }
 
     public void remove() {
-        attributes.values().forEach(ID -> PanelAttribute.fromID(ID).remove());
+        attributes.values().forEach(attributeID -> attributeID.get().remove());
         getDisplayGroup().remove();
     }
 }

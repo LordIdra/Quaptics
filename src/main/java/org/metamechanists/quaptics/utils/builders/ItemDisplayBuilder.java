@@ -3,29 +3,29 @@ package org.metamechanists.quaptics.utils.builders;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.data.BlockData;
-import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Display;
+import org.bukkit.entity.ItemDisplay;
+import org.bukkit.inventory.ItemStack;
 import org.joml.Matrix4f;
 
-public class BlockDisplayBuilder {
+public class ItemDisplayBuilder {
     private final Location location;
     private Material material;
-    private BlockData blockData;
+    private ItemStack itemStack;
     private Matrix4f transformation;
     private Integer brightness;
     private Color glowColor;
 
-    public BlockDisplayBuilder(Location location) {
+    public ItemDisplayBuilder(Location location) {
         this.location = location;
     }
-    public BlockDisplay build() {
-        return location.getWorld().spawn(location, BlockDisplay.class, display -> {
+    public ItemDisplay build() {
+        return location.getWorld().spawn(location, ItemDisplay.class, display -> {
             if (material != null) {
-                display.setBlock(material.createBlockData());
+                display.setItemStack(new ItemStack(material));
             }
-            if (blockData != null) {
-                display.setBlock(blockData);
+            if (itemStack != null) {
+                display.setItemStack(itemStack);
             }
             if (transformation != null) {
                 display.setTransformationMatrix(transformation);
@@ -42,24 +42,24 @@ public class BlockDisplayBuilder {
         });
     }
 
-    public BlockDisplayBuilder setMaterial(Material material) {
+    public ItemDisplayBuilder setMaterial(Material material) {
         this.material = material;
         return this;
     }
-    public BlockDisplayBuilder setBlockData(BlockData blockData) {
+    public ItemDisplayBuilder setItemStack(ItemStack itemStack) {
         // Overrides material
-        this.blockData = blockData;
+        this.itemStack = itemStack;
         return this;
     }
-    public BlockDisplayBuilder setTransformation(Matrix4f transformation) {
+    public ItemDisplayBuilder setTransformation(Matrix4f transformation) {
         this.transformation = transformation;
         return this;
     }
-    public BlockDisplayBuilder setBrightness(int brightness) {
+    public ItemDisplayBuilder setBrightness(int brightness) {
         this.brightness = brightness;
         return this;
     }
-    public BlockDisplayBuilder setGlow(Color glowColor) {
+    public ItemDisplayBuilder setGlow(Color glowColor) {
         this.glowColor = glowColor;
         return this;
     }

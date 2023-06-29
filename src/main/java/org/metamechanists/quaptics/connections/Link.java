@@ -3,15 +3,12 @@ package org.metamechanists.quaptics.connections;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import lombok.Getter;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.metamechanists.metalib.sefilib.entity.display.DisplayGroup;
 import org.metamechanists.quaptics.beams.DirectBeam;
 import org.metamechanists.quaptics.beams.ticker.DirectTicker;
-import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
 import org.metamechanists.quaptics.storage.DataTraverser;
@@ -39,8 +36,8 @@ public class Link {
         this.inputID = inputID;
         this.outputID = outputID;
         this.ID = new LinkID(new DisplayGroup(getInput().getLocation(), 0, 0).getParentUUID());
-        this.maxPower = getInput().getGroup().getBlock().maxPower;
-        saveData(); // the points being linked will not be able to Link.fromID() without this line
+        this.maxPower = getOutput().getGroup().getBlock().maxPower;
+        saveData(); // the points being linked will not be able to get the link from the ID without this line
         getInput().link(getID());
         getOutput().link(getID());
         BlockUpdateScheduler.scheduleUpdate(getOutput().getGroup().getID());
@@ -48,7 +45,7 @@ public class Link {
         update();
     }
 
-    private Link(LinkID ID) {
+    public Link(LinkID ID) {
         final DataTraverser traverser = new DataTraverser(ID);
         final JsonObject mainSection = traverser.getData();
         this.ID = ID;
@@ -62,13 +59,6 @@ public class Link {
         this.frequency = mainSection.get("frequency").getAsDouble();
         this.phase = mainSection.get("phase").getAsInt();
         this.maxPower = mainSection.get("maxPower").getAsDouble();
-    }
-
-    @Contract("_ -> new")
-    public static @Nullable Link fromID(@NotNull LinkID ID) {
-        return Bukkit.getEntity(ID.get()) == null
-                ? null
-                : new Link(ID);
     }
 
     public void saveData() {
@@ -86,11 +76,11 @@ public class Link {
     }
 
     public ConnectionPointOutput getOutput() {
-        return (ConnectionPointOutput) ConnectionPoint.fromID(outputID);
+        return (ConnectionPointOutput) outputID.get();
     }
 
     public ConnectionPointInput getInput() {
-        return (ConnectionPointInput) ConnectionPoint.fromID(inputID);
+        return (ConnectionPointInput) inputID.get();
     }
 
     private boolean hasBeam() {
@@ -99,7 +89,7 @@ public class Link {
 
     @Contract(" -> new")
     private @NotNull DirectBeam getBeam() {
-        return DirectBeam.fromID(tickerID);
+        return new DirectBeam(tickerID);
     }
 
     public void remove() {
@@ -168,6 +158,29 @@ public class Link {
         }
 
         this.power = power;
+
+        update();
+        BlockUpdateScheduler.scheduleUpdate(getInput().getGroup().getID());
+    }
+
+    public void setFrequency(double frequency) {
+        // TODO how can we limit the size of frequency changes?
+        if (this.frequency == frequency) {
+            return;
+        }
+
+        this.frequency = frequency;
+
+        update();
+        BlockUpdateScheduler.scheduleUpdate(getInput().getGroup().getID());
+    }
+
+    public void setPhase(int phase) {
+        if (this.phase == phase) {
+            return;
+        }
+
+        this.phase = phase;
 
         update();
         BlockUpdateScheduler.scheduleUpdate(getInput().getGroup().getID());

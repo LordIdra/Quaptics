@@ -80,12 +80,18 @@ public class Transformations {
         return new Matrix4f().translate(-scale.x/2, -scale.y/2, -scale.z/2).scale(scale);
     }
 
-    public static Matrix4f rotateAndScale(Vector3f scale, Vector3f rotationInRadians) {
+    public static Matrix4f adjustedRotateAndScale(Vector3f scale, Vector3f rotationInRadians) {
         final Matrix4f hitboxMatrix = new Matrix4f()
                 .rotateXYZ(rotationInRadians)
                 .scale(scale);
         return new Matrix4f()
                 .translate(calculateHitboxAdjustmentTranslation(hitboxMatrix))
+                .rotateXYZ(rotationInRadians)
+                .scale(scale);
+    }
+
+    public static Matrix4f unadjustedRotateAndScale(Vector3f scale, Vector3f rotationInRadians) {
+        return new Matrix4f()
                 .rotateXYZ(rotationInRadians)
                 .scale(scale);
     }

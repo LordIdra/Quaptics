@@ -5,49 +5,58 @@ import org.metamechanists.quaptics.utils.Colors;
 import java.util.Objects;
 
 public class Lore {
-    private final static String attributeSymbol = "&8⇨ ";
-    private final static String countSymbol = Colors.COUNT.getString() + "→ ";
-    private final static String rangeSymbol = Colors.TURRET.getString() + "↔ ";
-    private final static String damageSymbol = Colors.TURRET.getString() + "🗡 ";
-    private final static String powerSymbol = Colors.POWER.getString() + "⏻ ";
-    private final static String frequencySymbol = Colors.FREQUENCY.getString() + "λ ";
-    private final static String phaseSymbol = Colors.PHASE.getString() + "◎ ";
+    private final static String ATTRIBUTE_SYMBOL = "&8⇨ ";
+    private final static String COUNT_SYMBOL = Colors.COMPONENTS_MISC.getString() + "◎ ";
+    private final static String RANGE_SYMBOL = Colors.COMPONENTS_MISC.getString() + "↔ ";
+    private final static String DAMAGE_SYMBOL = Colors.COMPONENTS_MISC.getString() + "🗡 ";
+    private final static String POWER_SYMBOL = Colors.POWER.getString() + "⏻ ";
+    private final static String FREQUENCY_SYMBOL = Colors.FREQUENCY.getString() + "∀ ";
+    private final static String PHASE_SYMBOL = Colors.PHASE.getString() + "۞ ";
 
-    private final static String percentageSuffix = " &8%";
-    private final static String powerSuffix = " &8W";
-    private final static String rangeSuffix = " &8blocks";
-    private final static String damageSuffix = " &8dps";
-    private final static String frequencySuffix = " &8Hz";
-    private final static String phaseSuffix = " &8°";
+    private final static String PERCENTAGE_SUFFIX = " &8%";
+    private final static String POWER_SUFFIX = " &8W";
+    private final static String RANGE_SUFFIX = " &8blocks";
+    private final static String DAMAGE_SUFFIX = " &8dps";
+    private final static String FREQUENCY_SUFFIX = " &8Hz";
+    private final static String PHASE_SUFFIX = " &8°";
 
+    private static String format(double x) {
+        return Objects.toString(((int) x) == x
+                ? (int) x
+                : x);
+    }
+
+    public static String maxConnections(int maxConnections) {
+        return ATTRIBUTE_SYMBOL + COUNT_SYMBOL + "&7Max connections: &e" + Objects.toString(maxConnections);
+    }
     public static String range(int range) {
-        return attributeSymbol + rangeSymbol + "&7Range &e" + Objects.toString(range) + rangeSuffix;
+        return ATTRIBUTE_SYMBOL + RANGE_SYMBOL + "&7Range &e" + Objects.toString(range) + RANGE_SUFFIX;
     }
     public static String damage(double damage) {
-        return attributeSymbol + damageSymbol + "&7Damage &e" + Objects.toString(damage) + damageSuffix;
+        return ATTRIBUTE_SYMBOL + DAMAGE_SYMBOL + "&7Damage &e" + format(damage) + DAMAGE_SUFFIX;
     }
 
     public static String powerNoArrow(double power) {
-        return powerSymbol + "&7Power &e" + Objects.toString(power) + powerSuffix;
+        return POWER_SYMBOL + "&7Power &e" + Objects.toString(power) + POWER_SUFFIX;
     }
     public static String emissionPower(double emissionPower) {
-        return attributeSymbol + powerSymbol + "&7Emission Power &e" + Objects.toString(emissionPower) + powerSuffix;
+        return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Emission Power &e" + format(emissionPower) + POWER_SUFFIX;
     }
-    public static String minimumPower(double minimumPower) {
-        return attributeSymbol + powerSymbol + "&7Minimum Power &e" + Objects.toString(minimumPower) + powerSuffix;
+    public static String minPower(double minPower) {
+        return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Min Power &e" + format(minPower) + POWER_SUFFIX;
     }
     public static String maxPower(double maxPower) {
-        return attributeSymbol + powerSymbol + "&7Max Power &e" + Objects.toString(maxPower) + powerSuffix;
+        return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Max Power &e" + format(maxPower) + POWER_SUFFIX;
     }
     public static String powerLoss(int powerLossPercentage) {
-        return attributeSymbol + powerSymbol + "&7Power Loss &e" + Objects.toString(powerLossPercentage) + percentageSuffix;
+        return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Power Loss &e" + Objects.toString(powerLossPercentage) + PERCENTAGE_SUFFIX;
     }
 
     public static String frequencyNoArrow(double frequency) {
-        return frequencySymbol + "&7Frequency &e" + Objects.toString(frequency) + frequencySuffix;
+        return FREQUENCY_SYMBOL + "&7Frequency &e" + Objects.toString(frequency) + FREQUENCY_SUFFIX;
     }
 
     public static String phaseNoArrow(int phase) {
-        return phaseSymbol + "&7Phase &e" + Objects.toString(phase) + phaseSuffix;
+        return PHASE_SYMBOL + "&7Phase &e" + Objects.toString(phase) + PHASE_SUFFIX;
     }
 }

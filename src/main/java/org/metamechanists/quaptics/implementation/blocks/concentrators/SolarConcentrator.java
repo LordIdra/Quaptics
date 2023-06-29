@@ -1,4 +1,4 @@
-package org.metamechanists.quaptics.implementation.blocks;
+package org.metamechanists.quaptics.implementation.blocks.concentrators;
 
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
@@ -10,7 +10,7 @@ import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.entity.BlockDisplay;
+import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
@@ -19,79 +19,67 @@ import org.joml.Vector3f;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
-import org.metamechanists.quaptics.implementation.base.EnergyConnectedBlock;
+import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Transformations;
-import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
+import org.metamechanists.quaptics.utils.builders.ItemDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.ConnectionGroupID;
-import org.metamechanists.quaptics.utils.id.ConnectionPointID;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Emitter extends EnergyConnectedBlock {
-    private final Vector OUTPUT_LOCATION = new Vector(0.0F, 0.0F, getRadius());
-    private final Vector3f MAIN_DISPLAY_SIZE = new Vector3f(0.3F, 0.3F, (2*getRadius()));
+public class SolarConcentrator extends ConnectedBlock {
+    private static final float CONNECTION_ADDITIONAL_RADIUS = 0.05F;
+    private final float rotationY;
+    private final Vector outputLocation = new Vector(0.0F, 0.0F, displayRadius +CONNECTION_ADDITIONAL_RADIUS);
+    private final Vector3f mainDisplaySize = new Vector3f(displayRadius*2);
     private final double emissionPower;
 
-    public Emitter(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe,
-                   int capacity, int consumption, double emissionPower) {
-        super(group, item, recipeType, recipe, 0, capacity, consumption);
+    public SolarConcentrator(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe,
+                             float radius, float rotationY, double emissionPower, double maxPower) {
+        super(group, item, recipeType, recipe, radius, 2*radius, maxPower);
+        this.rotationY = rotationY;
         this.emissionPower = emissionPower;
     }
 
-    private BlockDisplay generateMainBlockDisplay(@NotNull Location from, Location to) {
-        return new BlockDisplayBuilder(from.clone().add(RELATIVE_CENTER))
-                .setMaterial(Material.PURPLE_CONCRETE)
-                .setTransformation(Transformations.lookAlong(MAIN_DISPLAY_SIZE, Transformations.getDirection(from, to)))
+    private ItemDisplay generateMainBlockDisplay(@NotNull Location from) {
+        final Vector3f mainDisplayRotation = new Vector3f((float)(Math.PI/2), 0.0F, rotationY);
+        return new ItemDisplayBuilder(from.clone().add(RELATIVE_CENTER))
+                .setMaterial(Material.GLASS_PANE)
+                .setTransformation(Transformations.unadjustedRotateAndScale(mainDisplaySize, mainDisplayRotation))
                 .build();
     }
 
     @Override
     protected void addDisplays(@NotNull DisplayGroup displayGroup, Location location, Player player) {
-        displayGroup.addDisplay("main", generateMainBlockDisplay(location, location.clone().add(rotateVectorByEyeDirection(player, INITIAL_LINE))));
+        displayGroup.addDisplay("main", generateMainBlockDisplay(location));
     }
 
     @Override
     protected List<ConnectionPoint> generateConnectionPoints(ConnectionGroupID groupID, Player player, Location location) {
         final List<ConnectionPoint> points = new ArrayList<>();
-        points.add(new ConnectionPointOutput(groupID, "output", formatPointLocation(player, location, OUTPUT_LOCATION)));
+        points.add(new ConnectionPointOutput(groupID, "output", formatPointLocation(player, location, outputLocation)));
         return points;
     }
 
     @Override
     public void onSlimefunTick(@NotNull Block block, SlimefunItem item, Config data) {
         super.onSlimefunTick(block, item, data);
-        final ConnectionGroupID ID = new ConnectionGroupID(BlockStorage.getLocationInfo(block.getLocation(), Keys.CONNECTION_GROUP_ID));
-        final ConnectionGroup group = ConnectionGroup.fromID(ID);
+        final ConnectionGroupID groupID = new ConnectionGroupID(BlockStorage.getLocationInfo(block.getLocation(), Keys.CONNECTION_GROUP_ID));
+        final ConnectionGroup group = groupID.get();
         final ConnectionPointOutput output = (ConnectionPointOutput) group.getPoint("output");
 
         if (!output.hasLink()) {
             return;
         }
 
-        if (powered) {
+        if (block.getWorld().isDayTime()) {
             output.getLink().setPower(emissionPower);
             output.getLink().setEnabled(true);
             return;
         }
 
         output.getLink().setEnabled(false);
-    }
-
-    @Override
-    public void connect(ConnectionPointID from, ConnectionPointID to) {
-        super.connect(from, to);
-        final DisplayGroup fromDisplayGroup = getDisplayGroup(ConnectionPoint.fromID(from).getGroup().getLocation());
-        fromDisplayGroup.removeDisplay("main").remove();
-        fromDisplayGroup.addDisplay("main", generateMainBlockDisplay(
-                ConnectionPoint.fromID(from).getGroup().getLocation(),
-                ConnectionPoint.fromID(to).getGroup().getLocation()));
-    }
-
-    @Override
-    protected float getRadius() {
-        return 0.45F;
     }
 
     @Override

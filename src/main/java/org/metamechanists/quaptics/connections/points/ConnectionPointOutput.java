@@ -13,7 +13,7 @@ public class ConnectionPointOutput extends ConnectionPoint {
         super(groupID, name, location, Material.LIME_CONCRETE, 15, 3);
     }
 
-    protected ConnectionPointOutput(ConnectionPointID ID) {
+    public ConnectionPointOutput(ConnectionPointID ID) {
         super(ID);
     }
 

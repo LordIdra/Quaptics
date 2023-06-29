@@ -6,7 +6,6 @@ import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
@@ -34,7 +33,7 @@ public class ConnectionGroup {
         saveData();
     }
 
-    private ConnectionGroup(ConnectionGroupID ID) {
+    public ConnectionGroup(ConnectionGroupID ID) {
         final DataTraverser traverser = new DataTraverser(ID);
         final JsonObject mainSection = traverser.getData();
         final JsonObject pointSection = mainSection.get("points").getAsJsonObject();
@@ -44,27 +43,22 @@ public class ConnectionGroup {
                 (key, value) -> points.put(key, new ConnectionPointID(value.getAsString())));
     }
 
-    public static @Nullable ConnectionGroup fromID(@NotNull ConnectionGroupID ID) {
-        if (Bukkit.getEntity(ID.get()) == null) { return null; }
-        return new ConnectionGroup(ID);
-    }
-
     private void saveData() {
         final DataTraverser traverser = new DataTraverser(ID);
         final JsonObject mainSection = traverser.getData();
         final JsonObject pointSection = new JsonObject();
         mainSection.add("blockID", new JsonPrimitive(blockID));
         points.forEach(
-                (key, value) -> pointSection.add(key, new JsonPrimitive(value.get().toString())));
+                (key, value) -> pointSection.add(key, new JsonPrimitive(value.getUUID().toString())));
         mainSection.add("points", pointSection);
         traverser.save();
     }
 
-    private ConnectionPoint getPoint(ConnectionPointID key) {
-        return ConnectionPoint.fromID(key);
+    private ConnectionPoint getPoint(ConnectionPointID pointID) {
+        return pointID.get();
     }
     public ConnectionPoint getPoint(String name) {
-        return ConnectionPoint.fromID(points.get(name));
+        return points.get(name).get();
     }
     public ConnectionPointOutput getOutput(String name) {
         return (ConnectionPointOutput) getPoint(name);
@@ -76,7 +70,7 @@ public class ConnectionGroup {
         return Items.getBlocks().get(blockID);
     }
     public Location getLocation() {
-        return Bukkit.getEntity(getID().get()).getLocation();
+        return Bukkit.getEntity(getID().getUUID()).getLocation();
     }
 
     public void tick() {

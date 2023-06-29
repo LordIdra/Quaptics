@@ -1,4 +1,4 @@
-package org.metamechanists.quaptics.utils.panel;
+package org.metamechanists.quaptics.panel;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
@@ -9,7 +9,6 @@ import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.entity.Display;
 import org.bukkit.entity.TextDisplay;
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.storage.DataTraverser;
@@ -38,16 +37,11 @@ public class PanelAttribute {
         saveData();
     }
 
-    private PanelAttribute(PanelAttributeID textDisplayID) {
+    public PanelAttribute(PanelAttributeID textDisplayID) {
         final DataTraverser traverser = new DataTraverser(textDisplayID);
         final JsonObject mainSection = traverser.getData();
         this.textDisplayID = new TextDisplayID(textDisplayID);
         this.hidden = mainSection.get("hidden").getAsBoolean();
-    }
-
-    @Contract("_ -> new")
-    public static @NotNull PanelAttribute fromID(PanelAttributeID ID) {
-        return new PanelAttribute(ID);
     }
 
     public void saveData() {
@@ -66,7 +60,7 @@ public class PanelAttribute {
     }
 
     private TextDisplay getTextDisplay() {
-        return (TextDisplay) Bukkit.getEntity(textDisplayID.get());
+        return (TextDisplay) Bukkit.getEntity(textDisplayID.getUUID());
     }
 
     public void setHidden(boolean hidden) {

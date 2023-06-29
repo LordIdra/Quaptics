@@ -13,7 +13,7 @@ public class ConnectionPointInput extends ConnectionPoint {
         super(groupID, name, location, Material.RED_CONCRETE, 15, 3);
     }
 
-    protected ConnectionPointInput(ConnectionPointID ID) {
+    public ConnectionPointInput(ConnectionPointID ID) {
         super(ID);
     }
 

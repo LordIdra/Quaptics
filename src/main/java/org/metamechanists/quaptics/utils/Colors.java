@@ -6,11 +6,17 @@ import org.metamechanists.metalib.utils.ColorUtils;
 
 public enum Colors {
     QUAPTICS("66CCFF"),
-    COUNT("9494B8"),
-    TURRET("993366"),
+
+    PRIMITIVE("996633"),
+    BASIC("8C8C8C"),
+    INTERMEDIATE("FFCC00"),
+    ADVANCED("FF6600"),
+
     POWER("FF0000"),
     FREQUENCY("00ff00"),
-    PHASE("FFCC00");
+    PHASE("FFCC00"),
+
+    COMPONENTS_MISC("993366");
 
     @Getter
     private final String string;

@@ -9,8 +9,8 @@ import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.utils.id.ConnectionPointID;
 import org.metamechanists.quaptics.utils.id.PanelID;
-import org.metamechanists.quaptics.utils.panel.Panel;
-import org.metamechanists.quaptics.utils.panel.PanelBuilder;
+import org.metamechanists.quaptics.panel.Panel;
+import org.metamechanists.quaptics.panel.PanelBuilder;
 
 public class PointPanel {
     private static final Vector POINT_OFFSET = new Vector(0, 0.2, 0);
@@ -31,7 +31,7 @@ public class PointPanel {
 
     public PointPanel(PanelID panelID, ConnectionPointID pointID) {
         this.pointID = pointID;
-        this.panel = Panel.fromID(panelID);
+        this.panel = panelID.get();
     }
 
     public PanelID getID() {
@@ -39,7 +39,7 @@ public class PointPanel {
     }
 
     private ConnectionPoint getPoint() {
-        return ConnectionPoint.fromID(pointID);
+        return pointID.get();
     }
 
     private double roundTo2dp(double value) {
@@ -53,7 +53,7 @@ public class PointPanel {
         panel.setHidden(hidden);
     }
 
-    public void toggleVisibility() {
+    public void toggleHidden() {
         panel.toggleHidden();
     }
 

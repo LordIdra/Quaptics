@@ -30,7 +30,7 @@ public class IntervalVelocityTicker implements DisplayTicker {
     }
 
     private BlockDisplay getDisplay() {
-        return (BlockDisplay) Bukkit.getEntity(displayID.get());
+        return (BlockDisplay) Bukkit.getEntity(displayID.getUUID());
     }
 
     @Override

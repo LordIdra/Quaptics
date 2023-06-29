@@ -14,14 +14,14 @@ public class DataTraverser {
     private final JsonObject data;
 
     public DataTraverser(CustomID ID) {
-        this.persistentDataHolder = Bukkit.getEntity(ID.get());
-        final JsonObject data = PersistentDataAPI.getJsonObject(persistentDataHolder, Keys.QUAPTICS_DATA);
+        this.persistentDataHolder = Bukkit.getEntity(ID.getUUID());
+        final JsonObject data = PersistentDataAPI.getJsonObject(persistentDataHolder, Keys.DATA);
         this.data = data == null
                 ? new JsonObject()
                 : data;
     }
 
     public void save() {
-        PersistentDataAPI.setJsonObject(persistentDataHolder, Keys.QUAPTICS_DATA, data);
+        PersistentDataAPI.setJsonObject(persistentDataHolder, Keys.DATA, data);
     }
 }

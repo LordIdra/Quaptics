@@ -113,12 +113,12 @@ public abstract class DisplayGroupTickerBlock extends SlimefunItem {
         BlockStorage.addBlockInfo(location, KEY_UUID, displayGroup.getParentUUID().toString());
     }
 
-    public DisplayGroupID getID(Location location) {
+    public DisplayGroupID getDisplayGroupID(Location location) {
         final String uuid = BlockStorage.getLocationInfo(location, KEY_UUID);
         return new DisplayGroupID(uuid);
     }
 
     public DisplayGroup getDisplayGroup(Location location) {
-        return DisplayGroup.fromUUID(getID(location).get());
+        return DisplayGroup.fromUUID(getDisplayGroupID(location).getUUID());
     }
 }

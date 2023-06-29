@@ -4,10 +4,12 @@ import com.destroystokyo.paper.ParticleBuilder;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import io.github.thebusybiscuit.slimefun4.core.handlers.BlockUseHandler;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -22,22 +24,46 @@ import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.id.ConnectionGroupID;
 import org.metamechanists.quaptics.utils.id.ConnectionPointID;
 
-import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.util.List;
 
 public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
+    protected final float displayRadius;
+    protected final float connectionRadius;
     public final double maxPower;
 
-    public ConnectedBlock(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, double maxPower) {
+    protected ConnectedBlock(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe,
+                             float displayRadius, float connectionRadius, double maxPower) {
         super(group, item, recipeType, recipe);
+        this.displayRadius = displayRadius;
+        this.connectionRadius = connectionRadius;
         this.maxPower = maxPower;
+        addItemHandler(onUse());
     }
 
-    private ConnectionGroup getGroup(Location location) {
-        return ConnectionGroup.fromID(new ConnectionGroupID(getID(location)));
+    public BlockUseHandler onUse() {
+        return event -> {
+            if (!event.getPlayer().isSneaking()) {
+                return;
+            }
+
+            final Block block = event.getClickedBlock().orElse(null);
+            if (block == null) {
+                return;
+            }
+
+            final ConnectionGroup group = getGroup(block.getLocation());
+            final boolean isAnyPanelHidden = group.getPoints().values().stream().anyMatch(
+                    point -> point.get().getPointPanel().isPanelHidden());
+
+            group.getPoints().values().forEach(pointID -> pointID.get().getPointPanel().setPanelHidden(!isAnyPanelHidden));
+
+        };
     }
 
-    protected abstract float getRadius();
+    protected ConnectionGroup getGroup(Location location) {
+        return new ConnectionGroupID(getDisplayGroupID(location)).get();
+    }
+
     protected abstract List<ConnectionPoint> generateConnectionPoints(ConnectionGroupID groupID, Player player, Location location);
 
     protected static double powerLoss(double inputPower,  double powerLoss) {
@@ -47,7 +73,7 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
     @Override
     protected void onPlace(@NotNull BlockPlaceEvent event) {
         final Location location = event.getBlock().getLocation();
-        final ConnectionGroupID groupID = new ConnectionGroupID(getID(location));
+        final ConnectionGroupID groupID = new ConnectionGroupID(getDisplayGroupID(location));
         final List<ConnectionPoint> points = generateConnectionPoints(groupID, event.getPlayer(), location);
         new ConnectionGroup(groupID, this, points);
         QuapticStorage.addGroup(groupID);
@@ -62,12 +88,12 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
         onBreak(event.getBlock().getLocation());
     }
 
-    @OverridingMethodsMustInvokeSuper
     public void connect(ConnectionPointID from, ConnectionPointID to) {
-        ConnectionPoint.fromID(from).getGroup().changePointLocation(from, calculateNewLocation(from, to));
+        from.get().getGroup().changePointLocation(from, calculatePointLocationSphere(from, to));
     }
 
     public void burnout(Location location) {
+        // TODO send message to player to inform them what happened
         onBreak(location);
         getGroup(location).remove();
         getDisplayGroup(location).getDisplays().values().forEach(Entity::remove);
@@ -88,10 +114,10 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
 
     public void onInputLinkUpdated(ConnectionGroup group) {}
 
-    public Location calculateNewLocation(ConnectionPointID from, ConnectionPointID to) {
-        final Location fromGroupLocation =  ConnectionPoint.fromID(from).getGroup().getLocation();
-        final Location toGroupLocation =  ConnectionPoint.fromID(to).getGroup().getLocation();
-        final Vector radiusDirection = Vector.fromJOML(Transformations.getDirection(fromGroupLocation, toGroupLocation).mul(getRadius()));
+    public Location calculatePointLocationSphere(ConnectionPointID from, ConnectionPointID to) {
+        final Location fromGroupLocation =  from.get().getGroup().getLocation();
+        final Location toGroupLocation =  to.get().getGroup().getLocation();
+        final Vector radiusDirection = Vector.fromJOML(Transformations.getDirection(fromGroupLocation, toGroupLocation).mul(connectionRadius));
         return fromGroupLocation.clone().add(0.5, 0.5, 0.5).add(radiusDirection);
     }
 }

@@ -11,7 +11,7 @@ public class BlockUpdateScheduler {
     private static Queue<ConnectionGroupID> newGroupsToTick = new ConcurrentLinkedQueue<>();
 
     private static void tickGroup(ConnectionGroupID groupID) {
-        final ConnectionGroup group = ConnectionGroup.fromID(groupID);
+        final ConnectionGroup group = groupID.get();
         if (group == null) {
             return;
         }
