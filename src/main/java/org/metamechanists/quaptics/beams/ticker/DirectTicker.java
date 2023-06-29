@@ -42,7 +42,9 @@ public class DirectTicker implements DisplayTicker {
 
     @Override
     public void remove() {
-        getDisplay().remove();
+        if (getDisplay() != null) {
+            getDisplay().remove();
+        }
     }
 
     @Override
