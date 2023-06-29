@@ -6,6 +6,7 @@ import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Display;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -13,9 +14,11 @@ import org.metamechanists.quaptics.Quaptics;
 
 public class BurnoutRunnable extends BukkitRunnable {
     private final Location location;
+    private final Location centerLocation;
 
     public BurnoutRunnable(Location location) {
         this.location = location;
+        this.centerLocation = location.toCenterLocation();
     }
 
     @Override
@@ -38,12 +41,21 @@ public class BurnoutRunnable extends BukkitRunnable {
                     });
 
                     new ParticleBuilder(Particle.LAVA)
-                            .location(location.clone().add(ConnectedBlock.RELATIVE_CENTER))
+                            .location(centerLocation)
                             .spawn();
+
+                    playSound(Sound.BLOCK_LAVA_EXTINGUISH, 2, 1);
                 }
             }, delay);
         }
 
-        Bukkit.getScheduler().runTaskLater(Quaptics.getInstance(), () -> connectedBlock.burnout(block.getLocation()), 60L);
+        Bukkit.getScheduler().runTaskLater(Quaptics.getInstance(), () -> {
+            playSound(Sound.ENTITY_GENERIC_EXPLODE, 2, 2);
+            connectedBlock.burnout(block.getLocation());
+        }, 60L);
+    }
+
+    public void playSound(Sound sound, int volume, int pitch) {
+        location.getWorld().playSound(centerLocation, sound, volume, pitch);
     }
 }
