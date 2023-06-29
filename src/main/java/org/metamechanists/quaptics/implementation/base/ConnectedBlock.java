@@ -104,14 +104,14 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
         BlockStorage.clearBlockInfo(location);
         location.getBlock().setBlockData(Material.AIR.createBlockData());
         new ParticleBuilder(Particle.FLASH)
-                .location(location.clone().add(RELATIVE_CENTER))
+                .location(location.toCenterLocation())
                 .count(3)
                 .spawn();
     }
 
-    public void doBurnoutCheck(ConnectionGroup group, @NotNull ConnectionPoint point) {
+    public boolean doBurnoutCheck(ConnectionGroup group, @NotNull ConnectionPoint point) {
         if (!point.hasLink() || point.getLink().getPower() <= maxPower) {
-            return;
+            return false;
         }
 
         final Location location = group.getLocation();
@@ -119,6 +119,8 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
             BlockStorage.addBlockInfo(location, Keys.BURNOUT, "true");
             new BurnoutRunnable(location).run();
         }
+
+        return true;
     }
 
     public void onInputLinkUpdated(ConnectionGroup group) {}

@@ -43,7 +43,7 @@ public class SolarConcentrator extends ConnectedBlock {
 
     private ItemDisplay generateMainBlockDisplay(@NotNull Location from) {
         final Vector3f mainDisplayRotation = new Vector3f((float)(Math.PI/2), 0.0F, rotationY);
-        return new ItemDisplayBuilder(from.clone().add(RELATIVE_CENTER))
+        return new ItemDisplayBuilder(from.toCenterLocation())
                 .setMaterial(Material.GLASS_PANE)
                 .setTransformation(Transformations.unadjustedRotateAndScale(mainDisplaySize, mainDisplayRotation))
                 .build();

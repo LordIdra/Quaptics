@@ -42,11 +42,11 @@ public class Lens extends ConnectedBlock {
 
     @Override
     protected void addDisplays(@NotNull DisplayGroup displayGroup, @NotNull Location location, Player player) {
-        displayGroup.addDisplay("main", new BlockDisplayBuilder(location.clone().add(RELATIVE_CENTER))
+        displayGroup.addDisplay("main", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(Material.GLASS)
                 .setTransformation(Transformations.adjustedRotateAndScale(glassDisplaySize, mainDisplayRotation))
                 .build());
-        displayGroup.addDisplay("concrete", new BlockDisplayBuilder(location.clone().add(RELATIVE_CENTER))
+        displayGroup.addDisplay("concrete", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(Material.WHITE_CONCRETE)
                 .setTransformation(Transformations.adjustedRotateAndScale(concreteDisplaySize, mainDisplayRotation))
                 .setViewRange(0)
@@ -67,7 +67,9 @@ public class Lens extends ConnectedBlock {
         final ConnectionPointInput input = group.getInput("input");
         final ConnectionPointOutput output = group.getOutput("output");
 
-        doBurnoutCheck(group, input);
+        if (doBurnoutCheck(group, input)) {
+            return;
+        }
 
         if (input.hasLink() && input.getLink().isEnabled()) {
             getDisplayGroup(group.getLocation()).getDisplays().get("concrete").setViewRange(VIEW_RANGE_ON);

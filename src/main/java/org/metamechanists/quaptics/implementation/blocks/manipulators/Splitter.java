@@ -49,11 +49,11 @@ public class Splitter extends ConnectedBlock {
 
     @Override
     protected void addDisplays(@NotNull DisplayGroup displayGroup, @NotNull Location location, Player player) {
-        displayGroup.addDisplay("main", new BlockDisplayBuilder(location.clone().add(RELATIVE_CENTER))
+        displayGroup.addDisplay("main", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(Material.LIGHT_GRAY_STAINED_GLASS)
                 .setTransformation(Transformations.adjustedRotateAndScale(glassDisplaySize, displayRotation))
                 .build());
-        displayGroup.addDisplay("concrete", new BlockDisplayBuilder(location.clone().add(RELATIVE_CENTER))
+        displayGroup.addDisplay("concrete", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(concreteMaterial)
                 .setBrightness(BRIGHTNESS_ON)
                 .setTransformation(Transformations.adjustedRotateAndScale(concreteDisplaySize, displayRotation))
@@ -82,7 +82,9 @@ public class Splitter extends ConnectedBlock {
                 .mapToObj(i -> (ConnectionPointOutput) group.getPoint("output " + Objects.toString(i)))
                 .toList();
 
-        doBurnoutCheck(group, input);
+        if (doBurnoutCheck(group, input)) {
+            return;
+        }
 
         if (input.hasLink() && input.getLink().isEnabled()) {
             getDisplayGroup(group.getLocation()).getDisplays().get("concrete").setViewRange(VIEW_RANGE_ON);

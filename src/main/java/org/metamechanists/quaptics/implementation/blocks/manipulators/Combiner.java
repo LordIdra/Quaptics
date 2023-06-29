@@ -49,11 +49,11 @@ public class Combiner extends ConnectedBlock {
 
     @Override
     protected void addDisplays(@NotNull DisplayGroup displayGroup, @NotNull Location location, Player player) {
-        displayGroup.addDisplay("glass", new BlockDisplayBuilder(location.clone().add(RELATIVE_CENTER))
+        displayGroup.addDisplay("glass", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(Material.GRAY_STAINED_GLASS)
                 .setTransformation(Transformations.adjustedRotateAndScale(glassDisplaySize, displayRotation))
                 .build());
-        displayGroup.addDisplay("concrete", new BlockDisplayBuilder(location.clone().add(RELATIVE_CENTER))
+        displayGroup.addDisplay("concrete", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(concreteMaterial)
                 .setViewRange(BRIGHTNESS_ON)
                 .setTransformation(Transformations.adjustedRotateAndScale(concreteDisplaySize, displayRotation))
@@ -82,7 +82,11 @@ public class Combiner extends ConnectedBlock {
                 .toList();
         final ConnectionPointOutput output = (ConnectionPointOutput) group.getPoint("output");
 
-        inputs.forEach(input -> doBurnoutCheck(group, input));
+        for (ConnectionPointInput input : inputs) {
+            if (doBurnoutCheck(group, input)) {
+                return;
+            }
+        }
 
         if (inputs.stream().anyMatch(input -> input.hasLink() && input.getLink().isEnabled())) {
             getDisplayGroup(group.getLocation()).getDisplays().get("concrete").setViewRange(VIEW_RANGE_ON);

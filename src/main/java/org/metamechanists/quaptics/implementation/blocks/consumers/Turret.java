@@ -72,7 +72,7 @@ public class Turret extends ConnectedBlock {
 
     @Override
     protected void addDisplays(@NotNull DisplayGroup displayGroup, @NotNull Location location, Player player) {
-        displayGroup.addDisplay("main", new BlockDisplayBuilder(location.clone().add(RELATIVE_CENTER))
+        displayGroup.addDisplay("main", new BlockDisplayBuilder(location.toCenterLocation())
                         .setMaterial(Material.POLISHED_ANDESITE)
                         .setTransformation(Transformations.adjustedScale(mainDisplaySize))
                         .build());
@@ -90,7 +90,9 @@ public class Turret extends ConnectedBlock {
     public void onInputLinkUpdated(@NotNull ConnectionGroup group) {
         final ConnectionPointInput input = (ConnectionPointInput) group.getPoint("input");
 
-        doBurnoutCheck(group, input);
+        if (doBurnoutCheck(group, input)) {
+            return;
+        }
 
         BlockStorage.addBlockInfo(group.getLocation(), Keys.POWERED, "false");
         if (!input.hasLink()) {
@@ -136,7 +138,7 @@ public class Turret extends ConnectedBlock {
         LivingEntity target = null;
         double targetDistance = 9999999;
         for (Entity entity : targetableEntities) {
-            final double distance = entity.getLocation().distance(location.clone().add(RELATIVE_CENTER));
+            final double distance = entity.getLocation().distance(location.toCenterLocation());
             if (distance < targetDistance) {
                 target = (LivingEntity) entity;
                 targetDistance = distance;
@@ -151,7 +153,7 @@ public class Turret extends ConnectedBlock {
 
         if (target == null
                 || target.isDead()
-                || location.clone().add(RELATIVE_CENTER).distance(target.getLocation()) > range) {
+                || location.toCenterLocation().distance(target.getLocation()) > range) {
             clearTarget(location);
             return;
         }

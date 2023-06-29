@@ -32,10 +32,9 @@ import java.util.List;
 import static dev.sefiraat.sefilib.slimefun.blocks.DisplayGroupBlock.KEY_UUID;
 
 public abstract class DisplayGroupTickerBlock extends SlimefunItem {
-    protected static final Vector RELATIVE_CENTER = new Vector(0.5, 0.5, 0.5);
     protected static final Vector INITIAL_LINE = new Vector(0, 0, 1);
 
-    public DisplayGroupTickerBlock(
+    protected DisplayGroupTickerBlock(
             ItemGroup group, SlimefunItemStack item,
             RecipeType recipeType, ItemStack[] recipe) {
         super(group, item, recipeType, recipe);
