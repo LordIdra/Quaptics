@@ -67,7 +67,9 @@ public class Lens extends ConnectedBlock {
         final ConnectionPointInput input = group.getInput("input");
         final ConnectionPointOutput output = group.getOutput("output");
 
-        doBurnoutCheck(group, input);
+        if (doBurnoutCheck(group, input)) {
+            return;
+        }
 
         if (input.hasLink() && input.getLink().isEnabled()) {
             getDisplayGroup(group.getLocation()).getDisplays().get("concrete").setViewRange(VIEW_RANGE_ON);
