@@ -37,7 +37,7 @@ public class BurnoutRunnable extends BukkitRunnable {
                 }
 
                 if (ticks % 4 == 0) {
-                    playSound(Sound.BLOCK_LAVA_EXTINGUISH, 1, 1);
+                    playSound(Sound.BLOCK_LAVA_EXTINGUISH, 0.5f, 0.6f);
                 }
 
                 if (ticks % 2 == 0) {
@@ -56,7 +56,7 @@ public class BurnoutRunnable extends BukkitRunnable {
         }
 
         Bukkit.getScheduler().runTaskLater(Quaptics.getInstance(), () -> {
-            playSound(Sound.ENTITY_GENERIC_EXPLODE, 2, 1.5f);
+            playSound(Sound.ENTITY_GENERIC_EXPLODE, 2, 1.2f);
             connectedBlock.burnout(block.getLocation());
         }, 60L);
     }
