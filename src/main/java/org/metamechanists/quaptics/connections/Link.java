@@ -116,7 +116,7 @@ public class Link {
             tickerID = null;
         }
 
-        if (!enabled) {
+        if (!enabled || getOutput() == null || getInput() == null) {
             return;
         }
 
