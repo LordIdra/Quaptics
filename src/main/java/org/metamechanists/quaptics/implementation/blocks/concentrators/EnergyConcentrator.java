@@ -36,7 +36,7 @@ public class EnergyConcentrator extends EnergyConnectedBlock {
 
     public EnergyConcentrator(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe,
                               int capacity, int consumption, double emissionPower, double maxPower) {
-        super(group, item, recipeType, recipe, 0.45F, 0.90F, maxPower, capacity, consumption);
+        super(group, item, recipeType, recipe, 0.45F, 0.45F, maxPower, capacity, consumption);
         this.emissionPower = emissionPower;
     }
 
