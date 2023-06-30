@@ -117,7 +117,7 @@ public class Lore {
         return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Operating Power &e" + format(minPower) + " &7- &e" + format(maxPower) + POWER_SUFFIX;
     }
     public static String chargeBar(int charge, int capacity) {
-        return ATTRIBUTE_SYMBOL + CHARGE_SYMBOL + "&7Charge " + progressBar(charge, capacity, "&c", "&7");
+        return ATTRIBUTE_SYMBOL + CHARGE_SYMBOL + "&7Charge " + progressBar(charge, capacity, Colors.CHARGE.getString(), "&7");
     }
     public static String chargeValues(int charge, int capacity) {
         return ATTRIBUTE_SYMBOL + CHARGE_SYMBOL + "&7" + charge + " &8/ &7" + capacity + CHARGE_SUFFIX;
