@@ -98,6 +98,7 @@ public class Repeater extends ConnectedBlock {
         doDisplayBrightnessCheck(group.getLocation(), "concrete", false);
 
         if (!output.hasLink()) {
+            setRepeaterPowered(group.getLocation(), false);
             return;
         }
 
