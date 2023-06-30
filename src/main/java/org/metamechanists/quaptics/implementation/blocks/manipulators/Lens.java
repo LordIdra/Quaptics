@@ -73,6 +73,10 @@ public class Lens extends ConnectedBlock {
 
         doDisplayBrightnessCheck(group.getLocation(), "concrete");
 
+        if (!output.hasLink()) {
+            return;
+        }
+
         if (!input.isLinkEnabled()) {
             output.disableLinkIfExists();
             return;
