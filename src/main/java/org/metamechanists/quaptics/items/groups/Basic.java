@@ -138,7 +138,7 @@ public class Basic {
                 ConnectedBlock.Settings.builder()
                         .tier(Tier.BASIC)
                         .displayRadius(0.21F)
-                        .connectionRadius(0.21F)
+                        .connectionRadius(0.315F)
                         .powerLoss(0.07)
                         .build()).register(addon);
 

@@ -101,7 +101,7 @@ public class Intermediate {
                 ConnectedBlock.Settings.builder()
                         .tier(Tier.INTERMEDIATE)
                         .displayRadius(0.18F)
-                        .connectionRadius(0.18F)
+                        .connectionRadius(0.27F)
                         .powerLoss(0.04)
                         .build()).register(addon);
 

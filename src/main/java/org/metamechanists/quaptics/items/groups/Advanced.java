@@ -121,7 +121,7 @@ public class Advanced {
                 ConnectedBlock.Settings.builder()
                         .tier(Tier.ADVANCED)
                         .displayRadius(0.15F)
-                        .connectionRadius(0.15F)
+                        .connectionRadius(0.225F)
                         .powerLoss(0.02)
                         .build()).register(addon);
 
