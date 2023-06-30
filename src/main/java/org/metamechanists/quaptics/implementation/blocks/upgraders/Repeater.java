@@ -96,14 +96,13 @@ public class Repeater extends ConnectedBlock {
         }
 
         doDisplayBrightnessCheck(group.getLocation(), "concrete", false);
+        setRepeaterPowered(group.getLocation(), input.isLinkEnabled() && input.getLink().getFrequency() < settings.getMaxFrequency());
 
         if (!output.hasLink()) {
-            setRepeaterPowered(group.getLocation(), false);
             return;
         }
 
         if (!input.isLinkEnabled()) {
-            setRepeaterPowered(group.getLocation(), false);
             output.disableLinkIfExists();
             return;
         }
@@ -113,7 +112,6 @@ public class Repeater extends ConnectedBlock {
             newFrequency += settings.getFrequencyStep();
         }
 
-        setRepeaterPowered(group.getLocation(), true);
         output.getLink().setAttributes(
                 powerLoss(input.getLink().getPower(), settings.getPowerLoss()),
                 newFrequency,
