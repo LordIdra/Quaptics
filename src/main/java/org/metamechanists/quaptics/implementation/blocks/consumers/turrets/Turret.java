@@ -144,9 +144,8 @@ public abstract class Turret extends ConnectedBlock {
     @Override
     protected void onSlimefunTick(@NotNull Block block, SlimefunItem item, Config data) {
         if (Objects.equal(BlockStorage.getLocationInfo(block.getLocation(), Keys.BS_POWERED), "true")) {
-            shoot(block.getLocation());
-        } else {
             retarget(block.getLocation());
+            shoot(block.getLocation());
         }
     }
 }

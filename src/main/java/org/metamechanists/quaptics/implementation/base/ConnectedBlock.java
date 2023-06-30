@@ -224,7 +224,7 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
 
         // Built in Power Methods
         public boolean checkPower(double power) {
-            return this.minPower <= power && power < tier.maxPower;
+            return this.minPower <= power && power <= tier.maxPower;
         }
         public double powerLoss(double power) {
             return power*(1-powerLoss);
@@ -232,6 +232,9 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
 
         // Built in Frequency Methods
         public boolean checkFrequency(double frequency) {
+            if (this.minFrequency == 0 && this.maxFrequency == 0) {
+                return true;
+            }
             return this.minFrequency <= frequency && frequency < this.maxFrequency;
         }
         public double stepFrequency(double frequency) {
