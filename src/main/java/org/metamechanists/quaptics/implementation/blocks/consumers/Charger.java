@@ -31,9 +31,9 @@ import java.util.List;
 public class Charger extends ConnectedBlock {
     private final Vector3f mainDisplaySize = new Vector3f(0.7F, 0.3F, 0.7F);
     private final Vector3f glassDisplaySize = new Vector3f(0.5F, 0.1F, 0.5F);
-    private final Vector3f itemDisplaySize = new Vector3f(1);
-    private final Vector3f topOffset = new Vector3f(0, 0.25F, 0);
-    private final Vector3f bottomOffset = new Vector3f(0, -0.25F, 0);
+    private final Vector3f itemDisplaySize = new Vector3f(0.6F);
+    private final Vector3f topOffset = new Vector3f(0, 0.3F, 0);
+    private final Vector3f bottomOffset = new Vector3f(0, -0.3F, 0);
     private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -settings.getConnectionRadius());
 
     public Charger(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, Settings settings) {
@@ -119,7 +119,7 @@ public class Charger extends ConnectedBlock {
                 .build());
         displayGroup.addDisplay("item", new ItemDisplayBuilder(location.toCenterLocation())
                 .setItemStack(null)
-                .setTransformation(Transformations.adjustedScale(itemDisplaySize))
+                .setTransformation(Transformations.unadjustedScale(itemDisplaySize))
                 .build());
     }
 
