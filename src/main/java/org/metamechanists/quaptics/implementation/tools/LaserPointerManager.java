@@ -25,17 +25,17 @@ public class LaserPointerManager extends BukkitRunnable {
     public void run() {
         for (LaserPointer.LaserPoint point : points.values()) {
             final Player player = Bukkit.getPlayer(point.getPlayerId());
-            final BlockDisplay blockDisplay = point.getDisplayID().get();
+            final BlockDisplayID displayID = point.getDisplayID();
             if (player == null) {
                 continue;
             }
 
-            if (blockDisplay == null) {
+            if (displayID == null || displayID.get() == null) {
                 createBlockDisplay(point, player);
                 continue;
             }
 
-            updatePoint(point, player, blockDisplay);
+            updatePoint(point, player, displayID.get());
         }
     }
 
