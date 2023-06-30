@@ -12,7 +12,7 @@ import org.metamechanists.quaptics.utils.id.ConnectionGroupID;
 import org.metamechanists.quaptics.utils.id.PanelID;
 
 public class CapacitorPanel {
-    private static final Vector BLOCK_OFFSET = new Vector(0, 1.0, 0);
+    private static final Vector BLOCK_OFFSET = new Vector(0, 0.5, 0);
     private static final float SIZE = 0.40F;
     private final ConnectionGroupID groupID;
     private final Panel panel;
@@ -61,8 +61,8 @@ public class CapacitorPanel {
 
         setPanelHidden(false);
 
-        panel.setText("chargeText", Lore.chargeBar((int)charge, (int)capacity));
-        panel.setText("chargeBar", Lore.chargeValues((int)charge, (int)capacity));
+        panel.setText("chargeText", Lore.chargeBarRaw((int)charge, (int)capacity));
+        panel.setText("chargeBar", Lore.chargeValuesRaw((int)charge, (int)capacity));
     }
 
     public void remove() {
