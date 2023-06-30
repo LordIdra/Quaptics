@@ -58,7 +58,7 @@ public class Intermediate {
             .build();
     public static final SlimefunItemStack ENERGY_CONCENTRATOR_2 = new SlimefunItemStack(
             "QP_ENERGY_CONCENTRATOR_2",
-            Tier.INTERMEDIATE.material,
+            Tier.INTERMEDIATE.concreteMaterial,
             "&eEnergy Concentrator &bII",
             Lore.create(ENERGY_CONCENTRATOR_2_SETTINGS,
                     "&7● Consumes energy",

@@ -1,11 +1,14 @@
 package org.metamechanists.quaptics.items;
 
-import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import lombok.Getter;
-import org.metamechanists.quaptics.Quaptics;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
-import org.metamechanists.quaptics.items.groups.*;
+import org.metamechanists.quaptics.items.groups.Advanced;
+import org.metamechanists.quaptics.items.groups.Basic;
+import org.metamechanists.quaptics.items.groups.Guide;
+import org.metamechanists.quaptics.items.groups.Intermediate;
+import org.metamechanists.quaptics.items.groups.Primitive;
+import org.metamechanists.quaptics.items.groups.Tools;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -15,8 +18,6 @@ public class Items {
     private static final Map<String, ConnectedBlock> blocks = new LinkedHashMap<>();
 
     public static void initialize() {
-        final SlimefunAddon addon = Quaptics.getInstance();
-
         Guide.initialize();
         Tools.initialize();
         Primitive.initialize();

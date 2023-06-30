@@ -9,6 +9,7 @@ import org.metamechanists.quaptics.Quaptics;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
 import org.metamechanists.quaptics.implementation.blocks.concentrators.SolarConcentrator;
 import org.metamechanists.quaptics.implementation.blocks.consumers.Turret;
+import org.metamechanists.quaptics.implementation.blocks.manipulators.Capacitor;
 import org.metamechanists.quaptics.implementation.blocks.manipulators.Combiner;
 import org.metamechanists.quaptics.implementation.blocks.manipulators.Lens;
 import org.metamechanists.quaptics.implementation.blocks.manipulators.Splitter;
@@ -45,6 +46,13 @@ public class Primitive {
             .connectionRadius(0.8F)
             .powerLoss(0.2)
             .connections(2)
+            .build();
+
+    public static final ConnectedBlock.Settings CAPACITOR_1_SETTINGS = ConnectedBlock.Settings.builder()
+            .tier(Tier.PRIMITIVE)
+            .displayRadius(0.4F)
+            .connectionRadius(0.5F)
+            .capacity(200)
             .build();
 
     public static final ConnectedBlock.Settings TURRET_SETTINGS = ConnectedBlock.Settings.builder()
@@ -85,6 +93,14 @@ public class Primitive {
             Lore.create(SPLITTER_1_2_SETTINGS,
                     "&7● Splits one quaptic ray into multiple"));
 
+    public static final SlimefunItemStack CAPACITOR_1 = new SlimefunItemStack(
+            "QP_CAPACITOR_1",
+            Material.LIGHT_BLUE_CONCRETE,
+            "&3Capacitor &bI",
+            Lore.create(CAPACITOR_1_SETTINGS,
+                    "&7● Stores charge",
+                    "&7● Outputs at a constant power"));
+
     public static final SlimefunItemStack TURRET = new SlimefunItemStack(
             "QP_TURRET",
             Material.SMOOTH_STONE_SLAB,
@@ -123,6 +139,13 @@ public class Primitive {
                 RecipeType.NULL,
                 new ItemStack[]{},
                 SPLITTER_1_2_SETTINGS).register(addon);
+
+        new Capacitor(
+                Groups.PRIMITIVE,
+                CAPACITOR_1,
+                RecipeType.NULL,
+                new ItemStack[]{},
+                CAPACITOR_1_SETTINGS).register(addon);
 
         new Turret(
                 Groups.PRIMITIVE,

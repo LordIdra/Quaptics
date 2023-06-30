@@ -45,7 +45,7 @@ public class Splitter extends ConnectedBlock {
                 .setTransformation(Transformations.adjustedRotateAndScale(glassDisplaySize, displayRotation))
                 .build());
         displayGroup.addDisplay("concrete", new BlockDisplayBuilder(location.toCenterLocation())
-                .setMaterial(settings.getTier().material)
+                .setMaterial(settings.getTier().concreteMaterial)
                 .setBrightness(CONCRETE_BRIGHTNESS)
                 .setViewRange(VIEW_RANGE_OFF)
                 .setTransformation(Transformations.adjustedRotateAndScale(concreteDisplaySize, displayRotation))

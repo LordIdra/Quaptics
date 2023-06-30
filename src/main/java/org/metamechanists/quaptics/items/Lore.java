@@ -15,11 +15,13 @@ public class Lore {
     private static final String COUNT_SYMBOL = Colors.COMPONENTS_MISC.getString() + "◎ ";
     private static final String RANGE_SYMBOL = Colors.COMPONENTS_MISC.getString() + "↔ ";
     private static final String DAMAGE_SYMBOL = Colors.COMPONENTS_MISC.getString() + "🗡 ";
+    private static final String CHARGE_SYMBOL = Colors.CHARGE.getString() + "◆";
     private static final String POWER_SYMBOL = Colors.POWER.getString() + "⏻ ";
     private static final String FREQUENCY_SYMBOL = Colors.FREQUENCY.getString() + "∀ ";
     private static final String PHASE_SYMBOL = Colors.PHASE.getString() + "۞ ";
 
     private static final String PERCENTAGE_SUFFIX = " &8%";
+    private static final String CHARGE_SUFFIX = " &8QEU";
     private static final String POWER_SUFFIX = " &8W";
     private static final String RANGE_SUFFIX = " &8blocks";
     private static final String DAMAGE_SUFFIX = " &8dps";
@@ -35,8 +37,11 @@ public class Lore {
     private static @NotNull List<String> fromSettings(@NotNull ConnectedBlock.Settings settings) {
         final List<String> lore = new ArrayList<>();
 
-        if (settings.getTier() != null && settings.getEmissionPower() == 0) {
+        if (settings.getTier() != null && settings.getCapacity() != 0) {
             lore.add(operatingPower(settings.getMinPower(), settings.getTier().maxPower));
+        }
+        if (settings.getCapacity() != 0) {
+            lore.add(capacity(settings.getCapacity()));
         }
         if (settings.getEmissionPower() != 0) {
             lore.add(emissionPower(settings.getEmissionPower()));
@@ -81,6 +86,10 @@ public class Lore {
     }
     public static String damage(double damage) {
         return ATTRIBUTE_SYMBOL + DAMAGE_SYMBOL + "&7Damage &e" + format(damage) + DAMAGE_SUFFIX;
+    }
+
+    public static String capacity(double capacity) {
+        return CHARGE_SYMBOL + "&7Capacity &e" + Objects.toString(capacity) + CHARGE_SUFFIX;
     }
 
     public static String powerNoArrow(double power) {

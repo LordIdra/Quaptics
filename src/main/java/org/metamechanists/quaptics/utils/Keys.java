@@ -24,6 +24,7 @@ public class Keys {
     public static final NamespacedKey DATA = newKey("DATA");
 
     public static final String BURNOUT = "QP_BURNOUT";
+    public static final String CHARGE = "QP_CHARGE";
     public static final String POWERED = "QP_POWERED";
     public static final String TARGET = "QP_TARGET";
 }

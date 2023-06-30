@@ -12,6 +12,7 @@ public enum Colors {
     INTERMEDIATE("FFCC00"),
     ADVANCED("FF6600"),
 
+    CHARGE("33CCFF"),
     POWER("FF0000"),
     FREQUENCY("00ff00"),
     PHASE("FFCC00"),

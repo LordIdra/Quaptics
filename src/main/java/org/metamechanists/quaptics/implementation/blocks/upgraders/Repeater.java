@@ -25,7 +25,6 @@ import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.ConnectionGroupID;
 
 import java.util.List;
-import java.util.Objects;
 
 public class Repeater extends ConnectedBlock {
     private static final int CONCRETE_BRIGHTNESS = 15;
@@ -64,7 +63,7 @@ public class Repeater extends ConnectedBlock {
                 .setTransformation(Transformations.adjustedRotateAndScale(glassDisplaySize, mainDisplayRotation))
                 .build());
         displayGroup.addDisplay("concrete", new BlockDisplayBuilder(location.toCenterLocation())
-                .setMaterial(settings.getTier().material)
+                .setMaterial(settings.getTier().concreteMaterial)
                 .setTransformation(Transformations.adjustedScaleAndOffset(concreteDisplaySize, concreteOffset))
                 .setBrightness(CONCRETE_BRIGHTNESS)
                 .build());

@@ -73,7 +73,7 @@ public class Advanced {
 
     public static final SlimefunItemStack ENERGY_CONCENTRATOR_3 = new SlimefunItemStack(
             "QP_ENERGY_CONCENTRATOR_3",
-            Tier.ADVANCED.material,
+            Tier.ADVANCED.concreteMaterial,
             "&eEnergy Concentrator &bIII",
             Lore.create(ENERGY_CONCENTRATOR_3_SETTINGS,
                     "&7● Consumes energy",

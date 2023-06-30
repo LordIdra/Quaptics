@@ -35,7 +35,7 @@ public class EnergyConcentrator extends EnergyConnectedBlock {
 
     private BlockDisplay generateMainBlockDisplay(@NotNull Location from, Location to) {
         return new BlockDisplayBuilder(from.toCenterLocation())
-                .setMaterial(settings.getTier().material)
+                .setMaterial(settings.getTier().concreteMaterial)
                 .setTransformation(Transformations.lookAlong(mainDisplaySize, Transformations.getDirection(from, to)))
                 .build();
     }

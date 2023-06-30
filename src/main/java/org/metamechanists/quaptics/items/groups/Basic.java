@@ -108,7 +108,7 @@ public class Basic {
 
     public static final SlimefunItemStack ENERGY_CONCENTRATOR_1 = new SlimefunItemStack(
             "QP_ENERGY_CONCENTRATOR_1",
-            Tier.BASIC.material,
+            Tier.BASIC.concreteMaterial,
             "&eEnergy Concentrator &bI",
             Lore.create(ENERGY_CONCENTRATOR_1_SETTINGS,
                     "&7● Consumes energy",
