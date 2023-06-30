@@ -1,4 +1,4 @@
-package org.metamechanists.quaptics.implementation.blocks.consumers;
+package org.metamechanists.quaptics.implementation.blocks.consumers.turrets;
 
 import com.google.common.base.Objects;
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
@@ -12,15 +12,17 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.entity.*;
+import org.bukkit.entity.BlockDisplay;
+import org.bukkit.entity.Damageable;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
-import org.metamechanists.quaptics.beams.DeprecatedTickerStorage;
-import org.metamechanists.quaptics.beams.ticker.IntervalVelocityTicker;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
@@ -34,20 +36,18 @@ import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
-public class Turret extends ConnectedBlock {
+public abstract class Turret extends ConnectedBlock {
     private final Vector3f mainDisplaySize = new Vector3f(0.6F, 0.6F, 0.6F);
-    private final Vector3f barrelSize = new Vector3f(0.18F, 0.18F, settings.getDisplayRadius());
-    private final Vector3f barrelTranslation = new Vector3f(0, 0, settings.getDisplayRadius() *0.8F);
-    private final Vector barrelLocation = new Vector(0.5, 0.7, 0.5);
-    private final Vector3f projectileSize = new Vector3f(0.095F, 0.095F, 0.20F);
+    private final Vector3f barrelSize = new Vector3f(0.18F, 0.18F, settings.getDisplayRadius()*1.3F);
+    private final Vector3f barrelTranslation = new Vector3f(0, 0, settings.getDisplayRadius()*0.8F);
+    protected final Vector barrelLocation = new Vector(0.5, 0.7, 0.5);
     private final Vector inputLocation = new Vector(0.0F, 0.0F, -settings.getConnectionRadius());
 
-    public Turret(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe,
-                  Settings settings) {
+    public Turret(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, Settings settings) {
         super(group, item, recipeType, recipe, settings);
     }
 
-    private Matrix4f getBarrelMatrix(@NotNull Location from, Location to) {
+    protected Matrix4f getBarrelMatrix(@NotNull Location from, Location to) {
         return Transformations.lookAlong(barrelSize, Transformations.getDirection(from.clone().add(barrelLocation), to)).translate(barrelTranslation);
     }
 
@@ -86,7 +86,7 @@ public class Turret extends ConnectedBlock {
             return;
         }
 
-        if (input.getLink().getPower() >= settings.getMinPower()) {
+        if (settings.checkPower(input.getLink().getPower()) && settings.checkFrequency(input.getLink().getFrequency())) {
             BlockStorage.addBlockInfo(group.getLocation(), Keys.BS_POWERED, "true");
         }
     }
@@ -95,12 +95,12 @@ public class Turret extends ConnectedBlock {
         BlockStorage.addBlockInfo(location, Keys.BS_TARGET, entity.getUniqueId().toString());
     }
 
-    private void clearTarget(Location location) {
+    protected void clearTarget(Location location) {
         BlockStorage.addBlockInfo(location, Keys.BS_TARGET, null);
     }
 
-    private @Nullable LivingEntity getTarget(Location location) {
-        final String targetString =  BlockStorage.getLocationInfo(location, Keys.BS_TARGET);
+    protected @Nullable LivingEntity getTarget(Location location) {
+        final String targetString = BlockStorage.getLocationInfo(location, Keys.BS_TARGET);
         if (targetString == null) {
             return null;
         }
@@ -121,14 +121,14 @@ public class Turret extends ConnectedBlock {
         return target;
     }
 
-    private void retarget(Location location) {
+    protected void retarget(Location location) {
         if (BlockStorage.getLocationInfo(location, Keys.BS_TARGET) != null) {
             return;
         }
 
         final Collection<Entity> entities = location.getWorld().getNearbyEntities(location, settings.getRange(), settings.getRange(), settings.getRange());
         final Collection<Entity> targetableEntities = entities.stream().filter(entity ->
-                entity.getSpawnCategory().equals(SpawnCategory.MONSTER)
+                settings.getTargets().contains(entity.getSpawnCategory())
                         && entity instanceof Damageable
                         && entity.getLocation().distance(location) < settings.getRange()).toList();
 
@@ -139,25 +139,7 @@ public class Turret extends ConnectedBlock {
         setTarget(location, getClosestEntity(targetableEntities, location));
     }
 
-    private void shoot(Location location) {
-        final LivingEntity target = getTarget(location);
-
-        if (target == null || target.isDead() || location.toCenterLocation().distance(target.getLocation()) > settings.getRange()) {
-            clearTarget(location);
-            return;
-        }
-
-        getDisplayGroup(location).getDisplays().get("barrel").setTransformationMatrix(getBarrelMatrix(location, target.getEyeLocation()));
-
-        DeprecatedTickerStorage.deprecate(new IntervalVelocityTicker(
-                Material.LIGHT_BLUE_CONCRETE,
-                location.clone().add(barrelLocation),
-                target.getEyeLocation(),
-                projectileSize,
-                1));
-
-        target.damage(settings.getDamage());
-    }
+    protected abstract void shoot(Location location);
 
     @Override
     protected void onSlimefunTick(@NotNull Block block, SlimefunItem item, Config data) {
@@ -165,10 +147,5 @@ public class Turret extends ConnectedBlock {
             retarget(block.getLocation());
             shoot(block.getLocation());
         }
-    }
-
-    @Override
-    protected @NotNull Material getBaseMaterial() {
-        return Material.SMOOTH_STONE_SLAB;
     }
 }

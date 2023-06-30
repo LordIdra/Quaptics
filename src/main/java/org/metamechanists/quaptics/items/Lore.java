@@ -1,6 +1,7 @@
 package org.metamechanists.quaptics.items;
 
 import org.jetbrains.annotations.NotNull;
+import org.metamechanists.quaptics.QuapticTicker;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
 import org.metamechanists.quaptics.utils.Colors;
 
@@ -14,6 +15,7 @@ public class Lore {
     private static final String ATTRIBUTE_SYMBOL = "&8⇨ ";
     private static final String COUNT_SYMBOL = Colors.COMPONENTS_MISC.getString() + "◎ ";
     private static final String RANGE_SYMBOL = Colors.COMPONENTS_MISC.getString() + "↔ ";
+    private static final String SPEED_SYMBOL = Colors.COMPONENTS_MISC.getString() + "→ ";
     private static final String DAMAGE_SYMBOL = Colors.COMPONENTS_MISC.getString() + "🗡 ";
     private static final String CHARGE_SYMBOL = Colors.CHARGE.getString() + "◆ ";
     private static final String POWER_SYMBOL = Colors.POWER.getString() + "⏻ ";
@@ -24,6 +26,7 @@ public class Lore {
     private static final String CHARGE_SUFFIX = " &8QEU";
     private static final String POWER_SUFFIX = " &8W";
     private static final String RANGE_SUFFIX = " &8blocks";
+    private static final String SPEED_SUFFIX = " &8blocks/s";
     private static final String DAMAGE_SUFFIX = " &8dps";
     private static final String FREQUENCY_SUFFIX = " &8Hz";
     private static final String PHASE_SUFFIX = " &8°";
@@ -79,6 +82,9 @@ public class Lore {
         if (settings.getRange() != 0) {
             lore.add(range(settings.getRange()));
         }
+        if (settings.getProjectileSpeed() != 0) {
+            lore.add(projectileSpeed(settings.getProjectileSpeed()));
+        }
         if (settings.getDamage() != 0) {
             lore.add(damage(settings.getDamage()));
         }
@@ -99,8 +105,11 @@ public class Lore {
     public static String range(int range) {
         return ATTRIBUTE_SYMBOL + RANGE_SYMBOL + "&7Range &e" + Objects.toString(range) + RANGE_SUFFIX;
     }
+    public static String projectileSpeed(double speed) {
+        return ATTRIBUTE_SYMBOL + SPEED_SYMBOL + "&7Projectile Speed &e" + speed*QuapticTicker.QUAPTIC_TICKS_PER_SECOND + SPEED_SUFFIX;
+    }
     public static String damage(double damage) {
-        return ATTRIBUTE_SYMBOL + DAMAGE_SYMBOL + "&7Damage &e" + format(damage) + DAMAGE_SUFFIX;
+        return ATTRIBUTE_SYMBOL + DAMAGE_SYMBOL + "&7Damage &e" + format(damage/2.0) + DAMAGE_SUFFIX;
     }
 
     public static String capacity(double capacity) {

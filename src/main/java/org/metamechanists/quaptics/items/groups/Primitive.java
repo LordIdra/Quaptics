@@ -4,12 +4,13 @@ import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import org.bukkit.Material;
+import org.bukkit.entity.SpawnCategory;
 import org.bukkit.inventory.ItemStack;
 import org.metamechanists.quaptics.Quaptics;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
 import org.metamechanists.quaptics.implementation.blocks.concentrators.SolarConcentrator;
 import org.metamechanists.quaptics.implementation.blocks.consumers.Charger;
-import org.metamechanists.quaptics.implementation.blocks.consumers.Turret;
+import org.metamechanists.quaptics.implementation.blocks.consumers.turrets.ModulatedTurret;
 import org.metamechanists.quaptics.implementation.blocks.manipulators.Capacitor;
 import org.metamechanists.quaptics.implementation.blocks.manipulators.Combiner;
 import org.metamechanists.quaptics.implementation.blocks.manipulators.Lens;
@@ -17,6 +18,8 @@ import org.metamechanists.quaptics.implementation.blocks.manipulators.Splitter;
 import org.metamechanists.quaptics.items.Groups;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
+
+import java.util.Set;
 
 public class Primitive {
     public static final ConnectedBlock.Settings SOLAR_CONCENTRATOR_1_SETTINGS = ConnectedBlock.Settings.builder()
@@ -63,13 +66,31 @@ public class Primitive {
             .emissionPower(3)
             .build();
 
-    public static final ConnectedBlock.Settings TURRET_SETTINGS = ConnectedBlock.Settings.builder()
+    public static final ConnectedBlock.Settings TURRET_1_HOSTILE_SETTINGS = ConnectedBlock.Settings.builder()
             .tier(Tier.PRIMITIVE)
             .displayRadius(0.55F)
             .connectionRadius(0.55F)
             .minPower(5)
-            .range(10)
-            .damage(2)
+            .range(5)
+            .damage(1)
+            .projectileSpeed(0.7F)
+            .targets(Set.of(SpawnCategory.MONSTER))
+            .projectileMaterial(Material.LIGHT_BLUE_CONCRETE)
+            .mainMaterial(Material.POLISHED_ANDESITE)
+            .build();
+
+    public static final ConnectedBlock.Settings TURRET_1_PASSIVE_SETTINGS = ConnectedBlock.Settings.builder()
+            .tier(Tier.PRIMITIVE)
+            .displayRadius(0.55F)
+            .connectionRadius(0.55F)
+            .minPower(5)
+            .range(5)
+            .damage(1)
+            .projectileSpeed(0.7F)
+            .targets(Set.of(SpawnCategory.WATER_UNDERGROUND_CREATURE, SpawnCategory.AMBIENT, SpawnCategory.ANIMAL, SpawnCategory.AXOLOTL,
+                    SpawnCategory.WATER_AMBIENT, SpawnCategory.WATER_ANIMAL))
+            .projectileMaterial(Material.LIGHT_BLUE_CONCRETE)
+            .mainMaterial(Material.POLISHED_ANDESITE)
             .build();
 
     public static final SlimefunItemStack SOLAR_CONCENTRATOR_1 = new SlimefunItemStack(
@@ -118,11 +139,20 @@ public class Primitive {
                     "&7● Stores charge",
                     "&7● Outputs at a constant power"));
 
-    public static final SlimefunItemStack TURRET = new SlimefunItemStack(
-            "QP_TURRET",
+    public static final SlimefunItemStack TURRET_1_HOSTILE = new SlimefunItemStack(
+            "QP_TURRET_1_HOSTILE",
             Material.SMOOTH_STONE_SLAB,
-            "&4Turret",
-            Lore.create(TURRET_SETTINGS,
+            "&6Turret &eI &8(targets hostiles)",
+            Lore.create(TURRET_1_HOSTILE_SETTINGS,
+                    "&7● Modulated projectiles",
+                    "&7● Shoots at nearby entities"));
+
+    public static final SlimefunItemStack TURRET_1_PASSIVE = new SlimefunItemStack(
+            "QP_TURRET_1_PASSIVE",
+            Material.SMOOTH_STONE_SLAB,
+            "&6Turret &eII &8(targets passives)",
+            Lore.create(TURRET_1_PASSIVE_SETTINGS,
+                    "&7● Modulated projectiles",
                     "&7● Shoots at nearby entities"));
 
     public static void initialize() {
@@ -171,11 +201,18 @@ public class Primitive {
                 new ItemStack[]{},
                 CAPACITOR_1_SETTINGS).register(addon);
 
-        new Turret(
+        new ModulatedTurret(
                 Groups.PRIMITIVE,
-                TURRET,
+                TURRET_1_HOSTILE,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                TURRET_SETTINGS).register(addon);
+                TURRET_1_HOSTILE_SETTINGS).register(addon);
+
+        new ModulatedTurret(
+                Groups.PRIMITIVE,
+                TURRET_1_PASSIVE,
+                RecipeType.NULL,
+                new ItemStack[]{},
+                TURRET_1_PASSIVE_SETTINGS).register(addon);
     }
 }

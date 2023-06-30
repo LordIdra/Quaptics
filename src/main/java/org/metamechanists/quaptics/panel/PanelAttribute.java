@@ -19,7 +19,7 @@ import org.metamechanists.quaptics.utils.id.TextDisplayID;
 
 public class PanelAttribute {
     private static final float HIDDEN_VIEW_RANGE = 0;
-    private static final float SHOWN_VIEW_RANGE = 15;
+    private static final float SHOWN_VIEW_RANGE = 1;
 
     @Getter
     private final TextDisplayID textDisplayID;

@@ -16,6 +16,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Display;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.SpawnCategory;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
@@ -34,11 +35,12 @@ import org.metamechanists.quaptics.utils.id.ConnectionPointID;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
     protected static final Display.Brightness BRIGHTNESS_ON = new Display.Brightness(13, 0);
     protected static final Display.Brightness BRIGHTNESS_OFF = new Display.Brightness(5, 0);
-    protected static final int VIEW_RANGE_ON = 64;
+    protected static final int VIEW_RANGE_ON = 1;
     protected static final int VIEW_RANGE_OFF = 0;
 
     @Getter
@@ -202,8 +204,12 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
 
         private int connections;
 
+        private float projectileSpeed;
         private int range;
         private double damage;
+        private Set<SpawnCategory> targets;
+        Material projectileMaterial;
+        Material mainMaterial;
 
         // Built in Charge Methods
         public double stepCharge(double charge, double chargeStep) {
