@@ -1,10 +1,16 @@
 package org.metamechanists.quaptics.implementation.tools;
 
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import org.bukkit.Bukkit;
 import org.bukkit.FluidCollisionMode;
 import org.bukkit.Location;
 import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerItemHeldEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.RayTraceResult;
 import org.joml.Vector3f;
@@ -16,24 +22,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class LaserPointerManager extends BukkitRunnable {
+public class LaserPointerManager extends BukkitRunnable implements Listener {
     private static final Map<UUID, LaserPointer.LaserPoint> points = new HashMap<>();
-    private static final Vector3f pointerScale = new Vector3f(0.5F, 0.1F, 0.5F);
+    private static final Vector3f pointerScale = new Vector3f(0.1F, 0.1F, 0.1F);
     public static final long INTERVAL_TICKS = 1;
-
-    public static void removePoints() {
-        points.values().forEach(point -> {
-            final BlockDisplayID displayID = point.getDisplayID();
-            if (displayID == null) {
-                return;
-            }
-
-            final BlockDisplay blockDisplay = displayID.get();
-            if (blockDisplay != null) {
-                blockDisplay.remove();
-            }
-        });
-    }
 
     @Override
     public void run() {
@@ -53,6 +45,25 @@ public class LaserPointerManager extends BukkitRunnable {
         }
     }
 
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onPlayerScroll(PlayerItemHeldEvent event) {
+        if (event.isCancelled()) {
+            return;
+        }
+
+        final Player player = event.getPlayer();
+        final ItemStack itemStack = player.getInventory().getItem(event.getPreviousSlot());
+        if (itemStack == null || itemStack.getType().isEmpty()) {
+            return;
+        }
+
+        if (!(SlimefunItem.getByItem(itemStack) instanceof LaserPointer) || getPoint(player.getUniqueId()) == null) {
+            return;
+        }
+
+        LaserPointer.togglePointer(player);
+    }
+
     public static LaserPointer.LaserPoint getPoint(UUID playerId) {
         return points.get(playerId);
     }
@@ -66,15 +77,29 @@ public class LaserPointerManager extends BukkitRunnable {
         points.remove(playerId);
     }
 
+    public static void removePoints() {
+        points.values().forEach(point -> {
+            final BlockDisplayID displayID = point.getDisplayID();
+            if (displayID == null) {
+                return;
+            }
+
+            final BlockDisplay blockDisplay = displayID.get();
+            if (blockDisplay != null) {
+                blockDisplay.remove();
+            }
+        });
+    }
+
     private static RayTraceResult rayTrace(Player player) {
         return player.getWorld()
                 .rayTrace(
                         player.getEyeLocation(),
                         player.getEyeLocation().getDirection(),
-                        10,
+                        32,
                         FluidCollisionMode.ALWAYS,
                         true,
-                        0.5,
+                        0.1,
                         (entity -> false));
     }
 
