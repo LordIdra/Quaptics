@@ -201,8 +201,21 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
 
         private int connections;
 
+        private int capacity;
+
         private int range;
         private double damage;
+
+        // Built in Charge Methods
+        public boolean checkCharge(double charge, double chargeStep) {
+            return charge + chargeStep <= capacity && charge + chargeStep >= 0;
+        }
+        public double stepCharge(double charge, double chargeStep) {
+            if (charge + chargeStep < 0) {
+                return 0;
+            }
+            return checkCharge(charge, chargeStep) ? charge + chargeStep : charge;
+        }
 
         // Built in Power Methods
         public boolean checkPower(double power) {
