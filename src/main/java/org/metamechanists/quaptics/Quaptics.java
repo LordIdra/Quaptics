@@ -10,6 +10,7 @@ import org.jetbrains.annotations.Nullable;
 import org.metamechanists.quaptics.connections.panels.PointPanelListener;
 import org.metamechanists.quaptics.implementation.base.BurnoutManager;
 import org.metamechanists.quaptics.implementation.panels.CapacitorPanelListener;
+import org.metamechanists.quaptics.implementation.tools.LaserPointerManager;
 import org.metamechanists.quaptics.implementation.tools.TargetingWandListener;
 import org.metamechanists.quaptics.items.Groups;
 import org.metamechanists.quaptics.items.Items;
@@ -30,6 +31,7 @@ public final class Quaptics extends JavaPlugin implements SlimefunAddon {
     }
 
     public void initializeRunnables() {
+        new LaserPointerManager().runTaskTimer(instance, 0, LaserPointerManager.INTERVAL_TICKS);
         new QuapticTicker().runTaskTimer(instance, 0, QuapticTicker.INTERVAl_TICKS);
         new SaveRunnable().runTaskTimer(instance, SaveRunnable.INTERVAl_TICKS, SaveRunnable.INTERVAl_TICKS);
     }
@@ -53,6 +55,7 @@ public final class Quaptics extends JavaPlugin implements SlimefunAddon {
 
     @Override
     public void onDisable() {
+        LaserPointerManager.removePoints();
         BurnoutManager.stopBurnouts();
         QuapticStorage.save();
     }
