@@ -40,14 +40,14 @@ public class Lore {
         if (settings.getTier() != null && settings.getCapacity() != 0) {
             lore.add(operatingPower(settings.getMinPower(), settings.getTier().maxPower));
         }
-        if (settings.getCapacity() != 0) {
-            lore.add(capacity(settings.getCapacity()));
-        }
         if (settings.getEmissionPower() != 0) {
             lore.add(emissionPower(settings.getEmissionPower()));
         }
         if (settings.getPowerLoss() != 0) {
             lore.add(powerLoss(settings.getPowerLoss()));
+        }
+        if (settings.getCapacity() != 0) {
+            lore.add(capacity(settings.getCapacity()));
         }
         if (settings.getMaxFrequency() != 0 || settings.getMinFrequency() != 0) {
             lore.add(operatingFrequency(settings.getMinFrequency(), settings.getMaxFrequency()));
