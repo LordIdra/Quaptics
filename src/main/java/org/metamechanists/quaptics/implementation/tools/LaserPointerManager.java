@@ -56,8 +56,8 @@ public class LaserPointerManager extends BukkitRunnable {
         return player.getWorld()
                 .rayTrace(
                         player.getLocation(),
-                        player.getEyeLocation().toVector(),
-                        10,
+                        player.getEyeLocation().toVector().multiply(-1),
+                        16,
                         FluidCollisionMode.ALWAYS,
                         false,
                         0.5,
@@ -66,6 +66,10 @@ public class LaserPointerManager extends BukkitRunnable {
 
     private static void createBlockDisplay(LaserPointer.LaserPoint point, Player player) {
         final RayTraceResult rayTraceResult = rayTrace(player);
+        if (rayTraceResult == null) {
+            return;
+        }
+
         final BlockDisplay display = new BlockDisplayBuilder(
                 new Location(player.getWorld(), rayTraceResult.getHitPosition().getX(), rayTraceResult.getHitPosition().getY(), rayTraceResult.getHitPosition().getZ()))
                 .setTransformation(Transformations.adjustedScale(pointerScale))
@@ -78,11 +82,15 @@ public class LaserPointerManager extends BukkitRunnable {
 
     private static void updatePoint(LaserPointer.LaserPoint point, Player player, BlockDisplay blockDisplay) {
         final RayTraceResult rayTraceResult = rayTrace(player);
-        blockDisplay.teleport(new Location(player.getWorld(), rayTraceResult.getHitPosition().getX(), rayTraceResult.getHitPosition().getY(), rayTraceResult.getHitPosition().getZ()));
+        if (rayTraceResult == null) {
+            return;
+        }
 
         if (point.isUpdated()) {
             blockDisplay.setBlock(point.getColor().getMaterial().createBlockData());
             point.setUpdated(false);
         }
+
+        blockDisplay.teleport(new Location(player.getWorld(), rayTraceResult.getHitPosition().getX(), rayTraceResult.getHitPosition().getY(), rayTraceResult.getHitPosition().getZ()));
     }
 }
