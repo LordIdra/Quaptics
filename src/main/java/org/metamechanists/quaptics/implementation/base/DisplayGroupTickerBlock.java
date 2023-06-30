@@ -20,6 +20,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.id.DisplayGroupID;
@@ -113,16 +114,18 @@ public abstract class DisplayGroupTickerBlock extends SlimefunItem {
         BlockStorage.addBlockInfo(location, KEY_UUID, displayGroup.getParentUUID().toString());
     }
 
-    public DisplayGroupID getDisplayGroupID(Location location) {
+    public @Nullable DisplayGroupID getDisplayGroupID(Location location) {
         final String uuid = BlockStorage.getLocationInfo(location, KEY_UUID);
-        return new DisplayGroupID(uuid);
+        return uuid == null ? null : new DisplayGroupID(uuid);
     }
 
-    public DisplayGroup getDisplayGroup(Location location) {
-        return DisplayGroup.fromUUID(getDisplayGroupID(location).getUUID());
+    public @Nullable DisplayGroup getDisplayGroup(Location location) {
+        final DisplayGroupID ID = getDisplayGroupID(location);
+        return ID == null ? null : DisplayGroup.fromUUID(ID.getUUID());
     }
 
-    public Display getDisplay(Location location, String name) {
-        return DisplayGroup.fromUUID(getDisplayGroupID(location).getUUID()).getDisplays().get(name);
+    public @Nullable Display getDisplay(Location location, String name) {
+        final DisplayGroup displayGroup = getDisplayGroup(location);
+        return displayGroup == null ? null : displayGroup.getDisplays().get(name);
     }
 }

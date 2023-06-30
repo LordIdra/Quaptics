@@ -10,6 +10,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Display;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -152,7 +153,11 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
     }
 
     public void doDisplayBrightnessCheck(Location location, String concreteDisplayName) {
-        getDisplay(location, concreteDisplayName).setViewRange(getEnabledInputs(location).isEmpty() ? VIEW_RANGE_OFF : VIEW_RANGE_ON);
+        final Display display = getDisplay(location, concreteDisplayName);
+        if (display == null) {
+            return;
+        }
+        display.setViewRange(getEnabledInputs(location).isEmpty() ? VIEW_RANGE_OFF : VIEW_RANGE_ON);
     }
 
     public void onInputLinkUpdated(ConnectionGroup group) {}
