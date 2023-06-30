@@ -15,6 +15,7 @@ public class ItemDisplayBuilder {
     private Matrix4f transformation;
     private Integer brightness;
     private Color glowColor;
+    private Display.Billboard billboard;
 
     public ItemDisplayBuilder(Location location) {
         this.location = location;
@@ -36,6 +37,9 @@ public class ItemDisplayBuilder {
             }
             if (brightness != null) {
                 display.setBrightness(new Display.Brightness(brightness, 0));
+            }
+            if (billboard != null) {
+                display.setBillboard(billboard);
             }
             display.setDisplayWidth(0);
             display.setDisplayHeight(0);
@@ -61,6 +65,10 @@ public class ItemDisplayBuilder {
     }
     public ItemDisplayBuilder setGlow(Color glowColor) {
         this.glowColor = glowColor;
+        return this;
+    }
+    public ItemDisplayBuilder setBillboard(Display.Billboard billboard) {
+        this.billboard = billboard;
         return this;
     }
 }

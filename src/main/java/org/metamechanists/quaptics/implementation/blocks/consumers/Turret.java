@@ -80,27 +80,27 @@ public class Turret extends ConnectedBlock {
             return;
         }
 
-        BlockStorage.addBlockInfo(group.getLocation(), Keys.POWERED, "false");
+        BlockStorage.addBlockInfo(group.getLocation(), Keys.BS_POWERED, "false");
 
         if (!input.hasLink()) {
             return;
         }
 
         if (input.getLink().getPower() >= settings.getMinPower()) {
-            BlockStorage.addBlockInfo(group.getLocation(), Keys.POWERED, "true");
+            BlockStorage.addBlockInfo(group.getLocation(), Keys.BS_POWERED, "true");
         }
     }
 
     private void setTarget(Location location, @NotNull Damageable entity) {
-        BlockStorage.addBlockInfo(location, Keys.TARGET, entity.getUniqueId().toString());
+        BlockStorage.addBlockInfo(location, Keys.BS_TARGET, entity.getUniqueId().toString());
     }
 
     private void clearTarget(Location location) {
-        BlockStorage.addBlockInfo(location, Keys.TARGET, null);
+        BlockStorage.addBlockInfo(location, Keys.BS_TARGET, null);
     }
 
     private @Nullable LivingEntity getTarget(Location location) {
-        final String targetString =  BlockStorage.getLocationInfo(location, Keys.TARGET);
+        final String targetString =  BlockStorage.getLocationInfo(location, Keys.BS_TARGET);
         if (targetString == null) {
             return null;
         }
@@ -122,7 +122,7 @@ public class Turret extends ConnectedBlock {
     }
 
     private void retarget(Location location) {
-        if (BlockStorage.getLocationInfo(location, Keys.TARGET) != null) {
+        if (BlockStorage.getLocationInfo(location, Keys.BS_TARGET) != null) {
             return;
         }
 
@@ -161,7 +161,7 @@ public class Turret extends ConnectedBlock {
 
     @Override
     protected void onSlimefunTick(@NotNull Block block, SlimefunItem item, Config data) {
-        if (Objects.equal(BlockStorage.getLocationInfo(block.getLocation(), Keys.POWERED), "true")) {
+        if (Objects.equal(BlockStorage.getLocationInfo(block.getLocation(), Keys.BS_POWERED), "true")) {
             retarget(block.getLocation());
             shoot(block.getLocation());
         }

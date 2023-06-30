@@ -34,6 +34,21 @@ public class Lore {
                 : x);
     }
 
+    public static @NotNull String[] buildChargeableLore(ConnectedBlock.Settings settings, int filled, String... description) {
+        final List<String> lore = new ArrayList<>();
+
+        Collections.addAll(lore, description);
+        lore.add(chargeBar(filled, (int) settings.getCapacity()));
+        lore.add(chargeValues(filled, (int) settings.getCapacity()));
+        lore.add(chargeUsage((int) settings.getEmissionPower()));
+
+        if (settings.getMinFrequency() != 0 || settings.getMaxFrequency() != 0) {
+            lore.add(operatingFrequency(settings.getMinFrequency(), settings.getMaxFrequency()));
+        }
+
+        return lore.toArray(new String[0]);
+    }
+
     private static @NotNull List<String> fromSettings(@NotNull ConnectedBlock.Settings settings) {
         final List<String> lore = new ArrayList<>();
 
@@ -70,7 +85,7 @@ public class Lore {
 
         return lore;
     }
-    public static String @NotNull [] create(ConnectedBlock.@NotNull Settings settings, String... description) {
+    public static @NotNull String[] create(ConnectedBlock.@NotNull Settings settings, String... description) {
         final List<String> lore = new ArrayList<>();
         lore.add(settings.getTier().name);
         Collections.addAll(lore, description);
@@ -101,6 +116,15 @@ public class Lore {
     public static String operatingPower(double minPower, double maxPower) {
         return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Operating Power &e" + format(minPower) + " &7- &e" + format(maxPower) + POWER_SUFFIX;
     }
+    public static String chargeBar(int filled, int max) {
+        return ATTRIBUTE_SYMBOL + CHARGE_SYMBOL + "&7Charge " + progressBar(filled, max, "&c", "7");
+    }
+    public static String chargeValues(int filled, int max) {
+        return ATTRIBUTE_SYMBOL + CHARGE_SYMBOL + "&7" + filled + "&8/ &7" + max + CHARGE_SUFFIX;
+    }
+    public static String chargeUsage(int usage) {
+        return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Usage &e" + usage + POWER_SUFFIX;
+    }
     public static String powerLoss(double powerLoss) {
         return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Power Loss &e" + format(powerLoss*100) + PERCENTAGE_SUFFIX;
     }
@@ -120,5 +144,11 @@ public class Lore {
 
     public static String phaseNoArrow(int phase) {
         return PHASE_SYMBOL + "&7Phase &e" + Objects.toString(phase) + PHASE_SUFFIX;
+    }
+
+    public static String progressBar(int filled, int max, String filledColor, String emptyColor) {
+        final String base = "¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦";
+        final int divideAt = filled/max%20;
+        return filledColor + base.substring(0, divideAt) + emptyColor + base.substring(divideAt);
     }
 }

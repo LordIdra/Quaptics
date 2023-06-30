@@ -120,8 +120,8 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
         }
 
         final Location location = group.getLocation();
-        if (BlockStorage.hasBlockInfo(location) && BlockStorage.getLocationInfo(location, Keys.BURNOUT) == null) {
-            BlockStorage.addBlockInfo(location, Keys.BURNOUT, "true");
+        if (BlockStorage.hasBlockInfo(location) && BlockStorage.getLocationInfo(location, Keys.BS_BURNOUT) == null) {
+            BlockStorage.addBlockInfo(location, Keys.BS_BURNOUT, "true");
             BurnoutManager.addBurnout(new BurnoutRunnable(location));
         }
 
@@ -191,8 +191,9 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
         private float connectionRadius;
 
         private double minPower;
-        private double emissionPower;
         private double powerLoss;
+        private double capacity;
+        private double emissionPower;
 
         private double minFrequency;
         private double maxFrequency;
@@ -200,8 +201,6 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
         private double frequencyMultiplier;
 
         private int connections;
-
-        private int capacity;
 
         private int range;
         private double damage;

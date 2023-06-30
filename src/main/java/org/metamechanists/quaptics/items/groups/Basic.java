@@ -156,18 +156,18 @@ public class Basic {
             Lore.create(REPEATER_1_SETTINGS,
                     "&7● Increases the frequency of a quaptic ray"));
 
-    public static final SlimefunItemStack SCATTERER_1 = new SlimefunItemStack(
-            "QP_SCATTERER_1",
-            Material.ORANGE_STAINED_GLASS,
-            "&cScatterer &4I",
-            Lore.create(SCATTERER_1_SETTINGS,
-                    "&7● Increases the frequency of a quaptic ray"));
-
     public static final SlimefunItemStack REPEATER_2 = new SlimefunItemStack(
             "QP_REPEATER_2",
             Material.RED_STAINED_GLASS,
             "&cRepeater &4II",
             Lore.create(REPEATER_2_SETTINGS,
+                    "&7● Increases the frequency of a quaptic ray"));
+
+    public static final SlimefunItemStack SCATTERER_1 = new SlimefunItemStack(
+            "QP_SCATTERER_1",
+            Material.ORANGE_STAINED_GLASS,
+            "&cScatterer &4I",
+            Lore.create(SCATTERER_1_SETTINGS,
                     "&7● Increases the frequency of a quaptic ray"));
 
     public static void initialize() {
@@ -233,14 +233,6 @@ public class Basic {
                 REPEATER_1_SETTINGS,
                 1).register(addon);
 
-        new Scatterer(
-                Groups.BASIC,
-                SCATTERER_1,
-                RecipeType.NULL,
-                new ItemStack[]{},
-                SCATTERER_1_SETTINGS,
-                "compare").register(addon);
-
         new Repeater(
                 Groups.BASIC,
                 REPEATER_2,
@@ -248,5 +240,13 @@ public class Basic {
                 new ItemStack[]{},
                 REPEATER_2_SETTINGS,
                 2).register(addon);
+
+        new Scatterer(
+                Groups.BASIC,
+                SCATTERER_1,
+                RecipeType.NULL,
+                new ItemStack[]{},
+                SCATTERER_1_SETTINGS,
+                "compare").register(addon);
     }
 }

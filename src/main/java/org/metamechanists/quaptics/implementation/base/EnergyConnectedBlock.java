@@ -33,11 +33,11 @@ public abstract class EnergyConnectedBlock extends ConnectedBlock implements Ene
     }
 
     protected void setPowered(Location location, boolean powered) {
-        BlockStorage.addBlockInfo(location, Keys.POWERED, powered ? "true" : "false");
+        BlockStorage.addBlockInfo(location, Keys.BS_POWERED, powered ? "true" : "false");
     }
 
     protected boolean isPowered(Location location) {
-        final String powered = BlockStorage.getLocationInfo(location, Keys.POWERED);
+        final String powered = BlockStorage.getLocationInfo(location, Keys.BS_POWERED);
         if (powered == null) {
             return false;
         }

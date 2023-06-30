@@ -65,21 +65,21 @@ public class Capacitor extends ConnectedBlock {
     }
 
     private double getCharge(Location location) {
-        final String chargeString = BlockStorage.getLocationInfo(location, Keys.CHARGE);
+        final String chargeString = BlockStorage.getLocationInfo(location, Keys.BS_CHARGE);
         return chargeString == null ? 0 : Double.parseDouble(chargeString);
     }
 
     private void setCharge(Location location, double charge) {
-        BlockStorage.addBlockInfo(location, Keys.CHARGE, Objects.toString(charge));
+        BlockStorage.addBlockInfo(location, Keys.BS_CHARGE, Objects.toString(charge));
     }
 
     private double getChargeRate(Location location) {
-        final String chargeRateString = BlockStorage.getLocationInfo(location, Keys.CHARGE_RATE);
+        final String chargeRateString = BlockStorage.getLocationInfo(location, Keys.BS_CHARGE_RATE);
         return chargeRateString == null ? 0 : Double.parseDouble(chargeRateString);
     }
 
     private void setChargeRate(Location location, double chargeRate) {
-        BlockStorage.addBlockInfo(location, Keys.CHARGE_RATE, String.valueOf(chargeRate));
+        BlockStorage.addBlockInfo(location, Keys.BS_CHARGE_RATE, String.valueOf(chargeRate));
     }
 
     @Override

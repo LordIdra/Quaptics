@@ -8,6 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import org.metamechanists.quaptics.Quaptics;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
 import org.metamechanists.quaptics.implementation.blocks.concentrators.SolarConcentrator;
+import org.metamechanists.quaptics.implementation.blocks.consumers.Charger;
 import org.metamechanists.quaptics.implementation.blocks.consumers.Turret;
 import org.metamechanists.quaptics.implementation.blocks.manipulators.Capacitor;
 import org.metamechanists.quaptics.implementation.blocks.manipulators.Combiner;
@@ -46,6 +47,12 @@ public class Primitive {
             .connectionRadius(0.8F)
             .powerLoss(0.2)
             .connections(2)
+            .build();
+
+    public static final ConnectedBlock.Settings CHARGER_1_SETTINGS = ConnectedBlock.Settings.builder()
+            .tier(Tier.PRIMITIVE)
+            .displayRadius(0.4F)
+            .connectionRadius(0.8F)
             .build();
 
     public static final ConnectedBlock.Settings CAPACITOR_1_SETTINGS = ConnectedBlock.Settings.builder()
@@ -94,6 +101,15 @@ public class Primitive {
             Lore.create(SPLITTER_1_2_SETTINGS,
                     "&7● Splits one quaptic ray into multiple"));
 
+    public static final SlimefunItemStack CHARGER_1 = new SlimefunItemStack(
+            "QP_CHARGER",
+            Material.LIGHT_BLUE_STAINED_GLASS,
+            "&bCharger &3I",
+            Lore.create(CHARGER_1_SETTINGS,
+                    "&7● Charges items",
+                    "&eRight Click &7an item to place",
+                    "&eRight Click &7again to retrieve"));
+
     public static final SlimefunItemStack CAPACITOR_1 = new SlimefunItemStack(
             "QP_CAPACITOR_1",
             Material.LIGHT_BLUE_CONCRETE,
@@ -140,6 +156,13 @@ public class Primitive {
                 RecipeType.NULL,
                 new ItemStack[]{},
                 SPLITTER_1_2_SETTINGS).register(addon);
+
+        new Charger(
+                Groups.PRIMITIVE,
+                CHARGER_1,
+                RecipeType.NULL,
+                new ItemStack[]{},
+                CHARGER_1_SETTINGS).register(addon);
 
         new Capacitor(
                 Groups.PRIMITIVE,
