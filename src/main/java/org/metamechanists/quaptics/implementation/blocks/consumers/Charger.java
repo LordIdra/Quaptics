@@ -85,6 +85,7 @@ public class Charger extends ConnectedBlock {
             return;
         }
 
+        display.setItemStack(null);
         QuapticChargeableItem.updateLore(itemStack);
         ItemUtils.addOrDropItem(player, itemStack);
     }

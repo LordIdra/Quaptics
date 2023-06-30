@@ -49,6 +49,7 @@ public abstract class QuapticChargeableItem extends SlimefunItem {
         final double currentCharge = PersistentDataAPI.getDouble(itemMeta, Keys.CHARGE, 0.0);
         final double newCharge = Math.max(itemSettings.getCapacity(), currentCharge + link.getPower());
         PersistentDataAPI.setDouble(itemMeta, Keys.CHARGE, newCharge);
+        itemStack.setItemMeta(itemMeta);
     }
 
     public static boolean meetsRequirements(ConnectedBlock.Settings itemSettings, ConnectedBlock.Settings chargerSettings, Link link) {
