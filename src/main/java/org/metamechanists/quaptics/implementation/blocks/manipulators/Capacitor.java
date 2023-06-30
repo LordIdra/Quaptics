@@ -54,7 +54,6 @@ public class Capacitor extends ConnectedBlock {
                 .setMaterial(settings.getTier().concreteMaterial)
                 .setTransformation(Transformations.adjustedRotateAndScale(new Vector3f(), displayRotation))
                 .setBrightness(CONCRETE_BRIGHTNESS)
-                .setViewRange(VIEW_RANGE_OFF)
                 .build());
     }
 
