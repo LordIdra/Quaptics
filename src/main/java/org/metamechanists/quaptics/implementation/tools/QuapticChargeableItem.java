@@ -22,7 +22,7 @@ import org.metamechanists.quaptics.utils.Keys;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class QuapticChargeableItem extends UnplaceableBlock {
+public abstract class QuapticChargeableItem extends SlimefunItem {
     @Getter
     protected final ConnectedBlock.Settings settings;
 
