@@ -11,6 +11,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.metamechanists.quaptics.QuapticTicker;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
@@ -49,7 +50,7 @@ public abstract class QuapticChargeableItem extends SlimefunItem {
         }
 
         final double currentCharge = PersistentDataAPI.getDouble(itemMeta, Keys.CHARGE, 0.0);
-        final double newCharge = Math.max(itemSettings.getCapacity(), currentCharge + link.getPower());
+        final double newCharge = itemSettings.stepCharge(currentCharge, link.getPower() / QuapticTicker.QUAPTIC_TICKS_PER_SECOND);
         PersistentDataAPI.setDouble(itemMeta, Keys.CHARGE, newCharge);
         itemStack.setItemMeta(itemMeta);
         display.setItemStack(itemStack);

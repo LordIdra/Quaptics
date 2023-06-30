@@ -25,6 +25,7 @@ public class Keys {
 
     public static final NamespacedKey CHARGE = newKey("CHARGE");
 
+    public static final String BS_PANEL_ID = "QP_PANEL_ID";
     public static final String BS_BURNOUT = "QP_BURNOUT";
     public static final String BS_CHARGE = "QP_CHARGE";
     public static final String BS_CHARGE_RATE = "QP_CHARGE_RATE";

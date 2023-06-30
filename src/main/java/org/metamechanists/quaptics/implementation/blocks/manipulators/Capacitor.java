@@ -9,9 +9,11 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Display;
 import org.bukkit.entity.Player;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.QuapticTicker;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
@@ -19,10 +21,12 @@ import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
+import org.metamechanists.quaptics.implementation.panels.CapacitorPanel;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.ConnectionGroupID;
+import org.metamechanists.quaptics.utils.id.PanelID;
 
 import java.util.List;
 import java.util.Objects;
@@ -38,6 +42,13 @@ public class Capacitor extends ConnectedBlock {
 
     public Capacitor(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, Settings settings) {
         super(group, item, recipeType, recipe, settings);
+    }
+
+    @Override
+    protected void onPlace(@NotNull BlockPlaceEvent event) {
+        super.onPlace(event);
+        final Location location = event.getBlock().getLocation();
+        setPanelID(location, new CapacitorPanel(location, getGroup(location).getID()).getID());
     }
 
     @Override
@@ -71,6 +82,15 @@ public class Capacitor extends ConnectedBlock {
 
     private void setCharge(Location location, double charge) {
         BlockStorage.addBlockInfo(location, Keys.BS_CHARGE, Objects.toString(charge));
+    }
+
+    private @Nullable PanelID getPanelID(Location location) {
+        final String stringID = BlockStorage.getLocationInfo(location, Keys.BS_PANEL_ID);
+        return stringID == null ? null : new PanelID(stringID);
+    }
+
+    private void setPanelID(Location location, @NotNull PanelID ID) {
+        BlockStorage.addBlockInfo(location, Keys.BS_PANEL_ID, ID.toString());
     }
 
     private double getChargeRate(Location location) {
@@ -107,6 +127,12 @@ public class Capacitor extends ConnectedBlock {
             concreteDisplay.setTransformationMatrix(
                     Transformations.adjustedRotateAndScale(new Vector3f(maxConcreteDisplaySize)
                             .mul((float)(charge/settings.getCapacity())), displayRotation));
+        }
+
+        final PanelID ID = getPanelID(group.getLocation());
+        if (ID != null) {
+            final CapacitorPanel panel = new CapacitorPanel(ID, group.getID());
+            panel.update();
         }
 
         setCharge(group.getLocation(), charge);

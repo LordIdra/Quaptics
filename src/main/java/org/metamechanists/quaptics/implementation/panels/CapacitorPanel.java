@@ -38,13 +38,11 @@ public class CapacitorPanel {
         return groupID.get();
     }
 
-    public boolean isPanelHidden() {
-        return panel.isHidden();
-    }
     public void setPanelHidden(boolean hidden) {
         panel.setHidden(hidden);
     }
 
+    // TODO listener to toggle panel
     public void toggleHidden() {
         panel.toggleHidden();
     }
