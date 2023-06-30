@@ -65,7 +65,7 @@ public class Scatterer extends ConnectedBlock {
         displayGroup.addDisplay("comparator", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(Material.COMPARATOR)
                 .setBlockData(Material.COMPARATOR.createBlockData(
-                        ",facing=" + face.name().toLowerCase()
+                        "[facing=" + face.name().toLowerCase()
                         + ",powered=false"
                         + "]"))
                 .setTransformation(Transformations.adjustedScaleAndOffset(comparatorDisplaySize, comparatorOffset))
