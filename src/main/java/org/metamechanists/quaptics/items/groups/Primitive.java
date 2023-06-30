@@ -49,6 +49,8 @@ public class Primitive {
 
     public static final ConnectedBlock.Settings TURRET_SETTINGS = ConnectedBlock.Settings.builder()
             .tier(Tier.PRIMITIVE)
+            .displayRadius(0.55F)
+            .connectionRadius(0.55F)
             .minPower(5)
             .range(10)
             .damage(2)

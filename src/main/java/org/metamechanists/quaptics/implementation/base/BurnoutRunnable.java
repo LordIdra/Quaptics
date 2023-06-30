@@ -48,7 +48,7 @@ public class BurnoutRunnable extends BukkitRunnable {
                 }
 
                 if (ticks % 4 == 0) {
-                    playSound(Sound.BLOCK_LAVA_EXTINGUISH, 0.1f, 0.8f);
+                    location.getWorld().playSound(centerLocation, Sound.BLOCK_LAVA_EXTINGUISH, 0.1f, 0.8f);
                 }
 
                 if (ticks % 2 == 0) {
@@ -72,7 +72,6 @@ public class BurnoutRunnable extends BukkitRunnable {
                 return;
             }
 
-            playSound(Sound.ENTITY_GENERIC_EXPLODE, 2, 1.2f);
             connectedBlock.burnout(this.location);
             BurnoutManager.removeBurnout(this);
         }, 60L);
@@ -80,10 +79,6 @@ public class BurnoutRunnable extends BukkitRunnable {
 
     public boolean shouldStopEarly() {
         return this.stopEarly;
-    }
-
-    public void playSound(Sound sound, float volume, float pitch) {
-        location.getWorld().playSound(centerLocation, sound, volume, pitch);
     }
 
     public void stopEarly() {
