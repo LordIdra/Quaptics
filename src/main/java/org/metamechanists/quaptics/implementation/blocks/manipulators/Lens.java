@@ -76,7 +76,7 @@ public class Lens extends ConnectedBlock {
         }
 
         output.getLink().setAttributes(
-                powerLoss(input.getLink().getPower(), settings.getPowerLoss()),
+                settings.powerLoss(input.getLink().getPower()),
                 input.getLink().getFrequency(),
                 input.getLink().getPhase(),
                 true);

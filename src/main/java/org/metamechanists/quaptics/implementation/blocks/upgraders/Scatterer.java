@@ -46,13 +46,14 @@ public class Scatterer extends ConnectedBlock {
     }
 
     private void setComparatorPowered(Location location, boolean powered) {
-        final BlockDisplay display = (BlockDisplay) getDisplay(location, "comparator");
-        if (display != null) {
-            display.setBlock(Material.COMPARATOR.createBlockData("[mode=" + modeVisual
-                    + ",facing=" + PersistentDataAPI.getString(display, Keys.FACING)
-                    + ",powered=" + Objects.toString(powered)
-                    + "]"));
+        if (!(getDisplay(location, "comparator") instanceof BlockDisplay display)) {
+            return;
         }
+
+        display.setBlock(Material.COMPARATOR.createBlockData(
+                "[mode=" + modeVisual
+                + ",facing=" + PersistentDataAPI.getString(display, Keys.FACING)
+                + ",powered=" + powered + "]"));
     }
 
     @Override
@@ -62,20 +63,20 @@ public class Scatterer extends ConnectedBlock {
                 .setMaterial(Material.ORANGE_STAINED_GLASS)
                 .setTransformation(Transformations.adjustedRotateAndScale(glassDisplaySize, mainDisplayRotation))
                 .build());
-        displayGroup.addDisplay("comparator", new BlockDisplayBuilder(location.toCenterLocation())
-                .setMaterial(Material.COMPARATOR)
-                .setBlockData(Material.COMPARATOR.createBlockData(
-                        "[facing=" + face.name().toLowerCase()
-                        + ",powered=false"
-                        + "]"))
-                .setTransformation(Transformations.adjustedScaleAndOffset(comparatorDisplaySize, comparatorOffset))
-                .build());
         displayGroup.addDisplay("concrete", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(settings.getTier().material)
                 .setTransformation(Transformations.adjustedScaleAndOffset(concreteDisplaySize, concreteOffset))
                 .setBrightness(CONCRETE_BRIGHTNESS)
                 .build());
-        PersistentDataAPI.setString(displayGroup.getDisplays().get("comparator"), Keys.FACING, face.name().toLowerCase());
+        final BlockDisplay comparator = new BlockDisplayBuilder(location.toCenterLocation())
+                .setMaterial(Material.COMPARATOR)
+                .setBlockData(Material.COMPARATOR.createBlockData(
+                        "[facing=" + face.name().toLowerCase()
+                        + ",powered=false]"))
+                .setTransformation(Transformations.adjustedScaleAndOffset(comparatorDisplaySize, comparatorOffset))
+                .build();
+        PersistentDataAPI.setString(comparator, Keys.FACING, face.name().toLowerCase());
+        displayGroup.addDisplay("comparator", comparator);
     }
 
     @Override
@@ -95,7 +96,7 @@ public class Scatterer extends ConnectedBlock {
         }
 
         doDisplayBrightnessCheck(group.getLocation(), "concrete", false);
-        setComparatorPowered(group.getLocation(), input.isLinkEnabled() && input.getLink().getFrequency() < settings.getMaxFrequency());
+        setComparatorPowered(group.getLocation(), input.isLinkEnabled() && settings.checkFrequency(input.getLink().getFrequency()));
 
         if (!output.hasLink()) {
             return;
@@ -106,14 +107,9 @@ public class Scatterer extends ConnectedBlock {
             return;
         }
 
-        double newFrequency = input.getLink().getFrequency();
-        if (input.getLink().getFrequency() < settings.getMaxFrequency()) {
-            newFrequency += settings.getFrequencyMultiplier();
-        }
-
         output.getLink().setAttributes(
-                powerLoss(input.getLink().getPower(), settings.getPowerLoss()),
-                newFrequency,
+                settings.powerLoss(input.getLink().getPower()),
+                settings.multiplyFrequency(input.getLink().getFrequency()),
                 input.getLink().getPhase(),
                 true);
     }

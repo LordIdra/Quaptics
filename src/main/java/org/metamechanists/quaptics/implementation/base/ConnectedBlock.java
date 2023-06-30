@@ -76,10 +76,6 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
 
     protected abstract List<ConnectionPoint> generateConnectionPoints(ConnectionGroupID groupID, Player player, Location location);
 
-    protected static double powerLoss(double inputPower, double powerLoss) {
-        return inputPower*(1-powerLoss);
-    }
-
     @Override
     protected void onPlace(@NotNull BlockPlaceEvent event) {
         final Location location = event.getBlock().getLocation();
@@ -207,5 +203,24 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
 
         private int range;
         private double damage;
+
+        // Built in Power Methods
+        public boolean checkPower(double power) {
+            return this.minPower <= power && power < tier.maxPower;
+        }
+        public double powerLoss(double power) {
+            return power*(1-powerLoss);
+        }
+
+        // Built in Frequency Methods
+        public boolean checkFrequency(double frequency) {
+            return this.minFrequency <= frequency && frequency < this.maxFrequency;
+        }
+        public double stepFrequency(double frequency) {
+            return checkFrequency(frequency) ? frequency+frequencyStep : frequency;
+        }
+        public double multiplyFrequency(double frequency) {
+            return checkFrequency(frequency) ? frequency*frequencyMultiplier : frequency;
+        }
     }
 }
