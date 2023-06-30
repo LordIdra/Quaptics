@@ -55,11 +55,11 @@ public class LaserPointerManager extends BukkitRunnable {
     private static RayTraceResult rayTrace(Player player) {
         return player.getWorld()
                 .rayTrace(
-                        player.getLocation(),
-                        player.getEyeLocation().toVector().multiply(-1),
+                        player.getEyeLocation(),
+                        player.getEyeLocation().toVector(),
                         16,
                         FluidCollisionMode.ALWAYS,
-                        false,
+                        true,
                         0.5,
                         (entity -> false));
     }
