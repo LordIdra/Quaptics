@@ -84,6 +84,7 @@ public abstract class QuapticChargeableItem extends SlimefunItem {
             } else if (line.contains("⇨ ◆ ") && line.contains(" / ") && line.contains("QEU") && chargeValues == -1) {
                 chargeValues = i;
             }
+            i++;
         }
 
         if (chargeBar != -1) {
