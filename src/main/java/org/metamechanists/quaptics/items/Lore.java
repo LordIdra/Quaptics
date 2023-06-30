@@ -100,7 +100,7 @@ public class Lore {
         return FREQUENCY_SYMBOL + "&7Frequency &e" + Objects.toString(frequency) + FREQUENCY_SUFFIX;
     }
     public static String operatingFrequency(double minFrequency, double maxFrequency) {
-        return ATTRIBUTE_SYMBOL + FREQUENCY_SYMBOL + "&7Operating Power &e" + format(minFrequency) + " &7- &e" + format(maxFrequency) + FREQUENCY_SUFFIX;
+        return ATTRIBUTE_SYMBOL + FREQUENCY_SYMBOL + "&7Operating Frequency &e" + format(minFrequency) + " &7- &e" + format(maxFrequency) + FREQUENCY_SUFFIX;
     }
     public static String frequencyStep(double frequencyStep) {
         return ATTRIBUTE_SYMBOL + FREQUENCY_SYMBOL + "&7Frequency &e+" + format(frequencyStep) + FREQUENCY_SUFFIX;
