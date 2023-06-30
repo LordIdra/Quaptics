@@ -106,7 +106,7 @@ public class Lore {
         return ATTRIBUTE_SYMBOL + RANGE_SYMBOL + "&7Range &e" + Objects.toString(range) + RANGE_SUFFIX;
     }
     public static String projectileSpeed(double speed) {
-        return ATTRIBUTE_SYMBOL + SPEED_SYMBOL + "&7Projectile Speed &e" + speed*QuapticTicker.QUAPTIC_TICKS_PER_SECOND + SPEED_SUFFIX;
+        return ATTRIBUTE_SYMBOL + SPEED_SYMBOL + "&7Projectile Speed &e" + format(speed*QuapticTicker.QUAPTIC_TICKS_PER_SECOND) + SPEED_SUFFIX;
     }
     public static String damage(double damage) {
         return ATTRIBUTE_SYMBOL + DAMAGE_SYMBOL + "&7Damage &e" + format(damage/2.0) + DAMAGE_SUFFIX;

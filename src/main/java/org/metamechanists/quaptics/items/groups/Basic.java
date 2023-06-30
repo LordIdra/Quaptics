@@ -204,7 +204,7 @@ public class Basic {
     public static final SlimefunItemStack TURRET_2_HOSTILE = new SlimefunItemStack(
             "QP_TURRET_2_HOSTILE",
             Material.SMOOTH_STONE_SLAB,
-            "&6Turret &eII &8(hostiles)",
+            "&6Turret &eII &8(targets hostiles)",
             Lore.create(TURRET_2_HOSTILE_SETTINGS,
                     "&7● Direct beam",
                     "&7● Shoots at nearby entities"));
@@ -212,7 +212,7 @@ public class Basic {
     public static final SlimefunItemStack TURRET_2_PASSIVE = new SlimefunItemStack(
             "QP_TURRET_2_PASSIVE",
             Material.SMOOTH_STONE_SLAB,
-            "&6Turret &eII &8(passives)",
+            "&6Turret &eII &8(targets passives)",
             Lore.create(TURRET_2_HOSTILE_SETTINGS,
                     "&7● Direct beam",
                     "&7● Shoots at nearby entities"));
@@ -295,13 +295,6 @@ public class Basic {
                 new ItemStack[]{},
                 SCATTERER_1_SETTINGS,
                 "compare").register(addon);
-
-        new DirectTurret(
-                Groups.BASIC,
-                TURRET_2_HOSTILE,
-                RecipeType.NULL,
-                new ItemStack[]{},
-                TURRET_2_HOSTILE_SETTINGS).register(addon);
 
         new DirectTurret(
                 Groups.BASIC,
