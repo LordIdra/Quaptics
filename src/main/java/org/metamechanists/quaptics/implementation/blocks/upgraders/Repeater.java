@@ -46,7 +46,7 @@ public class Repeater extends ConnectedBlock {
     private void setRepeaterPowered(Location location, boolean powered) {
         final BlockDisplay display = (BlockDisplay) getDisplay(location, "repeater");
         if (display != null) {
-            display.setBlock(Material.REPEATER.createBlockData(display.getBlock().getAsString()
+            display.setBlock(Material.REPEATER.createBlockData(display.getBlock().getAsString(true)
                             .replace("powered=" + Objects.toString(!powered), "powered=" + Objects.toString(powered))));
         }
     }
