@@ -9,6 +9,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Display;
 import org.bukkit.entity.Player;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
@@ -49,6 +50,13 @@ public class Capacitor extends ConnectedBlock {
         super.onPlace(event);
         final Location location = event.getBlock().getLocation();
         setPanelID(location, new CapacitorPanel(location, getGroup(location).getID()).getID());
+    }
+
+    @Override
+    protected void onBreak(@NotNull BlockBreakEvent event) {
+        super.onBreak(event);
+        final Location location = event.getBlock().getLocation();
+        getPanelID(location).get().remove();
     }
 
     @Override

@@ -116,17 +116,24 @@ public class Lore {
     public static String operatingPower(double minPower, double maxPower) {
         return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Operating Power &e" + format(minPower) + " &7- &e" + format(maxPower) + POWER_SUFFIX;
     }
+    public static String powerLoss(double powerLoss) {
+        return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Power Loss &e" + format(powerLoss*100) + PERCENTAGE_SUFFIX;
+    }
+
     public static String chargeBar(int charge, int capacity) {
         return ATTRIBUTE_SYMBOL + CHARGE_SYMBOL + "&7Charge " + progressBar(charge, capacity, Colors.CHARGE.getString(), "&7");
+    }
+    public static String chargeBarRaw(int charge, int capacity) {
+        return progressBar(charge, capacity, Colors.CHARGE.getString(), "&7");
     }
     public static String chargeValues(int charge, int capacity) {
         return ATTRIBUTE_SYMBOL + CHARGE_SYMBOL + "&7" + charge + " &8/ &7" + capacity + CHARGE_SUFFIX;
     }
+    public static String chargeValuesRaw(int charge, int capacity) {
+        return "&7" + charge + " &8/ &7" + capacity + CHARGE_SUFFIX;
+    }
     public static String chargeUsage(int usage) {
         return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Usage &e" + usage + POWER_SUFFIX;
-    }
-    public static String powerLoss(double powerLoss) {
-        return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Power Loss &e" + format(powerLoss*100) + PERCENTAGE_SUFFIX;
     }
 
     public static String frequencyNoArrow(double frequency) {
