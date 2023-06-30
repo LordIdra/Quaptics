@@ -106,7 +106,7 @@ public class Capacitor extends ConnectedBlock {
         if (concreteDisplay != null) {
             concreteDisplay.setTransformationMatrix(
                     Transformations.adjustedRotateAndScale(new Vector3f(maxConcreteDisplaySize)
-                            .mul((float)charge/settings.getCapacity()), displayRotation));
+                            .mul((float)(charge/settings.getCapacity())), displayRotation));
         }
 
         setCharge(group.getLocation(), charge);
