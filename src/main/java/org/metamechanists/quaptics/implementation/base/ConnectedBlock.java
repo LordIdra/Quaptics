@@ -124,7 +124,7 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
         final Location location = group.getLocation();
         if (BlockStorage.hasBlockInfo(location) && BlockStorage.getLocationInfo(location, Keys.BURNOUT) == null) {
             BlockStorage.addBlockInfo(location, Keys.BURNOUT, "true");
-            new BurnoutRunnable(location).run();
+            BurnoutManager.addBurnout(new BurnoutRunnable(location));
         }
 
         return true;

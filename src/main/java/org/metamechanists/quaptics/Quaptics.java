@@ -8,6 +8,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.metamechanists.quaptics.connections.panels.PointPanelListener;
+import org.metamechanists.quaptics.implementation.base.BurnoutManager;
 import org.metamechanists.quaptics.implementation.tools.TargetingWandListener;
 import org.metamechanists.quaptics.items.Groups;
 import org.metamechanists.quaptics.items.Items;
@@ -21,6 +22,7 @@ public final class Quaptics extends JavaPlugin implements SlimefunAddon {
         final PluginManager pluginManager = this.getServer().getPluginManager();
         pluginManager.registerEvents(new TargetingWandListener(), this);
         pluginManager.registerEvents(new PointPanelListener(), this);
+        pluginManager.registerEvents(new BurnoutManager(), this);
     }
 
     public void initializeRunnables() {
@@ -45,7 +47,7 @@ public final class Quaptics extends JavaPlugin implements SlimefunAddon {
 
     @Override
     public void onDisable() {
-
+        BurnoutManager.stopBurnouts();
     }
 
     @NotNull
