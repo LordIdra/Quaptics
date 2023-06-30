@@ -6,20 +6,10 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.metamechanists.quaptics.Quaptics;
-import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
-import org.metamechanists.quaptics.implementation.tools.LaserPointer;
 import org.metamechanists.quaptics.implementation.tools.TargetingWand;
 import org.metamechanists.quaptics.items.Groups;
-import org.metamechanists.quaptics.items.Lore;
 
 public class Tools {
-    public static final ConnectedBlock.Settings LASER_POINTER_SETTINGS = ConnectedBlock.Settings.builder()
-            .capacity(1000.0)
-            .emissionPower(5.0)
-            .minFrequency(0.5)
-            .maxFrequency(1.0)
-            .build();
-
     public static final SlimefunItemStack TARGETING_WAND = new SlimefunItemStack(
             "QP_TARGETING_WAND",
             Material.BLAZE_ROD,
@@ -27,14 +17,6 @@ public class Tools {
             "&7● &eRight Click &7to select a source",
             "&7● &eRight Click &7again to create a link",
             "&7● &eShift Right Click &7to remove a link");
-
-    public static final SlimefunItemStack LASER_POINTER = new SlimefunItemStack(
-            "QP_LASER_POINTER",
-            Material.BLACK_CANDLE,
-            "&fLaser Pointer",
-            Lore.buildChargeableLore(LASER_POINTER_SETTINGS, 0,
-                    "&7● &eRight Click &7to toggle the pointer",
-                    "&7● &eShift Right Click &7to change the color"));
 
     public static void initialize() {
         final SlimefunAddon addon = Quaptics.getInstance();
@@ -44,12 +26,5 @@ public class Tools {
                 TARGETING_WAND,
                 RecipeType.NULL,
                 new ItemStack[]{}).register(addon);
-
-        new LaserPointer(
-                Groups.TOOLS,
-                LASER_POINTER,
-                RecipeType.NULL,
-                new ItemStack[]{},
-                LASER_POINTER_SETTINGS).register(addon);
     }
 }

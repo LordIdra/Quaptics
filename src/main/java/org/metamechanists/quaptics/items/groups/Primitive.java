@@ -123,7 +123,7 @@ public class Primitive {
                     "&7● Splits one quaptic ray into multiple"));
 
     public static final SlimefunItemStack CHARGER_1 = new SlimefunItemStack(
-            "QP_CHARGER",
+            "QP_CHARGER_1",
             Material.LIGHT_BLUE_STAINED_GLASS,
             "&bCharger &3I",
             Lore.create(CHARGER_1_SETTINGS,

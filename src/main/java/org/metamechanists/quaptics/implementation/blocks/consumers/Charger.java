@@ -30,9 +30,11 @@ import org.metamechanists.quaptics.utils.id.ConnectionGroupID;
 import java.util.List;
 
 public class Charger extends ConnectedBlock {
-    private final Vector3f glassDisplaySize = new Vector3f(settings.getDisplayRadius()*2);
-    private final Vector3f itemDisplaySize = new Vector3f(settings.getDisplayRadius());
-    private final Vector3f mainDisplayRotation = new Vector3f((float)(Math.PI/4), (float)(Math.PI/4), 0);
+    private final Vector3f mainDisplaySize = new Vector3f(1, 0.5F, 1);
+    private final Vector3f glassDisplaySize = new Vector3f(0.8F, 0.2F, 0.8F);
+    private final Vector3f itemDisplaySize = new Vector3f(1);
+    private final Vector3f topOffset = new Vector3f(0, 0.4F, 0);
+    private final Vector3f bottomOffset = new Vector3f(0, -0.4F, 0);
     private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -settings.getConnectionRadius());
 
     public Charger(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, Settings settings) {
@@ -100,14 +102,25 @@ public class Charger extends ConnectedBlock {
 
     @Override
     protected void addDisplays(DisplayGroup displayGroup, Location location, Player player) {
-        displayGroup.addDisplay("main", new BlockDisplayBuilder(location.toCenterLocation())
+        displayGroup.addDisplay("mainTop", new BlockDisplayBuilder(location.toCenterLocation())
+                .setBlockData(Material.SMOOTH_STONE_SLAB.createBlockData("[type=top]"))
+                .setTransformation(Transformations.adjustedScaleAndOffset(mainDisplaySize, topOffset))
+                .build());
+        displayGroup.addDisplay("mainBottom", new BlockDisplayBuilder(location.toCenterLocation())
+                .setBlockData(Material.SMOOTH_STONE_SLAB.createBlockData("[type=bottom]"))
+                .setTransformation(Transformations.adjustedScaleAndOffset(mainDisplaySize, bottomOffset))
+                .build());
+        displayGroup.addDisplay("glassTop", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(Material.LIGHT_BLUE_STAINED_GLASS)
-                .setTransformation(Transformations.adjustedRotateAndScale(glassDisplaySize, mainDisplayRotation))
+                .setTransformation(Transformations.adjustedScaleAndOffset(glassDisplaySize, topOffset))
+                .build());
+        displayGroup.addDisplay("glassBottom", new BlockDisplayBuilder(location.toCenterLocation())
+                .setMaterial(Material.LIGHT_BLUE_STAINED_GLASS)
+                .setTransformation(Transformations.adjustedScaleAndOffset(glassDisplaySize, bottomOffset))
                 .build());
         displayGroup.addDisplay("item", new ItemDisplayBuilder(location.toCenterLocation())
                 .setItemStack(null)
                 .setTransformation(Transformations.adjustedScale(itemDisplaySize))
-                .setBillboard(Display.Billboard.VERTICAL)
                 .build());
     }
 

@@ -6,6 +6,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import io.github.thebusybiscuit.slimefun4.implementation.items.blocks.UnplaceableBlock;
 import lombok.Getter;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.ItemDisplay;
@@ -21,7 +22,7 @@ import org.metamechanists.quaptics.utils.Keys;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class QuapticChargeableItem extends SlimefunItem {
+public abstract class QuapticChargeableItem extends UnplaceableBlock {
     @Getter
     protected final ConnectedBlock.Settings settings;
 
