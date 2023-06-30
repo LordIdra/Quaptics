@@ -55,7 +55,7 @@ public class Primitive {
     public static final ConnectedBlock.Settings CHARGER_1_SETTINGS = ConnectedBlock.Settings.builder()
             .tier(Tier.PRIMITIVE)
             .displayRadius(0.4F)
-            .connectionRadius(0.8F)
+            .connectionRadius(0.6F)
             .build();
 
     public static final ConnectedBlock.Settings CAPACITOR_1_SETTINGS = ConnectedBlock.Settings.builder()

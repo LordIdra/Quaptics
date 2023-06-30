@@ -9,7 +9,6 @@ import io.github.thebusybiscuit.slimefun4.core.handlers.BlockUseHandler;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Display;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -30,11 +29,11 @@ import org.metamechanists.quaptics.utils.id.ConnectionGroupID;
 import java.util.List;
 
 public class Charger extends ConnectedBlock {
-    private final Vector3f mainDisplaySize = new Vector3f(0.6F, 0.5F, 0.6F);
-    private final Vector3f glassDisplaySize = new Vector3f(0.4F, 0.2F, 0.4F);
+    private final Vector3f mainDisplaySize = new Vector3f(0.7F, 0.3F, 0.7F);
+    private final Vector3f glassDisplaySize = new Vector3f(0.5F, 0.1F, 0.5F);
     private final Vector3f itemDisplaySize = new Vector3f(1);
-    private final Vector3f topOffset = new Vector3f(0, 0.2F, 0);
-    private final Vector3f bottomOffset = new Vector3f(0, -0.2F, 0);
+    private final Vector3f topOffset = new Vector3f(0, 0.25F, 0);
+    private final Vector3f bottomOffset = new Vector3f(0, -0.25F, 0);
     private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -settings.getConnectionRadius());
 
     public Charger(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, Settings settings) {
@@ -56,7 +55,7 @@ public class Charger extends ConnectedBlock {
 
             final Player player = event.getPlayer();
             if (display.getItemStack() == null || display.getItemStack().getType().isEmpty()) {
-                addItem(location, player, display);
+                addItem(player, display);
                 return;
             }
 
@@ -64,7 +63,7 @@ public class Charger extends ConnectedBlock {
         };
     }
 
-    protected void addItem(Location location, Player player, ItemDisplay display) {
+    protected void addItem(Player player, ItemDisplay display) {
         final ItemStack itemStack = player.getInventory().getItemInMainHand().clone();
         if (itemStack.getType().isEmpty()) {
             return;
