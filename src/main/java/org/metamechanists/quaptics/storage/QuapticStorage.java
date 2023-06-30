@@ -34,7 +34,13 @@ public class QuapticStorage {
         groupIDs.addAll(stringIDs.stream().map(ConnectionGroupID::new).toList());
     }
 
-    private static void createIfNotExists(@NotNull File file) {
+    private static void createDirectoryIfNotExists(@NotNull File file) {
+        if (!file.exists()) {
+            file.mkdir();
+        }
+    }
+
+    private static void createFileIfNotExists(@NotNull File file) {
         if (!file.exists()) {
             try {
                 file.createNewFile();
@@ -45,9 +51,11 @@ public class QuapticStorage {
     }
 
     public static void save() {
-        final File file = new File(Quaptics.getInstance().getDataFolder(), "../../data-storage/quaptics/tickers.yml");
+        final File directory = new File(Quaptics.getInstance().getDataFolder(), "../../data-storage/quaptics/");
+        final File file = new File(directory, "tickers.yml");
 
-        createIfNotExists(file);
+        createDirectoryIfNotExists(directory);
+        createFileIfNotExists(file);
 
         final YamlConfiguration tickers = new YamlConfiguration();
         tickers.set("tickers", serializeGroupIDs());
