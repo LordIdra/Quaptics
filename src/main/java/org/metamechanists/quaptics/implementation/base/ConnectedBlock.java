@@ -138,13 +138,15 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
 
     public List<ConnectionPointOutput> getLinkedOutputs(Location location) {
         return getLinkedPoints(location).stream()
+                .filter(point -> point instanceof ConnectionPointOutput)
                 .map(output -> (ConnectionPointOutput) output)
                 .toList();
     }
 
     public List<ConnectionPointInput> getLinkedInputs(Location location) {
         return getLinkedPoints(location).stream()
-                .map(output -> (ConnectionPointInput) output)
+                .filter(point -> point instanceof ConnectionPointInput)
+                .map(input -> (ConnectionPointInput) input)
                 .toList();
     }
 
