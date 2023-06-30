@@ -208,7 +208,7 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
 
         // Built in Charge Methods
         public boolean checkCharge(double charge, double chargeStep) {
-            return charge + chargeStep <= capacity && charge + chargeStep >= 0;
+            return charge + chargeStep <= capacity;
         }
         public double stepCharge(double charge, double chargeStep) {
             if (charge + chargeStep < 0) {

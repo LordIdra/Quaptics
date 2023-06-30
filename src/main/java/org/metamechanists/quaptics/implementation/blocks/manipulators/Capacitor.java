@@ -66,17 +66,12 @@ public class Capacitor extends ConnectedBlock {
     }
 
     @Override
-    public void onInputLinkUpdated(@NotNull ConnectionGroup group) {
+    public void onQuapticTick(@NotNull ConnectionGroup group) {
         final ConnectionPointInput input = group.getInput("input");
         final ConnectionPointOutput output = group.getOutput("output");
-
-
-        if (doBurnoutCheck(group, input)) {
-            return;
-        }
-
         final String chargeString = BlockStorage.getLocationInfo(group.getLocation(), Keys.CHARGE);
         double charge = chargeString == null ? 0 : Double.parseDouble(chargeString);
+
         if (input.isLinkEnabled()) {
             final double additionalCharge = input.getLink().getPower() / QuapticTicker.QUAPTIC_TICKS_PER_SECOND;
             charge = settings.stepCharge(charge, additionalCharge);
@@ -99,5 +94,11 @@ public class Capacitor extends ConnectedBlock {
         }
 
         BlockStorage.addBlockInfo(group.getLocation(), Keys.CHARGE, Objects.toString(charge));
+    }
+
+    @Override
+    public void onInputLinkUpdated(@NotNull ConnectionGroup group) {
+        final ConnectionPointInput input = group.getInput("input");
+        doBurnoutCheck(group, input);
     }
 }
