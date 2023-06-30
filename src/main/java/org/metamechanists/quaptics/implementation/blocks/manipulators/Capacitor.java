@@ -64,16 +64,32 @@ public class Capacitor extends ConnectedBlock {
                 new ConnectionPointOutput(groupID, "output", formatPointLocation(player, location, outputPointLocation)));
     }
 
+    private double getCharge(Location location) {
+        final String chargeString = BlockStorage.getLocationInfo(location, Keys.CHARGE);
+        return chargeString == null ? 0 : Double.parseDouble(chargeString);
+    }
+
+    private void setCharge(Location location, double charge) {
+        BlockStorage.addBlockInfo(location, Keys.CHARGE, Objects.toString(charge));
+    }
+
+    private double getChargeRate(Location location) {
+        final String chargeRateString = BlockStorage.getLocationInfo(location, Keys.CHARGE_RATE);
+        return chargeRateString == null ? 0 : Double.parseDouble(chargeRateString);
+    }
+
+    private void setChargeRate(Location location, double chargeRate) {
+        BlockStorage.addBlockInfo(location, Keys.CHARGE_RATE, String.valueOf(chargeRate));
+    }
+
     @Override
     public void onQuapticTick(@NotNull ConnectionGroup group) {
-        final ConnectionPointInput input = group.getInput("input");
         final ConnectionPointOutput output = group.getOutput("output");
-        final String chargeString = BlockStorage.getLocationInfo(group.getLocation(), Keys.CHARGE);
-        double charge = chargeString == null ? 0 : Double.parseDouble(chargeString);
+        final double chargeRate = getChargeRate(group.getLocation());
+        double charge = getCharge(group.getLocation());
 
-        if (input.isLinkEnabled()) {
-            final double additionalCharge = input.getLink().getPower() / QuapticTicker.QUAPTIC_TICKS_PER_SECOND;
-            charge = settings.stepCharge(charge, additionalCharge);
+        if (chargeRate != 0) {
+            charge = settings.stepCharge(charge, chargeRate);
         }
 
         if (output.hasLink()) {
@@ -92,12 +108,17 @@ public class Capacitor extends ConnectedBlock {
                             .mul((float)charge/settings.getCapacity()), displayRotation));
         }
 
-        BlockStorage.addBlockInfo(group.getLocation(), Keys.CHARGE, Objects.toString(charge));
+        setCharge(group.getLocation(), charge);
     }
 
     @Override
     public void onInputLinkUpdated(@NotNull ConnectionGroup group) {
         final ConnectionPointInput input = group.getInput("input");
-        doBurnoutCheck(group, input);
+
+        if (doBurnoutCheck(group, input)) {
+            return;
+        }
+
+        setChargeRate(group.getLocation(), input.getLink() != null ? input.getLink().getPower() / QuapticTicker.QUAPTIC_TICKS_PER_SECOND : 0);
     }
 }
