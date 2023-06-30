@@ -13,18 +13,14 @@ import org.metamechanists.quaptics.implementation.blocks.manipulators.Lens;
 import org.metamechanists.quaptics.implementation.blocks.manipulators.Splitter;
 import org.metamechanists.quaptics.items.Groups;
 import org.metamechanists.quaptics.items.Lore;
-import org.metamechanists.quaptics.utils.Colors;
+import org.metamechanists.quaptics.items.Tier;
 
 public class Intermediate {
-    private static final String TIER_NAME = Colors.INTERMEDIATE.getString() + "Intermediate";
-    private static final Material TIER_MATERIAL = Material.YELLOW_CONCRETE;
-    private static final float MAX_POWER = 1000;
-
     public static final SlimefunItemStack ENERGY_CONCENTRATOR_2 = new SlimefunItemStack(
             "QP_ENERGY_CONCENTRATOR_2",
-            TIER_MATERIAL,
+            Tier.INTERMEDIATE.material,
             "&eEnergy Concentrator &bII",
-            TIER_NAME,
+            Tier.INTERMEDIATE.name,
             "&7● Consumes energy",
             "&7● Concentrates energy into a quaptic ray",
             LoreBuilder.powerPerSecond(160),
@@ -34,18 +30,18 @@ public class Intermediate {
             "QP_LENS_3",
             Material.GLASS,
             "&9Lens &bIII",
-            TIER_NAME,
+            Tier.INTERMEDIATE.name,
             "&7● &bRedirects &7a quaptic ray",
-            Lore.maxPower(MAX_POWER),
+            Lore.maxPower(Tier.INTERMEDIATE.maxPower),
             Lore.powerLoss(4));
 
     public static final SlimefunItemStack COMBINER_3_2 = new SlimefunItemStack(
             "QP_COMBINER_3_2",
             Material.GRAY_STAINED_GLASS,
             "&9Combiner &eIII &8(2 connections)",
-            TIER_NAME,
+            Tier.INTERMEDIATE.name,
             "&7● &bCombines &7multiple quaptic rays into one",
-            Lore.maxPower(MAX_POWER),
+            Lore.maxPower(Tier.INTERMEDIATE.maxPower),
             Lore.powerLoss(8),
             Lore.maxConnections(2));
 
@@ -53,9 +49,9 @@ public class Intermediate {
             "QP_COMBINER_3_3",
             Material.GRAY_STAINED_GLASS,
             "&9Combiner &eIII &8(3 connections)",
-            TIER_NAME,
+            Tier.INTERMEDIATE.name,
             "&7● &bCombines &7multiple quaptic rays into one",
-            Lore.maxPower(MAX_POWER),
+            Lore.maxPower(Tier.INTERMEDIATE.maxPower),
             Lore.powerLoss(8),
             Lore.maxConnections(3));
 
@@ -63,9 +59,9 @@ public class Intermediate {
             "QP_SPLITTER_3_2",
             Material.LIGHT_GRAY_STAINED_GLASS,
             "&9Splitter &eIII &8(2 connections)",
-            TIER_NAME,
+            Tier.INTERMEDIATE.name,
             "&7● &bSplits &7one quaptic ray into multiple",
-            Lore.maxPower(MAX_POWER),
+            Lore.maxPower(Tier.INTERMEDIATE.maxPower),
             Lore.powerLoss(8),
             Lore.maxConnections(2));
 
@@ -73,9 +69,9 @@ public class Intermediate {
             "QP_SPLITTER_3_3",
             Material.LIGHT_GRAY_STAINED_GLASS,
             "&9Splitter &eIII &8(3 connections)",
-            TIER_NAME,
+            Tier.INTERMEDIATE.name,
             "&7● &bSplits &7one quaptic ray into multiple",
-            Lore.maxPower(MAX_POWER),
+            Lore.maxPower(Tier.INTERMEDIATE.maxPower),
             Lore.powerLoss(8),
             Lore.maxConnections(3));
 
@@ -87,22 +83,22 @@ public class Intermediate {
                 ENERGY_CONCENTRATOR_2,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                TIER_MATERIAL,
+                Tier.INTERMEDIATE.material,
                 0.35F,
                 0.7F,
                 160,
                 160,
                 200,
-                MAX_POWER).register(addon);
+                Tier.INTERMEDIATE.maxPower).register(addon);
 
         new Lens(
                 Groups.INTERMEDIATE,
                 LENS_3,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                TIER_MATERIAL,
+                Tier.INTERMEDIATE.material,
                 0.18F,
-                MAX_POWER,
+                Tier.INTERMEDIATE.maxPower,
                 0.04).register(addon);
 
         new Combiner(
@@ -110,10 +106,10 @@ public class Intermediate {
                 COMBINER_3_2,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                TIER_MATERIAL,
+                Tier.INTERMEDIATE.material,
                 0.30F,
                 2,
-                MAX_POWER,
+                Tier.INTERMEDIATE.maxPower,
                 0.08).register(addon);
 
         new Combiner(
@@ -121,10 +117,10 @@ public class Intermediate {
                 COMBINER_3_3,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                TIER_MATERIAL,
+                Tier.INTERMEDIATE.material,
                 0.35F,
                 3,
-                MAX_POWER,
+                Tier.INTERMEDIATE.maxPower,
                 0.08).register(addon);
 
         new Splitter(
@@ -132,10 +128,10 @@ public class Intermediate {
                 SPLITTER_3_2,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                TIER_MATERIAL,
+                Tier.INTERMEDIATE.material,
                 0.30F,
                 2,
-                MAX_POWER,
+                Tier.INTERMEDIATE.maxPower,
                 0.08).register(addon);
 
         new Splitter(
@@ -143,10 +139,10 @@ public class Intermediate {
                 SPLITTER_3_3,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                TIER_MATERIAL,
+                Tier.INTERMEDIATE.material,
                 0.35F,
                 3,
-                MAX_POWER,
+                Tier.INTERMEDIATE.maxPower,
                 0.08).register(addon);
     }
 }

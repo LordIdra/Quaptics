@@ -13,17 +13,14 @@ import org.metamechanists.quaptics.implementation.blocks.manipulators.Lens;
 import org.metamechanists.quaptics.implementation.blocks.manipulators.Splitter;
 import org.metamechanists.quaptics.items.Groups;
 import org.metamechanists.quaptics.items.Lore;
-import org.metamechanists.quaptics.utils.Colors;
+import org.metamechanists.quaptics.items.Tier;
 
 public class Primitive {
-    private static final String TIER_NAME = Colors.PRIMITIVE.getString() + "Primitive";
-    private static final Material TIER_MATERIAL = Material.BROWN_CONCRETE;
-    private static final float MAX_POWER = 10;
     public static final SlimefunItemStack SOLAR_CONCENTRATOR_1 = new SlimefunItemStack(
             "QP_SOLAR_CONCENTRATOR_1",
             Material.GLASS_PANE,
             "&eSolar Concentrator &bI",
-            TIER_NAME,
+            Tier.PRIMITIVE.name,
             "&7● Only works during the day",
             "&7● Concentrates sunlight into a quaptic ray",
             Lore.emissionPower(1));
@@ -32,18 +29,18 @@ public class Primitive {
             "QP_LENS_1",
             Material.GLASS,
             "&9Lens &bI",
-            TIER_NAME,
+            Tier.PRIMITIVE.name,
             "&7● &bRedirects &7a quaptic ray",
-            Lore.maxPower(MAX_POWER),
+            Lore.maxPower(Tier.PRIMITIVE.maxPower),
             Lore.powerLoss(10));
 
     public static final SlimefunItemStack COMBINER_1_2 = new SlimefunItemStack(
             "QP_COMBINER_1_2",
             Material.GRAY_STAINED_GLASS,
             "&9Combiner &eI &8(2 connections)",
-            TIER_NAME,
+            Tier.PRIMITIVE.name,
             "&7● &bCombines &7multiple quaptic rays into one",
-            Lore.maxPower(MAX_POWER),
+            Lore.maxPower(Tier.PRIMITIVE.maxPower),
             Lore.powerLoss(20),
             Lore.maxConnections(2));
 
@@ -51,9 +48,9 @@ public class Primitive {
             "QP_SPLITTER_1_2",
             Material.LIGHT_GRAY_STAINED_GLASS,
             "&9Splitter &eI &8(2 connections)",
-            TIER_NAME,
+            Tier.PRIMITIVE.name,
             "&7● &bSplits &7one quaptic ray into multiple",
-            Lore.maxPower(MAX_POWER),
+            Lore.maxPower(Tier.PRIMITIVE.maxPower),
             Lore.powerLoss(20),
             Lore.maxConnections(2));
 
@@ -61,9 +58,9 @@ public class Primitive {
             "QP_TURRET",
             Material.SMOOTH_STONE_SLAB,
             "&4Turret",
-            TIER_NAME,
+            Tier.PRIMITIVE.name,
             "&7● Shoots at nearby entities",
-            Lore.maxPower(MAX_POWER),
+            Lore.maxPower(Tier.PRIMITIVE.maxPower),
             Lore.minPower(5),
             Lore.damage(4),
             Lore.range(10));
@@ -79,16 +76,16 @@ public class Primitive {
                 0.45F,
                 0.0F,
                 1,
-                MAX_POWER).register(addon);
+                Tier.PRIMITIVE.maxPower).register(addon);
 
         new Lens(
                 Groups.PRIMITIVE,
                 LENS_1,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                TIER_MATERIAL,
+                Tier.PRIMITIVE.material,
                 0.24F,
-                MAX_POWER,
+                Tier.PRIMITIVE.maxPower,
                 0.1).register(addon);
 
         new Combiner(
@@ -96,10 +93,10 @@ public class Primitive {
                 COMBINER_1_2,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                TIER_MATERIAL,
+                Tier.PRIMITIVE.material,
                 0.4F,
                 2,
-                MAX_POWER,
+                Tier.PRIMITIVE.maxPower,
                 0.2).register(addon);
 
         new Splitter(
@@ -107,10 +104,10 @@ public class Primitive {
                 SPLITTER_1_2,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                TIER_MATERIAL,
+                Tier.PRIMITIVE.material,
                 0.4F,
                 2,
-                MAX_POWER,
+                Tier.PRIMITIVE.maxPower,
                 0.2).register(addon);
 
         new Turret(
@@ -118,7 +115,7 @@ public class Primitive {
                 TURRET,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                MAX_POWER,
+                Tier.PRIMITIVE.maxPower,
                 5,
                 10,
                 2).register(addon);
