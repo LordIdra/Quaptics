@@ -71,26 +71,17 @@ public class Lens extends ConnectedBlock {
             return;
         }
 
-        if (input.hasLink() && input.getLink().isEnabled()) {
-            getDisplayGroup(group.getLocation()).getDisplays().get("concrete").setViewRange(VIEW_RANGE_ON);
-        } else {
-            getDisplayGroup(group.getLocation()).getDisplays().get("concrete").setViewRange(VIEW_RANGE_OFF);
-        }
+        doDisplayBrightnessCheck(group.getLocation(), "concrete");
 
-        if (!output.hasLink()) {
-
+        if (!input.isLinkEnabled()) {
+            output.disableLinkIfExists();
             return;
         }
 
-        if (!input.hasLink() || !input.getLink().isEnabled()) {
-            output.getLink().setEnabled(false);
-            getDisplayGroup(group.getLocation()).getDisplays().get("concrete").setViewRange(0);
-            return;
-        }
-
-        output.getLink().setPower(powerLoss(input.getLink().getPower(), powerLoss));
-        output.getLink().setFrequency(input.getLink().getFrequency());
-        output.getLink().setPhase(input.getLink().getPhase());
-        output.getLink().setEnabled(true);
+        output.getLink().setAttributes(
+                powerLoss(input.getLink().getPower(), powerLoss),
+                input.getLink().getFrequency(),
+                input.getLink().getPhase(),
+                true);
     }
 }

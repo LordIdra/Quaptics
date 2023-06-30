@@ -100,6 +100,16 @@ public abstract class ConnectionPoint {
         return linkID.get();
     }
 
+    public boolean isLinkEnabled() {
+        return hasLink() && getLink().isEnabled();
+    }
+
+    public void disableLinkIfExists() {
+        if (hasLink()) {
+            getLink().setEnabled(false);
+        }
+    }
+
     public Location getLocation() {
         return getBlockDisplay().getLocation();
     }

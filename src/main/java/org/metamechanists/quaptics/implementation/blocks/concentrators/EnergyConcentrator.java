@@ -15,7 +15,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
-import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
 import org.metamechanists.quaptics.implementation.base.EnergyConnectedBlock;
@@ -60,16 +59,14 @@ public class EnergyConcentrator extends EnergyConnectedBlock {
     @Override
     public void onSlimefunTick(@NotNull Block block, SlimefunItem item, Config data) {
         super.onSlimefunTick(block, item, data);
-        final ConnectionGroup group = getGroup(block.getLocation());
-        final ConnectionPointOutput output = (ConnectionPointOutput) group.getPoint("output");
+        final ConnectionPointOutput output = getGroup(block.getLocation()).getOutput("output");
 
         if (!output.hasLink()) {
             return;
         }
 
         if (isPowered(block.getLocation())) {
-            output.getLink().setPower(emissionPower);
-            output.getLink().setEnabled(true);
+            output.getLink().setAttributes(emissionPower, 0, 0, true);
             return;
         }
 

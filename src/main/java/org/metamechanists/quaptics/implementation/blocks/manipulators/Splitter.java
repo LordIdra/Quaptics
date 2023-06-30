@@ -26,9 +26,7 @@ import java.util.Objects;
 import java.util.stream.IntStream;
 
 public class Splitter extends ConnectedBlock {
-    private static final int BRIGHTNESS_ON = 15;
-    private static final int VIEW_RANGE_ON = 64;
-    private static final int VIEW_RANGE_OFF = 0;
+    private static final int CONCRETE_BRIGHTNESS = 15;
     private final Material concreteMaterial;
     private final double connectionAngle = Math.PI / 2;
     private final int connections;
@@ -55,7 +53,7 @@ public class Splitter extends ConnectedBlock {
                 .build());
         displayGroup.addDisplay("concrete", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(concreteMaterial)
-                .setBrightness(BRIGHTNESS_ON)
+                .setBrightness(CONCRETE_BRIGHTNESS)
                 .setViewRange(VIEW_RANGE_OFF)
                 .setTransformation(Transformations.adjustedRotateAndScale(concreteDisplaySize, displayRotation))
                 .build());
@@ -79,43 +77,27 @@ public class Splitter extends ConnectedBlock {
     @Override
     public void onInputLinkUpdated(@NotNull ConnectionGroup group) {
         final ConnectionPointInput input = (ConnectionPointInput) group.getPoint("input");
-        final List<ConnectionPointOutput> outputs = IntStream.range(0, connections)
-                .mapToObj(i -> (ConnectionPointOutput) group.getPoint("output " + Objects.toString(i)))
-                .toList();
+        final List<ConnectionPointOutput> linkedOutputs = getLinkedOutputs(group.getLocation());
 
         if (doBurnoutCheck(group, input)) {
             return;
         }
 
-        if (input.hasLink() && input.getLink().isEnabled()) {
-            getDisplayGroup(group.getLocation()).getDisplays().get("concrete").setViewRange(VIEW_RANGE_ON);
-        } else {
-            getDisplayGroup(group.getLocation()).getDisplays().get("concrete").setViewRange(VIEW_RANGE_OFF);
-        }
+        doDisplayBrightnessCheck(group.getLocation(), "concrete");
 
-        if (outputs.stream().noneMatch(ConnectionPoint::hasLink)) {
+        if (linkedOutputs.isEmpty()) {
             return;
         }
 
-        if (!input.hasLink() || !input.getLink().isEnabled()) {
-            outputs.stream()
-                    .filter(ConnectionPoint::hasLink)
-                    .forEach(output -> output.getLink().setEnabled(false));
+        if (!input.isLinkEnabled()) {
+            linkedOutputs.forEach(output -> output.getLink().setEnabled(false));
             return;
         }
 
-        final long numberOfLinkedOutputs = outputs.stream().filter(ConnectionPoint::hasLink).count();
-        final double outputPower = powerLoss(input.getLink().getPower(), powerLoss) / numberOfLinkedOutputs;
-        final double outputFrequency = input.getLink().getFrequency() / numberOfLinkedOutputs;
+        final double outputPower = powerLoss(input.getLink().getPower(), powerLoss) / linkedOutputs.size();
+        final double outputFrequency = input.getLink().getFrequency();
         final int outputPhase = input.getLink().getPhase();
 
-        outputs.stream()
-                .filter(ConnectionPoint::hasLink)
-                .forEach(output -> {
-                    output.getLink().setPower(outputPower);
-                    output.getLink().setFrequency(outputFrequency);
-                    output.getLink().setPhase(outputPhase);
-                    output.getLink().setEnabled(true);
-                });
+        linkedOutputs.forEach(output -> output.getLink().setAttributes(outputPower, outputFrequency, outputPhase, true));
     }
 }

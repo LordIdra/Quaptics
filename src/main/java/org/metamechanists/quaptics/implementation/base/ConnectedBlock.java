@@ -1,7 +1,6 @@
 package org.metamechanists.quaptics.implementation.base;
 
 import com.destroystokyo.paper.ParticleBuilder;
-import io.github.bakedlibs.dough.blocks.BlockPosition;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
@@ -20,6 +19,8 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
+import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
+import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
 import org.metamechanists.quaptics.storage.QuapticStorage;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Transformations;
@@ -27,8 +28,11 @@ import org.metamechanists.quaptics.utils.id.ConnectionGroupID;
 import org.metamechanists.quaptics.utils.id.ConnectionPointID;
 
 import java.util.List;
+import java.util.Objects;
 
 public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
+    protected static final int VIEW_RANGE_ON = 64;
+    protected static final int VIEW_RANGE_OFF = 0;
     protected final float displayRadius;
     protected final float connectionRadius;
     public final double maxPower;
@@ -121,6 +125,34 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
         }
 
         return true;
+    }
+
+    public List<ConnectionPoint> getLinkedPoints(Location location) {
+        return getGroup(location).getPoints().values().stream()
+                .map(ConnectionPointID::get)
+                .filter(Objects::nonNull)
+                .filter(ConnectionPoint::hasLink)
+                .toList();
+    }
+
+    public List<ConnectionPointOutput> getLinkedOutputs(Location location) {
+        return getLinkedPoints(location).stream()
+                .map(output -> (ConnectionPointOutput) output)
+                .toList();
+    }
+
+    public List<ConnectionPointInput> getLinkedInputs(Location location) {
+        return getLinkedPoints(location).stream()
+                .map(output -> (ConnectionPointInput) output)
+                .toList();
+    }
+
+    public List<ConnectionPointInput> getEnabledInputs(Location location) {
+        return getLinkedInputs(location).stream().filter(ConnectionPoint::isLinkEnabled).toList();
+    }
+
+    public void doDisplayBrightnessCheck(Location location, String concreteDisplayName) {
+        getDisplay(location, concreteDisplayName).setViewRange(getEnabledInputs(location).isEmpty() ? VIEW_RANGE_OFF : VIEW_RANGE_ON);
     }
 
     public void onInputLinkUpdated(ConnectionGroup group) {}

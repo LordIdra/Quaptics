@@ -13,6 +13,7 @@ import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Display;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -119,5 +120,9 @@ public abstract class DisplayGroupTickerBlock extends SlimefunItem {
 
     public DisplayGroup getDisplayGroup(Location location) {
         return DisplayGroup.fromUUID(getDisplayGroupID(location).getUUID());
+    }
+
+    public Display getDisplay(Location location, String name) {
+        return DisplayGroup.fromUUID(getDisplayGroupID(location).getUUID()).getDisplays().get(name);
     }
 }

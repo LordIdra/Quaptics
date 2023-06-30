@@ -186,4 +186,11 @@ public class Link {
         update();
         BlockUpdateScheduler.scheduleUpdate(getInput().getGroup().getID());
     }
+
+    public void setAttributes(double power, double frequency, int phase, boolean enabled) {
+        setPower(power);
+        setFrequency(frequency);
+        setPhase(phase);
+        setEnabled(enabled);
+    }
 }

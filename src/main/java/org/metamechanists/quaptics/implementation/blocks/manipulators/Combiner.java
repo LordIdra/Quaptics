@@ -26,9 +26,7 @@ import java.util.Objects;
 import java.util.stream.IntStream;
 
 public class Combiner extends ConnectedBlock {
-    private static final int BRIGHTNESS_ON = 15;
-    private static final int VIEW_RANGE_ON = 64;
-    private static final int VIEW_RANGE_OFF = 0;
+    private static final int CONCRETE_BRIGHTNESS = 15;
     private final Material concreteMaterial;
     private final double connectionAngle = Math.PI / 2;
     private final int connections;
@@ -55,7 +53,7 @@ public class Combiner extends ConnectedBlock {
                 .build());
         displayGroup.addDisplay("concrete", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(concreteMaterial)
-                .setBrightness(BRIGHTNESS_ON)
+                .setBrightness(CONCRETE_BRIGHTNESS)
                 .setViewRange(VIEW_RANGE_OFF)
                 .setTransformation(Transformations.adjustedRotateAndScale(concreteDisplaySize, displayRotation))
                 .build());
@@ -78,48 +76,28 @@ public class Combiner extends ConnectedBlock {
 
     @Override
     public void onInputLinkUpdated(@NotNull ConnectionGroup group) {
-        final List<ConnectionPointInput> inputs = IntStream.range(0, connections)
-                .mapToObj(i -> (ConnectionPointInput) group.getPoint("input " + Objects.toString(i)))
-                .toList();
+        final List<ConnectionPointInput> enabledInputs = getEnabledInputs(group.getLocation());
         final ConnectionPointOutput output = (ConnectionPointOutput) group.getPoint("output");
 
-        for (ConnectionPointInput input : inputs) {
-            if (doBurnoutCheck(group, input)) {
-                return;
-            }
+        if (enabledInputs.stream().anyMatch(input -> doBurnoutCheck(group, input))) {
+            return;
         }
 
-        if (inputs.stream().anyMatch(input -> input.hasLink() && input.getLink().isEnabled())) {
-            getDisplayGroup(group.getLocation()).getDisplays().get("concrete").setViewRange(VIEW_RANGE_ON);
-        } else {
-            getDisplayGroup(group.getLocation()).getDisplays().get("concrete").setViewRange(VIEW_RANGE_OFF);
-        }
+        doDisplayBrightnessCheck(group.getLocation(), "concrete");
 
         if (!output.hasLink()) {
             return;
         }
 
-        final List<ConnectionPointInput> poweredInputs = inputs.stream()
-                .filter(input -> input.hasLink() && input.getLink().isEnabled())
-                .toList();
-        if (poweredInputs.isEmpty()) {
+        if (enabledInputs.isEmpty()) {
             output.getLink().setEnabled(false);
             return;
         }
 
-        final double inputPower = poweredInputs.stream()
-                .mapToDouble(input -> input.getLink().getPower())
-                .sum();
-        final double inputFrequency = poweredInputs.stream()
-                .mapToDouble(input -> input.getLink().getFrequency())
-                .sum();
-        final int inputPhase = (int)(poweredInputs.stream()
-                .mapToDouble(input -> input.getLink().getPhase())
-                .sum() / poweredInputs.size());
+        final double inputPower = enabledInputs.stream().mapToDouble(input -> input.getLink().getPower()).sum();
+        final double inputFrequency = enabledInputs.stream().mapToDouble(input -> input.getLink().getFrequency()).sum();
+        final int inputPhase = (int)(enabledInputs.stream().mapToDouble(input -> input.getLink().getPhase()).sum() / enabledInputs.size());
 
-        output.getLink().setPower(powerLoss(inputPower, powerLoss));
-        output.getLink().setFrequency(inputFrequency);
-        output.getLink().setPhase(inputPhase);
-        output.getLink().setEnabled(true);
+        output.getLink().setAttributes(powerLoss(inputPower, powerLoss), inputFrequency, inputPhase, true);
     }
 }
