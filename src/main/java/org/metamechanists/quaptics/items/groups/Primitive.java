@@ -17,54 +17,78 @@ import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
 
 public class Primitive {
+    public static final ConnectedBlock.Settings SOLAR_CONCENTRATOR_1_SETTINGS = ConnectedBlock.Settings.builder()
+            .tier(Tier.PRIMITIVE)
+            .displayRadius(0.45F)
+            .connectionRadius(0.45F)
+            .emissionPower(1)
+            .build();
+
+    public static final ConnectedBlock.Settings LENS_1_SETTINGS = ConnectedBlock.Settings.builder()
+            .tier(Tier.PRIMITIVE)
+            .displayRadius(0.24F)
+            .connectionRadius(0.48F)
+            .powerLoss(0.1)
+            .build();
+
+    public static final ConnectedBlock.Settings COMBINER_1_2_SETTINGS = ConnectedBlock.Settings.builder()
+            .tier(Tier.PRIMITIVE)
+            .displayRadius(0.4F)
+            .connectionRadius(0.8F)
+            .powerLoss(0.2)
+            .connections(2)
+            .build();
+
+    public static final ConnectedBlock.Settings SPLITTER_1_2_SETTINGS = ConnectedBlock.Settings.builder()
+            .tier(Tier.PRIMITIVE)
+            .displayRadius(0.4F)
+            .connectionRadius(0.8F)
+            .powerLoss(0.2)
+            .connections(2)
+            .build();
+
+    public static final ConnectedBlock.Settings TURRET_SETTINGS = ConnectedBlock.Settings.builder()
+            .tier(Tier.PRIMITIVE)
+            .minPower(5)
+            .range(10)
+            .damage(2)
+            .build();
+
     public static final SlimefunItemStack SOLAR_CONCENTRATOR_1 = new SlimefunItemStack(
             "QP_SOLAR_CONCENTRATOR_1",
             Material.GLASS_PANE,
             "&eSolar Concentrator &bI",
-            Tier.PRIMITIVE.name,
-            "&7● Only works during the day",
-            "&7● Concentrates sunlight into a quaptic ray",
-            Lore.emissionPower(1));
+            Lore.create(SOLAR_CONCENTRATOR_1_SETTINGS,
+                    "&7● Only works during the day",
+                    "&7● Concentrates sunlight into a quaptic ray"));
 
     public static final SlimefunItemStack LENS_1 = new SlimefunItemStack(
             "QP_LENS_1",
             Material.GLASS,
             "&9Lens &bI",
-            Tier.PRIMITIVE.name,
-            "&7● &bRedirects &7a quaptic ray",
-            Lore.maxPower(Tier.PRIMITIVE.maxPower),
-            Lore.powerLoss(10));
+            Lore.create(LENS_1_SETTINGS,
+                    "&7● &bRedirects &7a quaptic ray"));
 
     public static final SlimefunItemStack COMBINER_1_2 = new SlimefunItemStack(
             "QP_COMBINER_1_2",
             Material.GRAY_STAINED_GLASS,
             "&9Combiner &eI &8(2 connections)",
-            Tier.PRIMITIVE.name,
-            "&7● &bCombines &7multiple quaptic rays into one",
-            Lore.maxPower(Tier.PRIMITIVE.maxPower),
-            Lore.powerLoss(20),
-            Lore.maxConnections(2));
+            Lore.create(COMBINER_1_2_SETTINGS,
+                    "&7● &bCombines &7multiple quaptic rays into one"));
 
     public static final SlimefunItemStack SPLITTER_1_2 = new SlimefunItemStack(
             "QP_SPLITTER_1_2",
             Material.LIGHT_GRAY_STAINED_GLASS,
             "&9Splitter &eI &8(2 connections)",
-            Tier.PRIMITIVE.name,
-            "&7● &bSplits &7one quaptic ray into multiple",
-            Lore.maxPower(Tier.PRIMITIVE.maxPower),
-            Lore.powerLoss(20),
-            Lore.maxConnections(2));
+            Lore.create(SPLITTER_1_2_SETTINGS,
+                    "&7● &bSplits &7one quaptic ray into multiple"));
 
     public static final SlimefunItemStack TURRET = new SlimefunItemStack(
             "QP_TURRET",
             Material.SMOOTH_STONE_SLAB,
             "&4Turret",
-            Tier.PRIMITIVE.name,
-            "&7● Shoots at nearby entities",
-            Lore.maxPower(Tier.PRIMITIVE.maxPower),
-            Lore.minPower(5),
-            Lore.damage(4),
-            Lore.range(10));
+            Lore.create(TURRET_SETTINGS,
+                    "&7● Shoots at nearby entities"));
 
     public static void initialize() {
         final SlimefunAddon addon = Quaptics.getInstance();
@@ -74,12 +98,7 @@ public class Primitive {
                 SOLAR_CONCENTRATOR_1,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                ConnectedBlock.Settings.builder()
-                        .tier(Tier.PRIMITIVE)
-                        .displayRadius(0.45F)
-                        .connectionRadius(0.45F)
-                        .emissionPower(1)
-                        .build(),
+                SOLAR_CONCENTRATOR_1_SETTINGS,
                 0.0F).register(addon);
 
         new Lens(
@@ -87,49 +106,27 @@ public class Primitive {
                 LENS_1,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                ConnectedBlock.Settings.builder()
-                        .tier(Tier.PRIMITIVE)
-                        .displayRadius(0.24F)
-                        .connectionRadius(0.48F)
-                        .powerLoss(0.1)
-                        .build()).register(addon);
+                LENS_1_SETTINGS).register(addon);
 
         new Combiner(
                 Groups.PRIMITIVE,
                 COMBINER_1_2,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                ConnectedBlock.Settings.builder()
-                        .tier(Tier.PRIMITIVE)
-                        .displayRadius(0.4F)
-                        .connectionRadius(0.8F)
-                        .powerLoss(0.2)
-                        .connections(2)
-                        .build()).register(addon);
+                COMBINER_1_2_SETTINGS).register(addon);
 
         new Splitter(
                 Groups.PRIMITIVE,
                 SPLITTER_1_2,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                ConnectedBlock.Settings.builder()
-                        .tier(Tier.PRIMITIVE)
-                        .displayRadius(0.4F)
-                        .connectionRadius(0.8F)
-                        .powerLoss(0.2)
-                        .connections(2)
-                        .build()).register(addon);
+                SPLITTER_1_2_SETTINGS).register(addon);
 
         new Turret(
                 Groups.PRIMITIVE,
                 TURRET,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                ConnectedBlock.Settings.builder()
-                        .tier(Tier.PRIMITIVE)
-                        .minPower(5)
-                        .range(10)
-                        .damage(2)
-                        .build()).register(addon);
+                TURRET_SETTINGS).register(addon);
     }
 }

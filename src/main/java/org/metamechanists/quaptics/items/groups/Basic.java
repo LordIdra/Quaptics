@@ -3,7 +3,6 @@ package org.metamechanists.quaptics.items.groups;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
-import io.github.thebusybiscuit.slimefun4.utils.LoreBuilder;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.metamechanists.quaptics.Quaptics;
@@ -19,87 +18,120 @@ import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
 
 public class Basic {
+    public static final ConnectedBlock.Settings SOLAR_CONCENTRATOR_2_SETTINGS = ConnectedBlock.Settings.builder()
+            .tier(Tier.BASIC)
+            .displayRadius(0.35F)
+            .connectionRadius(0.35F)
+            .emissionPower(10)
+            .build();
+    public static final ConnectedBlock.Settings ENERGY_CONCENTRATOR_1_SETTINGS = ConnectedBlock.Settings.builder()
+            .tier(Tier.BASIC)
+            .displayRadius(0.2F)
+            .connectionRadius(0.3F)
+            .emissionPower(15)
+            .build();
+    public static final ConnectedBlock.Settings LENS_2_SETTINGS = ConnectedBlock.Settings.builder()
+            .tier(Tier.BASIC)
+            .displayRadius(0.21F)
+            .connectionRadius(0.42F)
+            .powerLoss(0.07)
+            .build();
+    public static final ConnectedBlock.Settings COMBINER_2_2_SETTINGS = ConnectedBlock.Settings.builder()
+            .tier(Tier.BASIC)
+            .displayRadius(0.35F)
+            .connectionRadius(0.7F)
+            .powerLoss(0.12)
+            .connections(2)
+            .build();
+    public static final ConnectedBlock.Settings COMBINER_2_3_SETTINGS = ConnectedBlock.Settings.builder()
+            .tier(Tier.BASIC)
+            .displayRadius(0.4F)
+            .connectionRadius(0.8F)
+            .powerLoss(0.14)
+            .connections(3)
+            .build();
+    public static final ConnectedBlock.Settings SPLITTER_2_2_SETTINGS = ConnectedBlock.Settings.builder()
+            .tier(Tier.BASIC)
+            .displayRadius(0.35F)
+            .connectionRadius(0.7F)
+            .powerLoss(0.12)
+            .connections(2)
+            .build();
+    public static final ConnectedBlock.Settings SPLITTER_2_3_SETTINGS = ConnectedBlock.Settings.builder()
+            .tier(Tier.BASIC)
+            .displayRadius(0.4F)
+            .connectionRadius(0.8F)
+            .powerLoss(0.14)
+            .connections(3)
+            .build();
+    public static final ConnectedBlock.Settings REPEATER_1_SETTINGS = ConnectedBlock.Settings.builder()
+            .tier(Tier.BASIC)
+            .displayRadius(0.25F)
+            .connectionRadius(0.5F)
+            .minPower(15)
+            .powerLoss(0.05)
+            .minFrequency(0.0)
+            .maxFrequency(0.2)
+            .frequencyStep(0.1)
+            .build();
+
     public static final SlimefunItemStack SOLAR_CONCENTRATOR_2 = new SlimefunItemStack(
             "QP_SOLAR_CONCENTRATOR_2",
             Material.GLASS_PANE,
             "&eSolar Concentrator &bII",
-            Tier.BASIC.name,
-            "&7● Only works during the day",
-            "&7● Concentrates sunlight into a quaptic ray",
-            Lore.emissionPower(10));
+            Lore.create(SOLAR_CONCENTRATOR_2_SETTINGS,
+                    "&7● Only works during the day",
+                    "&7● Concentrates sunlight into a quaptic ray"));
 
     public static final SlimefunItemStack ENERGY_CONCENTRATOR_1 = new SlimefunItemStack(
             "QP_ENERGY_CONCENTRATOR_1",
             Tier.BASIC.material,
             "&eEnergy Concentrator &bI",
-            Tier.BASIC.name,
-            "&7● Consumes energy",
-            "&7● Concentrates energy into a quaptic ray",
-            LoreBuilder.powerPerSecond(30),
-            Lore.emissionPower(15));
+            Lore.create(ENERGY_CONCENTRATOR_1_SETTINGS,
+                    "&7● Consumes energy",
+                    "&7● Concentrates energy into a quaptic ray"));
 
     public static final SlimefunItemStack LENS_2 = new SlimefunItemStack(
             "QP_LENS_2",
             Material.GLASS,
             "&9Lens &bII",
-            Tier.BASIC.name,
-            "&7● &bRedirects &7a quaptic ray",
-            Lore.maxPower(Tier.BASIC.maxPower),
-            Lore.powerLoss(7));
+            Lore.create(LENS_2_SETTINGS,
+                    "&7● &bRedirects &7a quaptic ray"));
 
     public static final SlimefunItemStack COMBINER_2_2 = new SlimefunItemStack(
             "QP_COMBINER_2_2",
             Material.GRAY_STAINED_GLASS,
             "&9Combiner &eII &8(2 connections)",
-            Tier.BASIC.name,
-            "&7● &bCombines &7multiple quaptic rays into one",
-            Lore.maxPower(Tier.BASIC.maxPower),
-            Lore.powerLoss(14),
-            Lore.maxConnections(2));
+            Lore.create(COMBINER_2_2_SETTINGS,
+                    "&7● &bCombines &7multiple quaptic rays into one"));
 
     public static final SlimefunItemStack COMBINER_2_3 = new SlimefunItemStack(
             "QP_COMBINER_2_3",
             Material.GRAY_STAINED_GLASS,
             "&9Combiner &eII &8(3 connections)",
-            Tier.BASIC.name,
-            "&7● &bCombines &7multiple quaptic rays into one",
-            Lore.maxPower(Tier.BASIC.maxPower),
-            Lore.powerLoss(14),
-            Lore.maxConnections(3));
+            Lore.create(COMBINER_2_3_SETTINGS,
+                    "&7● &bCombines &7multiple quaptic rays into one"));
 
     public static final SlimefunItemStack SPLITTER_2_2 = new SlimefunItemStack(
             "QP_SPLITTER_2_2",
             Material.LIGHT_GRAY_STAINED_GLASS,
             "&9Splitter &eII &8(2 connections)",
-            Tier.BASIC.name,
-            "&7● &bSplits &7one quaptic ray into multiple",
-            Lore.maxPower(Tier.BASIC.maxPower),
-            Lore.powerLoss(14),
-            Lore.maxConnections(2));
+            Lore.create(SPLITTER_2_2_SETTINGS,
+                "&7● &bSplits &7one quaptic ray into multiple"));
 
     public static final SlimefunItemStack SPLITTER_2_3 = new SlimefunItemStack(
             "QP_SPLITTER_2_3",
             Material.LIGHT_GRAY_STAINED_GLASS,
             "&9Splitter &eII &8(3 connections)",
-            Tier.BASIC.name,
-            "&7● &bSplits &7one quaptic ray into multiple",
-            Lore.maxPower(Tier.BASIC.maxPower),
-            Lore.powerLoss(14),
-            Lore.maxConnections(3));
+            Lore.create(SPLITTER_2_3_SETTINGS,
+                    "&7● &bSplits &7one quaptic ray into multiple"));
 
     public static final SlimefunItemStack REPEATER_1 = new SlimefunItemStack(
             "QP_REPEATER_1",
             Material.RED_STAINED_GLASS,
             "&cRepeater &eI",
-            Tier.BASIC.name,
-            "&7● &bIncreases the frequency &7of a quaptic ray",
-            Lore.minPower(15),
-            Lore.maxPower(Tier.BASIC.maxPower),
-            Lore.powerLoss(5),
-            Lore.minFrequency(0.0),
-            Lore.maxFrequency(0.2),
-            Lore.frequencyStep(0.1)
-    );
+            Lore.create(REPEATER_1_SETTINGS,
+                    "&7● &bIncreases the frequency &7of a quaptic ray"));
 
     public static void initialize() {
         final SlimefunAddon addon = Quaptics.getInstance();
@@ -109,12 +141,7 @@ public class Basic {
                 SOLAR_CONCENTRATOR_2,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                ConnectedBlock.Settings.builder()
-                        .tier(Tier.BASIC)
-                        .displayRadius(0.35F)
-                        .connectionRadius(0.35F)
-                        .emissionPower(10)
-                        .build(),
+                SOLAR_CONCENTRATOR_2_SETTINGS,
                 (float)(Math.PI/4)).register(addon);
 
         new EnergyConcentrator(
@@ -122,12 +149,7 @@ public class Basic {
                 ENERGY_CONCENTRATOR_1,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                ConnectedBlock.Settings.builder()
-                        .tier(Tier.BASIC)
-                        .displayRadius(0.2F)
-                        .connectionRadius(0.3F)
-                        .emissionPower(15)
-                        .build(),
+                ENERGY_CONCENTRATOR_1_SETTINGS,
                 30,
                 30).register(addon);
 
@@ -136,80 +158,42 @@ public class Basic {
                 LENS_2,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                ConnectedBlock.Settings.builder()
-                        .tier(Tier.BASIC)
-                        .displayRadius(0.21F)
-                        .connectionRadius(0.42F)
-                        .powerLoss(0.07)
-                        .build()).register(addon);
+                LENS_2_SETTINGS).register(addon);
 
         new Combiner(
                 Groups.BASIC,
                 COMBINER_2_2,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                ConnectedBlock.Settings.builder()
-                        .tier(Tier.BASIC)
-                        .displayRadius(0.35F)
-                        .connectionRadius(0.7F)
-                        .powerLoss(0.12)
-                        .connections(2)
-                        .build()).register(addon);
+                COMBINER_2_2_SETTINGS).register(addon);
 
         new Combiner(
                 Groups.BASIC,
                 COMBINER_2_3,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                ConnectedBlock.Settings.builder()
-                        .tier(Tier.BASIC)
-                        .displayRadius(0.4F)
-                        .connectionRadius(0.8F)
-                        .powerLoss(0.14)
-                        .connections(3)
-                        .build()).register(addon);
+                COMBINER_2_3_SETTINGS).register(addon);
 
         new Splitter(
                 Groups.BASIC,
                 SPLITTER_2_2,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                ConnectedBlock.Settings.builder()
-                        .tier(Tier.BASIC)
-                        .displayRadius(0.35F)
-                        .connectionRadius(0.7F)
-                        .powerLoss(0.12)
-                        .connections(2)
-                        .build()).register(addon);
+                SPLITTER_2_2_SETTINGS).register(addon);
 
         new Splitter(
                 Groups.BASIC,
                 SPLITTER_2_3,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                ConnectedBlock.Settings.builder()
-                        .tier(Tier.BASIC)
-                        .displayRadius(0.4F)
-                        .connectionRadius(0.8F)
-                        .powerLoss(0.14)
-                        .connections(3)
-                        .build()).register(addon);
+                SPLITTER_2_3_SETTINGS).register(addon);
 
         new Repeater(
                 Groups.BASIC,
                 REPEATER_1,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                ConnectedBlock.Settings.builder()
-                        .tier(Tier.BASIC)
-                        .displayRadius(0.25F)
-                        .connectionRadius(0.5F)
-                        .minPower(15)
-                        .powerLoss(0.05)
-                        .minFrequency(0.0)
-                        .maxFrequency(0.2)
-                        .frequencyStep(0.1)
-                        .build(),
+                REPEATER_1_SETTINGS,
                 1).register(addon);
     }
 }

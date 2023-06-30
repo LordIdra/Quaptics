@@ -189,6 +189,9 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
     public static class Settings {
         Tier tier;
 
+        private float displayRadius;
+        private float connectionRadius;
+
         private double minPower;
         private double emissionPower;
         private double powerLoss;
@@ -198,16 +201,9 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
         private double frequencyStep;
         private double frequencyMultiplier;
 
-        private int minPhase;
-        private int maxPhase;
-        private int phaseStep;
-
-        private float displayRadius;
-        private float connectionRadius;
-
         private int connections;
 
-        private double range;
+        private int range;
         private double damage;
     }
 }
