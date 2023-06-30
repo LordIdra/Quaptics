@@ -12,6 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
+import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
@@ -63,5 +64,32 @@ public class Repeater extends ConnectedBlock {
         return List.of(
                 new ConnectionPointInput(groupID, "input", formatPointLocation(player, location, inputPointLocation)),
                 new ConnectionPointOutput(groupID, "output", formatPointLocation(player, location, outputPointLocation)));
+    }
+
+    @Override
+    public void onInputLinkUpdated(@NotNull ConnectionGroup group) {
+        final ConnectionPointInput input = group.getInput("input");
+        final ConnectionPointOutput output = group.getOutput("output");
+
+        if (doBurnoutCheck(group, input)) {
+            return;
+        }
+
+        doDisplayBrightnessCheck(group.getLocation(), "concrete", false);
+
+        if (!output.hasLink()) {
+            return;
+        }
+
+        if (!input.isLinkEnabled()) {
+            output.disableLinkIfExists();
+            return;
+        }
+
+        output.getLink().setAttributes(
+                powerLoss(input.getLink().getPower(), settings.getPowerLoss()),
+                input.getLink().getFrequency() + settings.getFrequencyStep(),
+                input.getLink().getPhase(),
+                true);
     }
 }

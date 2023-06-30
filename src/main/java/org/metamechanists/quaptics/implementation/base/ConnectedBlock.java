@@ -35,6 +35,8 @@ import java.util.List;
 import java.util.Objects;
 
 public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
+    protected static final Display.Brightness BRIGHTNESS_ON = new Display.Brightness(13, 0);
+    protected static final Display.Brightness BRIGHTNESS_OFF = new Display.Brightness(5, 0);
     protected static final int VIEW_RANGE_ON = 64;
     protected static final int VIEW_RANGE_OFF = 0;
 
@@ -138,15 +140,15 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
 
     public List<ConnectionPointOutput> getLinkedOutputs(Location location) {
         return getLinkedPoints(location).stream()
-                .filter(point -> point instanceof ConnectionPointOutput)
-                .map(output -> (ConnectionPointOutput) output)
+                .filter(ConnectionPointOutput.class::isInstance)
+                .map(ConnectionPointOutput.class::cast)
                 .toList();
     }
 
     public List<ConnectionPointInput> getLinkedInputs(Location location) {
         return getLinkedPoints(location).stream()
-                .filter(point -> point instanceof ConnectionPointInput)
-                .map(input -> (ConnectionPointInput) input)
+                .filter(ConnectionPointInput.class::isInstance)
+                .map(ConnectionPointInput.class::cast)
                 .toList();
     }
 
@@ -155,11 +157,21 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
     }
 
     public void doDisplayBrightnessCheck(Location location, String concreteDisplayName) {
+        doDisplayBrightnessCheck(location, concreteDisplayName, true);
+    }
+
+    public void doDisplayBrightnessCheck(Location location, String concreteDisplayName, boolean setVisible) {
         final Display display = getDisplay(location, concreteDisplayName);
         if (display == null) {
             return;
         }
-        display.setViewRange(getEnabledInputs(location).isEmpty() ? VIEW_RANGE_OFF : VIEW_RANGE_ON);
+
+        final boolean noInputs = getEnabledInputs(location).isEmpty();
+        if (setVisible) {
+            display.setViewRange(noInputs ? VIEW_RANGE_OFF : VIEW_RANGE_ON);
+        } else  {
+            display.setBrightness(noInputs ? BRIGHTNESS_OFF : BRIGHTNESS_ON);
+        }
     }
 
     public void onInputLinkUpdated(ConnectionGroup group) {}
