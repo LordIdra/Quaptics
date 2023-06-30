@@ -103,35 +103,35 @@ public class Basic {
             Material.GRAY_STAINED_GLASS,
             "&9Combiner &eII &8(2 connections)",
             Lore.create(COMBINER_2_2_SETTINGS,
-                    "&7● &bCombines &7multiple quaptic rays into one"));
+                    "&7● Combines multiple quaptic rays into one"));
 
     public static final SlimefunItemStack COMBINER_2_3 = new SlimefunItemStack(
             "QP_COMBINER_2_3",
             Material.GRAY_STAINED_GLASS,
             "&9Combiner &eII &8(3 connections)",
             Lore.create(COMBINER_2_3_SETTINGS,
-                    "&7● &bCombines &7multiple quaptic rays into one"));
+                    "&7● Combines multiple quaptic rays into one"));
 
     public static final SlimefunItemStack SPLITTER_2_2 = new SlimefunItemStack(
             "QP_SPLITTER_2_2",
             Material.LIGHT_GRAY_STAINED_GLASS,
             "&9Splitter &eII &8(2 connections)",
             Lore.create(SPLITTER_2_2_SETTINGS,
-                "&7● &bSplits &7one quaptic ray into multiple"));
+                "&7● Splits one quaptic ray into multiple"));
 
     public static final SlimefunItemStack SPLITTER_2_3 = new SlimefunItemStack(
             "QP_SPLITTER_2_3",
             Material.LIGHT_GRAY_STAINED_GLASS,
             "&9Splitter &eII &8(3 connections)",
             Lore.create(SPLITTER_2_3_SETTINGS,
-                    "&7● &bSplits &7one quaptic ray into multiple"));
+                    "&7● Splits one quaptic ray into multiple"));
 
     public static final SlimefunItemStack REPEATER_1 = new SlimefunItemStack(
             "QP_REPEATER_1",
             Material.RED_STAINED_GLASS,
             "&cRepeater &eI",
             Lore.create(REPEATER_1_SETTINGS,
-                    "&7● &bIncreases the frequency &7of a quaptic ray"));
+                    "&7● Increases the frequency of a quaptic ray"));
 
     public static void initialize() {
         final SlimefunAddon addon = Quaptics.getInstance();

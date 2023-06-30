@@ -67,21 +67,21 @@ public class Primitive {
             Material.GLASS,
             "&9Lens &bI",
             Lore.create(LENS_1_SETTINGS,
-                    "&7● &bRedirects &7a quaptic ray"));
+                    "&7● Redirects a quaptic ray"));
 
     public static final SlimefunItemStack COMBINER_1_2 = new SlimefunItemStack(
             "QP_COMBINER_1_2",
             Material.GRAY_STAINED_GLASS,
             "&9Combiner &eI &8(2 connections)",
             Lore.create(COMBINER_1_2_SETTINGS,
-                    "&7● &bCombines &7multiple quaptic rays into one"));
+                    "&7● Combines multiple quaptic rays into one"));
 
     public static final SlimefunItemStack SPLITTER_1_2 = new SlimefunItemStack(
             "QP_SPLITTER_1_2",
             Material.LIGHT_GRAY_STAINED_GLASS,
             "&9Splitter &eI &8(2 connections)",
             Lore.create(SPLITTER_1_2_SETTINGS,
-                    "&7● &bSplits &7one quaptic ray into multiple"));
+                    "&7● Splits one quaptic ray into multiple"));
 
     public static final SlimefunItemStack TURRET = new SlimefunItemStack(
             "QP_TURRET",

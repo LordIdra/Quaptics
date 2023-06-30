@@ -84,49 +84,49 @@ public class Advanced {
             Material.GLASS,
             "&9Lens &bIV",
             Lore.create(LENS_4_SETTINGS,
-                    "&7● &bRedirects &7a quaptic ray"));
+                    "&7● Redirects a quaptic ray"));
 
     public static final SlimefunItemStack COMBINER_4_2 = new SlimefunItemStack(
             "QP_COMBINER_4_2",
             Material.GRAY_STAINED_GLASS,
             "&9Combiner &eIV &8(2 connections)",
             Lore.create(COMBINER_4_2_SETTINGS,
-                    "&7● &bCombines &7multiple quaptic rays into one"));
+                    "&7● Combines multiple quaptic rays into one"));
 
     public static final SlimefunItemStack COMBINER_4_3 = new SlimefunItemStack(
             "QP_COMBINER_4_3",
             Material.GRAY_STAINED_GLASS,
             "&9Combiner &eIV &8(3 connections)",
             Lore.create(COMBINER_4_3_SETTINGS,
-                    "&7● &bCombines &7multiple quaptic rays into one"));
+                    "&7● Combines multiple quaptic rays into one"));
 
     public static final SlimefunItemStack COMBINER_4_4 = new SlimefunItemStack(
             "QP_COMBINER_4_4",
             Material.GRAY_STAINED_GLASS,
             "&9Combiner &eIV &8(4 connections)",
             Lore.create(COMBINER_4_4_SETTINGS,
-                    "&7● &bCombines &7multiple quaptic rays into one"));
+                    "&7● Combines multiple quaptic rays into one"));
 
     public static final SlimefunItemStack SPLITTER_4_2 = new SlimefunItemStack(
             "QP_SPLITTER_4_2",
             Material.LIGHT_GRAY_STAINED_GLASS,
             "&9Splitter &eIV &8(2 connections)",
             Lore.create(SPLITTER_4_2_SETTINGS,
-                    "&7● &bSplits &7one quaptic ray into multiple"));
+                    "&7● Splits one quaptic ray into multiple"));
 
     public static final SlimefunItemStack SPLITTER_4_3 = new SlimefunItemStack(
             "QP_SPLITTER_4_3",
             Material.LIGHT_GRAY_STAINED_GLASS,
             "&9Splitter &eIV &8(3 connections)",
             Lore.create(SPLITTER_4_3_SETTINGS,
-                    "&7● &bSplits &7one quaptic ray into multiple"));
+                    "&7● Splits one quaptic ray into multiple"));
 
     public static final SlimefunItemStack SPLITTER_4_4 = new SlimefunItemStack(
             "QP_SPLITTER_4_4",
             Material.LIGHT_GRAY_STAINED_GLASS,
             "&9Splitter &eIV &8(4 connections)",
             Lore.create(SPLITTER_4_4_SETTINGS,
-                    "&7● &bSplits &7one quaptic ray into multiple"));
+                    "&7● Splits one quaptic ray into multiple"));
 
     public static void initialize() {
         final SlimefunAddon addon = Quaptics.getInstance();
