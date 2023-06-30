@@ -40,7 +40,7 @@ public class Basic {
             .tier(Tier.BASIC)
             .displayRadius(0.35F)
             .connectionRadius(0.7F)
-            .powerLoss(0.12)
+            .powerLoss(0.14)
             .connections(2)
             .build();
     public static final ConnectedBlock.Settings COMBINER_2_3_SETTINGS = ConnectedBlock.Settings.builder()
@@ -54,7 +54,7 @@ public class Basic {
             .tier(Tier.BASIC)
             .displayRadius(0.35F)
             .connectionRadius(0.7F)
-            .powerLoss(0.12)
+            .powerLoss(0.14)
             .connections(2)
             .build();
     public static final ConnectedBlock.Settings SPLITTER_2_3_SETTINGS = ConnectedBlock.Settings.builder()
