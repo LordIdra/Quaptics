@@ -21,6 +21,20 @@ public class LaserPointerManager extends BukkitRunnable {
     private static final Vector3f pointerScale = new Vector3f(0.5F, 0.1F, 0.5F);
     public static final long INTERVAL_TICKS = 1;
 
+    public static void removePoints() {
+        points.values().forEach(point -> {
+            final BlockDisplayID displayID = point.getDisplayID();
+            if (displayID == null) {
+                return;
+            }
+
+            final BlockDisplay blockDisplay = displayID.get();
+            if (blockDisplay != null) {
+                blockDisplay.remove();
+            }
+        });
+    }
+
     @Override
     public void run() {
         for (LaserPointer.LaserPoint point : points.values()) {
@@ -56,8 +70,8 @@ public class LaserPointerManager extends BukkitRunnable {
         return player.getWorld()
                 .rayTrace(
                         player.getEyeLocation(),
-                        player.getEyeLocation().toVector(),
-                        16,
+                        player.getEyeLocation().getDirection(),
+                        10,
                         FluidCollisionMode.ALWAYS,
                         true,
                         0.5,

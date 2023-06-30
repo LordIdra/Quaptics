@@ -55,6 +55,7 @@ public final class Quaptics extends JavaPlugin implements SlimefunAddon {
 
     @Override
     public void onDisable() {
+        LaserPointerManager.removePoints();
         BurnoutManager.stopBurnouts();
         QuapticStorage.save();
     }
