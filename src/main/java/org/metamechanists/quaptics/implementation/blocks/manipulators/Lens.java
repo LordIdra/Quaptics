@@ -26,7 +26,7 @@ public class Lens extends ConnectedBlock {
     private static final int CONCRETE_BRIGHTNESS = 15;
     private final Vector3f glassDisplaySize = new Vector3f(settings.getDisplayRadius()*2);
     private final Vector3f concreteDisplaySize = new Vector3f(settings.getDisplayRadius());
-    private final Vector3f mainDisplayRotation = new Vector3f((float)(Math.PI/4), (float)(Math.PI/4), 0);
+    private final Vector3f mainDisplayRotation = new Vector3f(45, 35.26F, 0);
     private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -settings.getConnectionRadius());
     private final Vector outputPointLocation = new Vector(0.0F, 0.0F, settings.getConnectionRadius());
 
