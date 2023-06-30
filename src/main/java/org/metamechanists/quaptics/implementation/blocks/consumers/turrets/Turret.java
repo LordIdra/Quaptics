@@ -61,7 +61,7 @@ public abstract class Turret extends ConnectedBlock {
     @Override
     protected void addDisplays(@NotNull DisplayGroup displayGroup, @NotNull Location location, Player player) {
         displayGroup.addDisplay("main", new BlockDisplayBuilder(location.toCenterLocation())
-                        .setMaterial(Material.POLISHED_ANDESITE)
+                        .setMaterial(settings.getMainMaterial())
                         .setTransformation(Transformations.adjustedScale(mainDisplaySize))
                         .build());
         displayGroup.addDisplay("barrel", generateBarrel(location, location.clone().add(barrelLocation).add(new Vector(0, -1, 0))));
@@ -144,8 +144,9 @@ public abstract class Turret extends ConnectedBlock {
     @Override
     protected void onSlimefunTick(@NotNull Block block, SlimefunItem item, Config data) {
         if (Objects.equal(BlockStorage.getLocationInfo(block.getLocation(), Keys.BS_POWERED), "true")) {
-            retarget(block.getLocation());
             shoot(block.getLocation());
+        } else {
+            retarget(block.getLocation());
         }
     }
 }
