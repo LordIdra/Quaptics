@@ -11,16 +11,18 @@ public class Keys {
         return new NamespacedKey(Quaptics.getInstance(), key);
     }
 
-    public static final NamespacedKey MAIN = newKey("QP_MAIN");
-    public static final NamespacedKey GUIDE = newKey("QP_GUIDE");
-    public static final NamespacedKey TOOLS = newKey("QP_TOOLS");
-    public static final NamespacedKey PRIMITIVE = newKey("QP_PRIMITIVE");
-    public static final NamespacedKey BASIC = newKey("QP_BASIC");
-    public static final NamespacedKey INTERMEDIATE = newKey("QP_INTERMEDIATE");
-    public static final NamespacedKey ADVANCED = newKey("QP_ADVANCED");
-    
-    public static final NamespacedKey SOURCE = newKey("QP_SOURCE");
-    public static final NamespacedKey DATA = newKey("QP_DATA");
+    public static final NamespacedKey MAIN = newKey("MAIN");
+    public static final NamespacedKey GUIDE = newKey("GUIDE");
+    public static final NamespacedKey TOOLS = newKey("TOOLS");
+    public static final NamespacedKey PRIMITIVE = newKey("PRIMITIVE");
+    public static final NamespacedKey BASIC = newKey("BASIC");
+    public static final NamespacedKey INTERMEDIATE = newKey("INTERMEDIATE");
+    public static final NamespacedKey ADVANCED = newKey("ADVANCED");
+
+    public static final NamespacedKey FACING = newKey("FACING");
+    public static final NamespacedKey SOURCE = newKey("SOURCE");
+    public static final NamespacedKey DATA = newKey("DATA");
+
     public static final String BURNOUT = "QP_BURNOUT";
     public static final String POWERED = "QP_POWERED";
     public static final String TARGET = "QP_TARGET";

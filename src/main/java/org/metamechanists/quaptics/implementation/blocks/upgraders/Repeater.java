@@ -1,6 +1,7 @@
 package org.metamechanists.quaptics.implementation.blocks.upgraders;
 
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
+import io.github.bakedlibs.dough.data.persistent.PersistentDataAPI;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
@@ -18,6 +19,7 @@ import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
+import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.ConnectionGroupID;
@@ -45,10 +47,12 @@ public class Repeater extends ConnectedBlock {
 
     private void setRepeaterPowered(Location location, boolean powered) {
         final BlockDisplay display = (BlockDisplay) getDisplay(location, "repeater");
+        final String facing = PersistentDataAPI.getString(getDisplay(location, "repeater"), Keys.FACING);
         if (display != null) {
-            display.setBlock(Material.REPEATER.createBlockData(display.getBlock().getAsString()
-                            .replace("minecraft:repeaterminecraft:repeater", "")
-                            .replace("powered=" + Objects.toString(!powered), "powered=" + Objects.toString(powered))));
+            display.setBlock(Material.REPEATER.createBlockData("[delay=" + delayVisual
+                    + ",facing=" + facing
+                    + ",powered=" + Objects.toString(powered)
+                    + "]"));
         }
     }
 
@@ -72,6 +76,7 @@ public class Repeater extends ConnectedBlock {
                 .setTransformation(Transformations.adjustedScaleAndOffset(concreteDisplaySize, concreteOffset))
                 .setBrightness(CONCRETE_BRIGHTNESS)
                 .build());
+        PersistentDataAPI.setString(displayGroup.getDisplays().get("repeater"), Keys.FACING, face.name().toLowerCase());
     }
 
     @Override
