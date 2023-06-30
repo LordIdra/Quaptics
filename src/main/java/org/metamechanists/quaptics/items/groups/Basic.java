@@ -203,7 +203,7 @@ public class Basic {
                         .tier(Tier.BASIC)
                         .displayRadius(0.25F)
                         .connectionRadius(0.5F)
-                        .frequencyStep(0.2)
+                        .frequencyStep(0.1)
                         .powerLoss(0.05)
                         .build(),
                 1).register(addon);
