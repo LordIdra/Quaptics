@@ -205,7 +205,7 @@ public class Basic {
                         .displayRadius(0.25F)
                         .connectionRadius(0.5F)
                         .minPower(15)
-                        .powerLoss(5)
+                        .powerLoss(0.05)
                         .minFrequency(0.0)
                         .maxFrequency(0.2)
                         .frequencyStep(0.1)
