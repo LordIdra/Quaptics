@@ -95,7 +95,7 @@ public class Basic {
             "&7● &bIncreases &7the &bfrequency &7of a quaptic ray",
             Lore.maxPower(Tier.BASIC.maxPower),
             Lore.powerLoss(5),
-            Lore.frequency(0.1),
+            Lore.additionalFrequency(0.1),
             Lore.minFrequency(0.0),
             Lore.maxFrequency(0.2)
     );
