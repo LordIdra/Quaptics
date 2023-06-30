@@ -117,10 +117,10 @@ public class Lore {
         return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Operating Power &e" + format(minPower) + " &7- &e" + format(maxPower) + POWER_SUFFIX;
     }
     public static String chargeBar(int charge, int capacity) {
-        return ATTRIBUTE_SYMBOL + CHARGE_SYMBOL + "&7Charge " + progressBar(charge, capacity, "&c", "7");
+        return ATTRIBUTE_SYMBOL + CHARGE_SYMBOL + "&7Charge " + progressBar(charge, capacity, "&c", "&7");
     }
     public static String chargeValues(int charge, int capacity) {
-        return ATTRIBUTE_SYMBOL + CHARGE_SYMBOL + "&7" + charge + "&8/ &7" + capacity + CHARGE_SUFFIX;
+        return ATTRIBUTE_SYMBOL + CHARGE_SYMBOL + "&7" + charge + " &8/ &7" + capacity + CHARGE_SUFFIX;
     }
     public static String chargeUsage(int usage) {
         return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Usage &e" + usage + POWER_SUFFIX;
@@ -148,7 +148,7 @@ public class Lore {
 
     public static String progressBar(int filled, int max, String filledColor, String emptyColor) {
         final String base = "¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦";
-        final int divideAt = 1;
+        final int divideAt = filled/max%20;
         return filledColor + base.substring(0, divideAt) + emptyColor + base.substring(divideAt);
     }
 }
