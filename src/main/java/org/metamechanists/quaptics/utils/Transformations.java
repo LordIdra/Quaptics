@@ -1,6 +1,7 @@
 package org.metamechanists.quaptics.utils;
 
 import org.bukkit.Location;
+import org.bukkit.block.BlockFace;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Transformations {
+    private static final List<BlockFace> AXIS = new ArrayList<>(List.of(BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST));
     private static final List<Vector3f> BLOCK_VERTICES = new ArrayList<>();
     static {{
         BLOCK_VERTICES.add(new Vector3f(0, 0, 0));
@@ -48,6 +50,10 @@ public class Transformations {
 
     public static double yawToCardinalDirection(float yaw) {
         return -Math.round(yaw / 90F) * (Math.PI/2);
+    }
+
+    public static BlockFace yawToFace(float yaw) {
+        return AXIS.get(Math.round(yaw / 90f) & 0x3);
     }
 
     public static @NotNull Vector3f getDisplacement(Location from, @NotNull Location to) {
