@@ -53,6 +53,7 @@ public class Primitive {
             .displayRadius(0.3F)
             .connectionRadius(0.6F)
             .capacity(200)
+            .emissionPower(3)
             .build();
 
     public static final ConnectedBlock.Settings TURRET_SETTINGS = ConnectedBlock.Settings.builder()
