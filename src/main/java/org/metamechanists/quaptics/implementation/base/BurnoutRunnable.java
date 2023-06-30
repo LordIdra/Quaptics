@@ -50,17 +50,8 @@ public class BurnoutRunnable extends BukkitRunnable {
         for (int delay = 1; delay < 60; delay++) {
             final int ticks = delay;
             Bukkit.getScheduler().runTaskLater(Quaptics.getInstance(), () -> {
-                if (this.stopEarly) {
+                if (shouldStopEarly()) {
                     return;
-                }
-
-                if (ticks % 2 + RandomUtils.randomInteger(1, 5) == 0) {
-                    connectionGroup.getPoints().values().forEach(pointId -> {
-                        final ConnectionPoint point = pointId.get();
-                        if (point != null && point.hasLink()) {
-                            point.getLink().setEnabled(!point.getLink().isEnabled());
-                        }
-                    });
                 }
 
                 if (ticks % 4 == 0) {
@@ -84,13 +75,17 @@ public class BurnoutRunnable extends BukkitRunnable {
 
         Bukkit.getScheduler().runTaskLater(Quaptics.getInstance(), () -> {
             // TODO: Drop "Burnt Component" Item
-            if (this.stopEarly) {
+            if (shouldStopEarly()) {
                 return;
             }
 
             playSound(Sound.ENTITY_GENERIC_EXPLODE, 2, 1.2f);
             connectedBlock.burnout(this.location);
         }, 60L);
+    }
+
+    public boolean shouldStopEarly() {
+        return this.stopEarly;
     }
 
     public void playSound(Sound sound, float volume, float pitch) {
