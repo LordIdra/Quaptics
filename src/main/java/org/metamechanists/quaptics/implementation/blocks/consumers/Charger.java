@@ -74,8 +74,6 @@ public class Charger extends ConnectedBlock {
 
         player.getInventory().setItemInMainHand(null);
         display.setItemStack(itemStack);
-
-        QuapticChargeableItem.chargeItem(getGroup(location), itemStack);
     }
 
     protected void removeItem(Player player, ItemDisplay display) {
@@ -102,7 +100,7 @@ public class Charger extends ConnectedBlock {
             return;
         }
 
-        QuapticChargeableItem.chargeItem(group, itemStack);
+        QuapticChargeableItem.chargeItem(group, display);
     }
 
     @Override

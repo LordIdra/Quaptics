@@ -8,6 +8,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import lombok.Getter;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.ItemDisplay;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
@@ -29,7 +30,8 @@ public abstract class QuapticChargeableItem extends SlimefunItem {
         this.settings = settings;
     }
 
-    public static void chargeItem(ConnectionGroup connectionGroup, ItemStack itemStack) {
+    public static void chargeItem(ConnectionGroup connectionGroup, ItemDisplay display) {
+        final ItemStack itemStack = display.getItemStack();
         if (!(SlimefunItem.getByItem(itemStack) instanceof QuapticChargeableItem chargeableItem)) {
             return;
         }
@@ -50,6 +52,7 @@ public abstract class QuapticChargeableItem extends SlimefunItem {
         final double newCharge = Math.max(itemSettings.getCapacity(), currentCharge + link.getPower());
         PersistentDataAPI.setDouble(itemMeta, Keys.CHARGE, newCharge);
         itemStack.setItemMeta(itemMeta);
+        display.setItemStack(itemStack);
     }
 
     public static boolean meetsRequirements(ConnectedBlock.Settings itemSettings, ConnectedBlock.Settings chargerSettings, Link link) {
