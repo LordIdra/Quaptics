@@ -29,7 +29,7 @@ public class PointPanel {
         panel.setAttributeHidden("name", false);
     }
 
-    public PointPanel(PanelID panelID, ConnectionPointID pointID) {
+    public PointPanel(@NotNull PanelID panelID, ConnectionPointID pointID) {
         this.pointID = pointID;
         this.panel = panelID.get();
     }

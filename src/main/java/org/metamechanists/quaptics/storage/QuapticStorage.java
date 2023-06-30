@@ -45,10 +45,8 @@ public class QuapticStorage {
     }
 
     public static void save() {
-        final File directory = new File(Quaptics.getInstance().getDataFolder(), "../../data-storage/quaptics");
-        final File file = new File(Quaptics.getInstance().getDataFolder(), "tickers.yml");
+        final File file = new File(Quaptics.getInstance().getDataFolder(), "../../data-storage/quaptics/tickers.yml");
 
-        createIfNotExists(directory);
         createIfNotExists(file);
 
         final YamlConfiguration tickers = new YamlConfiguration();
@@ -62,10 +60,9 @@ public class QuapticStorage {
     }
 
     public static void load() {
-        final File directory = new File(Quaptics.getInstance().getDataFolder(), "../../data-storage/quaptics");
-        final File file = new File(Quaptics.getInstance().getDataFolder(), "tickers.yml");
+        final File file = new File(Quaptics.getInstance().getDataFolder(), "../../data-storage/quaptics/tickers.yml");
 
-        if (!directory.exists() || !file.exists()) {
+        if (!file.exists()) {
             Quaptics.getInstance().getLogger().severe(Language.getLanguageEntry("load.failed"));
             return;
         }

@@ -64,7 +64,7 @@ public class Capacitor extends ConnectedBlock {
                 new ConnectionPointOutput(groupID, "output", formatPointLocation(player, location, outputPointLocation)));
     }
 
-    private double getCharge(Location location) {
+    public static double getCharge(Location location) {
         final String chargeString = BlockStorage.getLocationInfo(location, Keys.BS_CHARGE);
         return chargeString == null ? 0 : Double.parseDouble(chargeString);
     }

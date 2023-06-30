@@ -116,11 +116,11 @@ public class Lore {
     public static String operatingPower(double minPower, double maxPower) {
         return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Operating Power &e" + format(minPower) + " &7- &e" + format(maxPower) + POWER_SUFFIX;
     }
-    public static String chargeBar(int filled, int max) {
-        return ATTRIBUTE_SYMBOL + CHARGE_SYMBOL + "&7Charge " + progressBar(filled, max, "&c", "7");
+    public static String chargeBar(int charge, int capacity) {
+        return ATTRIBUTE_SYMBOL + CHARGE_SYMBOL + "&7Charge " + progressBar(charge, capacity, "&c", "7");
     }
-    public static String chargeValues(int filled, int max) {
-        return ATTRIBUTE_SYMBOL + CHARGE_SYMBOL + "&7" + filled + "&8/ &7" + max + CHARGE_SUFFIX;
+    public static String chargeValues(int charge, int capacity) {
+        return ATTRIBUTE_SYMBOL + CHARGE_SYMBOL + "&7" + charge + "&8/ &7" + capacity + CHARGE_SUFFIX;
     }
     public static String chargeUsage(int usage) {
         return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Usage &e" + usage + POWER_SUFFIX;
