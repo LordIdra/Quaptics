@@ -15,7 +15,7 @@ public class Lore {
     private static final String COUNT_SYMBOL = Colors.COMPONENTS_MISC.getString() + "◎ ";
     private static final String RANGE_SYMBOL = Colors.COMPONENTS_MISC.getString() + "↔ ";
     private static final String DAMAGE_SYMBOL = Colors.COMPONENTS_MISC.getString() + "🗡 ";
-    private static final String CHARGE_SYMBOL = Colors.CHARGE.getString() + "◆";
+    private static final String CHARGE_SYMBOL = Colors.CHARGE.getString() + "◆ ";
     private static final String POWER_SYMBOL = Colors.POWER.getString() + "⏻ ";
     private static final String FREQUENCY_SYMBOL = Colors.FREQUENCY.getString() + "∀ ";
     private static final String PHASE_SYMBOL = Colors.PHASE.getString() + "۞ ";
@@ -89,7 +89,7 @@ public class Lore {
     }
 
     public static String capacity(double capacity) {
-        return CHARGE_SYMBOL + "&7Capacity &e" + Objects.toString(capacity) + CHARGE_SUFFIX;
+        return ATTRIBUTE_SYMBOL + CHARGE_SYMBOL + "&7Capacity &e" + Objects.toString(capacity) + CHARGE_SUFFIX;
     }
 
     public static String powerNoArrow(double power) {
