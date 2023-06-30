@@ -94,8 +94,8 @@ public class Capacitor extends ConnectedBlock {
 
         if (output.hasLink()) {
             final double dischargeRate = settings.getEmissionPower() / QuapticTicker.QUAPTIC_TICKS_PER_SECOND;
-            charge = settings.stepCharge(charge, -dischargeRate);
             if (charge > dischargeRate) {
+                charge = settings.stepCharge(charge, -dischargeRate);
                 output.getLink().setAttributes(settings.getEmissionPower(), 0, 0, true);
             } else {
                 output.disableLinkIfExists();
