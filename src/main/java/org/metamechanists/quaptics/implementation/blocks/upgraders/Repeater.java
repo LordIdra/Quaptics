@@ -25,8 +25,8 @@ public class Repeater extends ConnectedBlock {
     private static final int CONCRETE_BRIGHTNESS = 15;
     private final Vector3f glassDisplaySize = new Vector3f(settings.getDisplayRadius()*2);
     private final Vector3f repeaterDisplaySize = new Vector3f(settings.getDisplayRadius());
-    private final Vector3f concreteDisplaySize = new Vector3f(settings.getDisplayRadius(), 0.2F, settings.getDisplayRadius());
-    private final Vector3f concreteOffset = new Vector3f(0, -0.2F, 0);
+    private final Vector3f concreteDisplaySize = new Vector3f(settings.getDisplayRadius()+0.01F, 0.15F, settings.getDisplayRadius()+0.01F);
+    private final Vector3f concreteOffset = new Vector3f(0, -0.1F, 0);
     private final Vector3f mainDisplayRotation = new Vector3f((float)(Math.PI/4), (float)(Math.PI/4), 0);
     private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -settings.getConnectionRadius());
     private final Vector outputPointLocation = new Vector(0.0F, 0.0F, settings.getConnectionRadius());
@@ -41,7 +41,7 @@ public class Repeater extends ConnectedBlock {
     @Override
     protected void addDisplays(@NotNull DisplayGroup displayGroup, @NotNull Location location, Player player) {
         displayGroup.addDisplay("main", new BlockDisplayBuilder(location.toCenterLocation())
-                .setMaterial(Material.GLASS)
+                .setMaterial(Material.RED_STAINED_GLASS)
                 .setTransformation(Transformations.adjustedRotateAndScale(glassDisplaySize, mainDisplayRotation))
                 .build());
         displayGroup.addDisplay("repeater", new BlockDisplayBuilder(location.toCenterLocation())
