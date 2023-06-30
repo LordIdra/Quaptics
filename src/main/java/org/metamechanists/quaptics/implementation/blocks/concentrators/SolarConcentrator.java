@@ -26,15 +26,13 @@ import java.util.List;
 
 public class SolarConcentrator extends ConnectedBlock {
     private final float rotationY;
-    private final Vector outputLocation = new Vector(0.0F, 0.0F, connectionRadius);
-    private final Vector3f mainDisplaySize = new Vector3f(displayRadius*2);
-    private final double emissionPower;
+    private final Vector outputLocation = new Vector(0.0F, 0.0F, settings.getConnectionRadius());
+    private final Vector3f mainDisplaySize = new Vector3f(settings.getDisplayRadius()*2);
 
     public SolarConcentrator(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe,
-                             float radius, float rotationY, double emissionPower, double maxPower) {
-        super(group, item, recipeType, recipe, radius, radius, maxPower);
+                             Settings settings, float rotationY) {
+        super(group, item, recipeType, recipe, settings);
         this.rotationY = rotationY;
-        this.emissionPower = emissionPower;
     }
 
     private ItemDisplay generateMainBlockDisplay(@NotNull Location from) {
@@ -65,7 +63,7 @@ public class SolarConcentrator extends ConnectedBlock {
         }
 
         if (block.getWorld().isDayTime()) {
-            output.getLink().setAttributes(emissionPower, 0, 0, true);
+            output.getLink().setAttributes(settings.getPowerEmission(), 0, 0, true);
             return;
         }
 

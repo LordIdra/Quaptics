@@ -26,22 +26,17 @@ import org.metamechanists.quaptics.utils.id.ConnectionPointID;
 import java.util.List;
 
 public class EnergyConcentrator extends EnergyConnectedBlock {
-    private final Material material;
-    private final Vector outputLocation = new Vector(0.0F, 0.0F, connectionRadius);
-    private final Vector3f mainDisplaySize = new Vector3f(displayRadius, displayRadius, connectionRadius*2);
-    private final double emissionPower;
+    private final Vector outputLocation = new Vector(0.0F, 0.0F, settings.getConnectionRadius());
+    private final Vector3f mainDisplaySize = new Vector3f(settings.getDisplayRadius(), settings.getDisplayRadius(), settings.getConnectionRadius()*2);
 
     public EnergyConcentrator(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe,
-                              Material material, float width, float length,
-                              int capacity, int consumption, double emissionPower, double maxPower) {
-        super(group, item, recipeType, recipe, width/2, length/2, maxPower, capacity, consumption);
-        this.material = material;
-        this.emissionPower = emissionPower;
+                              Settings settings, int capacity, int consumption) {
+        super(group, item, recipeType, recipe, settings, capacity, consumption);
     }
 
     private BlockDisplay generateMainBlockDisplay(@NotNull Location from, Location to) {
         return new BlockDisplayBuilder(from.toCenterLocation())
-                .setMaterial(material)
+                .setMaterial(settings.getTier().material)
                 .setTransformation(Transformations.lookAlong(mainDisplaySize, Transformations.getDirection(from, to)))
                 .build();
     }
@@ -66,7 +61,7 @@ public class EnergyConcentrator extends EnergyConnectedBlock {
         }
 
         if (isPowered(block.getLocation())) {
-            output.getLink().setAttributes(emissionPower, 0, 0, true);
+            output.getLink().setAttributes(settings.getPowerEmission(), 0, 0, true);
             return;
         }
 

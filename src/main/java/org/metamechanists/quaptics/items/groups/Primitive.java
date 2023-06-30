@@ -6,6 +6,7 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.metamechanists.quaptics.Quaptics;
+import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
 import org.metamechanists.quaptics.implementation.blocks.concentrators.SolarConcentrator;
 import org.metamechanists.quaptics.implementation.blocks.consumers.Turret;
 import org.metamechanists.quaptics.implementation.blocks.manipulators.Combiner;
@@ -73,51 +74,62 @@ public class Primitive {
                 SOLAR_CONCENTRATOR_1,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                0.45F,
-                0.0F,
-                1,
-                Tier.PRIMITIVE.maxPower).register(addon);
+                ConnectedBlock.Settings.builder()
+                        .tier(Tier.PRIMITIVE)
+                        .displayRadius(0.45F)
+                        .connectionRadius(0.45F)
+                        .powerEmission(1)
+                        .build(),
+                0.0F).register(addon);
 
         new Lens(
                 Groups.PRIMITIVE,
                 LENS_1,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                Tier.PRIMITIVE.material,
-                0.24F,
-                Tier.PRIMITIVE.maxPower,
-                0.1).register(addon);
+                ConnectedBlock.Settings.builder()
+                        .tier(Tier.PRIMITIVE)
+                        .displayRadius(0.24F)
+                        .connectionRadius(0.24F)
+                        .powerLoss(0.1)
+                        .build()).register(addon);
 
         new Combiner(
                 Groups.PRIMITIVE,
                 COMBINER_1_2,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                Tier.PRIMITIVE.material,
-                0.4F,
-                2,
-                Tier.PRIMITIVE.maxPower,
-                0.2).register(addon);
+                ConnectedBlock.Settings.builder()
+                        .tier(Tier.PRIMITIVE)
+                        .displayRadius(0.4F)
+                        .connectionRadius(0.8F)
+                        .connections(2)
+                        .powerLoss(0.2)
+                        .build()).register(addon);
 
         new Splitter(
                 Groups.PRIMITIVE,
                 SPLITTER_1_2,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                Tier.PRIMITIVE.material,
-                0.4F,
-                2,
-                Tier.PRIMITIVE.maxPower,
-                0.2).register(addon);
+                ConnectedBlock.Settings.builder()
+                        .tier(Tier.PRIMITIVE)
+                        .displayRadius(0.4F)
+                        .connectionRadius(0.8F)
+                        .connections(2)
+                        .powerLoss(0.2)
+                        .build()).register(addon);
 
         new Turret(
                 Groups.PRIMITIVE,
                 TURRET,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                Tier.PRIMITIVE.maxPower,
-                5,
-                10,
-                2).register(addon);
+                ConnectedBlock.Settings.builder()
+                        .tier(Tier.PRIMITIVE)
+                        .minPower(5)
+                        .range(10)
+                        .damage(2)
+                        .build()).register(addon);
     }
 }

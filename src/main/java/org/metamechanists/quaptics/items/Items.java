@@ -25,8 +25,8 @@ public class Items {
         Advanced.initialize();
 
         Slimefun.getRegistry().getAllSlimefunItems().stream()
-                .filter(slimefunItem -> slimefunItem instanceof ConnectedBlock)
-                .map(slimefunItem -> (ConnectedBlock) slimefunItem)
+                .filter(ConnectedBlock.class::isInstance)
+                .map(ConnectedBlock.class::cast)
                 .forEach(connectedBlock -> blocks.put(connectedBlock.getId(), connectedBlock));
     }
 }

@@ -7,6 +7,7 @@ import io.github.thebusybiscuit.slimefun4.utils.LoreBuilder;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.metamechanists.quaptics.Quaptics;
+import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
 import org.metamechanists.quaptics.implementation.blocks.concentrators.EnergyConcentrator;
 import org.metamechanists.quaptics.implementation.blocks.manipulators.Combiner;
 import org.metamechanists.quaptics.implementation.blocks.manipulators.Lens;
@@ -83,66 +84,77 @@ public class Intermediate {
                 ENERGY_CONCENTRATOR_2,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                Tier.INTERMEDIATE.material,
-                0.35F,
-                0.7F,
+                ConnectedBlock.Settings.builder()
+                        .tier(Tier.INTERMEDIATE)
+                        .displayRadius(0.175F)
+                        .connectionRadius(0.35F)
+                        .powerEmission(100)
+                        .build(),
                 160,
-                160,
-                200,
-                Tier.INTERMEDIATE.maxPower).register(addon);
+                160).register(addon);
 
         new Lens(
                 Groups.INTERMEDIATE,
                 LENS_3,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                Tier.INTERMEDIATE.material,
-                0.18F,
-                Tier.INTERMEDIATE.maxPower,
-                0.04).register(addon);
+                ConnectedBlock.Settings.builder()
+                        .tier(Tier.INTERMEDIATE)
+                        .displayRadius(0.18F)
+                        .connectionRadius(0.18F)
+                        .powerLoss(0.04)
+                        .build()).register(addon);
 
         new Combiner(
                 Groups.INTERMEDIATE,
                 COMBINER_3_2,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                Tier.INTERMEDIATE.material,
-                0.30F,
-                2,
-                Tier.INTERMEDIATE.maxPower,
-                0.08).register(addon);
+                ConnectedBlock.Settings.builder()
+                        .tier(Tier.INTERMEDIATE)
+                        .displayRadius(0.3F)
+                        .connectionRadius(0.6F)
+                        .connections(2)
+                        .powerLoss(0.08)
+                        .build()).register(addon);
 
         new Combiner(
                 Groups.INTERMEDIATE,
                 COMBINER_3_3,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                Tier.INTERMEDIATE.material,
-                0.35F,
-                3,
-                Tier.INTERMEDIATE.maxPower,
-                0.08).register(addon);
+                ConnectedBlock.Settings.builder()
+                        .tier(Tier.INTERMEDIATE)
+                        .displayRadius(0.35F)
+                        .connectionRadius(0.7F)
+                        .connections(3)
+                        .powerLoss(0.08)
+                        .build()).register(addon);
 
         new Splitter(
                 Groups.INTERMEDIATE,
                 SPLITTER_3_2,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                Tier.INTERMEDIATE.material,
-                0.30F,
-                2,
-                Tier.INTERMEDIATE.maxPower,
-                0.08).register(addon);
+                ConnectedBlock.Settings.builder()
+                        .tier(Tier.INTERMEDIATE)
+                        .displayRadius(0.3F)
+                        .connectionRadius(0.6F)
+                        .connections(2)
+                        .powerLoss(0.08)
+                        .build()).register(addon);
 
         new Splitter(
                 Groups.INTERMEDIATE,
                 SPLITTER_3_3,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                Tier.INTERMEDIATE.material,
-                0.35F,
-                3,
-                Tier.INTERMEDIATE.maxPower,
-                0.08).register(addon);
+                ConnectedBlock.Settings.builder()
+                        .tier(Tier.INTERMEDIATE)
+                        .displayRadius(0.35F)
+                        .connectionRadius(0.7F)
+                        .connections(3)
+                        .powerLoss(0.08)
+                        .build()).register(addon);
     }
 }

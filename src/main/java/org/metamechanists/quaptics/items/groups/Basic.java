@@ -7,11 +7,13 @@ import io.github.thebusybiscuit.slimefun4.utils.LoreBuilder;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.metamechanists.quaptics.Quaptics;
+import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
 import org.metamechanists.quaptics.implementation.blocks.concentrators.EnergyConcentrator;
 import org.metamechanists.quaptics.implementation.blocks.concentrators.SolarConcentrator;
 import org.metamechanists.quaptics.implementation.blocks.manipulators.Combiner;
 import org.metamechanists.quaptics.implementation.blocks.manipulators.Lens;
 import org.metamechanists.quaptics.implementation.blocks.manipulators.Splitter;
+import org.metamechanists.quaptics.implementation.blocks.upgraders.Repeater;
 import org.metamechanists.quaptics.items.Groups;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
@@ -85,6 +87,19 @@ public class Basic {
             Lore.powerLoss(14),
             Lore.maxConnections(3));
 
+    public static final SlimefunItemStack REPEATER_1 = new SlimefunItemStack(
+            "QP_REPEATER_1",
+            Material.RED_STAINED_GLASS,
+            "&cRepeater &4I",
+            Tier.BASIC.name,
+            "&7● &bIncreases &7the &bfrequency &7of a quaptic ray",
+            Lore.maxPower(Tier.BASIC.maxPower),
+            Lore.powerLoss(5),
+            Lore.frequency(0.1),
+            Lore.minFrequency(0.0),
+            Lore.maxFrequency(0.2)
+    );
+
     public static void initialize() {
         final SlimefunAddon addon = Quaptics.getInstance();
 
@@ -93,76 +108,103 @@ public class Basic {
                 SOLAR_CONCENTRATOR_2,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                0.35F,
-                (float)(Math.PI/4),
-                10,
-                Tier.BASIC.maxPower).register(addon);
+                ConnectedBlock.Settings.builder()
+                        .tier(Tier.BASIC)
+                        .displayRadius(0.35F)
+                        .connectionRadius(0.35F)
+                        .powerEmission(10)
+                        .build(),
+                (float)(Math.PI/4)).register(addon);
 
         new EnergyConcentrator(
                 Groups.BASIC,
                 ENERGY_CONCENTRATOR_1,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                Tier.BASIC.material,
-                0.4F,
-                0.6F,
+                ConnectedBlock.Settings.builder()
+                        .tier(Tier.BASIC)
+                        .displayRadius(0.2F)
+                        .connectionRadius(0.3F)
+                        .powerEmission(15)
+                        .build(),
                 30,
-                30,
-                15,
-                Tier.BASIC.maxPower).register(addon);
+                30).register(addon);
 
         new Lens(
                 Groups.BASIC,
                 LENS_2,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                Tier.BASIC.material,
-                0.21F,
-                Tier.BASIC.maxPower,
-                0.07).register(addon);
+                ConnectedBlock.Settings.builder()
+                        .tier(Tier.BASIC)
+                        .displayRadius(0.21F)
+                        .connectionRadius(0.21F)
+                        .powerLoss(0.07)
+                        .build()).register(addon);
 
         new Combiner(
                 Groups.BASIC,
                 COMBINER_2_2,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                Tier.BASIC.material,
-                0.35F,
-                2,
-                Tier.BASIC.maxPower,
-                0.12).register(addon);
+                ConnectedBlock.Settings.builder()
+                        .tier(Tier.BASIC)
+                        .displayRadius(0.35F)
+                        .connectionRadius(0.7F)
+                        .connections(2)
+                        .powerLoss(0.12)
+                        .build()).register(addon);
 
         new Combiner(
                 Groups.BASIC,
                 COMBINER_2_3,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                Tier.BASIC.material,
-                0.40F,
-                3,
-                Tier.BASIC.maxPower,
-                0.14).register(addon);
+                ConnectedBlock.Settings.builder()
+                        .tier(Tier.BASIC)
+                        .displayRadius(0.4F)
+                        .connectionRadius(0.8F)
+                        .connections(3)
+                        .powerLoss(0.14)
+                        .build()).register(addon);
 
         new Splitter(
                 Groups.BASIC,
                 SPLITTER_2_2,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                Tier.BASIC.material,
-                0.35F,
-                2,
-                Tier.BASIC.maxPower,
-                0.12).register(addon);
+                ConnectedBlock.Settings.builder()
+                        .tier(Tier.BASIC)
+                        .displayRadius(0.35F)
+                        .connectionRadius(0.7F)
+                        .connections(2)
+                        .powerLoss(0.12)
+                        .build()).register(addon);
 
         new Splitter(
                 Groups.BASIC,
                 SPLITTER_2_3,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                Tier.BASIC.material,
-                0.40F,
-                2,
-                Tier.BASIC.maxPower,
-                0.14).register(addon);
+                ConnectedBlock.Settings.builder()
+                        .tier(Tier.BASIC)
+                        .displayRadius(0.4F)
+                        .connectionRadius(0.8F)
+                        .connections(3)
+                        .powerLoss(0.14)
+                        .build()).register(addon);
+
+        new Repeater(
+                Groups.BASIC,
+                REPEATER_1,
+                RecipeType.NULL,
+                new ItemStack[]{},
+                ConnectedBlock.Settings.builder()
+                        .tier(Tier.BASIC)
+                        .displayRadius(0.4F)
+                        .connectionRadius(0.8F)
+                        .powerLoss(0.05)
+                        .build(),
+                1).register(addon);
     }
 }

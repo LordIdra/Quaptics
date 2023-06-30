@@ -27,22 +27,15 @@ import java.util.stream.IntStream;
 
 public class Splitter extends ConnectedBlock {
     private static final int CONCRETE_BRIGHTNESS = 15;
-    private final Material concreteMaterial;
     private final double connectionAngle = Math.PI / 2;
-    private final int connections;
-    private final Vector inputLocation = new Vector(0.0F, 0.0F, -connectionRadius);
-    private final Vector outputStartingLocation = new Vector(0.0F, 0.0F, connectionRadius);
-    private final Vector3f glassDisplaySize = new Vector3f(displayRadius*2);
-    private final Vector3f concreteDisplaySize = new Vector3f(displayRadius);
+    private final Vector inputLocation = new Vector(0.0F, 0.0F, -settings.getConnectionRadius());
+    private final Vector outputStartingLocation = new Vector(0.0F, 0.0F, settings.getConnectionRadius());
+    private final Vector3f glassDisplaySize = new Vector3f(settings.getDisplayRadius()*2);
+    private final Vector3f concreteDisplaySize = new Vector3f(settings.getDisplayRadius());
     private final Vector3f displayRotation = new Vector3f((float)(Math.PI/4), (float)(Math.PI/4), 0);
-    private final double powerLoss;
 
-    public Splitter(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe,
-                    Material concreteMaterial, float radius, int connections, double maxPower, double powerLoss) {
-        super(group, item, recipeType, recipe, radius, 2*radius, maxPower);
-        this.concreteMaterial = concreteMaterial;
-        this.connections = connections;
-        this.powerLoss = powerLoss;
+    public Splitter(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, Settings settings) {
+        super(group, item, recipeType, recipe, settings);
     }
 
     @Override
@@ -52,7 +45,7 @@ public class Splitter extends ConnectedBlock {
                 .setTransformation(Transformations.adjustedRotateAndScale(glassDisplaySize, displayRotation))
                 .build());
         displayGroup.addDisplay("concrete", new BlockDisplayBuilder(location.toCenterLocation())
-                .setMaterial(concreteMaterial)
+                .setMaterial(settings.getTier().material)
                 .setBrightness(CONCRETE_BRIGHTNESS)
                 .setViewRange(VIEW_RANGE_OFF)
                 .setTransformation(Transformations.adjustedRotateAndScale(concreteDisplaySize, displayRotation))
@@ -64,9 +57,9 @@ public class Splitter extends ConnectedBlock {
         final List<ConnectionPoint> points = new ArrayList<>();
 
         points.add(new ConnectionPointInput(groupID, "input", formatPointLocation(player, location, inputLocation)));
-        IntStream.range(0, connections).forEach(i -> {
+        IntStream.range(0, settings.getConnections()).forEach(i -> {
             final String name = "output " + Objects.toString(i);
-            final double angle = (-connectionAngle/2) + connectionAngle*((double)(i) / (connections-1));
+            final double angle = (-connectionAngle/2) + connectionAngle*((double)(i) / (settings.getConnections()-1));
             final Vector relativeLocation = outputStartingLocation.clone().rotateAroundY(angle);
             points.add(new ConnectionPointOutput(groupID, name, formatPointLocation(player, location, relativeLocation)));
         });
@@ -94,7 +87,7 @@ public class Splitter extends ConnectedBlock {
             return;
         }
 
-        final double outputPower = powerLoss(input.getLink().getPower(), powerLoss) / linkedOutputs.size();
+        final double outputPower = powerLoss(input.getLink().getPower(), settings.getPowerLoss()) / linkedOutputs.size();
         final double outputFrequency = input.getLink().getFrequency();
         final int outputPhase = input.getLink().getPhase();
 

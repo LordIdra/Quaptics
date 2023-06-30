@@ -36,21 +36,15 @@ import java.util.UUID;
 
 public class Turret extends ConnectedBlock {
     private final Vector3f mainDisplaySize = new Vector3f(0.6F, 0.6F, 0.6F);
-    private final Vector3f barrelSize = new Vector3f(0.18F, 0.18F, displayRadius);
-    private final Vector3f barrelTranslation = new Vector3f(0, 0, displayRadius *0.8F);
+    private final Vector3f barrelSize = new Vector3f(0.18F, 0.18F, settings.getDisplayRadius());
+    private final Vector3f barrelTranslation = new Vector3f(0, 0, settings.getDisplayRadius() *0.8F);
     private final Vector barrelLocation = new Vector(0.5, 0.7, 0.5);
     private final Vector3f projectileSize = new Vector3f(0.095F, 0.095F, 0.20F);
-    private final Vector inputLocation = new Vector(0.0F, 0.0F, -connectionRadius);
-    private final double powerConsumption;
-    private final double range;
-    private final double damagePerSlimefunTick;
+    private final Vector inputLocation = new Vector(0.0F, 0.0F, -settings.getConnectionRadius());
 
     public Turret(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe,
-                  double maxPower, double powerConsumption, double range, double damagePerSlimefunTick) {
-        super(group, item, recipeType, recipe, 0.55F, 0.55F, maxPower);
-        this.powerConsumption = powerConsumption;
-        this.range = range;
-        this.damagePerSlimefunTick = damagePerSlimefunTick;
+                  Settings settings) {
+        super(group, item, recipeType, recipe, settings);
     }
 
     private Matrix4f getBarrelMatrix(@NotNull Location from, Location to) {
@@ -90,7 +84,7 @@ public class Turret extends ConnectedBlock {
         if (!input.hasLink()) {
             return;
         }
-        if (input.getLink().getPower() >= powerConsumption) {
+        if (input.getLink().getPower() >= settings.getMinPower()) {
             BlockStorage.addBlockInfo(group.getLocation(), Keys.POWERED, "true");
         }
     }
@@ -117,11 +111,11 @@ public class Turret extends ConnectedBlock {
             return;
         }
 
-        final Collection<Entity> entities = location.getWorld().getNearbyEntities(location, range, range, range);
+        final Collection<Entity> entities = location.getWorld().getNearbyEntities(location, settings.getRange(), settings.getRange(), settings.getRange());
         final Collection<Entity> targetableEntities = entities.stream().filter(entity ->
                 entity.getSpawnCategory().equals(SpawnCategory.MONSTER)
                         && entity instanceof Damageable
-                        && entity.getLocation().distance(location) < range).toList();
+                        && entity.getLocation().distance(location) < settings.getRange()).toList();
 
         if (targetableEntities.isEmpty()) {
             return;
@@ -145,7 +139,7 @@ public class Turret extends ConnectedBlock {
 
         if (target == null
                 || target.isDead()
-                || location.toCenterLocation().distance(target.getLocation()) > range) {
+                || location.toCenterLocation().distance(target.getLocation()) > settings.getRange()) {
             clearTarget(location);
             return;
         }
@@ -159,7 +153,7 @@ public class Turret extends ConnectedBlock {
                 projectileSize,
                 1));
 
-        target.damage(damagePerSlimefunTick);
+        target.damage(settings.getDamage());
     }
 
     @Override

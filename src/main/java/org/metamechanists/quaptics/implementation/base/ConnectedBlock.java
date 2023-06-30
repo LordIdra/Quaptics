@@ -5,6 +5,8 @@ import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockUseHandler;
+import lombok.Builder;
+import lombok.Getter;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -22,6 +24,7 @@ import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
+import org.metamechanists.quaptics.items.Tier;
 import org.metamechanists.quaptics.storage.QuapticStorage;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Transformations;
@@ -34,16 +37,13 @@ import java.util.Objects;
 public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
     protected static final int VIEW_RANGE_ON = 64;
     protected static final int VIEW_RANGE_OFF = 0;
-    protected final float displayRadius;
-    protected final float connectionRadius;
-    public final double maxPower;
 
-    protected ConnectedBlock(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe,
-                             float displayRadius, float connectionRadius, double maxPower) {
+    @Getter
+    protected final Settings settings;
+
+    protected ConnectedBlock(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, Settings settings) {
         super(group, item, recipeType, recipe);
-        this.displayRadius = displayRadius;
-        this.connectionRadius = connectionRadius;
-        this.maxPower = maxPower;
+        this.settings = settings;
         addItemHandler(onUse());
     }
 
@@ -115,7 +115,7 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
     }
 
     public boolean doBurnoutCheck(ConnectionGroup group, @NotNull ConnectionPoint point) {
-        if (!point.hasLink() || point.getLink().getPower() <= maxPower) {
+        if (!point.hasLink() || point.getLink().getPower() <= settings.getTier().maxPower) {
             return false;
         }
 
@@ -167,7 +167,35 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
     public Location calculatePointLocationSphere(ConnectionPointID from, ConnectionPointID to) {
         final Location fromGroupLocation =  from.get().getGroup().getLocation();
         final Location toGroupLocation =  to.get().getGroup().getLocation();
-        final Vector radiusDirection = Vector.fromJOML(Transformations.getDirection(fromGroupLocation, toGroupLocation).mul(connectionRadius));
+        final Vector radiusDirection = Vector.fromJOML(Transformations.getDirection(fromGroupLocation, toGroupLocation).mul(settings.getConnectionRadius()));
         return fromGroupLocation.clone().add(0.5, 0.5, 0.5).add(radiusDirection);
+    }
+
+
+    @Getter
+    @Builder
+    public static class Settings {
+        Tier tier;
+
+        private double minPower;
+        private double powerEmission;
+        private double powerLoss;
+
+        private double minFrequency;
+        private double maxFrequency;
+        private double frequencyStep;
+        private double frequencyMultiplier;
+
+        private int minPhase;
+        private int maxPhase;
+        private int phaseStep;
+
+        private float displayRadius;
+        private float connectionRadius;
+
+        private int connections;
+
+        private double range;
+        private double damage;
     }
 }

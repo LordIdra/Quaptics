@@ -7,6 +7,7 @@ import io.github.thebusybiscuit.slimefun4.utils.LoreBuilder;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.metamechanists.quaptics.Quaptics;
+import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
 import org.metamechanists.quaptics.implementation.blocks.concentrators.EnergyConcentrator;
 import org.metamechanists.quaptics.implementation.blocks.manipulators.Combiner;
 import org.metamechanists.quaptics.implementation.blocks.manipulators.Lens;
@@ -103,88 +104,103 @@ public class Advanced {
                 ENERGY_CONCENTRATOR_3,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                Tier.ADVANCED.material,
-                0.3F,
-                0.8F,
+                ConnectedBlock.Settings.builder()
+                        .tier(Tier.ADVANCED)
+                        .displayRadius(0.15F)
+                        .connectionRadius(0.4F)
+                        .powerEmission(1250)
+                        .build(),
                 680,
-                680,
-                2500,
-                Tier.ADVANCED.maxPower).register(addon);
+                680).register(addon);
 
         new Lens(
                 Groups.ADVANCED,
                 LENS_4,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                Tier.ADVANCED.material,
-                0.15F,
-                Tier.ADVANCED.maxPower,
-                0.02).register(addon);
+                ConnectedBlock.Settings.builder()
+                        .tier(Tier.ADVANCED)
+                        .displayRadius(0.15F)
+                        .connectionRadius(0.15F)
+                        .powerLoss(0.02)
+                        .build()).register(addon);
 
         new Combiner(
                 Groups.ADVANCED,
                 COMBINER_4_2,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                Tier.ADVANCED.material,
-                0.25F,
-                2,
-                Tier.ADVANCED.maxPower,
-                0.05).register(addon);
+                ConnectedBlock.Settings.builder()
+                        .tier(Tier.ADVANCED)
+                        .displayRadius(0.25F)
+                        .connectionRadius(0.5F)
+                        .connections(2)
+                        .powerLoss(0.05)
+                        .build()).register(addon);
 
         new Combiner(
                 Groups.ADVANCED,
                 COMBINER_4_3,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                Tier.ADVANCED.material,
-                0.30F,
-                3,
-                Tier.ADVANCED.maxPower,
-                0.05).register(addon);
+                ConnectedBlock.Settings.builder()
+                        .tier(Tier.ADVANCED)
+                        .displayRadius(0.3F)
+                        .connectionRadius(0.6F)
+                        .connections(3)
+                        .powerLoss(0.05)
+                        .build()).register(addon);
 
         new Combiner(
                 Groups.ADVANCED,
                 COMBINER_4_4,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                Tier.ADVANCED.material,
-                0.35F,
-                4,
-                Tier.ADVANCED.maxPower,
-                0.05).register(addon);
+                ConnectedBlock.Settings.builder()
+                        .tier(Tier.ADVANCED)
+                        .displayRadius(0.35F)
+                        .connectionRadius(0.7F)
+                        .connections(4)
+                        .powerLoss(0.05)
+                        .build()).register(addon);
 
         new Splitter(
                 Groups.ADVANCED,
                 SPLITTER_4_2,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                Tier.ADVANCED.material,
-                0.25F,
-                2,
-                Tier.ADVANCED.maxPower,
-                0.05).register(addon);
+                ConnectedBlock.Settings.builder()
+                        .tier(Tier.ADVANCED)
+                        .displayRadius(0.25F)
+                        .connectionRadius(0.5F)
+                        .connections(2)
+                        .powerLoss(0.05)
+                        .build()).register(addon);
 
         new Splitter(
                 Groups.ADVANCED,
                 SPLITTER_4_3,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                Tier.ADVANCED.material,
-                0.30F,
-                3,
-                Tier.ADVANCED.maxPower,
-                0.05).register(addon);
+                ConnectedBlock.Settings.builder()
+                        .tier(Tier.ADVANCED)
+                        .displayRadius(0.3F)
+                        .connectionRadius(0.6F)
+                        .connections(3)
+                        .powerLoss(0.05)
+                        .build()).register(addon);
 
         new Splitter(
                 Groups.ADVANCED,
                 SPLITTER_4_4,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                Tier.ADVANCED.material,
-                0.35F,
-                4,
-                Tier.ADVANCED.maxPower,
-                0.05).register(addon);
+                ConnectedBlock.Settings.builder()
+                        .tier(Tier.ADVANCED)
+                        .displayRadius(0.35F)
+                        .connectionRadius(0.7F)
+                        .connections(4)
+                        .powerLoss(0.05)
+                        .build()).register(addon);
     }
 }

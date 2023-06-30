@@ -5,20 +5,20 @@ import org.metamechanists.quaptics.utils.Colors;
 import java.util.Objects;
 
 public class Lore {
-    private final static String ATTRIBUTE_SYMBOL = "&8⇨ ";
-    private final static String COUNT_SYMBOL = Colors.COMPONENTS_MISC.getString() + "◎ ";
-    private final static String RANGE_SYMBOL = Colors.COMPONENTS_MISC.getString() + "↔ ";
-    private final static String DAMAGE_SYMBOL = Colors.COMPONENTS_MISC.getString() + "🗡 ";
-    private final static String POWER_SYMBOL = Colors.POWER.getString() + "⏻ ";
-    private final static String FREQUENCY_SYMBOL = Colors.FREQUENCY.getString() + "∀ ";
-    private final static String PHASE_SYMBOL = Colors.PHASE.getString() + "۞ ";
+    private static final String ATTRIBUTE_SYMBOL = "&8⇨ ";
+    private static final String COUNT_SYMBOL = Colors.COMPONENTS_MISC.getString() + "◎ ";
+    private static final String RANGE_SYMBOL = Colors.COMPONENTS_MISC.getString() + "↔ ";
+    private static final String DAMAGE_SYMBOL = Colors.COMPONENTS_MISC.getString() + "🗡 ";
+    private static final String POWER_SYMBOL = Colors.POWER.getString() + "⏻ ";
+    private static final String FREQUENCY_SYMBOL = Colors.FREQUENCY.getString() + "∀ ";
+    private static final String PHASE_SYMBOL = Colors.PHASE.getString() + "۞ ";
 
-    private final static String PERCENTAGE_SUFFIX = " &8%";
-    private final static String POWER_SUFFIX = " &8W";
-    private final static String RANGE_SUFFIX = " &8blocks";
-    private final static String DAMAGE_SUFFIX = " &8dps";
-    private final static String FREQUENCY_SUFFIX = " &8Hz";
-    private final static String PHASE_SUFFIX = " &8°";
+    private static final String PERCENTAGE_SUFFIX = " &8%";
+    private static final String POWER_SUFFIX = " &8W";
+    private static final String RANGE_SUFFIX = " &8blocks";
+    private static final String DAMAGE_SUFFIX = " &8dps";
+    private static final String FREQUENCY_SUFFIX = " &8Hz";
+    private static final String PHASE_SUFFIX = " &8°";
 
     private static String format(double x) {
         return Objects.toString(((int) x) == x
@@ -50,6 +50,24 @@ public class Lore {
     }
     public static String powerLoss(int powerLossPercentage) {
         return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Power Loss &e" + Objects.toString(powerLossPercentage) + PERCENTAGE_SUFFIX;
+    }
+    public static String frequency(double frequency) {
+        return ATTRIBUTE_SYMBOL + FREQUENCY_SYMBOL + "&7Frequency &e" + format(frequency) + FREQUENCY_SUFFIX;
+    }
+    public static String minFrequency(double minFrequency) {
+        return ATTRIBUTE_SYMBOL + FREQUENCY_SYMBOL + "&7Min Frequency &e" + format(minFrequency) + FREQUENCY_SUFFIX;
+    }
+    public static String maxFrequency(double maxFrequency) {
+        return ATTRIBUTE_SYMBOL + FREQUENCY_SYMBOL + "&7Max Frequency &e" + format(maxFrequency) + FREQUENCY_SUFFIX;
+    }
+    public static String phase(double phase) {
+        return ATTRIBUTE_SYMBOL + PHASE_SYMBOL + "&7Phase &e" + format(phase) + PHASE_SUFFIX;
+    }
+    public static String minPhase(double minPhase) {
+        return ATTRIBUTE_SYMBOL + PHASE_SYMBOL + "&7Min Phase &e" + format(minPhase) + PHASE_SUFFIX;
+    }
+    public static String maxPhase(double maxPhase) {
+        return ATTRIBUTE_SYMBOL + PHASE_SYMBOL + "&7Max Phase &e" + format(maxPhase) + PHASE_SUFFIX;
     }
 
     public static String frequencyNoArrow(double frequency) {

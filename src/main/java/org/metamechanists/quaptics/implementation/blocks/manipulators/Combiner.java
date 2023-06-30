@@ -27,22 +27,15 @@ import java.util.stream.IntStream;
 
 public class Combiner extends ConnectedBlock {
     private static final int CONCRETE_BRIGHTNESS = 15;
-    private final Material concreteMaterial;
     private final double connectionAngle = Math.PI / 2;
-    private final int connections;
-    private final Vector inputStartingLocation = new Vector(0.0F, 0.0F, -connectionRadius);
-    private final Vector outputLocation = new Vector(0.0F, 0.0F, connectionRadius);
-    private final Vector3f glassDisplaySize = new Vector3f(displayRadius*2);
-    private final Vector3f concreteDisplaySize = new Vector3f(displayRadius);
+    private final Vector inputStartingLocation = new Vector(0.0F, 0.0F, -settings.getConnectionRadius());
+    private final Vector outputLocation = new Vector(0.0F, 0.0F, settings.getConnectionRadius());
+    private final Vector3f glassDisplaySize = new Vector3f(settings.getDisplayRadius()*2);
+    private final Vector3f concreteDisplaySize = new Vector3f(settings.getDisplayRadius());
     private final Vector3f displayRotation = new Vector3f((float)(Math.PI/4), (float)(Math.PI/4), 0);
-    private final double powerLoss;
 
-    public Combiner(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe,
-                    Material concreteMaterial, float radius, int connections, double maxPower, double powerLoss) {
-        super(group, item, recipeType, recipe, radius, 2*radius, maxPower);
-        this.concreteMaterial = concreteMaterial;
-        this.connections = connections;
-        this.powerLoss = powerLoss;
+    public Combiner(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, Settings settings) {
+        super(group, item, recipeType, recipe, settings);
     }
 
     @Override
@@ -52,7 +45,7 @@ public class Combiner extends ConnectedBlock {
                 .setTransformation(Transformations.adjustedRotateAndScale(glassDisplaySize, displayRotation))
                 .build());
         displayGroup.addDisplay("concrete", new BlockDisplayBuilder(location.toCenterLocation())
-                .setMaterial(concreteMaterial)
+                .setMaterial(settings.getTier().material)
                 .setBrightness(CONCRETE_BRIGHTNESS)
                 .setViewRange(VIEW_RANGE_OFF)
                 .setTransformation(Transformations.adjustedRotateAndScale(concreteDisplaySize, displayRotation))
@@ -63,9 +56,9 @@ public class Combiner extends ConnectedBlock {
     protected List<ConnectionPoint> generateConnectionPoints(ConnectionGroupID groupID, Player player, Location location) {
         final List<ConnectionPoint> points = new ArrayList<>();
 
-        IntStream.range(0, connections).forEach(i -> {
+        IntStream.range(0, settings.getConnections()).forEach(i -> {
             final String name = "input " + Objects.toString(i);
-            final double angle = (-connectionAngle/2) + connectionAngle*((double)(i) / (connections-1));
+            final double angle = (-connectionAngle/2) + connectionAngle*((double)(i) / (settings.getConnections()-1));
             final Vector relativeLocation = inputStartingLocation.clone().rotateAroundY(angle);
             points.add(new ConnectionPointInput(groupID, name, formatPointLocation(player, location, relativeLocation)));
         });
@@ -98,6 +91,6 @@ public class Combiner extends ConnectedBlock {
         final double inputFrequency = enabledInputs.stream().mapToDouble(input -> input.getLink().getFrequency()).sum();
         final int inputPhase = (int)(enabledInputs.stream().mapToDouble(input -> input.getLink().getPhase()).sum() / enabledInputs.size());
 
-        output.getLink().setAttributes(powerLoss(inputPower, powerLoss), inputFrequency, inputPhase, true);
+        output.getLink().setAttributes(powerLoss(inputPower, settings.getPowerLoss()), inputFrequency, inputPhase, true);
     }
 }
