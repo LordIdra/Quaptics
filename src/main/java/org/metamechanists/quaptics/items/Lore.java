@@ -52,7 +52,7 @@ public class Lore {
         return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Power Loss &e" + Objects.toString(powerLossPercentage) + PERCENTAGE_SUFFIX;
     }
 
-    public static String additionalFrequency(double frequency) {
+    public static String frequencyStep(double frequency) {
         return ATTRIBUTE_SYMBOL + FREQUENCY_SYMBOL + "&7Frequency &e+" + format(frequency) + FREQUENCY_SUFFIX;
     }
     public static String minFrequency(double minFrequency) {

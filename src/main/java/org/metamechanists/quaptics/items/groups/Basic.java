@@ -90,12 +90,12 @@ public class Basic {
     public static final SlimefunItemStack REPEATER_1 = new SlimefunItemStack(
             "QP_REPEATER_1",
             Material.RED_STAINED_GLASS,
-            "&cRepeater &4I",
+            "&cRepeater &eI",
             Tier.BASIC.name,
-            "&7● &bIncreases &7the &bfrequency &7of a quaptic ray",
+            "&7● &bIncreases the frequency &7of a quaptic ray",
             Lore.maxPower(Tier.BASIC.maxPower),
             Lore.powerLoss(5),
-            Lore.additionalFrequency(0.1),
+            Lore.frequencyStep(0.1),
             Lore.minFrequency(0.0),
             Lore.maxFrequency(0.2)
     );
