@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Color;
 import org.bukkit.Material;
+import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
@@ -56,6 +57,16 @@ public class LaserPointer extends QuapticChargeableItem implements NotPlaceable 
         }
 
         LaserPointerManager.removePoint(uuid);
+
+        final BlockDisplayID displayID = point.getDisplayID();
+        if (displayID == null) {
+            return;
+        }
+
+        final BlockDisplay display = displayID.get();
+        if (display != null) {
+            display.remove();
+        }
     }
 
     @AllArgsConstructor
@@ -67,7 +78,7 @@ public class LaserPointer extends QuapticChargeableItem implements NotPlaceable 
     }
 
     public static class LaserColor {
-        @Getter public static final List<LaserColor> colors = new ArrayList<>();
+        @Getter private static final List<LaserColor> colors = new ArrayList<>();
         static {
             new LaserColor(Color.RED, Material.RED_CONCRETE);
             new LaserColor(Color.ORANGE, Material.ORANGE_CONCRETE);
@@ -92,7 +103,7 @@ public class LaserPointer extends QuapticChargeableItem implements NotPlaceable 
         }
 
         public LaserColor nextColor() {
-            return colors.get(colors.indexOf(this));
+            return colors.get(colors.indexOf(this) + 1);
         }
     }
 }
