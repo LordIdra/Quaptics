@@ -190,7 +190,7 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
         Tier tier;
 
         private double minPower;
-        private double powerEmission;
+        private double emissionPower;
         private double powerLoss;
 
         private double minFrequency;

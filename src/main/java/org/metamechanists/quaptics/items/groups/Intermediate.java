@@ -88,7 +88,7 @@ public class Intermediate {
                         .tier(Tier.INTERMEDIATE)
                         .displayRadius(0.175F)
                         .connectionRadius(0.35F)
-                        .powerEmission(100)
+                        .emissionPower(100)
                         .build(),
                 160,
                 160).register(addon);
@@ -114,8 +114,8 @@ public class Intermediate {
                         .tier(Tier.INTERMEDIATE)
                         .displayRadius(0.3F)
                         .connectionRadius(0.6F)
-                        .connections(2)
                         .powerLoss(0.08)
+                        .connections(2)
                         .build()).register(addon);
 
         new Combiner(
@@ -127,8 +127,8 @@ public class Intermediate {
                         .tier(Tier.INTERMEDIATE)
                         .displayRadius(0.35F)
                         .connectionRadius(0.7F)
-                        .connections(3)
                         .powerLoss(0.08)
+                        .connections(3)
                         .build()).register(addon);
 
         new Splitter(
@@ -140,8 +140,8 @@ public class Intermediate {
                         .tier(Tier.INTERMEDIATE)
                         .displayRadius(0.3F)
                         .connectionRadius(0.6F)
-                        .connections(2)
                         .powerLoss(0.08)
+                        .connections(2)
                         .build()).register(addon);
 
         new Splitter(
@@ -153,8 +153,8 @@ public class Intermediate {
                         .tier(Tier.INTERMEDIATE)
                         .displayRadius(0.35F)
                         .connectionRadius(0.7F)
-                        .connections(3)
                         .powerLoss(0.08)
+                        .connections(3)
                         .build()).register(addon);
     }
 }

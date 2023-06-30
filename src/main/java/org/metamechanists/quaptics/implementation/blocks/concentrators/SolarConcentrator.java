@@ -63,7 +63,7 @@ public class SolarConcentrator extends ConnectedBlock {
         }
 
         if (block.getWorld().isDayTime()) {
-            output.getLink().setAttributes(settings.getPowerEmission(), 0, 0, true);
+            output.getLink().setAttributes(settings.getEmissionPower(), 0, 0, true);
             return;
         }
 

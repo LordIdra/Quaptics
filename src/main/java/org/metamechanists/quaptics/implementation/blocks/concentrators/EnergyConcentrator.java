@@ -7,7 +7,6 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Player;
@@ -61,7 +60,7 @@ public class EnergyConcentrator extends EnergyConnectedBlock {
         }
 
         if (isPowered(block.getLocation())) {
-            output.getLink().setAttributes(settings.getPowerEmission(), 0, 0, true);
+            output.getLink().setAttributes(settings.getEmissionPower(), 0, 0, true);
             return;
         }
 

@@ -93,11 +93,12 @@ public class Basic {
             "&cRepeater &eI",
             Tier.BASIC.name,
             "&7● &bIncreases the frequency &7of a quaptic ray",
+            Lore.minPower(15),
             Lore.maxPower(Tier.BASIC.maxPower),
             Lore.powerLoss(5),
-            Lore.frequencyStep(0.1),
             Lore.minFrequency(0.0),
-            Lore.maxFrequency(0.2)
+            Lore.maxFrequency(0.2),
+            Lore.frequencyStep(0.1)
     );
 
     public static void initialize() {
@@ -112,7 +113,7 @@ public class Basic {
                         .tier(Tier.BASIC)
                         .displayRadius(0.35F)
                         .connectionRadius(0.35F)
-                        .powerEmission(10)
+                        .emissionPower(10)
                         .build(),
                 (float)(Math.PI/4)).register(addon);
 
@@ -125,7 +126,7 @@ public class Basic {
                         .tier(Tier.BASIC)
                         .displayRadius(0.2F)
                         .connectionRadius(0.3F)
-                        .powerEmission(15)
+                        .emissionPower(15)
                         .build(),
                 30,
                 30).register(addon);
@@ -151,8 +152,8 @@ public class Basic {
                         .tier(Tier.BASIC)
                         .displayRadius(0.35F)
                         .connectionRadius(0.7F)
-                        .connections(2)
                         .powerLoss(0.12)
+                        .connections(2)
                         .build()).register(addon);
 
         new Combiner(
@@ -164,8 +165,8 @@ public class Basic {
                         .tier(Tier.BASIC)
                         .displayRadius(0.4F)
                         .connectionRadius(0.8F)
-                        .connections(3)
                         .powerLoss(0.14)
+                        .connections(3)
                         .build()).register(addon);
 
         new Splitter(
@@ -177,8 +178,8 @@ public class Basic {
                         .tier(Tier.BASIC)
                         .displayRadius(0.35F)
                         .connectionRadius(0.7F)
-                        .connections(2)
                         .powerLoss(0.12)
+                        .connections(2)
                         .build()).register(addon);
 
         new Splitter(
@@ -190,8 +191,8 @@ public class Basic {
                         .tier(Tier.BASIC)
                         .displayRadius(0.4F)
                         .connectionRadius(0.8F)
-                        .connections(3)
                         .powerLoss(0.14)
+                        .connections(3)
                         .build()).register(addon);
 
         new Repeater(
@@ -203,8 +204,11 @@ public class Basic {
                         .tier(Tier.BASIC)
                         .displayRadius(0.25F)
                         .connectionRadius(0.5F)
+                        .minPower(15)
+                        .powerLoss(5)
+                        .minFrequency(0.0)
+                        .maxFrequency(0.2)
                         .frequencyStep(0.1)
-                        .powerLoss(0.05)
                         .build(),
                 1).register(addon);
     }

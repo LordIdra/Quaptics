@@ -78,7 +78,7 @@ public class Primitive {
                         .tier(Tier.PRIMITIVE)
                         .displayRadius(0.45F)
                         .connectionRadius(0.45F)
-                        .powerEmission(1)
+                        .emissionPower(1)
                         .build(),
                 0.0F).register(addon);
 
@@ -103,8 +103,8 @@ public class Primitive {
                         .tier(Tier.PRIMITIVE)
                         .displayRadius(0.4F)
                         .connectionRadius(0.8F)
-                        .connections(2)
                         .powerLoss(0.2)
+                        .connections(2)
                         .build()).register(addon);
 
         new Splitter(
@@ -116,8 +116,8 @@ public class Primitive {
                         .tier(Tier.PRIMITIVE)
                         .displayRadius(0.4F)
                         .connectionRadius(0.8F)
-                        .connections(2)
                         .powerLoss(0.2)
+                        .connections(2)
                         .build()).register(addon);
 
         new Turret(

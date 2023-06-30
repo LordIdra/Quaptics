@@ -108,7 +108,7 @@ public class Advanced {
                         .tier(Tier.ADVANCED)
                         .displayRadius(0.15F)
                         .connectionRadius(0.4F)
-                        .powerEmission(1250)
+                        .emissionPower(1250)
                         .build(),
                 680,
                 680).register(addon);
@@ -134,8 +134,8 @@ public class Advanced {
                         .tier(Tier.ADVANCED)
                         .displayRadius(0.25F)
                         .connectionRadius(0.5F)
-                        .connections(2)
                         .powerLoss(0.05)
+                        .connections(2)
                         .build()).register(addon);
 
         new Combiner(
@@ -147,8 +147,8 @@ public class Advanced {
                         .tier(Tier.ADVANCED)
                         .displayRadius(0.3F)
                         .connectionRadius(0.6F)
-                        .connections(3)
                         .powerLoss(0.05)
+                        .connections(3)
                         .build()).register(addon);
 
         new Combiner(
@@ -160,8 +160,8 @@ public class Advanced {
                         .tier(Tier.ADVANCED)
                         .displayRadius(0.35F)
                         .connectionRadius(0.7F)
-                        .connections(4)
                         .powerLoss(0.05)
+                        .connections(4)
                         .build()).register(addon);
 
         new Splitter(
@@ -173,8 +173,8 @@ public class Advanced {
                         .tier(Tier.ADVANCED)
                         .displayRadius(0.25F)
                         .connectionRadius(0.5F)
-                        .connections(2)
                         .powerLoss(0.05)
+                        .connections(2)
                         .build()).register(addon);
 
         new Splitter(
@@ -186,8 +186,8 @@ public class Advanced {
                         .tier(Tier.ADVANCED)
                         .displayRadius(0.3F)
                         .connectionRadius(0.6F)
-                        .connections(3)
                         .powerLoss(0.05)
+                        .connections(3)
                         .build()).register(addon);
 
         new Splitter(
@@ -199,8 +199,8 @@ public class Advanced {
                         .tier(Tier.ADVANCED)
                         .displayRadius(0.35F)
                         .connectionRadius(0.7F)
-                        .connections(4)
                         .powerLoss(0.05)
+                        .connections(4)
                         .build()).register(addon);
     }
 }
