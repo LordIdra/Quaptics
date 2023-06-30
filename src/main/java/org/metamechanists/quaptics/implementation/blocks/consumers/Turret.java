@@ -81,9 +81,11 @@ public class Turret extends ConnectedBlock {
         }
 
         BlockStorage.addBlockInfo(group.getLocation(), Keys.POWERED, "false");
+
         if (!input.hasLink()) {
             return;
         }
+
         if (input.getLink().getPower() >= settings.getMinPower()) {
             BlockStorage.addBlockInfo(group.getLocation(), Keys.POWERED, "true");
         }
@@ -106,6 +108,19 @@ public class Turret extends ConnectedBlock {
         return (LivingEntity) Bukkit.getEntity(UUID.fromString(targetString));
     }
 
+    private LivingEntity getClosestEntity(@NotNull Collection<Entity> entities, Location location) {
+        LivingEntity target = null;
+        double targetDistance = 9999999;
+        for (Entity entity : entities) {
+            final double distance = entity.getLocation().distance(location.toCenterLocation());
+            if (distance < targetDistance) {
+                target = (LivingEntity) entity;
+                targetDistance = distance;
+            }
+        }
+        return target;
+    }
+
     private void retarget(Location location) {
         if (BlockStorage.getLocationInfo(location, Keys.TARGET) != null) {
             return;
@@ -121,25 +136,13 @@ public class Turret extends ConnectedBlock {
             return;
         }
 
-        LivingEntity target = null;
-        double targetDistance = 9999999;
-        for (Entity entity : targetableEntities) {
-            final double distance = entity.getLocation().distance(location.toCenterLocation());
-            if (distance < targetDistance) {
-                target = (LivingEntity) entity;
-                targetDistance = distance;
-            }
-        }
-
-        setTarget(location, target);
+        setTarget(location, getClosestEntity(entities, location));
     }
 
     private void shoot(Location location) {
-        LivingEntity target = getTarget(location);
+        final LivingEntity target = getTarget(location);
 
-        if (target == null
-                || target.isDead()
-                || location.toCenterLocation().distance(target.getLocation()) > settings.getRange()) {
+        if (target == null || target.isDead() || location.toCenterLocation().distance(target.getLocation()) > settings.getRange()) {
             clearTarget(location);
             return;
         }
