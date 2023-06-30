@@ -16,6 +16,10 @@ public class BurnoutManager implements Listener {
         runnable.run();
     }
 
+    public static void removeBurnout(BurnoutRunnable runnable) {
+        burnouts.remove(runnable);
+    }
+
     public static void stopBurnouts() {
         burnouts.forEach(BurnoutRunnable::stopEarly);
     }

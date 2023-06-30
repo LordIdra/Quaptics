@@ -74,6 +74,7 @@ public class BurnoutRunnable extends BukkitRunnable {
 
             playSound(Sound.ENTITY_GENERIC_EXPLODE, 2, 1.2f);
             connectedBlock.burnout(this.location);
+            BurnoutManager.removeBurnout(this);
         }, 60L);
     }
 
@@ -92,5 +93,6 @@ public class BurnoutRunnable extends BukkitRunnable {
         if (BlockStorage.check(block) instanceof ConnectedBlock connectedBlock) {
             connectedBlock.burnout(this.location);
         }
+        BurnoutManager.removeBurnout(this);
     }
 }
