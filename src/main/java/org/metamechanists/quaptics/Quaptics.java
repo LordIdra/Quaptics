@@ -12,6 +12,8 @@ import org.metamechanists.quaptics.implementation.base.BurnoutManager;
 import org.metamechanists.quaptics.implementation.tools.TargetingWandListener;
 import org.metamechanists.quaptics.items.Groups;
 import org.metamechanists.quaptics.items.Items;
+import org.metamechanists.quaptics.storage.QuapticStorage;
+import org.metamechanists.quaptics.storage.SaveRunnable;
 import org.metamechanists.quaptics.utils.Language;
 
 public final class Quaptics extends JavaPlugin implements SlimefunAddon {
@@ -27,6 +29,7 @@ public final class Quaptics extends JavaPlugin implements SlimefunAddon {
 
     public void initializeRunnables() {
         new QuapticTicker().runTaskTimer(instance, 0, QuapticTicker.INTERVAl_TICKS);
+        new SaveRunnable().runTaskTimer(instance, SaveRunnable.INTERVAl_TICKS, SaveRunnable.INTERVAl_TICKS);
     }
 
     public void initializeCommands() {
@@ -43,11 +46,13 @@ public final class Quaptics extends JavaPlugin implements SlimefunAddon {
         initializeListeners();
         initializeRunnables();
         initializeCommands();
+        QuapticStorage.load();
     }
 
     @Override
     public void onDisable() {
         BurnoutManager.stopBurnouts();
+        QuapticStorage.save();
     }
 
     @NotNull

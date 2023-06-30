@@ -11,9 +11,4 @@ point-information.phase: "&7Phase &8- &e{1}"
 
 too-close: "&cToo close to another component!"
 
-save.failed: "Failed to save laser data; check that file permissions are set up correctly"
-save.success: "Saved laser data"
-
-load.file-not-found: "Could not load laser data; assuming that this is the first time the plugin is being run"
-load.invalid-config-version: "Invalid config version '{1}'; failed to load laser data"
-load.success: "Loaded laser data"
+load.failed: "Failed to load laser tickers; if this is not your first run, make sure file permissions are set up correctly."
