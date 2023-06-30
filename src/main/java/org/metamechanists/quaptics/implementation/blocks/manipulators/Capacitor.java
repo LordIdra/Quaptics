@@ -51,7 +51,7 @@ public class Capacitor extends ConnectedBlock {
                 .setTransformation(Transformations.adjustedRotateAndScale(tierGlassDisplaySize, displayRotation))
                 .build());
         displayGroup.addDisplay("concrete", new BlockDisplayBuilder(location.toCenterLocation())
-                .setMaterial(settings.getTier().concreteMaterial)
+                .setMaterial(Material.LIGHT_BLUE_CONCRETE)
                 .setTransformation(Transformations.adjustedRotateAndScale(new Vector3f(), displayRotation))
                 .setBrightness(CONCRETE_BRIGHTNESS)
                 .build());
@@ -119,6 +119,6 @@ public class Capacitor extends ConnectedBlock {
             return;
         }
 
-        setChargeRate(group.getLocation(), input.getLink() != null ? input.getLink().getPower() / QuapticTicker.QUAPTIC_TICKS_PER_SECOND : 0);
+        setChargeRate(group.getLocation(), input.isLinkEnabled() ? input.getLink().getPower() / QuapticTicker.QUAPTIC_TICKS_PER_SECOND : 0);
     }
 }
