@@ -50,8 +50,8 @@ public class Primitive {
 
     public static final ConnectedBlock.Settings CAPACITOR_1_SETTINGS = ConnectedBlock.Settings.builder()
             .tier(Tier.PRIMITIVE)
-            .displayRadius(0.4F)
-            .connectionRadius(0.5F)
+            .displayRadius(0.3F)
+            .connectionRadius(0.6F)
             .capacity(200)
             .build();
 

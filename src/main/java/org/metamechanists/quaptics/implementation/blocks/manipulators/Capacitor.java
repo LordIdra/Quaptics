@@ -75,7 +75,8 @@ public class Capacitor extends ConnectedBlock {
             return;
         }
 
-        double charge = Integer.parseInt(BlockStorage.getLocationInfo(group.getLocation(), Keys.CHARGE));
+        final String chargeString = BlockStorage.getLocationInfo(group.getLocation(), Keys.CHARGE);
+        double charge = chargeString == null ? 0 : Integer.parseInt(chargeString);
         if (input.isLinkEnabled()) {
             final double additionalCharge = input.getLink().getPower() / QuapticTicker.QUAPTIC_TICKS_PER_SECOND;
             charge = settings.stepCharge(charge, additionalCharge);
