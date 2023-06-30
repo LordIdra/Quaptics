@@ -1,13 +1,9 @@
 package org.metamechanists.quaptics.implementation.base;
 
-import lombok.Getter;
-
 import com.destroystokyo.paper.ParticleBuilder;
-
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
-
+import lombok.Getter;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
@@ -15,12 +11,9 @@ import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Display;
 import org.bukkit.scheduler.BukkitRunnable;
-
-import org.metamechanists.metalib.utils.RandomUtils;
-
+import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.Quaptics;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
-import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 
 public class BurnoutRunnable extends BukkitRunnable {
     @Getter
@@ -29,7 +22,7 @@ public class BurnoutRunnable extends BukkitRunnable {
     private final Location centerLocation;
     private boolean stopEarly = false;
 
-    public BurnoutRunnable(Location location) {
+    public BurnoutRunnable(@NotNull Location location) {
         this.location = location;
         this.centerLocation = location.toCenterLocation();
     }
