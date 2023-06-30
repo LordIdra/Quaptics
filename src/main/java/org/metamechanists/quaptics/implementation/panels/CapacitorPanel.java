@@ -23,6 +23,9 @@ public class CapacitorPanel {
                 .addAttribute("chargeText")
                 .addAttribute("chargeBar")
                 .build();
+        this.panel.setAttributeHidden("chargeText", false);
+        this.panel.setAttributeHidden("chargeBar", false);
+        this.panel.setHidden(false);
     }
 
     public CapacitorPanel(@NotNull PanelID panelID, ConnectionGroupID groupID) {

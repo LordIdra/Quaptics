@@ -84,7 +84,7 @@ public class Capacitor extends ConnectedBlock {
         BlockStorage.addBlockInfo(location, Keys.BS_CHARGE, Objects.toString(charge));
     }
 
-    private @Nullable PanelID getPanelID(Location location) {
+    public @Nullable PanelID getPanelID(Location location) {
         final String stringID = BlockStorage.getLocationInfo(location, Keys.BS_PANEL_ID);
         return stringID == null ? null : new PanelID(stringID);
     }
