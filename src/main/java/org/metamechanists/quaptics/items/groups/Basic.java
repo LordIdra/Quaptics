@@ -201,8 +201,8 @@ public class Basic {
                 new ItemStack[]{},
                 ConnectedBlock.Settings.builder()
                         .tier(Tier.BASIC)
-                        .displayRadius(0.4F)
-                        .connectionRadius(0.8F)
+                        .displayRadius(0.25F)
+                        .connectionRadius(0.5F)
                         .powerLoss(0.05)
                         .build(),
                 1).register(addon);
