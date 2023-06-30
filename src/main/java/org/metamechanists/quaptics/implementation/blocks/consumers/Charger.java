@@ -95,11 +95,6 @@ public class Charger extends ConnectedBlock {
             return;
         }
 
-        final ItemStack itemStack = display.getItemStack();
-        if (itemStack == null || itemStack.getType().isEmpty()) {
-            return;
-        }
-
         QuapticChargeableItem.chargeItem(group, display);
     }
 
