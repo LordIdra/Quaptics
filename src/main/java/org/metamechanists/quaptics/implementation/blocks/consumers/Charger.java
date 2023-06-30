@@ -33,8 +33,8 @@ public class Charger extends ConnectedBlock {
     private final Vector3f mainDisplaySize = new Vector3f(1, 0.5F, 1);
     private final Vector3f glassDisplaySize = new Vector3f(0.8F, 0.2F, 0.8F);
     private final Vector3f itemDisplaySize = new Vector3f(1);
-    private final Vector3f topOffset = new Vector3f(0, 0.4F, 0);
-    private final Vector3f bottomOffset = new Vector3f(0, -0.4F, 0);
+    private final Vector3f topOffset = new Vector3f(0, 0.3F, 0);
+    private final Vector3f bottomOffset = new Vector3f(0, -0.3F, 0);
     private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -settings.getConnectionRadius());
 
     public Charger(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, Settings settings) {
