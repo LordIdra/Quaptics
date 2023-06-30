@@ -50,10 +50,9 @@ public class Repeater extends ConnectedBlock {
             return;
         }
 
-        final String facing = PersistentDataAPI.getString(display, Keys.FACING);
         display.setBlock(Material.REPEATER.createBlockData(
                 "[delay=" + delayVisual
-                + ",facing=" + facing
+                + ",facing=" + PersistentDataAPI.getString(display, Keys.FACING)
                 + ",powered=" + powered + "]"));
     }
 
@@ -73,8 +72,8 @@ public class Repeater extends ConnectedBlock {
                 .setMaterial(Material.REPEATER)
                 .setBlockData(Material.REPEATER.createBlockData(
                         "[delay=" + delayVisual
-                                + ",facing=" + face.name().toLowerCase()
-                                + ",powered=false]"))
+                        + ",facing=" + face.name().toLowerCase()
+                        + ",powered=false]"))
                 .setTransformation(Transformations.adjustedScaleAndOffset(repeaterDisplaySize, repeaterOffset))
                 .build();
         PersistentDataAPI.setString(repeater, Keys.FACING, face.name().toLowerCase());
@@ -109,14 +108,9 @@ public class Repeater extends ConnectedBlock {
             return;
         }
 
-        double newFrequency = input.getLink().getFrequency();
-        if (input.getLink().getFrequency() < settings.getMaxFrequency()) {
-            newFrequency += settings.getFrequencyStep();
-        }
-
         output.getLink().setAttributes(
-                powerLoss(input.getLink().getPower(), settings.getPowerLoss()),
-                newFrequency,
+                settings.powerLoss(input.getLink().getPower()),
+                settings.stepFrequency(input.getLink().getFrequency()),
                 input.getLink().getPhase(),
                 true);
     }

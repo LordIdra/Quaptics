@@ -91,6 +91,6 @@ public class Combiner extends ConnectedBlock {
         final double inputFrequency = enabledInputs.stream().mapToDouble(input -> input.getLink().getFrequency()).min().getAsDouble();
         final int inputPhase = (int)(enabledInputs.stream().mapToDouble(input -> input.getLink().getPhase()).sum() / enabledInputs.size());
 
-        output.getLink().setAttributes(powerLoss(inputPower, settings.getPowerLoss()), inputFrequency, inputPhase, true);
+        output.getLink().setAttributes(settings.powerLoss(inputPower), inputFrequency, inputPhase, true);
     }
 }
