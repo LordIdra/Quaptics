@@ -11,6 +11,7 @@ import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Display;
 import org.bukkit.entity.Entity;
@@ -110,6 +111,7 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
 
         BlockStorage.clearBlockInfo(location);
         location.getBlock().setBlockData(Material.AIR.createBlockData());
+        location.getWorld().playSound(location.toCenterLocation(), Sound.ENTITY_GENERIC_EXPLODE, 2, 1.2F);
         new ParticleBuilder(Particle.FLASH)
                 .location(location.toCenterLocation())
                 .count(3)

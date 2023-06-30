@@ -46,14 +46,15 @@ public class Repeater extends ConnectedBlock {
     }
 
     private void setRepeaterPowered(Location location, boolean powered) {
-        final BlockDisplay display = (BlockDisplay) getDisplay(location, "repeater");
-        if (display != null) {
-            display.setBlock(Material.REPEATER.createBlockData(
-                    "[delay=" + delayVisual
-                    + ",facing=" + PersistentDataAPI.getString(display, Keys.FACING)
-                    + ",powered=" + Objects.toString(powered)
-                    + "]"));
+        if (!(getDisplay(location, "repeater") instanceof BlockDisplay display)) {
+            return;
         }
+
+        final String facing = PersistentDataAPI.getString(display, Keys.FACING);
+        display.setBlock(Material.REPEATER.createBlockData(
+                "[delay=" + delayVisual
+                + ",facing=" + facing
+                + ",powered=" + powered + "]"));
     }
 
     @Override
@@ -63,20 +64,21 @@ public class Repeater extends ConnectedBlock {
                 .setMaterial(Material.RED_STAINED_GLASS)
                 .setTransformation(Transformations.adjustedRotateAndScale(glassDisplaySize, mainDisplayRotation))
                 .build());
-        displayGroup.addDisplay("repeater", new BlockDisplayBuilder(location.toCenterLocation())
-                .setMaterial(Material.REPEATER)
-                .setBlockData(Material.REPEATER.createBlockData("[delay=" + delayVisual
-                        + ",facing=" + face.name().toLowerCase()
-                        + ",powered=false"
-                        + "]"))
-                .setTransformation(Transformations.adjustedScaleAndOffset(repeaterDisplaySize, repeaterOffset))
-                .build());
         displayGroup.addDisplay("concrete", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(settings.getTier().material)
                 .setTransformation(Transformations.adjustedScaleAndOffset(concreteDisplaySize, concreteOffset))
                 .setBrightness(CONCRETE_BRIGHTNESS)
                 .build());
-        PersistentDataAPI.setString(displayGroup.getDisplays().get("repeater"), Keys.FACING, face.name().toLowerCase());
+        final BlockDisplay repeater = new BlockDisplayBuilder(location.toCenterLocation())
+                .setMaterial(Material.REPEATER)
+                .setBlockData(Material.REPEATER.createBlockData(
+                        "[delay=" + delayVisual
+                                + ",facing=" + face.name().toLowerCase()
+                                + ",powered=false]"))
+                .setTransformation(Transformations.adjustedScaleAndOffset(repeaterDisplaySize, repeaterOffset))
+                .build();
+        PersistentDataAPI.setString(repeater, Keys.FACING, face.name().toLowerCase());
+        displayGroup.addDisplay("repeater", repeater);
     }
 
     @Override
