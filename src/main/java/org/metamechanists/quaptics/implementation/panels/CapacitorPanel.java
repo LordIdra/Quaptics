@@ -12,7 +12,7 @@ import org.metamechanists.quaptics.utils.id.ConnectionGroupID;
 import org.metamechanists.quaptics.utils.id.PanelID;
 
 public class CapacitorPanel {
-    private static final Vector BLOCK_OFFSET = new Vector(0, 0.5, 0);
+    private static final Vector BLOCK_OFFSET = new Vector(0, 0.7, 0);
     private static final float SIZE = 0.40F;
     private final ConnectionGroupID groupID;
     private final Panel panel;
