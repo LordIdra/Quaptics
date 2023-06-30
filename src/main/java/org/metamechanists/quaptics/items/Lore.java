@@ -35,8 +35,11 @@ public class Lore {
     private static @NotNull List<String> fromSettings(@NotNull ConnectedBlock.Settings settings) {
         final List<String> lore = new ArrayList<>();
 
-        if (settings.getTier() != null) {
+        if (settings.getTier() != null && settings.getEmissionPower() == 0) {
             lore.add(operatingPower(settings.getMinPower(), settings.getTier().maxPower));
+        }
+        if (settings.getEmissionPower() != 0) {
+            lore.add(emissionPower(settings.getEmissionPower()));
         }
         if (settings.getPowerLoss() != 0) {
             lore.add(powerLoss(settings.getPowerLoss()));
@@ -62,7 +65,7 @@ public class Lore {
 
         return lore;
     }
-    public static @NotNull String[] create(ConnectedBlock.Settings settings, String... description) {
+    public static String @NotNull [] create(ConnectedBlock.@NotNull Settings settings, String... description) {
         final List<String> lore = new ArrayList<>();
         lore.add(settings.getTier().name);
         Collections.addAll(lore, description);
