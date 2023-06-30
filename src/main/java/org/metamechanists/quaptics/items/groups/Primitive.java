@@ -90,7 +90,7 @@ public class Primitive {
                 ConnectedBlock.Settings.builder()
                         .tier(Tier.PRIMITIVE)
                         .displayRadius(0.24F)
-                        .connectionRadius(0.36F)
+                        .connectionRadius(0.48F)
                         .powerLoss(0.1)
                         .build()).register(addon);
 
