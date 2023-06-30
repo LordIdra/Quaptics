@@ -59,7 +59,7 @@ public class Scatterer extends ConnectedBlock {
     protected void addDisplays(@NotNull DisplayGroup displayGroup, @NotNull Location location, @NotNull Player player) {
         final BlockFace face = Transformations.yawToFace(player.getEyeLocation().getYaw());
         displayGroup.addDisplay("main", new BlockDisplayBuilder(location.toCenterLocation())
-                .setMaterial(Material.RED_STAINED_GLASS)
+                .setMaterial(Material.ORANGE_STAINED_GLASS)
                 .setTransformation(Transformations.adjustedRotateAndScale(glassDisplaySize, mainDisplayRotation))
                 .build());
         displayGroup.addDisplay("comparator", new BlockDisplayBuilder(location.toCenterLocation())

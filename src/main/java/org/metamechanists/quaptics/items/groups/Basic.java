@@ -158,7 +158,7 @@ public class Basic {
 
     public static final SlimefunItemStack SCATTERER_1 = new SlimefunItemStack(
             "QP_SCATTERER_1",
-            Material.RED_STAINED_GLASS,
+            Material.ORANGE_STAINED_GLASS,
             "&cScatterer &4I",
             Lore.create(SCATTERER_1_SETTINGS,
                     "&7● Increases the frequency of a quaptic ray"));
