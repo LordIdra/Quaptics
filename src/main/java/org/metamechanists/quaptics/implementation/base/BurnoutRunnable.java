@@ -50,6 +50,7 @@ public class BurnoutRunnable extends BukkitRunnable {
         for (int delay = 1; delay < 60; delay++) {
             final int ticks = delay;
             Bukkit.getScheduler().runTaskLater(Quaptics.getInstance(), () -> {
+                Bukkit.broadcastMessage("stop early: " + shouldStopEarly());
                 if (shouldStopEarly()) {
                     return;
                 }
@@ -75,6 +76,7 @@ public class BurnoutRunnable extends BukkitRunnable {
 
         Bukkit.getScheduler().runTaskLater(Quaptics.getInstance(), () -> {
             // TODO: Drop "Burnt Component" Item
+            Bukkit.broadcastMessage("stop early: " + shouldStopEarly());
             if (shouldStopEarly()) {
                 return;
             }
@@ -93,6 +95,7 @@ public class BurnoutRunnable extends BukkitRunnable {
     }
 
     public void stopEarly() {
+        Bukkit.broadcastMessage("stopping early");
         this.stopEarly = true;
 
         final Block block = this.location.getBlock();
