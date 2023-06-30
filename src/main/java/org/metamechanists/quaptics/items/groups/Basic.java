@@ -13,6 +13,7 @@ import org.metamechanists.quaptics.implementation.blocks.manipulators.Combiner;
 import org.metamechanists.quaptics.implementation.blocks.manipulators.Lens;
 import org.metamechanists.quaptics.implementation.blocks.manipulators.Splitter;
 import org.metamechanists.quaptics.implementation.blocks.upgraders.Repeater;
+import org.metamechanists.quaptics.implementation.blocks.upgraders.Scatterer;
 import org.metamechanists.quaptics.items.Groups;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
@@ -75,6 +76,28 @@ public class Basic {
             .frequencyStep(0.1)
             .build();
 
+    public static final ConnectedBlock.Settings SCATTERER_1_SETTINGS = ConnectedBlock.Settings.builder()
+            .tier(Tier.BASIC)
+            .displayRadius(0.25F)
+            .connectionRadius(0.5F)
+            .minPower(40)
+            .powerLoss(0.05)
+            .minFrequency(0.2)
+            .maxFrequency(0.7)
+            .frequencyMultiplier(2.0)
+            .build();
+
+    public static final ConnectedBlock.Settings REPEATER_2_SETTINGS = ConnectedBlock.Settings.builder()
+            .tier(Tier.BASIC)
+            .displayRadius(0.25F)
+            .connectionRadius(0.5F)
+            .minPower(65)
+            .powerLoss(0.05)
+            .minFrequency(0.7)
+            .maxFrequency(1.0)
+            .frequencyStep(0.1)
+            .build();
+
     public static final SlimefunItemStack SOLAR_CONCENTRATOR_2 = new SlimefunItemStack(
             "QP_SOLAR_CONCENTRATOR_2",
             Material.GLASS_PANE,
@@ -129,8 +152,22 @@ public class Basic {
     public static final SlimefunItemStack REPEATER_1 = new SlimefunItemStack(
             "QP_REPEATER_1",
             Material.RED_STAINED_GLASS,
-            "&cRepeater &eI",
+            "&cRepeater &4I",
             Lore.create(REPEATER_1_SETTINGS,
+                    "&7● Increases the frequency of a quaptic ray"));
+
+    public static final SlimefunItemStack SCATTERER_1 = new SlimefunItemStack(
+            "QP_SCATTERER_1",
+            Material.RED_STAINED_GLASS,
+            "&cScatterer &4I",
+            Lore.create(SCATTERER_1_SETTINGS,
+                    "&7● Increases the frequency of a quaptic ray"));
+
+    public static final SlimefunItemStack REPEATER_2 = new SlimefunItemStack(
+            "QP_REPEATER_2",
+            Material.RED_STAINED_GLASS,
+            "&cRepeater &4II",
+            Lore.create(REPEATER_2_SETTINGS,
                     "&7● Increases the frequency of a quaptic ray"));
 
     public static void initialize() {
@@ -195,5 +232,21 @@ public class Basic {
                 new ItemStack[]{},
                 REPEATER_1_SETTINGS,
                 1).register(addon);
+
+        new Scatterer(
+                Groups.BASIC,
+                SCATTERER_1,
+                RecipeType.NULL,
+                new ItemStack[]{},
+                SCATTERER_1_SETTINGS,
+                "compare").register(addon);
+
+        new Repeater(
+                Groups.BASIC,
+                REPEATER_2,
+                RecipeType.NULL,
+                new ItemStack[]{},
+                REPEATER_2_SETTINGS,
+                2).register(addon);
     }
 }

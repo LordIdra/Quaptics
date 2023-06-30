@@ -27,29 +27,28 @@ import org.metamechanists.quaptics.utils.id.ConnectionGroupID;
 import java.util.List;
 import java.util.Objects;
 
-public class Repeater extends ConnectedBlock {
+public class Scatterer extends ConnectedBlock {
     private static final int CONCRETE_BRIGHTNESS = 15;
     private final Vector3f glassDisplaySize = new Vector3f(settings.getDisplayRadius()*2);
-    private final Vector3f repeaterDisplaySize = new Vector3f(settings.getDisplayRadius());
-    private final Vector3f repeaterOffset = new Vector3f(0.0F, 0.1F, 0.0F);
+    private final Vector3f comparatorDisplaySize = new Vector3f(settings.getDisplayRadius());
+    private final Vector3f comparatorOffset = new Vector3f(0.0F, 0.1F, 0.0F);
     private final Vector3f concreteDisplaySize = new Vector3f(settings.getDisplayRadius()+0.01F, 0.075F, settings.getDisplayRadius()+0.01F);
     private final Vector3f concreteOffset = new Vector3f(0.0F, -0.05F, 0.0F);
     private final Vector3f mainDisplayRotation = new Vector3f((float)(Math.PI/4), (float)(Math.PI/4), 0.0F);
     private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -settings.getConnectionRadius());
     private final Vector outputPointLocation = new Vector(0.0F, 0.0F, settings.getConnectionRadius());
-    private final int delayVisual;
+    private final String modeVisual;
 
-    public Repeater(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe,
-                    Settings settings, int delayVisual) {
+    public Scatterer(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe,
+                     Settings settings, String modeVisual) {
         super(group, item, recipeType, recipe, settings);
-        this.delayVisual = delayVisual;
+        this.modeVisual = modeVisual;
     }
 
-    private void setRepeaterPowered(Location location, boolean powered) {
-        final BlockDisplay display = (BlockDisplay) getDisplay(location, "repeater");
+    private void setComparatorPowered(Location location, boolean powered) {
+        final BlockDisplay display = (BlockDisplay) getDisplay(location, "comparator");
         if (display != null) {
-            display.setBlock(Material.REPEATER.createBlockData(
-                    "[delay=" + delayVisual
+            display.setBlock(Material.COMPARATOR.createBlockData("[mode=" + modeVisual
                     + ",facing=" + PersistentDataAPI.getString(display, Keys.FACING)
                     + ",powered=" + Objects.toString(powered)
                     + "]"));
@@ -63,20 +62,20 @@ public class Repeater extends ConnectedBlock {
                 .setMaterial(Material.RED_STAINED_GLASS)
                 .setTransformation(Transformations.adjustedRotateAndScale(glassDisplaySize, mainDisplayRotation))
                 .build());
-        displayGroup.addDisplay("repeater", new BlockDisplayBuilder(location.toCenterLocation())
-                .setMaterial(Material.REPEATER)
-                .setBlockData(Material.REPEATER.createBlockData("[delay=" + delayVisual
-                        + ",facing=" + face.name().toLowerCase()
+        displayGroup.addDisplay("comparator", new BlockDisplayBuilder(location.toCenterLocation())
+                .setMaterial(Material.COMPARATOR)
+                .setBlockData(Material.COMPARATOR.createBlockData(
+                        ",facing=" + face.name().toLowerCase()
                         + ",powered=false"
                         + "]"))
-                .setTransformation(Transformations.adjustedScaleAndOffset(repeaterDisplaySize, repeaterOffset))
+                .setTransformation(Transformations.adjustedScaleAndOffset(comparatorDisplaySize, comparatorOffset))
                 .build());
         displayGroup.addDisplay("concrete", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(settings.getTier().material)
                 .setTransformation(Transformations.adjustedScaleAndOffset(concreteDisplaySize, concreteOffset))
                 .setBrightness(CONCRETE_BRIGHTNESS)
                 .build());
-        PersistentDataAPI.setString(displayGroup.getDisplays().get("repeater"), Keys.FACING, face.name().toLowerCase());
+        PersistentDataAPI.setString(displayGroup.getDisplays().get("comparator"), Keys.FACING, face.name().toLowerCase());
     }
 
     @Override
@@ -96,7 +95,7 @@ public class Repeater extends ConnectedBlock {
         }
 
         doDisplayBrightnessCheck(group.getLocation(), "concrete", false);
-        setRepeaterPowered(group.getLocation(), input.isLinkEnabled() && input.getLink().getFrequency() < settings.getMaxFrequency());
+        setComparatorPowered(group.getLocation(), input.isLinkEnabled() && input.getLink().getFrequency() < settings.getMaxFrequency());
 
         if (!output.hasLink()) {
             return;
@@ -109,7 +108,7 @@ public class Repeater extends ConnectedBlock {
 
         double newFrequency = input.getLink().getFrequency();
         if (input.getLink().getFrequency() < settings.getMaxFrequency()) {
-            newFrequency += settings.getFrequencyStep();
+            newFrequency += settings.getFrequencyMultiplier();
         }
 
         output.getLink().setAttributes(

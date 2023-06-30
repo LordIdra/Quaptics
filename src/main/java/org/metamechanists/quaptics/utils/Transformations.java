@@ -40,7 +40,7 @@ public class Transformations {
             if (vector.y < min.y) { min.y = vector.y; }
             if (vector.z < min.z) { min.z = vector.z; }
 
-            if (vector.x > max.x) { max.x = vector.x;}
+            if (vector.x > max.x) { max.x = vector.x; }
             if (vector.y > max.y) { max.y = vector.y; }
             if (vector.z > max.z) { max.z = vector.z; }
         });
