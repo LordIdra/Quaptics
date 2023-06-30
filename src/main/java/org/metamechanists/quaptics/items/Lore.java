@@ -148,7 +148,7 @@ public class Lore {
 
     public static String progressBar(int filled, int max, String filledColor, String emptyColor) {
         final String base = "¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦";
-        final int divideAt = filled/max%20;
+        final int divideAt = max%20/filled;
         return filledColor + base.substring(0, divideAt) + emptyColor + base.substring(divideAt);
     }
 }

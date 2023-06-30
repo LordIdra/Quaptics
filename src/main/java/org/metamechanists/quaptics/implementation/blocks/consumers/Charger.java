@@ -53,7 +53,7 @@ public class Charger extends ConnectedBlock {
             }
 
             final Player player = event.getPlayer();
-            if (display.getItemStack() == null) {
+            if (display.getItemStack() == null || display.getItemStack().getType().isEmpty()) {
                 addItem(location, player, display);
                 return;
             }

@@ -106,9 +106,9 @@ public class Primitive {
             Material.LIGHT_BLUE_STAINED_GLASS,
             "&bCharger &3I",
             Lore.create(CHARGER_1_SETTINGS,
-                    "&7● Charges items",
-                    "&eRight Click &7an item to place",
-                    "&eRight Click &7again to retrieve"));
+                    "&7● Charges item with Quaptic Energy Units",
+                    "&7● &eRight Click &7an item to place",
+                    "&7● &eRight Click &7again to retrieve"));
 
     public static final SlimefunItemStack CAPACITOR_1 = new SlimefunItemStack(
             "QP_CAPACITOR_1",
