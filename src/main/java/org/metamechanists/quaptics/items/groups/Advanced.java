@@ -131,8 +131,6 @@ public class Advanced {
             Lore.create(SPLITTER_4_4_SETTINGS,
                     "&7● Splits one quaptic ray into multiple"));
 
-    private Advanced() {}
-
     public void initialize() {
         final SlimefunAddon addon = Quaptics.getInstance();
 
