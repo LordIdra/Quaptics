@@ -114,7 +114,7 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
     @OverridingMethodsMustInvokeSuper
     @SuppressWarnings("unused")
     protected void onBreak(@NotNull final Location location) {
-        getGroup(location).ifPresent(group -> onBreak(location));
+        getGroup(location).ifPresent(ConnectionGroup::remove);
     }
 
     public void connect(@NotNull final ConnectionPointId from, @NotNull final ConnectionPointId to) {
