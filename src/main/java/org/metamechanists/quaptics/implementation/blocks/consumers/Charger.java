@@ -112,6 +112,7 @@ public class Charger extends ConnectedBlock {
         }
 
         QuapticChargeableItem.chargeItem(group, display);
+        updatePanel(group);
     }
 
     @Override
@@ -181,6 +182,5 @@ public class Charger extends ConnectedBlock {
         final ConnectionPointInput input = (ConnectionPointInput) group.getPoint("input");
 
         doBurnoutCheck(group, input);
-        updatePanel(group);
     }
 }
