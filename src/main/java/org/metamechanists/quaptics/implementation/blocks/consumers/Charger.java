@@ -77,7 +77,8 @@ public class Charger extends ConnectedBlock {
         if (!(getDisplay(location, "item") instanceof ItemDisplay display)) {
             return null;
         }
-        return display.getItemStack();
+        final ItemStack stack = display.getItemStack();
+        return stack == null || stack.getItemMeta() == null ? null : stack;
     }
 
     protected void addItem(@NotNull Player player, ItemDisplay display) {

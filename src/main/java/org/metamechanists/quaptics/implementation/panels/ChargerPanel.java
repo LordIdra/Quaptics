@@ -34,7 +34,7 @@ public class ChargerPanel extends CapacitorPanel {
         }
 
         final ItemStack itemStack = charger.getItem(location);
-        if (itemStack == null || itemStack.getItemMeta() == null) {
+        if (itemStack == null) {
             return;
         }
 
