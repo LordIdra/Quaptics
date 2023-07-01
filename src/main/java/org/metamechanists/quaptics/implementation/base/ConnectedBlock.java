@@ -88,7 +88,7 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
             group.getPoints().values().stream()
                     .map(ConnectionPointId::get)
                     .filter(Objects::nonNull)
-                    .forEach(point -> point.getPointPanel().setPanelHidden(isAnyPanelHidden));
+                    .forEach(point -> point.getPointPanel().setPanelHidden(!isAnyPanelHidden));
 
         };
     }
