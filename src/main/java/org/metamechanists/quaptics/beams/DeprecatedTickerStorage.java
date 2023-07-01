@@ -2,13 +2,15 @@ package org.metamechanists.quaptics.beams;
 
 import org.metamechanists.quaptics.beams.ticker.DisplayTicker;
 
-import java.util.Queue;
+import java.util.Collection;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-public class DeprecatedTickerStorage {
-    private static final Queue<DisplayTicker> tickers = new ConcurrentLinkedQueue<>();
+public final class DeprecatedTickerStorage {
+    private static final Collection<DisplayTicker> tickers = new ConcurrentLinkedQueue<>();
 
-    public static void deprecate(DisplayTicker ticker) {
+    private DeprecatedTickerStorage() {}
+
+    public static void deprecate(final DisplayTicker ticker) {
         tickers.add(ticker);
     }
 

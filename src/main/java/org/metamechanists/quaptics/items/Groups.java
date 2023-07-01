@@ -5,11 +5,14 @@ import dev.sefiraat.sefilib.slimefun.itemgroup.SimpleFlexGroup;
 import io.github.bakedlibs.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
+import lombok.experimental.UtilityClass;
 import org.bukkit.Material;
 import org.metamechanists.quaptics.Quaptics;
 import org.metamechanists.quaptics.utils.Colors;
 import org.metamechanists.quaptics.utils.Keys;
 
+@SuppressWarnings("WeakerAccess")
+@UtilityClass
 public class Groups {
     public static final SimpleFlexGroup MAIN = new SimpleFlexGroup(
             Quaptics.getInstance(),

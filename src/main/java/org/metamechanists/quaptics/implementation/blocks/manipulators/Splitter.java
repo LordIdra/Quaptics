@@ -35,12 +35,12 @@ public class Splitter extends ConnectedBlock {
     private final Vector3f concreteDisplaySize = new Vector3f(settings.getDisplayRadius());
     private final Vector3f displayRotation = new Vector3f((float)(Math.PI/4), (float)(Math.PI/4), 0);
 
-    public Splitter(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, Settings settings) {
+    public Splitter(final ItemGroup group, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(group, item, recipeType, recipe, settings);
     }
 
     @Override
-    protected void addDisplays(@NotNull DisplayGroup displayGroup, @NotNull Location location, Player player) {
+    protected void addDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
         displayGroup.addDisplay("main", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(Material.LIGHT_GRAY_STAINED_GLASS)
                 .setTransformation(Transformations.adjustedRotateAndScale(glassDisplaySize, displayRotation))
@@ -54,7 +54,7 @@ public class Splitter extends ConnectedBlock {
     }
 
     @Override
-    protected List<ConnectionPoint> generateConnectionPoints(ConnectionGroupId groupId, Player player, Location location) {
+    protected List<ConnectionPoint> generateConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
         final List<ConnectionPoint> points = new ArrayList<>();
 
         points.add(new ConnectionPointInput(groupId, "input", formatPointLocation(player, location, inputLocation)));
@@ -69,9 +69,14 @@ public class Splitter extends ConnectedBlock {
     }
 
     @Override
-    public void onInputLinkUpdated(@NotNull ConnectionGroup group) {
+    public void onInputLinkUpdated(@NotNull final ConnectionGroup group) {
+        final Location location = group.getLocation();
+        if (location == null) {
+            return;
+        }
+
         final ConnectionPointInput input = (ConnectionPointInput) group.getPoint("input");
-        final List<ConnectionPointOutput> linkedOutputs = getLinkedOutputs(group.getLocation());
+        final List<ConnectionPointOutput> linkedOutputs = getLinkedOutputs(location);
 
         if (input == null) {
             return;

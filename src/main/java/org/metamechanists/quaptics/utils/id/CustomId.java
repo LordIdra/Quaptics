@@ -1,5 +1,7 @@
 package org.metamechanists.quaptics.utils.id;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.UUID;
 
 public abstract class CustomId {

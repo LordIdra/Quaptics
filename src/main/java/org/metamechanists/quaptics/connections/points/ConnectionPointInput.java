@@ -9,14 +9,15 @@ import org.metamechanists.quaptics.utils.id.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.id.ConnectionPointId;
 
 public class ConnectionPointInput extends ConnectionPoint {
-    public ConnectionPointInput(ConnectionGroupId groupId, String name, Location location) {
+    public ConnectionPointInput(final ConnectionGroupId groupId, final String name, final Location location) {
         super(groupId, name, location, Material.RED_CONCRETE, 15, 3);
     }
 
-    public ConnectionPointInput(ConnectionPointId id) {
-        super(id);
+    public ConnectionPointInput(final ConnectionPointId pointId) {
+        super(pointId);
     }
 
+    @Override
     protected void saveData() {
         final DataTraverser traverser = new DataTraverser(getId());
         final JsonObject mainSection = traverser.getData();

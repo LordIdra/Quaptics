@@ -14,7 +14,7 @@ public enum Tier {
     public final Material glassMaterial;
     public final double maxPower;
 
-    Tier(String name, Material concreteMaterial, Material glassMaterial, double maxPower) {
+    Tier(final String name, final Material concreteMaterial, final Material glassMaterial, final double maxPower) {
         this.name = name;
         this.concreteMaterial = concreteMaterial;
         this.glassMaterial = glassMaterial;

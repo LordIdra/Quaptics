@@ -17,14 +17,14 @@ public class PanelBuilder {
     private final Location nextAttributeLocation;
     private final Map<String, PanelAttributeId> attributes = new HashMap<>();
 
-    public PanelBuilder(Location location, float size) {
+    public PanelBuilder(final Location location, final float size) {
         this.displayGroupId = new DisplayGroupId(new DisplayGroup(location, 0, 0).getParentUUID());
         this.displaySize = new Vector3f(size, size, size);
         this.attributeSpacing =  new Vector(0, size/3.5, 0);
         this.nextAttributeLocation = location;
     }
 
-    public PanelBuilder addAttribute(String name) {
+    public PanelBuilder addAttribute(final String name) {
         attributes.put(name, new PanelAttribute(nextAttributeLocation, displaySize).getId());
         nextAttributeLocation.add(attributeSpacing);
         return this;

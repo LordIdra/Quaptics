@@ -14,6 +14,7 @@ import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Display;
+import org.bukkit.entity.Display.Brightness;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -38,21 +39,32 @@ import java.util.List;
 import java.util.Objects;
 
 public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
-    protected static final Display.Brightness BRIGHTNESS_ON = new Display.Brightness(13, 0);
-    protected static final Display.Brightness BRIGHTNESS_OFF = new Display.Brightness(5, 0);
-    protected static final int VIEW_RANGE_ON = 1;
+    private static final Brightness BRIGHTNESS_ON = new Brightness(13, 0);
+    private static final Brightness BRIGHTNESS_OFF = new Brightness(5, 0);
+    private static final int VIEW_RANGE_ON = 1;
     protected static final int VIEW_RANGE_OFF = 0;
+    private static final int BURNOUT_EXPLODE_VOLUME = 2;
+    private static final float BURNOUT_EXPLODE_PITCH = 1.2F;
 
     @Getter
     protected final Settings settings;
 
-    protected ConnectedBlock(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, Settings settings) {
+    protected ConnectedBlock(final ItemGroup group, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe,
+                             final Settings settings) {
         super(group, item, recipeType, recipe);
         this.settings = settings;
         addItemHandler(onUse());
     }
 
-    public BlockUseHandler onUse() {
+    private static void changePointLocation(final @NotNull ConnectionPointId pointId, @Nullable final Location newLocation) {
+        final ConnectionPoint point = pointId.get();
+        if (point != null && newLocation != null) {
+            point.changeLocation(newLocation);
+        }
+    }
+
+    @NotNull
+    private static BlockUseHandler onUse() {
         return event -> {
             if (!event.getPlayer().isSneaking()) {
                 return;
@@ -70,23 +82,18 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
 
             final boolean isAnyPanelHidden = group.getPoints().values().stream().anyMatch(pointId -> {
                 final ConnectionPoint point = pointId.get();
-                if (point != null) {
-                    return point.getPointPanel().isPanelHidden();
-                }
-                return false;
+                return point != null && point.getPointPanel().isPanelHidden();
             });
 
-            group.getPoints().values().forEach(pointId -> {
-                final ConnectionPoint point = pointId.get();
-                if (point != null) {
-                    point.getPointPanel().setPanelHidden(!isAnyPanelHidden);
-                }
-            });
+            group.getPoints().values().stream()
+                    .map(ConnectionPointId::get)
+                    .filter(Objects::nonNull)
+                    .forEach(point -> point.getPointPanel().setPanelHidden(isAnyPanelHidden));
 
         };
     }
 
-    protected @Nullable ConnectionGroup getGroup(Location location) {
+    protected static @Nullable ConnectionGroup getGroup(final Location location) {
         final DisplayGroupId displayGroupId = getDisplayGroupId(location);
         if (displayGroupId == null) {
             return null;
@@ -98,7 +105,7 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
     protected abstract List<ConnectionPoint> generateConnectionPoints(ConnectionGroupId groupId, Player player, Location location);
 
     @Override
-    protected void onPlace(@NotNull BlockPlaceEvent event) {
+    protected void onPlace(@NotNull final BlockPlaceEvent event) {
         final Location location = event.getBlock().getLocation();
         final ConnectionGroupId groupId = new ConnectionGroupId(getDisplayGroupId(location));
         final List<ConnectionPoint> points = generateConnectionPoints(groupId, event.getPlayer(), location);
@@ -107,10 +114,10 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
     }
 
     @SuppressWarnings("unused")
-    protected void onBreak(Location location) {}
+    private void onBreak(final Location location) {}
 
     @Override
-    protected void onBreak(@NotNull BlockBreakEvent event) {
+    protected void onBreak(@NotNull final BlockBreakEvent event) {
         final ConnectionGroup group = getGroup(event.getBlock().getLocation());
         if (group != null) {
             group.remove();
@@ -118,16 +125,11 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
         onBreak(event.getBlock().getLocation());
     }
 
-    public void connect(@NotNull ConnectionPointId from, @NotNull ConnectionPointId to) {
-        final ConnectionPoint fromPoint = from.get();
-        final ConnectionGroup fromGroup = fromPoint != null ? fromPoint.getGroup() : null;
-
-        if (fromGroup != null) {
-            fromGroup.changePointLocation(from, calculatePointLocationSphere(from, to));
-        }
+    public void connect(@NotNull final ConnectionPointId from, @NotNull final ConnectionPointId to) {
+        changePointLocation(from, calculatePointLocationSphere(from, to));
     }
 
-    public void burnout(Location location) {
+    public void burnout(final Location location) {
         // TODO send message to player to inform them what happened
         onBreak(location);
 
@@ -144,11 +146,11 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
 
         BlockStorage.clearBlockInfo(location);
         location.getBlock().setBlockData(Material.AIR.createBlockData());
-        location.getWorld().playSound(location.toCenterLocation(), Sound.ENTITY_GENERIC_EXPLODE, 2, 1.2F);
+        location.getWorld().playSound(location.toCenterLocation(), Sound.ENTITY_GENERIC_EXPLODE, BURNOUT_EXPLODE_VOLUME, BURNOUT_EXPLODE_PITCH);
         new ParticleBuilder(Particle.FLASH).location(location.toCenterLocation()).count(3).spawn();
     }
 
-    public boolean doBurnoutCheck(@NotNull ConnectionGroup group, @NotNull ConnectionPoint point) {
+    protected boolean doBurnoutCheck(@NotNull final ConnectionGroup group, @NotNull final ConnectionPoint point) {
         if (!point.hasLink() || point.getLink().getPower() <= settings.getTier().maxPower) {
             return false;
         }
@@ -162,7 +164,8 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
         return true;
     }
 
-    public @NotNull List<ConnectionPoint> getLinkedPoints(Location location) {
+    @NotNull
+    private static List<ConnectionPoint> getLinkedPoints(final Location location) {
         final ConnectionGroup group = getGroup(location);
         if (group != null) {
             return group.getPoints().values().stream()
@@ -174,29 +177,32 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
         return new ArrayList<>();
     }
 
-    public @NotNull List<ConnectionPointOutput> getLinkedOutputs(Location location) {
+    @NotNull
+    protected static List<ConnectionPointOutput> getLinkedOutputs(final Location location) {
         return getLinkedPoints(location).stream()
                 .filter(ConnectionPointOutput.class::isInstance)
                 .map(ConnectionPointOutput.class::cast)
                 .toList();
     }
 
-    public @NotNull List<ConnectionPointInput> getLinkedInputs(Location location) {
+    @NotNull
+    private static List<ConnectionPointInput> getLinkedInputs(final Location location) {
         return getLinkedPoints(location).stream()
                 .filter(ConnectionPointInput.class::isInstance)
                 .map(ConnectionPointInput.class::cast)
                 .toList();
     }
 
-    public @NotNull List<ConnectionPointInput> getEnabledInputs(Location location) {
+    @NotNull
+    protected static List<ConnectionPointInput> getEnabledInputs(final Location location) {
         return getLinkedInputs(location).stream().filter(ConnectionPoint::isLinkEnabled).toList();
     }
 
-    public void doDisplayBrightnessCheck(Location location, String concreteDisplayName) {
+    protected static void doDisplayBrightnessCheck(final Location location, final String concreteDisplayName) {
         doDisplayBrightnessCheck(location, concreteDisplayName, true);
     }
 
-    public void doDisplayBrightnessCheck(Location location, String concreteDisplayName, boolean setVisible) {
+    protected static void doDisplayBrightnessCheck(final Location location, final String concreteDisplayName, final boolean setVisible) {
         final Display display = getDisplay(location, concreteDisplayName);
         if (display == null) {
             return;
@@ -210,9 +216,9 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
         }
     }
 
-    public void onInputLinkUpdated(ConnectionGroup group) {}
+    public void onInputLinkUpdated(@NotNull final ConnectionGroup group) {}
 
-    public Location calculatePointLocationSphere(@NotNull ConnectionPointId from, @NotNull ConnectionPointId to) {
+    private @Nullable Location calculatePointLocationSphere(@NotNull final ConnectionPointId from, @NotNull final ConnectionPointId to) {
         final ConnectionPoint fromPoint = from.get();
         final ConnectionPoint toPoint = to.get();
         if (fromPoint == null || toPoint == null) {
@@ -232,6 +238,6 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
         }
 
         final Vector radiusDirection = Vector.fromJOML(Transformations.getDirection(fromLocation, toLocation).mul(settings.getConnectionRadius()));
-        return fromLocation.clone().add(0.5, 0.5, 0.5).add(radiusDirection);
+        return fromLocation.clone().toCenterLocation().add(radiusDirection);
     }
 }

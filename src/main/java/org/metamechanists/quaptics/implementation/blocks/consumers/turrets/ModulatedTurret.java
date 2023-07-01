@@ -18,12 +18,12 @@ import org.metamechanists.quaptics.implementation.base.Settings;
 public class ModulatedTurret extends Turret {
     private final Vector3f projectileSize = new Vector3f(0.095F, 0.095F, 0.20F);
 
-    public ModulatedTurret(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, Settings settings) {
+    public ModulatedTurret(final ItemGroup group, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(group, item, recipeType, recipe, settings);
     }
 
     @Override
-    protected void shoot(Location location) {
+    protected void shoot(final Location location) {
         final LivingEntity target = getTarget(location);
 
         if (target == null || target.isDead() || location.toCenterLocation().distance(target.getLocation()) > settings.getRange()) {

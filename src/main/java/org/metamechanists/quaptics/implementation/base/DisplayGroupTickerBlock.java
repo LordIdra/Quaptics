@@ -33,11 +33,12 @@ import java.util.List;
 import static dev.sefiraat.sefilib.slimefun.blocks.DisplayGroupBlock.KEY_UUID;
 
 public abstract class DisplayGroupTickerBlock extends SlimefunItem {
+    private static final Vector CENTER_VECTOR = new Vector(0.5, 0.5, 0.5);
     protected static final Vector INITIAL_LINE = new Vector(0, 0, 1);
 
     protected DisplayGroupTickerBlock(
-            ItemGroup group, SlimefunItemStack item,
-            RecipeType recipeType, ItemStack[] recipe) {
+            final ItemGroup group, final SlimefunItemStack item,
+            final RecipeType recipeType, final ItemStack[] recipe) {
         super(group, item, recipeType, recipe);
     }
 
@@ -46,27 +47,28 @@ public abstract class DisplayGroupTickerBlock extends SlimefunItem {
         return Material.STRUCTURE_VOID;
     }
 
+    @ParametersAreNonnullByDefault
     protected abstract void addDisplays(DisplayGroup displayGroup, Location location, Player player);
 
-    protected Vector rotateVectorByEyeDirection(@NotNull Player player, @NotNull Vector vector) {
+    protected static @NotNull Vector rotateVectorByEyeDirection(@NotNull final Player player, @NotNull final Vector vector) {
         final double rotationAngle = Transformations.yawToCardinalDirection(player.getEyeLocation().getYaw());
         return vector.clone().rotateAroundY(rotationAngle);
     }
 
-    protected Location formatPointLocation(Player player, @NotNull Location location, Vector relativeLocation) {
+    protected static @NotNull Location formatPointLocation(final Player player, @NotNull final Location location, final Vector relativeLocation) {
         final Vector newRelativeLocation = rotateVectorByEyeDirection(player, relativeLocation);
-        newRelativeLocation.add(new Vector(0.5, 0.5, 0.5));
+        newRelativeLocation.add(CENTER_VECTOR);
         return location.clone().add(newRelativeLocation);
     }
 
-    protected void onPlace(BlockPlaceEvent event) {}
+    protected void onPlace(@NotNull final BlockPlaceEvent event) {}
 
-    protected void onBreak(BlockBreakEvent event) {}
+    protected void onBreak(@NotNull final BlockBreakEvent event) {}
 
-    protected void onSlimefunTick(Block block, SlimefunItem item, Config data) {}
+    protected void onSlimefunTick(@NotNull final Block block, final SlimefunItem item, final Config data) {}
 
     @SuppressWarnings("unused")
-    public void onQuapticTick(ConnectionGroup group) {}
+    public void onQuapticTick(@NotNull final ConnectionGroup group) {}
 
     @Override
     @OverridingMethodsMustInvokeSuper
@@ -74,7 +76,7 @@ public abstract class DisplayGroupTickerBlock extends SlimefunItem {
         addItemHandler(
                 new BlockPlaceHandler(false) {
                     @Override
-                    public void onPlayerPlace(@Nonnull BlockPlaceEvent event) {
+                    public void onPlayerPlace(@Nonnull final BlockPlaceEvent event) {
                         final Location location = event.getBlock().getLocation();
                         final DisplayGroup displayGroup = new DisplayGroup(location, 0, 0);
                         addDisplays(displayGroup, location, event.getPlayer());
@@ -87,7 +89,7 @@ public abstract class DisplayGroupTickerBlock extends SlimefunItem {
                 new BlockBreakHandler(false, false) {
                     @Override
                     @ParametersAreNonnullByDefault
-                    public void onPlayerBreak(BlockBreakEvent event, ItemStack item, List<ItemStack> drops) {
+                    public void onPlayerBreak(final BlockBreakEvent event, final ItemStack item, final List<ItemStack> drops) {
                         final Location location = event.getBlock().getLocation();
                         onBreak(event);
                         final DisplayGroup displayGroup = getDisplayGroup(location.clone());
@@ -100,7 +102,7 @@ public abstract class DisplayGroupTickerBlock extends SlimefunItem {
 
                 new BlockTicker() {
                     @Override
-                    public void tick(Block block, SlimefunItem item, Config data) {
+                    public void tick(final Block block, final SlimefunItem item, final Config data) {
                         onSlimefunTick(block, item, data);
                     }
 
@@ -112,21 +114,21 @@ public abstract class DisplayGroupTickerBlock extends SlimefunItem {
         );
     }
 
-    private void setId(@NotNull DisplayGroup displayGroup, Location location) {
+    private static void setId(@NotNull final DisplayGroup displayGroup, final Location location) {
         BlockStorage.addBlockInfo(location, KEY_UUID, displayGroup.getParentUUID().toString());
     }
 
-    public @Nullable DisplayGroupId getDisplayGroupId(Location location) {
+    public static @Nullable DisplayGroupId getDisplayGroupId(final Location location) {
         final String uuid = BlockStorage.getLocationInfo(location, KEY_UUID);
         return uuid == null ? null : new DisplayGroupId(uuid);
     }
 
-    public @Nullable DisplayGroup getDisplayGroup(Location location) {
+    public static @Nullable DisplayGroup getDisplayGroup(final Location location) {
         final DisplayGroupId id = getDisplayGroupId(location);
         return id == null ? null : DisplayGroup.fromUUID(id.getUUID());
     }
 
-    public @Nullable Display getDisplay(Location location, String name) {
+    public static @Nullable Display getDisplay(final Location location, final String name) {
         final DisplayGroup displayGroup = getDisplayGroup(location);
         return displayGroup == null ? null : displayGroup.getDisplays().get(name);
     }

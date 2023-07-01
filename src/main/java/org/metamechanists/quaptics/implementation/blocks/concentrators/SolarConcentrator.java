@@ -31,13 +31,13 @@ public class SolarConcentrator extends ConnectedBlock {
     private final Vector outputLocation = new Vector(0.0F, 0.0F, settings.getConnectionRadius());
     private final Vector3f mainDisplaySize = new Vector3f(settings.getDisplayRadius()*2);
 
-    public SolarConcentrator(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe,
-                             Settings settings, float rotationY) {
+    public SolarConcentrator(final ItemGroup group, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe,
+                             final Settings settings, final float rotationY) {
         super(group, item, recipeType, recipe, settings);
         this.rotationY = rotationY;
     }
 
-    private ItemDisplay generateMainBlockDisplay(@NotNull Location from) {
+    private ItemDisplay generateMainBlockDisplay(@NotNull final Location from) {
         final Vector3f mainDisplayRotation = new Vector3f((float)(Math.PI/2), 0.0F, rotationY);
         return new ItemDisplayBuilder(from.toCenterLocation())
                 .setMaterial(Material.GLASS_PANE)
@@ -46,17 +46,17 @@ public class SolarConcentrator extends ConnectedBlock {
     }
 
     @Override
-    protected void addDisplays(@NotNull DisplayGroup displayGroup, Location location, Player player) {
+    protected void addDisplays(@NotNull final DisplayGroup displayGroup, final @NotNull Location location, final @NotNull Player player) {
         displayGroup.addDisplay("main", generateMainBlockDisplay(location));
     }
 
     @Override
-    protected List<ConnectionPoint> generateConnectionPoints(ConnectionGroupId groupId, Player player, Location location) {
+    protected List<ConnectionPoint> generateConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
         return List.of(new ConnectionPointOutput(groupId, "output", formatPointLocation(player, location, outputLocation)));
     }
 
     @Override
-    public void onSlimefunTick(@NotNull Block block, SlimefunItem item, Config data) {
+    public void onSlimefunTick(@NotNull final Block block, final SlimefunItem item, final Config data) {
         super.onSlimefunTick(block, item, data);
 
         final ConnectionGroup group = getGroup(block.getLocation());

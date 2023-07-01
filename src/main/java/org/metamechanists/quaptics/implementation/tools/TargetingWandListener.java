@@ -14,14 +14,14 @@ import org.metamechanists.quaptics.utils.id.ConnectionPointId;
 public class TargetingWandListener implements Listener {
 
     @EventHandler
-    public void interactEvent(@NotNull PlayerInteractEntityEvent event) {
+    public void interactEvent(@NotNull final PlayerInteractEntityEvent event) {
         final Entity clickedEntity = event.getRightClicked();
         if (!(clickedEntity instanceof Interaction)) {
             return;
         }
 
         final ItemStack heldItem = event.getPlayer().getInventory().getItemInMainHand();
-        if (!(SlimefunItem.getByItem(heldItem) instanceof TargetingWand wand)) {
+        if (!(SlimefunItem.getByItem(heldItem) instanceof final TargetingWand wand)) {
             return;
         }
 
@@ -34,10 +34,10 @@ public class TargetingWandListener implements Listener {
     }
 
     @EventHandler
-    public void scrollEvent(@NotNull PlayerItemHeldEvent event) {
+    public void scrollEvent(@NotNull final PlayerItemHeldEvent event) {
         final ItemStack heldItem = event.getPlayer().getInventory().getItem(event.getPreviousSlot());
-        if (SlimefunItem.getByItem(heldItem) instanceof TargetingWand wand) {
-            wand.unsetSource(heldItem);
+        if (SlimefunItem.getByItem(heldItem) instanceof TargetingWand) {
+            TargetingWand.unsetSource(heldItem);
         }
     }
 }

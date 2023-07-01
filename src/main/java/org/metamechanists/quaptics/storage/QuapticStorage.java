@@ -53,9 +53,9 @@ public class QuapticStorage {
 
     public static void save() {
         final File directory = new File(Quaptics.getInstance().getDataFolder(), "../../data-storage/quaptics/");
-        final File file = new File(directory, "tickers.yml");
-
         createDirectoryIfNotExists(directory);
+
+        final File file = new File(directory, "tickers.yml");
         createFileIfNotExists(file);
 
         final YamlConfiguration tickers = new YamlConfiguration();

@@ -4,6 +4,7 @@ import io.github.bakedlibs.dough.common.ChatColors;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.items.Lore;
@@ -13,12 +14,12 @@ import org.metamechanists.quaptics.panel.Panel;
 import org.metamechanists.quaptics.panel.PanelBuilder;
 
 public class PointPanel {
-    private static final Vector POINT_OFFSET = new Vector(0, 0.2, 0);
+    private static final Vector POINT_OFFSET = new Vector(0.0, 0.2, 0.0);
     private static final float SIZE = 0.25F;
     private final ConnectionPointId pointId;
     private final Panel panel;
 
-    public PointPanel(@NotNull Location location, ConnectionPointId pointId) {
+    public PointPanel(@NotNull final Location location, final ConnectionPointId pointId) {
         this.pointId = pointId;
         this.panel = new PanelBuilder(location.clone().add(POINT_OFFSET), SIZE)
                 .addAttribute("phase")
@@ -29,7 +30,7 @@ public class PointPanel {
         panel.setAttributeHidden("name", false);
     }
 
-    public PointPanel(@NotNull PanelId panelId, ConnectionPointId pointId) {
+    public PointPanel(@NotNull final PanelId panelId, final ConnectionPointId pointId) {
         this.pointId = pointId;
         this.panel = panelId.get();
     }
@@ -38,18 +39,18 @@ public class PointPanel {
         return panel.getId();
     }
 
-    private ConnectionPoint getPoint() {
+    private @Nullable ConnectionPoint getPoint() {
         return pointId.get();
     }
 
-    private double roundTo2dp(double value) {
+    private static double roundTo2dp(final double value) {
         return Math.round(value*Math.pow(10, 2)) / Math.pow(10, 2);
     }
 
     public boolean isPanelHidden() {
         return panel.isHidden();
     }
-    public void setPanelHidden(boolean hidden) {
+    public void setPanelHidden(final boolean hidden) {
         panel.setHidden(hidden);
     }
 
@@ -58,6 +59,11 @@ public class PointPanel {
     }
 
     public void update() {
+        if (getPoint() == null) {
+            remove();
+            return;
+        }
+
         panel.setText("name", ChatColors.color((getPoint().hasLink() ? "&a" : "&c") + getPoint().getName().toUpperCase()));
 
         if (!getPoint().hasLink()) {

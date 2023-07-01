@@ -31,12 +31,12 @@ public class EnergyConcentrator extends EnergyConnectedBlock {
     private final Vector outputLocation = new Vector(0.0F, 0.0F, settings.getConnectionRadius());
     private final Vector3f mainDisplaySize = new Vector3f(settings.getDisplayRadius(), settings.getDisplayRadius(), settings.getConnectionRadius()*2);
 
-    public EnergyConcentrator(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe,
-                              Settings settings, int capacity, int consumption) {
+    public EnergyConcentrator(final ItemGroup group, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe,
+                              final Settings settings, final int capacity, final int consumption) {
         super(group, item, recipeType, recipe, settings, capacity, consumption);
     }
 
-    private BlockDisplay generateMainBlockDisplay(@NotNull Location from, Location to) {
+    private BlockDisplay generateMainBlockDisplay(@NotNull final Location from, final Location to) {
         return new BlockDisplayBuilder(from.toCenterLocation())
                 .setMaterial(settings.getTier().concreteMaterial)
                 .setTransformation(Transformations.lookAlong(mainDisplaySize, Transformations.getDirection(from, to)))
@@ -44,17 +44,17 @@ public class EnergyConcentrator extends EnergyConnectedBlock {
     }
 
     @Override
-    protected void addDisplays(@NotNull DisplayGroup displayGroup, Location location, Player player) {
+    protected void addDisplays(@NotNull final DisplayGroup displayGroup, final @NotNull Location location, final @NotNull Player player) {
         displayGroup.addDisplay("main", generateMainBlockDisplay(location, location.clone().add(rotateVectorByEyeDirection(player, INITIAL_LINE))));
     }
 
     @Override
-    protected List<ConnectionPoint> generateConnectionPoints(ConnectionGroupId groupId, Player player, Location location) {
+    protected List<ConnectionPoint> generateConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
         return List.of(new ConnectionPointOutput(groupId, "output", formatPointLocation(player, location, outputLocation)));
     }
 
     @Override
-    public void onSlimefunTick(@NotNull Block block, SlimefunItem item, Config data) {
+    public void onSlimefunTick(@NotNull final Block block, final SlimefunItem item, final Config data) {
         super.onSlimefunTick(block, item, data);
 
         final Location location = block.getLocation();
@@ -78,7 +78,7 @@ public class EnergyConcentrator extends EnergyConnectedBlock {
     }
 
     @Override
-    public void connect(@NotNull ConnectionPointId from, @NotNull ConnectionPointId to) {
+    public void connect(@NotNull final ConnectionPointId from, @NotNull final ConnectionPointId to) {
         super.connect(from, to);
 
         final ConnectionPoint fromPoint = from.get();

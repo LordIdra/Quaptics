@@ -14,7 +14,7 @@ import org.metamechanists.quaptics.utils.id.ConnectionPointId;
 
 public class PointPanelListener implements Listener {
     @EventHandler
-    public void interactEvent(@NotNull PlayerInteractEntityEvent event) {
+    public void interactEvent(@NotNull final PlayerInteractEntityEvent event) {
         final Entity clickedEntity = event.getRightClicked();
         if (!(clickedEntity instanceof Interaction)) {
             return;

@@ -18,8 +18,8 @@ import org.metamechanists.quaptics.utils.id.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.id.ConnectionPointId;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class ConnectionGroup {
     @Getter
@@ -28,14 +28,14 @@ public class ConnectionGroup {
     @Getter
     private final Map<String, ConnectionPointId> points = new HashMap<>();
 
-    public ConnectionGroup(ConnectionGroupId id, @NotNull ConnectedBlock block, @NotNull List<ConnectionPoint> pointsIn) {
+    public ConnectionGroup(final ConnectionGroupId id, @NotNull final ConnectedBlock block, @NotNull final Iterable<ConnectionPoint> pointsIn) {
         this.id = id;
         this.blockId = block.getId();
         pointsIn.forEach(point -> points.put(point.getName(), point.getId()));
         saveData();
     }
 
-    public ConnectionGroup(ConnectionGroupId id) {
+    public ConnectionGroup(final ConnectionGroupId id) {
         final DataTraverser traverser = new DataTraverser(id);
         final JsonObject mainSection = traverser.getData();
         final JsonObject pointSection = mainSection.get("points").getAsJsonObject();
@@ -56,16 +56,16 @@ public class ConnectionGroup {
         traverser.save();
     }
 
-    public @Nullable ConnectionPoint getPoint(String name) {
+    public @Nullable ConnectionPoint getPoint(final String name) {
         return points.get(name).get();
     }
-    public @Nullable ConnectionPointOutput getOutput(String name) {
-        return getPoint(name) instanceof ConnectionPointOutput output
+    public @Nullable ConnectionPointOutput getOutput(final String name) {
+        return getPoint(name) instanceof final ConnectionPointOutput output
                 ? output
                 : null;
     }
-    public @Nullable ConnectionPointInput getInput(String name) {
-        return getPoint(name) instanceof ConnectionPointInput input
+    public @Nullable ConnectionPointInput getInput(final String name) {
+        return getPoint(name) instanceof final ConnectionPointInput input
                 ? input
                 : null;
     }
@@ -74,7 +74,7 @@ public class ConnectionGroup {
     }
     public @Nullable Location getLocation() {
         // The ConnectionGroupId shares the UUID of the main interaction entity
-        final Entity entity = Bukkit.getEntity(getId().getUUID());
+        final Entity entity = Bukkit.getEntity(id.getUUID());
         return entity != null
                 ? entity.getLocation()
                 : null;
@@ -85,27 +85,16 @@ public class ConnectionGroup {
     }
 
     public void updatePanels() {
-        points.values().forEach(pointId -> {
-            final ConnectionPoint point = pointId.get();
-            if (point != null) {
-                point.updatePanel();
-            }
-        });
+        points.values().stream()
+                .map(ConnectionPointId::get)
+                .filter(Objects::nonNull)
+                .forEach(ConnectionPoint::updatePanel);
     }
 
     public void remove() {
-        points.values().forEach(pointId -> {
-            final ConnectionPoint point = pointId.get();
-            if (point != null) {
-                point.remove();
-            }
-        });
-    }
-
-    public void changePointLocation(ConnectionPointId pointId, @Nullable Location newLocation) {
-        final ConnectionPoint point = pointId.get();
-        if (point != null && newLocation != null) {
-            point.changeLocation(newLocation);
-        }
+        points.values().stream()
+                .map(ConnectionPointId::get)
+                .filter(Objects::nonNull)
+                .forEach(ConnectionPoint::remove);
     }
 }

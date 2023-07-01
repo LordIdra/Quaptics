@@ -1,16 +1,19 @@
 package org.metamechanists.quaptics.connections;
 
+import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.utils.id.ConnectionGroupId;
 
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-public class BlockUpdateScheduler {
+public final class BlockUpdateScheduler {
     // DANGER - this class is responsible for ensuring no update loops occur, which could crash the server and then make restarting it appallingly difficult
 
     private static Queue<ConnectionGroupId> newGroupsToTick = new ConcurrentLinkedQueue<>();
 
-    private static void tickGroup(ConnectionGroupId groupId) {
+    private BlockUpdateScheduler() {}
+
+    private static void tickGroup(final @NotNull ConnectionGroupId groupId) {
         final ConnectionGroup group = groupId.get();
         if (group == null) {
             return;
@@ -19,7 +22,7 @@ public class BlockUpdateScheduler {
         group.getBlock().onInputLinkUpdated(group);
     }
 
-    public static void scheduleUpdate(ConnectionGroupId groupId) {
+    public static void scheduleUpdate(final ConnectionGroupId groupId) {
         newGroupsToTick.add(groupId);
     }
 

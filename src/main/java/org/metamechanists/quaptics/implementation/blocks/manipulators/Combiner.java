@@ -28,19 +28,19 @@ import java.util.stream.IntStream;
 
 public class Combiner extends ConnectedBlock {
     private static final int CONCRETE_BRIGHTNESS = 15;
-    private final double CONNECTION_ANGLE = Math.PI / 2;
+    private static final double CONNECTION_ANGLE = Math.PI / 2;
     private final Vector inputStartingLocation = new Vector(0.0F, 0.0F, -settings.getConnectionRadius());
     private final Vector outputLocation = new Vector(0.0F, 0.0F, settings.getConnectionRadius());
     private final Vector3f glassDisplaySize = new Vector3f(settings.getDisplayRadius()*2);
     private final Vector3f concreteDisplaySize = new Vector3f(settings.getDisplayRadius());
     private final Vector3f displayRotation = new Vector3f((float)(Math.PI/4), (float)(Math.PI/4), 0);
 
-    public Combiner(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, Settings settings) {
+    public Combiner(final ItemGroup group, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(group, item, recipeType, recipe, settings);
     }
 
     @Override
-    protected void addDisplays(@NotNull DisplayGroup displayGroup, @NotNull Location location, Player player) {
+    protected void addDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
         displayGroup.addDisplay("glass", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(Material.GRAY_STAINED_GLASS)
                 .setTransformation(Transformations.adjustedRotateAndScale(glassDisplaySize, displayRotation))
@@ -54,7 +54,7 @@ public class Combiner extends ConnectedBlock {
     }
 
     @Override
-    protected List<ConnectionPoint> generateConnectionPoints(ConnectionGroupId groupId, Player player, Location location) {
+    protected List<ConnectionPoint> generateConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
         final List<ConnectionPoint> points = new ArrayList<>();
 
         IntStream.range(0, settings.getConnections()).forEach(i -> {
@@ -69,8 +69,13 @@ public class Combiner extends ConnectedBlock {
     }
 
     @Override
-    public void onInputLinkUpdated(@NotNull ConnectionGroup group) {
-        final List<ConnectionPointInput> enabledInputs = getEnabledInputs(group.getLocation());
+    public void onInputLinkUpdated(@NotNull final ConnectionGroup group) {
+        final Location location = group.getLocation();
+        if (location == null) {
+            return;
+        }
+
+        final List<ConnectionPointInput> enabledInputs = getEnabledInputs(location);
         final ConnectionPointOutput output = (ConnectionPointOutput) group.getPoint("output");
 
         if (output == null) {

@@ -39,14 +39,14 @@ public class Repeater extends ConnectedBlock {
     private final Vector outputPointLocation = new Vector(0.0F, 0.0F, settings.getConnectionRadius());
     private final int delayVisual;
 
-    public Repeater(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe,
-                    Settings settings, int delayVisual) {
+    public Repeater(final ItemGroup group, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe,
+                    final Settings settings, final int delayVisual) {
         super(group, item, recipeType, recipe, settings);
         this.delayVisual = delayVisual;
     }
 
-    private void setRepeaterPowered(Location location, boolean powered) {
-        if (!(getDisplay(location, "repeater") instanceof BlockDisplay display)) {
+    private void setRepeaterPowered(final Location location, final boolean powered) {
+        if (!(getDisplay(location, "repeater") instanceof final BlockDisplay display)) {
             return;
         }
 
@@ -57,7 +57,7 @@ public class Repeater extends ConnectedBlock {
     }
 
     @Override
-    protected void addDisplays(@NotNull DisplayGroup displayGroup, @NotNull Location location, @NotNull Player player) {
+    protected void addDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, @NotNull final Player player) {
         final BlockFace face = Transformations.yawToFace(player.getEyeLocation().getYaw());
         displayGroup.addDisplay("main", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(Material.RED_STAINED_GLASS)
@@ -81,16 +81,21 @@ public class Repeater extends ConnectedBlock {
     }
 
     @Override
-    protected List<ConnectionPoint> generateConnectionPoints(ConnectionGroupId groupId, Player player, Location location) {
+    protected List<ConnectionPoint> generateConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
         return List.of(
                 new ConnectionPointInput(groupId, "input", formatPointLocation(player, location, inputPointLocation)),
                 new ConnectionPointOutput(groupId, "output", formatPointLocation(player, location, outputPointLocation)));
     }
 
     @Override
-    public void onInputLinkUpdated(@NotNull ConnectionGroup group) {
+    public void onInputLinkUpdated(@NotNull final ConnectionGroup group) {
         final ConnectionPointInput input = group.getInput("input");
         final ConnectionPointOutput output = group.getOutput("output");
+
+        final Location location = group.getLocation();
+        if (location == null) {
+            return;
+        }
 
         if (input == null || output == null) {
             return;
@@ -100,8 +105,8 @@ public class Repeater extends ConnectedBlock {
             return;
         }
 
-        doDisplayBrightnessCheck(group.getLocation(), "concrete", false);
-        setRepeaterPowered(group.getLocation(), input.isLinkEnabled() && input.getLink().getFrequency() < settings.getMaxFrequency());
+        doDisplayBrightnessCheck(location, "concrete", false);
+        setRepeaterPowered(location, input.isLinkEnabled() && input.getLink().getFrequency() < settings.getMaxFrequency());
 
         if (!output.hasLink()) {
             return;

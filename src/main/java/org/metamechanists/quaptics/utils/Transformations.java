@@ -30,11 +30,8 @@ public class Transformations {
     private static Vector3f calculateHitboxAdjustmentTranslation(Matrix4f matrix) {
         // When we rotate a block, the hitbox in X, Y, and Z changes
         // We need to account for this change to center the block
-        final List<Vector3f> transformedVertices = new ArrayList<>();
-
-        for (Vector3f vertex : BLOCK_VERTICES) {
-            transformedVertices.add(new Vector3f(vertex).mulDirection(matrix));
-        }
+        final List<Vector3f> transformedVertices = BLOCK_VERTICES.stream()
+                .map(vertex -> new Vector3f(vertex).mulDirection(matrix)).toList();
 
         final Vector3f min = new Vector3f();
         final Vector3f max = new Vector3f();

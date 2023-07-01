@@ -5,8 +5,6 @@ import com.google.gson.JsonPrimitive;
 import lombok.Getter;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.metamechanists.metalib.sefilib.entity.display.DisplayGroup;
 import org.metamechanists.quaptics.beams.DirectBeam;
@@ -26,7 +24,7 @@ public class Link {
     private final ConnectionPointId outputId;
     private final ConnectionPointId inputId;
     private final double maxPower;
-    private TickerId tickerId;
+    private @Nullable TickerId tickerId;
     @Getter
     private boolean enabled;
     @Getter
@@ -36,20 +34,20 @@ public class Link {
     @Getter
     private int phase;
 
-    public Link(ConnectionPointId inputId, ConnectionPointId outputId) {
+    public Link(final ConnectionPointId inputId, final ConnectionPointId outputId) {
         this.inputId = inputId;
         this.outputId = outputId;
         this.linkId = new LinkId(new DisplayGroup(getInput().getLocation(), 0, 0).getParentUUID());
         this.maxPower = getOutput().getGroup().getBlock().getSettings().getTier().maxPower;
         saveData(); // the points being linked will not be able to get the link from the id without this line
-        getInput().link(getLinkId());
-        getOutput().link(getLinkId());
+        getInput().link(linkId);
+        getOutput().link(linkId);
         updateGroupIfNotNull(getInput());
         updateGroupIfNotNull(getOutput());
         update();
     }
 
-    public Link(LinkId linkId) {
+    public Link(final LinkId linkId) {
         final DataTraverser traverser = new DataTraverser(linkId);
         final JsonObject mainSection = traverser.getData();
         this.linkId = linkId;
@@ -65,8 +63,8 @@ public class Link {
         this.maxPower = mainSection.get("maxPower").getAsDouble();
     }
 
-    public void saveData() {
-        final DataTraverser traverser = new DataTraverser(getLinkId());
+    private void saveData() {
+        final DataTraverser traverser = new DataTraverser(linkId);
         final JsonObject mainSection = traverser.getData();
         mainSection.add("outputId", new JsonPrimitive(outputId.toString()));
         mainSection.add("inputId", new JsonPrimitive(inputId.toString()));
@@ -80,13 +78,13 @@ public class Link {
     }
 
     public @Nullable ConnectionPointOutput getOutput() {
-        return outputId.get() instanceof ConnectionPointOutput output
+        return outputId.get() instanceof final ConnectionPointOutput output
                 ? output
                 : null;
     }
 
     public @Nullable ConnectionPointInput getInput() {
-        return inputId.get() instanceof ConnectionPointInput input
+        return inputId.get() instanceof final ConnectionPointInput input
                 ? input
                 : null;
     }
@@ -95,9 +93,8 @@ public class Link {
         return tickerId != null;
     }
 
-    @Contract(" -> new")
-    private @NotNull DirectBeam getBeam() {
-        return new DirectBeam(tickerId);
+    private @Nullable DirectBeam getBeam() {
+        return tickerId != null ? new DirectBeam(tickerId) : null;
     }
 
     public void remove() {
@@ -162,7 +159,7 @@ public class Link {
         }
     }
 
-    public void setEnabled(boolean enabled) {
+    public void setEnabled(final boolean enabled) {
         if (enabled == this.enabled) {
             return;
         }
@@ -179,14 +176,14 @@ public class Link {
         updateGroupIfNotNull(getInput());
     }
 
-    public void updateGroupIfNotNull(ConnectionPoint point) {
+    private static void updateGroupIfNotNull(final @Nullable ConnectionPoint point) {
         final ConnectionGroup group = point != null ? point.getGroup() : null;
         if (group != null) {
             BlockUpdateScheduler.scheduleUpdate(group.getId());
         }
     }
 
-    public void setPower(double power) {
+    private void setPower(final double power) {
         // TODO how can we limit the size of power changes?
         if (this.power == power) {
             return;
@@ -198,7 +195,7 @@ public class Link {
         updateGroupIfNotNull(getInput());
     }
 
-    public void setFrequency(double frequency) {
+    private void setFrequency(final double frequency) {
         // TODO how can we limit the size of frequency changes?
         if (this.frequency == frequency) {
             return;
@@ -210,7 +207,7 @@ public class Link {
         updateGroupIfNotNull(getInput());
     }
 
-    public void setPhase(int phase) {
+    private void setPhase(final int phase) {
         // TODO how can we limit the size of phase changes?
         if (this.phase == phase) {
             return;
@@ -222,7 +219,7 @@ public class Link {
         updateGroupIfNotNull(getInput());
     }
 
-    public void setAttributes(double power, double frequency, int phase, boolean enabled) {
+    public void setAttributes(final double power, final double frequency, final int phase, final boolean enabled) {
         setPower(power);
         setFrequency(frequency);
         setPhase(phase);

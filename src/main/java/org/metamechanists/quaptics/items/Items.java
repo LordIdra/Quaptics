@@ -2,6 +2,7 @@ package org.metamechanists.quaptics.items;
 
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import lombok.Getter;
+import lombok.experimental.UtilityClass;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
 import org.metamechanists.quaptics.items.groups.Advanced;
 import org.metamechanists.quaptics.items.groups.Basic;
@@ -13,11 +14,13 @@ import org.metamechanists.quaptics.items.groups.Tools;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+@SuppressWarnings("WeakerAccess")
+@UtilityClass
 public class Items {
     @Getter
-    private static final Map<String, ConnectedBlock> blocks = new LinkedHashMap<>();
+    private final Map<String, ConnectedBlock> blocks = new LinkedHashMap<>();
 
-    public static void initialize() {
+    public void initialize() {
         Guide.initialize();
         Tools.initialize();
         Primitive.initialize();

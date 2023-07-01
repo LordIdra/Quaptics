@@ -39,14 +39,14 @@ public class Scatterer extends ConnectedBlock {
     private final Vector outputPointLocation = new Vector(0.0F, 0.0F, settings.getConnectionRadius());
     private final String modeVisual;
 
-    public Scatterer(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe,
-                     Settings settings, String modeVisual) {
+    public Scatterer(final ItemGroup group, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe,
+                     final Settings settings, final String modeVisual) {
         super(group, item, recipeType, recipe, settings);
         this.modeVisual = modeVisual;
     }
 
-    private void setComparatorPowered(Location location, boolean powered) {
-        if (!(getDisplay(location, "comparator") instanceof BlockDisplay display)) {
+    private void setComparatorPowered(final Location location, final boolean powered) {
+        if (!(getDisplay(location, "comparator") instanceof final BlockDisplay display)) {
             return;
         }
 
@@ -57,7 +57,7 @@ public class Scatterer extends ConnectedBlock {
     }
 
     @Override
-    protected void addDisplays(@NotNull DisplayGroup displayGroup, @NotNull Location location, @NotNull Player player) {
+    protected void addDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, @NotNull final Player player) {
         final BlockFace face = Transformations.yawToFace(player.getEyeLocation().getYaw());
         displayGroup.addDisplay("main", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(Material.ORANGE_STAINED_GLASS)
@@ -80,14 +80,14 @@ public class Scatterer extends ConnectedBlock {
     }
 
     @Override
-    protected List<ConnectionPoint> generateConnectionPoints(ConnectionGroupId groupId, Player player, Location location) {
+    protected List<ConnectionPoint> generateConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
         return List.of(
                 new ConnectionPointInput(groupId, "input", formatPointLocation(player, location, inputPointLocation)),
                 new ConnectionPointOutput(groupId, "output", formatPointLocation(player, location, outputPointLocation)));
     }
 
     @Override
-    public void onInputLinkUpdated(@NotNull ConnectionGroup group) {
+    public void onInputLinkUpdated(@NotNull final ConnectionGroup group) {
         final ConnectionPointInput input = group.getInput("input");
         final ConnectionPointOutput output = group.getOutput("output");
 
@@ -99,8 +99,13 @@ public class Scatterer extends ConnectedBlock {
             return;
         }
 
-        doDisplayBrightnessCheck(group.getLocation(), "concrete", false);
-        setComparatorPowered(group.getLocation(), input.isLinkEnabled() && settings.checkFrequency(input.getLink().getFrequency()));
+        final Location location = group.getLocation();
+        if (location == null) {
+            return;
+        }
+
+        doDisplayBrightnessCheck(location, "concrete", false);
+        setComparatorPowered(location, input.isLinkEnabled() && settings.checkFrequency(input.getLink().getFrequency()));
 
         if (!output.hasLink()) {
             return;

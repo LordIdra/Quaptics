@@ -18,18 +18,18 @@ public class CapacitorPanel {
     private final ConnectionGroupId groupId;
     protected final Panel panel;
 
-    public CapacitorPanel(@NotNull Location location, ConnectionGroupId groupId) {
+    public CapacitorPanel(@NotNull final Location location, final ConnectionGroupId groupId) {
         this.groupId = groupId;
         this.panel = new PanelBuilder(location.clone().toCenterLocation().add(BLOCK_OFFSET), SIZE)
                 .addAttribute("chargeText")
                 .addAttribute("chargeBar")
                 .build();
-        this.panel.setAttributeHidden("chargeText", false);
-        this.panel.setAttributeHidden("chargeBar", false);
-        this.panel.setHidden(false);
+        panel.setAttributeHidden("chargeText", false);
+        panel.setAttributeHidden("chargeBar", false);
+        panel.setHidden(false);
     }
 
-    public CapacitorPanel(@NotNull PanelId panelId, ConnectionGroupId groupId) {
+    public CapacitorPanel(@NotNull final PanelId panelId, final ConnectionGroupId groupId) {
         this.groupId = groupId;
         this.panel = panelId.get();
     }
@@ -42,7 +42,7 @@ public class CapacitorPanel {
         return groupId.get();
     }
 
-    public void setPanelHidden(boolean hidden) {
+    public void setPanelHidden(final boolean hidden) {
         panel.setHidden(hidden);
     }
 
@@ -65,11 +65,11 @@ public class CapacitorPanel {
         final double charge = Capacitor.getCharge(location);
 
         if (charge == 0) {
-            setPanelHidden(true);
+            setPanelHidden(false);
             return;
         }
 
-        setPanelHidden(false);
+        setPanelHidden(true);
 
         panel.setText("chargeText", Lore.chargeBarRaw((int)charge, (int)capacity));
         panel.setText("chargeBar", Lore.chargeValuesRaw((int)charge, (int)capacity));

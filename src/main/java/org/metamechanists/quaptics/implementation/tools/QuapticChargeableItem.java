@@ -65,7 +65,7 @@ public abstract class QuapticChargeableItem extends SlimefunItem {
             return;
         }
 
-        final Settings itemSettings = item.getSettings();
+        final Settings itemSettings = item.settings;
         final Link link = input.getLink();
         if (!meetsRequirements(itemSettings, link)) {
             return;
@@ -103,7 +103,7 @@ public abstract class QuapticChargeableItem extends SlimefunItem {
         }
 
         final double currentCharge = PersistentDataAPI.getDouble(itemMeta, Keys.CHARGE, 0.0);
-        final Settings itemSettings = chargeableItem.getSettings();
+        final Settings itemSettings = chargeableItem.settings;
         final List<String> lore = itemMeta.getLore() == null ? new ArrayList<>() : itemMeta.getLore();
         final int chargeBar = getFirstLineMatching(lore, line -> line.contains("¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦"));
         final int chargeValues = getFirstLineMatching(lore, line -> line.contains("⇨ ◆ ") && line.contains(" / ") && line.contains("QEU"));

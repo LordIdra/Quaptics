@@ -5,18 +5,18 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 
+import java.util.Collection;
 import java.util.HashSet;
-import java.util.Set;
 
 public class BurnoutManager implements Listener {
-    private static final Set<BurnoutRunnable> burnouts = new HashSet<>();
+    private static final Collection<BurnoutRunnable> burnouts = new HashSet<>();
 
-    public static void addBurnout(BurnoutRunnable runnable) {
+    public static void addBurnout(final BurnoutRunnable runnable) {
         burnouts.add(runnable);
         runnable.run();
     }
 
-    public static void removeBurnout(BurnoutRunnable runnable) {
+    public static void removeBurnout(final BurnoutRunnable runnable) {
         burnouts.remove(runnable);
     }
 
@@ -25,8 +25,8 @@ public class BurnoutManager implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onBlockBreak(BlockBreakEvent event) {
-        for (BurnoutRunnable runnable : burnouts) {
+    public void onBlockBreak(final BlockBreakEvent event) {
+        for (final BurnoutRunnable runnable : burnouts) {
             if (event.getBlock().equals(runnable.getLocation().getBlock())) {
                 event.setCancelled(true);
                 runnable.stopEarly();

@@ -1,5 +1,6 @@
 package org.metamechanists.quaptics.items;
 
+import lombok.experimental.UtilityClass;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.QuapticTicker;
 import org.metamechanists.quaptics.implementation.base.Settings;
@@ -10,6 +11,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+@SuppressWarnings("WeakerAccess")
+@UtilityClass
 public class Lore {
     private static final double ROUND_TO_INT_THRESHOLD = 0.0001;
     private static final String ATTRIBUTE_SYMBOL = "&8⇨ ";
@@ -41,8 +44,8 @@ public class Lore {
         final List<String> lore = new ArrayList<>();
 
         Collections.addAll(lore, description);
-        lore.add(chargeBar(filled, (int) settings.getCapacity()));
-        lore.add(chargeValues(filled, (int) settings.getCapacity()));
+        lore.add(chargeBar(charge, (int) settings.getCapacity()));
+        lore.add(chargeValues(charge, (int) settings.getCapacity()));
         lore.add(chargeUsage((int) settings.getEmissionPower()));
 
         if (settings.getMinFrequency() != 0 || settings.getMaxFrequency() != 0) {

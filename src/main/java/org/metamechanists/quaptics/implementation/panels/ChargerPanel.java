@@ -12,18 +12,18 @@ import org.metamechanists.quaptics.utils.id.PanelId;
 
 public class ChargerPanel extends CapacitorPanel {
 
-    public ChargerPanel(@NotNull Location location, ConnectionGroupId groupId) {
+    public ChargerPanel(@NotNull final Location location, final ConnectionGroupId groupId) {
         super(location, groupId);
     }
 
-    public ChargerPanel(@NotNull PanelId panelID, ConnectionGroupId groupId) {
-        super(panelID, groupId);
+    public ChargerPanel(@NotNull final PanelId panelId, final ConnectionGroupId groupId) {
+        super(panelId, groupId);
     }
 
     @Override
     public void update() {
         final ConnectionGroup group = getGroup();
-        if (group == null || !(group.getBlock() instanceof Charger charger)) {
+        if ((group == null) || !(group.getBlock() instanceof Charger)) {
             // How the hell did we get here?
             return;
         }
@@ -42,12 +42,12 @@ public class ChargerPanel extends CapacitorPanel {
         final double capacity = item.getSettings().getCapacity();
         final double charge = QuapticChargeableItem.getCharge(stack);
 
-        if (charge == 0 || capacity == 0) {
-            setPanelHidden(true);
+        if ((charge == 0.0) || (capacity == 0.0)) {
+            setPanelHidden(false);
             return;
         }
 
-        setPanelHidden(false);
+        setPanelHidden(true);
 
         panel.setText("chargeText", Lore.chargeBarRaw((int)charge, (int)capacity));
         panel.setText("chargeBar", Lore.chargeValuesRaw((int)charge, (int)capacity));

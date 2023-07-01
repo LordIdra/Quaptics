@@ -17,12 +17,12 @@ import org.metamechanists.quaptics.implementation.base.Settings;
 public class DirectTurret extends Turret {
     private static final float BEAM_RADIUS = 0.095F;
 
-    public DirectTurret(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, Settings settings) {
+    public DirectTurret(final ItemGroup group, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(group, item, recipeType, recipe, settings);
     }
 
     @Override
-    protected void shoot(Location location) {
+    protected void shoot(final Location location) {
         final LivingEntity target = getTarget(location);
 
         if (target == null || target.isDead() || location.toCenterLocation().distance(target.getLocation()) > settings.getRange()) {

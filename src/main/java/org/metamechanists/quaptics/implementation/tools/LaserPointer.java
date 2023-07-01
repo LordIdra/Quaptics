@@ -7,7 +7,7 @@ import org.bukkit.inventory.ItemStack;
 import org.metamechanists.quaptics.implementation.base.Settings;
 
 public class LaserPointer extends QuapticChargeableItem {
-    public LaserPointer(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, Settings settings) {
+    public LaserPointer(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
     }
 }

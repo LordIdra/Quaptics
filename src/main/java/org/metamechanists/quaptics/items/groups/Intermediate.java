@@ -3,6 +3,7 @@ package org.metamechanists.quaptics.items.groups;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import lombok.experimental.UtilityClass;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.metamechanists.quaptics.Quaptics;
@@ -15,48 +16,50 @@ import org.metamechanists.quaptics.items.Groups;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
 
+@SuppressWarnings({"MagicNumber", "ZeroLengthArrayAllocation", "WeakerAccess"})
+@UtilityClass
 public class Intermediate {
-    public static final Settings ENERGY_CONCENTRATOR_2_SETTINGS = Settings.builder()
+    public final Settings ENERGY_CONCENTRATOR_2_SETTINGS = Settings.builder()
             .tier(Tier.INTERMEDIATE)
             .displayRadius(0.175F)
             .connectionRadius(0.35F)
             .emissionPower(100)
             .build();
-    public static final Settings LENS_3_SETTINGS = Settings.builder()
+    public final Settings LENS_3_SETTINGS = Settings.builder()
             .tier(Tier.INTERMEDIATE)
             .displayRadius(0.18F)
             .connectionRadius(0.36F)
             .powerLoss(0.04)
             .build();
-    public static final Settings COMBINER_3_2_SETTINGS = Settings.builder()
+    public final Settings COMBINER_3_2_SETTINGS = Settings.builder()
             .tier(Tier.INTERMEDIATE)
             .displayRadius(0.3F)
             .connectionRadius(0.6F)
             .powerLoss(0.08)
             .connections(2)
             .build();
-    public static final Settings COMBINER_3_3_SETTINGS = Settings.builder()
+    public final Settings COMBINER_3_3_SETTINGS = Settings.builder()
             .tier(Tier.INTERMEDIATE)
             .displayRadius(0.35F)
             .connectionRadius(0.7F)
             .powerLoss(0.08)
             .connections(3)
             .build();
-    public static final Settings SPLITTER_3_2_SETTINGS = Settings.builder()
+    public final Settings SPLITTER_3_2_SETTINGS = Settings.builder()
             .tier(Tier.INTERMEDIATE)
             .displayRadius(0.3F)
             .connectionRadius(0.6F)
             .powerLoss(0.08)
             .connections(2)
             .build();
-    public static final Settings SPLITTER_3_3_SETTINGS = Settings.builder()
+    public final Settings SPLITTER_3_3_SETTINGS = Settings.builder()
             .tier(Tier.INTERMEDIATE)
             .displayRadius(0.35F)
             .connectionRadius(0.7F)
             .powerLoss(0.08)
             .connections(3)
             .build();
-    public static final SlimefunItemStack ENERGY_CONCENTRATOR_2 = new SlimefunItemStack(
+    public final SlimefunItemStack ENERGY_CONCENTRATOR_2 = new SlimefunItemStack(
             "QP_ENERGY_CONCENTRATOR_2",
             Tier.INTERMEDIATE.concreteMaterial,
             "&eEnergy Concentrator &bII",
@@ -64,42 +67,42 @@ public class Intermediate {
                     "&7● Consumes energy",
                     "&7● Concentrates energy into a quaptic ray"));
 
-    public static final SlimefunItemStack LENS_3 = new SlimefunItemStack(
+    public final SlimefunItemStack LENS_3 = new SlimefunItemStack(
             "QP_LENS_3",
             Material.GLASS,
             "&9Lens &bIII",
             Lore.create(LENS_3_SETTINGS,
                     "&7● Redirects a quaptic ray"));
 
-    public static final SlimefunItemStack COMBINER_3_2 = new SlimefunItemStack(
+    public final SlimefunItemStack COMBINER_3_2 = new SlimefunItemStack(
             "QP_COMBINER_3_2",
             Material.GRAY_STAINED_GLASS,
             "&9Combiner &eIII &8(2 connections)",
             Lore.create(COMBINER_3_2_SETTINGS,
                     "&7● Combines multiple quaptic rays into one"));
 
-    public static final SlimefunItemStack COMBINER_3_3 = new SlimefunItemStack(
+    public final SlimefunItemStack COMBINER_3_3 = new SlimefunItemStack(
             "QP_COMBINER_3_3",
             Material.GRAY_STAINED_GLASS,
             "&9Combiner &eIII &8(3 connections)",
             Lore.create(COMBINER_3_3_SETTINGS,
                     "&7● Combines multiple quaptic rays into one"));
 
-    public static final SlimefunItemStack SPLITTER_3_2 = new SlimefunItemStack(
+    public final SlimefunItemStack SPLITTER_3_2 = new SlimefunItemStack(
             "QP_SPLITTER_3_2",
             Material.LIGHT_GRAY_STAINED_GLASS,
             "&9Splitter &eIII &8(2 connections)",
             Lore.create(SPLITTER_3_2_SETTINGS,
                     "&7● Splits one quaptic ray into multiple"));
 
-    public static final SlimefunItemStack SPLITTER_3_3 = new SlimefunItemStack(
+    public final SlimefunItemStack SPLITTER_3_3 = new SlimefunItemStack(
             "QP_SPLITTER_3_3",
             Material.LIGHT_GRAY_STAINED_GLASS,
             "&9Splitter &eIII &8(3 connections)",
             Lore.create(SPLITTER_3_3_SETTINGS,
                     "&7● Splits one quaptic ray into multiple"));
 
-    public static void initialize() {
+    public void initialize() {
         final SlimefunAddon addon = Quaptics.getInstance();
 
         new EnergyConcentrator(

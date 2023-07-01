@@ -3,6 +3,7 @@ package org.metamechanists.quaptics.items.groups;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import lombok.experimental.UtilityClass;
 import org.bukkit.Material;
 import org.bukkit.entity.SpawnCategory;
 import org.bukkit.inventory.ItemStack;
@@ -21,22 +22,24 @@ import org.metamechanists.quaptics.items.Tier;
 
 import java.util.Set;
 
+@SuppressWarnings({"MagicNumber", "ZeroLengthArrayAllocation", "WeakerAccess"})
+@UtilityClass
 public class Primitive {
-    public static final Settings SOLAR_CONCENTRATOR_1_SETTINGS = Settings.builder()
+    public final Settings SOLAR_CONCENTRATOR_1_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
             .displayRadius(0.45F)
             .connectionRadius(0.45F)
             .emissionPower(1)
             .build();
 
-    public static final Settings LENS_1_SETTINGS = Settings.builder()
+    public final Settings LENS_1_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
             .displayRadius(0.24F)
             .connectionRadius(0.48F)
             .powerLoss(0.1)
             .build();
 
-    public static final Settings COMBINER_1_2_SETTINGS = Settings.builder()
+    public final Settings COMBINER_1_2_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
             .displayRadius(0.4F)
             .connectionRadius(0.8F)
@@ -44,7 +47,7 @@ public class Primitive {
             .connections(2)
             .build();
 
-    public static final Settings SPLITTER_1_2_SETTINGS = Settings.builder()
+    public final Settings SPLITTER_1_2_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
             .displayRadius(0.4F)
             .connectionRadius(0.8F)
@@ -52,13 +55,13 @@ public class Primitive {
             .connections(2)
             .build();
 
-    public static final Settings CHARGER_1_SETTINGS = Settings.builder()
+    public final Settings CHARGER_1_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
             .displayRadius(0.4F)
             .connectionRadius(0.6F)
             .build();
 
-    public static final Settings CAPACITOR_1_SETTINGS = Settings.builder()
+    public final Settings CAPACITOR_1_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
             .displayRadius(0.3F)
             .connectionRadius(0.6F)
@@ -66,7 +69,7 @@ public class Primitive {
             .emissionPower(3)
             .build();
 
-    public static final Settings TURRET_1_HOSTILE_SETTINGS = Settings.builder()
+    public final Settings TURRET_1_HOSTILE_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
             .displayRadius(0.55F)
             .connectionRadius(0.55F)
@@ -79,7 +82,7 @@ public class Primitive {
             .mainMaterial(Material.POLISHED_ANDESITE)
             .build();
 
-    public static final Settings TURRET_1_PASSIVE_SETTINGS = Settings.builder()
+    public final Settings TURRET_1_PASSIVE_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
             .displayRadius(0.55F)
             .connectionRadius(0.55F)
@@ -93,7 +96,7 @@ public class Primitive {
             .mainMaterial(Material.POLISHED_ANDESITE)
             .build();
 
-    public static final SlimefunItemStack SOLAR_CONCENTRATOR_1 = new SlimefunItemStack(
+    public final SlimefunItemStack SOLAR_CONCENTRATOR_1 = new SlimefunItemStack(
             "QP_SOLAR_CONCENTRATOR_1",
             Material.GLASS_PANE,
             "&eSolar Concentrator &bI",
@@ -101,28 +104,28 @@ public class Primitive {
                     "&7● Only works during the day",
                     "&7● Concentrates sunlight into a quaptic ray"));
 
-    public static final SlimefunItemStack LENS_1 = new SlimefunItemStack(
+    public final SlimefunItemStack LENS_1 = new SlimefunItemStack(
             "QP_LENS_1",
             Material.GLASS,
             "&9Lens &bI",
             Lore.create(LENS_1_SETTINGS,
                     "&7● Redirects a quaptic ray"));
 
-    public static final SlimefunItemStack COMBINER_1_2 = new SlimefunItemStack(
+    public final SlimefunItemStack COMBINER_1_2 = new SlimefunItemStack(
             "QP_COMBINER_1_2",
             Material.GRAY_STAINED_GLASS,
             "&9Combiner &eI &8(2 connections)",
             Lore.create(COMBINER_1_2_SETTINGS,
                     "&7● Combines multiple quaptic rays into one"));
 
-    public static final SlimefunItemStack SPLITTER_1_2 = new SlimefunItemStack(
+    public final SlimefunItemStack SPLITTER_1_2 = new SlimefunItemStack(
             "QP_SPLITTER_1_2",
             Material.LIGHT_GRAY_STAINED_GLASS,
             "&9Splitter &eI &8(2 connections)",
             Lore.create(SPLITTER_1_2_SETTINGS,
                     "&7● Splits one quaptic ray into multiple"));
 
-    public static final SlimefunItemStack CHARGER_1 = new SlimefunItemStack(
+    public final SlimefunItemStack CHARGER_1 = new SlimefunItemStack(
             "QP_CHARGER_1",
             Material.LIGHT_BLUE_STAINED_GLASS,
             "&bCharger &3I",
@@ -131,7 +134,7 @@ public class Primitive {
                     "&7● &eRight Click &7an item to place",
                     "&7● &eRight Click &7again to retrieve"));
 
-    public static final SlimefunItemStack CAPACITOR_1 = new SlimefunItemStack(
+    public final SlimefunItemStack CAPACITOR_1 = new SlimefunItemStack(
             "QP_CAPACITOR_1",
             Material.LIGHT_BLUE_CONCRETE,
             "&3Capacitor &bI",
@@ -139,7 +142,7 @@ public class Primitive {
                     "&7● Stores charge",
                     "&7● Outputs at a constant power"));
 
-    public static final SlimefunItemStack TURRET_1_HOSTILE = new SlimefunItemStack(
+    public final SlimefunItemStack TURRET_1_HOSTILE = new SlimefunItemStack(
             "QP_TURRET_1_HOSTILE",
             Material.SMOOTH_STONE_SLAB,
             "&6Turret &eI &8(targets hostiles)",
@@ -147,7 +150,7 @@ public class Primitive {
                     "&7● Modulated projectiles",
                     "&7● Shoots at nearby entities"));
 
-    public static final SlimefunItemStack TURRET_1_PASSIVE = new SlimefunItemStack(
+    public final SlimefunItemStack TURRET_1_PASSIVE = new SlimefunItemStack(
             "QP_TURRET_1_PASSIVE",
             Material.SMOOTH_STONE_SLAB,
             "&6Turret &eII &8(targets passives)",
@@ -155,7 +158,7 @@ public class Primitive {
                     "&7● Modulated projectiles",
                     "&7● Shoots at nearby entities"));
 
-    public static void initialize() {
+    public void initialize() {
         final SlimefunAddon addon = Quaptics.getInstance();
 
         new SolarConcentrator(

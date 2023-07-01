@@ -40,7 +40,7 @@ public class Panel {
                 (key, value) -> attributes.put(key, new PanelAttributeId(value.getAsString())));
     }
 
-    public void saveData() {
+    private void saveData() {
         final DataTraverser traverser = new DataTraverser(displayGroupId);
         final JsonObject mainSection = traverser.getData();
         final JsonObject attributeSection = new JsonObject();
@@ -60,20 +60,21 @@ public class Panel {
     }
 
     @Contract("_ -> new")
-    private PanelAttribute getAttribute(String name) {
+    private @Nullable PanelAttribute getAttribute(final String name) {
+
         return attributes.get(name).get();
     }
 
-    public void setAttributeHidden(String name, boolean attributeHidden) {
+    public void setAttributeHidden(final String name, final boolean attributeHidden) {
         getAttribute(name).setHidden(attributeHidden);
         getAttribute(name).updateVisibility(hidden);
     }
 
-    public void setText(String name, String text) {
+    public void setText(final String name, final String text) {
         getAttribute(name).setText(text);
     }
 
-    public void setHidden(boolean hidden) {
+    public void setHidden(final boolean hidden) {
         if (this.hidden != hidden) {
             this.hidden = hidden;
             updateAttributeVisibility();
@@ -101,6 +102,9 @@ public class Panel {
 
     public void remove() {
         removeAttributes();
-        getDisplayGroup().remove();
+        final DisplayGroup displayGroup = getDisplayGroup();
+        if (displayGroup != null) {
+            displayGroup.remove();
+        }
     }
 }

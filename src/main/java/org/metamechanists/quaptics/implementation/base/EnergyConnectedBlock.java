@@ -24,8 +24,8 @@ public abstract class EnergyConnectedBlock extends ConnectedBlock implements Ene
     @Getter
     private final int consumption;
 
-    protected EnergyConnectedBlock(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe,
-                                Settings settings, int capacity, int consumption) {
+    protected EnergyConnectedBlock(final ItemGroup group, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe,
+                                   final Settings settings, final int capacity, final int consumption) {
         super(group, item, recipeType, recipe, settings);
         this.capacity = capacity;
         this.consumption = consumption;
@@ -37,21 +37,18 @@ public abstract class EnergyConnectedBlock extends ConnectedBlock implements Ene
         return COMPONENT_TYPE;
     }
 
-    protected void setPowered(Location location, boolean powered) {
+    private static void setPowered(final Location location, final boolean powered) {
         BlockStorage.addBlockInfo(location, Keys.BS_POWERED, powered ? "true" : "false");
     }
 
-    protected boolean isPowered(Location location) {
+    protected static boolean isPowered(final Location location) {
         final String powered = BlockStorage.getLocationInfo(location, Keys.BS_POWERED);
-        if (powered == null) {
-            return false;
-        }
-        return powered.equals("true");
+        return "true".equals(powered);
     }
 
     @Override
     @OverridingMethodsMustInvokeSuper
-    public void onSlimefunTick(@NotNull Block block, SlimefunItem item, Config data) {
+    public void onSlimefunTick(@NotNull final Block block, final SlimefunItem item, final Config data) {
         if (getCharge(block.getLocation(), data) >= consumption) {
             removeCharge(block.getLocation(), consumption);
             setPowered(block.getLocation(), true);

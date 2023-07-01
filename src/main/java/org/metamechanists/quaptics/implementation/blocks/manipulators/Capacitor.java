@@ -44,12 +44,12 @@ public class Capacitor extends ConnectedBlock {
     private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -settings.getConnectionRadius());
     private final Vector outputPointLocation = new Vector(0.0F, 0.0F, settings.getConnectionRadius());
 
-    public Capacitor(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, Settings settings) {
+    public Capacitor(final ItemGroup group, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(group, item, recipeType, recipe, settings);
     }
 
     @Override
-    protected void addDisplays(@NotNull DisplayGroup displayGroup, @NotNull Location location, Player player) {
+    protected void addDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
         displayGroup.addDisplay("mainGlass", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(Material.GLASS)
                 .setTransformation(Transformations.adjustedRotateAndScale(mainGlassDisplaySize, displayRotation))
@@ -66,42 +66,42 @@ public class Capacitor extends ConnectedBlock {
     }
 
     @Override
-    protected List<ConnectionPoint> generateConnectionPoints(ConnectionGroupId groupId, Player player, Location location) {
+    protected List<ConnectionPoint> generateConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
         return List.of(
                 new ConnectionPointInput(groupId, "input", formatPointLocation(player, location, inputPointLocation)),
                 new ConnectionPointOutput(groupId, "output", formatPointLocation(player, location, outputPointLocation)));
     }
 
-    public static double getCharge(Location location) {
+    public static double getCharge(final Location location) {
         final String chargeString = BlockStorage.getLocationInfo(location, Keys.BS_CHARGE);
         return chargeString == null ? 0 : Double.parseDouble(chargeString);
     }
 
-    private void setCharge(Location location, double charge) {
+    private static void setCharge(final Location location, final double charge) {
         BlockStorage.addBlockInfo(location, Keys.BS_CHARGE, Objects.toString(charge));
     }
 
-    private double getChargeRate(Location location) {
+    private static double getChargeRate(final Location location) {
         final String chargeRateString = BlockStorage.getLocationInfo(location, Keys.BS_CHARGE_RATE);
         return chargeRateString == null ? 0 : Double.parseDouble(chargeRateString);
     }
 
-    private void setChargeRate(Location location, double chargeRate) {
+    private static void setChargeRate(final Location location, final double chargeRate) {
         BlockStorage.addBlockInfo(location, Keys.BS_CHARGE_RATE, String.valueOf(chargeRate));
     }
 
-    public @Nullable PanelId getPanelId(Location location) {
+    public static @Nullable PanelId getPanelId(final Location location) {
         final String stringID = BlockStorage.getLocationInfo(location, Keys.BS_PANEL_ID);
         return stringID == null ? null : new PanelId(stringID);
     }
 
-    private void setPanelID(Location location, @NotNull PanelId id) {
+    private static void setPanelID(final Location location, @NotNull final PanelId id) {
         BlockStorage.addBlockInfo(location, Keys.BS_PANEL_ID, id.toString());
     }
 
     @Override
     @OverridingMethodsMustInvokeSuper
-    protected void onPlace(@NotNull BlockPlaceEvent event) {
+    protected void onPlace(@NotNull final BlockPlaceEvent event) {
         super.onPlace(event);
         final Location location = event.getBlock().getLocation();
         final ConnectionGroup group = getGroup(location);
@@ -113,7 +113,7 @@ public class Capacitor extends ConnectedBlock {
 
     @Override
     @OverridingMethodsMustInvokeSuper
-    protected void onBreak(@NotNull BlockBreakEvent event) {
+    protected void onBreak(@NotNull final BlockBreakEvent event) {
         super.onBreak(event);
         final Location location = event.getBlock().getLocation();
         final PanelId panelId = getPanelId(location);
@@ -129,8 +129,13 @@ public class Capacitor extends ConnectedBlock {
         panel.remove();
     }
 
-    protected void updatePanel(@NotNull ConnectionGroup group) {
-        final PanelId id = getPanelId(group.getLocation());
+    private static void updatePanel(@NotNull final ConnectionGroup group) {
+        final Location location = group.getLocation();
+        if (location == null) {
+            return;
+        }
+
+        final PanelId id = getPanelId(location);
         if (id != null) {
             final CapacitorPanel panel = new CapacitorPanel(id, group.getId());
             panel.update();
@@ -138,13 +143,18 @@ public class Capacitor extends ConnectedBlock {
     }
 
     @Override
-    public void onQuapticTick(@NotNull ConnectionGroup group) {
+    public void onQuapticTick(@NotNull final ConnectionGroup group) {
         final ConnectionPointOutput output = group.getOutput("output");
         if (output == null) {
             return;
         }
 
-        final double chargeRate = getChargeRate(group.getLocation());
+        final Location location = group.getLocation();
+        if (location == null) {
+            return;
+        }
+
+        final double chargeRate = getChargeRate(location);
         double charge = getCharge(group.getLocation());
 
         if (chargeRate != 0) {
@@ -173,7 +183,7 @@ public class Capacitor extends ConnectedBlock {
     }
 
     @Override
-    public void onInputLinkUpdated(@NotNull ConnectionGroup group) {
+    public void onInputLinkUpdated(@NotNull final ConnectionGroup group) {
         final ConnectionPointInput input = group.getInput("input");
 
         if (input == null) {
@@ -184,6 +194,11 @@ public class Capacitor extends ConnectedBlock {
             return;
         }
 
-        setChargeRate(group.getLocation(), input.isLinkEnabled() ? input.getLink().getPower() / QuapticTicker.QUAPTIC_TICKS_PER_SECOND : 0);
+        final Location location = group.getLocation();
+        if (location == null) {
+            return;
+        }
+
+        setChargeRate(location, input.isLinkEnabled() ? input.getLink().getPower() / QuapticTicker.QUAPTIC_TICKS_PER_SECOND : 0);
     }
 }

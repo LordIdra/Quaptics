@@ -7,10 +7,10 @@ import org.metamechanists.quaptics.utils.id.TickerId;
 public class DirectBeam {
     private final DirectTicker ticker;
 
-    public DirectBeam(DirectTicker ticker) {
+    public DirectBeam(final DirectTicker ticker) {
         this.ticker = ticker;
     }
-    public DirectBeam(@NotNull TickerId id) {
+    public DirectBeam(@NotNull final TickerId id) {
         this.ticker = id.get();
     }
 

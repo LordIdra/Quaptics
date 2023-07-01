@@ -9,38 +9,43 @@ import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Display;
+import org.bukkit.entity.Display.Brightness;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.Quaptics;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 
 public class BurnoutRunnable extends BukkitRunnable {
+    private static final int BURN_TIME_TICKS = 60;
+    private static final float FIZZLE_VOLUME = 0.1f;
+    private static final float FIZZLE_PITCH = 0.8f;
+    private static final int INITIAL_BRIGHTNESS = 14;
     @Getter
     private final Location location;
     @Getter
     private final Location centerLocation;
-    private boolean stopEarly = false;
+    private boolean stopEarly;
 
-    public BurnoutRunnable(@NotNull Location location) {
+    public BurnoutRunnable(@NotNull final Location location) {
+        super();
         this.location = location;
         this.centerLocation = location.toCenterLocation();
     }
 
     @Override
     public void run() {
-        final Block block = this.location.getBlock();
-        if (!(BlockStorage.check(block) instanceof ConnectedBlock connectedBlock)) {
+        final Block block = location.getBlock();
+        if (!(BlockStorage.check(block) instanceof final ConnectedBlock connectedBlock)) {
             return;
         }
 
-        final DisplayGroup displayGroup = connectedBlock.getDisplayGroup(this.location);
-        final ConnectionGroup connectionGroup = connectedBlock.getGroup(this.location);
+        final DisplayGroup displayGroup = DisplayGroupTickerBlock.getDisplayGroup(location);
+        final ConnectionGroup connectionGroup = ConnectedBlock.getGroup(location);
         if (displayGroup == null || connectionGroup == null) {
             return;
         }
 
-        for (int delay = 1; delay < 60; delay++) {
+        for (int delay = 1; delay < BURN_TIME_TICKS; delay++) {
             final int ticks = delay;
             Bukkit.getScheduler().runTaskLater(Quaptics.getInstance(), () -> {
                 if (shouldStopEarly()) {
@@ -48,19 +53,19 @@ public class BurnoutRunnable extends BukkitRunnable {
                 }
 
                 if (ticks % 4 == 0) {
-                    location.getWorld().playSound(centerLocation, Sound.BLOCK_LAVA_EXTINGUISH, 0.1f, 0.8f);
+                    location.getWorld().playSound(centerLocation, Sound.BLOCK_LAVA_EXTINGUISH, FIZZLE_VOLUME, FIZZLE_PITCH);
                 }
 
                 if (ticks % 2 == 0) {
                     displayGroup.getDisplays().values().forEach(display -> {
-                        final Display.Brightness brightness = display.getBrightness();
-                        display.setBrightness(new Display.Brightness(
-                                brightness == null ? 14 : Math.max(0, brightness.getBlockLight() - 1),
-                                brightness == null ? 14 : Math.max(0, brightness.getSkyLight() - 1)));
+                        final Brightness brightness = display.getBrightness();
+                        display.setBrightness(new Brightness(
+                                brightness == null ? INITIAL_BRIGHTNESS : Math.max(0, brightness.getBlockLight() - 1),
+                                brightness == null ? INITIAL_BRIGHTNESS : Math.max(0, brightness.getSkyLight() - 1)));
                     });
 
                     new ParticleBuilder(Particle.LAVA)
-                            .location(this.centerLocation)
+                            .location(centerLocation)
                             .spawn();
                 }
             }, delay);
@@ -72,21 +77,21 @@ public class BurnoutRunnable extends BukkitRunnable {
                 return;
             }
 
-            connectedBlock.burnout(this.location);
+            connectedBlock.burnout(location);
             BurnoutManager.removeBurnout(this);
-        }, 60L);
+        }, BURN_TIME_TICKS);
     }
 
-    public boolean shouldStopEarly() {
-        return this.stopEarly;
+    private boolean shouldStopEarly() {
+        return stopEarly;
     }
 
     public void stopEarly() {
         this.stopEarly = true;
 
-        final Block block = this.location.getBlock();
-        if (BlockStorage.check(block) instanceof ConnectedBlock connectedBlock) {
-            connectedBlock.burnout(this.location);
+        final Block block = location.getBlock();
+        if (BlockStorage.check(block) instanceof final ConnectedBlock connectedBlock) {
+            connectedBlock.burnout(location);
         }
         BurnoutManager.removeBurnout(this);
     }

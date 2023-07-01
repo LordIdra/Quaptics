@@ -36,7 +36,7 @@ public class Settings {
     Material mainMaterial;
 
     // Built in Charge Methods
-    public double stepCharge(double charge, double chargeStep) {
+    public double stepCharge(final double charge, final double chargeStep) {
         if (charge + chargeStep < 0) {
             return 0;
         }
@@ -44,27 +44,26 @@ public class Settings {
     }
 
     // Built in Power Methods
-    public boolean checkPower(double power) {
-        return this.minPower <= power && power <= tier.maxPower;
+    public boolean checkPower(final double power) {
+        return minPower <= power && power <= tier.maxPower;
     }
 
-    public double powerLoss(double power) {
+    public double powerLoss(final double power) {
         return power * (1 - powerLoss);
     }
 
     // Built in Frequency Methods
-    public boolean checkFrequency(double frequency) {
-        if (this.minFrequency == 0 && this.maxFrequency == 0) {
-            return true;
-        }
-        return this.minFrequency <= frequency && frequency < this.maxFrequency;
+    public boolean checkFrequency(final double frequency) {
+        return minFrequency == 0
+                && maxFrequency == 0 || minFrequency <= frequency
+                && frequency < maxFrequency;
     }
 
-    public double stepFrequency(double frequency) {
+    public double stepFrequency(final double frequency) {
         return checkFrequency(frequency) ? frequency + frequencyStep : frequency;
     }
 
-    public double multiplyFrequency(double frequency) {
+    public double multiplyFrequency(final double frequency) {
         return checkFrequency(frequency) ? frequency * frequencyMultiplier : frequency;
     }
 }

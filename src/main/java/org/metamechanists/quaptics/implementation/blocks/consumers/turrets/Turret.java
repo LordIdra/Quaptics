@@ -38,21 +38,22 @@ import java.util.List;
 import java.util.UUID;
 
 public abstract class Turret extends ConnectedBlock {
+    private static final int ARBITRARILY_LARGE_NUMBER = 9999999;
     private final Vector3f mainDisplaySize = new Vector3f(0.6F, 0.6F, 0.6F);
     private final Vector3f barrelSize = new Vector3f(0.18F, 0.18F, settings.getDisplayRadius()*1.3F);
     private final Vector3f barrelTranslation = new Vector3f(0, 0, settings.getDisplayRadius()*0.8F);
     protected final Vector barrelLocation = new Vector(0.5, 0.7, 0.5);
     private final Vector inputLocation = new Vector(0.0F, 0.0F, -settings.getConnectionRadius());
 
-    protected Turret(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, Settings settings) {
+    protected Turret(final ItemGroup group, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(group, item, recipeType, recipe, settings);
     }
 
-    protected Matrix4f getBarrelMatrix(@NotNull Location from, Location to) {
+    protected Matrix4f getBarrelMatrix(@NotNull final Location from, final Location to) {
         return Transformations.lookAlong(barrelSize, Transformations.getDirection(from.clone().add(barrelLocation), to)).translate(barrelTranslation);
     }
 
-    private BlockDisplay generateBarrel(@NotNull Location from, Location to) {
+    private BlockDisplay generateBarrel(@NotNull final Location from, final Location to) {
         return new BlockDisplayBuilder(from.clone().add(barrelLocation))
                 .setMaterial(Material.GRAY_CONCRETE)
                 .setTransformation(getBarrelMatrix(from, to))
@@ -60,7 +61,7 @@ public abstract class Turret extends ConnectedBlock {
     }
 
     @Override
-    protected void addDisplays(@NotNull DisplayGroup displayGroup, @NotNull Location location, Player player) {
+    protected void addDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
         displayGroup.addDisplay("main", new BlockDisplayBuilder(location.toCenterLocation())
                         .setMaterial(settings.getMainMaterial())
                         .setTransformation(Transformations.adjustedScale(mainDisplaySize))
@@ -69,12 +70,12 @@ public abstract class Turret extends ConnectedBlock {
     }
 
     @Override
-    protected List<ConnectionPoint> generateConnectionPoints(ConnectionGroupId groupId, Player player, Location location) {
+    protected List<ConnectionPoint> generateConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
         return List.of(new ConnectionPointInput(groupId, "input", formatPointLocation(player, location, inputLocation)));
     }
 
     @Override
-    public void onInputLinkUpdated(@NotNull ConnectionGroup group) {
+    public void onInputLinkUpdated(@NotNull final ConnectionGroup group) {
         final ConnectionPoint input = group.getPoint("input");
         if (input == null || doBurnoutCheck(group, input)) {
             return;
@@ -94,15 +95,15 @@ public abstract class Turret extends ConnectedBlock {
         }
     }
 
-    private void setTarget(@NotNull Location location, @NotNull Damageable entity) {
+    private static void setTarget(@NotNull final Location location, @NotNull final Entity entity) {
         BlockStorage.addBlockInfo(location, Keys.BS_TARGET, entity.getUniqueId().toString());
     }
 
-    protected void clearTarget(Location location) {
+    protected static void clearTarget(final Location location) {
         BlockStorage.addBlockInfo(location, Keys.BS_TARGET, null);
     }
 
-    protected @Nullable LivingEntity getTarget(Location location) {
+    protected static @Nullable LivingEntity getTarget(final Location location) {
         final String targetString = BlockStorage.getLocationInfo(location, Keys.BS_TARGET);
         if (targetString == null) {
             return null;
@@ -111,10 +112,10 @@ public abstract class Turret extends ConnectedBlock {
         return (LivingEntity) Bukkit.getEntity(UUID.fromString(targetString));
     }
 
-    private LivingEntity getClosestEntity(@NotNull Collection<Entity> entities, Location location) {
+    private static @Nullable LivingEntity getClosestEntity(@NotNull final Iterable<? extends Entity> entities, final Location location) {
         LivingEntity target = null;
-        double targetDistance = 9999999;
-        for (Entity entity : entities) {
+        double targetDistance = ARBITRARILY_LARGE_NUMBER;
+        for (final Entity entity : entities) {
             final double distance = entity.getLocation().distance(location.toCenterLocation());
             if (distance < targetDistance) {
                 target = (LivingEntity) entity;
@@ -124,7 +125,7 @@ public abstract class Turret extends ConnectedBlock {
         return target;
     }
 
-    protected void retarget(@NotNull Location location) {
+    private void retarget(@NotNull final Location location) {
         if (BlockStorage.getLocationInfo(location, Keys.BS_TARGET) != null) {
             return;
         }
@@ -148,7 +149,7 @@ public abstract class Turret extends ConnectedBlock {
     protected abstract void shoot(Location location);
 
     @Override
-    protected void onSlimefunTick(@NotNull Block block, SlimefunItem item, Config data) {
+    protected void onSlimefunTick(@NotNull final Block block, final SlimefunItem item, final Config data) {
         if (Objects.equal(BlockStorage.getLocationInfo(block.getLocation(), Keys.BS_POWERED), "true")) {
             retarget(block.getLocation());
             shoot(block.getLocation());

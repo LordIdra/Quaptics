@@ -1,6 +1,7 @@
 package org.metamechanists.quaptics.implementation.panels;
 
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
+import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Interaction;
 import org.bukkit.event.EventHandler;
@@ -16,7 +17,7 @@ import org.metamechanists.quaptics.utils.id.PanelId;
 
 public class CapacitorPanelListener implements Listener {
     @EventHandler
-    public void interactEvent(@NotNull PlayerInteractEntityEvent event) {
+    public static void interactEvent(@NotNull final PlayerInteractEntityEvent event) {
         final Entity clickedEntity = event.getRightClicked();
         if (!(clickedEntity instanceof Interaction)) {
             return;
@@ -32,11 +33,16 @@ public class CapacitorPanelListener implements Listener {
             return;
         }
 
-        if (!(group.getBlock() instanceof Capacitor capacitor)) {
+        if (!(group.getBlock() instanceof Capacitor)) {
             return;
         }
 
-        final PanelId id = capacitor.getPanelId(group.getLocation());
+        final Location location = group.getLocation();
+        if (location == null) {
+            return;
+        }
+
+        final PanelId id = Capacitor.getPanelId(location);
         if (id == null) {
             return;
         }

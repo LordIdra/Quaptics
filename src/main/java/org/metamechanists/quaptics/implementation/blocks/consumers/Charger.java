@@ -46,12 +46,12 @@ public class Charger extends ConnectedBlock {
     private final Vector3f bottomOffset = new Vector3f(0, -0.35F, 0);
     private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -settings.getConnectionRadius());
 
-    public Charger(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, Settings settings) {
+    public Charger(final ItemGroup group, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(group, item, recipeType, recipe, settings);
         addItemHandler(onUseQuapticCharger());
     }
 
-    public BlockUseHandler onUseQuapticCharger() {
+    private static BlockUseHandler onUseQuapticCharger() {
         return event -> {
             final Block block = event.getClickedBlock().orElse(null);
             if (block == null) {
@@ -59,7 +59,7 @@ public class Charger extends ConnectedBlock {
             }
 
             final Location location = block.getLocation();
-            if (!(getDisplay(location, "item") instanceof ItemDisplay display)) {
+            if (!(getDisplay(location, "item") instanceof final ItemDisplay display)) {
                 return;
             }
 
@@ -73,15 +73,15 @@ public class Charger extends ConnectedBlock {
         };
     }
 
-    public @Nullable ItemStack getItem(Location location) {
-        if (!(getDisplay(location, "item") instanceof ItemDisplay display)) {
+    public static @Nullable ItemStack getItem(final Location location) {
+        if (!(getDisplay(location, "item") instanceof final ItemDisplay display)) {
             return null;
         }
         final ItemStack stack = display.getItemStack();
         return stack == null || stack.getItemMeta() == null ? null : stack;
     }
 
-    protected void addItem(@NotNull Player player, ItemDisplay display) {
+    private static void addItem(@NotNull final Player player, final ItemDisplay display) {
         final ItemStack itemStack = player.getInventory().getItemInMainHand().clone();
         if (itemStack.getType().isEmpty()) {
             return;
@@ -95,7 +95,7 @@ public class Charger extends ConnectedBlock {
         display.setItemStack(itemStack);
     }
 
-    protected void removeItem(Player player, @NotNull ItemDisplay display) {
+    private static void removeItem(final Player player, @NotNull final ItemDisplay display) {
         final ItemStack itemStack = display.getItemStack();
         if (itemStack == null) {
             // This should never be reached
@@ -108,9 +108,13 @@ public class Charger extends ConnectedBlock {
     }
 
     @Override
-    public void onQuapticTick(@NotNull ConnectionGroup group) {
+    public void onQuapticTick(@NotNull final ConnectionGroup group) {
         final Location location = group.getLocation();
-        if (!(getDisplay(location, "item") instanceof ItemDisplay display)) {
+        if (location == null) {
+            return;
+        }
+
+        if (!(getDisplay(location, "item") instanceof final ItemDisplay display)) {
             return;
         }
 
@@ -119,7 +123,7 @@ public class Charger extends ConnectedBlock {
     }
 
     @Override
-    protected void addDisplays(@NotNull DisplayGroup displayGroup, @NotNull Location location, Player player) {
+    protected void addDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
         displayGroup.addDisplay("mainTop", new BlockDisplayBuilder(location.toCenterLocation())
                 .setBlockData(Material.SMOOTH_STONE_SLAB.createBlockData("[type=top]"))
                 .setTransformation(Transformations.adjustedScaleAndOffset(mainDisplaySize, topOffset))
@@ -137,28 +141,28 @@ public class Charger extends ConnectedBlock {
                 .setTransformation(Transformations.adjustedScaleAndOffset(glassDisplaySize, bottomOffset))
                 .build());
         displayGroup.addDisplay("item", new ItemDisplayBuilder(location.toCenterLocation())
-                .setItemStack(null)
                 .setTransformation(Transformations.unadjustedScale(itemDisplaySize))
                 .build());
     }
 
     @Override
-    protected List<ConnectionPoint> generateConnectionPoints(ConnectionGroupId groupId, Player player, Location location) {
+    protected List<ConnectionPoint> generateConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
         return List.of(new ConnectionPointInput(groupId, "input", formatPointLocation(player, location, inputPointLocation)));
     }
 
-    public @Nullable PanelId getPanelId(Location location) {
+    @Nullable
+    private static PanelId getPanelId(final Location location) {
         final String stringId = BlockStorage.getLocationInfo(location, Keys.BS_PANEL_ID);
         return stringId == null ? null : new PanelId(stringId);
     }
 
-    private void setPanelId(Location location, @NotNull PanelId id) {
+    private static void setPanelId(final Location location, @NotNull final PanelId id) {
         BlockStorage.addBlockInfo(location, Keys.BS_PANEL_ID, id.toString());
     }
 
     @Override
     @OverridingMethodsMustInvokeSuper
-    protected void onPlace(@NotNull BlockPlaceEvent event) {
+    protected void onPlace(@NotNull final BlockPlaceEvent event) {
         super.onPlace(event);
         final Location location = event.getBlock().getLocation();
         final ConnectionGroup group = getGroup(location);
@@ -171,7 +175,7 @@ public class Charger extends ConnectedBlock {
 
     @Override
     @OverridingMethodsMustInvokeSuper
-    protected void onBreak(@NotNull BlockBreakEvent event) {
+    protected void onBreak(@NotNull final BlockBreakEvent event) {
         super.onBreak(event);
         final Location location = event.getBlock().getLocation();
         final PanelId panelId = getPanelId(location);
@@ -181,8 +185,13 @@ public class Charger extends ConnectedBlock {
         }
     }
 
-    protected void updatePanel(@NotNull ConnectionGroup group) {
-        final PanelId id = getPanelId(group.getLocation());
+    private static void updatePanel(@NotNull final ConnectionGroup group) {
+        final Location location = group.getLocation();
+        if (location == null) {
+            return;
+        }
+
+        final PanelId id = getPanelId(location);
         if (id != null) {
             final ChargerPanel panel = new ChargerPanel(id, group.getId());
             panel.update();
@@ -190,7 +199,7 @@ public class Charger extends ConnectedBlock {
     }
 
     @Override
-    public void onInputLinkUpdated(@NotNull ConnectionGroup group) {
+    public void onInputLinkUpdated(@NotNull final ConnectionGroup group) {
         final ConnectionPoint input = group.getPoint("input");
         if (input != null) {
             doBurnoutCheck(group, input);
