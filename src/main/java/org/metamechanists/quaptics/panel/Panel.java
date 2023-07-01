@@ -76,13 +76,20 @@ public class Panel {
     public void setHidden(boolean hidden) {
         if (this.hidden != hidden) {
             this.hidden = hidden;
-            removeAttributes();
+            hideAttributes();
             saveData();
         }
     }
 
     public void toggleHidden() {
         setHidden(!hidden);
+    }
+
+    private void hideAttributes() {
+        attributes.values().stream()
+                .map(PanelAttributeId::get)
+                .filter(Objects::nonNull)
+                .forEach(attribute -> attribute.updateVisibility(hidden));
     }
 
     private void removeAttributes() {
