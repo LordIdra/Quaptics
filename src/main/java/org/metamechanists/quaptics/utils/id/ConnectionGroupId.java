@@ -1,8 +1,6 @@
 package org.metamechanists.quaptics.utils.id;
 
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Entity;
 import org.jetbrains.annotations.Nullable;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 
@@ -24,7 +22,6 @@ public class ConnectionGroupId extends CustomId {
     }
     @Override
     public @Nullable ConnectionGroup get() {
-        final Entity entity = Bukkit.getEntity(getUUID());
         return DisplayGroup.fromUUID(getUUID()) != null
                 ? new ConnectionGroup(this)
                 : null;
