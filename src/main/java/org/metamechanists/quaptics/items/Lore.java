@@ -41,7 +41,7 @@ public class Lore {
                 : x);
     }
 
-    public @NotNull String[] buildChargeableLore(final Settings settings, final int charge, final String... description) {
+    public @NotNull String[] buildChargeableLore(final @NotNull Settings settings, final int charge, final String... description) {
         final List<String> lore = new ArrayList<>();
 
         Collections.addAll(lore, description);

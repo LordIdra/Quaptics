@@ -12,6 +12,8 @@ import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.implementation.tools.TargetingWand;
 import org.metamechanists.quaptics.utils.id.ConnectionPointId;
 
+import java.util.Optional;
+
 public class PointPanelListener implements Listener {
     @EventHandler
     public void interactEvent(@NotNull final PlayerInteractEntityEvent event) {
@@ -25,11 +27,11 @@ public class PointPanelListener implements Listener {
             return;
         }
 
-        final ConnectionPoint point = new ConnectionPointId(clickedEntity.getUniqueId()).get();
-        if (point == null) {
+        final Optional<ConnectionPoint> point = new ConnectionPointId(clickedEntity.getUniqueId()).get();
+        if (point.isEmpty()) {
             return;
         }
 
-        point.togglePanelHidden();
+        point.get().togglePanelHidden();
     }
 }

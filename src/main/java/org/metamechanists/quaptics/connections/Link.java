@@ -3,8 +3,8 @@ package org.metamechanists.quaptics.connections;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import lombok.Getter;
-import org.bukkit.Location;
 import org.bukkit.Material;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.metamechanists.metalib.sefilib.entity.display.DisplayGroup;
 import org.metamechanists.quaptics.beams.DirectBeam;
@@ -16,6 +16,8 @@ import org.metamechanists.quaptics.storage.DataTraverser;
 import org.metamechanists.quaptics.utils.id.ConnectionPointId;
 import org.metamechanists.quaptics.utils.id.LinkId;
 import org.metamechanists.quaptics.utils.id.TickerId;
+
+import java.util.Optional;
 
 public class Link {
     private static final float MAX_BEAM_SIZE = 0.095F;
@@ -37,13 +39,13 @@ public class Link {
     public Link(final ConnectionPointId inputId, final ConnectionPointId outputId) {
         this.inputId = inputId;
         this.outputId = outputId;
-        this.linkId = new LinkId(new DisplayGroup(getInput().getLocation(), 0, 0).getParentUUID());
-        this.maxPower = getOutput().getGroup().getBlock().getSettings().getTier().maxPower;
+        this.linkId = new LinkId(new DisplayGroup(getInput().get().getLocation().get(), 0, 0).getParentUUID());
+        this.maxPower = getInput().get().getGroup().get().getBlock().getSettings().getTier().maxPower;
         saveData(); // the points being linked will not be able to get the link from the id without this line
-        getInput().link(linkId);
-        getOutput().link(linkId);
-        updateGroupIfNotNull(getInput());
-        updateGroupIfNotNull(getOutput());
+        getInput().get().link(linkId);
+        getOutput().get().link(linkId);
+        updateGroup(getInput().get());
+        updateGroup(getOutput().get());
         update();
     }
 
@@ -77,86 +79,73 @@ public class Link {
         traverser.save();
     }
 
-    public @Nullable ConnectionPointOutput getOutput() {
-        return outputId.get() instanceof final ConnectionPointOutput output
-                ? output
-                : null;
+    public Optional<ConnectionPointOutput> getOutput() {
+        if (outputId.get().isEmpty()) {
+            return Optional.empty();
+        }
+        return outputId.get().get() instanceof final ConnectionPointOutput output
+                ? Optional.of(output)
+                : Optional.empty();
     }
 
-    public @Nullable ConnectionPointInput getInput() {
-        return inputId.get() instanceof final ConnectionPointInput input
-                ? input
-                : null;
+    public Optional<ConnectionPointInput> getInput() {
+        if (inputId.get().isEmpty()) {
+            return Optional.empty();
+        }
+        return inputId.get().get() instanceof final ConnectionPointInput input
+                ? Optional.of(input)
+                : Optional.empty();
     }
 
     private boolean hasBeam() {
         return tickerId != null;
     }
 
-    private @Nullable DirectBeam getBeam() {
-        return tickerId != null ? new DirectBeam(tickerId) : null;
+    public Optional<DirectBeam> getBeam() {
+        return Optional.ofNullable(tickerId).map(DirectBeam::new);
     }
 
     public void remove() {
         if (hasBeam()) {
-            getBeam().deprecate();
+            getBeam().ifPresent(DirectBeam::deprecate);
             tickerId = null;
         }
 
-        final ConnectionPointOutput output = getOutput();
-        if (output != null) {
+        getOutput().ifPresent(output -> {
             output.unlink();
-            updateGroupIfNotNull(getOutput());
-        }
+            updateGroup(output);
+        });
 
-        final ConnectionPointInput input = getInput();
-        if (input != null) {
+        getInput().ifPresent(input -> {
             input.unlink();
-            updateGroupIfNotNull(getInput());
-        }
+            updateGroup(input);
+        });
     }
 
     private void updateBeam() {
-        if (hasBeam()) {
-            getBeam().deprecate();
-            tickerId = null;
-        }
+        getBeam().ifPresent(DirectBeam::deprecate);
+        tickerId = null;
 
-        final ConnectionPointOutput output = getOutput();
-        final ConnectionPointInput input = getInput();
-        if (!enabled || output == null || input == null) {
-            return;
-        }
-
-        final Location outputLocation = output.getLocation();
-        final Location inputLocation = input.getLocation();
-        if (outputLocation == null || inputLocation == null) {
+        if (getOutput().isEmpty()
+                || getInput().isEmpty()
+                || getOutput().get().getLocation().isEmpty()
+                || getInput().get().getLocation().isEmpty()) {
             return;
         }
 
         this.tickerId = new DirectBeam(new DirectTicker(
                 Material.WHITE_CONCRETE,
-                outputLocation,
-                inputLocation,
+                getOutput().get().getLocation().get(),
+                getInput().get().getLocation().get(),
                 Math.min((float)(power / maxPower) * MAX_BEAM_SIZE, MAX_BEAM_SIZE)))
-                .getId();
+                .getId().get();
     }
 
     private void update() {
         updateBeam();
         saveData();
-
-        final ConnectionPointOutput output = getOutput();
-        final ConnectionGroup outputGroup = output != null ? output.getGroup() : null;
-        if (output != null && outputGroup != null) {
-            outputGroup.updatePanels();
-        }
-
-        final ConnectionPointInput input = getInput();
-        final ConnectionGroup inputGroup = input != null ? input.getGroup() : null;
-        if (input != null && inputGroup != null) {
-            inputGroup.updatePanels();
-        }
+        getOutput().flatMap(ConnectionPoint::getGroup).ifPresent(ConnectionGroup::updatePanels);
+        getInput().flatMap(ConnectionPoint::getGroup).ifPresent(ConnectionGroup::updatePanels);
     }
 
     public void setEnabled(final boolean enabled) {
@@ -173,14 +162,11 @@ public class Link {
         }
 
         update();
-        updateGroupIfNotNull(getInput());
+        getInput().ifPresent(Link::updateGroup);
     }
 
-    private static void updateGroupIfNotNull(final @Nullable ConnectionPoint point) {
-        final ConnectionGroup group = point != null ? point.getGroup() : null;
-        if (group != null) {
-            BlockUpdateScheduler.scheduleUpdate(group.getId());
-        }
+    private static void updateGroup(final @NotNull ConnectionPoint point) {
+        point.getGroup().ifPresent(group -> BlockUpdateScheduler.scheduleUpdate(group.getId()));
     }
 
     private void setPower(final double power) {
@@ -192,7 +178,7 @@ public class Link {
         this.power = power;
 
         update();
-        updateGroupIfNotNull(getInput());
+        getInput().ifPresent(Link::updateGroup);
     }
 
     private void setFrequency(final double frequency) {
@@ -204,7 +190,7 @@ public class Link {
         this.frequency = frequency;
 
         update();
-        updateGroupIfNotNull(getInput());
+        getInput().ifPresent(Link::updateGroup);
     }
 
     private void setPhase(final int phase) {
@@ -216,7 +202,7 @@ public class Link {
         this.phase = phase;
 
         update();
-        updateGroupIfNotNull(getInput());
+        getInput().ifPresent(Link::updateGroup);
     }
 
     public void setAttributes(final double power, final double frequency, final int phase, final boolean enabled) {

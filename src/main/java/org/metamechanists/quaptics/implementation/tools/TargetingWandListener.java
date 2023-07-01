@@ -26,7 +26,7 @@ public class TargetingWandListener implements Listener {
         }
 
         final ConnectionPointId pointId = new ConnectionPointId(clickedEntity.getUniqueId());
-        if (pointId.get() == null) {
+        if (pointId.get().isEmpty()) {
             return;
         }
 

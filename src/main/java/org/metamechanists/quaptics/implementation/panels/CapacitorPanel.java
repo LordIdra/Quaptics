@@ -3,7 +3,6 @@ package org.metamechanists.quaptics.implementation.panels;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.implementation.blocks.manipulators.Capacitor;
 import org.metamechanists.quaptics.items.Lore;
@@ -11,6 +10,8 @@ import org.metamechanists.quaptics.panel.Panel;
 import org.metamechanists.quaptics.panel.PanelBuilder;
 import org.metamechanists.quaptics.utils.id.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.id.PanelId;
+
+import java.util.Optional;
 
 public class CapacitorPanel {
     private static final Vector BLOCK_OFFSET = new Vector(0, 0.7, 0);
@@ -31,14 +32,14 @@ public class CapacitorPanel {
 
     public CapacitorPanel(@NotNull final PanelId panelId, final ConnectionGroupId groupId) {
         this.groupId = groupId;
-        this.panel = panelId.get();
+        this.panel = panelId.get().get();
     }
 
     public PanelId getId() {
         return panel.getId();
     }
 
-    protected @Nullable ConnectionGroup getGroup() {
+    protected Optional<ConnectionGroup> getGroup() {
         return groupId.get();
     }
 

@@ -1,9 +1,9 @@
 package org.metamechanists.quaptics.utils.id;
 
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
-import org.jetbrains.annotations.Nullable;
 import org.metamechanists.quaptics.panel.Panel;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @SuppressWarnings("unused")
@@ -21,9 +21,10 @@ public class PanelId extends CustomId {
         super(uuid);
     }
     @Override
-    public @Nullable Panel get() {
-        return DisplayGroup.fromUUID(getUUID()) != null
-                ? new Panel(this)
-                : null;
+    public Optional<Panel> get() {
+        final DisplayGroup displayGroup = DisplayGroup.fromUUID(getUUID());
+        return displayGroup != null
+                ? Optional.of(new Panel(this))
+                : Optional.empty();
     }
 }

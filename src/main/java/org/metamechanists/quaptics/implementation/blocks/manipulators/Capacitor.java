@@ -9,12 +9,10 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Display;
 import org.bukkit.entity.Player;
-import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.QuapticTicker;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
@@ -34,6 +32,7 @@ import org.metamechanists.quaptics.utils.id.PanelId;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 public class Capacitor extends ConnectedBlock {
     private static final int CONCRETE_BRIGHTNESS = 15;
@@ -90,9 +89,9 @@ public class Capacitor extends ConnectedBlock {
         BlockStorage.addBlockInfo(location, Keys.BS_CHARGE_RATE, String.valueOf(chargeRate));
     }
 
-    public static @Nullable PanelId getPanelId(final Location location) {
+    public static Optional<PanelId> getPanelId(final Location location) {
         final String stringID = BlockStorage.getLocationInfo(location, Keys.BS_PANEL_ID);
-        return stringID == null ? null : new PanelId(stringID);
+        return Optional.ofNullable(stringID).map(PanelId::new);
     }
 
     private static void setPanelID(final Location location, @NotNull final PanelId id) {
@@ -113,20 +112,11 @@ public class Capacitor extends ConnectedBlock {
 
     @Override
     @OverridingMethodsMustInvokeSuper
-    protected void onBreak(@NotNull final BlockBreakEvent event) {
-        super.onBreak(event);
-        final Location location = event.getBlock().getLocation();
-        final PanelId panelId = getPanelId(location);
-        if (panelId == null) {
-            return;
-        }
-
-        final Panel panel = panelId.get();
-        if (panel == null) {
-            return;
-        }
-
-        panel.remove();
+    protected void onBreak(@NotNull final Location location) {
+        super.onBreak(location);
+        getPanelId(location)
+                .flatMap(PanelId::get)
+                .ifPresent(Panel::remove);
     }
 
     private static void updatePanel(@NotNull final ConnectionGroup group) {
@@ -163,9 +153,9 @@ public class Capacitor extends ConnectedBlock {
 
         if (output.hasLink()) {
             final double dischargeRate = settings.getEmissionPower() / QuapticTicker.QUAPTIC_TICKS_PER_SECOND;
-            charge = settings.stepCharge(charge, -dischargeRate);
             if (charge > dischargeRate) {
-                output.getLink().setAttributes(settings.getEmissionPower(), 0, 0, true);
+                charge = settings.stepCharge(charge, -dischargeRate);
+                output.get().getLink().get().setAttributes(settings.getEmissionPower(), 0, 0, true);
             } else {
                 output.disableLinkIfExists();
             }

@@ -14,6 +14,8 @@ import org.metamechanists.quaptics.beams.DeprecatedTickerStorage;
 import org.metamechanists.quaptics.beams.ticker.DirectTicker;
 import org.metamechanists.quaptics.implementation.base.Settings;
 
+import java.util.Optional;
+
 public class DirectTurret extends Turret {
     private static final float BEAM_RADIUS = 0.095F;
 
@@ -30,12 +32,13 @@ public class DirectTurret extends Turret {
             return;
         }
 
-        final DisplayGroup group = getDisplayGroup(location);
-        final Display display = group != null
-                ? group.getDisplays().get("barrel")
-                : null;
+        final Optional<DisplayGroup> group = getDisplayGroup(location);
+        if (group.isEmpty()) {
+            return;
+        }
 
-        if (group != null && display != null) {
+        final Display display = group.get().getDisplays().get("barrel");
+        if (display != null) {
             display.setTransformationMatrix(getBarrelMatrix(location, target.getEyeLocation()));
         }
 

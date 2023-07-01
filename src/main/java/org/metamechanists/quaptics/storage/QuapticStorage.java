@@ -20,7 +20,7 @@ public class QuapticStorage {
 
     public @NotNull Set<ConnectionGroupId> getLoadedGroups() {
         return groupIDs.stream()
-                .filter(id -> id.get() != null)
+                .filter(id -> id.get().isPresent())
                 .collect(Collectors.toSet());
     }
 

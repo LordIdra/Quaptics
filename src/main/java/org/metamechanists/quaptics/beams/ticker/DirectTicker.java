@@ -4,12 +4,13 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.BlockDisplay;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.BlockDisplayId;
 import org.metamechanists.quaptics.utils.id.TickerId;
+
+import java.util.Optional;
 
 public class DirectTicker implements DisplayTicker {
     private final BlockDisplayId displayId;
@@ -33,7 +34,7 @@ public class DirectTicker implements DisplayTicker {
         return new TickerId(displayId);
     }
 
-    private @Nullable BlockDisplay getDisplay() {
+    private Optional<BlockDisplay> getDisplay() {
         return displayId.get();
     }
 
@@ -42,9 +43,7 @@ public class DirectTicker implements DisplayTicker {
 
     @Override
     public void remove() {
-        if (getDisplay() != null) {
-            getDisplay().remove();
-        }
+        getDisplay().ifPresent(BlockDisplay::remove);
     }
 
     @Override

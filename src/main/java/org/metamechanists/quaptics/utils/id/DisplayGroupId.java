@@ -1,8 +1,8 @@
 package org.metamechanists.quaptics.utils.id;
 
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
-import org.jetbrains.annotations.Nullable;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @SuppressWarnings("unused")
@@ -20,7 +20,7 @@ public class DisplayGroupId extends CustomId {
         super(uuid);
     }
     @Override
-    public @Nullable DisplayGroup get() {
-        return DisplayGroup.fromUUID(getUUID());
+    public Optional<DisplayGroup> get() {
+        return Optional.ofNullable(DisplayGroup.fromUUID(getUUID()));
     }
 }

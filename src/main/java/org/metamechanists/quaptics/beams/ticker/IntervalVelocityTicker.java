@@ -5,11 +5,12 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.BlockDisplay;
 import org.bukkit.util.Vector;
-import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.BlockDisplayId;
+
+import java.util.Optional;
 
 public class IntervalVelocityTicker implements DisplayTicker {
     private final Vector3f velocity;
@@ -30,25 +31,19 @@ public class IntervalVelocityTicker implements DisplayTicker {
                 .getUniqueId());
     }
 
-    private @Nullable BlockDisplay getDisplay() {
+    private Optional<BlockDisplay> getDisplay() {
         return displayID.get();
     }
 
     @Override
     public void tick() {
-        final BlockDisplay display = getDisplay();
-        if (display != null) {
-            display.teleport(getDisplay().getLocation().add(Vector.fromJOML(velocity)));
-        }
+        getDisplay().ifPresent(display -> display.teleport(display.getLocation().add(Vector.fromJOML(velocity))));
         ageTicks++;
     }
 
     @Override
     public void remove() {
-        final BlockDisplay display = getDisplay();
-        if (display != null) {
-            display.remove();
-        }
+        getDisplay().ifPresent(BlockDisplay::remove);
     }
 
     @Override

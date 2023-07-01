@@ -7,7 +7,7 @@ import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.storage.QuapticStorage;
 import org.metamechanists.quaptics.utils.id.ConnectionGroupId;
 
-import java.util.Objects;
+import java.util.Optional;
 
 public class QuapticTicker extends BukkitRunnable {
     public static final int INTERVAL_TICKS = 1;
@@ -17,7 +17,8 @@ public class QuapticTicker extends BukkitRunnable {
     public void run() {
         QuapticStorage.getLoadedGroups().stream()
                 .map(ConnectionGroupId::get)
-                .filter(Objects::nonNull)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
                 .forEach(ConnectionGroup::tick);
         DeprecatedTickerStorage.tick();
         BlockUpdateScheduler.tick();

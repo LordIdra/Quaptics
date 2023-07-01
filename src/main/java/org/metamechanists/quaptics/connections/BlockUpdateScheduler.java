@@ -14,12 +14,7 @@ public final class BlockUpdateScheduler {
     private BlockUpdateScheduler() {}
 
     private static void tickGroup(final @NotNull ConnectionGroupId groupId) {
-        final ConnectionGroup group = groupId.get();
-        if (group == null) {
-            return;
-        }
-
-        group.getBlock().onInputLinkUpdated(group);
+        groupId.get().ifPresent(group -> group.getBlock().onInputLinkUpdated(group));
     }
 
     public static void scheduleUpdate(final ConnectionGroupId groupId) {

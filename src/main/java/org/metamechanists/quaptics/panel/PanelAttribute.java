@@ -6,16 +6,18 @@ import io.github.bakedlibs.dough.common.ChatColors;
 import lombok.Getter;
 import org.bukkit.Color;
 import org.bukkit.Location;
+import org.bukkit.entity.Display;
 import org.bukkit.entity.Display.Billboard;
 import org.bukkit.entity.TextDisplay;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.storage.DataTraverser;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.TextDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.PanelAttributeId;
 import org.metamechanists.quaptics.utils.id.TextDisplayId;
+
+import java.util.Optional;
 
 public class PanelAttribute {
     private static final float HIDDEN_VIEW_RANGE = 0;
@@ -56,13 +58,10 @@ public class PanelAttribute {
     }
 
     public void updateVisibility(final boolean panelHidden) {
-        final TextDisplay display = getTextDisplay();
-        if (display != null) {
-            display.setViewRange(hidden || panelHidden ? HIDDEN_VIEW_RANGE : SHOWN_VIEW_RANGE);
-        }
+        getTextDisplay().ifPresent(textDisplay -> textDisplay.setViewRange(hidden || panelHidden ? HIDDEN_VIEW_RANGE : SHOWN_VIEW_RANGE));
     }
 
-    private @Nullable TextDisplay getTextDisplay() {
+    private Optional<TextDisplay> getTextDisplay() {
         return textDisplayId.get();
     }
 
@@ -72,21 +71,18 @@ public class PanelAttribute {
     }
 
     public void setText(@NotNull final String text) {
-        final TextDisplay display = getTextDisplay();
-        if (display == null) {
+        final Optional<TextDisplay> display = getTextDisplay();
+        if (display.isEmpty()) {
             return;
         }
 
-        final String currentText = display.getText();
+        final String currentText = display.get().getText();
         if (!text.equals(currentText)) {
-            display.setText(ChatColors.color(text));
+            display.get().setText(ChatColors.color(text));
         }
     }
 
     public void remove() {
-        final TextDisplay display = getTextDisplay();
-        if (display != null) {
-            display.remove();
-        }
+        getTextDisplay().ifPresent(Display::remove);
     }
 }

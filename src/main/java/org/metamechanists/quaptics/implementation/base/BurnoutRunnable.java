@@ -15,6 +15,8 @@ import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.Quaptics;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 
+import java.util.Optional;
+
 public class BurnoutRunnable extends BukkitRunnable {
     private static final int BURN_TIME_TICKS = 60;
     private static final float FIZZLE_VOLUME = 0.1f;
@@ -39,9 +41,9 @@ public class BurnoutRunnable extends BukkitRunnable {
             return;
         }
 
-        final DisplayGroup displayGroup = DisplayGroupTickerBlock.getDisplayGroup(location);
-        final ConnectionGroup connectionGroup = ConnectedBlock.getGroup(location);
-        if (displayGroup == null || connectionGroup == null) {
+        final Optional<DisplayGroup> displayGroup = DisplayGroupTickerBlock.getDisplayGroup(location);
+        final Optional<ConnectionGroup> connectionGroup = ConnectedBlock.getGroup(location);
+        if (displayGroup.isEmpty() || connectionGroup.isEmpty()) {
             return;
         }
 
@@ -57,7 +59,7 @@ public class BurnoutRunnable extends BukkitRunnable {
                 }
 
                 if (ticks % 2 == 0) {
-                    displayGroup.getDisplays().values().forEach(display -> {
+                    displayGroup.get().getDisplays().values().forEach(display -> {
                         final Brightness brightness = display.getBrightness();
                         display.setBrightness(new Brightness(
                                 brightness == null ? INITIAL_BRIGHTNESS : Math.max(0, brightness.getBlockLight() - 1),

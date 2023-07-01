@@ -4,14 +4,15 @@ import io.github.bakedlibs.dough.common.ChatColors;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.items.Lore;
-import org.metamechanists.quaptics.utils.id.ConnectionPointId;
-import org.metamechanists.quaptics.utils.id.PanelId;
 import org.metamechanists.quaptics.panel.Panel;
 import org.metamechanists.quaptics.panel.PanelBuilder;
+import org.metamechanists.quaptics.utils.id.ConnectionPointId;
+import org.metamechanists.quaptics.utils.id.PanelId;
+
+import java.util.Optional;
 
 public class PointPanel {
     private static final Vector POINT_OFFSET = new Vector(0.0, 0.2, 0.0);
@@ -32,14 +33,14 @@ public class PointPanel {
 
     public PointPanel(@NotNull final PanelId panelId, final ConnectionPointId pointId) {
         this.pointId = pointId;
-        this.panel = panelId.get();
+        this.panel = panelId.get().get();
     }
 
     public PanelId getId() {
         return panel.getId();
     }
 
-    private @Nullable ConnectionPoint getPoint() {
+    private Optional<ConnectionPoint> getPoint() {
         return pointId.get();
     }
 
@@ -59,21 +60,23 @@ public class PointPanel {
     }
 
     public void update() {
-        if (getPoint() == null) {
+        if (getPoint().isEmpty()) {
             remove();
             return;
         }
 
-        panel.setText("name", ChatColors.color((getPoint().hasLink() ? "&a" : "&c") + getPoint().getName().toUpperCase()));
+        final ConnectionPoint point = getPoint().get();
 
-        if (!getPoint().hasLink()) {
+        panel.setText("name", ChatColors.color((point.getLink().isEmpty() ? "&a" : "&c") + point.getName().toUpperCase()));
+
+        if (point.getLink().isEmpty()) {
             panel.setAttributeHidden("power", true);
             panel.setAttributeHidden("frequency", true);
             panel.setAttributeHidden("phase", true);
             return;
         }
 
-        final Link link = getPoint().getLink();
+        final Link link = point.getLink().get();
 
         panel.setAttributeHidden("power", link.getPower() == 0);
         panel.setAttributeHidden("frequency", link.getFrequency() == 0);

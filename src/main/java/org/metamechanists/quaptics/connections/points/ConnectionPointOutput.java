@@ -10,7 +10,7 @@ import org.metamechanists.quaptics.utils.id.ConnectionPointId;
 
 public class ConnectionPointOutput extends ConnectionPoint {
     public ConnectionPointOutput(final ConnectionGroupId groupId, final String name, final Location location) {
-        super(groupId, name, location, Material.LIME_CONCRETE, 15, 3);
+        super(groupId, name, location, Material.LIME_CONCRETE);
     }
 
     public ConnectionPointOutput(final ConnectionPointId pointId) {

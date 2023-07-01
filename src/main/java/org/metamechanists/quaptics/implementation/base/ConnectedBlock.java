@@ -1,7 +1,6 @@
 package org.metamechanists.quaptics.implementation.base;
 
 import com.destroystokyo.paper.ParticleBuilder;
-import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
@@ -17,12 +16,10 @@ import org.bukkit.entity.Display;
 import org.bukkit.entity.Display.Brightness;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
@@ -34,9 +31,10 @@ import org.metamechanists.quaptics.utils.id.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.id.ConnectionPointId;
 import org.metamechanists.quaptics.utils.id.DisplayGroupId;
 
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 
 public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
     private static final Brightness BRIGHTNESS_ON = new Brightness(13, 0);
@@ -56,11 +54,8 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
         addItemHandler(onUse());
     }
 
-    private static void changePointLocation(final @NotNull ConnectionPointId pointId, @Nullable final Location newLocation) {
-        final ConnectionPoint point = pointId.get();
-        if (point != null && newLocation != null) {
-            point.changeLocation(newLocation);
-        }
+    private static void changePointLocation(final @NotNull ConnectionPointId pointId, @NotNull final Location newLocation) {
+        pointId.get().ifPresent(point -> point.changeLocation(newLocation));
     }
 
     @NotNull
@@ -75,31 +70,28 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
                 return;
             }
 
-            final ConnectionGroup group = getGroup(block.getLocation());
-            if (group == null) {
+            final Optional<ConnectionGroup> group = getGroup(block.getLocation());
+            if (group.isEmpty()) {
                 return;
             }
 
-            final boolean isAnyPanelHidden = group.getPoints().values().stream().anyMatch(pointId -> {
-                final ConnectionPoint point = pointId.get();
-                return point != null && point.getPointPanel().isPanelHidden();
-            });
+            final boolean isAnyPanelHidden = group.get().getPoints().values().stream().anyMatch(
+                    pointId -> pointId.get().isPresent() && pointId.get().get().getPointPanel().isPanelHidden());
 
-            group.getPoints().values().stream()
+            group.get().getPoints().values().stream()
                     .map(ConnectionPointId::get)
-                    .filter(Objects::nonNull)
+                    .filter(Optional::isPresent)
+                    .map(Optional::get)
                     .forEach(point -> point.getPointPanel().setPanelHidden(!isAnyPanelHidden));
 
         };
     }
 
-    protected static @Nullable ConnectionGroup getGroup(final Location location) {
-        final DisplayGroupId displayGroupId = getDisplayGroupId(location);
-        if (displayGroupId == null) {
-            return null;
-        }
-
-        return new ConnectionGroupId(displayGroupId).get();
+    protected static Optional<ConnectionGroup> getGroup(final Location location) {
+        final Optional<DisplayGroupId> displayGroupId = getDisplayGroupId(location);
+        return displayGroupId.isEmpty()
+            ? Optional.empty()
+            : new ConnectionGroupId(displayGroupId.get()).get();
     }
 
     protected abstract List<ConnectionPoint> generateConnectionPoints(ConnectionGroupId groupId, Player player, Location location);
@@ -107,43 +99,39 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
     @Override
     protected void onPlace(@NotNull final BlockPlaceEvent event) {
         final Location location = event.getBlock().getLocation();
-        final ConnectionGroupId groupId = new ConnectionGroupId(getDisplayGroupId(location));
+        final Optional<DisplayGroupId> displayGroupId = getDisplayGroupId(location);
+        if (displayGroupId.isEmpty()) {
+            return;
+        }
+
+        final ConnectionGroupId groupId = new ConnectionGroupId(displayGroupId.get());
         final List<ConnectionPoint> points = generateConnectionPoints(groupId, event.getPlayer(), location);
         new ConnectionGroup(groupId, this, points);
         QuapticStorage.addGroup(groupId);
     }
 
-    @SuppressWarnings("unused")
-    private void onBreak(final Location location) {}
-
     @Override
-    protected void onBreak(@NotNull final BlockBreakEvent event) {
-        final ConnectionGroup group = getGroup(event.getBlock().getLocation());
-        if (group != null) {
-            group.remove();
-        }
-        onBreak(event.getBlock().getLocation());
+    @OverridingMethodsMustInvokeSuper
+    @SuppressWarnings("unused")
+    protected void onBreak(@NotNull final Location location) {
+        getGroup(location).ifPresent(group -> onBreak(location));
     }
 
     public void connect(@NotNull final ConnectionPointId from, @NotNull final ConnectionPointId to) {
-        changePointLocation(from, calculatePointLocationSphere(from, to));
+        calculatePointLocationSphere(from, to).ifPresent(location -> changePointLocation(from, location));
     }
 
     public void burnout(final Location location) {
         // TODO send message to player to inform them what happened
         onBreak(location);
 
-        final ConnectionGroup group = getGroup(location);
-        if (group != null) {
-            group.remove();
-        }
-
-        final DisplayGroup displayGroup = getDisplayGroup(location);
-        if (displayGroup != null) {
+        getGroup(location).ifPresent(ConnectionGroup::remove);
+        getDisplayGroup(location).ifPresent(displayGroup -> {
             displayGroup.getDisplays().values().forEach(Entity::remove);
             displayGroup.remove();
-        }
+        });
 
+        // TODO make this naturally break, not the forced shit we have going on here
         BlockStorage.clearBlockInfo(location);
         location.getBlock().setBlockData(Material.AIR.createBlockData());
         location.getWorld().playSound(location.toCenterLocation(), Sound.ENTITY_GENERIC_EXPLODE, BURNOUT_EXPLODE_VOLUME, BURNOUT_EXPLODE_PITCH);
@@ -151,30 +139,31 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
     }
 
     protected boolean doBurnoutCheck(@NotNull final ConnectionGroup group, @NotNull final ConnectionPoint point) {
-        if (!point.hasLink() || point.getLink().getPower() <= settings.getTier().maxPower) {
+        if (point.getLink().isEmpty() || point.getLink().get().getPower() <= settings.getTier().maxPower) {
             return false;
         }
 
-        final Location location = group.getLocation();
-        if (location != null && BlockStorage.hasBlockInfo(location) && BlockStorage.getLocationInfo(location, Keys.BS_BURNOUT) == null) {
-            BlockStorage.addBlockInfo(location, Keys.BS_BURNOUT, "true");
-            BurnoutManager.addBurnout(new BurnoutRunnable(location));
-        }
+        group.getLocation().ifPresent(location -> {
+             if (BlockStorage.hasBlockInfo(location) && BlockStorage.getLocationInfo(location, Keys.BS_BURNOUT) == null) {
+                 BlockStorage.addBlockInfo(location, Keys.BS_BURNOUT, "true");
+                 BurnoutManager.addBurnout(new BurnoutRunnable(location));
+             }
+        });
 
         return true;
     }
 
     @NotNull
     private static List<ConnectionPoint> getLinkedPoints(final Location location) {
-        final ConnectionGroup group = getGroup(location);
-        if (group != null) {
-            return group.getPoints().values().stream()
-                    .map(ConnectionPointId::get)
-                    .filter(Objects::nonNull)
-                    .filter(ConnectionPoint::hasLink)
-                    .toList();
-        }
-        return new ArrayList<>();
+        final Optional<ConnectionGroup> group = getGroup(location);
+        return group.map(connectionGroup -> connectionGroup.getPoints().values().stream()
+                .map(ConnectionPointId::get)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .filter(point -> point.getLink().isPresent())
+                .toList())
+                .orElseGet(ArrayList::new);
+
     }
 
     @NotNull
@@ -203,41 +192,41 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
     }
 
     protected static void doDisplayBrightnessCheck(final Location location, final String concreteDisplayName, final boolean setVisible) {
-        final Display display = getDisplay(location, concreteDisplayName);
-        if (display == null) {
+        final Optional<Display> display = getDisplay(location, concreteDisplayName);
+        if (display.isEmpty()) {
             return;
         }
 
         final boolean noInputs = getEnabledInputs(location).isEmpty();
         if (setVisible) {
-            display.setViewRange(noInputs ? VIEW_RANGE_OFF : VIEW_RANGE_ON);
+            display.get().setViewRange(noInputs ? VIEW_RANGE_OFF : VIEW_RANGE_ON);
         } else  {
-            display.setBrightness(noInputs ? BRIGHTNESS_OFF : BRIGHTNESS_ON);
+            display.get().setBrightness(noInputs ? BRIGHTNESS_OFF : BRIGHTNESS_ON);
         }
     }
 
     public void onInputLinkUpdated(@NotNull final ConnectionGroup group) {}
 
-    private @Nullable Location calculatePointLocationSphere(@NotNull final ConnectionPointId from, @NotNull final ConnectionPointId to) {
-        final ConnectionPoint fromPoint = from.get();
-        final ConnectionPoint toPoint = to.get();
-        if (fromPoint == null || toPoint == null) {
-            return null;
+    private Optional<Location> calculatePointLocationSphere(@NotNull final ConnectionPointId from, @NotNull final ConnectionPointId to) {
+        final Optional<ConnectionPoint> fromPoint = from.get();
+        final Optional<ConnectionPoint> toPoint = to.get();
+        if (fromPoint.isEmpty() || toPoint.isEmpty()) {
+            return Optional.empty();
         }
 
-        final ConnectionGroup fromGroup = fromPoint.getGroup();
-        final ConnectionGroup toGroup = toPoint.getGroup();
-        if (fromGroup == null || toGroup == null) {
-            return null;
+        final Optional<ConnectionGroup> fromGroup = fromPoint.get().getGroup();
+        final Optional<ConnectionGroup> toGroup = toPoint.get().getGroup();
+        if (fromGroup.isEmpty() || toGroup.isEmpty()) {
+            return Optional.empty();
         }
 
-        final Location fromLocation =  fromGroup.getLocation();
-        final Location toLocation =  toGroup.getLocation();
-        if (fromLocation == null || toLocation == null) {
-            return null;
+        final Optional<Location> fromLocation =  fromGroup.get().getLocation();
+        final Optional<Location> toLocation =  toGroup.get().getLocation();
+        if (fromLocation.isEmpty() || toLocation.isEmpty()) {
+            return Optional.empty();
         }
 
-        final Vector radiusDirection = Vector.fromJOML(Transformations.getDirection(fromLocation, toLocation).mul(settings.getConnectionRadius()));
-        return fromLocation.clone().toCenterLocation().add(radiusDirection);
+        final Vector radiusDirection = Vector.fromJOML(Transformations.getDirection(fromLocation.get(), toLocation.get()).mul(settings.getConnectionRadius()));
+        return Optional.of(fromLocation.get().clone().toCenterLocation().add(radiusDirection));
     }
 }

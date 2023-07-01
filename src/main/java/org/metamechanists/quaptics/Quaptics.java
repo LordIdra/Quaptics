@@ -9,7 +9,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.metamechanists.quaptics.connections.panels.PointPanelListener;
 import org.metamechanists.quaptics.implementation.base.BurnoutManager;
-import org.metamechanists.quaptics.implementation.panels.CapacitorPanelListener;
 import org.metamechanists.quaptics.implementation.tools.TargetingWandListener;
 import org.metamechanists.quaptics.items.Groups;
 import org.metamechanists.quaptics.items.Items;

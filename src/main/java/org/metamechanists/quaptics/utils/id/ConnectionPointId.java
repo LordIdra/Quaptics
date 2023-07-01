@@ -2,14 +2,13 @@ package org.metamechanists.quaptics.utils.id;
 
 import com.google.gson.JsonObject;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Interaction;
-import org.jetbrains.annotations.Nullable;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
 import org.metamechanists.quaptics.storage.DataTraverser;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @SuppressWarnings("unused")
@@ -27,14 +26,16 @@ public class ConnectionPointId extends CustomId {
         super(uuid);
     }
     @Override
-    public @Nullable ConnectionPoint get() {
-        final Entity entity = Bukkit.getEntity(getUUID());
-        if (!(entity instanceof Interaction)) { return null; }
+    public Optional<ConnectionPoint> get() {
+        if (!(Bukkit.getEntity(getUUID()) instanceof Interaction)) {
+            return Optional.empty();
+        }
+
         final DataTraverser traverser = new DataTraverser(this);
         final JsonObject mainSection = traverser.getData();
         final String type = mainSection.get("type").getAsString();
-        return type.equals("output")
+        return Optional.of(type.equals("output")
                 ? new ConnectionPointOutput(this)
-                : new ConnectionPointInput(this);
+                : new ConnectionPointInput(this));
     }
 }

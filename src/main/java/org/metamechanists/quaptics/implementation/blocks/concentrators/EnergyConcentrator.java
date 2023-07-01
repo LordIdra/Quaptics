@@ -16,6 +16,7 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
+import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
 import org.metamechanists.quaptics.implementation.base.EnergyConnectedBlock;
@@ -26,6 +27,7 @@ import org.metamechanists.quaptics.utils.id.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.id.ConnectionPointId;
 
 import java.util.List;
+import java.util.Optional;
 
 public class EnergyConcentrator extends EnergyConnectedBlock {
     private final Vector outputLocation = new Vector(0.0F, 0.0F, settings.getConnectionRadius());
@@ -58,55 +60,61 @@ public class EnergyConcentrator extends EnergyConnectedBlock {
         super.onSlimefunTick(block, item, data);
 
         final Location location = block.getLocation();
-        final ConnectionGroup group = getGroup(location);
-        if (group == null) {
+        final Optional<ConnectionGroup> group = getGroup(location);
+        if (group.isEmpty()) {
             return;
         }
 
-
-        final ConnectionPointOutput output = group.getOutput("output");
-        if (output == null || !output.hasLink()) {
+        final Optional<ConnectionPointOutput> output = group.get().getOutput("output");
+        if (output.isEmpty()) {
             return;
         }
 
-        if (isPowered(location)) {
-            output.getLink().setAttributes(settings.getEmissionPower(), 0, 0, true);
+        final Optional<Link> outputLink = output.get().getLink();
+        if (outputLink.isEmpty()) {
             return;
         }
 
-        output.getLink().setEnabled(false);
+        if (!isPowered(location)) {
+            outputLink.get().setEnabled(false);
+            return;
+        }
+
+        outputLink.get().setAttributes(settings.getEmissionPower(), 0, 0, true);
     }
 
     @Override
     public void connect(@NotNull final ConnectionPointId from, @NotNull final ConnectionPointId to) {
         super.connect(from, to);
 
-        final ConnectionPoint fromPoint = from.get();
-        final ConnectionPoint toPoint = to.get();
-        if (fromPoint == null || toPoint == null) {
+        final Optional<ConnectionPoint> fromPoint = from.get();
+        final Optional<ConnectionPoint> toPoint = to.get();
+        if (fromPoint.isEmpty() || toPoint.isEmpty()) {
             return;
         }
 
-        final ConnectionGroup fromGroup = fromPoint.getGroup();
-        final ConnectionGroup toGroup = toPoint.getGroup();
-        if (fromGroup == null || toGroup == null) {
+        final Optional<ConnectionGroup> fromGroup = fromPoint.get().getGroup();
+        final Optional<ConnectionGroup> toGroup = toPoint.get().getGroup();
+        if (fromGroup.isEmpty() || toGroup.isEmpty()) {
             return;
         }
 
-        final Location fromLocation = fromGroup.getLocation();
-        final Location toLocation = toGroup.getLocation();
-        if (fromLocation == null || toLocation == null) {
+        final Optional<Location> fromLocation = fromGroup.get().getLocation();
+        final Optional<Location> toLocation = toGroup.get().getLocation();
+        if (fromLocation.isEmpty() || toLocation.isEmpty()) {
             return;
         }
 
-        final DisplayGroup fromDisplayGroup = getDisplayGroup(fromLocation);
-        if (fromDisplayGroup != null) {
-            final Display display = fromDisplayGroup.removeDisplay("main");
-            if (display != null) {
-                display.remove();
-            }
-
-            fromDisplayGroup.addDisplay("main", generateMainBlockDisplay(fromLocation, toLocation));
+        final Optional<DisplayGroup> fromDisplayGroup = getDisplayGroup(fromLocation.get());
+        if (fromDisplayGroup.isEmpty()) {
+            return;
         }
+
+        final Display display = fromDisplayGroup.get().removeDisplay("main");
+        if (display != null) {
+            display.remove();
+        }
+
+        fromDisplayGroup.get().addDisplay("main", generateMainBlockDisplay(fromLocation.get(), toLocation.get()));
     }
 }

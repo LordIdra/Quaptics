@@ -6,7 +6,6 @@ import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import lombok.Getter;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.metamechanists.quaptics.storage.DataTraverser;
 import org.metamechanists.quaptics.utils.id.DisplayGroupId;
 import org.metamechanists.quaptics.utils.id.PanelAttributeId;
@@ -15,6 +14,7 @@ import org.metamechanists.quaptics.utils.id.PanelId;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 public class Panel {
 
@@ -56,23 +56,24 @@ public class Panel {
         return new PanelId(displayGroupId);
     }
 
-    private @Nullable DisplayGroup getDisplayGroup() {
+    private Optional<DisplayGroup> getDisplayGroup() {
         return displayGroupId.get();
     }
 
     @Contract("_ -> new")
-    private @Nullable PanelAttribute getAttribute(final String name) {
-
+    private Optional<PanelAttribute> getAttribute(final String name) {
         return attributes.get(name).get();
     }
 
     public void setAttributeHidden(final String name, final boolean attributeHidden) {
-        getAttribute(name).setHidden(attributeHidden);
-        getAttribute(name).updateVisibility(hidden);
+        getAttribute(name).ifPresent(attribute -> {
+            attribute.setHidden(attributeHidden);
+            attribute.updateVisibility(hidden);
+        });
     }
 
     public void setText(final String name, final String text) {
-        getAttribute(name).setText(text);
+        getAttribute(name).ifPresent(attribute -> attribute.setText(text));
     }
 
     public void setHidden(final boolean hidden) {
@@ -91,21 +92,19 @@ public class Panel {
         attributes.values().stream()
                 .map(PanelAttributeId::get)
                 .filter(Objects::nonNull)
-                .forEach(attribute -> attribute.updateVisibility(hidden));
+                .forEach(attributeOptional -> attributeOptional.ifPresent(attribute -> attribute.updateVisibility(hidden)));
     }
 
     private void removeAttributes() {
         attributes.values().stream()
                 .map(PanelAttributeId::get)
-                .filter(Objects::nonNull)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
                 .forEach(PanelAttribute::remove);
     }
 
     public void remove() {
         removeAttributes();
-        final DisplayGroup displayGroup = getDisplayGroup();
-        if (displayGroup != null) {
-            displayGroup.remove();
-        }
+        getDisplayGroup().ifPresent(DisplayGroup::remove);
     }
 }

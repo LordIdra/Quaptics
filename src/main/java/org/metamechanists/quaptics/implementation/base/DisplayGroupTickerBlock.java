@@ -20,7 +20,6 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.id.DisplayGroupId;
@@ -29,6 +28,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
+import java.util.Optional;
 
 import static dev.sefiraat.sefilib.slimefun.blocks.DisplayGroupBlock.KEY_UUID;
 
@@ -63,7 +63,7 @@ public abstract class DisplayGroupTickerBlock extends SlimefunItem {
 
     protected void onPlace(@NotNull final BlockPlaceEvent event) {}
 
-    protected void onBreak(@NotNull final BlockBreakEvent event) {}
+    protected void onBreak(@NotNull final Location location) {}
 
     protected void onSlimefunTick(@NotNull final Block block, final SlimefunItem item, final Config data) {}
 
@@ -91,11 +91,8 @@ public abstract class DisplayGroupTickerBlock extends SlimefunItem {
                     @ParametersAreNonnullByDefault
                     public void onPlayerBreak(final BlockBreakEvent event, final ItemStack item, final List<ItemStack> drops) {
                         final Location location = event.getBlock().getLocation();
-                        onBreak(event);
-                        final DisplayGroup displayGroup = getDisplayGroup(location.clone());
-                        if (displayGroup != null) {
-                            displayGroup.remove();
-                        }
+                        onBreak(event.getPlayer().getLocation());
+                        getDisplayGroup(location.clone()).ifPresent(DisplayGroup::remove);
                         event.getBlock().setType(Material.AIR);
                     }
                 },
@@ -118,18 +115,16 @@ public abstract class DisplayGroupTickerBlock extends SlimefunItem {
         BlockStorage.addBlockInfo(location, KEY_UUID, displayGroup.getParentUUID().toString());
     }
 
-    public static @Nullable DisplayGroupId getDisplayGroupId(final Location location) {
+    public static Optional<DisplayGroupId> getDisplayGroupId(final Location location) {
         final String uuid = BlockStorage.getLocationInfo(location, KEY_UUID);
-        return uuid == null ? null : new DisplayGroupId(uuid);
+        return Optional.ofNullable(uuid).map(DisplayGroupId::new);
     }
 
-    public static @Nullable DisplayGroup getDisplayGroup(final Location location) {
-        final DisplayGroupId id = getDisplayGroupId(location);
-        return id == null ? null : DisplayGroup.fromUUID(id.getUUID());
+    public static Optional<DisplayGroup> getDisplayGroup(final Location location) {
+        return getDisplayGroupId(location).map(displayGroupId -> DisplayGroup.fromUUID(displayGroupId.getUUID()));
     }
 
-    public static @Nullable Display getDisplay(final Location location, final String name) {
-        final DisplayGroup displayGroup = getDisplayGroup(location);
-        return displayGroup == null ? null : displayGroup.getDisplays().get(name);
+    public static Optional<Display> getDisplay(final Location location, final String name) {
+        return getDisplayGroup(location).map(displayGroup -> displayGroup.getDisplays().get(name));
     }
 }

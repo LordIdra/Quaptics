@@ -28,9 +28,15 @@ import org.metamechanists.quaptics.utils.id.InteractionId;
 import org.metamechanists.quaptics.utils.id.LinkId;
 import org.metamechanists.quaptics.utils.id.PanelId;
 
+import java.util.Optional;
+
 public abstract class ConnectionPoint {
     private static final float SIZE = 0.1F;
     private static final Vector INTERACTION_OFFSET = new Vector(0, -SIZE/2, 0);
+    @Getter
+    private static final int CONNECTED_BRIGHTNESS = 15;
+    @Getter
+    private static final int DISCONNECTED_BRIGHTNESS = 3;
     private final ConnectionGroupId groupId;
     @Getter
     private final InteractionId interactionId;
@@ -39,13 +45,8 @@ public abstract class ConnectionPoint {
     private @Nullable LinkId linkId;
     @Getter
     private final String name;
-    @Getter
-    private final int connectedBrightness;
-    @Getter
-    private final int disconnectedBrightness;
 
-    protected ConnectionPoint(final ConnectionGroupId groupId, final String name, @NotNull final Location location, final Material material,
-                              final int connectedBrightness, final int disconnectedBrightness) {
+    protected ConnectionPoint(final ConnectionGroupId groupId, final String name, @NotNull final Location location, final Material material) {
         final Interaction interaction = new InteractionBuilder(location.clone().add(INTERACTION_OFFSET))
                 .setWidth(SIZE)
                 .setHeight(SIZE)
@@ -55,13 +56,11 @@ public abstract class ConnectionPoint {
         this.blockDisplayId = new BlockDisplayId(new BlockDisplayBuilder(location)
                 .setMaterial(material)
                 .setTransformation(Transformations.adjustedScale(new Vector3f(SIZE, SIZE, SIZE)))
-                .setBrightness(disconnectedBrightness)
+                .setBrightness(DISCONNECTED_BRIGHTNESS)
                 .build()
                 .getUniqueId());
         this.panelId = new PointPanel(location, getId()).getId();
         this.name = name;
-        this.connectedBrightness = connectedBrightness;
-        this.disconnectedBrightness = disconnectedBrightness;
         saveData();
         getPointPanel().update();
     }
@@ -76,8 +75,6 @@ public abstract class ConnectionPoint {
         this.panelId = new PanelId(mainSection.get("panelId").getAsString());
         this.linkId = linkIdString.equals("null") ? null : new LinkId(linkIdString);
         this.name = mainSection.get("name").getAsString();
-        this.connectedBrightness = mainSection.get("connectedBrightness").getAsInt();
-        this.disconnectedBrightness = mainSection.get("disconnectedBrightness").getAsInt();
     }
 
     protected void saveData(@NotNull final JsonObject mainSection) {
@@ -87,8 +84,6 @@ public abstract class ConnectionPoint {
         mainSection.add("panelId", new JsonPrimitive(panelId.getUUID().toString()));
         mainSection.add("linkId", new JsonPrimitive((linkId == null) ? "null" : linkId.getUUID().toString()));
         mainSection.add("name", new JsonPrimitive(name));
-        mainSection.add("connectedBrightness", new JsonPrimitive(connectedBrightness));
-        mainSection.add("disconnectedBrightness", new JsonPrimitive(disconnectedBrightness));
     }
 
     protected abstract void saveData();
@@ -97,29 +92,22 @@ public abstract class ConnectionPoint {
         return new ConnectionPointId(interactionId);
     }
 
-    public boolean hasLink() {
-        return linkId != null && getLink() != null;
-    }
-
-    public @Nullable Link getLink() {
-        return linkId == null ? null : linkId.get();
+    public Optional<Link> getLink() {
+        return linkId == null ? Optional.empty() : linkId.get();
     }
 
     public boolean isLinkEnabled() {
-        return hasLink() && getLink().isEnabled();
+        return getLink().isPresent() && getLink().get().isEnabled();
     }
 
     public void disableLinkIfExists() {
-        if (hasLink()) {
-            getLink().setEnabled(false);
-        }
+        getLink().ifPresent(link -> link.setEnabled(false));
     }
 
-    public @Nullable Location getLocation() {
-        final BlockDisplay blockDisplay = getBlockDisplay();
-        return blockDisplay != null
-                ? blockDisplay.getLocation()
-                : null;
+    public Optional<Location> getLocation() {
+        return getBlockDisplay().isPresent()
+                ? Optional.of(getBlockDisplay().get().getLocation())
+                : Optional.empty();
     }
 
     @Contract(" -> new")
@@ -127,46 +115,28 @@ public abstract class ConnectionPoint {
         return new PointPanel(panelId, getId());
     }
 
-    private @Nullable BlockDisplay getBlockDisplay() {
+    private Optional<BlockDisplay> getBlockDisplay() {
         return blockDisplayId.get();
     }
 
-    private @Nullable Interaction getInteraction() {
+    private Optional<Interaction> getInteraction() {
         return interactionId.get();
     }
 
-    public @Nullable ConnectionGroup getGroup() {
+    public Optional<ConnectionGroup> getGroup() {
         return groupId.get();
     }
 
     public void remove() {
-        if (hasLink()) {
-            getLink().remove();
-        }
-
+        getLink().ifPresent(Link::remove);
         getPointPanel().remove();
-
-        final BlockDisplay blockDisplay = getBlockDisplay();
-        if (blockDisplay != null) {
-            blockDisplay.remove();
-        }
-
-        final Interaction interaction = getInteraction();
-        if (interaction != null) {
-            interaction.remove();
-        }
+        getBlockDisplay().ifPresent(BlockDisplay::remove);
+        getInteraction().ifPresent(Interaction::remove);
     }
 
     public void changeLocation(@NotNull final Location location) {
-        final Interaction interaction = getInteraction();
-        final BlockDisplay blockDisplay = getBlockDisplay();
-        if (interaction == null || blockDisplay == null) {
-            return;
-        }
-
-
-        blockDisplay.teleport(location);
-        interaction.teleport(location.clone().add(INTERACTION_OFFSET));
+        getBlockDisplay().ifPresent(blockDisplay -> blockDisplay.teleport(location));
+        getInteraction().ifPresent(interaction -> interaction.teleport(location.clone().add(INTERACTION_OFFSET)));
 
         final boolean wasHidden = getPointPanel().isPanelHidden();
         getPointPanel().remove();
@@ -186,12 +156,7 @@ public abstract class ConnectionPoint {
 
     public void unlink() {
         this.linkId = null;
-
-        final BlockDisplay blockDisplay = getBlockDisplay();
-        if (blockDisplay != null) {
-            blockDisplay.setBrightness(new Brightness(disconnectedBrightness, 0));
-        }
-
+        getBlockDisplay().ifPresent(blockDisplay -> blockDisplay.setBrightness(new Brightness(DISCONNECTED_BRIGHTNESS, 0)));
         saveData();
         updatePanel();
     }
@@ -199,28 +164,19 @@ public abstract class ConnectionPoint {
     public void link(final LinkId linkId) {
         unlink();
         this.linkId = linkId;
-
-        final BlockDisplay blockDisplay = getBlockDisplay();
-        if (blockDisplay != null) {
-            blockDisplay.setBrightness(new Brightness(connectedBrightness, 0));
-        }
-
+        getBlockDisplay().ifPresent(blockDisplay -> blockDisplay.setBrightness(new Brightness(CONNECTED_BRIGHTNESS, 0)));
         saveData();
         updatePanel();
     }
 
     public void select() {
-        final BlockDisplay blockDisplay = getBlockDisplay();
-        if (blockDisplay != null) {
+        getBlockDisplay().ifPresent(blockDisplay -> {
             blockDisplay.setGlowing(true);
             blockDisplay.setGlowColorOverride(Color.fromRGB(0, 255, 0));
-        }
+        });
     }
 
     public void deselect() {
-        final BlockDisplay blockDisplay = getBlockDisplay();
-        if (blockDisplay != null) {
-            blockDisplay.setGlowing(false);
-        }
+        getBlockDisplay().ifPresent(blockDisplay -> blockDisplay.setGlowing(false));
     }
 }

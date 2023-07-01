@@ -1,11 +1,10 @@
 package org.metamechanists.quaptics.utils.id;
 
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.TextDisplay;
-import org.jetbrains.annotations.Nullable;
 import org.metamechanists.quaptics.panel.PanelAttribute;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @SuppressWarnings("unused")
@@ -23,10 +22,9 @@ public class PanelAttributeId extends CustomId {
         super(uuid);
     }
     @Override
-    public @Nullable PanelAttribute get() {
-        final Entity entity = Bukkit.getEntity(getUUID());
-        return (entity instanceof TextDisplay)
-                ? new PanelAttribute(this)
-                : null;
+    public Optional<PanelAttribute> get() {
+        return (Bukkit.getEntity(getUUID()) instanceof TextDisplay)
+                ? Optional.of(new PanelAttribute(this))
+                : Optional.empty();
     }
 }

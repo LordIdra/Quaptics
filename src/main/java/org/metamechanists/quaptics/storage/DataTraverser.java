@@ -8,6 +8,8 @@ import org.bukkit.persistence.PersistentDataHolder;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.id.CustomId;
 
+import java.util.Optional;
+
 public class DataTraverser {
     private final PersistentDataHolder persistentDataHolder;
     @Getter
@@ -17,9 +19,7 @@ public class DataTraverser {
         this.persistentDataHolder = Bukkit.getEntity(id.getUUID());
 
         final JsonObject data = PersistentDataAPI.getJsonObject(persistentDataHolder, Keys.DATA);
-        this.data = data == null
-                ? new JsonObject()
-                : data;
+        this.data = Optional.ofNullable(data).orElseGet(JsonObject::new);
     }
 
     public void save() {

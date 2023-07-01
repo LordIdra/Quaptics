@@ -1,10 +1,9 @@
 package org.metamechanists.quaptics.utils.id;
 
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.TextDisplay;
-import org.jetbrains.annotations.Nullable;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @SuppressWarnings("unused")
@@ -22,10 +21,9 @@ public class TextDisplayId extends CustomId {
         super(uuid);
     }
     @Override
-    public @Nullable TextDisplay get() {
-        final Entity entity = Bukkit.getEntity(getUUID());
-        return (entity instanceof final TextDisplay textDisplay)
-                ? textDisplay
-                : null;
+    public Optional<TextDisplay> get() {
+        return (Bukkit.getEntity(getUUID()) instanceof final TextDisplay textDisplay)
+                ? Optional.of(textDisplay)
+                : Optional.empty();
     }
 }

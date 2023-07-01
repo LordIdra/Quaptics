@@ -22,6 +22,8 @@ import org.metamechanists.quaptics.utils.Language;
 import org.metamechanists.quaptics.utils.PersistentDataUtils;
 import org.metamechanists.quaptics.utils.id.ConnectionPointId;
 
+import java.util.Optional;
+
 public class TargetingWand extends SlimefunItem {
     private static final float MIN_POINT_SEPARATION = 0.0001F;
 
@@ -34,39 +36,37 @@ public class TargetingWand extends SlimefunItem {
     }
 
     private static void setSource(final Player player, @NotNull final ConnectionPointId sourceId, final ItemStack stack) {
-        final ConnectionPoint source = sourceId.get();
-        if (!(source instanceof ConnectionPointOutput)) {
+        final Optional<ConnectionPoint> source = sourceId.get();
+        if (source.isEmpty()) {
+            return;
+        }
+
+        if (!(source.get() instanceof ConnectionPointOutput)) {
             Language.sendLanguageMessage(player, "targeting-wand.source-must-be-output");
             return;
         }
 
-        source.select();
+        source.get().select();
         PersistentDataUtils.setString(stack, Keys.SOURCE, sourceId.toString());
     }
 
     public static void unsetSource(final ItemStack stack) {
         if (isSourceSet(stack)) {
             final ConnectionPointId sourcePointId = new ConnectionPointId(PersistentDataUtils.getString(stack, Keys.SOURCE));
-            final ConnectionPointOutput sourcePoint = (ConnectionPointOutput) sourcePointId.get();
-
-            if (sourcePoint != null) {
-                sourcePoint.deselect();
-            }
+            final Optional<ConnectionPoint> sourcePoint = sourcePointId.get();
+            sourcePoint.ifPresent(ConnectionPoint::deselect);
         }
 
         PersistentDataUtils.clear(stack, Keys.SOURCE);
     }
 
     private static void removeLink(@NotNull final ConnectionPointId pointId) {
-        final ConnectionPoint point = pointId.get();
-
-        if (point == null || !point.hasLink()) {
+        final Optional<ConnectionPoint> point = pointId.get();
+        if (point.isEmpty()) {
             return;
         }
 
-        if (point instanceof ConnectionPointOutput || point instanceof ConnectionPointInput) {
-            point.getLink().remove();
-        }
+        point.get().getLink().ifPresent(Link::remove);
     }
 
     private static void createLink(final Player player, final ConnectionPointId inputId, final ItemStack stack) {

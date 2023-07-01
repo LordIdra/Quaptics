@@ -33,10 +33,14 @@ public class ChargerPanel extends CapacitorPanel {
             return;
         }
 
-        final ItemStack stack = Charger.getItem(location);
-        final QuapticChargeableItem item = QuapticChargeableItem.fromStack(stack);
-        if (item == null || stack == null) {
+        final Optional<ItemStack> stack = Charger.getItem(location.get());
+        if (stack.isEmpty()) {
             setPanelHidden(true);
+            return;
+        }
+
+        final Optional<QuapticChargeableItem> item = QuapticChargeableItem.fromStack(stack.get());
+        if (item.isEmpty()) {
             return;
         }
 

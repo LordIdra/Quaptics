@@ -1,24 +1,29 @@
 package org.metamechanists.quaptics.beams;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.metamechanists.quaptics.beams.ticker.DirectTicker;
 import org.metamechanists.quaptics.utils.id.TickerId;
 
-public class DirectBeam {
-    private final DirectTicker ticker;
+import java.util.Optional;
 
-    public DirectBeam(final DirectTicker ticker) {
+public class DirectBeam {
+    private final @Nullable DirectTicker ticker;
+
+    public DirectBeam(@Nullable final DirectTicker ticker) {
         this.ticker = ticker;
     }
     public DirectBeam(@NotNull final TickerId id) {
-        this.ticker = id.get();
+        ticker = id.get().isPresent() ? id.get().get() : null;
     }
 
-    public TickerId getId() {
-        return new TickerId(ticker.getID());
+    public Optional<TickerId> getId() {
+        return Optional.ofNullable(ticker).map(directTicker -> new TickerId(directTicker.getID()));
     }
 
     public void deprecate() {
-        DeprecatedTickerStorage.deprecate(ticker);
+        if (ticker != null) {
+            DeprecatedTickerStorage.deprecate(ticker);
+        }
     }
 }

@@ -13,7 +13,7 @@ import org.metamechanists.quaptics.implementation.tools.TargetingWand;
 import org.metamechanists.quaptics.items.Groups;
 import org.metamechanists.quaptics.items.Lore;
 
-@SuppressWarnings({"MagicNumber", "ZeroLengthArrayAllocation", "WeakerAccess"})
+@SuppressWarnings({"ZeroLengthArrayAllocation", "WeakerAccess"})
 @UtilityClass
 public class Tools {
     public final Settings LASER_POINTER_SETTINGS = Settings.builder()

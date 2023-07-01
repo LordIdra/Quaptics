@@ -7,7 +7,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
@@ -19,7 +18,7 @@ import org.metamechanists.quaptics.utils.id.ConnectionPointId;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
+import java.util.Optional;
 
 public class ConnectionGroup {
     @Getter
@@ -56,28 +55,21 @@ public class ConnectionGroup {
         traverser.save();
     }
 
-    public @Nullable ConnectionPoint getPoint(final String name) {
+    public Optional<ConnectionPoint> getPoint(final String name) {
         return points.get(name).get();
     }
-    public @Nullable ConnectionPointOutput getOutput(final String name) {
-        return getPoint(name) instanceof final ConnectionPointOutput output
-                ? output
-                : null;
+    public Optional<ConnectionPointOutput> getOutput(final String name) {
+        return getPoint(name).map(point -> (ConnectionPointOutput) point);
     }
-    public @Nullable ConnectionPointInput getInput(final String name) {
-        return getPoint(name) instanceof final ConnectionPointInput input
-                ? input
-                : null;
+    public Optional<ConnectionPointInput> getInput(final String name) {
+        return getPoint(name).map(point -> (ConnectionPointInput) point);
     }
     public ConnectedBlock getBlock() {
         return Items.getBlocks().get(blockId);
     }
-    public @Nullable Location getLocation() {
+    public Optional<Location> getLocation() {
         // The ConnectionGroupId shares the UUID of the main interaction entity
-        final Entity entity = Bukkit.getEntity(id.getUUID());
-        return entity != null
-                ? entity.getLocation()
-                : null;
+        return Optional.ofNullable(Bukkit.getEntity(id.getUUID())).map(Entity::getLocation);
     }
 
     public void tick() {
@@ -87,14 +79,16 @@ public class ConnectionGroup {
     public void updatePanels() {
         points.values().stream()
                 .map(ConnectionPointId::get)
-                .filter(Objects::nonNull)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
                 .forEach(ConnectionPoint::updatePanel);
     }
 
     public void remove() {
         points.values().stream()
                 .map(ConnectionPointId::get)
-                .filter(Objects::nonNull)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
                 .forEach(ConnectionPoint::remove);
     }
 }

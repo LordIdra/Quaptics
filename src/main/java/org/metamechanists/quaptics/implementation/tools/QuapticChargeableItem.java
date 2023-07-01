@@ -23,6 +23,7 @@ import org.metamechanists.quaptics.utils.Keys;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -38,12 +39,12 @@ public abstract class QuapticChargeableItem extends SlimefunItem {
         this.settings = settings;
     }
 
-    public static @Nullable QuapticChargeableItem fromStack(@Nullable final ItemStack stack) {
+    public static Optional<QuapticChargeableItem> fromStack(@Nullable final ItemStack stack) {
         if (!(SlimefunItem.getByItem(stack) instanceof final QuapticChargeableItem chargeableItem)) {
-            return null;
+            return Optional.empty();
         }
 
-        return chargeableItem;
+        return Optional.of(chargeableItem);
     }
 
     public static double getCharge(@NotNull final ItemStack stack) {
@@ -57,20 +58,20 @@ public abstract class QuapticChargeableItem extends SlimefunItem {
     }
 
     public static void chargeItem(@NotNull final ConnectionGroup connectionGroup, @NotNull final ItemDisplay display) {
-        final ConnectionPointInput input = connectionGroup.getInput("input");
-        if (input == null || !input.isLinkEnabled()) {
+        final Optional<ConnectionPointInput> input = connectionGroup.getInput("input");
+        if (input.isEmpty() || !input.get().isLinkEnabled()) {
             return;
         }
 
         final ItemStack itemStack = display.getItemStack();
-        final QuapticChargeableItem item = fromStack(itemStack);
-        if (item == null) {
+        final Optional<QuapticChargeableItem> item = fromStack(itemStack);
+        if (item.isEmpty()) {
             return;
         }
 
-        final Settings itemSettings = item.settings;
-        final Link link = input.getLink();
-        if (link == null || !meetsRequirements(itemSettings, link)) {
+        final Settings itemSettings = item.get().settings;
+        final Optional<Link> link = input.get().getLink();
+        if (link.isEmpty() || !meetsRequirements(itemSettings, link.get())) {
             return;
         }
 
@@ -78,7 +79,7 @@ public abstract class QuapticChargeableItem extends SlimefunItem {
             return;
         }
 
-        final double newCharge = itemSettings.stepCharge(getCharge(itemStack), link.getPower() / QuapticTicker.QUAPTIC_TICKS_PER_SECOND);
+        final double newCharge = itemSettings.stepCharge(getCharge(itemStack), link.get().getPower() / QuapticTicker.QUAPTIC_TICKS_PER_SECOND);
 
         setCharge(itemStack, newCharge);
         display.setItemStack(itemStack);

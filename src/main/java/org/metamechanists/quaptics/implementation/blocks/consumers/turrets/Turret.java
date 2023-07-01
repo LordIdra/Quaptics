@@ -24,6 +24,7 @@ import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
+import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
@@ -35,6 +36,7 @@ import org.metamechanists.quaptics.utils.id.ConnectionGroupId;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public abstract class Turret extends ConnectedBlock {
@@ -76,22 +78,25 @@ public abstract class Turret extends ConnectedBlock {
 
     @Override
     public void onInputLinkUpdated(@NotNull final ConnectionGroup group) {
-        final ConnectionPoint input = group.getPoint("input");
-        if (input == null || doBurnoutCheck(group, input)) {
+        final Optional<ConnectionPoint> input = group.getPoint("input");
+        if (input.isEmpty() || doBurnoutCheck(group, input.get())) {
             return;
         }
 
-        final Location location = group.getLocation();
-        if (location != null) {
-            BlockStorage.addBlockInfo(location, Keys.BS_POWERED, "false");
-        }
-
-        if (!input.hasLink()) {
+        final Optional<Location> location = group.getLocation();
+        if (location.isEmpty()) {
             return;
         }
 
-        if (settings.checkPower(input.getLink().getPower()) && settings.checkFrequency(input.getLink().getFrequency())) {
-            BlockStorage.addBlockInfo(group.getLocation(), Keys.BS_POWERED, "true");
+        BlockStorage.addBlockInfo(location.get(), Keys.BS_POWERED, "false");
+
+        final Optional<Link> inputLink = input.get().getLink();
+        if (inputLink.isEmpty()) {
+            return;
+        }
+
+        if (settings.checkPower(inputLink.get().getPower()) && settings.checkFrequency(inputLink.get().getFrequency())) {
+            BlockStorage.addBlockInfo(location.get(), Keys.BS_POWERED, "true");
         }
     }
 

@@ -22,7 +22,7 @@ import org.metamechanists.quaptics.items.Tier;
 
 import java.util.Set;
 
-@SuppressWarnings({"MagicNumber", "ZeroLengthArrayAllocation", "WeakerAccess"})
+@SuppressWarnings({"ZeroLengthArrayAllocation", "WeakerAccess"})
 @UtilityClass
 public class Primitive {
     public final Settings SOLAR_CONCENTRATOR_1_SETTINGS = Settings.builder()
