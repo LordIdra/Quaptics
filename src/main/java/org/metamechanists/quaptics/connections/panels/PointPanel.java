@@ -67,7 +67,7 @@ public class PointPanel {
 
         final ConnectionPoint point = getPoint().get();
 
-        panel.setText("name", ChatColors.color((point.getLink().isEmpty() ? "&a" : "&c") + point.getName().toUpperCase()));
+        panel.setText("name", ChatColors.color((point.getLink().isPresent() ? "&a" : "&c") + point.getName().toUpperCase()));
 
         if (point.getLink().isEmpty()) {
             panel.setAttributeHidden("power", true);
