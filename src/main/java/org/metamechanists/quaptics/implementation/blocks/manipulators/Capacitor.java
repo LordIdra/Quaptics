@@ -176,7 +176,7 @@ public class Capacitor extends ConnectedBlock {
     public void onInputLinkUpdated(@NotNull ConnectionGroup group) {
         final ConnectionPointInput input = group.getInput("input");
 
-        if (input == null || !input.hasLink()) {
+        if (input == null) {
             return;
         }
 
