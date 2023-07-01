@@ -142,7 +142,7 @@ public abstract class ConnectionPoint {
         getPointPanel().remove();
 
         this.panelId = new PointPanel(location, getId()).getId();
-        getPointPanel().setPanelHidden(!wasHidden);
+        getPointPanel().setPanelHidden(wasHidden);
         saveData();
     }
 
