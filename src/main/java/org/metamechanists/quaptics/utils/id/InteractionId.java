@@ -12,19 +12,19 @@ public class InteractionId extends CustomId {
     public InteractionId() {
         super();
     }
-    public InteractionId(CustomId id) {
+    public InteractionId(final CustomId id) {
         super(id);
     }
-    public InteractionId(String string) {
-        super(string);
+    public InteractionId(final String uuid) {
+        super(uuid);
     }
-    public InteractionId(UUID uuid) {
+    public InteractionId(final UUID uuid) {
         super(uuid);
     }
     @Override
     public @Nullable Interaction get() {
         final Entity entity = Bukkit.getEntity(getUUID());
-        return (entity instanceof Interaction interaction)
+        return (entity instanceof final Interaction interaction)
                 ? interaction
                 : null;
     }

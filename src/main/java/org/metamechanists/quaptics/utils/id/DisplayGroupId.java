@@ -10,13 +10,13 @@ public class DisplayGroupId extends CustomId {
     public DisplayGroupId() {
         super();
     }
-    public DisplayGroupId(CustomId id) {
+    public DisplayGroupId(final CustomId id) {
         super(id);
     }
-    public DisplayGroupId(String string) {
-        super(string);
+    public DisplayGroupId(final String uuid) {
+        super(uuid);
     }
-    public DisplayGroupId(UUID uuid) {
+    public DisplayGroupId(final UUID uuid) {
         super(uuid);
     }
     @Override

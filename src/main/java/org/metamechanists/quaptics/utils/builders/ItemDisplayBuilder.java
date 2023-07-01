@@ -3,11 +3,13 @@ package org.metamechanists.quaptics.utils.builders;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.entity.Display;
+import org.bukkit.entity.Display.Billboard;
+import org.bukkit.entity.Display.Brightness;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.inventory.ItemStack;
 import org.joml.Matrix4f;
 
+@SuppressWarnings("unused")
 public class ItemDisplayBuilder {
     private final Location location;
     private Material material;
@@ -15,9 +17,9 @@ public class ItemDisplayBuilder {
     private Matrix4f transformation;
     private Integer brightness;
     private Color glowColor;
-    private Display.Billboard billboard;
+    private Billboard billboard;
 
-    public ItemDisplayBuilder(Location location) {
+    public ItemDisplayBuilder(final Location location) {
         this.location = location;
     }
     public ItemDisplay build() {
@@ -36,7 +38,7 @@ public class ItemDisplayBuilder {
                 display.setGlowColorOverride(glowColor);
             }
             if (brightness != null) {
-                display.setBrightness(new Display.Brightness(brightness, 0));
+                display.setBrightness(new Brightness(brightness, 0));
             }
             if (billboard != null) {
                 display.setBillboard(billboard);
@@ -46,28 +48,28 @@ public class ItemDisplayBuilder {
         });
     }
 
-    public ItemDisplayBuilder setMaterial(Material material) {
+    public ItemDisplayBuilder setMaterial(final Material material) {
         this.material = material;
         return this;
     }
-    public ItemDisplayBuilder setItemStack(ItemStack itemStack) {
+    public ItemDisplayBuilder setItemStack(final ItemStack itemStack) {
         // Overrides material
         this.itemStack = itemStack;
         return this;
     }
-    public ItemDisplayBuilder setTransformation(Matrix4f transformation) {
+    public ItemDisplayBuilder setTransformation(final Matrix4f transformation) {
         this.transformation = transformation;
         return this;
     }
-    public ItemDisplayBuilder setBrightness(int brightness) {
+    public ItemDisplayBuilder setBrightness(final int brightness) {
         this.brightness = brightness;
         return this;
     }
-    public ItemDisplayBuilder setGlow(Color glowColor) {
+    public ItemDisplayBuilder setGlow(final Color glowColor) {
         this.glowColor = glowColor;
         return this;
     }
-    public ItemDisplayBuilder setBillboard(Display.Billboard billboard) {
+    public ItemDisplayBuilder setBillboard(final Billboard billboard) {
         this.billboard = billboard;
         return this;
     }

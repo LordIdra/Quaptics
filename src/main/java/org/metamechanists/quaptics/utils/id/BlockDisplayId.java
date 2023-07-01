@@ -12,19 +12,19 @@ public class BlockDisplayId extends CustomId {
     public BlockDisplayId() {
         super();
     }
-    public BlockDisplayId(CustomId id) {
+    public BlockDisplayId(final CustomId id) {
         super(id);
     }
-    public BlockDisplayId(String string) {
-        super(string);
+    public BlockDisplayId(final String uuid) {
+        super(uuid);
     }
-    public BlockDisplayId(UUID uuid) {
+    public BlockDisplayId(final UUID uuid) {
         super(uuid);
     }
     @Override
     public @Nullable BlockDisplay get() {
         final Entity entity = Bukkit.getEntity(getUUID());
-        return (entity instanceof BlockDisplay blockDisplay)
+        return (entity instanceof final BlockDisplay blockDisplay)
                 ? blockDisplay
                 : null;
     }

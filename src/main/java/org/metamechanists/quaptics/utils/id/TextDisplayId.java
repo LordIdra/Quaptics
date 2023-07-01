@@ -12,19 +12,19 @@ public class TextDisplayId extends CustomId {
     public TextDisplayId() {
         super();
     }
-    public TextDisplayId(CustomId id) {
+    public TextDisplayId(final CustomId id) {
         super(id);
     }
-    public TextDisplayId(String string) {
-        super(string);
+    public TextDisplayId(final String uuid) {
+        super(uuid);
     }
-    public TextDisplayId(UUID uuid) {
+    public TextDisplayId(final UUID uuid) {
         super(uuid);
     }
     @Override
     public @Nullable TextDisplay get() {
         final Entity entity = Bukkit.getEntity(getUUID());
-        return (entity instanceof TextDisplay textDisplay)
+        return (entity instanceof final TextDisplay textDisplay)
                 ? textDisplay
                 : null;
     }

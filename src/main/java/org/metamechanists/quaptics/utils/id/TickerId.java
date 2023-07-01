@@ -13,13 +13,13 @@ public class TickerId extends CustomId {
     public TickerId() {
         super();
     }
-    public TickerId(CustomId id) {
+    public TickerId(final CustomId id) {
         super(id);
     }
-    public TickerId(String string) {
-        super(string);
+    public TickerId(final String uuid) {
+        super(uuid);
     }
-    public TickerId(UUID uuid) {
+    public TickerId(final UUID uuid) {
         super(uuid);
     }
     @Override

@@ -13,7 +13,7 @@ public class DataTraverser {
     @Getter
     private final JsonObject data;
 
-    public DataTraverser(CustomId id) {
+    public DataTraverser(final CustomId id) {
         this.persistentDataHolder = Bukkit.getEntity(id.getUUID());
 
         final JsonObject data = PersistentDataAPI.getJsonObject(persistentDataHolder, Keys.DATA);

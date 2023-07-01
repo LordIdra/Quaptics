@@ -1,5 +1,6 @@
 package org.metamechanists.quaptics.storage;
 
+import lombok.experimental.UtilityClass;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.Quaptics;
@@ -13,45 +14,46 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@UtilityClass
 public class QuapticStorage {
-    protected static final Set<ConnectionGroupId> groupIDs = new HashSet<>();
+    private final Set<ConnectionGroupId> groupIDs = new HashSet<>();
 
-    public static void addGroup(ConnectionGroupId groupId) {
-        groupIDs.add(groupId);
-    }
-
-    public static Set<ConnectionGroupId> getLoadedGroups() {
+    public @NotNull Set<ConnectionGroupId> getLoadedGroups() {
         return groupIDs.stream()
                 .filter(id -> id.get() != null)
                 .collect(Collectors.toSet());
     }
 
-    private static List<String> serializeGroupIDs() {
+    private @NotNull List<String> serializeGroupIDs() {
         return groupIDs.stream().map(id -> id.getUUID().toString()).toList();
     }
 
-    private static void deserializeGroupIDs(@NotNull List<String> stringIDs) {
+    public void addGroup(final ConnectionGroupId groupId) {
+        groupIDs.add(groupId);
+    }
+
+    private void deserializeGroupIDs(@NotNull final List<String> stringIDs) {
         groupIDs.addAll(stringIDs.stream().map(ConnectionGroupId::new).toList());
     }
 
-    private static void createDirectoryIfNotExists(@NotNull File file) {
+    private void createDirectoryIfNotExists(@NotNull final File file) {
         if (!file.exists()) {
             file.mkdir();
         }
     }
 
-    private static void createFileIfNotExists(@NotNull File file) {
+    private void createFileIfNotExists(@NotNull final File file) {
         if (!file.exists()) {
             try {
                 file.createNewFile();
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 e.printStackTrace();
                 throw new RuntimeException("Failed to create ticker file");
             }
         }
     }
 
-    public static void save() {
+    public void save() {
         final File directory = new File(Quaptics.getInstance().getDataFolder(), "../../data-storage/quaptics/");
         createDirectoryIfNotExists(directory);
 
@@ -63,13 +65,13 @@ public class QuapticStorage {
 
         try {
             tickers.save(file);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             e.printStackTrace();
             throw new RuntimeException("Failed to save ticker file");
         }
     }
 
-    public static void load() {
+    public void load() {
         final File file = new File(Quaptics.getInstance().getDataFolder(), "../../data-storage/quaptics/tickers.yml");
 
         if (!file.exists()) {

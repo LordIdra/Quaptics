@@ -5,7 +5,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.BlockDisplay;
-import org.bukkit.entity.Display;
+import org.bukkit.entity.Display.Brightness;
 import org.joml.Matrix4f;
 
 public class BlockDisplayBuilder {
@@ -17,7 +17,7 @@ public class BlockDisplayBuilder {
     private Integer brightness;
     private Float viewRange;
 
-    public BlockDisplayBuilder(Location location) {
+    public BlockDisplayBuilder(final Location location) {
         this.location = location;
     }
     public BlockDisplay build() {
@@ -36,7 +36,7 @@ public class BlockDisplayBuilder {
                 display.setGlowColorOverride(glowColor);
             }
             if (brightness != null) {
-                display.setBrightness(new Display.Brightness(brightness, 0));
+                display.setBrightness(new Brightness(brightness, 0));
             }
             if (viewRange != null) {
                 display.setViewRange(viewRange);
@@ -46,28 +46,28 @@ public class BlockDisplayBuilder {
         });
     }
 
-    public BlockDisplayBuilder setMaterial(Material material) {
+    public BlockDisplayBuilder setMaterial(final Material material) {
         this.material = material;
         return this;
     }
-    public BlockDisplayBuilder setBlockData(BlockData blockData) {
+    public BlockDisplayBuilder setBlockData(final BlockData blockData) {
         // Overrides material
         this.blockData = blockData;
         return this;
     }
-    public BlockDisplayBuilder setTransformation(Matrix4f transformation) {
+    public BlockDisplayBuilder setTransformation(final Matrix4f transformation) {
         this.transformation = transformation;
         return this;
     }
-    public BlockDisplayBuilder setBrightness(int brightness) {
+    public BlockDisplayBuilder setBrightness(final int brightness) {
         this.brightness = brightness;
         return this;
     }
-    public BlockDisplayBuilder setGlow(Color glowColor) {
+    public BlockDisplayBuilder setGlow(final Color glowColor) {
         this.glowColor = glowColor;
         return this;
     }
-    public BlockDisplayBuilder setViewRange(float viewRange) {
+    public BlockDisplayBuilder setViewRange(final float viewRange) {
         this.viewRange = viewRange;
         return this;
     }

@@ -11,13 +11,13 @@ public class ConnectionGroupId extends CustomId {
     public ConnectionGroupId() {
         super();
     }
-    public ConnectionGroupId(CustomId id) {
+    public ConnectionGroupId(final CustomId id) {
         super(id);
     }
-    public ConnectionGroupId(String string) {
-        super(string);
+    public ConnectionGroupId(final String uuid) {
+        super(uuid);
     }
-    public ConnectionGroupId(UUID uuid) {
+    public ConnectionGroupId(final UUID uuid) {
         super(uuid);
     }
     @Override

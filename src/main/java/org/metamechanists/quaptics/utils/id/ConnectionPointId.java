@@ -17,13 +17,13 @@ public class ConnectionPointId extends CustomId {
     public ConnectionPointId() {
         super();
     }
-    public ConnectionPointId(CustomId id) {
+    public ConnectionPointId(final CustomId id) {
         super(id);
     }
-    public ConnectionPointId(String string) {
-        super(string);
+    public ConnectionPointId(final String uuid) {
+        super(uuid);
     }
-    public ConnectionPointId(UUID uuid) {
+    public ConnectionPointId(final UUID uuid) {
         super(uuid);
     }
     @Override

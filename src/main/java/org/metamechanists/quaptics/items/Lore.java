@@ -14,33 +14,34 @@ import java.util.Objects;
 @SuppressWarnings("WeakerAccess")
 @UtilityClass
 public class Lore {
-    private static final double ROUND_TO_INT_THRESHOLD = 0.0001;
-    private static final String ATTRIBUTE_SYMBOL = "&8⇨ ";
-    private static final String COUNT_SYMBOL = Colors.COMPONENTS_MISC.getString() + "◎ ";
-    private static final String RANGE_SYMBOL = Colors.COMPONENTS_MISC.getString() + "↔ ";
-    private static final String SPEED_SYMBOL = Colors.COMPONENTS_MISC.getString() + "→ ";
-    private static final String DAMAGE_SYMBOL = Colors.COMPONENTS_MISC.getString() + "🗡 ";
-    private static final String CHARGE_SYMBOL = Colors.CHARGE.getString() + "◆ ";
-    private static final String POWER_SYMBOL = Colors.POWER.getString() + "⏻ ";
-    private static final String FREQUENCY_SYMBOL = Colors.FREQUENCY.getString() + "∀ ";
-    private static final String PHASE_SYMBOL = Colors.PHASE.getString() + "۞ ";
+    private final double ROUND_TO_INT_THRESHOLD = 0.0001;
+    private final String ATTRIBUTE_SYMBOL = "&8⇨ ";
+    private final String COUNT_SYMBOL = Colors.COMPONENTS_MISC.getFormattedColor() + "◎ ";
+    private final String RANGE_SYMBOL = Colors.COMPONENTS_MISC.getFormattedColor() + "↔ ";
+    private final String SPEED_SYMBOL = Colors.COMPONENTS_MISC.getFormattedColor() + "→ ";
+    private final String DAMAGE_SYMBOL = Colors.COMPONENTS_MISC.getFormattedColor() + "🗡 ";
+    private final String CHARGE_SYMBOL = Colors.CHARGE.getFormattedColor() + "◆ ";
+    private final String POWER_SYMBOL = Colors.POWER.getFormattedColor() + "⏻ ";
+    private final String FREQUENCY_SYMBOL = Colors.FREQUENCY.getFormattedColor() + "∀ ";
+    private final String PHASE_SYMBOL = Colors.PHASE.getFormattedColor() + "۞ ";
 
-    private static final String PERCENTAGE_SUFFIX = " &8%";
-    private static final String CHARGE_SUFFIX = " &8QEU";
-    private static final String POWER_SUFFIX = " &8W";
-    private static final String RANGE_SUFFIX = " &8blocks";
-    private static final String SPEED_SUFFIX = " &8blocks/s";
-    private static final String DAMAGE_SUFFIX = " &8dps";
-    private static final String FREQUENCY_SUFFIX = " &8Hz";
-    private static final String PHASE_SUFFIX = " &8°";
+    private final String PERCENTAGE_SUFFIX = " &8%";
+    private final String CHARGE_SUFFIX = " &8QEU";
+    private final String POWER_SUFFIX = " &8W";
+    private final String RANGE_SUFFIX = " &8blocks";
+    private final String SPEED_SUFFIX = " &8blocks/s";
+    private final String DAMAGE_SUFFIX = " &8dps";
+    private final String FREQUENCY_SUFFIX = " &8Hz";
+    private final String PHASE_SUFFIX = " &8°";
+    private final double SLIMEFUN_TICKS_PER_SECOND = 2.0;
 
-    private static String format(double x) {
+    private String format(final double x) {
         return Objects.toString(Math.abs((int)(x) - x) < ROUND_TO_INT_THRESHOLD
                 ? (int) x
                 : x);
     }
 
-    public static @NotNull String[] buildChargeableLore(Settings settings, int filled, String... description) {
+    public @NotNull String[] buildChargeableLore(final Settings settings, final int charge, final String... description) {
         final List<String> lore = new ArrayList<>();
 
         Collections.addAll(lore, description);
@@ -55,7 +56,7 @@ public class Lore {
         return lore.toArray(new String[0]);
     }
 
-    private static @NotNull List<String> fromSettings(@NotNull Settings settings) {
+    private @NotNull List<String> fromSettings(@NotNull final Settings settings) {
         final List<String> lore = new ArrayList<>();
 
         if (settings.getTier() != null && (settings.getEmissionPower() == 0 || settings.getCapacity() != 0)) {
@@ -94,7 +95,7 @@ public class Lore {
 
         return lore;
     }
-    public static @NotNull String[] create(@NotNull Settings settings, String... description) {
+    public @NotNull String[] create(@NotNull final Settings settings, final String... description) {
         final List<String> lore = new ArrayList<>();
         lore.add(settings.getTier().name);
         Collections.addAll(lore, description);
@@ -102,72 +103,72 @@ public class Lore {
         return lore.toArray(new String[0]);
     }
 
-    public static String maxConnections(int maxConnections) {
+    public String maxConnections(final int maxConnections) {
         return ATTRIBUTE_SYMBOL + COUNT_SYMBOL + "&7Max connections: &e" + Objects.toString(maxConnections);
     }
-    public static String range(int range) {
+    public String range(final int range) {
         return ATTRIBUTE_SYMBOL + RANGE_SYMBOL + "&7Range &e" + Objects.toString(range) + RANGE_SUFFIX;
     }
-    public static String projectileSpeed(double speed) {
+    public String projectileSpeed(final double speed) {
         return ATTRIBUTE_SYMBOL + SPEED_SYMBOL + "&7Projectile Speed &e" + format(speed*QuapticTicker.QUAPTIC_TICKS_PER_SECOND) + SPEED_SUFFIX;
     }
-    public static String damage(double damage) {
-        return ATTRIBUTE_SYMBOL + DAMAGE_SYMBOL + "&7Damage &e" + format(damage/2.0) + DAMAGE_SUFFIX;
+    public String damage(final double damage) {
+        return ATTRIBUTE_SYMBOL + DAMAGE_SYMBOL + "&7Damage &e" + format(damage/SLIMEFUN_TICKS_PER_SECOND) + DAMAGE_SUFFIX;
     }
 
-    public static String capacity(double capacity) {
+    public String capacity(final double capacity) {
         return ATTRIBUTE_SYMBOL + CHARGE_SYMBOL + "&7Capacity &e" + Objects.toString(capacity) + CHARGE_SUFFIX;
     }
 
-    public static String powerNoArrow(double power) {
+    public String powerNoArrow(final double power) {
         return POWER_SYMBOL + "&7Power &e" + Objects.toString(power) + POWER_SUFFIX;
     }
-    public static String emissionPower(double emissionPower) {
+    public String emissionPower(final double emissionPower) {
         return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Emission Power &e" + format(emissionPower) + POWER_SUFFIX;
     }
-    public static String operatingPower(double minPower, double maxPower) {
+    public String operatingPower(final double minPower, final double maxPower) {
         return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Operating Power &e" + format(minPower) + " &7- &e" + format(maxPower) + POWER_SUFFIX;
     }
-    public static String powerLoss(double powerLoss) {
+    public String powerLoss(final double powerLoss) {
         return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Power Loss &e" + format(powerLoss*100) + PERCENTAGE_SUFFIX;
     }
 
-    public static String chargeBar(int charge, int capacity) {
-        return ATTRIBUTE_SYMBOL + CHARGE_SYMBOL + "&7Charge " + progressBar(charge, capacity, Colors.CHARGE.getString(), "&7");
+    public String chargeBar(final int charge, final int capacity) {
+        return ATTRIBUTE_SYMBOL + CHARGE_SYMBOL + "&7Charge " + progressBar(charge, capacity, Colors.CHARGE.getFormattedColor(), "&7");
     }
-    public static String chargeBarRaw(int charge, int capacity) {
-        return progressBar(charge, capacity, Colors.CHARGE.getString(), "&7");
+    public String chargeBarRaw(final int charge, final int capacity) {
+        return progressBar(charge, capacity, Colors.CHARGE.getFormattedColor(), "&7");
     }
-    public static String chargeValues(int charge, int capacity) {
+    public String chargeValues(final int charge, final int capacity) {
         return ATTRIBUTE_SYMBOL + CHARGE_SYMBOL + "&7" + charge + " &8/ &7" + capacity + CHARGE_SUFFIX;
     }
-    public static String chargeValuesRaw(int charge, int capacity) {
+    public String chargeValuesRaw(final int charge, final int capacity) {
         return "&7" + charge + " &8/ &7" + capacity + CHARGE_SUFFIX;
     }
-    public static String chargeUsage(int usage) {
+    public String chargeUsage(final int usage) {
         return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Usage &e" + usage + POWER_SUFFIX;
     }
 
-    public static String frequencyNoArrow(double frequency) {
+    public String frequencyNoArrow(final double frequency) {
         return FREQUENCY_SYMBOL + "&7Frequency &e" + Objects.toString(frequency) + FREQUENCY_SUFFIX;
     }
-    public static String operatingFrequency(double minFrequency, double maxFrequency) {
+    public String operatingFrequency(final double minFrequency, final double maxFrequency) {
         return ATTRIBUTE_SYMBOL + FREQUENCY_SYMBOL + "&7Operating Frequency &e" + format(minFrequency)
                 + (maxFrequency == 0 ? "+" : " &7- &e" + format(maxFrequency))
                 + FREQUENCY_SUFFIX;
     }
-    public static String frequencyStep(double frequencyStep) {
+    public String frequencyStep(final double frequencyStep) {
         return ATTRIBUTE_SYMBOL + FREQUENCY_SYMBOL + "&7Frequency &e+" + format(frequencyStep) + FREQUENCY_SUFFIX;
     }
-    public static String frequencyMultiplier(double frequencyMultiplier) {
+    public String frequencyMultiplier(final double frequencyMultiplier) {
         return ATTRIBUTE_SYMBOL + FREQUENCY_SYMBOL + "&7Frequency &ex" + format(frequencyMultiplier);
     }
 
-    public static String phaseNoArrow(int phase) {
+    public String phaseNoArrow(final int phase) {
         return PHASE_SYMBOL + "&7Phase &e" + Objects.toString(phase) + PHASE_SUFFIX;
     }
 
-    public static String progressBar(int filled, int max, String filledColor, String emptyColor) {
+    public String progressBar(final int filled, final int max, final String filledColor, final String emptyColor) {
         final String base = "¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦";
         final int divideAt = filled/(max/20);
         return filledColor + base.substring(0, divideAt) + emptyColor + base.substring(divideAt);

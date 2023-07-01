@@ -2,7 +2,8 @@ package org.metamechanists.quaptics.utils.builders;
 
 import org.bukkit.Color;
 import org.bukkit.Location;
-import org.bukkit.entity.Display;
+import org.bukkit.entity.Display.Billboard;
+import org.bukkit.entity.Display.Brightness;
 import org.bukkit.entity.TextDisplay;
 import org.joml.Matrix4f;
 
@@ -14,10 +15,10 @@ public class TextDisplayBuilder {
     private Integer brightness;
     private Color glowColor;
     private Float viewRange;
-    private Display.Billboard billboard;
+    private Billboard billboard;
     private Color backgroundColor;
 
-    public TextDisplayBuilder(Location location) {
+    public TextDisplayBuilder(final Location location) {
         this.location = location;
     }
     public TextDisplay build() {
@@ -29,7 +30,7 @@ public class TextDisplayBuilder {
                 display.setTransformationMatrix(transformation);
             }
             if (brightness != null) {
-                display.setBrightness(new Display.Brightness(brightness, 0));
+                display.setBrightness(new Brightness(brightness, 0));
             }
             if (glowColor != null) {
                 display.setGlowing(true);
@@ -49,31 +50,31 @@ public class TextDisplayBuilder {
         });
     }
 
-    public TextDisplayBuilder setText(String text) {
+    public TextDisplayBuilder setText(final String text) {
         this.text = text;
         return this;
     }
-    public TextDisplayBuilder setTransformation(Matrix4f transformation) {
+    public TextDisplayBuilder setTransformation(final Matrix4f transformation) {
         this.transformation = transformation;
         return this;
     }
-    public TextDisplayBuilder setBrightness(int brightness) {
+    public TextDisplayBuilder setBrightness(final int brightness) {
         this.brightness = brightness;
         return this;
     }
-    public TextDisplayBuilder setGlow(Color glowColor) {
+    public TextDisplayBuilder setGlow(final Color glowColor) {
         this.glowColor = glowColor;
         return this;
     }
-    public TextDisplayBuilder setViewRange(float viewRange) {
+    public TextDisplayBuilder setViewRange(final float viewRange) {
         this.viewRange = viewRange;
         return this;
     }
-    public TextDisplayBuilder setBillboard(Display.Billboard billboard) {
+    public TextDisplayBuilder setBillboard(final Billboard billboard) {
         this.billboard = billboard;
         return this;
     }
-    public TextDisplayBuilder setBackgroundColor(Color backgroundColor) {
+    public TextDisplayBuilder setBackgroundColor(final Color backgroundColor) {
         this.backgroundColor = backgroundColor;
         return this;
     }

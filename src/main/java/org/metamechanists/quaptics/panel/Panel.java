@@ -6,6 +6,7 @@ import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import lombok.Getter;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.metamechanists.quaptics.storage.DataTraverser;
 import org.metamechanists.quaptics.utils.id.DisplayGroupId;
 import org.metamechanists.quaptics.utils.id.PanelAttributeId;
@@ -23,13 +24,13 @@ public class Panel {
     private boolean hidden = true;
     private final Map<String, PanelAttributeId> attributes;
 
-    public Panel(DisplayGroupId displayGroupId, Map<String, PanelAttributeId> attributes) {
+    public Panel(final DisplayGroupId displayGroupId, final Map<String, PanelAttributeId> attributes) {
         this.displayGroupId = displayGroupId;
         this.attributes = attributes;
         saveData();
     }
 
-    public Panel(@NotNull PanelId panelId) {
+    public Panel(@NotNull final PanelId panelId) {
         final DataTraverser traverser = new DataTraverser(panelId);
         final JsonObject mainSection = traverser.getData();
         final JsonObject attributeSection = mainSection.get("attributes").getAsJsonObject();
@@ -45,7 +46,7 @@ public class Panel {
         final JsonObject mainSection = traverser.getData();
         final JsonObject attributeSection = new JsonObject();
         mainSection.add("hidden", new JsonPrimitive(hidden));
-        this.attributes.forEach(
+        attributes.forEach(
                 (key, value) -> attributeSection.add(key, new JsonPrimitive(value.getUUID().toString())));
         mainSection.add("attributes", attributeSection);
         traverser.save();
@@ -55,8 +56,8 @@ public class Panel {
         return new PanelId(displayGroupId);
     }
 
-    private DisplayGroup getDisplayGroup() {
-        return DisplayGroup.fromUUID(displayGroupId.getUUID());
+    private @Nullable DisplayGroup getDisplayGroup() {
+        return displayGroupId.get();
     }
 
     @Contract("_ -> new")

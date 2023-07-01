@@ -8,7 +8,7 @@ public class InteractionBuilder {
     private Float width;
     private Float height;
 
-    public InteractionBuilder(Location location) {
+    public InteractionBuilder(final Location location) {
         this.location = location;
     }
     public Interaction build() {
@@ -22,11 +22,11 @@ public class InteractionBuilder {
         });
     }
 
-    public InteractionBuilder setWidth(float width) {
+    public InteractionBuilder setWidth(final float width) {
         this.width = width;
         return this;
     }
-    public InteractionBuilder setHeight(float height) {
+    public InteractionBuilder setHeight(final float height) {
         this.height = height;
         return this;
     }

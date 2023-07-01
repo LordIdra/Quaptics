@@ -14,31 +14,31 @@ import org.metamechanists.quaptics.utils.Keys;
 @SuppressWarnings("WeakerAccess")
 @UtilityClass
 public class Groups {
-    public static final SimpleFlexGroup MAIN = new SimpleFlexGroup(
+    public final SimpleFlexGroup MAIN = new SimpleFlexGroup(
             Quaptics.getInstance(),
-            Colors.QUAPTICS.getString() + "Quaptics",
+            Colors.QUAPTICS.getFormattedColor() + "Quaptics",
             Keys.MAIN,
-            new CustomItemStack(Material.LIGHT_BLUE_STAINED_GLASS, Colors.QUAPTICS.getString() + "Quaptics"));
+            new CustomItemStack(Material.LIGHT_BLUE_STAINED_GLASS, Colors.QUAPTICS.getFormattedColor() + "Quaptics"));
 
-    public static final ItemGroup GUIDE = new DummyItemGroup(Keys.GUIDE,
+    public final ItemGroup GUIDE = new DummyItemGroup(Keys.GUIDE,
             new CustomItemStack(Material.MAP, "&aGuide"));
 
-    public static final ItemGroup TOOLS = new DummyItemGroup(Keys.TOOLS,
+    public final ItemGroup TOOLS = new DummyItemGroup(Keys.TOOLS,
             new CustomItemStack(Material.GOLDEN_PICKAXE, "&fTools"));
 
-    public static final ItemGroup PRIMITIVE = new DummyItemGroup(Keys.PRIMITIVE,
-            new CustomItemStack(Material.BROWN_CONCRETE, Colors.PRIMITIVE.getString() + "Primitive Components"));
+    public final ItemGroup PRIMITIVE = new DummyItemGroup(Keys.PRIMITIVE,
+            new CustomItemStack(Material.BROWN_CONCRETE, Colors.PRIMITIVE.getFormattedColor() + "Primitive Components"));
 
-    public static final ItemGroup BASIC = new DummyItemGroup(Keys.BASIC,
-            new CustomItemStack(Material.GRAY_CONCRETE, Colors.BASIC.getString() + "Basic Components"));
+    public final ItemGroup BASIC = new DummyItemGroup(Keys.BASIC,
+            new CustomItemStack(Material.GRAY_CONCRETE, Colors.BASIC.getFormattedColor() + "Basic Components"));
 
-    public static final ItemGroup INTERMEDIATE = new DummyItemGroup(Keys.INTERMEDIATE,
-            new CustomItemStack(Material.YELLOW_CONCRETE, Colors.INTERMEDIATE.getString() + "Intermediate Components"));
+    public final ItemGroup INTERMEDIATE = new DummyItemGroup(Keys.INTERMEDIATE,
+            new CustomItemStack(Material.YELLOW_CONCRETE, Colors.INTERMEDIATE.getFormattedColor() + "Intermediate Components"));
 
-    public static final ItemGroup ADVANCED = new DummyItemGroup(Keys.ADVANCED,
-            new CustomItemStack(Material.ORANGE_CONCRETE, Colors.ADVANCED.getString() + "Advanced Components"));
+    public final ItemGroup ADVANCED = new DummyItemGroup(Keys.ADVANCED,
+            new CustomItemStack(Material.ORANGE_CONCRETE, Colors.ADVANCED.getFormattedColor() + "Advanced Components"));
 
-    public static void initialize() {
+    public void initialize() {
         final SlimefunAddon addon = Quaptics.getInstance();
         MAIN.addItemGroup(GUIDE);
         MAIN.addItemGroup(TOOLS);

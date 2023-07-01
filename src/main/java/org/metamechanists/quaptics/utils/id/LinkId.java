@@ -13,13 +13,13 @@ public class LinkId extends CustomId {
     public LinkId() {
         super();
     }
-    public LinkId(CustomId id) {
+    public LinkId(final CustomId id) {
         super(id);
     }
-    public LinkId(String string) {
-        super(string);
+    public LinkId(final String uuid) {
+        super(uuid);
     }
-    public LinkId(UUID uuid) {
+    public LinkId(final UUID uuid) {
         super(uuid);
     }
     @Override

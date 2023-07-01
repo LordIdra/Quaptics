@@ -20,16 +20,16 @@ public enum Colors {
     COMPONENTS_MISC("993366");
 
     @Getter
-    private final String string;
+    private final String formattedColor;
 
-    Colors(@NotNull String rawHex) {
+    Colors(@NotNull final String rawHex) {
         // "#ffffff" -> "&x&f&f&f&f&f&f
         // "#123456" -> "&x&1&2&3&4&5&6
         final StringBuilder colorStringBuilder = new StringBuilder("&x");
-        for (char character : rawHex.toCharArray()) {
-            colorStringBuilder.append("&").append(character);
+        for (final char character : rawHex.toCharArray()) {
+            colorStringBuilder.append('&').append(character);
         }
 
-        string = ColorUtils.formatColors(colorStringBuilder.toString());
+        formattedColor = ColorUtils.formatColors(colorStringBuilder.toString());
     }
 }

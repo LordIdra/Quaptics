@@ -11,13 +11,13 @@ public class PanelId extends CustomId {
     public PanelId() {
         super();
     }
-    public PanelId(CustomId id) {
+    public PanelId(final CustomId id) {
         super(id);
     }
-    public PanelId(String string) {
-        super(string);
+    public PanelId(final String uuid) {
+        super(uuid);
     }
-    public PanelId(UUID uuid) {
+    public PanelId(final UUID uuid) {
         super(uuid);
     }
     @Override
