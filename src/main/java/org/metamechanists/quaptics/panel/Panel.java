@@ -76,7 +76,7 @@ public class Panel {
     public void setHidden(boolean hidden) {
         if (this.hidden != hidden) {
             this.hidden = hidden;
-            hideAttributes();
+            updateAttributeVisibility();
             saveData();
         }
     }
@@ -85,7 +85,7 @@ public class Panel {
         setHidden(!hidden);
     }
 
-    private void hideAttributes() {
+    private void updateAttributeVisibility() {
         attributes.values().stream()
                 .map(PanelAttributeId::get)
                 .filter(Objects::nonNull)

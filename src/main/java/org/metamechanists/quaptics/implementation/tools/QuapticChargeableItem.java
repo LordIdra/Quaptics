@@ -15,6 +15,7 @@ import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.QuapticTicker;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.Link;
+import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
 import org.metamechanists.quaptics.implementation.base.Settings;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.utils.Keys;
@@ -34,6 +35,14 @@ public abstract class QuapticChargeableItem extends SlimefunItem {
         this.settings = settings;
     }
 
+    public static QuapticChargeableItem fromStack(ItemStack stack) {
+        if (!(SlimefunItem.getByItem(stack) instanceof QuapticChargeableItem chargeableItem)) {
+            return null;
+        }
+
+        return chargeableItem;
+    }
+
     public static double getCharge(@NotNull ItemStack stack) {
         return PersistentDataAPI.getDouble(stack.getItemMeta(), Keys.CHARGE, 0.0);
     }
@@ -44,14 +53,20 @@ public abstract class QuapticChargeableItem extends SlimefunItem {
         stack.setItemMeta(meta);
     }
 
-    public static void chargeItem(ConnectionGroup connectionGroup, @NotNull ItemDisplay display) {
-        final ItemStack itemStack = display.getItemStack();
-        if (!(SlimefunItem.getByItem(itemStack) instanceof QuapticChargeableItem chargeableItem)) {
+    public static void chargeItem(@NotNull ConnectionGroup connectionGroup, @NotNull ItemDisplay display) {
+        final ConnectionPointInput input = connectionGroup.getInput("input");
+        if (input == null || !input.isLinkEnabled()) {
             return;
         }
 
-        final Settings itemSettings = chargeableItem.getSettings();
-        final Link link = connectionGroup.getInput("input").getLink();
+        final ItemStack itemStack = display.getItemStack();
+        final QuapticChargeableItem item = fromStack(itemStack);
+        if (item == null) {
+            return;
+        }
+
+        final Settings itemSettings = item.getSettings();
+        final Link link = input.getLink();
         if (!meetsRequirements(itemSettings, link)) {
             return;
         }
