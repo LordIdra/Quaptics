@@ -36,19 +36,18 @@ public class ChargerPanel extends CapacitorPanel {
         final ItemStack stack = Charger.getItem(location);
         final QuapticChargeableItem item = QuapticChargeableItem.fromStack(stack);
         if (item == null || stack == null) {
-            setPanelHidden(false);
+            setPanelHidden(true);
             return;
         }
 
         final double capacity = item.getSettings().getCapacity();
         final double charge = QuapticChargeableItem.getCharge(stack);
-
         if ((charge == 0.0) || (capacity == 0.0)) {
-            setPanelHidden(false);
+            setPanelHidden(true);
             return;
         }
 
-        setPanelHidden(true);
+        setPanelHidden(false);
 
         panel.setText("chargeText", Lore.chargeBarRaw((int)charge, (int)capacity));
         panel.setText("chargeBar", Lore.chargeValuesRaw((int)charge, (int)capacity));

@@ -65,11 +65,11 @@ public class CapacitorPanel {
         final double charge = Capacitor.getCharge(location);
 
         if (charge == 0) {
-            setPanelHidden(false);
+            setPanelHidden(true);
             return;
         }
 
-        setPanelHidden(true);
+        setPanelHidden(false);
 
         panel.setText("chargeText", Lore.chargeBarRaw((int)charge, (int)capacity));
         panel.setText("chargeBar", Lore.chargeValuesRaw((int)charge, (int)capacity));
