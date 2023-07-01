@@ -56,9 +56,6 @@ public class ConnectionGroup {
         traverser.save();
     }
 
-    private @Nullable ConnectionPoint getPoint(ConnectionPointId pointId) {
-        return pointId.get();
-    }
     public @Nullable ConnectionPoint getPoint(String name) {
         return points.get(name).get();
     }
@@ -89,7 +86,7 @@ public class ConnectionGroup {
 
     public void updatePanels() {
         points.values().forEach(pointId -> {
-            final ConnectionPoint point = getPoint(pointId);
+            final ConnectionPoint point = pointId.get();
             if (point != null) {
                 point.updatePanel();
             }
@@ -98,7 +95,7 @@ public class ConnectionGroup {
 
     public void remove() {
         points.values().forEach(pointId -> {
-            final ConnectionPoint point = getPoint(pointId);
+            final ConnectionPoint point = pointId.get();
             if (point != null) {
                 point.remove();
             }
@@ -106,7 +103,7 @@ public class ConnectionGroup {
     }
 
     public void changePointLocation(ConnectionPointId pointId, @Nullable Location newLocation) {
-        final ConnectionPoint point = getPoint(pointId);
+        final ConnectionPoint point = pointId.get();
         if (point != null && newLocation != null) {
             point.changeLocation(newLocation);
         }
