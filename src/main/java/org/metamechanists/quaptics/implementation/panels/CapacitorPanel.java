@@ -15,7 +15,7 @@ public class CapacitorPanel {
     private static final Vector BLOCK_OFFSET = new Vector(0, 0.7, 0);
     private static final float SIZE = 0.40F;
     private final ConnectionGroupID groupID;
-    private final Panel panel;
+    protected final Panel panel;
 
     public CapacitorPanel(@NotNull Location location, ConnectionGroupID groupID) {
         this.groupID = groupID;
@@ -37,7 +37,7 @@ public class CapacitorPanel {
         return panel.getID();
     }
 
-    private ConnectionGroup getGroup() {
+    protected ConnectionGroup getGroup() {
         return groupID.get();
     }
 
@@ -45,7 +45,6 @@ public class CapacitorPanel {
         panel.setHidden(hidden);
     }
 
-    // TODO listener to toggle panel
     public void toggleHidden() {
         panel.toggleHidden();
     }

@@ -76,7 +76,7 @@ public class Basic {
             .minPower(15)
             .powerLoss(0.05)
             .minFrequency(0.0)
-            .maxFrequency(0.2)
+            .maxFrequency(0.3)
             .frequencyStep(0.1)
             .build();
 
@@ -87,7 +87,7 @@ public class Basic {
             .minPower(40)
             .powerLoss(0.05)
             .minFrequency(0.2)
-            .maxFrequency(0.7)
+            .maxFrequency(0.9)
             .frequencyMultiplier(2.0)
             .build();
 
@@ -103,7 +103,7 @@ public class Basic {
             .build();
 
     public static final ConnectedBlock.Settings TURRET_2_HOSTILE_SETTINGS = ConnectedBlock.Settings.builder()
-            .tier(Tier.PRIMITIVE)
+            .tier(Tier.BASIC)
             .displayRadius(0.60F)
             .connectionRadius(0.65F)
             .minPower(40)
@@ -116,7 +116,7 @@ public class Basic {
             .build();
 
     public static final ConnectedBlock.Settings TURRET_2_PASSIVE_SETTINGS = ConnectedBlock.Settings.builder()
-            .tier(Tier.PRIMITIVE)
+            .tier(Tier.BASIC)
             .displayRadius(0.60F)
             .connectionRadius(0.65F)
             .minPower(40)

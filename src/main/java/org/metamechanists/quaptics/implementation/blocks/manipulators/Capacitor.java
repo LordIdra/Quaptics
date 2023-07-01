@@ -29,6 +29,7 @@ import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.ConnectionGroupID;
 import org.metamechanists.quaptics.utils.id.PanelID;
 
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.util.List;
 import java.util.Objects;
 
@@ -43,20 +44,6 @@ public class Capacitor extends ConnectedBlock {
 
     public Capacitor(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, Settings settings) {
         super(group, item, recipeType, recipe, settings);
-    }
-
-    @Override
-    protected void onPlace(@NotNull BlockPlaceEvent event) {
-        super.onPlace(event);
-        final Location location = event.getBlock().getLocation();
-        setPanelID(location, new CapacitorPanel(location, getGroup(location).getID()).getID());
-    }
-
-    @Override
-    protected void onBreak(@NotNull BlockBreakEvent event) {
-        super.onBreak(event);
-        final Location location = event.getBlock().getLocation();
-        getPanelID(location).get().remove();
     }
 
     @Override
@@ -92,6 +79,15 @@ public class Capacitor extends ConnectedBlock {
         BlockStorage.addBlockInfo(location, Keys.BS_CHARGE, Objects.toString(charge));
     }
 
+    private double getChargeRate(Location location) {
+        final String chargeRateString = BlockStorage.getLocationInfo(location, Keys.BS_CHARGE_RATE);
+        return chargeRateString == null ? 0 : Double.parseDouble(chargeRateString);
+    }
+
+    private void setChargeRate(Location location, double chargeRate) {
+        BlockStorage.addBlockInfo(location, Keys.BS_CHARGE_RATE, String.valueOf(chargeRate));
+    }
+
     public @Nullable PanelID getPanelID(Location location) {
         final String stringID = BlockStorage.getLocationInfo(location, Keys.BS_PANEL_ID);
         return stringID == null ? null : new PanelID(stringID);
@@ -101,13 +97,28 @@ public class Capacitor extends ConnectedBlock {
         BlockStorage.addBlockInfo(location, Keys.BS_PANEL_ID, ID.toString());
     }
 
-    private double getChargeRate(Location location) {
-        final String chargeRateString = BlockStorage.getLocationInfo(location, Keys.BS_CHARGE_RATE);
-        return chargeRateString == null ? 0 : Double.parseDouble(chargeRateString);
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    protected void onPlace(@NotNull BlockPlaceEvent event) {
+        super.onPlace(event);
+        final Location location = event.getBlock().getLocation();
+        setPanelID(location, new CapacitorPanel(location, getGroup(location).getID()).getID());
     }
 
-    private void setChargeRate(Location location, double chargeRate) {
-        BlockStorage.addBlockInfo(location, Keys.BS_CHARGE_RATE, String.valueOf(chargeRate));
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    protected void onBreak(@NotNull BlockBreakEvent event) {
+        super.onBreak(event);
+        final Location location = event.getBlock().getLocation();
+        getPanelID(location).get().remove();
+    }
+
+    protected void updatePanel(@NotNull ConnectionGroup group) {
+        final PanelID ID = getPanelID(group.getLocation());
+        if (ID != null) {
+            final CapacitorPanel panel = new CapacitorPanel(ID, group.getID());
+            panel.update();
+        }
     }
 
     @Override
@@ -137,12 +148,7 @@ public class Capacitor extends ConnectedBlock {
                             .mul((float)(charge/settings.getCapacity())), displayRotation));
         }
 
-        final PanelID ID = getPanelID(group.getLocation());
-        if (ID != null) {
-            final CapacitorPanel panel = new CapacitorPanel(ID, group.getID());
-            panel.update();
-        }
-
+        updatePanel(group);
         setCharge(group.getLocation(), charge);
     }
 
