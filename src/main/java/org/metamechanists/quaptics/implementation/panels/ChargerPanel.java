@@ -41,7 +41,7 @@ public class ChargerPanel extends CapacitorPanel {
         final double capacity = charger.getSettings().getCapacity();
         final double charge = QuapticChargeableItem.getCharge(itemStack);
 
-        if (charge == 0) {
+        if (charge == 0 || capacity == 0) {
             setPanelHidden(true);
             return;
         }
