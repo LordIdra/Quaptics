@@ -26,4 +26,10 @@ public class DirectBeam {
             DeprecatedTickerStorage.deprecate(ticker);
         }
     }
+
+    public void nextFrequencyColor() {
+        if (ticker != null) {
+            ticker.nextFrequencyColor();
+        }
+    }
 }

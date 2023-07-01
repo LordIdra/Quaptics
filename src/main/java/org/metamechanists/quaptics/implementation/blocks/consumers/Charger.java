@@ -13,12 +13,10 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Display;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
-import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 import org.metamechanists.metalib.utils.ItemUtils;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
@@ -183,29 +181,22 @@ public class Charger extends ConnectedBlock {
     protected void onPlace(@NotNull final BlockPlaceEvent event) {
         super.onPlace(event);
         final Location location = event.getBlock().getLocation();
-        final ConnectionGroup group = getGroup(location);
-        if (group == null) {
-            return;
-        }
-
-        setPanelId(location, new ChargerPanel(location, group.getId()).getId());
+        final Optional<ConnectionGroup> optionalGroup = getGroup(location);
+        optionalGroup.ifPresent(group -> setPanelId(location, new ChargerPanel(location, group.getId()).getId()));
     }
 
     @Override
     @OverridingMethodsMustInvokeSuper
-    protected void onBreak(@NotNull final BlockBreakEvent event) {
-        super.onBreak(event);
-        final Location location = event.getBlock().getLocation();
-        final PanelId panelId = getPanelId(location);
-        final Panel panel = panelId != null ? panelId.get() : null;
-        if (panel != null) {
-            panel.remove();
-        }
+    protected void onBreak(@NotNull final Location location) {
+        super.onBreak(location);
+        final Optional<PanelId> panelId = getPanelId(location);
+        final Optional<Panel> panel = panelId.isPresent() ? panelId.get().get() : Optional.empty();
+        panel.ifPresent(Panel::remove);
     }
 
     private static void updatePanel(@NotNull final ConnectionGroup group) {
-        final Location location = group.getLocation();
-        if (location == null) {
+        final Optional<Location> location = group.getLocation();
+        if (location.isEmpty()) {
             return;
         }
 

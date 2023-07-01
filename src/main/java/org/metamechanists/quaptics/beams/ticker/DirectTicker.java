@@ -5,6 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.BlockDisplay;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
+import org.metamechanists.quaptics.utils.Colors;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.BlockDisplayId;
@@ -49,6 +50,10 @@ public class DirectTicker implements DisplayTicker {
     @Override
     public boolean expired() {
         return true;
+    }
+
+    public void nextFrequencyColor() {
+        getDisplay().ifPresent(display -> display.setBlock(Colors.nextFrequencyColor(display.getBlock().getMaterial()).createBlockData()));
     }
 }
 

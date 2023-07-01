@@ -9,12 +9,14 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.BlockDisplay;
+import org.bukkit.entity.Display;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
+import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
@@ -26,8 +28,9 @@ import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.ConnectionGroupId;
 
 import java.util.List;
+import java.util.Optional;
 
-public class Scatterer extends ConnectedBlock {
+public class Scatterer extends ConnectedBlock implements FrequencyUpgrader {
     private static final int CONCRETE_BRIGHTNESS = 15;
     private final Vector3f glassDisplaySize = new Vector3f(settings.getDisplayRadius()*2);
     private final Vector3f comparatorDisplaySize = new Vector3f(settings.getDisplayRadius());
@@ -46,13 +49,14 @@ public class Scatterer extends ConnectedBlock {
     }
 
     private void setComparatorPowered(final Location location, final boolean powered) {
-        if (!(getDisplay(location, "comparator") instanceof final BlockDisplay display)) {
+        final Optional<Display> display = getDisplay(location, "comparator");
+        if (display.isEmpty() || !(display.get() instanceof final BlockDisplay blockDisplay)) {
             return;
         }
 
-        display.setBlock(Material.COMPARATOR.createBlockData(
+        blockDisplay.setBlock(Material.COMPARATOR.createBlockData(
                 "[mode=" + modeVisual
-                + ",facing=" + PersistentDataAPI.getString(display, Keys.FACING)
+                + ",facing=" + PersistentDataAPI.getString(blockDisplay, Keys.FACING)
                 + ",powered=" + powered + "]"));
     }
 
@@ -88,38 +92,34 @@ public class Scatterer extends ConnectedBlock {
 
     @Override
     public void onInputLinkUpdated(@NotNull final ConnectionGroup group) {
-        final ConnectionPointInput input = group.getInput("input");
-        final ConnectionPointOutput output = group.getOutput("output");
-
-        if (input == null || output == null) {
+        final Optional<ConnectionPointInput> input = group.getInput("input");
+        final Optional<ConnectionPointOutput> output = group.getOutput("output");
+        final Optional<Location> location = group.getLocation();
+        if (input.isEmpty() || output.isEmpty() || location.isEmpty()) {
             return;
         }
 
-        if (doBurnoutCheck(group, input)) {
+        if (doBurnoutCheck(group, input.get())) {
             return;
         }
 
-        final Location location = group.getLocation();
-        if (location == null) {
+        doDisplayBrightnessCheck(location.get(), "concrete", false);
+        setComparatorPowered(location.get(), input.get().isLinkEnabled() && upgradeFrequency(settings, input.get().getLink().get()));
+
+        if (!output.get().isLinkEnabled()) {
             return;
         }
 
-        doDisplayBrightnessCheck(location, "concrete", false);
-        setComparatorPowered(location, input.isLinkEnabled() && settings.checkFrequency(input.getLink().getFrequency()));
-
-        if (!output.hasLink()) {
+        if (!input.get().isLinkEnabled()) {
+            output.get().disableLinkIfExists();
             return;
         }
 
-        if (!input.isLinkEnabled()) {
-            output.disableLinkIfExists();
-            return;
-        }
-
-        output.getLink().setAttributes(
-                settings.powerLoss(input.getLink().getPower()),
-                settings.multiplyFrequency(input.getLink().getFrequency()),
-                input.getLink().getPhase(),
+        final Link link = output.get().getLink().get();
+        link.setAttributes(
+                settings.powerLoss(link.getPower()),
+                settings.multiplyFrequency(link.getFrequency()),
+                link.getPhase(),
                 true);
     }
 }

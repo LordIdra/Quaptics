@@ -12,6 +12,7 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
+import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
@@ -24,6 +25,7 @@ import org.metamechanists.quaptics.utils.id.ConnectionGroupId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 public class Splitter extends ConnectedBlock {
@@ -70,37 +72,37 @@ public class Splitter extends ConnectedBlock {
 
     @Override
     public void onInputLinkUpdated(@NotNull final ConnectionGroup group) {
-        final Location location = group.getLocation();
-        if (location == null) {
+        final Optional<Location> location = group.getLocation();
+        if (location.isEmpty()) {
             return;
         }
 
-        final ConnectionPointInput input = (ConnectionPointInput) group.getPoint("input");
-        final List<ConnectionPointOutput> linkedOutputs = getLinkedOutputs(location);
-
-        if (input == null) {
+        final List<ConnectionPointOutput> linkedOutputs = getLinkedOutputs(location.get());
+        final Optional<ConnectionPointInput> input = group.getInput("input");
+        if (input.isEmpty()) {
             return;
         }
 
-        if (doBurnoutCheck(group, input)) {
+        if (doBurnoutCheck(group, input.get())) {
             return;
         }
 
-        doDisplayBrightnessCheck(group.getLocation(), "concrete");
+        doDisplayBrightnessCheck(location.get(), "concrete");
 
         if (linkedOutputs.isEmpty()) {
             return;
         }
 
-        if (!input.isLinkEnabled()) {
-            linkedOutputs.forEach(output -> output.getLink().setEnabled(false));
+        if (!input.get().isLinkEnabled()) {
+            linkedOutputs.forEach(output -> output.getLink().get().setEnabled(false));
             return;
         }
 
-        final double outputPower = settings.powerLoss(input.getLink().getPower()) / linkedOutputs.size();
-        final double outputFrequency = input.getLink().getFrequency();
-        final int outputPhase = input.getLink().getPhase();
+        final Link link = input.get().getLink().get();
+        final double outputPower = settings.powerLoss(link.getPower()) / linkedOutputs.size();
+        final double outputFrequency = link.getFrequency();
+        final int outputPhase = link.getPhase();
 
-        linkedOutputs.forEach(output -> output.getLink().setAttributes(outputPower, outputFrequency, outputPhase, true));
+        linkedOutputs.forEach(output -> output.getLink().get().setAttributes(outputPower, outputFrequency, outputPhase, true));
     }
 }

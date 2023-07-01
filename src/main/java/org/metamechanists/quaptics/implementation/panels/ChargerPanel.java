@@ -10,6 +10,8 @@ import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.utils.id.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.id.PanelId;
 
+import java.util.Optional;
+
 public class ChargerPanel extends CapacitorPanel {
 
     public ChargerPanel(@NotNull final Location location, final ConnectionGroupId groupId) {
@@ -22,14 +24,14 @@ public class ChargerPanel extends CapacitorPanel {
 
     @Override
     public void update() {
-        final ConnectionGroup group = getGroup();
-        if ((group == null) || !(group.getBlock() instanceof Charger)) {
+        final Optional<ConnectionGroup> group = getGroup();
+        if (group.isEmpty() || !(group.get().getBlock() instanceof Charger)) {
             // How the hell did we get here?
             return;
         }
 
-        final Location location = group.getLocation();
-        if (location == null) {
+        final Optional<Location> location = group.get().getLocation();
+        if (location.isEmpty()) {
             return;
         }
 
@@ -44,8 +46,8 @@ public class ChargerPanel extends CapacitorPanel {
             return;
         }
 
-        final double capacity = item.getSettings().getCapacity();
-        final double charge = QuapticChargeableItem.getCharge(stack);
+        final double capacity = item.get().getSettings().getCapacity();
+        final double charge = QuapticChargeableItem.getCharge(stack.get());
         if ((charge == 0.0) || (capacity == 0.0)) {
             setPanelHidden(true);
             return;

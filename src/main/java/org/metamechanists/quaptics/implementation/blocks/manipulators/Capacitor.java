@@ -94,7 +94,7 @@ public class Capacitor extends ConnectedBlock {
         return Optional.ofNullable(stringID).map(PanelId::new);
     }
 
-    private static void setPanelID(final Location location, @NotNull final PanelId id) {
+    private static void setPanelId(final Location location, @NotNull final PanelId id) {
         BlockStorage.addBlockInfo(location, Keys.BS_PANEL_ID, id.toString());
     }
 
@@ -103,11 +103,8 @@ public class Capacitor extends ConnectedBlock {
     protected void onPlace(@NotNull final BlockPlaceEvent event) {
         super.onPlace(event);
         final Location location = event.getBlock().getLocation();
-        final ConnectionGroup group = getGroup(location);
-        if (group == null) {
-            return;
-        }
-        setPanelID(location, new CapacitorPanel(location, group.getId()).getId());
+        final Optional<ConnectionGroup> optionalGroup = getGroup(location);
+        optionalGroup.ifPresent(group -> setPanelId(location, new CapacitorPanel(location, group.getId()).getId()));
     }
 
     @Override
@@ -120,75 +117,63 @@ public class Capacitor extends ConnectedBlock {
     }
 
     private static void updatePanel(@NotNull final ConnectionGroup group) {
-        final Location location = group.getLocation();
-        if (location == null) {
+        final Optional<Location> location = group.getLocation();
+        if (location.isEmpty()) {
             return;
         }
 
-        final PanelId id = getPanelId(location);
-        if (id != null) {
-            final CapacitorPanel panel = new CapacitorPanel(id, group.getId());
-            panel.update();
-        }
+        final Optional<PanelId> id = getPanelId(location.get());
+        id.ifPresent(panelId -> new CapacitorPanel(panelId, group.getId()).update());
     }
 
     @Override
     public void onQuapticTick(@NotNull final ConnectionGroup group) {
-        final ConnectionPointOutput output = group.getOutput("output");
-        if (output == null) {
+        final Optional<ConnectionPointOutput> output = group.getOutput("output");
+        final Optional<Location> location = group.getLocation();
+        if (output.isEmpty() || location.isEmpty()) {
             return;
         }
 
-        final Location location = group.getLocation();
-        if (location == null) {
-            return;
-        }
-
-        final double chargeRate = getChargeRate(location);
-        double charge = getCharge(group.getLocation());
+        final double chargeRate = getChargeRate(location.get());
+        double charge = getCharge(group.getLocation().get());
 
         if (chargeRate != 0) {
             charge = settings.stepCharge(charge, chargeRate);
         }
 
-        if (output.hasLink()) {
+        if (output.get().isLinkEnabled()) {
             final double dischargeRate = settings.getEmissionPower() / QuapticTicker.QUAPTIC_TICKS_PER_SECOND;
             if (charge > dischargeRate) {
                 charge = settings.stepCharge(charge, -dischargeRate);
                 output.get().getLink().get().setAttributes(settings.getEmissionPower(), 0, 0, true);
             } else {
-                output.disableLinkIfExists();
+                output.get().disableLinkIfExists();
             }
         }
 
-        final Display concreteDisplay = getDisplay(group.getLocation(), "concrete");
-        if (concreteDisplay != null) {
-            concreteDisplay.setTransformationMatrix(
-                    Transformations.adjustedRotateAndScale(new Vector3f(maxConcreteDisplaySize)
-                            .mul((float)(charge/settings.getCapacity())), displayRotation));
-        }
+        final Optional<Display> concreteDisplay = getDisplay(location.get(), "concrete");
+        final double finalCharge = charge;
+        concreteDisplay.ifPresent(display ->
+                display.setTransformationMatrix(
+                        Transformations.adjustedRotateAndScale(new Vector3f(maxConcreteDisplaySize)
+                        .mul((float)(finalCharge /settings.getCapacity())), displayRotation)));
 
         updatePanel(group);
-        setCharge(group.getLocation(), charge);
+        setCharge(location.get(), charge);
     }
 
     @Override
     public void onInputLinkUpdated(@NotNull final ConnectionGroup group) {
-        final ConnectionPointInput input = group.getInput("input");
-
-        if (input == null) {
+        final Optional<ConnectionPointInput> input = group.getInput("input");
+        final Optional<Location> location = group.getLocation();
+        if (input.isEmpty() || location.isEmpty()) {
             return;
         }
 
-        if (doBurnoutCheck(group, input)) {
+        if (doBurnoutCheck(group, input.get())) {
             return;
         }
 
-        final Location location = group.getLocation();
-        if (location == null) {
-            return;
-        }
-
-        setChargeRate(location, input.isLinkEnabled() ? input.getLink().getPower() / QuapticTicker.QUAPTIC_TICKS_PER_SECOND : 0);
+        setChargeRate(location.get(), input.get().isLinkEnabled() ? input.get().getLink().get().getPower() / QuapticTicker.QUAPTIC_TICKS_PER_SECOND : 0);
     }
 }

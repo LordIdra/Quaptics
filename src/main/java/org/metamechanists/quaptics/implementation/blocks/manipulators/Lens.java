@@ -12,6 +12,7 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
+import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
@@ -22,6 +23,7 @@ import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.ConnectionGroupId;
 
 import java.util.List;
+import java.util.Optional;
 
 public class Lens extends ConnectedBlock {
     private static final int CONCRETE_BRIGHTNESS = 15;
@@ -58,41 +60,33 @@ public class Lens extends ConnectedBlock {
 
     @Override
     public void onInputLinkUpdated(@NotNull final ConnectionGroup group) {
-        final ConnectionPointInput input = group.getInput("input");
-        final ConnectionPointOutput output = group.getOutput("output");
-
-        if (input == null) {
+        final Optional<ConnectionPointInput> input = group.getInput("input");
+        final Optional<ConnectionPointOutput> output = group.getOutput("output");
+        final Optional<Location> location = group.getLocation();
+        if (input.isEmpty() || output.isEmpty() || location.isEmpty()) {
             return;
         }
 
-        if (doBurnoutCheck(group, input)) {
+        if (doBurnoutCheck(group, input.get())) {
             return;
         }
 
-        if (output == null) {
+        doDisplayBrightnessCheck(location.get(), "concrete");
+
+        if (!output.get().isLinkEnabled()) {
             return;
         }
 
-        final Location location = group.getLocation();
-        if (location == null) {
+        if (!input.get().isLinkEnabled()) {
+            output.get().disableLinkIfExists();
             return;
         }
 
-        doDisplayBrightnessCheck(location, "concrete");
-
-        if (!output.hasLink()) {
-            return;
-        }
-
-        if (!input.isLinkEnabled()) {
-            output.disableLinkIfExists();
-            return;
-        }
-
-        output.getLink().setAttributes(
-                settings.powerLoss(input.getLink().getPower()),
-                input.getLink().getFrequency(),
-                input.getLink().getPhase(),
+        final Link link = output.get().getLink().get();
+        link.setAttributes(
+                settings.powerLoss(link.getPower()),
+                link.getFrequency(),
+                link.getPhase(),
                 true);
     }
 }

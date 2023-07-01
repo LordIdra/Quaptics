@@ -52,18 +52,18 @@ public class CapacitorPanel {
     }
 
     public void update() {
-        final ConnectionGroup group = getGroup();
-        if (group == null) {
+        final Optional<ConnectionGroup> group = getGroup();
+        if (group.isEmpty()) {
             return;
         }
 
-        final Location location = group.getLocation();
-        if (location == null) {
+        final Optional<Location> location = group.get().getLocation();
+        if (location.isEmpty()) {
             return;
         }
 
-        final double capacity = group.getBlock().getSettings().getCapacity();
-        final double charge = Capacitor.getCharge(location);
+        final double capacity = group.get().getBlock().getSettings().getCapacity();
+        final double charge = Capacitor.getCharge(location.get());
 
         if (charge == 0) {
             setPanelHidden(true);

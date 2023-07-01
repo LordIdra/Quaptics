@@ -24,6 +24,7 @@ import org.metamechanists.quaptics.utils.id.ConnectionGroupId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 public class Combiner extends ConnectedBlock {
@@ -70,15 +71,14 @@ public class Combiner extends ConnectedBlock {
 
     @Override
     public void onInputLinkUpdated(@NotNull final ConnectionGroup group) {
-        final Location location = group.getLocation();
-        if (location == null) {
+        final Optional<Location> location = group.getLocation();
+        if (location.isEmpty()) {
             return;
         }
 
-        final List<ConnectionPointInput> enabledInputs = getEnabledInputs(location);
-        final ConnectionPointOutput output = (ConnectionPointOutput) group.getPoint("output");
-
-        if (output == null) {
+        final List<ConnectionPointInput> enabledInputs = getEnabledInputs(location.get());
+        final Optional<ConnectionPointOutput> output = group.getOutput("output");
+        if (output.isEmpty()) {
             return;
         }
 
@@ -86,21 +86,20 @@ public class Combiner extends ConnectedBlock {
             return;
         }
 
-        doDisplayBrightnessCheck(group.getLocation(), "concrete");
+        doDisplayBrightnessCheck(location.get(), "concrete");
 
-        if (!output.hasLink()) {
+        if (!output.get().isLinkEnabled()) {
             return;
         }
 
         if (enabledInputs.isEmpty()) {
-            output.getLink().setEnabled(false);
+            output.get().getLink().get().setEnabled(false);
             return;
         }
 
-        final double inputPower = enabledInputs.stream().mapToDouble(input -> input.getLink().getPower()).sum();
-        final double inputFrequency = enabledInputs.stream().mapToDouble(input -> input.getLink().getFrequency()).min().getAsDouble();
-        final int inputPhase = (int)(enabledInputs.stream().mapToDouble(input -> input.getLink().getPhase()).sum() / enabledInputs.size());
-
-        output.getLink().setAttributes(settings.powerLoss(inputPower), inputFrequency, inputPhase, true);
+        final double inputPower = enabledInputs.stream().mapToDouble(input -> input.getLink().get().getPower()).sum();
+        final double inputFrequency = enabledInputs.stream().mapToDouble(input -> input.getLink().get().getFrequency()).min().orElse(0.0);
+        final int inputPhase = (int) (enabledInputs.stream().mapToDouble(input -> input.getLink().get().getPhase()).sum() / enabledInputs.size());
+        output.get().getLink().get().setAttributes(settings.powerLoss(inputPower), inputFrequency, inputPhase, true);
     }
 }

@@ -24,7 +24,6 @@ public final class Quaptics extends JavaPlugin implements SlimefunAddon {
         final PluginManager pluginManager = getServer().getPluginManager();
         pluginManager.registerEvents(new TargetingWandListener(), this);
         pluginManager.registerEvents(new PointPanelListener(), this);
-        pluginManager.registerEvents(new CapacitorPanelListener(), this);
         pluginManager.registerEvents(new BurnoutManager(), this);
     }
 

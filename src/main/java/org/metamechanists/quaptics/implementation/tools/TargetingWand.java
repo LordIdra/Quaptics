@@ -71,65 +71,64 @@ public class TargetingWand extends SlimefunItem {
 
     private static void createLink(final Player player, final ConnectionPointId inputId, final ItemStack stack) {
         final ConnectionPointId outputId = new ConnectionPointId(PersistentDataUtils.getString(stack, Keys.SOURCE));
-        final ConnectionPointOutput output = (ConnectionPointOutput) outputId.get();
-
-        if (output == null) {
+        final Optional<ConnectionPointOutput> output = outputId.get().map(ConnectionPointOutput.class::cast);
+        if (output.isEmpty()) {
             return;
         }
 
-        if (!(inputId.get() instanceof final ConnectionPointInput input)) {
+        if (inputId.get().isEmpty() || !(inputId.get().get() instanceof final ConnectionPointInput input)) {
             Language.sendLanguageMessage(player, "targeting-wand.target-must-be-input");
             return;
         }
 
-        final Location inputLocation = input.getLocation();
-        final Location outputLocation = output.getLocation();
-        if (inputLocation == null || outputLocation == null) {
+        final Optional<Location> inputLocation = input.getLocation();
+        final Optional<Location> outputLocation = output.get().getLocation();
+        if (inputLocation.isEmpty() || outputLocation.isEmpty()) {
             return;
         }
 
-        final ConnectionGroup outputGroup = output.getGroup();
-        final ConnectionGroup inputGroup = input.getGroup();
-        if (outputGroup == null || inputGroup == null) {
+        final Optional<ConnectionGroup> outputGroup = output.get().getGroup();
+        final Optional<ConnectionGroup> inputGroup = input.getGroup();
+        if (outputGroup.isEmpty() || inputGroup.isEmpty()) {
             return;
         }
 
-        if (!outputLocation.getWorld().getUID().equals(inputLocation.getWorld().getUID())) {
+        if (!outputLocation.get().getWorld().getUID().equals(inputLocation.get().getWorld().getUID())) {
             Language.sendLanguageMessage(player, "targeting-wand.different-worlds");
             return;
         }
 
-        if (output.getLocation().distance(inputLocation) < MIN_POINT_SEPARATION) {
+        if (outputLocation.get().distance(inputLocation.get()) < MIN_POINT_SEPARATION) {
             Language.sendLanguageMessage(player, "targeting-wand.same-connection-point");
             return;
         }
 
-        if (input.getGroup().getPoints().containsValue(outputId)) {
+        if (inputGroup.get().getPoints().containsValue(outputId)) {
             Language.sendLanguageMessage(player, "targeting-wand.same-connection-group");
             return;
         }
 
-        if (input.hasLink() && output.hasLink()) {
-            final ConnectionPointInput inputPoint = output.getLink().getInput();
-            final ConnectionPointOutput outputPoint = input.getLink().getOutput();
+        if (input.isLinkEnabled() && output.get().isLinkEnabled()) {
+            final Optional<ConnectionPointInput> inputPoint = output.get().getLink().get().getInput();
+            final Optional<ConnectionPointOutput> outputPoint = input.getLink().get().getOutput();
 
-            if (inputPoint != null
-                    && input.getId().equals(inputId)
-                    && outputPoint != null
-                    && outputPoint.getId().equals(outputId)) {
+            if (inputPoint.isPresent()
+                    && inputPoint.get().getId().equals(inputId)
+                    && outputPoint.isPresent()
+                    && outputPoint.get().getId().equals(outputId)) {
                 return;
             }
         }
 
-        final ConnectedBlock outputBlock = outputGroup.getBlock();
-        final ConnectedBlock inputBlock = inputGroup.getBlock();
+        final ConnectedBlock outputBlock = outputGroup.get().getBlock();
+        final ConnectedBlock inputBlock = inputGroup.get().getBlock();
 
-        if (input.hasLink()) {
-            input.getLink().remove();
+        if (input.isLinkEnabled()) {
+            input.getLink().get().remove();
         }
 
-        if (output.hasLink()) {
-            output.getLink().remove();
+        if (output.get().isLinkEnabled()) {
+            output.get().getLink().get().remove();
         }
 
         outputBlock.connect(outputId, inputId);
@@ -141,23 +140,23 @@ public class TargetingWand extends SlimefunItem {
     }
 
     public void use(final Player player, @NotNull final ConnectionPointId pointId, final ItemStack stack) {
-        final ConnectionPoint point = pointId.get();
-        if (point == null) {
+        final Optional<ConnectionPoint> point = pointId.get();
+        if (point.isEmpty()) {
             return;
         }
 
-        final ConnectionGroup group = point.getGroup();
-        if (group == null) {
+        final Optional<ConnectionGroup> group = point.get().getGroup();
+        if (group.isEmpty()) {
             return;
         }
 
-        final Location location = group.getLocation();
-        if (location == null) {
+        final Optional<Location> location = group.get().getLocation();
+        if (location.isEmpty()) {
             return;
         }
 
-        if (!BlockStorage.hasBlockInfo(location)
-                || !(BlockStorage.check(location) instanceof ConnectedBlock)
+        if (!BlockStorage.hasBlockInfo(location.get())
+                || !(BlockStorage.check(location.get()) instanceof ConnectedBlock)
                 || !canUse(player, false)
                 || !Slimefun.getProtectionManager().hasPermission(player, player.getLocation(), Interaction.INTERACT_BLOCK)) {
             return;
