@@ -1,5 +1,6 @@
 package org.metamechanists.quaptics.utils;
 
+import lombok.experimental.UtilityClass;
 import org.bukkit.Location;
 import org.bukkit.block.BlockFace;
 import org.jetbrains.annotations.NotNull;
@@ -9,14 +10,15 @@ import org.joml.Vector3f;
 import java.util.ArrayList;
 import java.util.List;
 
+@UtilityClass
 public class Transformations {
-    private static final List<BlockFace> AXIS = new ArrayList<>(List.of(
+    private final List<BlockFace> AXIS = new ArrayList<>(List.of(
             BlockFace.NORTH,
             BlockFace.EAST,
             BlockFace.SOUTH,
             BlockFace.WEST
     ));
-    private static final List<Vector3f> BLOCK_VERTICES = new ArrayList<>(List.of(
+    private final List<Vector3f> BLOCK_VERTICES = new ArrayList<>(List.of(
             new Vector3f(0, 0, 0),
             new Vector3f(0, 0, 1),
             new Vector3f(0, 1, 0),
@@ -27,7 +29,7 @@ public class Transformations {
             new Vector3f(1, 1, 1)
     ));
 
-    private static Vector3f calculateHitboxAdjustmentTranslation(Matrix4f matrix) {
+    private Vector3f calculateHitboxAdjustmentTranslation(final Matrix4f matrix) {
         // When we rotate a block, the hitbox in X, Y, and Z changes
         // We need to account for this change to center the block
         final List<Vector3f> transformedVertices = BLOCK_VERTICES.stream()
@@ -49,23 +51,23 @@ public class Transformations {
         return max.add(min).div(-2);
     }
 
-    public static double yawToCardinalDirection(float yaw) {
-        return -Math.round(yaw / 90F) * (Math.PI/2);
+    public double yawToCardinalDirection(final float yaw) {
+        return -Math.round(yaw / 90.0F) * (Math.PI/2);
     }
 
-    public static BlockFace yawToFace(float yaw) {
-        return AXIS.get(Math.round(yaw / 90f) & 0x3);
+    public BlockFace yawToFace(final float yaw) {
+        return AXIS.get(Math.round(yaw / 90.0F) & 0x3);
     }
 
-    public static @NotNull Vector3f getDisplacement(Location from, @NotNull Location to) {
+    public @NotNull Vector3f getDisplacement(final Location from, @NotNull final Location to) {
         return to.clone().subtract(from).toVector().toVector3f();
     }
 
-    public static Vector3f getDirection(Location from, Location to) {
+    public Vector3f getDirection(final Location from, final Location to) {
         return getDisplacement(from, to).normalize();
     }
 
-    public static Matrix4f lookAlong(Vector3f scale, @NotNull Vector3f direction) {
+    public Matrix4f lookAlong(final Vector3f scale, @NotNull final Vector3f direction) {
         final float angleY = (float) Math.atan2(direction.x, direction.z);
         final float angleX = (float) Math.atan2(direction.y, Math.sqrt(direction.x*direction.x + direction.z*direction.z));
         final Matrix4f hitboxMatrix = new Matrix4f()
@@ -79,19 +81,19 @@ public class Transformations {
                 .scale(scale);
     }
 
-    public static Matrix4f unadjustedScale(Vector3f scale) {
+    public Matrix4f unadjustedScale(final Vector3f scale) {
         return new Matrix4f().scale(scale);
     }
 
-    public static Matrix4f adjustedScale(@NotNull Vector3f scale) {
+    public Matrix4f adjustedScale(@NotNull final Vector3f scale) {
         return new Matrix4f().translate(-scale.x/2, -scale.y/2, -scale.z/2).scale(scale);
     }
 
-    public static Matrix4f adjustedScaleAndOffset(@NotNull Vector3f scale, Vector3f offset) {
+    public Matrix4f adjustedScaleAndOffset(@NotNull final Vector3f scale, final Vector3f offset) {
         return new Matrix4f().translate(offset).mul(adjustedScale(scale));
     }
 
-    public static Matrix4f adjustedRotateAndScale(Vector3f scale, Vector3f rotationInRadians) {
+    public Matrix4f adjustedRotateAndScale(final Vector3f scale, final Vector3f rotationInRadians) {
         final Matrix4f hitboxMatrix = new Matrix4f()
                 .rotateXYZ(rotationInRadians)
                 .scale(scale);
@@ -101,7 +103,7 @@ public class Transformations {
                 .scale(scale);
     }
 
-    public static Matrix4f unadjustedRotateAndScale(Vector3f scale, Vector3f rotationInRadians) {
+    public Matrix4f unadjustedRotateAndScale(final Vector3f scale, final Vector3f rotationInRadians) {
         return new Matrix4f()
                 .rotateXYZ(rotationInRadians)
                 .scale(scale);

@@ -22,19 +22,19 @@ public final class Quaptics extends JavaPlugin implements SlimefunAddon {
     private static Quaptics instance;
 
     private void initializeListeners() {
-        final PluginManager pluginManager = this.getServer().getPluginManager();
+        final PluginManager pluginManager = getServer().getPluginManager();
         pluginManager.registerEvents(new TargetingWandListener(), this);
         pluginManager.registerEvents(new PointPanelListener(), this);
         pluginManager.registerEvents(new CapacitorPanelListener(), this);
         pluginManager.registerEvents(new BurnoutManager(), this);
     }
 
-    public void initializeRunnables() {
-        new QuapticTicker().runTaskTimer(instance, 0, QuapticTicker.INTERVAL_TICKS);
-        new SaveRunnable().runTaskTimer(instance, SaveRunnable.INTERVAL_TICKS, SaveRunnable.INTERVAL_TICKS);
+    private void initializeRunnables() {
+        new QuapticTicker().runTaskTimer(this, 0, QuapticTicker.INTERVAL_TICKS);
+        new SaveRunnable().runTaskTimer(this, SaveRunnable.INTERVAL_TICKS, SaveRunnable.INTERVAL_TICKS);
     }
 
-    public void initializeCommands() {
+    private void initializeCommands() {
         final PaperCommandManager commandManager = new PaperCommandManager(this);
         commandManager.enableUnstableAPI("help");
     }

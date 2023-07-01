@@ -1,34 +1,36 @@
 package org.metamechanists.quaptics.utils;
 
+import lombok.experimental.UtilityClass;
 import org.bukkit.NamespacedKey;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.Quaptics;
 
+@UtilityClass
 public class Keys {
     @Contract("_ -> new")
-    public static @NotNull NamespacedKey newKey(String key) {
+    private @NotNull NamespacedKey newKey(final String key) {
         return new NamespacedKey(Quaptics.getInstance(), key);
     }
 
-    public static final NamespacedKey MAIN = newKey("MAIN");
-    public static final NamespacedKey GUIDE = newKey("GUIDE");
-    public static final NamespacedKey TOOLS = newKey("TOOLS");
-    public static final NamespacedKey PRIMITIVE = newKey("PRIMITIVE");
-    public static final NamespacedKey BASIC = newKey("BASIC");
-    public static final NamespacedKey INTERMEDIATE = newKey("INTERMEDIATE");
-    public static final NamespacedKey ADVANCED = newKey("ADVANCED");
+    public final NamespacedKey MAIN = newKey("MAIN");
+    public final NamespacedKey GUIDE = newKey("GUIDE");
+    public final NamespacedKey TOOLS = newKey("TOOLS");
+    public final NamespacedKey PRIMITIVE = newKey("PRIMITIVE");
+    public final NamespacedKey BASIC = newKey("BASIC");
+    public final NamespacedKey INTERMEDIATE = newKey("INTERMEDIATE");
+    public final NamespacedKey ADVANCED = newKey("ADVANCED");
 
-    public static final NamespacedKey FACING = newKey("FACING");
-    public static final NamespacedKey SOURCE = newKey("SOURCE");
-    public static final NamespacedKey DATA = newKey("DATA");
+    public final NamespacedKey FACING = newKey("FACING");
+    public final NamespacedKey SOURCE = newKey("SOURCE");
+    public final NamespacedKey DATA = newKey("DATA");
 
-    public static final NamespacedKey CHARGE = newKey("CHARGE");
+    public final NamespacedKey CHARGE = newKey("CHARGE");
 
-    public static final String BS_PANEL_ID = "QP_PANEL_ID";
-    public static final String BS_BURNOUT = "QP_BURNOUT";
-    public static final String BS_CHARGE = "QP_CHARGE";
-    public static final String BS_CHARGE_RATE = "QP_CHARGE_RATE";
-    public static final String BS_POWERED = "QP_POWERED";
-    public static final String BS_TARGET = "QP_TARGET";
+    public final String BS_PANEL_ID = "QP_PANEL_ID";
+    public final String BS_BURNOUT = "QP_BURNOUT";
+    public final String BS_CHARGE = "QP_CHARGE";
+    public final String BS_CHARGE_RATE = "QP_CHARGE_RATE";
+    public final String BS_POWERED = "QP_POWERED";
+    public final String BS_TARGET = "QP_TARGET";
 }

@@ -12,6 +12,7 @@ import org.bukkit.entity.ItemDisplay;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.metamechanists.quaptics.QuapticTicker;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.Link;
@@ -24,36 +25,38 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public abstract class QuapticChargeableItem extends SlimefunItem {
     @Getter
     protected final Settings settings;
 
-    protected QuapticChargeableItem(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, Settings settings) {
+    protected QuapticChargeableItem(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe,
+                                    final Settings settings) {
         super(itemGroup, item, recipeType, recipe);
 
         this.settings = settings;
     }
 
-    public static QuapticChargeableItem fromStack(ItemStack stack) {
-        if (!(SlimefunItem.getByItem(stack) instanceof QuapticChargeableItem chargeableItem)) {
+    public static @Nullable QuapticChargeableItem fromStack(@Nullable final ItemStack stack) {
+        if (!(SlimefunItem.getByItem(stack) instanceof final QuapticChargeableItem chargeableItem)) {
             return null;
         }
 
         return chargeableItem;
     }
 
-    public static double getCharge(@NotNull ItemStack stack) {
+    public static double getCharge(@NotNull final ItemStack stack) {
         return PersistentDataAPI.getDouble(stack.getItemMeta(), Keys.CHARGE, 0.0);
     }
 
-    private static void setCharge(@NotNull ItemStack stack, double newCharge) {
+    private static void setCharge(@NotNull final ItemStack stack, final double newCharge) {
         final ItemMeta meta = stack.getItemMeta();
         PersistentDataAPI.setDouble(meta, Keys.CHARGE, newCharge);
         stack.setItemMeta(meta);
     }
 
-    public static void chargeItem(@NotNull ConnectionGroup connectionGroup, @NotNull ItemDisplay display) {
+    public static void chargeItem(@NotNull final ConnectionGroup connectionGroup, @NotNull final ItemDisplay display) {
         final ConnectionPointInput input = connectionGroup.getInput("input");
         if (input == null || !input.isLinkEnabled()) {
             return;
@@ -67,11 +70,11 @@ public abstract class QuapticChargeableItem extends SlimefunItem {
 
         final Settings itemSettings = item.settings;
         final Link link = input.getLink();
-        if (!meetsRequirements(itemSettings, link)) {
+        if (link == null || !meetsRequirements(itemSettings, link)) {
             return;
         }
 
-        if (itemStack.getItemMeta() == null) {
+        if (itemStack == null || itemStack.getItemMeta() == null) {
             return;
         }
 
@@ -81,19 +84,19 @@ public abstract class QuapticChargeableItem extends SlimefunItem {
         display.setItemStack(itemStack);
     }
 
-    public static boolean meetsRequirements(@NotNull Settings itemSettings, @NotNull Link link) {
+    private static boolean meetsRequirements(@NotNull final Settings itemSettings, @NotNull final Link link) {
         return itemSettings.checkFrequency(link.getFrequency());
     }
 
-    private static int getFirstLineMatching(@NotNull List<String> lore, Predicate<String> matcher) {
+    private static int getFirstLineMatching(@NotNull final List<String> lore, final Predicate<? super String> matcher) {
         return IntStream.range(0, lore.size())
                 .filter(i -> matcher.test(ChatColor.stripColor(lore.get(i))))
                 .findFirst()
                 .orElse(-1);
     }
 
-    public static void updateLore(ItemStack itemStack) {
-        if (!(SlimefunItem.getByItem(itemStack) instanceof QuapticChargeableItem chargeableItem)) {
+    public static void updateLore(final ItemStack itemStack) {
+        if (!(SlimefunItem.getByItem(itemStack) instanceof final QuapticChargeableItem chargeableItem)) {
             return;
         }
 
@@ -106,7 +109,7 @@ public abstract class QuapticChargeableItem extends SlimefunItem {
         final Settings itemSettings = chargeableItem.settings;
         final List<String> lore = itemMeta.getLore() == null ? new ArrayList<>() : itemMeta.getLore();
         final int chargeBar = getFirstLineMatching(lore, line -> line.contains("¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦"));
-        final int chargeValues = getFirstLineMatching(lore, line -> line.contains("⇨ ◆ ") && line.contains(" / ") && line.contains("QEU"));
+        final int chargeValues = getFirstLineMatching(lore, line -> Stream.of("⇨ ◆ ", " / ", "QEU").allMatch(line::contains));
 
         if (chargeBar != -1) {
             lore.set(chargeBar, ChatColors.color(Lore.chargeBar((int) currentCharge, (int) itemSettings.getCapacity())));

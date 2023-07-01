@@ -1,21 +1,25 @@
 package org.metamechanists.quaptics.utils;
 
+import lombok.experimental.UtilityClass;
 import org.bukkit.entity.Player;
 import org.metamechanists.quaptics.Quaptics;
 import org.metamechanists.metalib.language.LanguageStorage;
 
+@UtilityClass
 public class Language {
-    private static LanguageStorage languageStorage;
+    private LanguageStorage languageStorage;
 
-    public static void initialize() {
+    public void initialize() {
         languageStorage = new LanguageStorage(Quaptics.getInstance());
     }
 
-    public static String getLanguageEntry(String path, Object... args) {
-        return languageStorage.getLanguageEntry(path, args);
+    public String getLanguageEntry(final String path, final Object... args) {
+        return languageStorage != null ? languageStorage.getLanguageEntry(path, args) : "";
     }
 
-    public static void sendLanguageMessage(Player player, String path, Object... args) {
-        languageStorage.sendLanguageMessage(player, path, args);
+    public void sendLanguageMessage(final Player player, final String path, final Object... args) {
+        if (languageStorage != null) {
+            languageStorage.sendLanguageMessage(player, path, args);
+        }
     }
 }
