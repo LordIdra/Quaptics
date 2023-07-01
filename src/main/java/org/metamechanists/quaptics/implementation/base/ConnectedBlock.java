@@ -1,11 +1,11 @@
 package org.metamechanists.quaptics.implementation.base;
 
 import com.destroystokyo.paper.ParticleBuilder;
+import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockUseHandler;
-import lombok.Builder;
 import lombok.Getter;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Location;
@@ -16,26 +16,26 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Display;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.SpawnCategory;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
-import org.metamechanists.quaptics.items.Tier;
 import org.metamechanists.quaptics.storage.QuapticStorage;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Transformations;
-import org.metamechanists.quaptics.utils.id.ConnectionGroupID;
-import org.metamechanists.quaptics.utils.id.ConnectionPointID;
+import org.metamechanists.quaptics.utils.id.ConnectionGroupId;
+import org.metamechanists.quaptics.utils.id.ConnectionPointId;
+import org.metamechanists.quaptics.utils.id.DisplayGroupId;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
     protected static final Display.Brightness BRIGHTNESS_ON = new Display.Brightness(13, 0);
@@ -64,27 +64,46 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
             }
 
             final ConnectionGroup group = getGroup(block.getLocation());
-            final boolean isAnyPanelHidden = group.getPoints().values().stream().anyMatch(
-                    point -> point.get().getPointPanel().isPanelHidden());
+            if (group == null) {
+                return;
+            }
 
-            group.getPoints().values().forEach(pointID -> pointID.get().getPointPanel().setPanelHidden(!isAnyPanelHidden));
+            final boolean isAnyPanelHidden = group.getPoints().values().stream().anyMatch(pointId -> {
+                final ConnectionPoint point = pointId.get();
+                if (point != null) {
+                    return point.getPointPanel().isPanelHidden();
+                }
+                return false;
+            });
+
+            group.getPoints().values().forEach(pointId -> {
+                final ConnectionPoint point = pointId.get();
+                if (point != null) {
+                    point.getPointPanel().setPanelHidden(!isAnyPanelHidden);
+                }
+            });
 
         };
     }
 
-    protected ConnectionGroup getGroup(Location location) {
-        return new ConnectionGroupID(getDisplayGroupID(location)).get();
+    protected @Nullable ConnectionGroup getGroup(Location location) {
+        final DisplayGroupId displayGroupId = getDisplayGroupId(location);
+        if (displayGroupId == null) {
+            return null;
+        }
+
+        return new ConnectionGroupId(displayGroupId).get();
     }
 
-    protected abstract List<ConnectionPoint> generateConnectionPoints(ConnectionGroupID groupID, Player player, Location location);
+    protected abstract List<ConnectionPoint> generateConnectionPoints(ConnectionGroupId groupId, Player player, Location location);
 
     @Override
     protected void onPlace(@NotNull BlockPlaceEvent event) {
         final Location location = event.getBlock().getLocation();
-        final ConnectionGroupID groupID = new ConnectionGroupID(getDisplayGroupID(location));
-        final List<ConnectionPoint> points = generateConnectionPoints(groupID, event.getPlayer(), location);
-        new ConnectionGroup(groupID, this, points);
-        QuapticStorage.addGroup(groupID);
+        final ConnectionGroupId groupId = new ConnectionGroupId(getDisplayGroupId(location));
+        final List<ConnectionPoint> points = generateConnectionPoints(groupId, event.getPlayer(), location);
+        new ConnectionGroup(groupId, this, points);
+        QuapticStorage.addGroup(groupId);
     }
 
     @SuppressWarnings("unused")
@@ -92,37 +111,50 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
 
     @Override
     protected void onBreak(@NotNull BlockBreakEvent event) {
-        getGroup(event.getBlock().getLocation()).remove();
+        final ConnectionGroup group = getGroup(event.getBlock().getLocation());
+        if (group != null) {
+            group.remove();
+        }
         onBreak(event.getBlock().getLocation());
     }
 
-    public void connect(@NotNull ConnectionPointID from, ConnectionPointID to) {
-        from.get().getGroup().changePointLocation(from, calculatePointLocationSphere(from, to));
+    public void connect(@NotNull ConnectionPointId from, @NotNull ConnectionPointId to) {
+        final ConnectionPoint fromPoint = from.get();
+        final ConnectionGroup fromGroup = fromPoint != null ? fromPoint.getGroup() : null;
+
+        if (fromGroup != null) {
+            fromGroup.changePointLocation(from, calculatePointLocationSphere(from, to));
+        }
     }
 
     public void burnout(Location location) {
         // TODO send message to player to inform them what happened
         onBreak(location);
-        getGroup(location).remove();
-        getDisplayGroup(location).getDisplays().values().forEach(Entity::remove);
-        getDisplayGroup(location).remove();
+
+        final ConnectionGroup group = getGroup(location);
+        if (group != null) {
+            group.remove();
+        }
+
+        final DisplayGroup displayGroup = getDisplayGroup(location);
+        if (displayGroup != null) {
+            displayGroup.getDisplays().values().forEach(Entity::remove);
+            displayGroup.remove();
+        }
 
         BlockStorage.clearBlockInfo(location);
         location.getBlock().setBlockData(Material.AIR.createBlockData());
         location.getWorld().playSound(location.toCenterLocation(), Sound.ENTITY_GENERIC_EXPLODE, 2, 1.2F);
-        new ParticleBuilder(Particle.FLASH)
-                .location(location.toCenterLocation())
-                .count(3)
-                .spawn();
+        new ParticleBuilder(Particle.FLASH).location(location.toCenterLocation()).count(3).spawn();
     }
 
-    public boolean doBurnoutCheck(ConnectionGroup group, @NotNull ConnectionPoint point) {
+    public boolean doBurnoutCheck(@NotNull ConnectionGroup group, @NotNull ConnectionPoint point) {
         if (!point.hasLink() || point.getLink().getPower() <= settings.getTier().maxPower) {
             return false;
         }
 
         final Location location = group.getLocation();
-        if (BlockStorage.hasBlockInfo(location) && BlockStorage.getLocationInfo(location, Keys.BS_BURNOUT) == null) {
+        if (location != null && BlockStorage.hasBlockInfo(location) && BlockStorage.getLocationInfo(location, Keys.BS_BURNOUT) == null) {
             BlockStorage.addBlockInfo(location, Keys.BS_BURNOUT, "true");
             BurnoutManager.addBurnout(new BurnoutRunnable(location));
         }
@@ -130,29 +162,33 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
         return true;
     }
 
-    public List<ConnectionPoint> getLinkedPoints(Location location) {
-        return getGroup(location).getPoints().values().stream()
-                .map(ConnectionPointID::get)
-                .filter(Objects::nonNull)
-                .filter(ConnectionPoint::hasLink)
-                .toList();
+    public @NotNull List<ConnectionPoint> getLinkedPoints(Location location) {
+        final ConnectionGroup group = getGroup(location);
+        if (group != null) {
+            return group.getPoints().values().stream()
+                    .map(ConnectionPointId::get)
+                    .filter(Objects::nonNull)
+                    .filter(ConnectionPoint::hasLink)
+                    .toList();
+        }
+        return new ArrayList<>();
     }
 
-    public List<ConnectionPointOutput> getLinkedOutputs(Location location) {
+    public @NotNull List<ConnectionPointOutput> getLinkedOutputs(Location location) {
         return getLinkedPoints(location).stream()
                 .filter(ConnectionPointOutput.class::isInstance)
                 .map(ConnectionPointOutput.class::cast)
                 .toList();
     }
 
-    public List<ConnectionPointInput> getLinkedInputs(Location location) {
+    public @NotNull List<ConnectionPointInput> getLinkedInputs(Location location) {
         return getLinkedPoints(location).stream()
                 .filter(ConnectionPointInput.class::isInstance)
                 .map(ConnectionPointInput.class::cast)
                 .toList();
     }
 
-    public List<ConnectionPointInput> getEnabledInputs(Location location) {
+    public @NotNull List<ConnectionPointInput> getEnabledInputs(Location location) {
         return getLinkedInputs(location).stream().filter(ConnectionPoint::isLinkEnabled).toList();
     }
 
@@ -176,72 +212,26 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
 
     public void onInputLinkUpdated(ConnectionGroup group) {}
 
-    public Location calculatePointLocationSphere(@NotNull ConnectionPointID from, @NotNull ConnectionPointID to) {
-        final Location fromGroupLocation =  from.get().getGroup().getLocation();
-        final Location toGroupLocation =  to.get().getGroup().getLocation();
-        final Vector radiusDirection = Vector.fromJOML(Transformations.getDirection(fromGroupLocation, toGroupLocation).mul(settings.getConnectionRadius()));
-        return fromGroupLocation.clone().add(0.5, 0.5, 0.5).add(radiusDirection);
-    }
-
-
-    @Getter
-    @Builder
-    public static class Settings {
-        Tier tier;
-
-        private float displayRadius;
-        private float connectionRadius;
-
-        private double minPower;
-        private double powerLoss;
-        private double capacity;
-        private double emissionPower;
-
-        private double minFrequency;
-        private double maxFrequency;
-        private double frequencyStep;
-        private double frequencyMultiplier;
-
-        private int connections;
-
-        private float projectileSpeed;
-        private int range;
-        private double damage;
-        private Set<SpawnCategory> targets;
-        Material projectileMaterial;
-        Material mainMaterial;
-
-        // Built in Charge Methods
-        public double stepCharge(double charge, double chargeStep) {
-            if (charge + chargeStep < 0) {
-                return 0;
-            }
-            if (charge + chargeStep > capacity) {
-                return capacity;
-            }
-            return charge + chargeStep;
+    public Location calculatePointLocationSphere(@NotNull ConnectionPointId from, @NotNull ConnectionPointId to) {
+        final ConnectionPoint fromPoint = from.get();
+        final ConnectionPoint toPoint = to.get();
+        if (fromPoint == null || toPoint == null) {
+            return null;
         }
 
-        // Built in Power Methods
-        public boolean checkPower(double power) {
-            return this.minPower <= power && power <= tier.maxPower;
-        }
-        public double powerLoss(double power) {
-            return power*(1-powerLoss);
+        final ConnectionGroup fromGroup = fromPoint.getGroup();
+        final ConnectionGroup toGroup = toPoint.getGroup();
+        if (fromGroup == null || toGroup == null) {
+            return null;
         }
 
-        // Built in Frequency Methods
-        public boolean checkFrequency(double frequency) {
-            if (this.minFrequency == 0 && this.maxFrequency == 0) {
-                return true;
-            }
-            return this.minFrequency <= frequency && frequency < this.maxFrequency;
+        final Location fromLocation =  fromGroup.getLocation();
+        final Location toLocation =  toGroup.getLocation();
+        if (fromLocation == null || toLocation == null) {
+            return null;
         }
-        public double stepFrequency(double frequency) {
-            return checkFrequency(frequency) ? frequency+frequencyStep : frequency;
-        }
-        public double multiplyFrequency(double frequency) {
-            return checkFrequency(frequency) ? frequency*frequencyMultiplier : frequency;
-        }
+
+        final Vector radiusDirection = Vector.fromJOML(Transformations.getDirection(fromLocation, toLocation).mul(settings.getConnectionRadius()));
+        return fromLocation.clone().add(0.5, 0.5, 0.5).add(radiusDirection);
     }
 }

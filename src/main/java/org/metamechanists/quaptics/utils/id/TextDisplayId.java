@@ -2,30 +2,30 @@ package org.metamechanists.quaptics.utils.id;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Interaction;
+import org.bukkit.entity.TextDisplay;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 
 @SuppressWarnings("unused")
-public class InteractionID extends CustomID {
-    public InteractionID() {
+public class TextDisplayId extends CustomId {
+    public TextDisplayId() {
         super();
     }
-    public InteractionID(CustomID ID) {
-        super(ID);
+    public TextDisplayId(CustomId id) {
+        super(id);
     }
-    public InteractionID(String string) {
+    public TextDisplayId(String string) {
         super(string);
     }
-    public InteractionID(UUID uuid) {
+    public TextDisplayId(UUID uuid) {
         super(uuid);
     }
     @Override
-    public @Nullable Interaction get() {
+    public @Nullable TextDisplay get() {
         final Entity entity = Bukkit.getEntity(getUUID());
-        return (entity instanceof Interaction)
-                ? (Interaction) entity
+        return (entity instanceof TextDisplay textDisplay)
+                ? textDisplay
                 : null;
     }
 }

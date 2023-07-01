@@ -18,18 +18,23 @@ import org.metamechanists.quaptics.utils.Keys;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 public abstract class EnergyConnectedBlock extends ConnectedBlock implements EnergyNetComponent {
-    @Getter
-    private final EnergyNetComponentType energyComponentType = EnergyNetComponentType.CONSUMER;
+    private static final EnergyNetComponentType COMPONENT_TYPE = EnergyNetComponentType.CONSUMER;
     @Getter
     private final int capacity;
     @Getter
     private final int consumption;
 
-    public EnergyConnectedBlock(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe,
+    protected EnergyConnectedBlock(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe,
                                 Settings settings, int capacity, int consumption) {
         super(group, item, recipeType, recipe, settings);
         this.capacity = capacity;
         this.consumption = consumption;
+    }
+
+    @NotNull
+    @Override
+    public EnergyNetComponentType getEnergyComponentType() {
+        return COMPONENT_TYPE;
     }
 
     protected void setPowered(Location location, boolean powered) {
@@ -44,8 +49,8 @@ public abstract class EnergyConnectedBlock extends ConnectedBlock implements Ene
         return powered.equals("true");
     }
 
-    @OverridingMethodsMustInvokeSuper
     @Override
+    @OverridingMethodsMustInvokeSuper
     public void onSlimefunTick(@NotNull Block block, SlimefunItem item, Config data) {
         if (getCharge(block.getLocation(), data) >= consumption) {
             removeCharge(block.getLocation(), consumption);

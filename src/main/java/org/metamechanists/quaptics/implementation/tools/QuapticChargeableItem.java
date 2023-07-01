@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.QuapticTicker;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.Link;
-import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
+import org.metamechanists.quaptics.implementation.base.Settings;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.utils.Keys;
 
@@ -26,9 +26,9 @@ import java.util.stream.IntStream;
 
 public abstract class QuapticChargeableItem extends SlimefunItem {
     @Getter
-    protected final ConnectedBlock.Settings settings;
+    protected final Settings settings;
 
-    protected QuapticChargeableItem(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, ConnectedBlock.Settings settings) {
+    protected QuapticChargeableItem(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, Settings settings) {
         super(itemGroup, item, recipeType, recipe);
 
         this.settings = settings;
@@ -50,7 +50,7 @@ public abstract class QuapticChargeableItem extends SlimefunItem {
             return;
         }
 
-        final ConnectedBlock.Settings itemSettings = chargeableItem.getSettings();
+        final Settings itemSettings = chargeableItem.getSettings();
         final Link link = connectionGroup.getInput("input").getLink();
         if (!meetsRequirements(itemSettings, link)) {
             return;
@@ -66,7 +66,7 @@ public abstract class QuapticChargeableItem extends SlimefunItem {
         display.setItemStack(itemStack);
     }
 
-    public static boolean meetsRequirements(ConnectedBlock.@NotNull Settings itemSettings, @NotNull Link link) {
+    public static boolean meetsRequirements(@NotNull Settings itemSettings, @NotNull Link link) {
         return itemSettings.checkFrequency(link.getFrequency());
     }
 
@@ -88,7 +88,7 @@ public abstract class QuapticChargeableItem extends SlimefunItem {
         }
 
         final double currentCharge = PersistentDataAPI.getDouble(itemMeta, Keys.CHARGE, 0.0);
-        final ConnectedBlock.Settings itemSettings = chargeableItem.getSettings();
+        final Settings itemSettings = chargeableItem.getSettings();
         final List<String> lore = itemMeta.getLore() == null ? new ArrayList<>() : itemMeta.getLore();
         final int chargeBar = getFirstLineMatching(lore, line -> line.contains("¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦"));
         final int chargeValues = getFirstLineMatching(lore, line -> line.contains("⇨ ◆ ") && line.contains(" / ") && line.contains("QEU"));

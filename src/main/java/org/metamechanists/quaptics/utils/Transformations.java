@@ -10,18 +10,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Transformations {
-    private static final List<BlockFace> AXIS = new ArrayList<>(List.of(BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST));
-    private static final List<Vector3f> BLOCK_VERTICES = new ArrayList<>();
-    static {{
-        BLOCK_VERTICES.add(new Vector3f(0, 0, 0));
-        BLOCK_VERTICES.add(new Vector3f(0, 0, 1));
-        BLOCK_VERTICES.add(new Vector3f(0, 1, 0));
-        BLOCK_VERTICES.add(new Vector3f(0, 1, 1));
-        BLOCK_VERTICES.add(new Vector3f(1, 0, 0));
-        BLOCK_VERTICES.add(new Vector3f(1, 0, 1));
-        BLOCK_VERTICES.add(new Vector3f(1, 1, 0));
-        BLOCK_VERTICES.add(new Vector3f(1, 1, 1));
-    }}
+    private static final List<BlockFace> AXIS = new ArrayList<>(List.of(
+            BlockFace.NORTH,
+            BlockFace.EAST,
+            BlockFace.SOUTH,
+            BlockFace.WEST
+    ));
+    private static final List<Vector3f> BLOCK_VERTICES = new ArrayList<>(List.of(
+            new Vector3f(0, 0, 0),
+            new Vector3f(0, 0, 1),
+            new Vector3f(0, 1, 0),
+            new Vector3f(0, 1, 1),
+            new Vector3f(1, 0, 0),
+            new Vector3f(1, 0, 1),
+            new Vector3f(1, 1, 0),
+            new Vector3f(1, 1, 1)
+    ));
 
     private static Vector3f calculateHitboxAdjustmentTranslation(Matrix4f matrix) {
         // When we rotate a block, the hitbox in X, Y, and Z changes

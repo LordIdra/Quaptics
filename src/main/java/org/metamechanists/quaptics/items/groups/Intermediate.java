@@ -6,7 +6,7 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.metamechanists.quaptics.Quaptics;
-import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
+import org.metamechanists.quaptics.implementation.base.Settings;
 import org.metamechanists.quaptics.implementation.blocks.concentrators.EnergyConcentrator;
 import org.metamechanists.quaptics.implementation.blocks.manipulators.Combiner;
 import org.metamechanists.quaptics.implementation.blocks.manipulators.Lens;
@@ -16,40 +16,40 @@ import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
 
 public class Intermediate {
-    public static final ConnectedBlock.Settings ENERGY_CONCENTRATOR_2_SETTINGS = ConnectedBlock.Settings.builder()
+    public static final Settings ENERGY_CONCENTRATOR_2_SETTINGS = Settings.builder()
             .tier(Tier.INTERMEDIATE)
             .displayRadius(0.175F)
             .connectionRadius(0.35F)
             .emissionPower(100)
             .build();
-    public static final ConnectedBlock.Settings LENS_3_SETTINGS = ConnectedBlock.Settings.builder()
+    public static final Settings LENS_3_SETTINGS = Settings.builder()
             .tier(Tier.INTERMEDIATE)
             .displayRadius(0.18F)
             .connectionRadius(0.36F)
             .powerLoss(0.04)
             .build();
-    public static final ConnectedBlock.Settings COMBINER_3_2_SETTINGS = ConnectedBlock.Settings.builder()
+    public static final Settings COMBINER_3_2_SETTINGS = Settings.builder()
             .tier(Tier.INTERMEDIATE)
             .displayRadius(0.3F)
             .connectionRadius(0.6F)
             .powerLoss(0.08)
             .connections(2)
             .build();
-    public static final ConnectedBlock.Settings COMBINER_3_3_SETTINGS = ConnectedBlock.Settings.builder()
+    public static final Settings COMBINER_3_3_SETTINGS = Settings.builder()
             .tier(Tier.INTERMEDIATE)
             .displayRadius(0.35F)
             .connectionRadius(0.7F)
             .powerLoss(0.08)
             .connections(3)
             .build();
-    public static final ConnectedBlock.Settings SPLITTER_3_2_SETTINGS = ConnectedBlock.Settings.builder()
+    public static final Settings SPLITTER_3_2_SETTINGS = Settings.builder()
             .tier(Tier.INTERMEDIATE)
             .displayRadius(0.3F)
             .connectionRadius(0.6F)
             .powerLoss(0.08)
             .connections(2)
             .build();
-    public static final ConnectedBlock.Settings SPLITTER_3_3_SETTINGS = ConnectedBlock.Settings.builder()
+    public static final Settings SPLITTER_3_3_SETTINGS = Settings.builder()
             .tier(Tier.INTERMEDIATE)
             .displayRadius(0.35F)
             .connectionRadius(0.7F)

@@ -4,29 +4,29 @@ import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.jetbrains.annotations.Nullable;
-import org.metamechanists.quaptics.connections.Link;
+import org.metamechanists.quaptics.connections.ConnectionGroup;
 
 import java.util.UUID;
 
 @SuppressWarnings("unused")
-public class LinkID extends CustomID {
-    public LinkID() {
+public class ConnectionGroupId extends CustomId {
+    public ConnectionGroupId() {
         super();
     }
-    public LinkID(CustomID ID) {
-        super(ID);
+    public ConnectionGroupId(CustomId id) {
+        super(id);
     }
-    public LinkID(String string) {
+    public ConnectionGroupId(String string) {
         super(string);
     }
-    public LinkID(UUID uuid) {
+    public ConnectionGroupId(UUID uuid) {
         super(uuid);
     }
     @Override
-    public @Nullable Link get() {
+    public @Nullable ConnectionGroup get() {
         final Entity entity = Bukkit.getEntity(getUUID());
         return DisplayGroup.fromUUID(getUUID()) != null
-                ? new Link(this)
+                ? new ConnectionGroup(this)
                 : null;
     }
 }

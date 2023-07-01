@@ -19,10 +19,11 @@ import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
+import org.metamechanists.quaptics.implementation.base.Settings;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
-import org.metamechanists.quaptics.utils.id.ConnectionGroupID;
+import org.metamechanists.quaptics.utils.id.ConnectionGroupId;
 
 import java.util.List;
 
@@ -80,16 +81,20 @@ public class Repeater extends ConnectedBlock {
     }
 
     @Override
-    protected List<ConnectionPoint> generateConnectionPoints(ConnectionGroupID groupID, Player player, Location location) {
+    protected List<ConnectionPoint> generateConnectionPoints(ConnectionGroupId groupId, Player player, Location location) {
         return List.of(
-                new ConnectionPointInput(groupID, "input", formatPointLocation(player, location, inputPointLocation)),
-                new ConnectionPointOutput(groupID, "output", formatPointLocation(player, location, outputPointLocation)));
+                new ConnectionPointInput(groupId, "input", formatPointLocation(player, location, inputPointLocation)),
+                new ConnectionPointOutput(groupId, "output", formatPointLocation(player, location, outputPointLocation)));
     }
 
     @Override
     public void onInputLinkUpdated(@NotNull ConnectionGroup group) {
         final ConnectionPointInput input = group.getInput("input");
         final ConnectionPointOutput output = group.getOutput("output");
+
+        if (input == null || output == null) {
+            return;
+        }
 
         if (doBurnoutCheck(group, input)) {
             return;

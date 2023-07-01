@@ -16,9 +16,10 @@ import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
+import org.metamechanists.quaptics.implementation.base.Settings;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
-import org.metamechanists.quaptics.utils.id.ConnectionGroupID;
+import org.metamechanists.quaptics.utils.id.ConnectionGroupId;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +28,7 @@ import java.util.stream.IntStream;
 
 public class Combiner extends ConnectedBlock {
     private static final int CONCRETE_BRIGHTNESS = 15;
-    private final double connectionAngle = Math.PI / 2;
+    private final double CONNECTION_ANGLE = Math.PI / 2;
     private final Vector inputStartingLocation = new Vector(0.0F, 0.0F, -settings.getConnectionRadius());
     private final Vector outputLocation = new Vector(0.0F, 0.0F, settings.getConnectionRadius());
     private final Vector3f glassDisplaySize = new Vector3f(settings.getDisplayRadius()*2);
@@ -53,17 +54,17 @@ public class Combiner extends ConnectedBlock {
     }
 
     @Override
-    protected List<ConnectionPoint> generateConnectionPoints(ConnectionGroupID groupID, Player player, Location location) {
+    protected List<ConnectionPoint> generateConnectionPoints(ConnectionGroupId groupId, Player player, Location location) {
         final List<ConnectionPoint> points = new ArrayList<>();
 
         IntStream.range(0, settings.getConnections()).forEach(i -> {
             final String name = "input " + Objects.toString(i);
-            final double angle = (-connectionAngle/2) + connectionAngle*((double)(i) / (settings.getConnections()-1));
+            final double angle = (-CONNECTION_ANGLE /2) + CONNECTION_ANGLE *((double)(i) / (settings.getConnections()-1));
             final Vector relativeLocation = inputStartingLocation.clone().rotateAroundY(angle);
-            points.add(new ConnectionPointInput(groupID, name, formatPointLocation(player, location, relativeLocation)));
+            points.add(new ConnectionPointInput(groupId, name, formatPointLocation(player, location, relativeLocation)));
         });
 
-        points.add(new ConnectionPointOutput(groupID, "output", formatPointLocation(player, location, outputLocation)));
+        points.add(new ConnectionPointOutput(groupId, "output", formatPointLocation(player, location, outputLocation)));
         return points;
     }
 
@@ -71,6 +72,10 @@ public class Combiner extends ConnectedBlock {
     public void onInputLinkUpdated(@NotNull ConnectionGroup group) {
         final List<ConnectionPointInput> enabledInputs = getEnabledInputs(group.getLocation());
         final ConnectionPointOutput output = (ConnectionPointOutput) group.getPoint("output");
+
+        if (output == null) {
+            return;
+        }
 
         if (enabledInputs.stream().anyMatch(input -> doBurnoutCheck(group, input))) {
             return;

@@ -8,17 +8,17 @@ import org.metamechanists.quaptics.implementation.blocks.manipulators.Capacitor;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.panel.Panel;
 import org.metamechanists.quaptics.panel.PanelBuilder;
-import org.metamechanists.quaptics.utils.id.ConnectionGroupID;
-import org.metamechanists.quaptics.utils.id.PanelID;
+import org.metamechanists.quaptics.utils.id.ConnectionGroupId;
+import org.metamechanists.quaptics.utils.id.PanelId;
 
 public class CapacitorPanel {
     private static final Vector BLOCK_OFFSET = new Vector(0, 0.7, 0);
     private static final float SIZE = 0.40F;
-    private final ConnectionGroupID groupID;
+    private final ConnectionGroupId groupId;
     protected final Panel panel;
 
-    public CapacitorPanel(@NotNull Location location, ConnectionGroupID groupID) {
-        this.groupID = groupID;
+    public CapacitorPanel(@NotNull Location location, ConnectionGroupId groupId) {
+        this.groupId = groupId;
         this.panel = new PanelBuilder(location.clone().toCenterLocation().add(BLOCK_OFFSET), SIZE)
                 .addAttribute("chargeText")
                 .addAttribute("chargeBar")
@@ -28,17 +28,17 @@ public class CapacitorPanel {
         this.panel.setHidden(false);
     }
 
-    public CapacitorPanel(@NotNull PanelID panelID, ConnectionGroupID groupID) {
-        this.groupID = groupID;
-        this.panel = panelID.get();
+    public CapacitorPanel(@NotNull PanelId panelId, ConnectionGroupId groupId) {
+        this.groupId = groupId;
+        this.panel = panelId.get();
     }
 
-    public PanelID getID() {
-        return panel.getID();
+    public PanelId getId() {
+        return panel.getId();
     }
 
     protected ConnectionGroup getGroup() {
-        return groupID.get();
+        return groupId.get();
     }
 
     public void setPanelHidden(boolean hidden) {

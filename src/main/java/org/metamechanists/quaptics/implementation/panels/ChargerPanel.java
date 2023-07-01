@@ -5,17 +5,17 @@ import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.implementation.blocks.consumers.Charger;
 import org.metamechanists.quaptics.implementation.tools.QuapticChargeableItem;
 import org.metamechanists.quaptics.items.Lore;
-import org.metamechanists.quaptics.utils.id.ConnectionGroupID;
-import org.metamechanists.quaptics.utils.id.PanelID;
+import org.metamechanists.quaptics.utils.id.ConnectionGroupId;
+import org.metamechanists.quaptics.utils.id.PanelId;
 
 public class ChargerPanel extends CapacitorPanel {
 
-    public ChargerPanel(@NotNull Location location, ConnectionGroupID groupID) {
-        super(location, groupID);
+    public ChargerPanel(@NotNull Location location, ConnectionGroupId groupId) {
+        super(location, groupId);
     }
 
-    public ChargerPanel(@NotNull PanelID panelID, ConnectionGroupID groupID) {
-        super(panelID, groupID);
+    public ChargerPanel(@NotNull PanelId panelID, ConnectionGroupId groupId) {
+        super(panelID, groupId);
     }
 
     @Override

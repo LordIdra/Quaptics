@@ -15,12 +15,14 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
+import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
+import org.metamechanists.quaptics.implementation.base.Settings;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.ItemDisplayBuilder;
-import org.metamechanists.quaptics.utils.id.ConnectionGroupID;
+import org.metamechanists.quaptics.utils.id.ConnectionGroupId;
 
 import java.util.List;
 
@@ -49,14 +51,23 @@ public class SolarConcentrator extends ConnectedBlock {
     }
 
     @Override
-    protected List<ConnectionPoint> generateConnectionPoints(ConnectionGroupID groupID, Player player, Location location) {
-        return List.of(new ConnectionPointOutput(groupID, "output", formatPointLocation(player, location, outputLocation)));
+    protected List<ConnectionPoint> generateConnectionPoints(ConnectionGroupId groupId, Player player, Location location) {
+        return List.of(new ConnectionPointOutput(groupId, "output", formatPointLocation(player, location, outputLocation)));
     }
 
     @Override
     public void onSlimefunTick(@NotNull Block block, SlimefunItem item, Config data) {
         super.onSlimefunTick(block, item, data);
-        final ConnectionPointOutput output = getGroup(block.getLocation()).getOutput("output");
+
+        final ConnectionGroup group = getGroup(block.getLocation());
+        if (group == null) {
+            return;
+        }
+
+        final ConnectionPointOutput output = group.getOutput("output");
+        if (output == null) {
+            return;
+        }
 
         if (!output.hasLink()) {
             return;

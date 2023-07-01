@@ -4,7 +4,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.Quaptics;
 import org.metamechanists.quaptics.utils.Language;
-import org.metamechanists.quaptics.utils.id.ConnectionGroupID;
+import org.metamechanists.quaptics.utils.id.ConnectionGroupId;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,24 +14,24 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class QuapticStorage {
-    public static final Set<ConnectionGroupID> groupIDs = new HashSet<>();
+    protected static final Set<ConnectionGroupId> groupIDs = new HashSet<>();
 
-    public static void addGroup(ConnectionGroupID groupID) {
-        groupIDs.add(groupID);
+    public static void addGroup(ConnectionGroupId groupId) {
+        groupIDs.add(groupId);
     }
 
-    public static Set<ConnectionGroupID> getLoadedGroups() {
+    public static Set<ConnectionGroupId> getLoadedGroups() {
         return groupIDs.stream()
-                .filter(ID -> ID.get() != null)
+                .filter(id -> id.get() != null)
                 .collect(Collectors.toSet());
     }
 
     private static List<String> serializeGroupIDs() {
-        return groupIDs.stream().map(ID -> ID.getUUID().toString()).toList();
+        return groupIDs.stream().map(id -> id.getUUID().toString()).toList();
     }
 
     private static void deserializeGroupIDs(@NotNull List<String> stringIDs) {
-        groupIDs.addAll(stringIDs.stream().map(ConnectionGroupID::new).toList());
+        groupIDs.addAll(stringIDs.stream().map(ConnectionGroupId::new).toList());
     }
 
     private static void createDirectoryIfNotExists(@NotNull File file) {
@@ -45,7 +45,8 @@ public class QuapticStorage {
             try {
                 file.createNewFile();
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                e.printStackTrace();
+                throw new RuntimeException("Failed to create ticker file");
             }
         }
     }
@@ -63,7 +64,8 @@ public class QuapticStorage {
         try {
             tickers.save(file);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            throw new RuntimeException("Failed to save ticker file");
         }
     }
 

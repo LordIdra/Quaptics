@@ -1,15 +1,18 @@
 package org.metamechanists.quaptics.implementation.blocks.consumers.turrets;
 
+import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.Display;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.beams.DeprecatedTickerStorage;
 import org.metamechanists.quaptics.beams.ticker.DirectTicker;
+import org.metamechanists.quaptics.implementation.base.Settings;
 
 public class DirectTurret extends Turret {
     private static final float BEAM_RADIUS = 0.095F;
@@ -27,7 +30,14 @@ public class DirectTurret extends Turret {
             return;
         }
 
-        getDisplayGroup(location).getDisplays().get("barrel").setTransformationMatrix(getBarrelMatrix(location, target.getEyeLocation()));
+        final DisplayGroup group = getDisplayGroup(location);
+        final Display display = group != null
+                ? group.getDisplays().get("barrel")
+                : null;
+
+        if (group != null && display != null) {
+            display.setTransformationMatrix(getBarrelMatrix(location, target.getEyeLocation()));
+        }
 
         DeprecatedTickerStorage.deprecate(new DirectTicker(
                 settings.getProjectileMaterial(),

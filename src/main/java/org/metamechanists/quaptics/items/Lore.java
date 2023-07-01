@@ -2,7 +2,7 @@ package org.metamechanists.quaptics.items;
 
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.QuapticTicker;
-import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
+import org.metamechanists.quaptics.implementation.base.Settings;
 import org.metamechanists.quaptics.utils.Colors;
 
 import java.util.ArrayList;
@@ -37,7 +37,7 @@ public class Lore {
                 : x);
     }
 
-    public static @NotNull String[] buildChargeableLore(ConnectedBlock.Settings settings, int filled, String... description) {
+    public static @NotNull String[] buildChargeableLore(Settings settings, int filled, String... description) {
         final List<String> lore = new ArrayList<>();
 
         Collections.addAll(lore, description);
@@ -52,7 +52,7 @@ public class Lore {
         return lore.toArray(new String[0]);
     }
 
-    private static @NotNull List<String> fromSettings(@NotNull ConnectedBlock.Settings settings) {
+    private static @NotNull List<String> fromSettings(@NotNull Settings settings) {
         final List<String> lore = new ArrayList<>();
 
         if (settings.getTier() != null && (settings.getEmissionPower() == 0 || settings.getCapacity() != 0)) {
@@ -91,7 +91,7 @@ public class Lore {
 
         return lore;
     }
-    public static @NotNull String[] create(ConnectedBlock.@NotNull Settings settings, String... description) {
+    public static @NotNull String[] create(@NotNull Settings settings, String... description) {
         final List<String> lore = new ArrayList<>();
         lore.add(settings.getTier().name);
         Collections.addAll(lore, description);

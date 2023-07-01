@@ -9,17 +9,17 @@ import org.metamechanists.quaptics.beams.ticker.DirectTicker;
 import java.util.UUID;
 
 @SuppressWarnings("unused")
-public class TickerID extends CustomID {
-    public TickerID() {
+public class TickerId extends CustomId {
+    public TickerId() {
         super();
     }
-    public TickerID(CustomID ID) {
-        super(ID);
+    public TickerId(CustomId id) {
+        super(id);
     }
-    public TickerID(String string) {
+    public TickerId(String string) {
         super(string);
     }
-    public TickerID(UUID uuid) {
+    public TickerId(UUID uuid) {
         super(uuid);
     }
     @Override

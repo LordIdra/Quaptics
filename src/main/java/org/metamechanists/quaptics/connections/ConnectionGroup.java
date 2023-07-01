@@ -5,15 +5,17 @@ import com.google.gson.JsonPrimitive;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.entity.Entity;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
 import org.metamechanists.quaptics.items.Items;
 import org.metamechanists.quaptics.storage.DataTraverser;
-import org.metamechanists.quaptics.utils.id.ConnectionGroupID;
-import org.metamechanists.quaptics.utils.id.ConnectionPointID;
+import org.metamechanists.quaptics.utils.id.ConnectionGroupId;
+import org.metamechanists.quaptics.utils.id.ConnectionPointId;
 
 import java.util.HashMap;
 import java.util.List;
@@ -21,56 +23,64 @@ import java.util.Map;
 
 public class ConnectionGroup {
     @Getter
-    private final ConnectionGroupID ID;
-    private final String blockID;
+    private final ConnectionGroupId id;
+    private final String blockId;
     @Getter
-    private final Map<String, ConnectionPointID> points = new HashMap<>();
+    private final Map<String, ConnectionPointId> points = new HashMap<>();
 
-    public ConnectionGroup(ConnectionGroupID ID, @NotNull ConnectedBlock block, @NotNull List<ConnectionPoint> pointsIn) {
-        this.ID = ID;
-        this.blockID = block.getId();
-        pointsIn.forEach(point -> points.put(point.getName(), point.getID()));
+    public ConnectionGroup(ConnectionGroupId id, @NotNull ConnectedBlock block, @NotNull List<ConnectionPoint> pointsIn) {
+        this.id = id;
+        this.blockId = block.getId();
+        pointsIn.forEach(point -> points.put(point.getName(), point.getId()));
         saveData();
     }
 
-    public ConnectionGroup(ConnectionGroupID ID) {
-        final DataTraverser traverser = new DataTraverser(ID);
+    public ConnectionGroup(ConnectionGroupId id) {
+        final DataTraverser traverser = new DataTraverser(id);
         final JsonObject mainSection = traverser.getData();
         final JsonObject pointSection = mainSection.get("points").getAsJsonObject();
-        this.ID = ID;
-        this.blockID = mainSection.get("blockID").getAsString();
+        this.id = id;
+        this.blockId = mainSection.get("blockId").getAsString();
         pointSection.asMap().forEach(
-                (key, value) -> points.put(key, new ConnectionPointID(value.getAsString())));
+                (key, value) -> points.put(key, new ConnectionPointId(value.getAsString())));
     }
 
     private void saveData() {
-        final DataTraverser traverser = new DataTraverser(ID);
+        final DataTraverser traverser = new DataTraverser(id);
         final JsonObject mainSection = traverser.getData();
         final JsonObject pointSection = new JsonObject();
-        mainSection.add("blockID", new JsonPrimitive(blockID));
+        mainSection.add("blockId", new JsonPrimitive(blockId));
         points.forEach(
                 (key, value) -> pointSection.add(key, new JsonPrimitive(value.getUUID().toString())));
         mainSection.add("points", pointSection);
         traverser.save();
     }
 
-    private ConnectionPoint getPoint(ConnectionPointID pointID) {
-        return pointID.get();
+    private @Nullable ConnectionPoint getPoint(ConnectionPointId pointId) {
+        return pointId.get();
     }
-    public ConnectionPoint getPoint(String name) {
+    public @Nullable ConnectionPoint getPoint(String name) {
         return points.get(name).get();
     }
-    public ConnectionPointOutput getOutput(String name) {
-        return (ConnectionPointOutput) getPoint(name);
+    public @Nullable ConnectionPointOutput getOutput(String name) {
+        return getPoint(name) instanceof ConnectionPointOutput output
+                ? output
+                : null;
     }
-    public ConnectionPointInput getInput(String name) {
-        return (ConnectionPointInput) getPoint(name);
+    public @Nullable ConnectionPointInput getInput(String name) {
+        return getPoint(name) instanceof ConnectionPointInput input
+                ? input
+                : null;
     }
     public ConnectedBlock getBlock() {
-        return Items.getBlocks().get(blockID);
+        return Items.getBlocks().get(blockId);
     }
-    public Location getLocation() {
-        return Bukkit.getEntity(getID().getUUID()).getLocation();
+    public @Nullable Location getLocation() {
+        // The ConnectionGroupId shares the UUID of the main interaction entity
+        final Entity entity = Bukkit.getEntity(getId().getUUID());
+        return entity != null
+                ? entity.getLocation()
+                : null;
     }
 
     public void tick() {
@@ -78,14 +88,27 @@ public class ConnectionGroup {
     }
 
     public void updatePanels() {
-        points.values().forEach(ID -> getPoint(ID).updatePanel());
+        points.values().forEach(pointId -> {
+            final ConnectionPoint point = getPoint(pointId);
+            if (point != null) {
+                point.updatePanel();
+            }
+        });
     }
 
     public void remove() {
-        points.values().forEach(ID -> getPoint(ID).remove());
+        points.values().forEach(pointId -> {
+            final ConnectionPoint point = getPoint(pointId);
+            if (point != null) {
+                point.remove();
+            }
+        });
     }
 
-    public void changePointLocation(ConnectionPointID pointId, Location newLocation) {
-        getPoint(pointId).changeLocation(newLocation);
+    public void changePointLocation(ConnectionPointId pointId, @Nullable Location newLocation) {
+        final ConnectionPoint point = getPoint(pointId);
+        if (point != null && newLocation != null) {
+            point.changeLocation(newLocation);
+        }
     }
 }

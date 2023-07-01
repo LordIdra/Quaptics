@@ -3,7 +3,6 @@ package org.metamechanists.quaptics.connections.points;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import lombok.Getter;
-import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -13,6 +12,7 @@ import org.bukkit.entity.Interaction;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.Link;
@@ -24,14 +24,14 @@ import org.metamechanists.quaptics.utils.builders.InteractionBuilder;
 import org.metamechanists.quaptics.utils.id.*;
 
 public abstract class ConnectionPoint {
-    private final static float SIZE = 0.1F;
+    private static final float SIZE = 0.1F;
     private static final Vector INTERACTION_OFFSET = new Vector(0, -SIZE /2, 0);
-    private final ConnectionGroupID groupID;
+    private final ConnectionGroupId groupId;
     @Getter
-    private final InteractionID interactionID;
-    private final BlockDisplayID blockDisplayID;
-    private PanelID panelID;
-    private LinkID linkID;
+    private final InteractionId interactionId;
+    private final BlockDisplayId blockDisplayId;
+    private PanelId panelId;
+    private LinkId linkId;
     @Getter
     private final String name;
     @Getter
@@ -39,21 +39,21 @@ public abstract class ConnectionPoint {
     @Getter
     private final int disconnectedBrightness;
 
-    public ConnectionPoint(ConnectionGroupID groupID, String name, @NotNull Location location, Material material,
-                           int connectedBrightness, int disconnectedBrightness) {
+    protected ConnectionPoint(ConnectionGroupId groupId, String name, @NotNull Location location, Material material,
+                              int connectedBrightness, int disconnectedBrightness) {
         final Interaction interaction = new InteractionBuilder(location.clone().add(INTERACTION_OFFSET))
                 .setWidth(SIZE)
                 .setHeight(SIZE)
                 .build();
-        this.groupID = groupID;
-        this.interactionID = new InteractionID(interaction.getUniqueId());
-        this.blockDisplayID = new BlockDisplayID(new BlockDisplayBuilder(location)
+        this.groupId = groupId;
+        this.interactionId = new InteractionId(interaction.getUniqueId());
+        this.blockDisplayId = new BlockDisplayId(new BlockDisplayBuilder(location)
                 .setMaterial(material)
                 .setTransformation(Transformations.adjustedScale(new Vector3f(SIZE, SIZE, SIZE)))
                 .setBrightness(disconnectedBrightness)
                 .build()
                 .getUniqueId());
-        this.panelID = new PointPanel(location, getID()).getID();
+        this.panelId = new PointPanel(location, getId()).getId();
         this.name = name;
         this.connectedBrightness = connectedBrightness;
         this.disconnectedBrightness = disconnectedBrightness;
@@ -61,26 +61,26 @@ public abstract class ConnectionPoint {
         getPointPanel().update();
     }
 
-    public ConnectionPoint(ConnectionPointID pointID) {
-        final DataTraverser traverser = new DataTraverser(pointID);
+    protected ConnectionPoint(ConnectionPointId pointId) {
+        final DataTraverser traverser = new DataTraverser(pointId);
         final JsonObject mainSection = traverser.getData();
-        final String linkIDString = mainSection.get("linkID").getAsString();
-        this.groupID = new ConnectionGroupID(mainSection.get("groupID").getAsString());
-        this.blockDisplayID = new BlockDisplayID(mainSection.get("blockDisplayID").getAsString());
-        this.interactionID = new InteractionID(mainSection.get("interactionID").getAsString());
-        this.panelID = new PanelID(mainSection.get("panelID").getAsString());
-        this.linkID = linkIDString.equals("null") ? null : new LinkID(linkIDString);
+        final String linkIdString = mainSection.get("linkId").getAsString();
+        this.groupId = new ConnectionGroupId(mainSection.get("groupId").getAsString());
+        this.blockDisplayId = new BlockDisplayId(mainSection.get("blockDisplayId").getAsString());
+        this.interactionId = new InteractionId(mainSection.get("interactionId").getAsString());
+        this.panelId = new PanelId(mainSection.get("panelId").getAsString());
+        this.linkId = linkIdString.equals("null") ? null : new LinkId(linkIdString);
         this.name = mainSection.get("name").getAsString();
         this.connectedBrightness = mainSection.get("connectedBrightness").getAsInt();
         this.disconnectedBrightness = mainSection.get("disconnectedBrightness").getAsInt();
     }
 
     protected void saveData(@NotNull JsonObject mainSection) {
-        mainSection.add("groupID", new JsonPrimitive(groupID.getUUID().toString()));
-        mainSection.add("blockDisplayID", new JsonPrimitive(blockDisplayID.getUUID().toString()));
-        mainSection.add("interactionID", new JsonPrimitive(interactionID.getUUID().toString()));
-        mainSection.add("panelID", new JsonPrimitive(panelID.getUUID().toString()));
-        mainSection.add("linkID", new JsonPrimitive(linkID == null ? "null" : linkID.getUUID().toString()));
+        mainSection.add("groupId", new JsonPrimitive(groupId.getUUID().toString()));
+        mainSection.add("blockDisplayId", new JsonPrimitive(blockDisplayId.getUUID().toString()));
+        mainSection.add("interactionId", new JsonPrimitive(interactionId.getUUID().toString()));
+        mainSection.add("panelId", new JsonPrimitive(panelId.getUUID().toString()));
+        mainSection.add("linkId", new JsonPrimitive(linkId == null ? "null" : linkId.getUUID().toString()));
         mainSection.add("name", new JsonPrimitive(name));
         mainSection.add("connectedBrightness", new JsonPrimitive(connectedBrightness));
         mainSection.add("disconnectedBrightness", new JsonPrimitive(disconnectedBrightness));
@@ -88,16 +88,16 @@ public abstract class ConnectionPoint {
 
     protected abstract void saveData();
 
-    public ConnectionPointID getID() {
-        return new ConnectionPointID(interactionID);
+    public @NotNull ConnectionPointId getId() {
+        return new ConnectionPointId(interactionId);
     }
 
     public boolean hasLink() {
-        return linkID != null && getLink() != null;
+        return linkId != null && getLink() != null;
     }
 
-    public Link getLink() {
-        return linkID.get();
+    public @Nullable Link getLink() {
+        return linkId.get();
     }
 
     public boolean isLinkEnabled() {
@@ -110,25 +110,28 @@ public abstract class ConnectionPoint {
         }
     }
 
-    public Location getLocation() {
-        return getBlockDisplay().getLocation();
+    public @Nullable Location getLocation() {
+        final BlockDisplay blockDisplay = getBlockDisplay();
+        return blockDisplay != null
+                ? blockDisplay.getLocation()
+                : null;
     }
 
     @Contract(" -> new")
     public @NotNull PointPanel getPointPanel() {
-        return new PointPanel(panelID, getID());
+        return new PointPanel(panelId, getId());
     }
 
-    private BlockDisplay getBlockDisplay() {
-        return (BlockDisplay) Bukkit.getEntity(blockDisplayID.getUUID());
+    private @Nullable BlockDisplay getBlockDisplay() {
+        return blockDisplayId.get();
     }
 
-    private Interaction getInteraction() {
-        return (Interaction) Bukkit.getEntity(interactionID.getUUID());
+    private @Nullable Interaction getInteraction() {
+        return interactionId.get();
     }
 
-    public ConnectionGroup getGroup() {
-        return groupID.get();
+    public @Nullable ConnectionGroup getGroup() {
+        return groupId.get();
     }
 
     public void remove() {
@@ -137,16 +140,33 @@ public abstract class ConnectionPoint {
         }
 
         getPointPanel().remove();
-        getBlockDisplay().remove();
-        getInteraction().remove();
+
+        final BlockDisplay blockDisplay = getBlockDisplay();
+        if (blockDisplay != null) {
+            blockDisplay.remove();
+        }
+
+        final Interaction interaction = getInteraction();
+        if (interaction != null) {
+            interaction.remove();
+        }
     }
 
     public void changeLocation(@NotNull Location location) {
-        getInteraction().teleport(location.clone().add(INTERACTION_OFFSET));
-        getBlockDisplay().teleport(location);
+        final Interaction interaction = getInteraction();
+        final BlockDisplay blockDisplay = getBlockDisplay();
+        if (interaction == null || blockDisplay == null) {
+            return;
+        }
+
+
+        blockDisplay.teleport(location);
+        interaction.teleport(location.clone().add(INTERACTION_OFFSET));
+
         final boolean wasHidden = getPointPanel().isPanelHidden();
         getPointPanel().remove();
-        panelID = new PointPanel(location, getID()).getID();
+
+        this.panelId = new PointPanel(location, getId()).getId();
         getPointPanel().setPanelHidden(wasHidden);
         saveData();
     }
@@ -160,26 +180,42 @@ public abstract class ConnectionPoint {
     }
 
     public void unlink() {
-        linkID = null;
-        getBlockDisplay().setBrightness(new Display.Brightness(disconnectedBrightness, 0));
+        this.linkId = null;
+
+        final BlockDisplay blockDisplay = getBlockDisplay();
+        if (blockDisplay != null) {
+            blockDisplay.setBrightness(new Display.Brightness(this.disconnectedBrightness, 0));
+        }
+
         saveData();
         updatePanel();
     }
 
-    public void link(LinkID linkID) {
+    public void link(LinkId linkId) {
         unlink();
-        this.linkID = linkID;
-        getBlockDisplay().setBrightness(new Display.Brightness(connectedBrightness, 0));
+        this.linkId = linkId;
+
+        final BlockDisplay blockDisplay = getBlockDisplay();
+        if (blockDisplay != null) {
+            blockDisplay.setBrightness(new Display.Brightness(this.connectedBrightness, 0));
+        }
+
         saveData();
         updatePanel();
     }
 
     public void select() {
-        getBlockDisplay().setGlowing(true);
-        getBlockDisplay().setGlowColorOverride(Color.fromRGB(0, 255, 0));
+        final BlockDisplay blockDisplay = getBlockDisplay();
+        if (blockDisplay != null) {
+            blockDisplay.setGlowing(true);
+            blockDisplay.setGlowColorOverride(Color.fromRGB(0, 255, 0));
+        }
     }
 
     public void deselect() {
-        getBlockDisplay().setGlowing(false);
+        final BlockDisplay blockDisplay = getBlockDisplay();
+        if (blockDisplay != null) {
+            blockDisplay.setGlowing(false);
+        }
     }
 }

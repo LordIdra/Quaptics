@@ -9,7 +9,7 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-import org.metamechanists.quaptics.utils.id.ConnectionPointID;
+import org.metamechanists.quaptics.utils.id.ConnectionPointId;
 
 public class TargetingWandListener implements Listener {
 
@@ -25,12 +25,12 @@ public class TargetingWandListener implements Listener {
             return;
         }
 
-        final ConnectionPointID pointID = new ConnectionPointID(clickedEntity.getUniqueId());
-        if (pointID.get() == null) {
+        final ConnectionPointId pointId = new ConnectionPointId(clickedEntity.getUniqueId());
+        if (pointId.get() == null) {
             return;
         }
 
-        wand.use(event.getPlayer(), pointID, heldItem);
+        wand.use(event.getPlayer(), pointId, heldItem);
     }
 
     @EventHandler

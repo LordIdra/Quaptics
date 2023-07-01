@@ -27,10 +27,11 @@ import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
+import org.metamechanists.quaptics.implementation.base.Settings;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
-import org.metamechanists.quaptics.utils.id.ConnectionGroupID;
+import org.metamechanists.quaptics.utils.id.ConnectionGroupId;
 
 import java.util.Collection;
 import java.util.List;
@@ -43,7 +44,7 @@ public abstract class Turret extends ConnectedBlock {
     protected final Vector barrelLocation = new Vector(0.5, 0.7, 0.5);
     private final Vector inputLocation = new Vector(0.0F, 0.0F, -settings.getConnectionRadius());
 
-    public Turret(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, Settings settings) {
+    protected Turret(ItemGroup group, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, Settings settings) {
         super(group, item, recipeType, recipe, settings);
     }
 
@@ -68,19 +69,21 @@ public abstract class Turret extends ConnectedBlock {
     }
 
     @Override
-    protected List<ConnectionPoint> generateConnectionPoints(ConnectionGroupID groupID, Player player, Location location) {
-        return List.of(new ConnectionPointInput(groupID, "input", formatPointLocation(player, location, inputLocation)));
+    protected List<ConnectionPoint> generateConnectionPoints(ConnectionGroupId groupId, Player player, Location location) {
+        return List.of(new ConnectionPointInput(groupId, "input", formatPointLocation(player, location, inputLocation)));
     }
 
     @Override
     public void onInputLinkUpdated(@NotNull ConnectionGroup group) {
-        final ConnectionPointInput input = (ConnectionPointInput) group.getPoint("input");
-
-        if (doBurnoutCheck(group, input)) {
+        final ConnectionPoint input = group.getPoint("input");
+        if (input == null || doBurnoutCheck(group, input)) {
             return;
         }
 
-        BlockStorage.addBlockInfo(group.getLocation(), Keys.BS_POWERED, "false");
+        final Location location = group.getLocation();
+        if (location != null) {
+            BlockStorage.addBlockInfo(location, Keys.BS_POWERED, "false");
+        }
 
         if (!input.hasLink()) {
             return;
@@ -91,7 +94,7 @@ public abstract class Turret extends ConnectedBlock {
         }
     }
 
-    private void setTarget(Location location, @NotNull Damageable entity) {
+    private void setTarget(@NotNull Location location, @NotNull Damageable entity) {
         BlockStorage.addBlockInfo(location, Keys.BS_TARGET, entity.getUniqueId().toString());
     }
 
@@ -121,22 +124,25 @@ public abstract class Turret extends ConnectedBlock {
         return target;
     }
 
-    protected void retarget(Location location) {
+    protected void retarget(@NotNull Location location) {
         if (BlockStorage.getLocationInfo(location, Keys.BS_TARGET) != null) {
             return;
         }
 
-        final Collection<Entity> entities = location.getWorld().getNearbyEntities(location, settings.getRange(), settings.getRange(), settings.getRange());
-        final Collection<Entity> targetableEntities = entities.stream().filter(entity ->
-                settings.getTargets().contains(entity.getSpawnCategory())
+        final Collection<Entity> entities = location.getWorld()
+                .getNearbyEntities(location, settings.getRange(), settings.getRange(), settings.getRange(),
+                        (entity -> settings.getTargets().contains(entity.getSpawnCategory())
                         && entity instanceof Damageable
-                        && entity.getLocation().distance(location) < settings.getRange()).toList();
+                        && entity.getLocation().distance(location) < settings.getRange()));
 
-        if (targetableEntities.isEmpty()) {
+        if (entities.isEmpty()) {
             return;
         }
 
-        setTarget(location, getClosestEntity(targetableEntities, location));
+        final LivingEntity closestEntity = getClosestEntity(entities, location);
+        if (closestEntity != null) {
+            setTarget(location, closestEntity);
+        }
     }
 
     protected abstract void shoot(Location location);

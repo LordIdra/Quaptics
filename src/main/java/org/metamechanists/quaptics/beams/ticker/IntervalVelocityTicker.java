@@ -9,18 +9,18 @@ import org.bukkit.util.Vector;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
-import org.metamechanists.quaptics.utils.id.BlockDisplayID;
+import org.metamechanists.quaptics.utils.id.BlockDisplayId;
 
 public class IntervalVelocityTicker implements DisplayTicker {
     private final Vector3f velocity;
-    private final BlockDisplayID displayID;
+    private final BlockDisplayId displayID;
     private final int lifespanTicks;
     private int ageTicks = 0;
 
     public IntervalVelocityTicker(Material material, Location source, Location target, Vector3f scale, float speed) {
         this.velocity = Transformations.getDisplacement(source, target).normalize().mul(speed);
         this.lifespanTicks = (int)(Transformations.getDisplacement(source, target).length() / speed) + 1;
-        this.displayID = new BlockDisplayID(new BlockDisplayBuilder(source)
+        this.displayID = new BlockDisplayId(new BlockDisplayBuilder(source)
                 .setMaterial(material)
                 .setTransformation(Transformations.lookAlong(scale, Transformations.getDirection(source, target)))
                 .setGlow(Color.AQUA)

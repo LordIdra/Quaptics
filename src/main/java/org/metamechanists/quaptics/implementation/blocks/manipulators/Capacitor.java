@@ -22,12 +22,14 @@ import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
+import org.metamechanists.quaptics.implementation.base.Settings;
 import org.metamechanists.quaptics.implementation.panels.CapacitorPanel;
+import org.metamechanists.quaptics.panel.Panel;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
-import org.metamechanists.quaptics.utils.id.ConnectionGroupID;
-import org.metamechanists.quaptics.utils.id.PanelID;
+import org.metamechanists.quaptics.utils.id.ConnectionGroupId;
+import org.metamechanists.quaptics.utils.id.PanelId;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.util.List;
@@ -64,10 +66,10 @@ public class Capacitor extends ConnectedBlock {
     }
 
     @Override
-    protected List<ConnectionPoint> generateConnectionPoints(ConnectionGroupID groupID, Player player, Location location) {
+    protected List<ConnectionPoint> generateConnectionPoints(ConnectionGroupId groupId, Player player, Location location) {
         return List.of(
-                new ConnectionPointInput(groupID, "input", formatPointLocation(player, location, inputPointLocation)),
-                new ConnectionPointOutput(groupID, "output", formatPointLocation(player, location, outputPointLocation)));
+                new ConnectionPointInput(groupId, "input", formatPointLocation(player, location, inputPointLocation)),
+                new ConnectionPointOutput(groupId, "output", formatPointLocation(player, location, outputPointLocation)));
     }
 
     public static double getCharge(Location location) {
@@ -88,13 +90,13 @@ public class Capacitor extends ConnectedBlock {
         BlockStorage.addBlockInfo(location, Keys.BS_CHARGE_RATE, String.valueOf(chargeRate));
     }
 
-    public @Nullable PanelID getPanelID(Location location) {
+    public @Nullable PanelId getPanelId(Location location) {
         final String stringID = BlockStorage.getLocationInfo(location, Keys.BS_PANEL_ID);
-        return stringID == null ? null : new PanelID(stringID);
+        return stringID == null ? null : new PanelId(stringID);
     }
 
-    private void setPanelID(Location location, @NotNull PanelID ID) {
-        BlockStorage.addBlockInfo(location, Keys.BS_PANEL_ID, ID.toString());
+    private void setPanelID(Location location, @NotNull PanelId id) {
+        BlockStorage.addBlockInfo(location, Keys.BS_PANEL_ID, id.toString());
     }
 
     @Override
@@ -102,7 +104,11 @@ public class Capacitor extends ConnectedBlock {
     protected void onPlace(@NotNull BlockPlaceEvent event) {
         super.onPlace(event);
         final Location location = event.getBlock().getLocation();
-        setPanelID(location, new CapacitorPanel(location, getGroup(location).getID()).getID());
+        final ConnectionGroup group = getGroup(location);
+        if (group == null) {
+            return;
+        }
+        setPanelID(location, new CapacitorPanel(location, group.getId()).getId());
     }
 
     @Override
@@ -110,13 +116,23 @@ public class Capacitor extends ConnectedBlock {
     protected void onBreak(@NotNull BlockBreakEvent event) {
         super.onBreak(event);
         final Location location = event.getBlock().getLocation();
-        getPanelID(location).get().remove();
+        final PanelId panelId = getPanelId(location);
+        if (panelId == null) {
+            return;
+        }
+
+        final Panel panel = panelId.get();
+        if (panel == null) {
+            return;
+        }
+
+        panel.remove();
     }
 
     protected void updatePanel(@NotNull ConnectionGroup group) {
-        final PanelID ID = getPanelID(group.getLocation());
-        if (ID != null) {
-            final CapacitorPanel panel = new CapacitorPanel(ID, group.getID());
+        final PanelId id = getPanelId(group.getLocation());
+        if (id != null) {
+            final CapacitorPanel panel = new CapacitorPanel(id, group.getId());
             panel.update();
         }
     }
@@ -124,6 +140,10 @@ public class Capacitor extends ConnectedBlock {
     @Override
     public void onQuapticTick(@NotNull ConnectionGroup group) {
         final ConnectionPointOutput output = group.getOutput("output");
+        if (output == null) {
+            return;
+        }
+
         final double chargeRate = getChargeRate(group.getLocation());
         double charge = getCharge(group.getLocation());
 
@@ -155,6 +175,10 @@ public class Capacitor extends ConnectedBlock {
     @Override
     public void onInputLinkUpdated(@NotNull ConnectionGroup group) {
         final ConnectionPointInput input = group.getInput("input");
+
+        if (input == null || input.hasLink()) {
+            return;
+        }
 
         if (doBurnoutCheck(group, input)) {
             return;

@@ -13,17 +13,17 @@ import org.metamechanists.quaptics.storage.DataTraverser;
 import java.util.UUID;
 
 @SuppressWarnings("unused")
-public class ConnectionPointID extends CustomID {
-    public ConnectionPointID() {
+public class ConnectionPointId extends CustomId {
+    public ConnectionPointId() {
         super();
     }
-    public ConnectionPointID(CustomID ID) {
-        super(ID);
+    public ConnectionPointId(CustomId id) {
+        super(id);
     }
-    public ConnectionPointID(String string) {
+    public ConnectionPointId(String string) {
         super(string);
     }
-    public ConnectionPointID(UUID uuid) {
+    public ConnectionPointId(UUID uuid) {
         super(uuid);
     }
     @Override

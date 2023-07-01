@@ -9,17 +9,17 @@ import org.metamechanists.quaptics.panel.PanelAttribute;
 import java.util.UUID;
 
 @SuppressWarnings("unused")
-public class PanelAttributeID extends CustomID {
-    public PanelAttributeID() {
+public class PanelAttributeId extends CustomId {
+    public PanelAttributeId() {
         super();
     }
-    public PanelAttributeID(CustomID ID) {
-        super(ID);
+    public PanelAttributeId(CustomId id) {
+        super(id);
     }
-    public PanelAttributeID(String string) {
+    public PanelAttributeId(String string) {
         super(string);
     }
-    public PanelAttributeID(UUID uuid) {
+    public PanelAttributeId(UUID uuid) {
         super(uuid);
     }
     @Override

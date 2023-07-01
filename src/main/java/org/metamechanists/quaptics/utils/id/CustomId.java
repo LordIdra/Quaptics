@@ -2,19 +2,19 @@ package org.metamechanists.quaptics.utils.id;
 
 import java.util.UUID;
 
-public abstract class CustomID {
+public abstract class CustomId {
     private final UUID uuid;
 
-    public CustomID() {
+    protected CustomId() {
         this.uuid = UUID.randomUUID();
     }
-    public CustomID(String string) {
+    protected CustomId(String string) {
         this.uuid = UUID.fromString(string);
     }
-    protected CustomID(CustomID ID) {
-        this.uuid = ID.uuid;
+    protected CustomId(CustomId id) {
+        this.uuid = id.uuid;
     }
-    protected CustomID(UUID uuid) {
+    protected CustomId(UUID uuid) {
         this.uuid = uuid;
     }
 
@@ -30,7 +30,7 @@ public abstract class CustomID {
             return true;
         }
 
-        if (!(other instanceof CustomID customID)) {
+        if (!(other instanceof CustomId customID)) {
             return false;
         }
 

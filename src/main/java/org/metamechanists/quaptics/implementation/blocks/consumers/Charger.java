@@ -24,14 +24,16 @@ import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
+import org.metamechanists.quaptics.implementation.base.Settings;
 import org.metamechanists.quaptics.implementation.panels.ChargerPanel;
 import org.metamechanists.quaptics.implementation.tools.QuapticChargeableItem;
+import org.metamechanists.quaptics.panel.Panel;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.builders.ItemDisplayBuilder;
-import org.metamechanists.quaptics.utils.id.ConnectionGroupID;
-import org.metamechanists.quaptics.utils.id.PanelID;
+import org.metamechanists.quaptics.utils.id.ConnectionGroupId;
+import org.metamechanists.quaptics.utils.id.PanelId;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.util.List;
@@ -140,17 +142,17 @@ public class Charger extends ConnectedBlock {
     }
 
     @Override
-    protected List<ConnectionPoint> generateConnectionPoints(ConnectionGroupID groupID, Player player, Location location) {
-        return List.of(new ConnectionPointInput(groupID, "input", formatPointLocation(player, location, inputPointLocation)));
+    protected List<ConnectionPoint> generateConnectionPoints(ConnectionGroupId groupId, Player player, Location location) {
+        return List.of(new ConnectionPointInput(groupId, "input", formatPointLocation(player, location, inputPointLocation)));
     }
 
-    public @Nullable PanelID getPanelID(Location location) {
-        final String stringID = BlockStorage.getLocationInfo(location, Keys.BS_PANEL_ID);
-        return stringID == null ? null : new PanelID(stringID);
+    public @Nullable PanelId getPanelId(Location location) {
+        final String stringId = BlockStorage.getLocationInfo(location, Keys.BS_PANEL_ID);
+        return stringId == null ? null : new PanelId(stringId);
     }
 
-    private void setPanelID(Location location, @NotNull PanelID ID) {
-        BlockStorage.addBlockInfo(location, Keys.BS_PANEL_ID, ID.toString());
+    private void setPanelId(Location location, @NotNull PanelId id) {
+        BlockStorage.addBlockInfo(location, Keys.BS_PANEL_ID, id.toString());
     }
 
     @Override
@@ -158,7 +160,12 @@ public class Charger extends ConnectedBlock {
     protected void onPlace(@NotNull BlockPlaceEvent event) {
         super.onPlace(event);
         final Location location = event.getBlock().getLocation();
-        setPanelID(location, new ChargerPanel(location, getGroup(location).getID()).getID());
+        final ConnectionGroup group = getGroup(location);
+        if (group == null) {
+            return;
+        }
+
+        setPanelId(location, new ChargerPanel(location, group.getId()).getId());
     }
 
     @Override
@@ -166,21 +173,26 @@ public class Charger extends ConnectedBlock {
     protected void onBreak(@NotNull BlockBreakEvent event) {
         super.onBreak(event);
         final Location location = event.getBlock().getLocation();
-        getPanelID(location).get().remove();
+        final PanelId panelId = getPanelId(location);
+        final Panel panel = panelId != null ? panelId.get() : null;
+        if (panel != null) {
+            panel.remove();
+        }
     }
 
     protected void updatePanel(@NotNull ConnectionGroup group) {
-        final PanelID ID = getPanelID(group.getLocation());
-        if (ID != null) {
-            final ChargerPanel panel = new ChargerPanel(ID, group.getID());
+        final PanelId id = getPanelId(group.getLocation());
+        if (id != null) {
+            final ChargerPanel panel = new ChargerPanel(id, group.getId());
             panel.update();
         }
     }
 
     @Override
     public void onInputLinkUpdated(@NotNull ConnectionGroup group) {
-        final ConnectionPointInput input = (ConnectionPointInput) group.getPoint("input");
-
-        doBurnoutCheck(group, input);
+        final ConnectionPoint input = group.getPoint("input");
+        if (input != null) {
+            doBurnoutCheck(group, input);
+        }
     }
 }

@@ -11,8 +11,8 @@ import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.implementation.blocks.manipulators.Capacitor;
 import org.metamechanists.quaptics.implementation.tools.TargetingWand;
-import org.metamechanists.quaptics.utils.id.ConnectionGroupID;
-import org.metamechanists.quaptics.utils.id.PanelID;
+import org.metamechanists.quaptics.utils.id.ConnectionGroupId;
+import org.metamechanists.quaptics.utils.id.PanelId;
 
 public class CapacitorPanelListener implements Listener {
     @EventHandler
@@ -27,7 +27,7 @@ public class CapacitorPanelListener implements Listener {
             return;
         }
 
-        final ConnectionGroup group = new ConnectionGroupID(clickedEntity.getUniqueId()).get();
+        final ConnectionGroup group = new ConnectionGroupId(clickedEntity.getUniqueId()).get();
         if (group == null) {
             return;
         }
@@ -36,12 +36,12 @@ public class CapacitorPanelListener implements Listener {
             return;
         }
 
-        final PanelID ID = capacitor.getPanelID(group.getLocation());
-        if (ID == null) {
+        final PanelId id = capacitor.getPanelId(group.getLocation());
+        if (id == null) {
             return;
         }
 
-        final CapacitorPanel panel = new CapacitorPanel(ID, group.getID());
+        final CapacitorPanel panel = new CapacitorPanel(id, group.getId());
         panel.toggleHidden();
     }
 }

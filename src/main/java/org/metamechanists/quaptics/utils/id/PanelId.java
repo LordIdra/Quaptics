@@ -7,17 +7,17 @@ import org.metamechanists.quaptics.panel.Panel;
 import java.util.UUID;
 
 @SuppressWarnings("unused")
-public class PanelID extends CustomID {
-    public PanelID() {
+public class PanelId extends CustomId {
+    public PanelId() {
         super();
     }
-    public PanelID(CustomID ID) {
-        super(ID);
+    public PanelId(CustomId id) {
+        super(id);
     }
-    public PanelID(String string) {
+    public PanelId(String string) {
         super(string);
     }
-    public PanelID(UUID uuid) {
+    public PanelId(UUID uuid) {
         super(uuid);
     }
     @Override

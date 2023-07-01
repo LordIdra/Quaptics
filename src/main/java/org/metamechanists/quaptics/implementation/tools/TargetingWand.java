@@ -7,6 +7,7 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -19,7 +20,7 @@ import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Language;
 import org.metamechanists.quaptics.utils.PersistentDataUtils;
-import org.metamechanists.quaptics.utils.id.ConnectionPointID;
+import org.metamechanists.quaptics.utils.id.ConnectionPointId;
 
 public class TargetingWand extends SlimefunItem {
     public TargetingWand(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
@@ -30,21 +31,21 @@ public class TargetingWand extends SlimefunItem {
         return stack.getItemMeta().getPersistentDataContainer().has(Keys.SOURCE);
     }
 
-    private void setSource(Player player, ConnectionPointID sourceID, ItemStack stack) {
-        final ConnectionPoint source = sourceID.get();
+    private void setSource(Player player, ConnectionPointId sourceId, ItemStack stack) {
+        final ConnectionPoint source = sourceId.get();
         if (!(source instanceof ConnectionPointOutput)) {
             Language.sendLanguageMessage(player, "targeting-wand.source-must-be-output");
             return;
         }
 
         source.select();
-        PersistentDataUtils.setString(stack, Keys.SOURCE, sourceID.toString());
+        PersistentDataUtils.setString(stack, Keys.SOURCE, sourceId.toString());
     }
 
     public void unsetSource(ItemStack stack) {
         if (isSourceSet(stack)) {
-            final ConnectionPointID sourcePointID = new ConnectionPointID(PersistentDataUtils.getString(stack, Keys.SOURCE));
-            final ConnectionPointOutput sourcePoint = (ConnectionPointOutput) sourcePointID.get();
+            final ConnectionPointId sourcePointId = new ConnectionPointId(PersistentDataUtils.getString(stack, Keys.SOURCE));
+            final ConnectionPointOutput sourcePoint = (ConnectionPointOutput) sourcePointId.get();
 
             if (sourcePoint != null) {
                 sourcePoint.deselect();
@@ -54,8 +55,8 @@ public class TargetingWand extends SlimefunItem {
         PersistentDataUtils.clear(stack, Keys.SOURCE);
     }
 
-    private void removeLink(ConnectionPointID pointID) {
-        final ConnectionPoint point = pointID.get();
+    private void removeLink(ConnectionPointId pointId) {
+        final ConnectionPoint point = pointId.get();
 
         if (point instanceof ConnectionPointOutput outputPoint && outputPoint.hasLink()) {
             outputPoint.getLink().remove();
@@ -67,15 +68,15 @@ public class TargetingWand extends SlimefunItem {
         }
     }
 
-    private void createLink(Player player, ConnectionPointID inputID, ItemStack stack) {
-        final ConnectionPointID outputID = new ConnectionPointID(PersistentDataUtils.getString(stack, Keys.SOURCE));
-        final ConnectionPointOutput output = (ConnectionPointOutput) outputID.get();
+    private void createLink(Player player, ConnectionPointId inputId, ItemStack stack) {
+        final ConnectionPointId outputId = new ConnectionPointId(PersistentDataUtils.getString(stack, Keys.SOURCE));
+        final ConnectionPointOutput output = (ConnectionPointOutput) outputId.get();
 
         if (output == null) {
             return;
         }
 
-        if (!(inputID.get() instanceof ConnectionPointInput input)) {
+        if (!(inputId.get() instanceof ConnectionPointInput input)) {
             Language.sendLanguageMessage(player, "targeting-wand.target-must-be-input");
             return;
         }
@@ -90,20 +91,27 @@ public class TargetingWand extends SlimefunItem {
             return;
         }
 
-        if (input.getGroup().getPoints().containsValue(outputID)) {
+        if (input.getGroup().getPoints().containsValue(outputId)) {
             Language.sendLanguageMessage(player, "targeting-wand.same-connection-group");
             return;
         }
 
-        if (input.hasLink()
-                && output.hasLink()
-                && output.getLink().getInput().getID().equals(inputID)
-                && input.getLink().getOutput().getID().equals(outputID)) {
+        if (input.hasLink() && output.hasLink()) {
+            final ConnectionPointInput inputPoint = output.getLink().getInput();
+            final ConnectionPointOutput outputPoint = input.getLink().getOutput();
+            if (inputPoint != null && input.getId().equals(inputId) && outputPoint != null && outputPoint.getId().equals(outputId)) {
+                return;
+            }
+        }
+
+        final ConnectionGroup outputGroup = output.getGroup();
+        final ConnectionGroup inputGroup = input.getGroup();
+        if (outputGroup == null || inputGroup == null) {
             return;
         }
 
-        final ConnectedBlock block1 = output.getGroup().getBlock();
-        final ConnectedBlock block2 = input.getGroup().getBlock();
+        final ConnectedBlock outputBlock = outputGroup.getBlock();
+        final ConnectedBlock inputBlock = inputGroup.getBlock();
 
         if (input.hasLink()) {
             input.getLink().remove();
@@ -113,18 +121,32 @@ public class TargetingWand extends SlimefunItem {
             output.getLink().remove();
         }
 
-        block1.connect(outputID, inputID);
-        block2.connect(inputID, outputID);
+        outputBlock.connect(outputId, inputId);
+        inputBlock.connect(inputId, outputId);
 
-        setSource(player, outputID, stack);
+        setSource(player, outputId, stack);
 
-        new Link(inputID, outputID);
+        new Link(inputId, outputId);
     }
 
-    public void use(Player player, ConnectionPointID pointId, ItemStack stack) {
-        final ConnectionGroup group = pointId.get().getGroup();
-        if (!BlockStorage.hasBlockInfo(group.getLocation())
-                || !(BlockStorage.check(group.getLocation()) instanceof ConnectedBlock)
+    public void use(Player player, ConnectionPointId pointId, ItemStack stack) {
+        final ConnectionPoint point = pointId.get();
+        if (point == null) {
+            return;
+        }
+
+        final ConnectionGroup group = point.getGroup();
+        if (group == null) {
+            return;
+        }
+
+        final Location location = group.getLocation();
+        if (location == null) {
+            return;
+        }
+
+        if (!BlockStorage.hasBlockInfo(location)
+                || !(BlockStorage.check(location) instanceof ConnectedBlock)
                 || !canUse(player, false)
                 || !Slimefun.getProtectionManager().hasPermission(player, player.getLocation(), Interaction.INTERACT_BLOCK)) {
             return;

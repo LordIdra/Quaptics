@@ -7,7 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.SpawnCategory;
 import org.bukkit.inventory.ItemStack;
 import org.metamechanists.quaptics.Quaptics;
-import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
+import org.metamechanists.quaptics.implementation.base.Settings;
 import org.metamechanists.quaptics.implementation.blocks.concentrators.SolarConcentrator;
 import org.metamechanists.quaptics.implementation.blocks.consumers.Charger;
 import org.metamechanists.quaptics.implementation.blocks.consumers.turrets.ModulatedTurret;
@@ -22,21 +22,21 @@ import org.metamechanists.quaptics.items.Tier;
 import java.util.Set;
 
 public class Primitive {
-    public static final ConnectedBlock.Settings SOLAR_CONCENTRATOR_1_SETTINGS = ConnectedBlock.Settings.builder()
+    public static final Settings SOLAR_CONCENTRATOR_1_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
             .displayRadius(0.45F)
             .connectionRadius(0.45F)
             .emissionPower(1)
             .build();
 
-    public static final ConnectedBlock.Settings LENS_1_SETTINGS = ConnectedBlock.Settings.builder()
+    public static final Settings LENS_1_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
             .displayRadius(0.24F)
             .connectionRadius(0.48F)
             .powerLoss(0.1)
             .build();
 
-    public static final ConnectedBlock.Settings COMBINER_1_2_SETTINGS = ConnectedBlock.Settings.builder()
+    public static final Settings COMBINER_1_2_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
             .displayRadius(0.4F)
             .connectionRadius(0.8F)
@@ -44,7 +44,7 @@ public class Primitive {
             .connections(2)
             .build();
 
-    public static final ConnectedBlock.Settings SPLITTER_1_2_SETTINGS = ConnectedBlock.Settings.builder()
+    public static final Settings SPLITTER_1_2_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
             .displayRadius(0.4F)
             .connectionRadius(0.8F)
@@ -52,13 +52,13 @@ public class Primitive {
             .connections(2)
             .build();
 
-    public static final ConnectedBlock.Settings CHARGER_1_SETTINGS = ConnectedBlock.Settings.builder()
+    public static final Settings CHARGER_1_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
             .displayRadius(0.4F)
             .connectionRadius(0.6F)
             .build();
 
-    public static final ConnectedBlock.Settings CAPACITOR_1_SETTINGS = ConnectedBlock.Settings.builder()
+    public static final Settings CAPACITOR_1_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
             .displayRadius(0.3F)
             .connectionRadius(0.6F)
@@ -66,7 +66,7 @@ public class Primitive {
             .emissionPower(3)
             .build();
 
-    public static final ConnectedBlock.Settings TURRET_1_HOSTILE_SETTINGS = ConnectedBlock.Settings.builder()
+    public static final Settings TURRET_1_HOSTILE_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
             .displayRadius(0.55F)
             .connectionRadius(0.55F)
@@ -79,7 +79,7 @@ public class Primitive {
             .mainMaterial(Material.POLISHED_ANDESITE)
             .build();
 
-    public static final ConnectedBlock.Settings TURRET_1_PASSIVE_SETTINGS = ConnectedBlock.Settings.builder()
+    public static final Settings TURRET_1_PASSIVE_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
             .displayRadius(0.55F)
             .connectionRadius(0.55F)

@@ -7,19 +7,19 @@ import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.items.Lore;
-import org.metamechanists.quaptics.utils.id.ConnectionPointID;
-import org.metamechanists.quaptics.utils.id.PanelID;
+import org.metamechanists.quaptics.utils.id.ConnectionPointId;
+import org.metamechanists.quaptics.utils.id.PanelId;
 import org.metamechanists.quaptics.panel.Panel;
 import org.metamechanists.quaptics.panel.PanelBuilder;
 
 public class PointPanel {
     private static final Vector POINT_OFFSET = new Vector(0, 0.2, 0);
     private static final float SIZE = 0.25F;
-    private final ConnectionPointID pointID;
+    private final ConnectionPointId pointId;
     private final Panel panel;
 
-    public PointPanel(@NotNull Location location, ConnectionPointID pointID) {
-        this.pointID = pointID;
+    public PointPanel(@NotNull Location location, ConnectionPointId pointId) {
+        this.pointId = pointId;
         this.panel = new PanelBuilder(location.clone().add(POINT_OFFSET), SIZE)
                 .addAttribute("phase")
                 .addAttribute("frequency")
@@ -29,21 +29,21 @@ public class PointPanel {
         panel.setAttributeHidden("name", false);
     }
 
-    public PointPanel(@NotNull PanelID panelID, ConnectionPointID pointID) {
-        this.pointID = pointID;
-        this.panel = panelID.get();
+    public PointPanel(@NotNull PanelId panelId, ConnectionPointId pointId) {
+        this.pointId = pointId;
+        this.panel = panelId.get();
     }
 
-    public PanelID getID() {
-        return panel.getID();
+    public PanelId getId() {
+        return panel.getId();
     }
 
     private ConnectionPoint getPoint() {
-        return pointID.get();
+        return pointId.get();
     }
 
     private double roundTo2dp(double value) {
-        return ((double)Math.round(value*Math.pow(10, 2))) / Math.pow(10, 2);
+        return Math.round(value*Math.pow(10, 2)) / Math.pow(10, 2);
     }
 
     public boolean isPanelHidden() {

@@ -10,7 +10,7 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.implementation.tools.TargetingWand;
-import org.metamechanists.quaptics.utils.id.ConnectionPointID;
+import org.metamechanists.quaptics.utils.id.ConnectionPointId;
 
 public class PointPanelListener implements Listener {
     @EventHandler
@@ -25,7 +25,7 @@ public class PointPanelListener implements Listener {
             return;
         }
 
-        final ConnectionPoint point = new ConnectionPointID(clickedEntity.getUniqueId()).get();
+        final ConnectionPoint point = new ConnectionPointId(clickedEntity.getUniqueId()).get();
         if (point == null) {
             return;
         }

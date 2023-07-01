@@ -7,40 +7,41 @@ import lombok.Getter;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.storage.DataTraverser;
-import org.metamechanists.quaptics.utils.id.DisplayGroupID;
-import org.metamechanists.quaptics.utils.id.PanelAttributeID;
-import org.metamechanists.quaptics.utils.id.PanelID;
+import org.metamechanists.quaptics.utils.id.DisplayGroupId;
+import org.metamechanists.quaptics.utils.id.PanelAttributeId;
+import org.metamechanists.quaptics.utils.id.PanelId;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class Panel {
 
     @Getter
-    private final DisplayGroupID displayGroupID;
+    private final DisplayGroupId displayGroupId;
     @Getter
     private boolean hidden = true;
-    private final Map<String, PanelAttributeID> attributes;
+    private final Map<String, PanelAttributeId> attributes;
 
-    public Panel(DisplayGroupID displayGroupID, Map<String, PanelAttributeID> attributes) {
-        this.displayGroupID = displayGroupID;
+    public Panel(DisplayGroupId displayGroupId, Map<String, PanelAttributeId> attributes) {
+        this.displayGroupId = displayGroupId;
         this.attributes = attributes;
         saveData();
     }
 
-    public Panel(@NotNull PanelID panelID) {
-        final DataTraverser traverser = new DataTraverser(panelID);
+    public Panel(@NotNull PanelId panelId) {
+        final DataTraverser traverser = new DataTraverser(panelId);
         final JsonObject mainSection = traverser.getData();
         final JsonObject attributeSection = mainSection.get("attributes").getAsJsonObject();
-        this.displayGroupID = new DisplayGroupID(panelID);
+        this.displayGroupId = new DisplayGroupId(panelId);
         this.hidden = mainSection.get("hidden").getAsBoolean();
         this.attributes = new HashMap<>();
         attributeSection.asMap().forEach(
-                (key, value) -> attributes.put(key, new PanelAttributeID(value.getAsString())));
+                (key, value) -> attributes.put(key, new PanelAttributeId(value.getAsString())));
     }
 
     public void saveData() {
-        final DataTraverser traverser = new DataTraverser(displayGroupID);
+        final DataTraverser traverser = new DataTraverser(displayGroupId);
         final JsonObject mainSection = traverser.getData();
         final JsonObject attributeSection = new JsonObject();
         mainSection.add("hidden", new JsonPrimitive(hidden));
@@ -50,12 +51,12 @@ public class Panel {
         traverser.save();
     }
 
-    public PanelID getID() {
-        return new PanelID(displayGroupID);
+    public PanelId getId() {
+        return new PanelId(displayGroupId);
     }
 
     private DisplayGroup getDisplayGroup() {
-        return DisplayGroup.fromUUID(displayGroupID.getUUID());
+        return DisplayGroup.fromUUID(displayGroupId.getUUID());
     }
 
     @Contract("_ -> new")
@@ -75,7 +76,7 @@ public class Panel {
     public void setHidden(boolean hidden) {
         if (this.hidden != hidden) {
             this.hidden = hidden;
-            attributes.values().forEach(attributeID -> attributeID.get().updateVisibility(hidden));
+            removeAttributes();
             saveData();
         }
     }
@@ -84,8 +85,15 @@ public class Panel {
         setHidden(!hidden);
     }
 
+    private void removeAttributes() {
+        attributes.values().stream()
+                .map(PanelAttributeId::get)
+                .filter(Objects::nonNull)
+                .forEach(attribute -> attribute.updateVisibility(hidden));
+    }
+
     public void remove() {
-        attributes.values().forEach(attributeID -> attributeID.get().remove());
+        removeAttributes();
         getDisplayGroup().remove();
     }
 }

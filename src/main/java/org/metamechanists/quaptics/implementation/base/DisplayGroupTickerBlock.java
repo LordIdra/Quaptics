@@ -23,7 +23,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.utils.Transformations;
-import org.metamechanists.quaptics.utils.id.DisplayGroupID;
+import org.metamechanists.quaptics.utils.id.DisplayGroupId;
 
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
@@ -78,7 +78,7 @@ public abstract class DisplayGroupTickerBlock extends SlimefunItem {
                         final Location location = event.getBlock().getLocation();
                         final DisplayGroup displayGroup = new DisplayGroup(location, 0, 0);
                         addDisplays(displayGroup, location, event.getPlayer());
-                        setID(displayGroup, location);
+                        setId(displayGroup, location);
                         event.getBlock().setType(getBaseMaterial());
                         onPlace(event);
                     }
@@ -90,8 +90,10 @@ public abstract class DisplayGroupTickerBlock extends SlimefunItem {
                     public void onPlayerBreak(BlockBreakEvent event, ItemStack item, List<ItemStack> drops) {
                         final Location location = event.getBlock().getLocation();
                         final DisplayGroup displayGroup = getDisplayGroup(location.clone());
+                        if (displayGroup != null) {
+                            displayGroup.remove();
+                        }
                         onBreak(event);
-                        displayGroup.remove();
                         event.getBlock().setType(Material.AIR);
                     }
                 },
@@ -110,18 +112,18 @@ public abstract class DisplayGroupTickerBlock extends SlimefunItem {
         );
     }
 
-    private void setID(@NotNull DisplayGroup displayGroup, Location location) {
+    private void setId(@NotNull DisplayGroup displayGroup, Location location) {
         BlockStorage.addBlockInfo(location, KEY_UUID, displayGroup.getParentUUID().toString());
     }
 
-    public @Nullable DisplayGroupID getDisplayGroupID(Location location) {
+    public @Nullable DisplayGroupId getDisplayGroupId(Location location) {
         final String uuid = BlockStorage.getLocationInfo(location, KEY_UUID);
-        return uuid == null ? null : new DisplayGroupID(uuid);
+        return uuid == null ? null : new DisplayGroupId(uuid);
     }
 
     public @Nullable DisplayGroup getDisplayGroup(Location location) {
-        final DisplayGroupID ID = getDisplayGroupID(location);
-        return ID == null ? null : DisplayGroup.fromUUID(ID.getUUID());
+        final DisplayGroupId id = getDisplayGroupId(location);
+        return id == null ? null : DisplayGroup.fromUUID(id.getUUID());
     }
 
     public @Nullable Display getDisplay(Location location, String name) {

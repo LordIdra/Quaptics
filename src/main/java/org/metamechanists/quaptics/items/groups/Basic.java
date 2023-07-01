@@ -7,7 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.SpawnCategory;
 import org.bukkit.inventory.ItemStack;
 import org.metamechanists.quaptics.Quaptics;
-import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
+import org.metamechanists.quaptics.implementation.base.Settings;
 import org.metamechanists.quaptics.implementation.blocks.concentrators.EnergyConcentrator;
 import org.metamechanists.quaptics.implementation.blocks.concentrators.SolarConcentrator;
 import org.metamechanists.quaptics.implementation.blocks.consumers.turrets.DirectTurret;
@@ -23,53 +23,53 @@ import org.metamechanists.quaptics.items.Tier;
 import java.util.Set;
 
 public class Basic {
-    public static final ConnectedBlock.Settings SOLAR_CONCENTRATOR_2_SETTINGS = ConnectedBlock.Settings.builder()
+    public static final Settings SOLAR_CONCENTRATOR_2_SETTINGS = Settings.builder()
             .tier(Tier.BASIC)
             .displayRadius(0.35F)
             .connectionRadius(0.35F)
             .emissionPower(10)
             .build();
-    public static final ConnectedBlock.Settings ENERGY_CONCENTRATOR_1_SETTINGS = ConnectedBlock.Settings.builder()
+    public static final Settings ENERGY_CONCENTRATOR_1_SETTINGS = Settings.builder()
             .tier(Tier.BASIC)
             .displayRadius(0.2F)
             .connectionRadius(0.3F)
             .emissionPower(15)
             .build();
-    public static final ConnectedBlock.Settings LENS_2_SETTINGS = ConnectedBlock.Settings.builder()
+    public static final Settings LENS_2_SETTINGS = Settings.builder()
             .tier(Tier.BASIC)
             .displayRadius(0.21F)
             .connectionRadius(0.42F)
             .powerLoss(0.07)
             .build();
-    public static final ConnectedBlock.Settings COMBINER_2_2_SETTINGS = ConnectedBlock.Settings.builder()
+    public static final Settings COMBINER_2_2_SETTINGS = Settings.builder()
             .tier(Tier.BASIC)
             .displayRadius(0.35F)
             .connectionRadius(0.7F)
             .powerLoss(0.14)
             .connections(2)
             .build();
-    public static final ConnectedBlock.Settings COMBINER_2_3_SETTINGS = ConnectedBlock.Settings.builder()
+    public static final Settings COMBINER_2_3_SETTINGS = Settings.builder()
             .tier(Tier.BASIC)
             .displayRadius(0.4F)
             .connectionRadius(0.8F)
             .powerLoss(0.14)
             .connections(3)
             .build();
-    public static final ConnectedBlock.Settings SPLITTER_2_2_SETTINGS = ConnectedBlock.Settings.builder()
+    public static final Settings SPLITTER_2_2_SETTINGS = Settings.builder()
             .tier(Tier.BASIC)
             .displayRadius(0.35F)
             .connectionRadius(0.7F)
             .powerLoss(0.14)
             .connections(2)
             .build();
-    public static final ConnectedBlock.Settings SPLITTER_2_3_SETTINGS = ConnectedBlock.Settings.builder()
+    public static final Settings SPLITTER_2_3_SETTINGS = Settings.builder()
             .tier(Tier.BASIC)
             .displayRadius(0.4F)
             .connectionRadius(0.8F)
             .powerLoss(0.14)
             .connections(3)
             .build();
-    public static final ConnectedBlock.Settings REPEATER_1_SETTINGS = ConnectedBlock.Settings.builder()
+    public static final Settings REPEATER_1_SETTINGS = Settings.builder()
             .tier(Tier.BASIC)
             .displayRadius(0.25F)
             .connectionRadius(0.5F)
@@ -80,7 +80,7 @@ public class Basic {
             .frequencyStep(0.1)
             .build();
 
-    public static final ConnectedBlock.Settings SCATTERER_1_SETTINGS = ConnectedBlock.Settings.builder()
+    public static final Settings SCATTERER_1_SETTINGS = Settings.builder()
             .tier(Tier.BASIC)
             .displayRadius(0.25F)
             .connectionRadius(0.5F)
@@ -91,7 +91,7 @@ public class Basic {
             .frequencyMultiplier(2.0)
             .build();
 
-    public static final ConnectedBlock.Settings REPEATER_2_SETTINGS = ConnectedBlock.Settings.builder()
+    public static final Settings REPEATER_2_SETTINGS = Settings.builder()
             .tier(Tier.BASIC)
             .displayRadius(0.25F)
             .connectionRadius(0.5F)
@@ -102,7 +102,7 @@ public class Basic {
             .frequencyStep(0.1)
             .build();
 
-    public static final ConnectedBlock.Settings TURRET_2_HOSTILE_SETTINGS = ConnectedBlock.Settings.builder()
+    public static final Settings TURRET_2_HOSTILE_SETTINGS = Settings.builder()
             .tier(Tier.BASIC)
             .displayRadius(0.60F)
             .connectionRadius(0.65F)
@@ -115,7 +115,7 @@ public class Basic {
             .mainMaterial(Material.SMOOTH_STONE)
             .build();
 
-    public static final ConnectedBlock.Settings TURRET_2_PASSIVE_SETTINGS = ConnectedBlock.Settings.builder()
+    public static final Settings TURRET_2_PASSIVE_SETTINGS = Settings.builder()
             .tier(Tier.BASIC)
             .displayRadius(0.60F)
             .connectionRadius(0.65F)

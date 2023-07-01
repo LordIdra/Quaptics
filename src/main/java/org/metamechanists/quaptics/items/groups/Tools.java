@@ -6,14 +6,14 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.metamechanists.quaptics.Quaptics;
-import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
+import org.metamechanists.quaptics.implementation.base.Settings;
 import org.metamechanists.quaptics.implementation.tools.LaserPointer;
 import org.metamechanists.quaptics.implementation.tools.TargetingWand;
 import org.metamechanists.quaptics.items.Groups;
 import org.metamechanists.quaptics.items.Lore;
 
 public class Tools {
-    public static final ConnectedBlock.Settings LASER_POINTER_SETTINGS = ConnectedBlock.Settings.builder()
+    public static final Settings LASER_POINTER_SETTINGS = Settings.builder()
             .capacity(1000.0)
             .emissionPower(5.0)
             .minFrequency(0.5)

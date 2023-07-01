@@ -9,18 +9,21 @@ import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.BlockDisplay;
+import org.bukkit.entity.Display;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
+import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
 import org.metamechanists.quaptics.implementation.base.EnergyConnectedBlock;
+import org.metamechanists.quaptics.implementation.base.Settings;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
-import org.metamechanists.quaptics.utils.id.ConnectionGroupID;
-import org.metamechanists.quaptics.utils.id.ConnectionPointID;
+import org.metamechanists.quaptics.utils.id.ConnectionGroupId;
+import org.metamechanists.quaptics.utils.id.ConnectionPointId;
 
 import java.util.List;
 
@@ -46,20 +49,27 @@ public class EnergyConcentrator extends EnergyConnectedBlock {
     }
 
     @Override
-    protected List<ConnectionPoint> generateConnectionPoints(ConnectionGroupID groupID, Player player, Location location) {
-        return List.of(new ConnectionPointOutput(groupID, "output", formatPointLocation(player, location, outputLocation)));
+    protected List<ConnectionPoint> generateConnectionPoints(ConnectionGroupId groupId, Player player, Location location) {
+        return List.of(new ConnectionPointOutput(groupId, "output", formatPointLocation(player, location, outputLocation)));
     }
 
     @Override
     public void onSlimefunTick(@NotNull Block block, SlimefunItem item, Config data) {
         super.onSlimefunTick(block, item, data);
-        final ConnectionPointOutput output = getGroup(block.getLocation()).getOutput("output");
 
-        if (!output.hasLink()) {
+        final Location location = block.getLocation();
+        final ConnectionGroup group = getGroup(location);
+        if (group == null) {
             return;
         }
 
-        if (isPowered(block.getLocation())) {
+
+        final ConnectionPointOutput output = group.getOutput("output");
+        if (output == null || !output.hasLink()) {
+            return;
+        }
+
+        if (isPowered(location)) {
             output.getLink().setAttributes(settings.getEmissionPower(), 0, 0, true);
             return;
         }
@@ -68,12 +78,35 @@ public class EnergyConcentrator extends EnergyConnectedBlock {
     }
 
     @Override
-    public void connect(ConnectionPointID from, ConnectionPointID to) {
+    public void connect(@NotNull ConnectionPointId from, @NotNull ConnectionPointId to) {
         super.connect(from, to);
-        final DisplayGroup fromDisplayGroup = getDisplayGroup(from.get().getGroup().getLocation());
-        fromDisplayGroup.removeDisplay("main").remove();
-        fromDisplayGroup.addDisplay("main", generateMainBlockDisplay(
-                from.get().getGroup().getLocation(),
-                to.get().getGroup().getLocation()));
+
+        final ConnectionPoint fromPoint = from.get();
+        final ConnectionPoint toPoint = to.get();
+        if (fromPoint == null || toPoint == null) {
+            return;
+        }
+
+        final ConnectionGroup fromGroup = fromPoint.getGroup();
+        final ConnectionGroup toGroup = toPoint.getGroup();
+        if (fromGroup == null || toGroup == null) {
+            return;
+        }
+
+        final Location fromLocation = fromGroup.getLocation();
+        final Location toLocation = toGroup.getLocation();
+        if (fromLocation == null || toLocation == null) {
+            return;
+        }
+
+        final DisplayGroup fromDisplayGroup = getDisplayGroup(fromLocation);
+        if (fromDisplayGroup != null) {
+            final Display display = fromDisplayGroup.removeDisplay("main");
+            if (display != null) {
+                display.remove();
+            }
+
+            fromDisplayGroup.addDisplay("main", generateMainBlockDisplay(fromLocation, toLocation));
+        }
     }
 }
