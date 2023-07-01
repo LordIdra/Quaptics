@@ -89,7 +89,7 @@ public class Panel {
         attributes.values().stream()
                 .map(PanelAttributeId::get)
                 .filter(Objects::nonNull)
-                .forEach(attribute -> attribute.updateVisibility(hidden));
+                .forEach(PanelAttribute::remove);
     }
 
     public void remove() {
