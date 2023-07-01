@@ -39,7 +39,6 @@ public class Capacitor extends ConnectedBlock {
     private final Vector3f mainGlassDisplaySize = new Vector3f(settings.getDisplayRadius()*2.0F);
     private final Vector3f tierGlassDisplaySize = new Vector3f(settings.getDisplayRadius()*1.7F);
     private final Vector3f maxConcreteDisplaySize = new Vector3f(settings.getDisplayRadius()*1.65F);
-    private final Vector3f displayRotation = new Vector3f((float)(Math.PI/4), (float)(Math.PI/4), 0);
     private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -settings.getConnectionRadius());
     private final Vector outputPointLocation = new Vector(0.0F, 0.0F, settings.getConnectionRadius());
 
@@ -51,15 +50,15 @@ public class Capacitor extends ConnectedBlock {
     protected void addDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
         displayGroup.addDisplay("mainGlass", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(Material.GLASS)
-                .setTransformation(Transformations.adjustedRotateAndScale(mainGlassDisplaySize, displayRotation))
+                .setTransformation(Transformations.adjustedRotateAndScale(mainGlassDisplaySize, Transformations.GENERIC_ROTATION_ANGLES))
                 .build());
         displayGroup.addDisplay("tierGlass", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(settings.getTier().glassMaterial)
-                .setTransformation(Transformations.adjustedRotateAndScale(tierGlassDisplaySize, displayRotation))
+                .setTransformation(Transformations.adjustedRotateAndScale(tierGlassDisplaySize, Transformations.GENERIC_ROTATION_ANGLES))
                 .build());
         displayGroup.addDisplay("concrete", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(Material.LIGHT_BLUE_CONCRETE)
-                .setTransformation(Transformations.adjustedRotateAndScale(new Vector3f(), displayRotation))
+                .setTransformation(Transformations.adjustedRotateAndScale(new Vector3f(), Transformations.GENERIC_ROTATION_ANGLES))
                 .setBrightness(CONCRETE_BRIGHTNESS)
                 .build());
     }
@@ -89,7 +88,7 @@ public class Capacitor extends ConnectedBlock {
         BlockStorage.addBlockInfo(location, Keys.BS_CHARGE_RATE, String.valueOf(chargeRate));
     }
 
-    public static Optional<PanelId> getPanelId(final Location location) {
+    private static Optional<PanelId> getPanelId(final Location location) {
         final String stringID = BlockStorage.getLocationInfo(location, Keys.BS_PANEL_ID);
         return Optional.ofNullable(stringID).map(PanelId::new);
     }
@@ -156,7 +155,7 @@ public class Capacitor extends ConnectedBlock {
         concreteDisplay.ifPresent(display ->
                 display.setTransformationMatrix(
                         Transformations.adjustedRotateAndScale(new Vector3f(maxConcreteDisplaySize)
-                        .mul((float)(finalCharge /settings.getCapacity())), displayRotation)));
+                        .mul((float)(finalCharge /settings.getCapacity())), Transformations.GENERIC_ROTATION_ANGLES)));
 
         updatePanel(group);
         setCharge(location.get(), charge);

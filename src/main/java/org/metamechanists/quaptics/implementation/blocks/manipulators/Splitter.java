@@ -35,7 +35,6 @@ public class Splitter extends ConnectedBlock {
     private final Vector outputStartingLocation = new Vector(0.0F, 0.0F, settings.getConnectionRadius());
     private final Vector3f glassDisplaySize = new Vector3f(settings.getDisplayRadius()*2);
     private final Vector3f concreteDisplaySize = new Vector3f(settings.getDisplayRadius());
-    private final Vector3f displayRotation = new Vector3f((float)(Math.PI/4), (float)(Math.PI/4), 0);
 
     public Splitter(final ItemGroup group, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(group, item, recipeType, recipe, settings);
@@ -45,13 +44,13 @@ public class Splitter extends ConnectedBlock {
     protected void addDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
         displayGroup.addDisplay("main", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(Material.LIGHT_GRAY_STAINED_GLASS)
-                .setTransformation(Transformations.adjustedRotateAndScale(glassDisplaySize, displayRotation))
+                .setTransformation(Transformations.adjustedRotateAndScale(glassDisplaySize, Transformations.GENERIC_ROTATION_ANGLES))
                 .build());
         displayGroup.addDisplay("concrete", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(settings.getTier().concreteMaterial)
                 .setBrightness(CONCRETE_BRIGHTNESS)
                 .setViewRange(VIEW_RANGE_OFF)
-                .setTransformation(Transformations.adjustedRotateAndScale(concreteDisplaySize, displayRotation))
+                .setTransformation(Transformations.adjustedRotateAndScale(concreteDisplaySize, Transformations.GENERIC_ROTATION_ANGLES))
                 .build());
     }
 

@@ -12,6 +12,8 @@ import java.util.List;
 
 @UtilityClass
 public class Transformations {
+    public final Vector3f GENERIC_ROTATION_ANGLES = new Vector3f(-0.955F, 0.785F, 0);
+
     private final List<BlockFace> AXIS = new ArrayList<>(List.of(
             BlockFace.NORTH,
             BlockFace.EAST,
