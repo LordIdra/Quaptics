@@ -115,11 +115,12 @@ public class Scatterer extends ConnectedBlock implements FrequencyUpgrader {
             return;
         }
 
-        final Link link = output.get().getLink().get();
-        link.setAttributes(
-                settings.powerLoss(link.getPower()),
-                settings.multiplyFrequency(link.getFrequency()),
-                link.getPhase(),
+        final Link outputLink = output.get().getLink().get();
+        final Link inputLink = input.get().getLink().get();
+        outputLink.setAttributes(
+                settings.powerLoss(inputLink.getPower()),
+                settings.multiplyFrequency(inputLink.getFrequency()),
+                inputLink.getPhase(),
                 true);
     }
 }

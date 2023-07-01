@@ -80,11 +80,12 @@ public class Lens extends ConnectedBlock {
             return;
         }
 
-        final Link link = output.get().getLink().get();
-        link.setAttributes(
-                settings.powerLoss(link.getPower()),
-                link.getFrequency(),
-                link.getPhase(),
+        final Link outputLink = output.get().getLink().get();
+        final Link inputLink = input.get().getLink().get();
+        outputLink.setAttributes(
+                settings.powerLoss(inputLink.getPower()),
+                inputLink.getFrequency(),
+                inputLink.getPhase(),
                 true);
     }
 }

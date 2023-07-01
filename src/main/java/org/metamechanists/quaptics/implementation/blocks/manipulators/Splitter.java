@@ -97,10 +97,10 @@ public class Splitter extends ConnectedBlock {
             return;
         }
 
-        final Link link = input.get().getLink().get();
-        final double outputPower = settings.powerLoss(link.getPower()) / linkedOutputs.size();
-        final double outputFrequency = link.getFrequency();
-        final int outputPhase = link.getPhase();
+        final Link inputLink = input.get().getLink().get();
+        final double outputPower = settings.powerLoss(inputLink.getPower()) / linkedOutputs.size();
+        final double outputFrequency = inputLink.getFrequency();
+        final int outputPhase = inputLink.getPhase();
 
         linkedOutputs.forEach(output -> output.getLink().get().setAttributes(outputPower, outputFrequency, outputPhase, true));
     }

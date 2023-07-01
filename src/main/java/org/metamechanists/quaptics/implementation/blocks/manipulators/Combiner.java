@@ -12,6 +12,7 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
+import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
@@ -87,18 +88,19 @@ public class Combiner extends ConnectedBlock {
 
         doDisplayBrightnessCheck(location.get(), "concrete");
 
-        if (output.get().getLink().isEmpty()) {
+        final Optional<Link> outputLink = output.get().getLink();
+        if (outputLink.isEmpty()) {
             return;
         }
 
         if (enabledInputs.isEmpty()) {
-            output.get().getLink().get().setEnabled(false);
+            outputLink.get().setEnabled(false);
             return;
         }
 
         final double inputPower = enabledInputs.stream().mapToDouble(input -> input.getLink().get().getPower()).sum();
         final double inputFrequency = enabledInputs.stream().mapToDouble(input -> input.getLink().get().getFrequency()).min().orElse(0.0);
         final int inputPhase = (int) (enabledInputs.stream().mapToDouble(input -> input.getLink().get().getPhase()).sum() / enabledInputs.size());
-        output.get().getLink().get().setAttributes(settings.powerLoss(inputPower), inputFrequency, inputPhase, true);
+        outputLink.get().setAttributes(settings.powerLoss(inputPower), inputFrequency, inputPhase, true);
     }
 }
