@@ -80,16 +80,14 @@ public class Link {
     }
 
     public @Nullable ConnectionPointOutput getOutput() {
-        final ConnectionPoint point = outputId.get();
-        return point != null
-                ? (ConnectionPointOutput) point
+        return outputId.get() instanceof ConnectionPointOutput output
+                ? output
                 : null;
     }
 
     public @Nullable ConnectionPointInput getInput() {
-        final ConnectionPoint point = outputId.get();
-        return point != null
-                ? (ConnectionPointInput) point
+        return inputId.get() instanceof ConnectionPointInput input
+                ? input
                 : null;
     }
 

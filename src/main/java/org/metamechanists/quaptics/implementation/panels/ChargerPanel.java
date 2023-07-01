@@ -1,7 +1,9 @@
 package org.metamechanists.quaptics.implementation.panels;
 
 import org.bukkit.Location;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.implementation.blocks.consumers.Charger;
 import org.metamechanists.quaptics.implementation.tools.QuapticChargeableItem;
 import org.metamechanists.quaptics.items.Lore;
@@ -20,13 +22,24 @@ public class ChargerPanel extends CapacitorPanel {
 
     @Override
     public void update() {
-        if (!(getGroup().getBlock() instanceof Charger charger)) {
+        final ConnectionGroup group = getGroup();
+        if (group == null || !(group.getBlock() instanceof Charger charger)) {
             // How the hell did we get here?
             return;
         }
 
+        final Location location = group.getLocation();
+        if (location == null) {
+            return;
+        }
+
+        final ItemStack itemStack = charger.getItem(location);
+        if (itemStack == null) {
+            return;
+        }
+
         final double capacity = charger.getSettings().getCapacity();
-        final double charge = QuapticChargeableItem.getCharge(charger.getItem(getGroup().getLocation()));
+        final double charge = QuapticChargeableItem.getCharge(itemStack);
 
         if (charge == 0) {
             setPanelHidden(true);

@@ -73,7 +73,7 @@ public class Charger extends ConnectedBlock {
         };
     }
 
-    public ItemStack getItem(Location location) {
+    public @Nullable ItemStack getItem(Location location) {
         if (!(getDisplay(location, "item") instanceof ItemDisplay display)) {
             return null;
         }

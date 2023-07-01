@@ -3,6 +3,7 @@ package org.metamechanists.quaptics.implementation.panels;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.implementation.blocks.manipulators.Capacitor;
 import org.metamechanists.quaptics.items.Lore;
@@ -37,7 +38,7 @@ public class CapacitorPanel {
         return panel.getId();
     }
 
-    protected ConnectionGroup getGroup() {
+    protected @Nullable ConnectionGroup getGroup() {
         return groupId.get();
     }
 
@@ -50,8 +51,18 @@ public class CapacitorPanel {
     }
 
     public void update() {
-        final double capacity = getGroup().getBlock().getSettings().getCapacity();
-        final double charge = Capacitor.getCharge(getGroup().getLocation());
+        final ConnectionGroup group = getGroup();
+        if (group == null) {
+            return;
+        }
+
+        final Location location = group.getLocation();
+        if (location == null) {
+            return;
+        }
+
+        final double capacity = group.getBlock().getSettings().getCapacity();
+        final double charge = Capacitor.getCharge(location);
 
         if (charge == 0) {
             setPanelHidden(true);
