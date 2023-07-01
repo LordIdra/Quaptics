@@ -107,7 +107,7 @@ public class Repeater extends ConnectedBlock implements FrequencyUpgrader {
         doDisplayBrightnessCheck(location.get(), "concrete", false);
         setRepeaterPowered(location.get(), input.get().isLinkEnabled() && upgradeFrequency(settings, input.get().getLink().get()));
 
-        if (!output.get().isLinkEnabled()) {
+        if (output.get().getLink().isEmpty()) {
             return;
         }
 

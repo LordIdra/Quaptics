@@ -106,7 +106,7 @@ public class Scatterer extends ConnectedBlock implements FrequencyUpgrader {
         doDisplayBrightnessCheck(location.get(), "concrete", false);
         setComparatorPowered(location.get(), input.get().isLinkEnabled() && upgradeFrequency(settings, input.get().getLink().get()));
 
-        if (!output.get().isLinkEnabled()) {
+        if (output.get().getLink().isEmpty()) {
             return;
         }
 

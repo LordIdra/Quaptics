@@ -87,7 +87,7 @@ public class Combiner extends ConnectedBlock {
 
         doDisplayBrightnessCheck(location.get(), "concrete");
 
-        if (!output.get().isLinkEnabled()) {
+        if (output.get().getLink().isEmpty()) {
             return;
         }
 
