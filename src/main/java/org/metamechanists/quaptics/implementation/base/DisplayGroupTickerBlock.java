@@ -91,7 +91,7 @@ public abstract class DisplayGroupTickerBlock extends SlimefunItem {
                     @ParametersAreNonnullByDefault
                     public void onPlayerBreak(final BlockBreakEvent event, final ItemStack item, final List<ItemStack> drops) {
                         final Location location = event.getBlock().getLocation();
-                        onBreak(event.getPlayer().getLocation());
+                        onBreak(location);
                         getDisplayGroup(location.clone()).ifPresent(DisplayGroup::remove);
                         event.getBlock().setType(Material.AIR);
                     }
