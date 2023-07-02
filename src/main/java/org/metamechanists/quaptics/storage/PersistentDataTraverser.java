@@ -76,40 +76,50 @@ public class PersistentDataTraverser {
     public boolean getBoolean(@NotNull final String key) {
         return PersistentDataAPI.getBoolean(persistentDataHolder, getKey(key));
     }
-    public @NotNull String getString(@NotNull final String key) {
+    public @Nullable String getString(@NotNull final String key) {
         return PersistentDataAPI.getString(persistentDataHolder, getKey(key));
     }
     public @Nullable BlockDisplayId getBlockDisplayId(@NotNull final String key) {
-        return new BlockDisplayId(getString(key));
+        final String uuid = getString(key);
+        return uuid == null ? null : new BlockDisplayId(uuid);
     }
     public @Nullable ConnectionGroupId getConnectionGroupId(@NotNull final String key) {
-        return new ConnectionGroupId(getString(key));
+        final String uuid = getString(key);
+        return uuid == null ? null : new ConnectionGroupId(uuid);
     }
     public @Nullable ConnectionPointId getConnectionPointId(@NotNull final String key) {
-        return new ConnectionPointId(getString(key));
+        final String uuid = getString(key);
+        return uuid == null ? null : new ConnectionPointId(uuid);
     }
     public @Nullable DisplayGroupId getDisplayGroupId(@NotNull final String key) {
-        return new DisplayGroupId(getString(key));
+        final String uuid = getString(key);
+        return uuid == null ? null : new DisplayGroupId(uuid);
     }
     public @Nullable InteractionId getInteractionId(@NotNull final String key) {
-        return new InteractionId(getString(key));
+        final String uuid = getString(key);
+        return uuid == null ? null : new InteractionId(uuid);
     }
     public @Nullable LinkId getLinkId(@NotNull final String key) {
-        return new LinkId(getString(key));
+        final String uuid = getString(key);
+        return uuid == null ? null : new LinkId(uuid);
     }
     public @Nullable PanelAttributeId getPanelAttributeId(@NotNull final String key) {
-        return new PanelAttributeId(getString(key));
+        final String uuid = getString(key);
+        return uuid == null ? null : new PanelAttributeId(uuid);
     }
     public @Nullable PanelId getPanelId(@NotNull final String key) {
-        return new PanelId(getString(key));
+        final String uuid = getString(key);
+        return uuid == null ? null : new PanelId(uuid);
     }
     public @Nullable TextDisplayId getTextDisplayId(@NotNull final String key) {
-        return new TextDisplayId(getString(key));
+        final String uuid = getString(key);
+        return uuid == null ? null : new TextDisplayId(uuid);
     }
     public @Nullable BeamId getBeamId(@NotNull final String key) {
-        return new BeamId(getString(key));
+        final String uuid = getString(key);
+        return uuid == null ? null : new BeamId(uuid);
     }
-    public @Nullable Map<String, ConnectionPointId> getPointIdMap(@NotNull final String key) {
+    public @NotNull Map<String, ConnectionPointId> getPointIdMap(@NotNull final String key) {
         final int size = getInt(key + "length");
         final Map<String, ConnectionPointId> list = new HashMap<>();
         IntStream.range(0, size).forEach(i -> {
@@ -121,7 +131,7 @@ public class PersistentDataTraverser {
         return list;
     }
     
-    public @Nullable Map<String, PanelAttributeId> getPanelAttributeIdMap(@NotNull final String key) {
+    public @NotNull Map<String, PanelAttributeId> getPanelAttributeIdMap(@NotNull final String key) {
         final int size = getInt(key + "length");
         final Map<String, PanelAttributeId> list = new HashMap<>();
         IntStream.range(0, size).forEach(i -> {
