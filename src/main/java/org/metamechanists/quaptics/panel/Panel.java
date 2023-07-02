@@ -1,17 +1,14 @@
 package org.metamechanists.quaptics.panel;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import lombok.Getter;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-import org.metamechanists.quaptics.storage.DataTraverser;
+import org.metamechanists.quaptics.storage.PersistentDataTraverser;
 import org.metamechanists.quaptics.utils.id.DisplayGroupId;
 import org.metamechanists.quaptics.utils.id.PanelAttributeId;
 import org.metamechanists.quaptics.utils.id.PanelId;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -31,25 +28,16 @@ public class Panel {
     }
 
     public Panel(@NotNull final PanelId panelId) {
-        final DataTraverser traverser = new DataTraverser(panelId);
-        final JsonObject mainSection = traverser.getData();
-        final JsonObject attributeSection = mainSection.get("attributes").getAsJsonObject();
+        final PersistentDataTraverser traverser = new PersistentDataTraverser(panelId);
         this.displayGroupId = new DisplayGroupId(panelId);
-        this.hidden = mainSection.get("hidden").getAsBoolean();
-        this.attributes = new HashMap<>();
-        attributeSection.asMap().forEach(
-                (key, value) -> attributes.put(key, new PanelAttributeId(value.getAsString())));
+        this.hidden = traverser.getBoolean("hidden");
+        this.attributes = traverser.getPanelAttributeIdMap("attributes");
     }
 
     private void saveData() {
-        final DataTraverser traverser = new DataTraverser(displayGroupId);
-        final JsonObject mainSection = traverser.getData();
-        final JsonObject attributeSection = new JsonObject();
-        mainSection.add("hidden", new JsonPrimitive(hidden));
-        attributes.forEach(
-                (key, value) -> attributeSection.add(key, new JsonPrimitive(value.getUUID().toString())));
-        mainSection.add("attributes", attributeSection);
-        traverser.save();
+        final PersistentDataTraverser traverser = new PersistentDataTraverser(displayGroupId);
+        traverser.set("hidden", hidden);
+        traverser.set("attributes", attributes);
     }
 
     public PanelId getId() {

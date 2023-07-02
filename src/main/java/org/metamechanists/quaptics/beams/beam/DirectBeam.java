@@ -1,4 +1,4 @@
-package org.metamechanists.quaptics.beams.ticker;
+package org.metamechanists.quaptics.beams.beam;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -6,17 +6,18 @@ import org.bukkit.entity.BlockDisplay;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
+import org.metamechanists.quaptics.beams.DeprecatedBeamStorage;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.BlockDisplayId;
-import org.metamechanists.quaptics.utils.id.TickerId;
+import org.metamechanists.quaptics.utils.id.BeamId;
 
 import java.util.Optional;
 
-public class DirectTicker implements DisplayTicker {
+public class DirectBeam implements Beam {
     private final BlockDisplayId displayId;
 
-    public DirectTicker(final Material material, @NotNull final Location source, final Location target, final float radius) {
+    public DirectBeam(final Material material, @NotNull final Location source, final Location target, final float radius) {
         final Location midpoint = source.clone().add(target).multiply(0.5);
         this.displayId = new BlockDisplayId(new BlockDisplayBuilder(midpoint)
                 .setMaterial(material)
@@ -26,12 +27,12 @@ public class DirectTicker implements DisplayTicker {
                 .getUniqueId());
     }
 
-    public DirectTicker(@NotNull final TickerId id) {
+    public DirectBeam(@NotNull final BeamId id) {
         this.displayId = new BlockDisplayId(id);
     }
 
-    public TickerId getID() {
-        return new TickerId(displayId);
+    public BeamId getID() {
+        return new BeamId(displayId);
     }
 
     private Optional<BlockDisplay> getDisplay() {
@@ -46,6 +47,10 @@ public class DirectTicker implements DisplayTicker {
 
     @Override
     public void tick() {}
+
+    public void deprecate() {
+        DeprecatedBeamStorage.deprecate(this);
+    }
 
     @Override
     public void remove() {

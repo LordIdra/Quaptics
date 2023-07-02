@@ -1,7 +1,5 @@
 package org.metamechanists.quaptics.connections.points;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
 import lombok.Getter;
 import org.bukkit.Color;
 import org.bukkit.Location;
@@ -10,14 +8,13 @@ import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Display.Brightness;
 import org.bukkit.entity.Interaction;
 import org.bukkit.util.Vector;
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.connections.panels.PointPanel;
-import org.metamechanists.quaptics.storage.DataTraverser;
+import org.metamechanists.quaptics.storage.PersistentDataTraverser;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.builders.InteractionBuilder;
@@ -42,7 +39,7 @@ public abstract class ConnectionPoint {
     @Getter
     private final InteractionId interactionId;
     private final BlockDisplayId blockDisplayId;
-    private PanelId panelId;
+    private @Nullable PanelId panelId;
     private @Nullable LinkId linkId;
     @Getter
     private final String name;
@@ -63,28 +60,26 @@ public abstract class ConnectionPoint {
         this.panelId = new PointPanel(location, getId()).getId();
         this.name = name;
         saveData();
-        getPointPanel().update();
+        updatePanel();
     }
 
     protected ConnectionPoint(final ConnectionPointId pointId) {
-        final DataTraverser traverser = new DataTraverser(pointId);
-        final JsonObject mainSection = traverser.getData();
-        final String linkIdString = mainSection.get("linkId").getAsString();
-        this.groupId = new ConnectionGroupId(mainSection.get("groupId").getAsString());
-        this.blockDisplayId = new BlockDisplayId(mainSection.get("blockDisplayId").getAsString());
-        this.interactionId = new InteractionId(mainSection.get("interactionId").getAsString());
-        this.panelId = new PanelId(mainSection.get("panelId").getAsString());
-        this.linkId = linkIdString.equals("null") ? null : new LinkId(linkIdString);
-        this.name = mainSection.get("name").getAsString();
+        final PersistentDataTraverser traverser = new PersistentDataTraverser(pointId);
+        this.groupId = traverser.getConnectionGroupId("groupId");
+        this.blockDisplayId = traverser.getBlockDisplayId("blockDisplayId");
+        this.interactionId = traverser.getInteractionId("interactionId");
+        this.panelId = traverser.getPanelId("panelId");
+        this.linkId = traverser.getLinkId("linkId");
+        this.name = traverser.getString("name");
     }
 
-    protected void saveData(@NotNull final JsonObject mainSection) {
-        mainSection.add("groupId", new JsonPrimitive(groupId.getUUID().toString()));
-        mainSection.add("blockDisplayId", new JsonPrimitive(blockDisplayId.getUUID().toString()));
-        mainSection.add("interactionId", new JsonPrimitive(interactionId.getUUID().toString()));
-        mainSection.add("panelId", new JsonPrimitive(panelId.getUUID().toString()));
-        mainSection.add("linkId", new JsonPrimitive((linkId == null) ? "null" : linkId.getUUID().toString()));
-        mainSection.add("name", new JsonPrimitive(name));
+    protected void saveData(@NotNull final PersistentDataTraverser traverser) {
+        traverser.set("groupId", groupId);
+        traverser.set("blockDisplayId", blockDisplayId);
+        traverser.set("interactionId", interactionId);
+        traverser.set("panelId", panelId);
+        traverser.set("linkId", linkId);
+        traverser.set("name", name);
     }
 
     protected abstract void saveData();
@@ -107,9 +102,8 @@ public abstract class ConnectionPoint {
                 : Optional.empty();
     }
 
-    @Contract(" -> new")
-    public @NotNull PointPanel getPointPanel() {
-        return new PointPanel(panelId, getId());
+    public Optional<PointPanel> getPointPanel() {
+        return panelId == null ? Optional.empty() : Optional.of(new PointPanel(panelId, getId()));
     }
 
     private Optional<BlockDisplay> getBlockDisplay() {
@@ -126,7 +120,7 @@ public abstract class ConnectionPoint {
 
     public void remove() {
         getLink().ifPresent(Link::remove);
-        getPointPanel().remove();
+        getPointPanel().ifPresent(PointPanel::remove);
         getBlockDisplay().ifPresent(BlockDisplay::remove);
         getInteraction().ifPresent(Interaction::remove);
     }
@@ -135,20 +129,23 @@ public abstract class ConnectionPoint {
         getBlockDisplay().ifPresent(blockDisplay -> blockDisplay.teleport(location));
         getInteraction().ifPresent(interaction -> interaction.teleport(location.clone().add(INTERACTION_OFFSET)));
 
-        final boolean wasHidden = getPointPanel().isPanelHidden();
-        getPointPanel().remove();
+        getPointPanel().ifPresent(panel -> {
+            final boolean wasHidden = panel.isPanelHidden();
+            panel.remove();
 
-        this.panelId = new PointPanel(location, getId()).getId();
-        getPointPanel().setPanelHidden(wasHidden);
+            this.panelId = new PointPanel(location, getId()).getId();
+            panel.setPanelHidden(wasHidden);
+        });
+
         saveData();
     }
 
     public void updatePanel() {
-        getPointPanel().update();
+        getPointPanel().ifPresent(PointPanel::update);
     }
 
     public void togglePanelHidden() {
-        getPointPanel().toggleHidden();
+        getPointPanel().ifPresent(PointPanel::toggleHidden);
     }
 
     public void unlink() {

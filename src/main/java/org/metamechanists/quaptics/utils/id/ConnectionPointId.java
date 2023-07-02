@@ -1,12 +1,11 @@
 package org.metamechanists.quaptics.utils.id;
 
-import com.google.gson.JsonObject;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Interaction;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
-import org.metamechanists.quaptics.storage.DataTraverser;
+import org.metamechanists.quaptics.storage.PersistentDataTraverser;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -31,9 +30,8 @@ public class ConnectionPointId extends CustomId {
             return Optional.empty();
         }
 
-        final DataTraverser traverser = new DataTraverser(this);
-        final JsonObject mainSection = traverser.getData();
-        final String type = mainSection.get("type").getAsString();
+        final PersistentDataTraverser traverser = new PersistentDataTraverser(this);
+        final String type = traverser.getString("type");
         return Optional.of(type.equals("output")
                 ? new ConnectionPointOutput(this)
                 : new ConnectionPointInput(this));

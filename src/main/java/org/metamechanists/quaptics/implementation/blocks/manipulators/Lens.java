@@ -65,7 +65,7 @@ public class Lens extends ConnectedBlock implements PowerAnimatedBlock, PowerLos
             return;
         }
 
-        final Optional<ConnectionPointInput> input = group.getInput("input");
+        final Optional<ConnectionPoint> input = group.getPoint("input");
         final Optional<Location> location = group.getLocation();
         if (input.isEmpty() || location.isEmpty()) {
             return;

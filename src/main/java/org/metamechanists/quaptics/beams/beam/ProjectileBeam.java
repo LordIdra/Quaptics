@@ -1,4 +1,4 @@
-package org.metamechanists.quaptics.beams.ticker;
+package org.metamechanists.quaptics.beams.beam;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -11,13 +11,13 @@ import org.metamechanists.quaptics.utils.id.BlockDisplayId;
 
 import java.util.Optional;
 
-public class IntervalVelocityTicker implements DisplayTicker {
+public class ProjectileBeam implements Beam {
     private final Vector3f velocity;
     private final BlockDisplayId displayID;
     private final int lifespanTicks;
     private int ageTicks;
 
-    public IntervalVelocityTicker(final Material material, final Location source, final Location target, final Vector3f scale, final float speed) {
+    public ProjectileBeam(final Material material, final Location source, final Location target, final Vector3f scale, final float speed) {
         super();
         this.velocity = Transformations.getDisplacement(source, target).normalize().mul(speed);
         this.lifespanTicks = (int) (Transformations.getDisplacement(source, target).length() / speed) + 1;

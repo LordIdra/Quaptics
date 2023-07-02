@@ -21,6 +21,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Unmodifiable;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.Link;
+import org.metamechanists.quaptics.connections.panels.PointPanel;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
@@ -99,14 +100,8 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
                 return;
             }
 
-            final boolean isAnyPanelHidden = group.get().getPoints().values().stream().anyMatch(
-                    pointId -> pointId.get().isPresent() && pointId.get().get().getPointPanel().isPanelHidden());
-
-            group.get().getPoints().values().stream()
-                    .map(ConnectionPointId::get)
-                    .filter(Optional::isPresent)
-                    .map(Optional::get)
-                    .forEach(point -> point.getPointPanel().setPanelHidden(!isAnyPanelHidden));
+            final boolean isAnyPanelHidden = group.get().getPointPanels().stream().anyMatch(PointPanel::isPanelHidden);
+            group.get().getPointPanels().forEach(panel -> panel.setPanelHidden(!isAnyPanelHidden));
         };
     }
 
@@ -156,7 +151,7 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
     }
 
     protected boolean doBurnoutCheck(@NotNull final ConnectionGroup group, @NotNull final String pointName) {
-        final Optional<ConnectionPointInput> point = group.getInput(pointName);
+        final Optional<ConnectionPoint> point = group.getPoint(pointName);
         return point.isPresent() && doBurnoutCheck(group, point.get());
     }
 
@@ -164,16 +159,14 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
         return points.stream().anyMatch(input -> doBurnoutCheck(group, input));
     }
 
+    @SuppressWarnings("OptionalIsPresent")
     @NotNull
     private static List<ConnectionPoint> getLinkedPoints(final Location location) {
         final Optional<ConnectionGroup> group = getGroup(location);
-        return group.map(connectionGroup -> connectionGroup.getPoints().values().stream()
-                .map(ConnectionPointId::get)
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .filter(point -> point.getLink().isPresent())
-                .toList())
-                .orElseGet(ArrayList::new);
+        if (group.isEmpty()) {
+            return new ArrayList<>();
+        }
+        return group.get().getPointList().stream().filter(point -> point.getLink().isPresent()).toList();
 
     }
 

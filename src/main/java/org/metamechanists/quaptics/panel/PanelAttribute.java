@@ -1,7 +1,5 @@
 package org.metamechanists.quaptics.panel;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
 import io.github.bakedlibs.dough.common.ChatColors;
 import lombok.Getter;
 import org.bukkit.Color;
@@ -11,7 +9,7 @@ import org.bukkit.entity.Display.Billboard;
 import org.bukkit.entity.TextDisplay;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
-import org.metamechanists.quaptics.storage.DataTraverser;
+import org.metamechanists.quaptics.storage.PersistentDataTraverser;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.TextDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.PanelAttributeId;
@@ -40,17 +38,14 @@ public class PanelAttribute {
     }
 
     public PanelAttribute(final PanelAttributeId textDisplayId) {
-        final DataTraverser traverser = new DataTraverser(textDisplayId);
-        final JsonObject mainSection = traverser.getData();
+        final PersistentDataTraverser traverser = new PersistentDataTraverser(textDisplayId);
         this.textDisplayId = new TextDisplayId(textDisplayId);
-        this.hidden = mainSection.get("hidden").getAsBoolean();
+        this.hidden = traverser.getBoolean("hidden");
     }
 
     private void saveData() {
-        final DataTraverser traverser = new DataTraverser(textDisplayId);
-        final JsonObject mainSection = traverser.getData();
-        mainSection.add("hidden", new JsonPrimitive(hidden));
-        traverser.save();
+        final PersistentDataTraverser traverser = new PersistentDataTraverser(textDisplayId);
+        traverser.set("hidden", hidden);
     }
 
     public PanelAttributeId getId() {

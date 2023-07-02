@@ -1,7 +1,7 @@
 package org.metamechanists.quaptics;
 
 import org.bukkit.scheduler.BukkitRunnable;
-import org.metamechanists.quaptics.beams.DeprecatedTickerStorage;
+import org.metamechanists.quaptics.beams.DeprecatedBeamStorage;
 import org.metamechanists.quaptics.connections.BlockUpdateScheduler;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.storage.QuapticStorage;
@@ -21,7 +21,7 @@ public class QuapticTicker extends BukkitRunnable {
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .forEach(ConnectionGroup::tick);
-        DeprecatedTickerStorage.tick();
+        DeprecatedBeamStorage.tick();
         BlockUpdateScheduler.tick();
     }
 }

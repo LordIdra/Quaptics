@@ -7,8 +7,8 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-import org.metamechanists.quaptics.beams.DeprecatedTickerStorage;
-import org.metamechanists.quaptics.beams.ticker.DirectTicker;
+import org.metamechanists.quaptics.beams.DeprecatedBeamStorage;
+import org.metamechanists.quaptics.beams.beam.DirectBeam;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 
 public class DirectTurret extends Turret {
@@ -20,7 +20,7 @@ public class DirectTurret extends Turret {
 
     @Override
     protected void createProjectile(final Location source, final Location target) {
-        DeprecatedTickerStorage.deprecate(new DirectTicker(settings.getProjectileMaterial(), source, target, BEAM_RADIUS));
+        DeprecatedBeamStorage.deprecate(new DirectBeam(settings.getProjectileMaterial(), source, target, BEAM_RADIUS));
     }
 
     @Override
