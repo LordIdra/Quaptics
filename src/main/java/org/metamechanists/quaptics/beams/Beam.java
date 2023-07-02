@@ -1,5 +1,7 @@
 package org.metamechanists.quaptics.beams;
 
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.metamechanists.quaptics.beams.ticker.DirectTicker;
@@ -27,9 +29,15 @@ public class Beam {
         }
     }
 
-    public void updateFrequencyColor(final double frequency) {
+    public void setMaterial(final Material material) {
         if (ticker != null) {
-            ticker.setMaterial(FrequencyColor.getMaterial(frequency));
+            ticker.setMaterial(material);
+        }
+    }
+
+    public void setRadius(final Location source, final Location target, final float radius) {
+        if (ticker != null) {
+            ticker.setRadius(source, target, radius);
         }
     }
 }

@@ -3,6 +3,7 @@ package org.metamechanists.quaptics.connections;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import lombok.Getter;
+import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.metamechanists.metalib.sefilib.entity.display.DisplayGroup;
@@ -25,6 +26,8 @@ public class Link {
     private final LinkId linkId;
     private final ConnectionPointId outputId;
     private final ConnectionPointId inputId;
+    private final Location outputLocation;
+    private final Location inputLocation;
     private final double maxPower;
     private @Nullable TickerId tickerId;
     @Getter
@@ -34,18 +37,29 @@ public class Link {
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     public Link(final ConnectionPointId inputId, final ConnectionPointId outputId) {
+        final ConnectionPointInput input = getInput().get();
+        final ConnectionPointOutput output = getOutput().get();
+
         this.inputId = inputId;
         this.outputId = outputId;
-        this.linkId = new LinkId(new DisplayGroup(getInput().get().getLocation().get(), 0, 0).getParentUUID());
-        this.maxPower = getInput().get().getGroup().get().getBlock().getSettings().getTier().maxPower;
+        this.inputLocation = input.getLocation().get();
+        this.outputLocation = output.getLocation().get();
+        this.linkId = new LinkId(new DisplayGroup(inputLocation, 0, 0).getParentUUID());
+        this.maxPower = input.getGroup().get().getBlock().getSettings().getTier().maxPower;
         saveData(); // the points being linked will not be able to get the link from the id without this line
-        getInput().get().link(linkId);
-        getOutput().get().link(linkId);
-        updateGroup(getInput().get());
-        updateGroup(getOutput().get());
-        update();
+
+        input.link(linkId);
+        output.link(linkId);
+        updateGroup(input);
+        updateGroup(output);
+        regenerateBeam();
+        saveData();
+
+        getOutput().flatMap(ConnectionPoint::getGroup).ifPresent(ConnectionGroup::updatePanels);
+        getInput().flatMap(ConnectionPoint::getGroup).ifPresent(ConnectionGroup::updatePanels);
     }
 
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     public Link(final LinkId linkId) {
         final DataTraverser traverser = new DataTraverser(linkId);
         final JsonObject mainSection = traverser.getData();
@@ -58,6 +72,8 @@ public class Link {
         this.power = mainSection.get("power").getAsDouble();
         this.frequency = mainSection.get("frequency").getAsDouble();
         this.maxPower = mainSection.get("maxPower").getAsDouble();
+        this.inputLocation = getInput().get().getLocation().get();
+        this.outputLocation = getOutput().get().getLocation().get();
     }
 
     private void saveData() {
@@ -115,29 +131,27 @@ public class Link {
         });
     }
 
-    @SuppressWarnings("OptionalGetWithoutIsPresent")
-    private void updateBeam() {
+    private void regenerateBeam() {
         getBeam().ifPresent(Beam::deprecate);
-        tickerId = null;
-
-        if (getOutput().isEmpty()
-                || getInput().isEmpty()
-                || getOutput().get().getLocation().isEmpty()
-                || getInput().get().getLocation().isEmpty()) {
-            return;
-        }
-
         this.tickerId = new Beam(new DirectTicker(
                 FrequencyColor.getMaterial(frequency),
-                getOutput().get().getLocation().get(),
-                getInput().get().getLocation().get(),
+                outputLocation,
+                inputLocation,
                 Math.min((float)(power / maxPower) * MAX_BEAM_SIZE, MAX_BEAM_SIZE)))
                 .getId().get();
     }
 
-    private void update() {
-        updateBeam();
-        saveData();
+    private void updateBeam() {
+        final Optional<Beam> beam = getBeam();
+        if (beam.isEmpty()) {
+            return;
+        }
+
+        beam.get().setMaterial(FrequencyColor.getMaterial(frequency));
+        beam.get().setRadius(outputLocation, inputLocation, Math.min((float)(power / maxPower) * MAX_BEAM_SIZE, MAX_BEAM_SIZE));
+    }
+
+    private void updatePanels() {
         getOutput().flatMap(ConnectionPoint::getGroup).ifPresent(ConnectionGroup::updatePanels);
         getInput().flatMap(ConnectionPoint::getGroup).ifPresent(ConnectionGroup::updatePanels);
     }
@@ -158,7 +172,9 @@ public class Link {
 
         this.power = power;
 
-        update();
+        saveData();
+        updateBeam();
+        updatePanels();
         getInput().ifPresent(Link::updateGroup);
     }
 
@@ -170,7 +186,9 @@ public class Link {
 
         this.frequency = frequency;
 
-        update();
+        saveData();
+        updateBeam();
+        updatePanels();
         getInput().ifPresent(Link::updateGroup);
     }
 

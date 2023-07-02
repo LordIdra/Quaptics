@@ -4,6 +4,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.BlockDisplay;
 import org.jetbrains.annotations.NotNull;
+import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
@@ -17,10 +18,9 @@ public class DirectTicker implements DisplayTicker {
 
     public DirectTicker(final Material material, @NotNull final Location source, final Location target, final float radius) {
         final Location midpoint = source.clone().add(target).multiply(0.5);
-        final Vector3f scale = new Vector3f(radius, radius, (float) (source.distance(target)));
         this.displayId = new BlockDisplayId(new BlockDisplayBuilder(midpoint)
                 .setMaterial(material)
-                .setTransformation(Transformations.lookAlong(scale, Transformations.getDirection(midpoint, target)))
+                .setTransformation(generateTransformation(source, target, radius))
                 .setBrightness(15)
                 .build()
                 .getUniqueId());
@@ -38,6 +38,12 @@ public class DirectTicker implements DisplayTicker {
         return displayId.get();
     }
 
+    private static Matrix4f generateTransformation(final @NotNull Location source, final Location target, final float radius) {
+        final Location midpoint = source.clone().add(target).multiply(0.5);
+        final Vector3f scale = new Vector3f(radius, radius, (float) source.distance(target));
+        return Transformations.lookAlong(scale, Transformations.getDirection(midpoint, target));
+    }
+
     @Override
     public void tick() {}
 
@@ -53,6 +59,10 @@ public class DirectTicker implements DisplayTicker {
 
     public void setMaterial(final Material material) {
         getDisplay().ifPresent(display -> display.setBlock(material.createBlockData()));
+    }
+
+    public void setRadius(final @NotNull Location source, final Location target, final float radius) {
+        getDisplay().ifPresent(display -> display.setTransformationMatrix(generateTransformation(source, target, radius)));
     }
 }
 
