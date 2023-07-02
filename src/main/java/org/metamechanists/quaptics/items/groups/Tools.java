@@ -19,8 +19,6 @@ public class Tools {
     public final Settings LASER_POINTER_SETTINGS = Settings.builder()
             .capacity(1000.0)
             .emissionPower(5.0)
-            .minFrequency(0.5)
-            .maxFrequency(1.0)
             .build();
 
     public final SlimefunItemStack TARGETING_WAND = new SlimefunItemStack(
