@@ -190,6 +190,6 @@ public class Charger extends ConnectedBlock implements PanelBlock {
 
         display.setItemStack(null);
         QuapticChargeableItem.updateLore(itemStack);
-        ItemUtils.addOrDropItem(player, itemStack);
+        ItemUtils.addOrDropItemMainHand(player, itemStack);
     }
 }
