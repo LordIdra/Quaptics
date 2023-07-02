@@ -61,7 +61,7 @@ public class PersistentDataTraverser {
         set(key + "length", value.size());
         int i = 0;
         for (final Entry<String, ? extends CustomId> pair : value.entrySet()) {
-            set(key + i + "key", pair.getValue().toString());
+            set(key + i + "key", pair.getKey());
             set(key + i + "value", pair.getValue().toString());
             i++;
         }

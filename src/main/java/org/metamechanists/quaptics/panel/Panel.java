@@ -2,7 +2,6 @@ package org.metamechanists.quaptics.panel;
 
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import lombok.Getter;
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.storage.PersistentDataTraverser;
 import org.metamechanists.quaptics.utils.id.DisplayGroupId;
@@ -19,9 +18,9 @@ public class Panel {
     private final DisplayGroupId displayGroupId;
     @Getter
     private boolean hidden = true;
-    private final Map<String, PanelAttributeId> attributes;
+    private final Map<String, ? extends PanelAttributeId> attributes;
 
-    public Panel(final DisplayGroupId displayGroupId, final Map<String, PanelAttributeId> attributes) {
+    public Panel(final DisplayGroupId displayGroupId, final Map<String, ? extends PanelAttributeId> attributes) {
         this.displayGroupId = displayGroupId;
         this.attributes = attributes;
         saveData();
@@ -48,7 +47,6 @@ public class Panel {
         return displayGroupId.get();
     }
 
-    @Contract("_ -> new")
     private Optional<PanelAttribute> getAttribute(final String name) {
         return attributes.get(name).get();
     }
