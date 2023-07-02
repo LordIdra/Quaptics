@@ -37,24 +37,24 @@ public class Link {
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     public Link(final ConnectionPointId inputId, final ConnectionPointId outputId) {
+        this.inputId = inputId;
+        this.outputId = outputId;
+
         final ConnectionPointInput input = getInput().get();
         final ConnectionPointOutput output = getOutput().get();
 
-        this.inputId = inputId;
-        this.outputId = outputId;
         this.inputLocation = input.getLocation().get();
         this.outputLocation = output.getLocation().get();
         this.linkId = new LinkId(new DisplayGroup(inputLocation, 0, 0).getParentUUID());
         this.maxPower = input.getGroup().get().getBlock().getSettings().getTier().maxPower;
-        saveData(); // the points being linked will not be able to get the link from the id without this line
 
+        saveData(); // the points being linked will not be able to get the link from the id without this line
         input.link(linkId);
         output.link(linkId);
         updateGroup(input);
         updateGroup(output);
         regenerateBeam();
         saveData();
-
         getOutput().flatMap(ConnectionPoint::getGroup).ifPresent(ConnectionGroup::updatePanels);
         getInput().flatMap(ConnectionPoint::getGroup).ifPresent(ConnectionGroup::updatePanels);
     }
@@ -63,6 +63,7 @@ public class Link {
     public Link(final LinkId linkId) {
         final DataTraverser traverser = new DataTraverser(linkId);
         final JsonObject mainSection = traverser.getData();
+
         this.linkId = linkId;
         this.outputId = new ConnectionPointId(mainSection.get("outputId").getAsString());
         this.inputId = new ConnectionPointId(mainSection.get("inputId").getAsString());
