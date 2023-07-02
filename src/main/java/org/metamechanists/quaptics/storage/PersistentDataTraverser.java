@@ -28,15 +28,14 @@ import java.util.stream.IntStream;
 @SuppressWarnings({"WeakerAccess", "unused"})
 public class PersistentDataTraverser {
     private final PersistentDataHolder persistentDataHolder;
-    private final Map<String, NamespacedKey> keys = new ConcurrentHashMap<>();
+    private static final Map<String, NamespacedKey> keys = new ConcurrentHashMap<>();
 
     public PersistentDataTraverser(@NotNull final CustomId id) {
         this.persistentDataHolder = Bukkit.getEntity(id.getUUID());
     }
 
-    private @NotNull NamespacedKey getKey(@NotNull final String key) {
-        keys.computeIfAbsent(key, k -> keys.put(key, new NamespacedKey(Quaptics.getInstance(), key)));
-        return keys.get(key);
+    private static @NotNull NamespacedKey getKey(@NotNull final String key) {
+        return keys.computeIfAbsent(key, k -> new NamespacedKey(Quaptics.getInstance(), key));
     }
 
     public void set(@NotNull final String key, final int value) {
