@@ -91,19 +91,8 @@ public class Basic {
             .minPower(40)
             .powerLoss(0.05)
             .minFrequency(0.2)
-            .maxFrequency(0.9)
-            .frequencyMultiplier(2.0)
-            .build();
-
-    public final Settings REPEATER_2_SETTINGS = Settings.builder()
-            .tier(Tier.BASIC)
-            .displayRadius(0.25F)
-            .connectionRadius(0.5F)
-            .minPower(65)
-            .powerLoss(0.05)
-            .minFrequency(0.7)
             .maxFrequency(1.0)
-            .frequencyStep(0.1)
+            .frequencyMultiplier(2.0)
             .build();
 
     public final Settings TURRET_2_HOSTILE_SETTINGS = Settings.builder()
@@ -111,7 +100,7 @@ public class Basic {
             .displayRadius(0.60F)
             .connectionRadius(0.65F)
             .minPower(40)
-            .minFrequency(6)
+            .minFrequency(1.0)
             .range(7)
             .damage(2)
             .targets(Set.of(SpawnCategory.MONSTER))
@@ -189,13 +178,6 @@ public class Basic {
             Material.RED_STAINED_GLASS,
             "&cRepeater &4I",
             Lore.create(REPEATER_1_SETTINGS,
-                    "&7● Increases the frequency of a quaptic ray"));
-
-    public final SlimefunItemStack REPEATER_2 = new SlimefunItemStack(
-            "QP_REPEATER_2",
-            Material.RED_STAINED_GLASS,
-            "&cRepeater &4II",
-            Lore.create(REPEATER_2_SETTINGS,
                     "&7● Increases the frequency of a quaptic ray"));
 
     public final SlimefunItemStack SCATTERER_1 = new SlimefunItemStack(
@@ -282,14 +264,6 @@ public class Basic {
                 new ItemStack[]{},
                 REPEATER_1_SETTINGS,
                 1).register(addon);
-
-        new Repeater(
-                Groups.BASIC,
-                REPEATER_2,
-                RecipeType.NULL,
-                new ItemStack[]{},
-                REPEATER_2_SETTINGS,
-                2).register(addon);
 
         new Scatterer(
                 Groups.BASIC,
