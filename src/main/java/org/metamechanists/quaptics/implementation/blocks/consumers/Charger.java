@@ -5,11 +5,8 @@ import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
-import io.github.thebusybiscuit.slimefun4.core.handlers.BlockUseHandler;
-import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Display;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
@@ -22,12 +19,13 @@ import org.metamechanists.metalib.utils.ItemUtils;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
-import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
-import org.metamechanists.quaptics.implementation.base.Settings;
-import org.metamechanists.quaptics.implementation.panels.ChargerPanel;
+import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
+import org.metamechanists.quaptics.implementation.blocks.base.PanelBlock;
+import org.metamechanists.quaptics.implementation.blocks.base.Settings;
+import org.metamechanists.quaptics.implementation.blocks.panels.BlockPanel;
+import org.metamechanists.quaptics.implementation.blocks.panels.ChargerPanel;
 import org.metamechanists.quaptics.implementation.tools.QuapticChargeableItem;
 import org.metamechanists.quaptics.panel.Panel;
-import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.builders.ItemDisplayBuilder;
@@ -38,7 +36,7 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.util.List;
 import java.util.Optional;
 
-public class Charger extends ConnectedBlock {
+public class Charger extends ConnectedBlock implements PanelBlock {
     private final Vector3f mainDisplaySize = new Vector3f(0.7F, 0.3F, 0.7F);
     private final Vector3f glassDisplaySize = new Vector3f(0.5F, 0.1F, 0.5F);
     private final Vector3f itemDisplaySize = new Vector3f(0.5F);
@@ -48,95 +46,6 @@ public class Charger extends ConnectedBlock {
 
     public Charger(final ItemGroup group, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(group, item, recipeType, recipe, settings);
-        addItemHandler(onUseQuapticCharger());
-    }
-
-    @NotNull
-    private static BlockUseHandler onUseQuapticCharger() {
-        return event -> {
-            final Block block = event.getClickedBlock().orElse(null);
-            if (block == null) {
-                return;
-            }
-
-            final Location location = block.getLocation();
-            final Optional<Display> display = getDisplay(location, "item");
-            if (display.isEmpty()) {
-                return;
-            }
-
-            if (!(display.get() instanceof final ItemDisplay itemDisplay)) {
-                return;
-            }
-
-            final Player player = event.getPlayer();
-            if (itemDisplay.getItemStack() == null || itemDisplay.getItemStack().getType().isEmpty()) {
-                addItem(player, itemDisplay);
-                return;
-            }
-
-            removeItem(player, itemDisplay);
-        };
-    }
-
-    public static Optional<ItemStack> getItem(final Location location) {
-        final Optional<Display> display = getDisplay(location, "item");
-        if (display.isEmpty()) {
-            return Optional.empty();
-        }
-
-        if (!(display.get() instanceof final ItemDisplay itemDisplay)) {
-            return Optional.empty();
-        }
-
-        final ItemStack stack = itemDisplay.getItemStack();
-        return stack == null || stack.getItemMeta() == null ? Optional.empty() : Optional.of(stack);
-    }
-
-    private static void addItem(@NotNull final Player player, final ItemDisplay display) {
-        final ItemStack itemStack = player.getInventory().getItemInMainHand().clone();
-        if (itemStack.getType().isEmpty()) {
-            return;
-        }
-
-        if (!(SlimefunItem.getByItem(itemStack) instanceof QuapticChargeableItem)) {
-            return;
-        }
-
-        player.getInventory().setItemInMainHand(null);
-        display.setItemStack(itemStack);
-    }
-
-    private static void removeItem(final Player player, @NotNull final ItemDisplay display) {
-        final ItemStack itemStack = display.getItemStack();
-        if (itemStack == null) {
-            // This should never be reached
-            return;
-        }
-
-        display.setItemStack(null);
-        QuapticChargeableItem.updateLore(itemStack);
-        ItemUtils.addOrDropItem(player, itemStack);
-    }
-
-    @Override
-    public void onQuapticTick(@NotNull final ConnectionGroup group) {
-        final Optional<Location> location = group.getLocation();
-        if (location.isEmpty()) {
-            return;
-        }
-
-        final Optional<Display> display = getDisplay(location.get(), "item");
-        if (display.isEmpty()) {
-            return;
-        }
-
-        if (!(display.get() instanceof final ItemDisplay itemDisplay)) {
-            return;
-        }
-
-        QuapticChargeableItem.chargeItem(group, itemDisplay);
-        updatePanel(group);
     }
 
     @Override
@@ -167,13 +76,9 @@ public class Charger extends ConnectedBlock {
         return List.of(new ConnectionPointInput(groupId, "input", formatPointLocation(player, location, inputPointLocation)));
     }
 
-    private static Optional<PanelId> getPanelId(final Location location) {
-        final String panelId = BlockStorage.getLocationInfo(location, Keys.BS_PANEL_ID);
-        return panelId == null ? Optional.empty() : Optional.of(new PanelId(panelId));
-    }
-
-    private static void setPanelId(final Location location, @NotNull final PanelId id) {
-        BlockStorage.addBlockInfo(location, Keys.BS_PANEL_ID, id.toString());
+    @Override
+    public BlockPanel createPanel(final PanelId panelId, final ConnectionGroupId groupId) {
+        return new ChargerPanel(panelId, groupId);
     }
 
     @Override
@@ -194,19 +99,92 @@ public class Charger extends ConnectedBlock {
         panel.ifPresent(Panel::remove);
     }
 
-    private static void updatePanel(@NotNull final ConnectionGroup group) {
-        final Optional<Location> location = group.getLocation();
-        if (location.isEmpty()) {
+    @Override
+    protected void onUse(final Location location, final Player player) {
+        final Optional<ItemDisplay> itemDisplay = getItemDisplay(location);
+        if (itemDisplay.isEmpty()) {
             return;
         }
 
-        final Optional<PanelId> id = getPanelId(location.get());
-        id.ifPresent(panelId -> new ChargerPanel(panelId, group.getId()).update());
+        final ItemStack stack = itemDisplay.get().getItemStack();
+        if (stack == null || stack.getType().isEmpty()) {
+            addItem(player, itemDisplay.get());
+            return;
+        }
+
+        removeItem(player, itemDisplay.get());
+    }
+
+    @Override
+    public void onQuapticTick(@NotNull final ConnectionGroup group) {
+        final Optional<ItemDisplay> itemDisplay = getItemDisplay(group);
+        if (itemDisplay.isEmpty()) {
+            return;
+        }
+
+        QuapticChargeableItem.chargeItem(group, itemDisplay.get());
+        updatePanel(group);
     }
 
     @Override
     public void onInputLinkUpdated(@NotNull final ConnectionGroup group) {
         final Optional<ConnectionPoint> input = group.getPoint("input");
         input.ifPresent(point -> doBurnoutCheck(group, point));
+    }
+
+    private static Optional<ItemDisplay> getItemDisplay(@NotNull final ConnectionGroup group) {
+        final Optional<Location> location = group.getLocation();
+        if (location.isEmpty()) {
+            return Optional.empty();
+        }
+
+        final Optional<Display> display = getDisplay(location.get(), "item");
+        if (display.isEmpty()) {
+            return Optional.empty();
+        }
+
+        if (!(display.get() instanceof final ItemDisplay itemDisplay)) {
+            return Optional.empty();
+        }
+
+        return Optional.of(itemDisplay);
+    }
+
+    private static Optional<ItemDisplay> getItemDisplay(final Location location) {
+        final Optional<Display> display = getDisplay(location, "item");
+        if (display.isEmpty()) {
+            return Optional.empty();
+        }
+
+        if (!(display.get() instanceof final ItemDisplay itemDisplay)) {
+            return Optional.empty();
+        }
+
+        return Optional.of(itemDisplay);
+    }
+
+    private static void addItem(@NotNull final Player player, final ItemDisplay display) {
+        final ItemStack itemStack = player.getInventory().getItemInMainHand().clone();
+        if (itemStack.getType().isEmpty()) {
+            return;
+        }
+
+        if (!(SlimefunItem.getByItem(itemStack) instanceof QuapticChargeableItem)) {
+            return;
+        }
+
+        player.getInventory().setItemInMainHand(null);
+        display.setItemStack(itemStack);
+    }
+
+    private static void removeItem(final Player player, @NotNull final ItemDisplay display) {
+        final ItemStack itemStack = display.getItemStack();
+        if (itemStack == null) {
+            return;
+        }
+
+        display.setItemStack(null);
+        QuapticChargeableItem.updateLore(itemStack);
+        ItemUtils.addOrDropItem(player, itemStack);
     }
 }

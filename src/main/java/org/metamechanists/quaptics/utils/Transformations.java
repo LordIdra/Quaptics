@@ -69,6 +69,10 @@ public class Transformations {
         return getDisplacement(from, to).normalize();
     }
 
+    public Matrix4f none() {
+        return new Matrix4f().scale(0);
+    }
+
     public Matrix4f lookAlong(final Vector3f scale, @NotNull final Vector3f direction) {
         final float angleY = (float) Math.atan2(direction.x, direction.z);
         final float angleX = (float) Math.atan2(direction.y, Math.sqrt(direction.x*direction.x + direction.z*direction.z));

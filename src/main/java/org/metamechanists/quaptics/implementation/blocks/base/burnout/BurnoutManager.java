@@ -1,4 +1,4 @@
-package org.metamechanists.quaptics.implementation.base;
+package org.metamechanists.quaptics.implementation.blocks.base.burnout;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

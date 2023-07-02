@@ -1,7 +1,6 @@
-package org.metamechanists.quaptics.implementation.panels;
+package org.metamechanists.quaptics.implementation.blocks.panels;
 
 import org.bukkit.Location;
-import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.implementation.blocks.manipulators.Capacitor;
@@ -13,44 +12,24 @@ import org.metamechanists.quaptics.utils.id.PanelId;
 
 import java.util.Optional;
 
-public class CapacitorPanel {
-    private static final Vector BLOCK_OFFSET = new Vector(0, 0.7, 0);
-    private static final float SIZE = 0.40F;
-    private final ConnectionGroupId groupId;
-    protected final Panel panel;
-
+public class CapacitorPanel extends BlockPanel {
     public CapacitorPanel(@NotNull final Location location, final ConnectionGroupId groupId) {
-        this.groupId = groupId;
-        this.panel = new PanelBuilder(location.clone().toCenterLocation().add(BLOCK_OFFSET), SIZE)
-                .addAttribute("chargeText")
-                .addAttribute("chargeBar")
-                .build();
-        panel.setAttributeHidden("chargeText", false);
-        panel.setAttributeHidden("chargeBar", false);
-        panel.setHidden(false);
+        super(location, groupId);
     }
 
     public CapacitorPanel(@NotNull final PanelId panelId, final ConnectionGroupId groupId) {
-        this.groupId = groupId;
-        this.panel = panelId.get().get();
+        super(panelId, groupId);
     }
 
-    public PanelId getId() {
-        return panel.getId();
+    @Override
+    protected Panel createPanel(@NotNull final Location location) {
+        return new PanelBuilder(location.clone().toCenterLocation().add(BLOCK_OFFSET), SIZE)
+                .addAttribute("chargeText", false)
+                .addAttribute("chargeBar", false)
+                .build();
     }
 
-    protected Optional<ConnectionGroup> getGroup() {
-        return groupId.get();
-    }
-
-    public void setPanelHidden(final boolean hidden) {
-        panel.setHidden(hidden);
-    }
-
-    public void toggleHidden() {
-        panel.toggleHidden();
-    }
-
+    @Override
     public void update() {
         final Optional<ConnectionGroup> group = getGroup();
         if (group.isEmpty()) {
@@ -74,9 +53,5 @@ public class CapacitorPanel {
 
         panel.setText("chargeText", Lore.chargeBarRaw((int)charge, (int)capacity));
         panel.setText("chargeBar", Lore.chargeValuesRaw((int)charge, (int)capacity));
-    }
-
-    public void remove() {
-        panel.remove();
     }
 }

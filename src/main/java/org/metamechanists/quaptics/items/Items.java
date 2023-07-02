@@ -3,7 +3,7 @@ package org.metamechanists.quaptics.items;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import lombok.Getter;
 import lombok.experimental.UtilityClass;
-import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
+import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
 import org.metamechanists.quaptics.items.groups.Advanced;
 import org.metamechanists.quaptics.items.groups.Basic;
 import org.metamechanists.quaptics.items.groups.Guide;

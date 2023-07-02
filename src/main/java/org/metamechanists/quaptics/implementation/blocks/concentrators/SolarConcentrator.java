@@ -15,18 +15,15 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
-import org.metamechanists.quaptics.connections.ConnectionGroup;
-import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
-import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
-import org.metamechanists.quaptics.implementation.base.Settings;
+import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
+import org.metamechanists.quaptics.implementation.blocks.base.Settings;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.ItemDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.ConnectionGroupId;
 
 import java.util.List;
-import java.util.Optional;
 
 public class SolarConcentrator extends ConnectedBlock {
     private final float rotationY;
@@ -37,14 +34,6 @@ public class SolarConcentrator extends ConnectedBlock {
                              final Settings settings, final float rotationY) {
         super(group, item, recipeType, recipe, settings);
         this.rotationY = rotationY;
-    }
-
-    private ItemDisplay generateMainBlockDisplay(@NotNull final Location from) {
-        final Vector3f mainDisplayRotation = new Vector3f((float)(Math.PI/2), 0.0F, rotationY);
-        return new ItemDisplayBuilder(from.toCenterLocation())
-                .setMaterial(Material.GLASS_PANE)
-                .setTransformation(Transformations.unadjustedRotateAndScale(mainDisplaySize, mainDisplayRotation))
-                .build();
     }
 
     @Override
@@ -60,27 +49,18 @@ public class SolarConcentrator extends ConnectedBlock {
     @Override
     public void onSlimefunTick(@NotNull final Block block, final SlimefunItem item, final Config data) {
         super.onSlimefunTick(block, item, data);
+        final Location location = block.getLocation();
+        final double power = block.getWorld().isDayTime()
+                ? settings.getEmissionPower()
+                : 0;
+        getLink(location, "output").ifPresent(link -> link.setPower(power));
+    }
 
-        final Optional<ConnectionGroup> group = getGroup(block.getLocation());
-        if (group.isEmpty()) {
-            return;
-        }
-
-        final Optional<ConnectionPointOutput> output = group.get().getOutput("output");
-        if (output.isEmpty()) {
-            return;
-        }
-
-        final Optional<Link> outputLink = output.get().getLink();
-        if (outputLink.isEmpty()) {
-            return;
-        }
-
-        if (block.getWorld().isDayTime()) {
-            outputLink.get().setAttributes(settings.getEmissionPower(), 0, 0, true);
-            return;
-        }
-
-        outputLink.get().setEnabled(false);
+    private ItemDisplay generateMainBlockDisplay(@NotNull final Location from) {
+        final Vector3f mainDisplayRotation = new Vector3f((float)(Math.PI/2), 0.0F, rotationY);
+        return new ItemDisplayBuilder(from.toCenterLocation())
+                .setMaterial(Material.GLASS_PANE)
+                .setTransformation(Transformations.unadjustedRotateAndScale(mainDisplaySize, mainDisplayRotation))
+                .build();
     }
 }

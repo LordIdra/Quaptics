@@ -28,8 +28,6 @@ public class Link {
     private final double maxPower;
     private @Nullable TickerId tickerId;
     @Getter
-    private boolean enabled;
-    @Getter
     private double power;
     @Getter
     private double frequency;
@@ -58,7 +56,6 @@ public class Link {
         this.tickerId = mainSection.get("tickerId").getAsString().equals("null")
                 ? null
                 : new TickerId(mainSection.get("tickerId").getAsString());
-        this.enabled = mainSection.get("enabled").getAsBoolean();
         this.power = mainSection.get("power").getAsDouble();
         this.frequency = mainSection.get("frequency").getAsDouble();
         this.phase = mainSection.get("phase").getAsInt();
@@ -71,7 +68,6 @@ public class Link {
         mainSection.add("outputId", new JsonPrimitive(outputId.toString()));
         mainSection.add("inputId", new JsonPrimitive(inputId.toString()));
         mainSection.add("tickerId", new JsonPrimitive(tickerId == null ? "null" : tickerId.toString()));
-        mainSection.add("enabled", new JsonPrimitive(enabled));
         mainSection.add("power", new JsonPrimitive(power));
         mainSection.add("frequency", new JsonPrimitive(frequency));
         mainSection.add("phase", new JsonPrimitive(phase));
@@ -148,28 +144,15 @@ public class Link {
         getInput().flatMap(ConnectionPoint::getGroup).ifPresent(ConnectionGroup::updatePanels);
     }
 
-    public void setEnabled(final boolean enabled) {
-        if (enabled == this.enabled) {
-            return;
-        }
-
-        this.enabled = enabled;
-
-        if (!enabled) {
-            power = 0;
-            frequency = 0;
-            phase = 0;
-        }
-
-        update();
-        getInput().ifPresent(Link::updateGroup);
-    }
-
     private static void updateGroup(final @NotNull ConnectionPoint point) {
         point.getGroup().ifPresent(group -> BlockUpdateScheduler.scheduleUpdate(group.getId()));
     }
 
-    private void setPower(final double power) {
+    public boolean isEnabled() {
+        return power != 0;
+    }
+
+    public void setPower(final double power) {
         // TODO how can we limit the size of power changes?
         if (this.power == power) {
             return;
@@ -193,22 +176,8 @@ public class Link {
         getInput().ifPresent(Link::updateGroup);
     }
 
-    private void setPhase(final int phase) {
-        // TODO how can we limit the size of phase changes?
-        if (this.phase == phase) {
-            return;
-        }
-
-        this.phase = phase;
-
-        update();
-        getInput().ifPresent(Link::updateGroup);
-    }
-
-    public void setAttributes(final double power, final double frequency, final int phase, final boolean enabled) {
+    public void setPowerAndFrequency(final double power, final double frequency) {
         setPower(power);
         setFrequency(frequency);
-        setPhase(phase);
-        setEnabled(enabled);
     }
 }

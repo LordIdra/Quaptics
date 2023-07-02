@@ -1,4 +1,4 @@
-package org.metamechanists.quaptics.implementation.tools;
+package org.metamechanists.quaptics.implementation.tools.targetingwand;
 
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import org.bukkit.entity.Entity;

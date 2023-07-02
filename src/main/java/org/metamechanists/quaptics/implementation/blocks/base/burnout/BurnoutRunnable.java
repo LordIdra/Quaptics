@@ -1,4 +1,4 @@
-package org.metamechanists.quaptics.implementation.base;
+package org.metamechanists.quaptics.implementation.blocks.base.burnout;
 
 import com.destroystokyo.paper.ParticleBuilder;
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
@@ -14,6 +14,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.Quaptics;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
+import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
+import org.metamechanists.quaptics.implementation.blocks.base.DisplayGroupTickerBlock;
 
 import java.util.Optional;
 
@@ -61,9 +63,7 @@ public class BurnoutRunnable extends BukkitRunnable {
                 if (ticks % 2 == 0) {
                     displayGroup.get().getDisplays().values().forEach(display -> {
                         final Brightness brightness = display.getBrightness();
-                        display.setBrightness(new Brightness(
-                                brightness == null ? INITIAL_BRIGHTNESS : Math.max(0, brightness.getBlockLight() - 1),
-                                brightness == null ? INITIAL_BRIGHTNESS : Math.max(0, brightness.getSkyLight() - 1)));
+                        display.setBrightness(new Brightness(brightness == null ? INITIAL_BRIGHTNESS : Math.max(0, brightness.getBlockLight() - 1), 0));
                     });
 
                     new ParticleBuilder(Particle.LAVA)

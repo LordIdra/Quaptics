@@ -1,6 +1,5 @@
 package org.metamechanists.quaptics.implementation.blocks.consumers.turrets;
 
-import com.google.common.base.Objects;
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
@@ -13,22 +12,20 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.BlockDisplay;
-import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
-import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
-import org.metamechanists.quaptics.implementation.base.Settings;
+import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
+import org.metamechanists.quaptics.implementation.blocks.base.Settings;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
@@ -44,22 +41,11 @@ public abstract class Turret extends ConnectedBlock {
     private final Vector3f mainDisplaySize = new Vector3f(0.6F, 0.6F, 0.6F);
     private final Vector3f barrelSize = new Vector3f(0.18F, 0.18F, settings.getDisplayRadius()*1.3F);
     private final Vector3f barrelTranslation = new Vector3f(0, 0, settings.getDisplayRadius()*0.8F);
-    protected final Vector barrelLocation = new Vector(0.5, 0.7, 0.5);
+    private final Vector barrelLocation = new Vector(0.5, 0.7, 0.5);
     private final Vector inputLocation = new Vector(0.0F, 0.0F, -settings.getConnectionRadius());
 
     protected Turret(final ItemGroup group, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(group, item, recipeType, recipe, settings);
-    }
-
-    protected Matrix4f getBarrelMatrix(@NotNull final Location from, final Location to) {
-        return Transformations.lookAlong(barrelSize, Transformations.getDirection(from.clone().add(barrelLocation), to)).translate(barrelTranslation);
-    }
-
-    private BlockDisplay generateBarrel(@NotNull final Location from, final Location to) {
-        return new BlockDisplayBuilder(from.clone().add(barrelLocation))
-                .setMaterial(Material.GRAY_CONCRETE)
-                .setTransformation(getBarrelMatrix(from, to))
-                .build();
     }
 
     @Override
@@ -77,47 +63,71 @@ public abstract class Turret extends ConnectedBlock {
     }
 
     @Override
-    public void onInputLinkUpdated(@NotNull final ConnectionGroup group) {
-        final Optional<ConnectionPoint> input = group.getPoint("input");
-        if (input.isEmpty() || doBurnoutCheck(group, input.get())) {
-            return;
+    protected void onSlimefunTick(@NotNull final Block block, final SlimefunItem item, final Config data) {
+        if (isPowered(block.getLocation())) {
+            retarget(block.getLocation());
+            shoot(block.getLocation());
         }
+    }
 
+    @Override
+    public void onInputLinkUpdated(@NotNull final ConnectionGroup group) {
         final Optional<Location> location = group.getLocation();
         if (location.isEmpty()) {
             return;
         }
 
-        BlockStorage.addBlockInfo(location.get(), Keys.BS_POWERED, "false");
+        setPowered(location.get(), false);
 
-        final Optional<Link> inputLink = input.get().getLink();
+        final Optional<Link> inputLink = getLink(location.get(), "input");
         if (inputLink.isEmpty()) {
             return;
         }
 
-        if (settings.checkPower(inputLink.get().getPower()) && settings.checkFrequency(inputLink.get().getFrequency())) {
-            BlockStorage.addBlockInfo(location.get(), Keys.BS_POWERED, "true");
+        if (!settings.checkPower(inputLink.get().getPower()) || !settings.checkFrequency(inputLink.get().getFrequency())) {
+            return;
         }
+
+        setPowered(location.get(), true);
+    }
+
+    private Matrix4f getBarrelMatrix(@NotNull final Location from, final Location to) {
+        return Transformations.lookAlong(barrelSize, Transformations.getDirection(from.clone().add(barrelLocation), to)).translate(barrelTranslation);
+    }
+
+    private BlockDisplay generateBarrel(@NotNull final Location from, final Location to) {
+        return new BlockDisplayBuilder(from.clone().add(barrelLocation))
+                .setMaterial(Material.GRAY_CONCRETE)
+                .setTransformation(getBarrelMatrix(from, to))
+                .build();
+    }
+
+    private static void setPowered(final Location location, final boolean powered) {
+        BlockStorage.addBlockInfo(location, Keys.BS_POWERED, java.util.Objects.toString(powered));
+    }
+
+    private static boolean isPowered(final Location location) {
+        return "true".equals(BlockStorage.getLocationInfo(location, Keys.BS_POWERED));
     }
 
     private static void setTarget(@NotNull final Location location, @NotNull final Entity entity) {
         BlockStorage.addBlockInfo(location, Keys.BS_TARGET, entity.getUniqueId().toString());
     }
 
-    protected static void clearTarget(final Location location) {
+    private static void clearTarget(final Location location) {
         BlockStorage.addBlockInfo(location, Keys.BS_TARGET, null);
     }
 
-    protected static @Nullable LivingEntity getTarget(final Location location) {
+    private static Optional<LivingEntity> getTarget(final Location location) {
         final String targetString = BlockStorage.getLocationInfo(location, Keys.BS_TARGET);
         if (targetString == null) {
-            return null;
+            return Optional.empty();
         }
 
-        return (LivingEntity) Bukkit.getEntity(UUID.fromString(targetString));
+        return Optional.ofNullable((LivingEntity) Bukkit.getEntity(UUID.fromString(targetString)));
     }
 
-    private static @Nullable LivingEntity getClosestEntity(@NotNull final Iterable<? extends Entity> entities, final Location location) {
+    private static Optional<LivingEntity> getClosestEntity(@NotNull final Collection<? extends Entity> entities, final Location location) {
         LivingEntity target = null;
         double targetDistance = ARBITRARILY_LARGE_NUMBER;
         for (final Entity entity : entities) {
@@ -127,7 +137,7 @@ public abstract class Turret extends ConnectedBlock {
                 targetDistance = distance;
             }
         }
-        return target;
+        return Optional.ofNullable(target);
     }
 
     private void retarget(@NotNull final Location location) {
@@ -138,26 +148,32 @@ public abstract class Turret extends ConnectedBlock {
         final Collection<Entity> entities = location.getWorld()
                 .getNearbyEntities(location, settings.getRange(), settings.getRange(), settings.getRange(),
                         (entity -> settings.getTargets().contains(entity.getSpawnCategory())
-                        && entity instanceof Damageable
-                        && entity.getLocation().distance(location) < settings.getRange()));
+                                && entity instanceof LivingEntity
+                                && entity.getLocation().distance(location) < settings.getRange()));
 
         if (entities.isEmpty()) {
             return;
         }
 
-        final LivingEntity closestEntity = getClosestEntity(entities, location);
-        if (closestEntity != null) {
-            setTarget(location, closestEntity);
-        }
+        final Optional<LivingEntity> closestEntity = getClosestEntity(entities, location);
+        closestEntity.ifPresent(livingEntity -> setTarget(location, livingEntity));
     }
 
-    protected abstract void shoot(Location location);
-
-    @Override
-    protected void onSlimefunTick(@NotNull final Block block, final SlimefunItem item, final Config data) {
-        if (Objects.equal(BlockStorage.getLocationInfo(block.getLocation(), Keys.BS_POWERED), "true")) {
-            retarget(block.getLocation());
-            shoot(block.getLocation());
-        }
+    private void updateBarrelTransformation(final Location location, final LivingEntity target) {
+        getDisplay(location, "barrel").ifPresent(value -> value.setTransformationMatrix(getBarrelMatrix(location, target.getEyeLocation())));
     }
+
+    private void shoot(final Location location) {
+        final Optional<LivingEntity> target = getTarget(location);
+        if (target.isEmpty() || target.get().isDead() || location.toCenterLocation().distance(target.get().getLocation()) > settings.getRange()) {
+            clearTarget(location);
+            return;
+        }
+
+        updateBarrelTransformation(location, target.get());
+        createProjectile(location.clone().add(barrelLocation), target.get().getEyeLocation());
+        target.get().damage(settings.getDamage());
+    }
+
+    protected abstract void createProjectile(final Location source, final Location target);
 }

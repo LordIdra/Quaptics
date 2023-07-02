@@ -17,7 +17,7 @@ import org.metamechanists.quaptics.QuapticTicker;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
-import org.metamechanists.quaptics.implementation.base.Settings;
+import org.metamechanists.quaptics.implementation.blocks.base.Settings;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.utils.Keys;
 

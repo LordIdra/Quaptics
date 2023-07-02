@@ -9,18 +9,15 @@ import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.BlockDisplay;
-import org.bukkit.entity.Display;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
-import org.metamechanists.quaptics.connections.ConnectionGroup;
-import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
-import org.metamechanists.quaptics.implementation.base.EnergyConnectedBlock;
-import org.metamechanists.quaptics.implementation.base.Settings;
+import org.metamechanists.quaptics.implementation.blocks.base.EnergyConnectedBlock;
+import org.metamechanists.quaptics.implementation.blocks.base.Settings;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.ConnectionGroupId;
@@ -38,13 +35,6 @@ public class EnergyConcentrator extends EnergyConnectedBlock {
         super(group, item, recipeType, recipe, settings, capacity, consumption);
     }
 
-    private BlockDisplay generateMainBlockDisplay(@NotNull final Location from, final Location to) {
-        return new BlockDisplayBuilder(from.toCenterLocation())
-                .setMaterial(settings.getTier().concreteMaterial)
-                .setTransformation(Transformations.lookAlong(mainDisplaySize, Transformations.getDirection(from, to)))
-                .build();
-    }
-
     @Override
     protected void addDisplays(@NotNull final DisplayGroup displayGroup, final @NotNull Location location, final @NotNull Player player) {
         displayGroup.addDisplay("main", generateMainBlockDisplay(location, location.clone().add(rotateVectorByEyeDirection(player, INITIAL_LINE))));
@@ -56,52 +46,32 @@ public class EnergyConcentrator extends EnergyConnectedBlock {
     }
 
     @Override
-    public void onSlimefunTick(@NotNull final Block block, final SlimefunItem item, final Config data) {
-        super.onSlimefunTick(block, item, data);
-
-        final Location location = block.getLocation();
-        final Optional<ConnectionGroup> group = getGroup(location);
-        if (group.isEmpty()) {
-            return;
-        }
-
-        final Optional<ConnectionPointOutput> output = group.get().getOutput("output");
-        if (output.isEmpty()) {
-            return;
-        }
-
-        final Optional<Link> outputLink = output.get().getLink();
-        if (outputLink.isEmpty()) {
-            return;
-        }
-
-        if (!isPowered(location)) {
-            outputLink.get().setEnabled(false);
-            return;
-        }
-
-        outputLink.get().setAttributes(settings.getEmissionPower(), 0, 0, true);
+    public void connect(@NotNull final ConnectionPointId from, @NotNull final ConnectionPointId to) {
+        super.connect(from, to);
+        regenerateMainDisplay(from, to);
     }
 
     @Override
-    public void connect(@NotNull final ConnectionPointId from, @NotNull final ConnectionPointId to) {
-        super.connect(from, to);
+    public void onSlimefunTick(@NotNull final Block block, final SlimefunItem item, final Config data) {
+        super.onSlimefunTick(block, item, data);
+        final Location location = block.getLocation();
+        final double power = isPowered(location)
+                ? settings.getEmissionPower()
+                : 0;
+        getLink(location, "output").ifPresent(link -> link.setPower(power));
+    }
 
-        final Optional<ConnectionPoint> fromPoint = from.get();
-        final Optional<ConnectionPoint> toPoint = to.get();
-        if (fromPoint.isEmpty() || toPoint.isEmpty()) {
-            return;
-        }
+    private BlockDisplay generateMainBlockDisplay(@NotNull final Location from, final Location to) {
+        return new BlockDisplayBuilder(from.toCenterLocation())
+                .setMaterial(settings.getTier().concreteMaterial)
+                .setTransformation(Transformations.lookAlong(mainDisplaySize, Transformations.getDirection(from, to)))
+                .build();
+    }
 
-        final Optional<ConnectionGroup> fromGroup = fromPoint.get().getGroup();
-        final Optional<ConnectionGroup> toGroup = toPoint.get().getGroup();
-        if (fromGroup.isEmpty() || toGroup.isEmpty()) {
-            return;
-        }
-
-        final Optional<Location> fromLocation = fromGroup.get().getLocation();
-        final Optional<Location> toLocation = toGroup.get().getLocation();
-        if (fromLocation.isEmpty() || toLocation.isEmpty()) {
+    private void regenerateMainDisplay(@NotNull final ConnectionPointId from, @NotNull final ConnectionPointId to) {
+        final Optional<Location> fromLocation = getGroupLocation(from);
+        final Optional<Location> toLocation = getGroupLocation(to);
+        if (toLocation.isEmpty() || fromLocation.isEmpty()) {
             return;
         }
 
@@ -110,11 +80,7 @@ public class EnergyConcentrator extends EnergyConnectedBlock {
             return;
         }
 
-        final Display display = fromDisplayGroup.get().removeDisplay("main");
-        if (display != null) {
-            display.remove();
-        }
-
+        removeDisplay(fromDisplayGroup.get(), "main");
         fromDisplayGroup.get().addDisplay("main", generateMainBlockDisplay(fromLocation.get(), toLocation.get()));
     }
 }

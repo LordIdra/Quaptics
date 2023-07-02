@@ -24,8 +24,10 @@ public class PanelBuilder {
         this.nextAttributeLocation = location;
     }
 
-    public PanelBuilder addAttribute(final String name) {
-        attributes.put(name, new PanelAttribute(nextAttributeLocation, displaySize).getId());
+    public PanelBuilder addAttribute(final String name, final boolean hidden) {
+        final PanelAttribute attribute = new PanelAttribute(nextAttributeLocation, displaySize);
+        attribute.setHidden(hidden);
+        attributes.put(name, attribute.getId());
         nextAttributeLocation.add(attributeSpacing);
         return this;
     }

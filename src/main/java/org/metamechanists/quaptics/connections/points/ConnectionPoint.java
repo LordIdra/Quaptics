@@ -100,10 +100,6 @@ public abstract class ConnectionPoint {
         return getLink().isPresent() && getLink().get().isEnabled();
     }
 
-    public void disableLinkIfExists() {
-        getLink().ifPresent(link -> link.setEnabled(false));
-    }
-
     public Optional<Location> getLocation() {
         return getBlockDisplay().isPresent()
                 ? Optional.of(getBlockDisplay().get().getLocation())

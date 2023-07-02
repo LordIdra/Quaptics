@@ -1,9 +1,10 @@
-package org.metamechanists.quaptics.implementation.base;
+package org.metamechanists.quaptics.implementation.blocks.base;
 
 import lombok.Builder;
 import lombok.Getter;
 import org.bukkit.Material;
 import org.bukkit.entity.SpawnCategory;
+import org.metamechanists.quaptics.QuapticTicker;
 import org.metamechanists.quaptics.items.Tier;
 
 import java.util.Set;
@@ -41,6 +42,10 @@ public class Settings {
             return 0;
         }
         return Math.min(charge + chargeStep, capacity);
+    }
+
+    public double stepDischarge(final double charge) {
+       return stepCharge(charge, -emissionPower / QuapticTicker.QUAPTIC_TICKS_PER_SECOND);
     }
 
     // Built in Power Methods

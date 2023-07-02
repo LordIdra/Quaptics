@@ -13,15 +13,19 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
+import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.QuapticTicker;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
+import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
-import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
-import org.metamechanists.quaptics.implementation.base.Settings;
-import org.metamechanists.quaptics.implementation.panels.CapacitorPanel;
+import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
+import org.metamechanists.quaptics.implementation.blocks.base.PanelBlock;
+import org.metamechanists.quaptics.implementation.blocks.base.Settings;
+import org.metamechanists.quaptics.implementation.blocks.panels.BlockPanel;
+import org.metamechanists.quaptics.implementation.blocks.panels.CapacitorPanel;
 import org.metamechanists.quaptics.panel.Panel;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Transformations;
@@ -34,7 +38,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-public class Capacitor extends ConnectedBlock {
+public class Capacitor extends ConnectedBlock implements PanelBlock {
     private static final int CONCRETE_BRIGHTNESS = 15;
     private final Vector3f mainGlassDisplaySize = new Vector3f(settings.getDisplayRadius()*2.0F);
     private final Vector3f tierGlassDisplaySize = new Vector3f(settings.getDisplayRadius()*1.7F);
@@ -58,7 +62,7 @@ public class Capacitor extends ConnectedBlock {
                 .build());
         displayGroup.addDisplay("concrete", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(Material.LIGHT_BLUE_CONCRETE)
-                .setTransformation(Transformations.adjustedRotateAndScale(new Vector3f(), Transformations.GENERIC_ROTATION_ANGLES))
+                .setTransformation(Transformations.none())
                 .setBrightness(CONCRETE_BRIGHTNESS)
                 .build());
     }
@@ -70,31 +74,9 @@ public class Capacitor extends ConnectedBlock {
                 new ConnectionPointOutput(groupId, "output", formatPointLocation(player, location, outputPointLocation)));
     }
 
-    public static double getCharge(final Location location) {
-        final String chargeString = BlockStorage.getLocationInfo(location, Keys.BS_CHARGE);
-        return chargeString == null ? 0 : Double.parseDouble(chargeString);
-    }
-
-    private static void setCharge(final Location location, final double charge) {
-        BlockStorage.addBlockInfo(location, Keys.BS_CHARGE, Objects.toString(charge));
-    }
-
-    private static double getChargeRate(final Location location) {
-        final String chargeRateString = BlockStorage.getLocationInfo(location, Keys.BS_CHARGE_RATE);
-        return chargeRateString == null ? 0 : Double.parseDouble(chargeRateString);
-    }
-
-    private static void setChargeRate(final Location location, final double chargeRate) {
-        BlockStorage.addBlockInfo(location, Keys.BS_CHARGE_RATE, String.valueOf(chargeRate));
-    }
-
-    private static Optional<PanelId> getPanelId(final Location location) {
-        final String stringID = BlockStorage.getLocationInfo(location, Keys.BS_PANEL_ID);
-        return Optional.ofNullable(stringID).map(PanelId::new);
-    }
-
-    private static void setPanelId(final Location location, @NotNull final PanelId id) {
-        BlockStorage.addBlockInfo(location, Keys.BS_PANEL_ID, id.toString());
+    @Override
+    public BlockPanel createPanel(final PanelId panelId, final ConnectionGroupId groupId) {
+        return new CapacitorPanel(panelId, groupId);
     }
 
     @Override
@@ -115,53 +97,17 @@ public class Capacitor extends ConnectedBlock {
                 .ifPresent(Panel::remove);
     }
 
-    private static void updatePanel(@NotNull final ConnectionGroup group) {
+    @Override
+    public void onQuapticTick(@NotNull final ConnectionGroup group) {
         final Optional<Location> location = group.getLocation();
         if (location.isEmpty()) {
             return;
         }
 
-        final Optional<PanelId> id = getPanelId(location.get());
-        id.ifPresent(panelId -> new CapacitorPanel(panelId, group.getId()).update());
-    }
-
-    @Override
-    public void onQuapticTick(@NotNull final ConnectionGroup group) {
-        final Optional<ConnectionPointOutput> output = group.getOutput("output");
-        final Optional<Location> location = group.getLocation();
-        if (output.isEmpty() || location.isEmpty()) {
-            return;
-        }
-
-        final double chargeRate = getChargeRate(location.get());
-        double charge = getCharge(group.getLocation().get());
-
-        if (chargeRate != 0) {
-            charge = settings.stepCharge(charge, chargeRate);
-        }
-
-        if (output.get().getLink().isPresent()) {
-            final double dischargeRate = settings.getEmissionPower() / QuapticTicker.QUAPTIC_TICKS_PER_SECOND;
-            if (charge > 0) {
-                charge = settings.stepCharge(charge, -dischargeRate);
-            }
-
-            if (charge > dischargeRate) {
-                output.get().getLink().get().setAttributes(settings.getEmissionPower(), 0, 0, true);
-            } else {
-                output.get().disableLinkIfExists();
-            }
-        }
-
-        final Optional<Display> concreteDisplay = getDisplay(location.get(), "concrete");
-        final double finalCharge = charge;
-        concreteDisplay.ifPresent(display ->
-                display.setTransformationMatrix(
-                        Transformations.adjustedRotateAndScale(new Vector3f(maxConcreteDisplaySize)
-                        .mul((float)(finalCharge /settings.getCapacity())), Transformations.GENERIC_ROTATION_ANGLES)));
-
+        doCharge(location.get());
+        doDischarge(location.get(), group);
+        updateConcreteTransformation(location.get());
         updatePanel(group);
-        setCharge(location.get(), charge);
     }
 
     @Override
@@ -176,6 +122,63 @@ public class Capacitor extends ConnectedBlock {
             return;
         }
 
-        setChargeRate(location.get(), input.get().isLinkEnabled() ? input.get().getLink().get().getPower() / QuapticTicker.QUAPTIC_TICKS_PER_SECOND : 0);
+        final Optional<Link> inputLink = input.get().getLink();
+        if (inputLink.isEmpty()) {
+            return;
+        }
+
+        setChargeRate(location.get(), input.get().isLinkEnabled() ? inputLink.get().getPower() / QuapticTicker.QUAPTIC_TICKS_PER_SECOND : 0);
+    }
+
+    private void doCharge(final Location location) {
+        final double chargeRate = getChargeRate(location);
+        final double charge = getCharge(location);
+        setCharge(location, chargeRate != 0 ? charge : settings.stepCharge(charge, chargeRate));
+    }
+
+    private void doDischarge(final Location location, @NotNull final ConnectionGroup group) {
+        final Optional<ConnectionPointOutput> output = group.getOutput("output");
+        if (output.isEmpty()) {
+            return;
+        }
+
+        final Optional<Link> outputLink = output.get().getLink();
+        if (outputLink.isEmpty()) {
+            return;
+        }
+
+        final double charge = settings.stepDischarge(getCharge(location));
+        outputLink.get().setPower(charge > 0 ? settings.getEmissionPower() : 0);
+        setCharge(location, charge);
+    }
+
+    private Matrix4f getConcreteTransformationMatrix(final double charge) {
+        return Transformations.adjustedRotateAndScale(
+                new Vector3f(maxConcreteDisplaySize).mul((float)(charge/settings.getCapacity())),
+                Transformations.GENERIC_ROTATION_ANGLES);
+    }
+
+    private void updateConcreteTransformation(final Location location) {
+        final double charge = getCharge(location);
+        final Optional<Display> concreteDisplay = getDisplay(location, "concrete");
+        concreteDisplay.ifPresent(display -> display.setTransformationMatrix(getConcreteTransformationMatrix(charge)));
+    }
+
+    public static double getCharge(final Location location) {
+        final String chargeString = BlockStorage.getLocationInfo(location, Keys.BS_CHARGE);
+        return chargeString == null ? 0 : Double.parseDouble(chargeString);
+    }
+
+    private static void setCharge(final Location location, final double charge) {
+        BlockStorage.addBlockInfo(location, Keys.BS_CHARGE, Objects.toString(charge));
+    }
+
+    private static double getChargeRate(final Location location) {
+        final String chargeRateString = BlockStorage.getLocationInfo(location, Keys.BS_CHARGE_RATE);
+        return chargeRateString == null ? 0 : Double.parseDouble(chargeRateString);
+    }
+
+    private static void setChargeRate(final Location location, final double chargeRate) {
+        BlockStorage.addBlockInfo(location, Keys.BS_CHARGE_RATE, String.valueOf(chargeRate));
     }
 }

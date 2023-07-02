@@ -1,4 +1,4 @@
-package org.metamechanists.quaptics.implementation.base;
+package org.metamechanists.quaptics.implementation.blocks.base;
 
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
@@ -126,5 +126,12 @@ public abstract class DisplayGroupTickerBlock extends SlimefunItem {
 
     public static Optional<Display> getDisplay(final Location location, final String name) {
         return getDisplayGroup(location).map(displayGroup -> displayGroup.getDisplays().get(name));
+    }
+
+    protected static void removeDisplay(final @NotNull DisplayGroup displayGroup, final String name) {
+        final Display display = displayGroup.removeDisplay(name);
+        if (display != null) {
+            display.remove();
+        }
     }
 }

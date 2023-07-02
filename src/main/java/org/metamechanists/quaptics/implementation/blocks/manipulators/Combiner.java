@@ -16,8 +16,8 @@ import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
-import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
-import org.metamechanists.quaptics.implementation.base.Settings;
+import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
+import org.metamechanists.quaptics.implementation.blocks.base.Settings;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.ConnectionGroupId;
@@ -60,9 +60,7 @@ public class Combiner extends ConnectedBlock {
 
         IntStream.range(0, settings.getConnections()).forEach(i -> {
             final String name = "input " + Objects.toString(i);
-            final double angle = (-CONNECTION_ANGLE /2) + CONNECTION_ANGLE *((double)(i) / (settings.getConnections()-1));
-            final Vector relativeLocation = inputStartingLocation.clone().rotateAroundY(angle);
-            points.add(new ConnectionPointInput(groupId, name, formatPointLocation(player, location, relativeLocation)));
+            points.add(new ConnectionPointInput(groupId, name, formatPointLocation(player, location, getRelativeInputLocation(i))));
         });
 
         points.add(new ConnectionPointOutput(groupId, "output", formatPointLocation(player, location, outputLocation)));
@@ -102,5 +100,10 @@ public class Combiner extends ConnectedBlock {
         final double inputFrequency = enabledInputs.stream().mapToDouble(input -> input.getLink().get().getFrequency()).min().orElse(0.0);
         final int inputPhase = (int) (enabledInputs.stream().mapToDouble(input -> input.getLink().get().getPhase()).sum() / enabledInputs.size());
         outputLink.get().setAttributes(settings.powerLoss(inputPower), inputFrequency, inputPhase, true);
+    }
+
+    private @NotNull Vector getRelativeInputLocation(final int i) {
+        final double angle = (-CONNECTION_ANGLE /2) + CONNECTION_ANGLE *((double)(i) / (settings.getConnections()-1));
+        return inputStartingLocation.clone().rotateAroundY(angle);
     }
 }
