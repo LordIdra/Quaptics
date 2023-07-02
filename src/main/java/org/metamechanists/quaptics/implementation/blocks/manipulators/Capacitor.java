@@ -104,8 +104,12 @@ public class Capacitor extends ConnectedBlock implements PanelBlock {
             return;
         }
 
-        doDischarge(location.get(), group);
-        doCharge(location.get());
+        double charge = getCharge(location.get());
+        charge = doDischarge(location.get(), charge);
+        charge = doCharge(location.get(), charge);
+        setCharge(location.get(), charge);
+
+        doEmission(location.get(), charge);
         updateConcreteTransformation(location.get());
         updatePanel(group);
     }
@@ -130,27 +134,36 @@ public class Capacitor extends ConnectedBlock implements PanelBlock {
         setChargeRate(location.get(), settings.isOperational(inputLink) ? inputLink.get().getPower() / QuapticTicker.QUAPTIC_TICKS_PER_SECOND : 0);
     }
 
-    private void doCharge(final Location location) {
+    private double doCharge(final Location location, final double charge) {
         final double chargeRate = getChargeRate(location);
-        final double charge = getCharge(location);
-        setCharge(location, chargeRate == 0 ? charge : settings.stepCharge(charge, chargeRate));
+        return settings.stepCharge(charge, chargeRate);
     }
 
-    private void doDischarge(final Location location, @NotNull final ConnectionGroup group) {
-        final Optional<ConnectionPointOutput> output = group.getOutput("output");
-        if (output.isEmpty()) {
-            return;
+    private double doDischarge(final Location location, final double charge) {
+        final Optional<Link> outputLink = getLink(location, "output");
+        if (outputLink.isEmpty()) {
+            return charge;
         }
 
-        final Optional<Link> outputLink = output.get().getLink();
+        final double newCharge = settings.stepDischarge(charge);
+        setCharge(location, newCharge);
+        return newCharge;
+    }
+
+    private void doEmission(final Location location, final double charge) {
+        final Optional<Link> outputLink = getLink(location, "output");
         if (outputLink.isEmpty()) {
             return;
         }
 
-        final double charge = getCharge(location);
-        outputLink.get().setPowerAndFrequency(charge > 0 ? settings.getEmissionPower() : 0, 0);
-        final double newCharge = settings.stepDischarge(charge);
-        setCharge(location, newCharge);
+        final Optional<Link> inputLink = getLink(location, "input");
+        if (inputLink.isPresent() && inputLink.get().getPower() <= settings.getEmissionPower() && charge == 0) {
+            outputLink.get().setPower(inputLink.get().getPower());
+        }
+
+        outputLink.get().setPowerAndFrequency(
+                (charge > settings.getEmissionPower() / QuapticTicker.QUAPTIC_TICKS_PER_SECOND) ? settings.getEmissionPower() : 0,
+                0);
     }
 
     private Matrix4f getConcreteTransformationMatrix(final double charge) {
