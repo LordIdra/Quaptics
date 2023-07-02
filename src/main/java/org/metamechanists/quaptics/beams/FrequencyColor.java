@@ -42,9 +42,9 @@ public final class FrequencyColor {
     }
 
     public static Material getMaterial(final double frequency) {
-        for (int i = 0; i < COLORS.size(); i++) {
-            if (frequency >= COLORS.get(i).frequencyThreshold) {
-                return COLORS.get(i-1).material;
+        for (final FrequencyColor color : COLORS) {
+            if (frequency >= color.frequencyThreshold) {
+                return color.material;
             }
         }
         return errorColor.material;
