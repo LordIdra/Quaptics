@@ -30,6 +30,7 @@ public class PointPanel {
         panel.setAttributeHidden("name", false);
     }
 
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     public PointPanel(@NotNull final PanelId panelId, final ConnectionPointId pointId) {
         this.pointId = pointId;
         this.panel = panelId.get().get();

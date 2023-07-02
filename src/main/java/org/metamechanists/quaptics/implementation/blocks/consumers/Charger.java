@@ -45,8 +45,8 @@ public class Charger extends ConnectedBlock implements PanelBlock {
     private final Vector3f bottomOffset = new Vector3f(0, -0.35F, 0);
     private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -settings.getConnectionRadius());
 
-    public Charger(final ItemGroup group, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
-        super(group, item, recipeType, recipe, settings);
+    public Charger(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
+        super(itemGroup, item, recipeType, recipe, settings);
     }
 
     @Override

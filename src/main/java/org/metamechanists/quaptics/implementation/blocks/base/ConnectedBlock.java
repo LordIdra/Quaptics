@@ -48,9 +48,9 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
     @Getter
     protected final Settings settings;
 
-    protected ConnectedBlock(final ItemGroup group, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe,
+    protected ConnectedBlock(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe,
                              final Settings settings) {
-        super(group, item, recipeType, recipe);
+        super(itemGroup, item, recipeType, recipe);
         this.settings = settings;
         addItemHandler(onRightClick());
     }
@@ -199,11 +199,13 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
     }
 
     @NotNull
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     protected static @Unmodifiable List<Link> getOutgoingLinks(final Location location) {
         return getLinkedOutputs(location).stream().map(output -> output.getLink().get()).toList();
     }
 
     @NotNull
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     protected static @Unmodifiable List<Link> getIncomingLinks(final Location location) {
         return getLinkedInputs(location).stream().map(output -> output.getLink().get()).toList();
     }

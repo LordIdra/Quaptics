@@ -43,9 +43,9 @@ public class Repeater extends ConnectedBlock implements PowerAnimatedBlock, Powe
     private final Vector outputPointLocation = new Vector(0.0F, 0.0F, settings.getConnectionRadius());
     private final int delayVisual;
 
-    public Repeater(final ItemGroup group, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe,
+    public Repeater(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe,
                     final Settings settings, final int delayVisual) {
-        super(group, item, recipeType, recipe, settings);
+        super(itemGroup, item, recipeType, recipe, settings);
         this.delayVisual = delayVisual;
     }
 

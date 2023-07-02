@@ -16,18 +16,18 @@ import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
+import org.metamechanists.quaptics.implementation.blocks.Settings;
+import org.metamechanists.quaptics.implementation.blocks.attachments.PowerAnimatedBlock;
 import org.metamechanists.quaptics.implementation.blocks.attachments.PowerLossBlock;
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
-import org.metamechanists.quaptics.implementation.blocks.attachments.PowerAnimatedBlock;
-import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.ConnectionGroupId;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Combiner extends ConnectedBlock implements PowerAnimatedBlock, PowerLossBlock {
@@ -38,8 +38,8 @@ public class Combiner extends ConnectedBlock implements PowerAnimatedBlock, Powe
     private final Vector3f glassDisplaySize = new Vector3f(settings.getDisplayRadius()*2);
     private final Vector3f concreteDisplaySize = new Vector3f(settings.getDisplayRadius());
 
-    public Combiner(final ItemGroup group, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
-        super(group, item, recipeType, recipe, settings);
+    public Combiner(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
+        super(itemGroup, item, recipeType, recipe, settings);
     }
 
     @Override
@@ -58,10 +58,9 @@ public class Combiner extends ConnectedBlock implements PowerAnimatedBlock, Powe
 
     @Override
     protected List<ConnectionPoint> generateConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
-        final List<ConnectionPoint> points = new ArrayList<>();
-        IntStream.range(0, settings.getConnections()).forEach(i -> points.add(new ConnectionPointInput(groupId,
+        final List<ConnectionPoint> points = IntStream.range(0, settings.getConnections()).mapToObj(i -> new ConnectionPointInput(groupId,
                 "input " + Objects.toString(i),
-                formatPointLocation(player, location, getRelativeInputLocation(i)))));
+                formatPointLocation(player, location, getRelativeInputLocation(i)))).collect(Collectors.toList());
         points.add(new ConnectionPointOutput(groupId, "output", formatPointLocation(player, location, outputLocation)));
         return points;
     }

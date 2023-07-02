@@ -46,8 +46,8 @@ public class Capacitor extends ConnectedBlock implements PanelBlock {
     private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -settings.getConnectionRadius());
     private final Vector outputPointLocation = new Vector(0.0F, 0.0F, settings.getConnectionRadius());
 
-    public Capacitor(final ItemGroup group, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
-        super(group, item, recipeType, recipe, settings);
+    public Capacitor(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
+        super(itemGroup, item, recipeType, recipe, settings);
     }
 
     @Override

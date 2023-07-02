@@ -25,7 +25,7 @@ public class BurnoutManager implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onBlockBreak(final BlockBreakEvent event) {
+    public static void onBlockBreak(final BlockBreakEvent event) {
         for (final BurnoutRunnable runnable : burnouts) {
             if (event.getBlock().equals(runnable.getLocation().getBlock())) {
                 event.setCancelled(true);

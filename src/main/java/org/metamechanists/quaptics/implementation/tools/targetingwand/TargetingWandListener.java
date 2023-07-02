@@ -14,7 +14,7 @@ import org.metamechanists.quaptics.utils.id.ConnectionPointId;
 public class TargetingWandListener implements Listener {
 
     @EventHandler
-    public void interactEvent(@NotNull final PlayerInteractEntityEvent event) {
+    public static void interactEvent(@NotNull final PlayerInteractEntityEvent event) {
         final Entity clickedEntity = event.getRightClicked();
         if (!(clickedEntity instanceof Interaction)) {
             return;
@@ -34,7 +34,7 @@ public class TargetingWandListener implements Listener {
     }
 
     @EventHandler
-    public void scrollEvent(@NotNull final PlayerItemHeldEvent event) {
+    public static void scrollEvent(@NotNull final PlayerItemHeldEvent event) {
         final ItemStack heldItem = event.getPlayer().getInventory().getItem(event.getPreviousSlot());
         if (SlimefunItem.getByItem(heldItem) instanceof TargetingWand) {
             TargetingWand.unsetSource(heldItem);

@@ -25,9 +25,9 @@ public abstract class EnergyConnectedBlock extends ConnectedBlock implements Ene
     @Getter
     private final int consumption;
 
-    protected EnergyConnectedBlock(final ItemGroup group, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe,
+    protected EnergyConnectedBlock(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe,
                                    final Settings settings, final int capacity, final int consumption) {
-        super(group, item, recipeType, recipe, settings);
+        super(itemGroup, item, recipeType, recipe, settings);
         this.capacity = capacity;
         this.consumption = consumption;
     }

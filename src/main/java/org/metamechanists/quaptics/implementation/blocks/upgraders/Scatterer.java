@@ -43,9 +43,9 @@ public class Scatterer extends ConnectedBlock implements PowerAnimatedBlock, Pow
     private final Vector outputPointLocation = new Vector(0.0F, 0.0F, settings.getConnectionRadius());
     private final String modeVisual;
 
-    public Scatterer(final ItemGroup group, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe,
+    public Scatterer(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe,
                      final Settings settings, final String modeVisual) {
-        super(group, item, recipeType, recipe, settings);
+        super(itemGroup, item, recipeType, recipe, settings);
         this.modeVisual = modeVisual;
     }
 

@@ -36,12 +36,14 @@ public class QuapticStorage {
         groupIDs.addAll(stringIDs.stream().map(ConnectionGroupId::new).toList());
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     private void createDirectoryIfNotExists(@NotNull final File file) {
         if (!file.exists()) {
             file.mkdir();
         }
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     private void createFileIfNotExists(@NotNull final File file) {
         if (!file.exists()) {
             try {

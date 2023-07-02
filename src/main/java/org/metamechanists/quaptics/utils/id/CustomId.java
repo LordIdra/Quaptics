@@ -20,6 +20,7 @@ public abstract class CustomId {
         this.uuid = uuid;
     }
 
+    @SuppressWarnings("unused")
     public abstract Object get();
 
     public UUID getUUID() {

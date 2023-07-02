@@ -10,6 +10,7 @@ import org.metamechanists.quaptics.utils.id.ConnectionGroupId;
 import java.util.Optional;
 
 public class QuapticTicker extends BukkitRunnable {
+    @SuppressWarnings("StaticMethodOnlyUsedInOneClass")
     public static final int INTERVAL_TICKS = 1;
     public static final int QUAPTIC_TICKS_PER_SECOND = 20;
 

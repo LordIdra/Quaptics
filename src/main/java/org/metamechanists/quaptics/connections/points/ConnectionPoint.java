@@ -33,6 +33,7 @@ import java.util.Optional;
 public abstract class ConnectionPoint {
     private static final float SIZE = 0.1F;
     private static final Vector INTERACTION_OFFSET = new Vector(0, -SIZE/2, 0);
+    private static final Color SELECTED_COLOR = Color.fromRGB(0, 255, 0);
     @Getter
     private static final int CONNECTED_BRIGHTNESS = 15;
     @Getter
@@ -168,7 +169,7 @@ public abstract class ConnectionPoint {
     public void select() {
         getBlockDisplay().ifPresent(blockDisplay -> {
             blockDisplay.setGlowing(true);
-            blockDisplay.setGlowColorOverride(Color.fromRGB(0, 255, 0));
+            blockDisplay.setGlowColorOverride(SELECTED_COLOR);
         });
     }
 

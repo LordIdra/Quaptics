@@ -22,6 +22,7 @@ public abstract class BlockPanel {
         panel.setHidden(false);
     }
 
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     protected BlockPanel(@NotNull final PanelId panelId, final ConnectionGroupId groupId) {
         this.groupId = groupId;
         this.panel = panelId.get().get();
@@ -39,10 +40,7 @@ public abstract class BlockPanel {
         panel.setHidden(hidden);
     }
 
-    public void remove() {
-        panel.remove();
-    }
-
     protected abstract Panel createPanel(@NotNull Location location);
+
     public abstract void update();
 }

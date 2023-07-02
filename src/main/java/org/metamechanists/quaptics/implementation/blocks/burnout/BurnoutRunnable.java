@@ -62,13 +62,14 @@ public class BurnoutRunnable extends BukkitRunnable {
 
                 if (ticks % 2 == 0) {
                     displayGroup.get().getDisplays().values().forEach(display -> {
-                        final Brightness brightness = display.getBrightness();
-                        display.setBrightness(new Brightness(brightness == null ? INITIAL_BRIGHTNESS : Math.max(0, brightness.getBlockLight() - 1), 0));
+                        final Brightness oldBrightness = display.getBrightness();
+                        final Brightness newBrightess = new Brightness(Optional.ofNullable(oldBrightness)
+                                .map(brightness -> Math.max(0, brightness.getBlockLight() - 1))
+                                .orElse(INITIAL_BRIGHTNESS), 0);
+                        display.setBrightness(newBrightess);
                     });
 
-                    new ParticleBuilder(Particle.LAVA)
-                            .location(centerLocation)
-                            .spawn();
+                    new ParticleBuilder(Particle.LAVA).location(centerLocation).spawn();
                 }
             }, delay);
         }

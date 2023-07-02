@@ -28,8 +28,8 @@ public class SolarConcentrator extends ConnectedBlock {
     private final Vector outputLocation = new Vector(0.0F, 0.0F, settings.getConnectionRadius());
     private final Vector3f mainDisplaySize = new Vector3f(settings.getDisplayRadius()*2);
 
-    public SolarConcentrator(final ItemGroup group, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
-        super(group, item, recipeType, recipe, settings);
+    public SolarConcentrator(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
+        super(itemGroup, item, recipeType, recipe, settings);
     }
 
     @Override

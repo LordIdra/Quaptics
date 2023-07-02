@@ -16,8 +16,8 @@ import org.metamechanists.quaptics.implementation.blocks.Settings;
 public class ModulatedTurret extends Turret {
     private final Vector3f projectileSize = new Vector3f(0.095F, 0.095F, 0.20F);
 
-    public ModulatedTurret(final ItemGroup group, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
-        super(group, item, recipeType, recipe, settings);
+    public ModulatedTurret(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
+        super(itemGroup, item, recipeType, recipe, settings);
     }
 
     @Override

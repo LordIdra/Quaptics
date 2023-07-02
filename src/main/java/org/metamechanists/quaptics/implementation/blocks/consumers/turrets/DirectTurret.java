@@ -14,8 +14,8 @@ import org.metamechanists.quaptics.implementation.blocks.Settings;
 public class DirectTurret extends Turret {
     private static final float BEAM_RADIUS = 0.095F;
 
-    public DirectTurret(final ItemGroup group, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
-        super(group, item, recipeType, recipe, settings);
+    public DirectTurret(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
+        super(itemGroup, item, recipeType, recipe, settings);
     }
 
     @Override

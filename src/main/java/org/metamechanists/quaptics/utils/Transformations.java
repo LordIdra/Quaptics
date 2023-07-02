@@ -53,10 +53,12 @@ public class Transformations {
         return max.add(min).div(-2);
     }
 
+    @SuppressWarnings("MagicNumber")
     public double yawToCardinalDirection(final float yaw) {
         return -Math.round(yaw / 90.0F) * (Math.PI/2);
     }
 
+    @SuppressWarnings("MagicNumber")
     public BlockFace yawToFace(final float yaw) {
         return AXIS.get(Math.round(yaw / 90.0F) & 0x3);
     }

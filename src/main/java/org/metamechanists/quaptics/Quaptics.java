@@ -15,9 +15,9 @@ import org.metamechanists.quaptics.items.Groups;
 import org.metamechanists.quaptics.items.Items;
 import org.metamechanists.quaptics.storage.QuapticStorage;
 import org.metamechanists.quaptics.storage.SaveRunnable;
-import org.metamechanists.quaptics.utils.Language;
 
 public final class Quaptics extends JavaPlugin implements SlimefunAddon {
+    private static final int BSTATS_ID = 18956;
     @Getter
     private static Quaptics instance;
 
@@ -41,7 +41,6 @@ public final class Quaptics extends JavaPlugin implements SlimefunAddon {
     @Override
     public void onEnable() {
         instance = this;
-        Language.initialize();
         Groups.initialize();
         Items.initialize();
 
@@ -49,7 +48,7 @@ public final class Quaptics extends JavaPlugin implements SlimefunAddon {
         initializeRunnables();
         initializeCommands();
 
-        new Metrics(this, 18956);
+        new Metrics(this, BSTATS_ID);
         QuapticStorage.load();
     }
 

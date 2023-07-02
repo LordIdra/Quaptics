@@ -16,7 +16,7 @@ import java.util.Optional;
 
 public class PointPanelListener implements Listener {
     @EventHandler
-    public void interactEvent(@NotNull final PlayerInteractEntityEvent event) {
+    public static void interactEvent(@NotNull final PlayerInteractEntityEvent event) {
         final Entity clickedEntity = event.getRightClicked();
         if (!(clickedEntity instanceof Interaction)) {
             return;

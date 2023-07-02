@@ -22,8 +22,7 @@ public class PanelId extends CustomId {
     }
     @Override
     public Optional<Panel> get() {
-        final DisplayGroup displayGroup = DisplayGroup.fromUUID(getUUID());
-        return displayGroup != null
+        return DisplayGroup.fromUUID(getUUID()) != null
                 ? Optional.of(new Panel(this))
                 : Optional.empty();
     }

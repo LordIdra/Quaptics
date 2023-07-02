@@ -30,9 +30,9 @@ public class EnergyConcentrator extends EnergyConnectedBlock {
     private final Vector outputLocation = new Vector(0.0F, 0.0F, settings.getConnectionRadius());
     private final Vector3f mainDisplaySize = new Vector3f(settings.getDisplayRadius(), settings.getDisplayRadius(), settings.getConnectionRadius()*2);
 
-    public EnergyConcentrator(final ItemGroup group, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe,
+    public EnergyConcentrator(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe,
                               final Settings settings, final int capacity, final int consumption) {
-        super(group, item, recipeType, recipe, settings, capacity, consumption);
+        super(itemGroup, item, recipeType, recipe, settings, capacity, consumption);
     }
 
     @Override

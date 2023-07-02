@@ -32,6 +32,7 @@ public class Link {
     @Getter
     private double frequency;
 
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     public Link(final ConnectionPointId inputId, final ConnectionPointId outputId) {
         this.inputId = inputId;
         this.outputId = outputId;
@@ -114,6 +115,7 @@ public class Link {
         });
     }
 
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     private void updateBeam() {
         getBeam().ifPresent(DirectBeam::deprecate);
         tickerId = null;

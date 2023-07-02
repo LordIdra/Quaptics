@@ -38,9 +38,9 @@ public abstract class DisplayGroupTickerBlock extends SlimefunItem {
     protected static final Vector INITIAL_LINE = new Vector(0, 0, 1);
 
     protected DisplayGroupTickerBlock(
-            final ItemGroup group, final SlimefunItemStack item,
+            final ItemGroup itemGroup, final SlimefunItemStack item,
             final RecipeType recipeType, final ItemStack[] recipe) {
-        super(group, item, recipeType, recipe);
+        super(itemGroup, item, recipeType, recipe);
     }
 
     @NotNull
