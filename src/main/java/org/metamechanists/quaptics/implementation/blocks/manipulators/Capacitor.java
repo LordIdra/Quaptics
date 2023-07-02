@@ -159,6 +159,7 @@ public class Capacitor extends ConnectedBlock implements PanelBlock {
         final Optional<Link> inputLink = getLink(location, "input");
         if (inputLink.isPresent() && inputLink.get().getPower() <= settings.getEmissionPower() && charge == 0) {
             outputLink.get().setPower(inputLink.get().getPower());
+            return;
         }
 
         outputLink.get().setPowerAndFrequency(
