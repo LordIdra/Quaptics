@@ -8,7 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.SpawnCategory;
 import org.bukkit.inventory.ItemStack;
 import org.metamechanists.quaptics.Quaptics;
-import org.metamechanists.quaptics.implementation.blocks.base.Settings;
+import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.implementation.blocks.concentrators.SolarConcentrator;
 import org.metamechanists.quaptics.implementation.blocks.consumers.Charger;
 import org.metamechanists.quaptics.implementation.blocks.consumers.turrets.ModulatedTurret;
@@ -166,8 +166,7 @@ public class Primitive {
                 SOLAR_CONCENTRATOR_1,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                SOLAR_CONCENTRATOR_1_SETTINGS,
-                0.0F).register(addon);
+                SOLAR_CONCENTRATOR_1_SETTINGS).register(addon);
 
         new Lens(
                 Groups.PRIMITIVE,

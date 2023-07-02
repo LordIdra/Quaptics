@@ -7,7 +7,7 @@ import lombok.experimental.UtilityClass;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.metamechanists.quaptics.Quaptics;
-import org.metamechanists.quaptics.implementation.blocks.base.Settings;
+import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.implementation.tools.LaserPointer;
 import org.metamechanists.quaptics.implementation.tools.targetingwand.TargetingWand;
 import org.metamechanists.quaptics.items.Groups;

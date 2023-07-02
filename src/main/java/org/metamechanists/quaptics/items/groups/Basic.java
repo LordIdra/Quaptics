@@ -8,7 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.SpawnCategory;
 import org.bukkit.inventory.ItemStack;
 import org.metamechanists.quaptics.Quaptics;
-import org.metamechanists.quaptics.implementation.blocks.base.Settings;
+import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.implementation.blocks.concentrators.EnergyConcentrator;
 import org.metamechanists.quaptics.implementation.blocks.concentrators.SolarConcentrator;
 import org.metamechanists.quaptics.implementation.blocks.consumers.turrets.DirectTurret;
@@ -30,6 +30,7 @@ public class Basic {
             .tier(Tier.BASIC)
             .displayRadius(0.35F)
             .connectionRadius(0.35F)
+            .rotationY((float)(Math.PI/4))
             .emissionPower(10)
             .build();
     public final Settings ENERGY_CONCENTRATOR_1_SETTINGS = Settings.builder()
@@ -228,8 +229,7 @@ public class Basic {
                 SOLAR_CONCENTRATOR_2,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                SOLAR_CONCENTRATOR_2_SETTINGS,
-                (float)(Math.PI/4)).register(addon);
+                SOLAR_CONCENTRATOR_2_SETTINGS).register(addon);
 
         new EnergyConcentrator(
                 Groups.BASIC,

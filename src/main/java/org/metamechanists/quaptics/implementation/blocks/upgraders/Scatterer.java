@@ -19,9 +19,10 @@ import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
+import org.metamechanists.quaptics.implementation.blocks.attachments.PowerLossBlock;
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
-import org.metamechanists.quaptics.implementation.blocks.base.PowerAnimatedBlock;
-import org.metamechanists.quaptics.implementation.blocks.base.Settings;
+import org.metamechanists.quaptics.implementation.blocks.attachments.PowerAnimatedBlock;
+import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
@@ -30,7 +31,7 @@ import org.metamechanists.quaptics.utils.id.ConnectionGroupId;
 import java.util.List;
 import java.util.Optional;
 
-public class Scatterer extends ConnectedBlock implements PowerAnimatedBlock {
+public class Scatterer extends ConnectedBlock implements PowerAnimatedBlock, PowerLossBlock {
     private static final int CONCRETE_BRIGHTNESS = 15;
     private final Vector3f glassDisplaySize = new Vector3f(settings.getDisplayRadius()*2);
     private final Vector3f comparatorDisplaySize = new Vector3f(settings.getDisplayRadius());
@@ -105,7 +106,7 @@ public class Scatterer extends ConnectedBlock implements PowerAnimatedBlock {
             return;
         }
 
-        outputLink.get().setPowerAndFrequency(settings.doPowerLoss(inputLink.get()), doFrequencyUpgrade(inputLink.get(), settings));
+        outputLink.get().setPowerAndFrequency(doPowerLoss(settings, inputLink.get()), doFrequencyUpgrade(inputLink.get(), settings));
     }
 
     @Override

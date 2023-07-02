@@ -16,9 +16,10 @@ import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
+import org.metamechanists.quaptics.implementation.blocks.attachments.PowerLossBlock;
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
-import org.metamechanists.quaptics.implementation.blocks.base.PowerAnimatedBlock;
-import org.metamechanists.quaptics.implementation.blocks.base.Settings;
+import org.metamechanists.quaptics.implementation.blocks.attachments.PowerAnimatedBlock;
+import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.ConnectionGroupId;
@@ -29,7 +30,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
-public class Combiner extends ConnectedBlock implements PowerAnimatedBlock {
+public class Combiner extends ConnectedBlock implements PowerAnimatedBlock, PowerLossBlock {
     private static final int CONCRETE_BRIGHTNESS = 15;
     private static final double CONNECTION_ANGLE = Math.PI / 2;
     private final Vector inputStartingLocation = new Vector(0.0F, 0.0F, -settings.getConnectionRadius());
@@ -87,7 +88,7 @@ public class Combiner extends ConnectedBlock implements PowerAnimatedBlock {
 
         final double inputPower = incomingLinks.stream().mapToDouble(Link::getPower).sum();
         final double inputFrequency = incomingLinks.stream().mapToDouble(Link::getFrequency).min().orElse(0.0);
-        outputLink.get().setPowerAndFrequency(settings.doPowerLoss(inputPower), inputFrequency);
+        outputLink.get().setPowerAndFrequency(doPowerLoss(settings, inputPower), inputFrequency);
     }
 
     private @NotNull Vector getRelativeInputLocation(final int i) {

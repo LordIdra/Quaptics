@@ -16,9 +16,10 @@ import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
+import org.metamechanists.quaptics.implementation.blocks.attachments.PowerLossBlock;
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
-import org.metamechanists.quaptics.implementation.blocks.base.PowerAnimatedBlock;
-import org.metamechanists.quaptics.implementation.blocks.base.Settings;
+import org.metamechanists.quaptics.implementation.blocks.attachments.PowerAnimatedBlock;
+import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.ConnectionGroupId;
@@ -29,7 +30,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
-public class Splitter extends ConnectedBlock implements PowerAnimatedBlock {
+public class Splitter extends ConnectedBlock implements PowerAnimatedBlock, PowerLossBlock {
     private static final int CONCRETE_BRIGHTNESS = 15;
     private static final double CONNECTION_ANGLE = Math.PI / 2;
     private final Vector inputLocation = new Vector(0.0F, 0.0F, -settings.getConnectionRadius());
@@ -90,7 +91,7 @@ public class Splitter extends ConnectedBlock implements PowerAnimatedBlock {
 
         onPoweredAnimation(location.get(), inputLink.get().isEnabled());
 
-        final double outputPower = settings.doPowerLoss(inputLink.get().getPower()) / outgoingLinks.size();
+        final double outputPower = doPowerLoss(settings, inputLink.get().getPower()) / outgoingLinks.size();
         final double outputFrequency = inputLink.get().getFrequency();
         outgoingLinks.forEach(output -> output.setPowerAndFrequency(outputPower, outputFrequency));
     }

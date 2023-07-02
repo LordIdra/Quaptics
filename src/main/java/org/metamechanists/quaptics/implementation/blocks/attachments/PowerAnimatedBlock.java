@@ -1,4 +1,4 @@
-package org.metamechanists.quaptics.implementation.blocks.base;
+package org.metamechanists.quaptics.implementation.blocks.attachments;
 
 import org.bukkit.Location;
 

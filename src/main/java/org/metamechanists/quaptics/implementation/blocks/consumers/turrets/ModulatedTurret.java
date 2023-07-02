@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.beams.DeprecatedTickerStorage;
 import org.metamechanists.quaptics.beams.ticker.IntervalVelocityTicker;
-import org.metamechanists.quaptics.implementation.blocks.base.Settings;
+import org.metamechanists.quaptics.implementation.blocks.Settings;
 
 public class ModulatedTurret extends Turret {
     private final Vector3f projectileSize = new Vector3f(0.095F, 0.095F, 0.20F);

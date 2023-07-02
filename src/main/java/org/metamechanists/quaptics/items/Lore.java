@@ -3,7 +3,7 @@ package org.metamechanists.quaptics.items;
 import lombok.experimental.UtilityClass;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.QuapticTicker;
-import org.metamechanists.quaptics.implementation.blocks.base.Settings;
+import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.utils.Colors;
 
 import java.util.ArrayList;

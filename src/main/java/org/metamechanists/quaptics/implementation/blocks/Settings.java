@@ -1,4 +1,4 @@
-package org.metamechanists.quaptics.implementation.blocks.base;
+package org.metamechanists.quaptics.implementation.blocks;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -19,6 +19,7 @@ public class Settings {
 
     private float displayRadius;
     private float connectionRadius;
+    private float rotationY;
 
     private double minPower;
     private double powerLoss;
@@ -51,13 +52,7 @@ public class Settings {
         return inputLink.isPresent() && isOperational(inputLink.get());
     }
 
-    public double doPowerLoss(final double power) {
-        return power * (1 - powerLoss);
-    }
 
-    public double doPowerLoss(@NotNull final Link inputLink) {
-        return doPowerLoss(inputLink.getPower());
-    }
 
     public double stepCharge(final double charge, final double chargeStep) {
         if (charge + chargeStep < 0) {
