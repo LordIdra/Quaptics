@@ -1,6 +1,5 @@
 package org.metamechanists.quaptics.beams.ticker;
 
-import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.BlockDisplay;
@@ -25,7 +24,6 @@ public class IntervalVelocityTicker implements DisplayTicker {
         this.displayID = new BlockDisplayId(new BlockDisplayBuilder(source)
                 .setMaterial(material)
                 .setTransformation(Transformations.lookAlong(scale, Transformations.getDirection(source, target)))
-                .setGlow(Color.AQUA)
                 .setBrightness(15)
                 .build()
                 .getUniqueId());
