@@ -21,6 +21,7 @@ import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
+import org.metamechanists.quaptics.implementation.blocks.attachments.PowerLossBlock;
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
 import org.metamechanists.quaptics.implementation.blocks.attachments.PanelBlock;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
@@ -38,7 +39,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-public class Capacitor extends ConnectedBlock implements PanelBlock {
+public class Capacitor extends ConnectedBlock implements PanelBlock, PowerLossBlock {
     private static final int CONCRETE_BRIGHTNESS = 15;
     private final Vector3f mainGlassDisplaySize = new Vector3f(settings.getDisplayRadius()*2.0F);
     private final Vector3f tierGlassDisplaySize = new Vector3f(settings.getDisplayRadius()*1.7F);
@@ -105,8 +106,8 @@ public class Capacitor extends ConnectedBlock implements PanelBlock {
         }
 
         double charge = getCharge(location.get());
-        charge = doDischarge(location.get(), charge);
         charge = doCharge(location.get(), charge);
+        charge = doDischarge(location.get(), charge);
         setCharge(location.get(), charge);
 
         doEmission(location.get(), charge);
@@ -131,7 +132,9 @@ public class Capacitor extends ConnectedBlock implements PanelBlock {
             return;
         }
 
-        setChargeRate(location.get(), settings.isOperational(inputLink) ? inputLink.get().getPower() / QuapticTicker.QUAPTIC_TICKS_PER_SECOND : 0);
+        setChargeRate(location.get(), settings.isOperational(inputLink)
+                ? calculatePowerLoss(settings, inputLink.get().getPower() / QuapticTicker.QUAPTIC_TICKS_PER_SECOND)
+                : 0);
     }
 
     private double doCharge(final Location location, final double charge) {
@@ -158,12 +161,14 @@ public class Capacitor extends ConnectedBlock implements PanelBlock {
 
         final Optional<Link> inputLink = getLink(location, "input");
         if (inputLink.isPresent() && inputLink.get().getPower() <= settings.getEmissionPower() && charge == 0) {
-            outputLink.get().setPower(inputLink.get().getPower());
+            outputLink.get().setPower(calculatePowerLoss(settings, inputLink.get().getPower()));
             return;
         }
 
         outputLink.get().setPowerAndFrequency(
-                (charge > settings.getEmissionPower() / QuapticTicker.QUAPTIC_TICKS_PER_SECOND) ? settings.getEmissionPower() : 0,
+                (charge > settings.getEmissionPower() / QuapticTicker.QUAPTIC_TICKS_PER_SECOND)
+                        ? settings.getEmissionPower()
+                        : 0,
                 0);
     }
 

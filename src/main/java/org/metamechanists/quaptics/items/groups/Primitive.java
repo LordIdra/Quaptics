@@ -55,18 +55,19 @@ public class Primitive {
             .connections(2)
             .build();
 
-    public final Settings CHARGER_1_SETTINGS = Settings.builder()
-            .tier(Tier.PRIMITIVE)
-            .displayRadius(0.4F)
-            .connectionRadius(0.6F)
-            .build();
-
     public final Settings CAPACITOR_1_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
             .displayRadius(0.3F)
             .connectionRadius(0.6F)
             .capacity(200)
             .emissionPower(3)
+            .powerLoss(0.25)
+            .build();
+
+    public final Settings CHARGER_1_SETTINGS = Settings.builder()
+            .tier(Tier.PRIMITIVE)
+            .displayRadius(0.4F)
+            .connectionRadius(0.6F)
             .build();
 
     public final Settings TURRET_1_HOSTILE_SETTINGS = Settings.builder()
