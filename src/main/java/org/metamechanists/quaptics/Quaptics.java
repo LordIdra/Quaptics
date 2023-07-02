@@ -3,6 +3,7 @@ package org.metamechanists.quaptics;
 import co.aikar.commands.PaperCommandManager;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import lombok.Getter;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
@@ -43,9 +44,12 @@ public final class Quaptics extends JavaPlugin implements SlimefunAddon {
         Language.initialize();
         Groups.initialize();
         Items.initialize();
+
         initializeListeners();
         initializeRunnables();
         initializeCommands();
+
+        new Metrics(this, 18956);
         QuapticStorage.load();
     }
 
