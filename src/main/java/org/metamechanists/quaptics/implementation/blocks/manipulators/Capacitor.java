@@ -132,7 +132,7 @@ public class Capacitor extends ConnectedBlock implements PanelBlock {
     private void doCharge(final Location location) {
         final double chargeRate = getChargeRate(location);
         final double charge = getCharge(location);
-        setCharge(location, chargeRate != 0 ? charge : settings.stepCharge(charge, chargeRate));
+        setCharge(location, chargeRate == 0 ? charge : settings.stepCharge(charge, chargeRate));
     }
 
     private void doDischarge(final Location location, @NotNull final ConnectionGroup group) {
