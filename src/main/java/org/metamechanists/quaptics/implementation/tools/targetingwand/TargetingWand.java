@@ -108,7 +108,7 @@ public class TargetingWand extends SlimefunItem {
             return;
         }
 
-        if (input.isLinkEnabled() && output.get().isLinkEnabled()) {
+        if (input.getLink().isPresent() && output.get().getLink().isPresent()) {
             final Optional<ConnectionPointInput> inputPoint = output.get().getLink().get().getInput();
             final Optional<ConnectionPointOutput> outputPoint = input.getLink().get().getOutput();
 
@@ -123,11 +123,11 @@ public class TargetingWand extends SlimefunItem {
         final ConnectedBlock outputBlock = outputGroup.get().getBlock();
         final ConnectedBlock inputBlock = inputGroup.get().getBlock();
 
-        if (input.isLinkEnabled()) {
+        if (input.getLink().isPresent()) {
             input.getLink().get().remove();
         }
 
-        if (output.get().isLinkEnabled()) {
+        if (output.get().getLink().isPresent()) {
             output.get().getLink().get().remove();
         }
 
