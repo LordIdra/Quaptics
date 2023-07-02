@@ -64,14 +64,18 @@ public enum Colors {
         formattedColor = ColorUtils.formatColors(colorStringBuilder.toString());
     }
 
+    public static Material firstFrequencyColor() {
+        return CAN_YOU_TASTE_THE_RAINBOW.get(0);
+    }
+
     public static Material nextFrequencyColor(@NotNull final Material currentColor) {
         final int index = CAN_YOU_TASTE_THE_RAINBOW.indexOf(currentColor);
         if (index == -1) {
-            return CAN_YOU_TASTE_THE_RAINBOW.get(0);
+            return firstFrequencyColor();
         }
 
         return index == CAN_YOU_TASTE_THE_RAINBOW.size() - 1
-                ? CAN_YOU_TASTE_THE_RAINBOW.get(0)
+                ? firstFrequencyColor()
                 : CAN_YOU_TASTE_THE_RAINBOW.get(index + 1);
     }
 }

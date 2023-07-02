@@ -13,6 +13,7 @@ import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
 import org.metamechanists.quaptics.storage.DataTraverser;
+import org.metamechanists.quaptics.utils.Colors;
 import org.metamechanists.quaptics.utils.id.ConnectionPointId;
 import org.metamechanists.quaptics.utils.id.LinkId;
 import org.metamechanists.quaptics.utils.id.TickerId;
@@ -130,7 +131,7 @@ public class Link {
         }
 
         this.tickerId = new DirectBeam(new DirectTicker(
-                Material.WHITE_CONCRETE,
+                Colors.firstFrequencyColor(),
                 getOutput().get().getLocation().get(),
                 getInput().get().getLocation().get(),
                 Math.min((float)(power / maxPower) * MAX_BEAM_SIZE, MAX_BEAM_SIZE)))
