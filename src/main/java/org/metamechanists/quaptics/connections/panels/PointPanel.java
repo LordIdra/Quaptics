@@ -78,11 +78,9 @@ public class PointPanel {
 
         panel.setAttributeHidden("power", link.getPower() == 0);
         panel.setAttributeHidden("frequency", link.getFrequency() == 0);
-        panel.setAttributeHidden("phase", link.getPhase() == 0);
 
         panel.setText("power", Lore.powerNoArrow(roundTo2dp(link.getPower())));
         panel.setText("frequency", Lore.frequencyNoArrow(roundTo2dp(link.getFrequency())));
-        panel.setText("phase", Lore.phaseNoArrow(link.getPhase()));
     }
 
     public void remove() {
