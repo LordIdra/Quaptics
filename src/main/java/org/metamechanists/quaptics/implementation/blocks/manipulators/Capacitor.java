@@ -104,8 +104,8 @@ public class Capacitor extends ConnectedBlock implements PanelBlock {
             return;
         }
 
-        doCharge(location.get());
         doDischarge(location.get(), group);
+        doCharge(location.get());
         updateConcreteTransformation(location.get());
         updatePanel(group);
     }
@@ -147,9 +147,9 @@ public class Capacitor extends ConnectedBlock implements PanelBlock {
             return;
         }
 
-        final double charge = settings.stepDischarge(getCharge(location));
-        outputLink.get().setPowerAndFrequency(charge > 0 ? settings.getEmissionPower() : 0, 0);
-        setCharge(location, charge);
+        final double newCharge = settings.stepDischarge(getCharge(location));
+        outputLink.get().setPowerAndFrequency(newCharge > 0 ? settings.getEmissionPower() : 0, 0);
+        setCharge(location, newCharge);
     }
 
     private Matrix4f getConcreteTransformationMatrix(final double charge) {
