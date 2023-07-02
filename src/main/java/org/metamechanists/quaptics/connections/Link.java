@@ -180,7 +180,6 @@ public class Link {
     }
 
     public void disable() {
-        power = 0;
-        frequency = 0;
+        setPowerAndFrequency(0, 0);
     }
 }
