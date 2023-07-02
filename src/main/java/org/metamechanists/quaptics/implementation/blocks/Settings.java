@@ -45,7 +45,7 @@ public class Settings {
                 && inputLink.getPower() >= minPower
                 && inputLink.getPower() <= tier.maxPower
                 && inputLink.getFrequency() >= minFrequency
-                && (maxFrequency == 0) || inputLink.getFrequency() <= maxFrequency;
+                && ((maxFrequency == 0) || (inputLink.getFrequency() <= maxFrequency));
     }
 
     public boolean isOperational(final @NotNull Optional<? extends Link> inputLink) {

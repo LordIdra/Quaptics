@@ -104,7 +104,7 @@ public class Repeater extends ConnectedBlock implements PowerAnimatedBlock, Powe
         }
 
         if (!settings.isOperational(inputLink.get())) {
-            outputLink.get().setPower(0);
+            outputLink.get().disable();
             return;
         }
 

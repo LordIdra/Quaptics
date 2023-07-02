@@ -103,7 +103,7 @@ public class Scatterer extends ConnectedBlock implements PowerAnimatedBlock, Pow
         }
 
         if (!settings.isOperational(inputLink.get())) {
-            outputLink.get().setPower(0);
+            outputLink.get().disable();
             return;
         }
 
