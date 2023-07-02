@@ -77,17 +77,18 @@ public class Splitter extends ConnectedBlock implements PowerAnimatedBlock {
             return;
         }
 
-        final Optional<Link> inputLink = getLink(location.get(), "input");
-        if (inputLink.isEmpty()) {
-            return;
-        }
-
-        onPoweredAnimation(location.get(), inputLink.get().isEnabled());
-
         final List<ConnectionPointOutput> linkedOutputs = getLinkedOutputs(location.get());
         if (linkedOutputs.isEmpty()) {
             return;
         }
+
+        final Optional<Link> inputLink = getLink(location.get(), "input");
+        if (inputLink.isEmpty()) {
+            linkedOutputs.forEach(output -> output.getLink().get().setPower(0));
+            return;
+        }
+
+        onPoweredAnimation(location.get(), inputLink.get().isEnabled());
 
         linkedOutputs.forEach(output -> output.getLink().get().setPowerAndFrequency(
                 settings.doPowerLoss(inputLink.get().getPower()) / linkedOutputs.size(),
