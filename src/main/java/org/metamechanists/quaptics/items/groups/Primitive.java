@@ -76,7 +76,7 @@ public class Primitive {
             .minPower(5)
             .range(5)
             .damage(1)
-            .projectileSpeed(0.7F)
+            .projectileSpeed(3)
             .targets(Set.of(SpawnCategory.MONSTER))
             .projectileMaterial(Material.LIGHT_BLUE_CONCRETE)
             .mainMaterial(Material.POLISHED_ANDESITE)
@@ -89,7 +89,7 @@ public class Primitive {
             .minPower(5)
             .range(5)
             .damage(1)
-            .projectileSpeed(0.5F)
+            .projectileSpeed(3)
             .targets(Set.of(SpawnCategory.WATER_UNDERGROUND_CREATURE, SpawnCategory.AMBIENT, SpawnCategory.ANIMAL, SpawnCategory.AXOLOTL,
                     SpawnCategory.WATER_AMBIENT, SpawnCategory.WATER_ANIMAL))
             .projectileMaterial(Material.LIGHT_BLUE_CONCRETE)

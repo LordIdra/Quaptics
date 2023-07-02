@@ -2,7 +2,6 @@ package org.metamechanists.quaptics.items;
 
 import lombok.experimental.UtilityClass;
 import org.jetbrains.annotations.NotNull;
-import org.metamechanists.quaptics.QuapticTicker;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.utils.Colors;
 
@@ -110,7 +109,7 @@ public class Lore {
         return ATTRIBUTE_SYMBOL + RANGE_SYMBOL + "&7Range &e" + Objects.toString(range) + RANGE_SUFFIX;
     }
     public String projectileSpeed(final double speed) {
-        return ATTRIBUTE_SYMBOL + SPEED_SYMBOL + "&7Projectile Speed &e" + format(speed*QuapticTicker.QUAPTIC_TICKS_PER_SECOND) + SPEED_SUFFIX;
+        return ATTRIBUTE_SYMBOL + SPEED_SYMBOL + "&7Projectile Speed &e" + format(speed) + SPEED_SUFFIX;
     }
     public String damage(final double damage) {
         return ATTRIBUTE_SYMBOL + DAMAGE_SYMBOL + "&7Damage &e" + format(damage/SLIMEFUN_TICKS_PER_SECOND) + DAMAGE_SUFFIX;

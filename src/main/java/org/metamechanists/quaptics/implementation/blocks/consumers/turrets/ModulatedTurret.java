@@ -8,6 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
+import org.metamechanists.quaptics.QuapticTicker;
 import org.metamechanists.quaptics.beams.DeprecatedTickerStorage;
 import org.metamechanists.quaptics.beams.ticker.IntervalVelocityTicker;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
@@ -22,7 +23,7 @@ public class ModulatedTurret extends Turret {
     @Override
     protected void createProjectile(final Location source, final Location target) {
         DeprecatedTickerStorage.deprecate(new IntervalVelocityTicker(
-                settings.getProjectileMaterial(), source, target, projectileSize, settings.getProjectileSpeed()));
+                settings.getProjectileMaterial(), source, target, projectileSize, settings.getProjectileSpeed() / QuapticTicker.QUAPTIC_TICKS_PER_SECOND));
     }
 
     @Override
