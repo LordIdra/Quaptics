@@ -5,10 +5,6 @@ targeting-wand.no-source-selected: "&cNo source selected."
 targeting-wand.source-must-be-output: "&cThe source must be an output point."
 targeting-wand.target-must-be-input: "&cYou can only link to an output point."
 
-point-information.transmission-power: "&7Transmission Power &8- &e{1}"
-point-information.frequency: "&7Frequency &8- &e{1}"
-point-information.phase: "&7Phase &8- &e{1}"
-
 too-close: "&cToo close to another component!"
 
 load.failed: "Failed to load laser tickers; if this is not your first run, make sure file permissions are set up correctly."

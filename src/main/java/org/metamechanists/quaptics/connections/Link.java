@@ -31,8 +31,6 @@ public class Link {
     private double power;
     @Getter
     private double frequency;
-    @Getter
-    private int phase;
 
     public Link(final ConnectionPointId inputId, final ConnectionPointId outputId) {
         this.inputId = inputId;
@@ -58,7 +56,6 @@ public class Link {
                 : new TickerId(mainSection.get("tickerId").getAsString());
         this.power = mainSection.get("power").getAsDouble();
         this.frequency = mainSection.get("frequency").getAsDouble();
-        this.phase = mainSection.get("phase").getAsInt();
         this.maxPower = mainSection.get("maxPower").getAsDouble();
     }
 
@@ -70,7 +67,6 @@ public class Link {
         mainSection.add("tickerId", new JsonPrimitive(tickerId == null ? "null" : tickerId.toString()));
         mainSection.add("power", new JsonPrimitive(power));
         mainSection.add("frequency", new JsonPrimitive(frequency));
-        mainSection.add("phase", new JsonPrimitive(phase));
         mainSection.add("maxPower", new JsonPrimitive(maxPower));
         traverser.save();
     }

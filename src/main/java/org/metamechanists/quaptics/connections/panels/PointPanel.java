@@ -71,7 +71,6 @@ public class PointPanel {
         if (point.getLink().isEmpty()) {
             panel.setAttributeHidden("power", true);
             panel.setAttributeHidden("frequency", true);
-            panel.setAttributeHidden("phase", true);
             return;
         }
 
