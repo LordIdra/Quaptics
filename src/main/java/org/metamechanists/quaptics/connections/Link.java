@@ -72,8 +72,8 @@ public class Link {
 
     private void saveData() {
         final PersistentDataTraverser traverser = new PersistentDataTraverser(linkId);
-        traverser.set("outputId", outputId.toString());
-        traverser.set("inputId", inputId.toString());
+        traverser.set("outputId", outputId);
+        traverser.set("inputId", inputId);
         traverser.set("beamId", beamId);
         traverser.set("power", power);
         traverser.set("frequency", frequency);
