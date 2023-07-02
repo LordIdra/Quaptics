@@ -100,7 +100,7 @@ public class Charger extends ConnectedBlock implements PanelBlock {
     }
 
     @Override
-    protected void onUse(final Location location, final Player player) {
+    protected void onRightClick(final Location location, final Player player) {
         final Optional<ItemDisplay> itemDisplay = getItemDisplay(location);
         if (itemDisplay.isEmpty()) {
             return;

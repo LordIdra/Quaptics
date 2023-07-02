@@ -51,7 +51,7 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
                              final Settings settings) {
         super(group, item, recipeType, recipe);
         this.settings = settings;
-        addItemHandler(onUse());
+        addItemHandler(onRightClick());
     }
 
     @Override
@@ -74,21 +74,22 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
         getGroup(location).ifPresent(ConnectionGroup::remove);
     }
 
-    protected void onUse(final Location location, final Player player) {}
+    protected void onRightClick(final Location location, final Player player) {}
 
     private static void changePointLocation(final @NotNull ConnectionPointId pointId, @NotNull final Location newLocation) {
         pointId.get().ifPresent(point -> point.changeLocation(newLocation));
     }
 
     @NotNull
-    private BlockUseHandler onUse() {
+    private BlockUseHandler onRightClick() {
         return event -> {
-            if (!event.getPlayer().isSneaking()) {
+            final Block block = event.getClickedBlock().orElse(null);
+            if (block == null) {
                 return;
             }
 
-            final Block block = event.getClickedBlock().orElse(null);
-            if (block == null) {
+            if (!event.getPlayer().isSneaking()) {
+                onRightClick(block.getLocation(), event.getPlayer());
                 return;
             }
 
@@ -105,8 +106,6 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
                     .filter(Optional::isPresent)
                     .map(Optional::get)
                     .forEach(point -> point.getPointPanel().setPanelHidden(!isAnyPanelHidden));
-
-            onUse(block.getLocation(), event.getPlayer());
         };
     }
 
