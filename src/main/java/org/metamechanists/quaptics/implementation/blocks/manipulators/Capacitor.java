@@ -123,6 +123,7 @@ public class Capacitor extends ConnectedBlock implements PanelBlock {
 
         final Optional<Link> inputLink = getLink(location.get(), "input");
         if (inputLink.isEmpty()) {
+            setChargeRate(location.get(), 0);
             return;
         }
 
