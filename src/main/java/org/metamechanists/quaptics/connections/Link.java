@@ -6,13 +6,13 @@ import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.metamechanists.metalib.sefilib.entity.display.DisplayGroup;
-import org.metamechanists.quaptics.beams.DirectBeam;
+import org.metamechanists.quaptics.beams.Beam;
+import org.metamechanists.quaptics.beams.FrequencyColor;
 import org.metamechanists.quaptics.beams.ticker.DirectTicker;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
 import org.metamechanists.quaptics.storage.DataTraverser;
-import org.metamechanists.quaptics.utils.Colors;
 import org.metamechanists.quaptics.utils.id.ConnectionPointId;
 import org.metamechanists.quaptics.utils.id.LinkId;
 import org.metamechanists.quaptics.utils.id.TickerId;
@@ -94,13 +94,13 @@ public class Link {
         return tickerId != null;
     }
 
-    private Optional<DirectBeam> getBeam() {
-        return Optional.ofNullable(tickerId).map(DirectBeam::new);
+    private Optional<Beam> getBeam() {
+        return Optional.ofNullable(tickerId).map(Beam::new);
     }
 
     public void remove() {
         if (hasBeam()) {
-            getBeam().ifPresent(DirectBeam::deprecate);
+            getBeam().ifPresent(Beam::deprecate);
             tickerId = null;
         }
 
@@ -117,7 +117,7 @@ public class Link {
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     private void updateBeam() {
-        getBeam().ifPresent(DirectBeam::deprecate);
+        getBeam().ifPresent(Beam::deprecate);
         tickerId = null;
 
         if (getOutput().isEmpty()
@@ -127,8 +127,8 @@ public class Link {
             return;
         }
 
-        this.tickerId = new DirectBeam(new DirectTicker(
-                Colors.firstFrequencyColor(),
+        this.tickerId = new Beam(new DirectTicker(
+                FrequencyColor.getMaterial(frequency),
                 getOutput().get().getLocation().get(),
                 getInput().get().getLocation().get(),
                 Math.min((float)(power / maxPower) * MAX_BEAM_SIZE, MAX_BEAM_SIZE)))

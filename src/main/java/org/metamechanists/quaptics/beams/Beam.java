@@ -7,13 +7,13 @@ import org.metamechanists.quaptics.utils.id.TickerId;
 
 import java.util.Optional;
 
-public class DirectBeam {
+public class Beam {
     private final @Nullable DirectTicker ticker;
 
-    public DirectBeam(@Nullable final DirectTicker ticker) {
+    public Beam(@Nullable final DirectTicker ticker) {
         this.ticker = ticker;
     }
-    public DirectBeam(@NotNull final TickerId id) {
+    public Beam(@NotNull final TickerId id) {
         ticker = id.get().isPresent() ? id.get().get() : null;
     }
 
@@ -27,9 +27,9 @@ public class DirectBeam {
         }
     }
 
-    public void nextFrequencyColor() {
+    public void updateFrequencyColor(final double frequency) {
         if (ticker != null) {
-            ticker.nextFrequencyColor();
+            ticker.setMaterial(FrequencyColor.getMaterial(frequency));
         }
     }
 }

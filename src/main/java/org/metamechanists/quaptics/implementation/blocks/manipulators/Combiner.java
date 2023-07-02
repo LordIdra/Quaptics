@@ -87,7 +87,7 @@ public class Combiner extends ConnectedBlock implements PowerAnimatedBlock, Powe
 
         final double inputPower = incomingLinks.stream().mapToDouble(Link::getPower).sum();
         final double inputFrequency = incomingLinks.stream().mapToDouble(Link::getFrequency).min().orElse(0.0);
-        outputLink.get().setPowerAndFrequency(doPowerLoss(settings, inputPower), inputFrequency);
+        outputLink.get().setPowerAndFrequency(calculatePowerLoss(settings, inputPower), inputFrequency);
     }
 
     private @NotNull Vector getRelativeInputLocation(final int i) {

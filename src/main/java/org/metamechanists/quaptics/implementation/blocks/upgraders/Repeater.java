@@ -19,10 +19,11 @@ import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
-import org.metamechanists.quaptics.implementation.blocks.attachments.PowerLossBlock;
-import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
-import org.metamechanists.quaptics.implementation.blocks.attachments.PowerAnimatedBlock;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
+import org.metamechanists.quaptics.implementation.blocks.attachments.PowerAnimatedBlock;
+import org.metamechanists.quaptics.implementation.blocks.attachments.PowerLossBlock;
+import org.metamechanists.quaptics.implementation.blocks.attachments.UpgraderBlock;
+import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
@@ -31,7 +32,7 @@ import org.metamechanists.quaptics.utils.id.ConnectionGroupId;
 import java.util.List;
 import java.util.Optional;
 
-public class Repeater extends ConnectedBlock implements PowerAnimatedBlock, PowerLossBlock {
+public class Repeater extends ConnectedBlock implements PowerAnimatedBlock, PowerLossBlock, UpgraderBlock {
     private static final int CONCRETE_BRIGHTNESS = 15;
     private final Vector3f glassDisplaySize = new Vector3f(settings.getDisplayRadius()*2);
     private final Vector3f repeaterDisplaySize = new Vector3f(settings.getDisplayRadius());
@@ -107,7 +108,9 @@ public class Repeater extends ConnectedBlock implements PowerAnimatedBlock, Powe
             return;
         }
 
-        outputLink.get().setPowerAndFrequency(doPowerLoss(settings, inputLink.get()), doFrequencyUpgrade(inputLink.get(), settings));
+        outputLink.get().setPowerAndFrequency(
+                calculatePowerLoss(settings, inputLink.get()),
+                calculateUpgrade(settings, inputLink.get().getFrequency()));
     }
 
     @Override
@@ -119,7 +122,8 @@ public class Repeater extends ConnectedBlock implements PowerAnimatedBlock, Powe
                 + ",powered=" + powered + "]")));
     }
 
-    private static double doFrequencyUpgrade(final @NotNull Link inputLink, final @NotNull Settings settings) {
-        return inputLink.getFrequency() + settings.getFrequencyStep();
+    @Override
+    public double calculateUpgrade(@NotNull final Settings settings, final double frequency) {
+        return frequency + settings.getFrequencyStep();
     }
 }
