@@ -147,8 +147,9 @@ public class Capacitor extends ConnectedBlock implements PanelBlock {
             return;
         }
 
-        final double newCharge = settings.stepDischarge(getCharge(location));
-        outputLink.get().setPowerAndFrequency(newCharge > 0 ? settings.getEmissionPower() : 0, 0);
+        final double charge = getCharge(location);
+        outputLink.get().setPowerAndFrequency(charge > 0 ? settings.getEmissionPower() : 0, 0);
+        final double newCharge = settings.stepDischarge(charge);
         setCharge(location, newCharge);
     }
 
