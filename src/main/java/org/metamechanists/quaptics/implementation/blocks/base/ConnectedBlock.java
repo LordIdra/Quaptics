@@ -12,13 +12,13 @@ import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Display.Brightness;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Unmodifiable;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
@@ -39,8 +39,6 @@ import java.util.List;
 import java.util.Optional;
 
 public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
-    private static final Brightness BRIGHTNESS_ON = new Brightness(13, 0);
-    private static final Brightness BRIGHTNESS_OFF = new Brightness(5, 0);
     protected static final int VIEW_RANGE_ON = 1;
     protected static final int VIEW_RANGE_OFF = 0;
     private static final int BURNOUT_EXPLODE_VOLUME = 2;
@@ -180,7 +178,7 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
     }
 
     @NotNull
-    protected static List<ConnectionPointOutput> getLinkedOutputs(final Location location) {
+    private static List<ConnectionPointOutput> getLinkedOutputs(final Location location) {
         return getLinkedPoints(location).stream()
                 .filter(ConnectionPointOutput.class::isInstance)
                 .map(ConnectionPointOutput.class::cast)
@@ -193,6 +191,21 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
                 .filter(ConnectionPointInput.class::isInstance)
                 .map(ConnectionPointInput.class::cast)
                 .toList();
+    }
+
+    @NotNull
+    protected static List<ConnectionPointInput> getEnabledInputs(final Location location) {
+        return getLinkedInputs(location).stream().filter(ConnectionPoint::isLinkEnabled).toList();
+    }
+
+    @NotNull
+    protected static @Unmodifiable List<Link> getOutgoingLinks(final Location location) {
+        return getLinkedOutputs(location).stream().map(output -> output.getLink().get()).toList();
+    }
+
+    @NotNull
+    protected static @Unmodifiable List<Link> getIncomingLinks(final Location location) {
+        return getLinkedInputs(location).stream().map(output -> output.getLink().get()).toList();
     }
 
     protected static Optional<Location> getGroupLocation(final @NotNull ConnectionPointId pointId) {
@@ -221,11 +234,6 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
         }
 
         return point.get().getLink();
-    }
-
-    @NotNull
-    protected static List<ConnectionPointInput> getEnabledInputs(final Location location) {
-        return getLinkedInputs(location).stream().filter(ConnectionPoint::isLinkEnabled).toList();
     }
 
     public void onInputLinkUpdated(@NotNull final ConnectionGroup group) {}

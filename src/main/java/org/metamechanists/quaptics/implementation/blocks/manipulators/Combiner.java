@@ -77,15 +77,16 @@ public class Combiner extends ConnectedBlock implements PowerAnimatedBlock {
             return;
         }
 
-        onPoweredAnimation(location.get(), !getEnabledInputs(location.get()).isEmpty());
+        onPoweredAnimation(location.get(), !enabledInputs.isEmpty());
 
+        final List<Link> incomingLinks = getIncomingLinks(location.get());
         final Optional<Link> outputLink = getLink(location.get(), "output");
         if (outputLink.isEmpty()) {
             return;
         }
 
-        final double inputPower = enabledInputs.stream().mapToDouble(input -> input.getLink().get().getPower()).sum();
-        final double inputFrequency = enabledInputs.stream().mapToDouble(input -> input.getLink().get().getFrequency()).min().orElse(0.0);
+        final double inputPower = incomingLinks.stream().mapToDouble(Link::getPower).sum();
+        final double inputFrequency = incomingLinks.stream().mapToDouble(Link::getFrequency).min().orElse(0.0);
         outputLink.get().setPowerAndFrequency(settings.doPowerLoss(inputPower), inputFrequency);
     }
 
