@@ -22,12 +22,13 @@ import org.metamechanists.quaptics.utils.id.TextDisplayId;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.IntStream;
 
 @SuppressWarnings({"WeakerAccess", "unused"})
 public class PersistentDataTraverser {
     private final PersistentDataHolder persistentDataHolder;
-    private final Map<String, NamespacedKey> keys = new HashMap<>();
+    private final Map<String, NamespacedKey> keys = new ConcurrentHashMap<>();
 
     public PersistentDataTraverser(@NotNull final CustomId id) {
         this.persistentDataHolder = Bukkit.getEntity(id.getUUID());
