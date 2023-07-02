@@ -17,6 +17,7 @@ import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import org.metamechanists.metalib.utils.ItemUtils;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
+import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
@@ -122,7 +123,12 @@ public class Charger extends ConnectedBlock implements PanelBlock {
             return;
         }
 
-        QuapticChargeableItem.chargeItem(group, itemDisplay.get());
+        final Optional<Link> inputLink = getLink(group, "input");
+        if (inputLink.isEmpty() || !settings.isOperational(inputLink)) {
+            return;
+        }
+
+        QuapticChargeableItem.chargeItem(inputLink.get(), itemDisplay.get());
         updatePanel(group);
     }
 

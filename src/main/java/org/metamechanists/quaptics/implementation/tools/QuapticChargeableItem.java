@@ -14,9 +14,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.metamechanists.quaptics.QuapticTicker;
-import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.Link;
-import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
 import org.metamechanists.quaptics.implementation.blocks.base.Settings;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.utils.Keys;
@@ -57,30 +55,18 @@ public abstract class QuapticChargeableItem extends SlimefunItem {
         stack.setItemMeta(meta);
     }
 
-    public static void chargeItem(@NotNull final ConnectionGroup connectionGroup, @NotNull final ItemDisplay display) {
-        final Optional<ConnectionPointInput> input = connectionGroup.getInput("input");
-        if (input.isEmpty() || !input.get().isLinkEnabled()) {
+    public static void chargeItem(final Link inputLink, @NotNull final ItemDisplay display) {
+        final ItemStack itemStack = display.getItemStack();
+        if (itemStack == null || itemStack.getItemMeta() == null) {
             return;
         }
 
-        final ItemStack itemStack = display.getItemStack();
         final Optional<QuapticChargeableItem> item = fromStack(itemStack);
         if (item.isEmpty()) {
             return;
         }
 
-        final Settings itemSettings = item.get().settings;
-        final Optional<Link> inputLink = input.get().getLink();
-        if (inputLink.isEmpty() || !itemSettings.isOperational(inputLink.get())) {
-            return;
-        }
-
-        if (itemStack == null || itemStack.getItemMeta() == null) {
-            return;
-        }
-
-        final double newCharge = itemSettings.stepCharge(getCharge(itemStack), inputLink.get().getPower() / QuapticTicker.QUAPTIC_TICKS_PER_SECOND);
-
+        final double newCharge = item.get().settings.stepCharge(getCharge(itemStack), inputLink.getPower() / QuapticTicker.QUAPTIC_TICKS_PER_SECOND);
         setCharge(itemStack, newCharge);
         display.setItemStack(itemStack);
     }

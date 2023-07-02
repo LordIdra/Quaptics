@@ -235,6 +235,11 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
         return point.get().getLink();
     }
 
+    protected static Optional<Link> getLink(final @NotNull ConnectionGroup group, final String name) {
+        final Optional<Location> location = group.getLocation();
+        return location.isEmpty() ? Optional.empty() : getLink(location.get(), name);
+    }
+
     public void onInputLinkUpdated(@NotNull final ConnectionGroup group) {}
 
     private Optional<Location> calculatePointLocationSphere(@NotNull final ConnectionPointId from, @NotNull final ConnectionPointId to) {
