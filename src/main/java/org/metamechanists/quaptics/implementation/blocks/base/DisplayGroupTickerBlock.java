@@ -13,6 +13,7 @@ import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Display;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -115,7 +116,7 @@ public abstract class DisplayGroupTickerBlock extends SlimefunItem {
         BlockStorage.addBlockInfo(location, KEY_UUID, displayGroup.getParentUUID().toString());
     }
 
-    public static Optional<DisplayGroupId> getDisplayGroupId(final Location location) {
+    protected static Optional<DisplayGroupId> getDisplayGroupId(final Location location) {
         final String uuid = BlockStorage.getLocationInfo(location, KEY_UUID);
         return Optional.ofNullable(uuid).map(DisplayGroupId::new);
     }
@@ -126,6 +127,13 @@ public abstract class DisplayGroupTickerBlock extends SlimefunItem {
 
     public static Optional<Display> getDisplay(final Location location, final String name) {
         return getDisplayGroup(location).map(displayGroup -> displayGroup.getDisplays().get(name));
+    }
+
+    protected static Optional<BlockDisplay> getBlockDisplay(final Location location, final String name) {
+        final Optional<Display> display = getDisplay(location, name);
+        return display.isPresent() && display.get() instanceof final BlockDisplay blockDisplay
+                ? Optional.of(blockDisplay)
+                : Optional.empty();
     }
 
     protected static void removeDisplay(final @NotNull DisplayGroup displayGroup, final String name) {

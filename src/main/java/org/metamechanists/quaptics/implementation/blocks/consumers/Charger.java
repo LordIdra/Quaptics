@@ -128,8 +128,7 @@ public class Charger extends ConnectedBlock implements PanelBlock {
 
     @Override
     public void onInputLinkUpdated(@NotNull final ConnectionGroup group) {
-        final Optional<ConnectionPoint> input = group.getPoint("input");
-        input.ifPresent(point -> doBurnoutCheck(group, point));
+        doBurnoutCheck(group, "input");
     }
 
     private static Optional<ItemDisplay> getItemDisplay(@NotNull final ConnectionGroup group) {

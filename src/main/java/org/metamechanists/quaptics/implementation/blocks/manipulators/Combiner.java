@@ -17,6 +17,7 @@ import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
+import org.metamechanists.quaptics.implementation.blocks.base.PowerAnimatedBlock;
 import org.metamechanists.quaptics.implementation.blocks.base.Settings;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
@@ -28,7 +29,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
-public class Combiner extends ConnectedBlock {
+public class Combiner extends ConnectedBlock implements PowerAnimatedBlock {
     private static final int CONCRETE_BRIGHTNESS = 15;
     private static final double CONNECTION_ANGLE = Math.PI / 2;
     private final Vector inputStartingLocation = new Vector(0.0F, 0.0F, -settings.getConnectionRadius());
@@ -57,12 +58,9 @@ public class Combiner extends ConnectedBlock {
     @Override
     protected List<ConnectionPoint> generateConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
         final List<ConnectionPoint> points = new ArrayList<>();
-
-        IntStream.range(0, settings.getConnections()).forEach(i -> {
-            final String name = "input " + Objects.toString(i);
-            points.add(new ConnectionPointInput(groupId, name, formatPointLocation(player, location, getRelativeInputLocation(i))));
-        });
-
+        IntStream.range(0, settings.getConnections()).forEach(i -> points.add(new ConnectionPointInput(groupId,
+                "input " + Objects.toString(i),
+                formatPointLocation(player, location, getRelativeInputLocation(i)))));
         points.add(new ConnectionPointOutput(groupId, "output", formatPointLocation(player, location, outputLocation)));
         return points;
     }
@@ -75,35 +73,29 @@ public class Combiner extends ConnectedBlock {
         }
 
         final List<ConnectionPointInput> enabledInputs = getEnabledInputs(location.get());
-        final Optional<ConnectionPointOutput> output = group.getOutput("output");
-        if (output.isEmpty()) {
+        if (doBurnoutCheck(group, enabledInputs)) {
             return;
         }
 
-        if (enabledInputs.stream().anyMatch(input -> doBurnoutCheck(group, input))) {
-            return;
-        }
+        onPoweredAnimation(location.get(), !getEnabledInputs(location.get()).isEmpty());
 
-        doDisplayBrightnessCheck(location.get(), "concrete");
-
-        final Optional<Link> outputLink = output.get().getLink();
+        final Optional<Link> outputLink = getLink(location.get(), "output");
         if (outputLink.isEmpty()) {
-            return;
-        }
-
-        if (enabledInputs.isEmpty()) {
-            outputLink.get().setEnabled(false);
             return;
         }
 
         final double inputPower = enabledInputs.stream().mapToDouble(input -> input.getLink().get().getPower()).sum();
         final double inputFrequency = enabledInputs.stream().mapToDouble(input -> input.getLink().get().getFrequency()).min().orElse(0.0);
-        final int inputPhase = (int) (enabledInputs.stream().mapToDouble(input -> input.getLink().get().getPhase()).sum() / enabledInputs.size());
-        outputLink.get().setAttributes(settings.powerLoss(inputPower), inputFrequency, inputPhase, true);
+        outputLink.get().setPowerAndFrequency(settings.doPowerLoss(inputPower), inputFrequency);
     }
 
     private @NotNull Vector getRelativeInputLocation(final int i) {
         final double angle = (-CONNECTION_ANGLE /2) + CONNECTION_ANGLE *((double)(i) / (settings.getConnections()-1));
         return inputStartingLocation.clone().rotateAroundY(angle);
+    }
+
+    @Override
+    public void onPoweredAnimation(final Location location, final boolean powered) {
+        getDisplay(location, "concrete").ifPresent(value -> value.setViewRange(powered ? VIEW_RANGE_ON : VIEW_RANGE_OFF));
     }
 }

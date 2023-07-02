@@ -17,6 +17,7 @@ import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
+import org.metamechanists.quaptics.implementation.blocks.base.PowerAnimatedBlock;
 import org.metamechanists.quaptics.implementation.blocks.base.Settings;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
@@ -25,7 +26,7 @@ import org.metamechanists.quaptics.utils.id.ConnectionGroupId;
 import java.util.List;
 import java.util.Optional;
 
-public class Lens extends ConnectedBlock {
+public class Lens extends ConnectedBlock implements PowerAnimatedBlock {
     private static final int CONCRETE_BRIGHTNESS = 15;
     private final Vector3f glassDisplaySize = new Vector3f(settings.getDisplayRadius()*2);
     private final Vector3f concreteDisplaySize = new Vector3f(settings.getDisplayRadius());
@@ -59,33 +60,34 @@ public class Lens extends ConnectedBlock {
 
     @Override
     public void onInputLinkUpdated(@NotNull final ConnectionGroup group) {
+        if (doBurnoutCheck(group, "input")) {
+            return;
+        }
+
         final Optional<ConnectionPointInput> input = group.getInput("input");
-        final Optional<ConnectionPointOutput> output = group.getOutput("output");
         final Optional<Location> location = group.getLocation();
-        if (input.isEmpty() || output.isEmpty() || location.isEmpty()) {
+        if (input.isEmpty() || location.isEmpty()) {
             return;
         }
 
-        if (doBurnoutCheck(group, input.get())) {
+        onPoweredAnimation(location.get(), input.get().isLinkEnabled());
+
+        final Optional<Link> outputLink = getLink(location.get(), "output");
+        if (outputLink.isEmpty()) {
             return;
         }
 
-        doDisplayBrightnessCheck(location.get(), "concrete");
-        if (output.get().getLink().isEmpty()) {
+        final Optional<Link> inputLink = getLink(location.get(), "input");
+        if (inputLink.isEmpty()) {
+            outputLink.get().setPower(0);
             return;
         }
 
-        if (!input.get().isLinkEnabled()) {
-            output.get().disableLinkIfExists();
-            return;
-        }
+        outputLink.get().setPowerAndFrequency(settings.doPowerLoss(inputLink.get()), inputLink.get().getFrequency());
+    }
 
-        final Link outputLink = output.get().getLink().get();
-        final Link inputLink = input.get().getLink().get();
-        outputLink.setAttributes(
-                settings.powerLoss(inputLink.getPower()),
-                inputLink.getFrequency(),
-                inputLink.getPhase(),
-                true);
+    @Override
+    public void onPoweredAnimation(final Location location, final boolean powered) {
+        getDisplay(location, "concrete").ifPresent(value -> value.setViewRange(powered ? VIEW_RANGE_ON : VIEW_RANGE_OFF));
     }
 }

@@ -4,9 +4,12 @@ import lombok.Builder;
 import lombok.Getter;
 import org.bukkit.Material;
 import org.bukkit.entity.SpawnCategory;
+import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.QuapticTicker;
+import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.items.Tier;
 
+import java.util.Optional;
 import java.util.Set;
 
 @Getter
@@ -36,7 +39,26 @@ public class Settings {
     Material projectileMaterial;
     Material mainMaterial;
 
-    // Built in Charge Methods
+    public boolean isOperational(final @NotNull Link inputLink) {
+        return inputLink.isEnabled()
+                && inputLink.getPower() >= minPower
+                && inputLink.getPower() <= tier.maxPower
+                && inputLink.getFrequency() >= minFrequency
+                && inputLink.getFrequency() < maxFrequency;
+    }
+
+    public boolean isOperational(final @NotNull Optional<? extends Link> inputLink) {
+        return inputLink.isPresent() && isOperational(inputLink.get());
+    }
+
+    public double doPowerLoss(final double power) {
+        return power * (1 - powerLoss);
+    }
+
+    public double doPowerLoss(@NotNull final Link inputLink) {
+        return doPowerLoss(inputLink.getPower());
+    }
+
     public double stepCharge(final double charge, final double chargeStep) {
         if (charge + chargeStep < 0) {
             return 0;
@@ -46,29 +68,5 @@ public class Settings {
 
     public double stepDischarge(final double charge) {
        return stepCharge(charge, -emissionPower / QuapticTicker.QUAPTIC_TICKS_PER_SECOND);
-    }
-
-    // Built in Power Methods
-    public boolean checkPower(final double power) {
-        return minPower <= power && power <= tier.maxPower;
-    }
-
-    public double powerLoss(final double power) {
-        return power * (1 - powerLoss);
-    }
-
-    // Built in Frequency Methods
-    public boolean checkFrequency(final double frequency) {
-        return minFrequency == 0
-                && maxFrequency == 0 || minFrequency <= frequency
-                && frequency < maxFrequency;
-    }
-
-    public double stepFrequency(final double frequency) {
-        return checkFrequency(frequency) ? frequency + frequencyStep : frequency;
-    }
-
-    public double multiplyFrequency(final double frequency) {
-        return checkFrequency(frequency) ? frequency * frequencyMultiplier : frequency;
     }
 }

@@ -12,7 +12,6 @@ import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Display;
 import org.bukkit.entity.Display.Brightness;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -42,7 +41,7 @@ import java.util.Optional;
 public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
     private static final Brightness BRIGHTNESS_ON = new Brightness(13, 0);
     private static final Brightness BRIGHTNESS_OFF = new Brightness(5, 0);
-    private static final int VIEW_RANGE_ON = 1;
+    protected static final int VIEW_RANGE_ON = 1;
     protected static final int VIEW_RANGE_OFF = 0;
     private static final int BURNOUT_EXPLODE_VOLUME = 2;
     private static final float BURNOUT_EXPLODE_PITCH = 1.2F;
@@ -143,7 +142,7 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
         new ParticleBuilder(Particle.FLASH).location(location.toCenterLocation()).count(3).spawn();
     }
 
-    protected boolean doBurnoutCheck(@NotNull final ConnectionGroup group, @NotNull final ConnectionPoint point) {
+    private boolean doBurnoutCheck(@NotNull final ConnectionGroup group, @NotNull final ConnectionPoint point) {
         if (point.getLink().isEmpty() || point.getLink().get().getPower() <= settings.getTier().maxPower) {
             return false;
         }
@@ -156,6 +155,15 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
         });
 
         return true;
+    }
+
+    protected boolean doBurnoutCheck(@NotNull final ConnectionGroup group, @NotNull final String pointName) {
+        final Optional<ConnectionPointInput> point = group.getInput(pointName);
+        return point.isPresent() && doBurnoutCheck(group, point.get());
+    }
+
+    protected boolean doBurnoutCheck(@NotNull final ConnectionGroup group, final @NotNull List<? extends ConnectionPoint> points) {
+        return points.stream().anyMatch(input -> doBurnoutCheck(group, input));
     }
 
     @NotNull
@@ -218,24 +226,6 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
     @NotNull
     protected static List<ConnectionPointInput> getEnabledInputs(final Location location) {
         return getLinkedInputs(location).stream().filter(ConnectionPoint::isLinkEnabled).toList();
-    }
-
-    protected static void doDisplayBrightnessCheck(final Location location, final String concreteDisplayName) {
-        doDisplayBrightnessCheck(location, concreteDisplayName, true);
-    }
-
-    protected static void doDisplayBrightnessCheck(final Location location, final String concreteDisplayName, final boolean setVisible) {
-        final Optional<Display> display = getDisplay(location, concreteDisplayName);
-        if (display.isEmpty()) {
-            return;
-        }
-
-        final boolean noInputs = getEnabledInputs(location).isEmpty();
-        if (setVisible) {
-            display.get().setViewRange(noInputs ? VIEW_RANGE_OFF : VIEW_RANGE_ON);
-        } else  {
-            display.get().setBrightness(noInputs ? BRIGHTNESS_OFF : BRIGHTNESS_ON);
-        }
     }
 
     public void onInputLinkUpdated(@NotNull final ConnectionGroup group) {}

@@ -9,7 +9,6 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.BlockDisplay;
-import org.bukkit.entity.Display;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
@@ -21,6 +20,7 @@ import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
+import org.metamechanists.quaptics.implementation.blocks.base.PowerAnimatedBlock;
 import org.metamechanists.quaptics.implementation.blocks.base.Settings;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Transformations;
@@ -30,7 +30,7 @@ import org.metamechanists.quaptics.utils.id.ConnectionGroupId;
 import java.util.List;
 import java.util.Optional;
 
-public class Repeater extends ConnectedBlock implements FrequencyUpgrader {
+public class Repeater extends ConnectedBlock implements PowerAnimatedBlock {
     private static final int CONCRETE_BRIGHTNESS = 15;
     private final Vector3f glassDisplaySize = new Vector3f(settings.getDisplayRadius()*2);
     private final Vector3f repeaterDisplaySize = new Vector3f(settings.getDisplayRadius());
@@ -46,18 +46,6 @@ public class Repeater extends ConnectedBlock implements FrequencyUpgrader {
                     final Settings settings, final int delayVisual) {
         super(group, item, recipeType, recipe, settings);
         this.delayVisual = delayVisual;
-    }
-
-    private void setRepeaterPowered(final Location location, final boolean powered) {
-        final Optional<Display> display = getDisplay(location, "repeater");
-        if (display.isEmpty() || !(display.get() instanceof final BlockDisplay blockDisplay)) {
-            return;
-        }
-
-        blockDisplay.setBlock(Material.REPEATER.createBlockData(
-                "[delay=" + delayVisual
-                + ",facing=" + PersistentDataAPI.getString(blockDisplay, Keys.FACING)
-                + ",powered=" + powered + "]"));
     }
 
     @Override
@@ -93,35 +81,44 @@ public class Repeater extends ConnectedBlock implements FrequencyUpgrader {
 
     @Override
     public void onInputLinkUpdated(@NotNull final ConnectionGroup group) {
-        final Optional<ConnectionPointInput> input = group.getInput("input");
-        final Optional<ConnectionPointOutput> output = group.getOutput("output");
+        if (doBurnoutCheck(group, "input")) {
+            return;
+        }
+
         final Optional<Location> location = group.getLocation();
-        if (input.isEmpty() || output.isEmpty() || location.isEmpty()) {
+        if (location.isEmpty()) {
             return;
         }
 
-        if (doBurnoutCheck(group, input.get())) {
+        final Optional<Link> inputLink = getLink(location.get(), "input");
+        onPoweredAnimation(location.get(), settings.isOperational(inputLink));
+        if (inputLink.isEmpty()) {
             return;
         }
 
-        doDisplayBrightnessCheck(location.get(), "concrete", false);
-        setRepeaterPowered(location.get(), input.get().isLinkEnabled() && upgradeFrequency(settings, input.get().getLink().get()));
-
-        if (output.get().getLink().isEmpty()) {
+        final Optional<Link> outputLink = getLink(location.get(), "output");
+        if (outputLink.isEmpty()) {
             return;
         }
 
-        if (!input.get().isLinkEnabled()) {
-            output.get().disableLinkIfExists();
+        if (!settings.isOperational(inputLink.get())) {
+            outputLink.get().setPower(0);
             return;
         }
 
-        final Link outputLink = output.get().getLink().get();
-        final Link inputLink = input.get().getLink().get();
-        outputLink.setAttributes(
-                settings.powerLoss(inputLink.getPower()),
-                settings.stepFrequency(inputLink.getFrequency()),
-                inputLink.getPhase(),
-                true);
+        outputLink.get().setPowerAndFrequency(settings.doPowerLoss(inputLink.get()), doFrequencyUpgrade(inputLink.get(), settings));
+    }
+
+    @Override
+    public void onPoweredAnimation(final Location location, final boolean powered) {
+        final Optional<BlockDisplay> blockDisplay = getBlockDisplay(location, "repeater");
+        blockDisplay.ifPresent(display -> display.setBlock(Material.REPEATER.createBlockData(
+                "[delay=" + delayVisual
+                + ",facing=" + PersistentDataAPI.getString(display, Keys.FACING)
+                + ",powered=" + powered + "]")));
+    }
+
+    private static double doFrequencyUpgrade(final @NotNull Link inputLink, final @NotNull Settings settings) {
+        return inputLink.getFrequency() + settings.getFrequencyStep();
     }
 }

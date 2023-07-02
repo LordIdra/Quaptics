@@ -35,7 +35,7 @@ public abstract class BlockPanel {
         return groupId.get();
     }
 
-    public void setPanelHidden(final boolean hidden) {
+    protected void setPanelHidden(final boolean hidden) {
         panel.setHidden(hidden);
     }
 

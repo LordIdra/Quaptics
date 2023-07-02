@@ -70,8 +70,8 @@ public abstract class QuapticChargeableItem extends SlimefunItem {
         }
 
         final Settings itemSettings = item.get().settings;
-        final Optional<Link> link = input.get().getLink();
-        if (link.isEmpty() || !meetsRequirements(itemSettings, link.get())) {
+        final Optional<Link> inputLink = input.get().getLink();
+        if (inputLink.isEmpty() || !itemSettings.isOperational(inputLink.get())) {
             return;
         }
 
@@ -79,14 +79,10 @@ public abstract class QuapticChargeableItem extends SlimefunItem {
             return;
         }
 
-        final double newCharge = itemSettings.stepCharge(getCharge(itemStack), link.get().getPower() / QuapticTicker.QUAPTIC_TICKS_PER_SECOND);
+        final double newCharge = itemSettings.stepCharge(getCharge(itemStack), inputLink.get().getPower() / QuapticTicker.QUAPTIC_TICKS_PER_SECOND);
 
         setCharge(itemStack, newCharge);
         display.setItemStack(itemStack);
-    }
-
-    private static boolean meetsRequirements(@NotNull final Settings itemSettings, @NotNull final Link link) {
-        return itemSettings.checkFrequency(link.getFrequency());
     }
 
     private static int getFirstLineMatching(@NotNull final List<String> lore, final Predicate<? super String> matcher) {

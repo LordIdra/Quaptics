@@ -23,10 +23,9 @@ public class PointPanel {
     public PointPanel(@NotNull final Location location, final ConnectionPointId pointId) {
         this.pointId = pointId;
         this.panel = new PanelBuilder(location.clone().add(POINT_OFFSET), SIZE)
-                .addAttribute("phase")
-                .addAttribute("frequency")
-                .addAttribute("power")
-                .addAttribute("name")
+                .addAttribute("frequency", true)
+                .addAttribute("power", true)
+                .addAttribute("name", true)
                 .build();
         panel.setAttributeHidden("name", false);
     }

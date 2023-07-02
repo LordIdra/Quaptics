@@ -3,7 +3,6 @@ package org.metamechanists.quaptics.connections;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import lombok.Getter;
-import org.bukkit.Material;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.metamechanists.metalib.sefilib.entity.display.DisplayGroup;
@@ -98,7 +97,7 @@ public class Link {
         return tickerId != null;
     }
 
-    public Optional<DirectBeam> getBeam() {
+    private Optional<DirectBeam> getBeam() {
         return Optional.ofNullable(tickerId).map(DirectBeam::new);
     }
 

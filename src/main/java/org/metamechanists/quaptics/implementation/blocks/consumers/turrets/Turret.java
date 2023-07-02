@@ -72,6 +72,10 @@ public abstract class Turret extends ConnectedBlock {
 
     @Override
     public void onInputLinkUpdated(@NotNull final ConnectionGroup group) {
+        if (doBurnoutCheck(group, "input")) {
+            return;
+        }
+
         final Optional<Location> location = group.getLocation();
         if (location.isEmpty()) {
             return;
@@ -84,11 +88,9 @@ public abstract class Turret extends ConnectedBlock {
             return;
         }
 
-        if (!settings.checkPower(inputLink.get().getPower()) || !settings.checkFrequency(inputLink.get().getFrequency())) {
-            return;
+        if (settings.isOperational(inputLink)) {
+            setPowered(location.get(), true);
         }
-
-        setPowered(location.get(), true);
     }
 
     private Matrix4f getBarrelMatrix(@NotNull final Location from, final Location to) {

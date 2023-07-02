@@ -112,22 +112,21 @@ public class Capacitor extends ConnectedBlock implements PanelBlock {
 
     @Override
     public void onInputLinkUpdated(@NotNull final ConnectionGroup group) {
-        final Optional<ConnectionPointInput> input = group.getInput("input");
+        if (doBurnoutCheck(group, "input")) {
+            return;
+        }
+
         final Optional<Location> location = group.getLocation();
-        if (input.isEmpty() || location.isEmpty()) {
+        if (location.isEmpty()) {
             return;
         }
 
-        if (doBurnoutCheck(group, input.get())) {
-            return;
-        }
-
-        final Optional<Link> inputLink = input.get().getLink();
+        final Optional<Link> inputLink = getLink(location.get(), "input");
         if (inputLink.isEmpty()) {
             return;
         }
 
-        setChargeRate(location.get(), input.get().isLinkEnabled() ? inputLink.get().getPower() / QuapticTicker.QUAPTIC_TICKS_PER_SECOND : 0);
+        setChargeRate(location.get(), settings.isOperational(inputLink) ? inputLink.get().getPower() / QuapticTicker.QUAPTIC_TICKS_PER_SECOND : 0);
     }
 
     private void doCharge(final Location location) {
