@@ -92,17 +92,13 @@ public class Scatterer extends ConnectedBlock implements PowerAnimatedBlock, Pow
         }
 
         final Optional<Link> inputLink = getLink(location.get(), "input");
-        onPoweredAnimation(location.get(), settings.isOperational(inputLink));
-        if (inputLink.isEmpty()) {
-            return;
-        }
-
         final Optional<Link> outputLink = getLink(location.get(), "output");
+        onPoweredAnimation(location.get(), settings.isOperational(inputLink));
         if (outputLink.isEmpty()) {
             return;
         }
 
-        if (!settings.isOperational(inputLink.get())) {
+        if (inputLink.isEmpty() || !settings.isOperational(inputLink.get())) {
             outputLink.get().disable();
             return;
         }
