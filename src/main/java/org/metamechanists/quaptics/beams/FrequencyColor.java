@@ -6,7 +6,7 @@ import java.util.List;
 
 public final class FrequencyColor {
 
-    private static final FrequencyColor errorColor = new FrequencyColor(0, Material.ANVIL);
+    private static final FrequencyColor errorColor = new FrequencyColor(0, Material.WOODEN_PICKAXE);
     private static final List<FrequencyColor> COLORS = List.of(
             new FrequencyColor(0, Material.RED_CONCRETE),
             new FrequencyColor(0.2, Material.RED_TERRACOTTA)
@@ -42,7 +42,7 @@ public final class FrequencyColor {
     }
 
     public static Material getMaterial(final double frequency) {
-        for (int i = COLORS.size()-1; i > 0; i--) {
+        for (int i = COLORS.size()-1; i >= 0; i--) {
             final FrequencyColor color = COLORS.get(i);
             if (frequency >= color.frequencyThreshold) {
                 return color.material;
