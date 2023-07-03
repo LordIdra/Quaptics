@@ -51,6 +51,7 @@ public class PointPanel {
     public boolean isPanelHidden() {
         return panel.isHidden();
     }
+
     public void setPanelHidden(final boolean hidden) {
         panel.setHidden(hidden);
     }

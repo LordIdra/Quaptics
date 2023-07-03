@@ -1,4 +1,4 @@
-package org.metamechanists.quaptics.connections;
+package org.metamechanists.quaptics.storage.scheduler;
 
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.utils.id.ConnectionGroupId;

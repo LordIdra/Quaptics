@@ -15,6 +15,7 @@ import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.connections.panels.PointPanel;
 import org.metamechanists.quaptics.storage.PersistentDataTraverser;
+import org.metamechanists.quaptics.storage.scheduler.PointPanelUpdateScheduler;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.builders.InteractionBuilder;
@@ -133,7 +134,7 @@ public abstract class ConnectionPoint {
     }
 
     public void updatePanel() {
-        getPointPanel().ifPresent(PointPanel::update);
+        PointPanelUpdateScheduler.scheduleUpdate(panelId, getId());
     }
 
     public void togglePanelHidden() {

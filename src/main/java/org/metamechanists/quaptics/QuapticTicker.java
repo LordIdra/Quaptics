@@ -2,9 +2,10 @@ package org.metamechanists.quaptics;
 
 import org.bukkit.scheduler.BukkitRunnable;
 import org.metamechanists.quaptics.beams.DeprecatedBeamStorage;
-import org.metamechanists.quaptics.connections.BlockUpdateScheduler;
+import org.metamechanists.quaptics.storage.scheduler.BlockUpdateScheduler;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.storage.QuapticStorage;
+import org.metamechanists.quaptics.storage.scheduler.PointPanelUpdateScheduler;
 import org.metamechanists.quaptics.utils.id.ConnectionGroupId;
 
 import java.util.Optional;
@@ -23,5 +24,6 @@ public class QuapticTicker extends BukkitRunnable {
                 .forEach(ConnectionGroup::tick);
         DeprecatedBeamStorage.tick();
         BlockUpdateScheduler.tick();
+        PointPanelUpdateScheduler.tick();
     }
 }
