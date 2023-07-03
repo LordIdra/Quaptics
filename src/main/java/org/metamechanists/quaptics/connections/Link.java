@@ -23,7 +23,7 @@ public class Link {
     private static final double MAX_FREQUENCY_CHANGE_PROPORTION = 0.0001;
     private static final float MAX_BEAM_SIZE = 0.095F;
     @Getter
-    private final LinkId linkId;
+    private final LinkId id;
     private final ConnectionPointId outputId;
     private final ConnectionPointId inputId;
     private final Location outputLocation;
@@ -45,12 +45,12 @@ public class Link {
 
         this.inputLocation = input.getLocation().get();
         this.outputLocation = output.getLocation().get();
-        this.linkId = new LinkId(new DisplayGroup(inputLocation, 0, 0).getParentUUID());
+        this.id = new LinkId(new DisplayGroup(inputLocation, 0, 0).getParentUUID());
         this.maxPower = input.getGroup().get().getBlock().getSettings().getTier().maxPower;
 
         saveData(); // the points being linked will not be able to get the link from the id without this line
-        input.link(linkId);
-        output.link(linkId);
+        input.link(id);
+        output.link(id);
         updateGroup(input);
         updateGroup(output);
         regenerateBeam();
@@ -60,9 +60,9 @@ public class Link {
     }
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
-    public Link(final LinkId linkId) {
-        final PersistentDataTraverser traverser = new PersistentDataTraverser(linkId);
-        this.linkId = linkId;
+    public Link(final LinkId id) {
+        final PersistentDataTraverser traverser = new PersistentDataTraverser(id);
+        this.id = id;
         this.outputId = traverser.getConnectionPointId("outputId");
         this.inputId = traverser.getConnectionPointId("inputId");
         this.beamId = traverser.getBeamId("beamId");
@@ -74,7 +74,7 @@ public class Link {
     }
 
     private void saveData() {
-        final PersistentDataTraverser traverser = new PersistentDataTraverser(linkId);
+        final PersistentDataTraverser traverser = new PersistentDataTraverser(id);
         traverser.set("outputId", outputId);
         traverser.set("inputId", inputId);
         traverser.set("beamId", beamId);
@@ -133,7 +133,7 @@ public class Link {
                 outputLocation,
                 inputLocation,
                 Math.min((float)(power / maxPower) * MAX_BEAM_SIZE, MAX_BEAM_SIZE))
-                .getID();
+                .getId();
     }
 
     private void updateBeam() {

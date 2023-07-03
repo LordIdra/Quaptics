@@ -31,7 +31,8 @@ public class DirectBeam implements Beam {
         this.displayId = new BlockDisplayId(id);
     }
 
-    public BeamId getID() {
+    @Override
+    public BeamId getId() {
         return new BeamId(displayId);
     }
 

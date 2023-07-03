@@ -29,7 +29,7 @@ public abstract class CustomId {
 
     @Override
     public boolean equals(final Object obj) {
-        return this == obj || obj instanceof final CustomId customID && uuid.equals(customID.uuid);
+        return this == obj || obj instanceof final CustomId customId && uuid.equals(customId.uuid);
     }
 
     @Override
