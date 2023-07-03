@@ -12,4 +12,8 @@ public interface PowerLossBlock {
     default double calculatePowerLoss(final @NotNull Settings settings, @NotNull final Link inputLink) {
         return calculatePowerLoss(settings, inputLink.getPower());
     }
+
+    default double calculateReversePowerLoss(final @NotNull Settings settings, final double outputPower) {
+        return outputPower / (1 - settings.getPowerLoss());
+    }
 }
