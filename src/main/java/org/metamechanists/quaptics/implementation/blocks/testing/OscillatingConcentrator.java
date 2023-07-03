@@ -2,19 +2,17 @@ package org.metamechanists.quaptics.implementation.blocks.testing;
 
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
-import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
-import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
+import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
@@ -25,6 +23,7 @@ import org.metamechanists.quaptics.utils.builders.ItemDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.ConnectionGroupId;
 
 import java.util.List;
+import java.util.Optional;
 
 public class OscillatingConcentrator extends ConnectedBlock {
     private final Vector outputLocation = new Vector(0.0F, 0.0F, settings.getConnectionRadius());
@@ -49,15 +48,18 @@ public class OscillatingConcentrator extends ConnectedBlock {
     }
 
     @Override
-    public void onSlimefunTick(@NotNull final Block block, final SlimefunItem item, final Config data) {
-        super.onSlimefunTick(block, item, data);
-        final Location location = block.getLocation();
-        final boolean enabled = isEnabled(location);
+    public void onQuapticTick(@NotNull final ConnectionGroup group) {
+        final Optional<Location> location = group.getLocation();
+        if (location.isEmpty()) {
+            return;
+        }
+
+        final boolean enabled = isEnabled(location.get());
         final double power = enabled
                 ? settings.getEmissionPower()
                 : 0;
-        getLink(location, "output").ifPresent(link -> link.setPower(power));
-        setEnabled(location, !enabled);
+        getLink(location.get(), "output").ifPresent(link -> link.setPower(power));
+        setEnabled(location.get(), !enabled);
     }
 
     private static boolean isEnabled(final Location location) {
