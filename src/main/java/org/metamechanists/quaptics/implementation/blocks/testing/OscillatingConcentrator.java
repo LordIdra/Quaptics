@@ -6,7 +6,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
-import org.bukkit.Bukkit;
+import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -19,6 +19,7 @@ import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
+import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.ItemDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.ConnectionGroupId;
@@ -51,9 +52,20 @@ public class OscillatingConcentrator extends ConnectedBlock {
     public void onSlimefunTick(@NotNull final Block block, final SlimefunItem item, final Config data) {
         super.onSlimefunTick(block, item, data);
         final Location location = block.getLocation();
-        final double power = Bukkit.getCurrentTick() % 2 == 0 // lol
+        final boolean enabled = isEnabled(location);
+        final double power = enabled
                 ? settings.getEmissionPower()
                 : 0;
         getLink(location, "output").ifPresent(link -> link.setPower(power));
+        setEnabled(location, !enabled);
+    }
+
+    private static boolean isEnabled(final Location location) {
+        final String enabledString = BlockStorage.getLocationInfo(location, Keys.BS_POWERED);
+        return enabledString != null && !enabledString.equals("false");
+    }
+
+    private static void setEnabled(final Location location, final boolean enabled) {
+        BlockStorage.addBlockInfo(location, Keys.BS_POWERED, enabled ? "true" : "false");
     }
 }
