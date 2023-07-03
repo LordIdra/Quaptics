@@ -162,7 +162,7 @@ public class Capacitor extends ConnectedBlock implements PanelBlock, PowerLossBl
         final Optional<Link> inputLink = getLink(location, "input");
         if (inputLink.isPresent() && charge == 0) {
             final double outputPower = calculatePowerLoss(settings, inputLink.get().getPower());
-            if (outputPower < getSettings().getEmissionPower() / QuapticTicker.QUAPTIC_TICKS_PER_SECOND) {
+            if (outputPower < getSettings().getEmissionPower()) {
                 outputLink.get().setPower(outputPower);
                 return;
             }
