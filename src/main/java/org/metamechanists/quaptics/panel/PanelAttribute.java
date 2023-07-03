@@ -69,7 +69,7 @@ public class PanelAttribute {
     }
 
     public void changeLocation(final Location location) {
-        getTextDisplay().ifPresent(display -> display.teleport(location.add(offset)));
+        getTextDisplay().ifPresent(display -> display.teleport(location.clone().add(offset)));
     }
 
     public void setHidden(final boolean hidden) {
