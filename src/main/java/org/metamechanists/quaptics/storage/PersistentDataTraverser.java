@@ -94,9 +94,9 @@ public class PersistentDataTraverser {
     }
     public @Nullable Vector getVector(@NotNull final String key) {
         return new Vector(
-                PersistentDataAPI.getInt(persistentDataHolder, getKey(key + "x")),
-                PersistentDataAPI.getInt(persistentDataHolder, getKey(key + "y")),
-                PersistentDataAPI.getInt(persistentDataHolder, getKey(key + "z")));
+                PersistentDataAPI.getDouble(persistentDataHolder, getKey(key + "x")),
+                PersistentDataAPI.getDouble(persistentDataHolder, getKey(key + "y")),
+                PersistentDataAPI.getDouble(persistentDataHolder, getKey(key + "z")));
     }
     public @Nullable BlockDisplayId getBlockDisplayId(@NotNull final String key) {
         final String uuid = getString(key);
