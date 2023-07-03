@@ -19,6 +19,8 @@ import org.metamechanists.quaptics.utils.id.LinkId;
 import java.util.Optional;
 
 public class Link {
+    private static final double MAX_POWER_CHANGE_PROPORTION = 0.0001;
+    private static final double MAX_FREQUENCY_CHANGE_PROPORTION = 0.0001;
     private static final float MAX_BEAM_SIZE = 0.095F;
     @Getter
     private final LinkId linkId;
@@ -157,9 +159,12 @@ public class Link {
         return power != 0;
     }
 
+    private double calculateChange(final double initialValue, final double newValue) {
+        return (newValue-initialValue) / initialValue;
+    }
+
     public void setPower(final double power) {
-        // TODO how can we limit the size of power changes?
-        if (this.power == power) {
+        if (calculateChange(this.power, power) < MAX_POWER_CHANGE_PROPORTION) {
             return;
         }
 
@@ -173,7 +178,7 @@ public class Link {
 
     private void setFrequency(final double frequency) {
         // TODO how can we limit the size of frequency changes?
-        if (this.frequency == frequency) {
+        if (calculateChange(this.frequency, frequency) < MAX_POWER_CHANGE_PROPORTION) {
             return;
         }
 
