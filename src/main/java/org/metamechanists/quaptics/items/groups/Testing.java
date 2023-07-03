@@ -25,11 +25,11 @@ public class Testing {
 
     private final SlimefunItemStack OSCILLATING_CONCENTRATOR = new SlimefunItemStack(
             "QP_TESTING_OSCILLATING_CONCENTRATOR",
-            Material.GLASS_PANE,
+            Material.BLACK_STAINED_GLASS_PANE,
             "&8Oscillating Concentrator &FI",
             Lore.create(OSCILLATING_CONCENTRATOR_SETTINGS,
                     "&7● Toggles power on/off every tick",
-                    "&7● Concentrates sunlight into a quaptic ray"));
+                    "&7● Concentrates epic admin hax into a quaptic ray"));
 
     public void initialize() {
         final SlimefunAddon addon = Quaptics.getInstance();
