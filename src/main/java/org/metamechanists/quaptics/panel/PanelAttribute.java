@@ -84,6 +84,7 @@ public class PanelAttribute {
     public void setText(@NotNull final String text) {
         if (!text.equals(currentTextCache)) {
             currentTextCache = text;
+            saveData();
             getTextDisplay().ifPresent(display -> display.setText(ChatColors.color(text)));
         }
     }
