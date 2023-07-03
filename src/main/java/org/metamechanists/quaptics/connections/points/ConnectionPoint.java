@@ -39,7 +39,7 @@ public abstract class ConnectionPoint {
     @Getter
     private final InteractionId interactionId;
     private final BlockDisplayId blockDisplayId;
-    private @Nullable PanelId panelId;
+    private final @Nullable PanelId panelId;
     private @Nullable LinkId linkId;
     @Getter
     private final String name;
@@ -128,15 +128,7 @@ public abstract class ConnectionPoint {
     public void changeLocation(@NotNull final Location location) {
         getBlockDisplay().ifPresent(blockDisplay -> blockDisplay.teleport(location));
         getInteraction().ifPresent(interaction -> interaction.teleport(location.clone().add(INTERACTION_OFFSET)));
-
-        getPointPanel().ifPresent(panel -> {
-            final boolean wasHidden = panel.isPanelHidden();
-            panel.remove();
-
-            this.panelId = new PointPanel(location, getId()).getId();
-            panel.setPanelHidden(wasHidden);
-        });
-
+        getPointPanel().ifPresent(panel -> panel.changeLocation(location.clone()));
         saveData();
     }
 

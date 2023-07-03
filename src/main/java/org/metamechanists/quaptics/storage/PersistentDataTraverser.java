@@ -4,6 +4,7 @@ import io.github.bakedlibs.dough.data.persistent.PersistentDataAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.persistence.PersistentDataHolder;
+import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.metamechanists.quaptics.Quaptics;
@@ -54,10 +55,22 @@ public class PersistentDataTraverser {
         }
         PersistentDataAPI.setString(persistentDataHolder, getKey(key), value);
     }
-    public void set(@NotNull final String key, final @Nullable CustomId value) {
+    public void set(@NotNull final String key, @Nullable final Vector value) {
+        if (value == null) {
+            PersistentDataAPI.remove(persistentDataHolder, getKey(key + "x"));
+            PersistentDataAPI.remove(persistentDataHolder, getKey(key + "y"));
+            PersistentDataAPI.remove(persistentDataHolder, getKey(key + "z"));
+            return;
+        }
+
+        set(key + "x", value.getX());
+        set(key + "y", value.getY());
+        set(key + "z", value.getZ());
+    }
+    public void set(@NotNull final String key, @Nullable final CustomId value) {
         set(key, value == null ? null : value.toString());
     }
-    public void set(@NotNull final String key, final @NotNull Map<String, ? extends CustomId> value) {
+    public void set(@NotNull final String key, @NotNull final Map<String, ? extends CustomId> value) {
         set(key + "length", value.size());
         int i = 0;
         for (final Entry<String, ? extends CustomId> pair : value.entrySet()) {
@@ -78,6 +91,12 @@ public class PersistentDataTraverser {
     }
     public @Nullable String getString(@NotNull final String key) {
         return PersistentDataAPI.getString(persistentDataHolder, getKey(key));
+    }
+    public @Nullable Vector getVector(@NotNull final String key) {
+        return new Vector(
+                PersistentDataAPI.getInt(persistentDataHolder, getKey(key + "x")),
+                PersistentDataAPI.getInt(persistentDataHolder, getKey(key + "y")),
+                PersistentDataAPI.getInt(persistentDataHolder, getKey(key + "z")));
     }
     public @Nullable BlockDisplayId getBlockDisplayId(@NotNull final String key) {
         final String uuid = getString(key);

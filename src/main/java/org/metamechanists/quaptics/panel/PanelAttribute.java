@@ -7,6 +7,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Display;
 import org.bukkit.entity.Display.Billboard;
 import org.bukkit.entity.TextDisplay;
+import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.storage.PersistentDataTraverser;
@@ -20,19 +21,20 @@ import java.util.Optional;
 public class PanelAttribute {
     private static final float HIDDEN_VIEW_RANGE = 0;
     private static final float SHOWN_VIEW_RANGE = 1;
-
+    private final Vector offset;
     @Getter
     private final TextDisplayId textDisplayId;
     private boolean hidden;
 
-    public PanelAttribute(final Location location, final Vector3f displaySize) {
-        this.textDisplayId = new TextDisplayId(new TextDisplayBuilder(location)
+    public PanelAttribute(final @NotNull Location location, final Vector offset, final Vector3f displaySize) {
+        this.textDisplayId = new TextDisplayId(new TextDisplayBuilder(location.clone().add(offset))
                 .setTransformation(Transformations.unadjustedScale(displaySize))
                 .setBrightness(15)
                 .setViewRange(0)
                 .setBillboard(Billboard.VERTICAL)
                 .setBackgroundColor(Color.fromARGB(0, 0, 0, 0))
                 .build().getUniqueId());
+        this.offset = offset;
         this.hidden = false;
         saveData();
     }
@@ -40,11 +42,13 @@ public class PanelAttribute {
     public PanelAttribute(final PanelAttributeId textDisplayId) {
         final PersistentDataTraverser traverser = new PersistentDataTraverser(textDisplayId);
         this.textDisplayId = new TextDisplayId(textDisplayId);
+        this.offset = traverser.getVector("offset");
         this.hidden = traverser.getBoolean("hidden");
     }
 
     private void saveData() {
         final PersistentDataTraverser traverser = new PersistentDataTraverser(textDisplayId);
+        traverser.set("offset", offset);
         traverser.set("hidden", hidden);
     }
 
@@ -58,6 +62,10 @@ public class PanelAttribute {
 
     private Optional<TextDisplay> getTextDisplay() {
         return textDisplayId.get();
+    }
+
+    public void changeLocation(final Location location) {
+        getTextDisplay().ifPresent(display -> display.teleport(location.add(offset)));
     }
 
     public void setHidden(final boolean hidden) {

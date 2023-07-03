@@ -55,6 +55,10 @@ public class PointPanel {
         panel.setHidden(hidden);
     }
 
+    public void changeLocation(final Location location) {
+        panel.changeLocation(location);
+    }
+
     public void toggleHidden() {
         panel.toggleHidden();
     }

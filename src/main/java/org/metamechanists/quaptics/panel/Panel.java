@@ -2,6 +2,7 @@ package org.metamechanists.quaptics.panel;
 
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import lombok.Getter;
+import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.storage.PersistentDataTraverser;
 import org.metamechanists.quaptics.utils.id.DisplayGroupId;
@@ -56,6 +57,11 @@ public class Panel {
             attribute.setHidden(attributeHidden);
             attribute.updateVisibility(hidden);
         });
+    }
+
+    public void changeLocation(final Location location) {
+        getDisplayGroup().ifPresent(displayGroup -> displayGroup.teleport(location));
+        attributes.values().forEach(attributeId -> attributeId.get().ifPresent(attribute -> attribute.changeLocation(location)));
     }
 
     public void setText(final String name, final String text) {
