@@ -21,7 +21,11 @@ public final class PointPanelUpdateScheduler {
     }
 
     public static void tick() {
-        panelsToTick.forEach((panelId, pointId) -> new PointPanel(panelId, pointId).update());
+        panelsToTick.forEach((panelId, pointId) -> {
+            if (panelId.get().isPresent() && pointId.get().isPresent()) {
+                new PointPanel(panelId, pointId).update();
+            }
+        });
         panelsToTick.clear();
     }
 }
