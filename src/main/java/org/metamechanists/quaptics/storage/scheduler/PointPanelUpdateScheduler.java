@@ -9,8 +9,8 @@ import org.metamechanists.quaptics.utils.id.PanelId;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PointPanelUpdateScheduler {
-    private static Map<PanelId, ConnectionPointId> panelsToTick = new HashMap<>();
+public final class PointPanelUpdateScheduler {
+    private static final Map<PanelId, ConnectionPointId> panelsToTick = new HashMap<>();
 
     private PointPanelUpdateScheduler() {}
 
@@ -22,5 +22,6 @@ public class PointPanelUpdateScheduler {
 
     public static void tick() {
         panelsToTick.forEach((panelId, pointId) -> new PointPanel(panelId, pointId).update());
+        panelsToTick.clear();
     }
 }
