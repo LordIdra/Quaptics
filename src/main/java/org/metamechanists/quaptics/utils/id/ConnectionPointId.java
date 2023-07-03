@@ -6,6 +6,7 @@ import org.metamechanists.quaptics.connections.points.ConnectionPoint;
 import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
 import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
 import org.metamechanists.quaptics.storage.PersistentDataTraverser;
+import org.metamechanists.quaptics.storage.QuapticCache;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -32,8 +33,6 @@ public class ConnectionPointId extends CustomId {
 
         final PersistentDataTraverser traverser = new PersistentDataTraverser(this);
         final String type = traverser.getString("type");
-        return Optional.of(type.equals("output")
-                ? new ConnectionPointOutput(this)
-                : new ConnectionPointInput(this));
+        return QuapticCache.getConnectionPoint(this).map(("output".equals(type) ? ConnectionPointOutput.class : ConnectionPointInput.class)::cast);
     }
 }

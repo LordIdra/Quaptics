@@ -3,6 +3,7 @@ package org.metamechanists.quaptics.utils.id;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.TextDisplay;
 import org.metamechanists.quaptics.panel.PanelAttribute;
+import org.metamechanists.quaptics.storage.QuapticCache;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -24,7 +25,7 @@ public class PanelAttributeId extends CustomId {
     @Override
     public Optional<PanelAttribute> get() {
         return (Bukkit.getEntity(getUUID()) instanceof TextDisplay)
-                ? Optional.of(new PanelAttribute(this))
+                ? QuapticCache.getPanelAttribute(this)
                 : Optional.empty();
     }
 }

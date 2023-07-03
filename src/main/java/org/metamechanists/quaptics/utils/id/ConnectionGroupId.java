@@ -2,6 +2,7 @@ package org.metamechanists.quaptics.utils.id;
 
 import org.bukkit.Bukkit;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
+import org.metamechanists.quaptics.storage.QuapticCache;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -23,7 +24,7 @@ public class ConnectionGroupId extends CustomId {
     @Override
     public Optional<ConnectionGroup> get() {
         return Bukkit.getEntity(getUUID()) != null
-                ? Optional.of(new ConnectionGroup(this))
+                ? QuapticCache.getConnectionGroup(this)
                 : Optional.empty();
     }
 }

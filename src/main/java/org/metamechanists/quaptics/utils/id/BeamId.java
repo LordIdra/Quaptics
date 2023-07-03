@@ -2,7 +2,8 @@ package org.metamechanists.quaptics.utils.id;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.BlockDisplay;
-import org.metamechanists.quaptics.beams.beam.DirectBeam;
+import org.metamechanists.quaptics.beams.beam.Beam;
+import org.metamechanists.quaptics.storage.QuapticCache;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -22,9 +23,9 @@ public class BeamId extends CustomId {
         super(uuid);
     }
     @Override
-    public Optional<DirectBeam> get() {
+    public Optional<Beam> get() {
         return (Bukkit.getEntity(getUUID()) instanceof BlockDisplay)
-                ? Optional.of(new DirectBeam(this))
+                ? QuapticCache.getBeam(this)
                 : Optional.empty();
     }
 }

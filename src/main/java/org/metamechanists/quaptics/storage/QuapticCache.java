@@ -52,7 +52,7 @@ public class QuapticCache {
         panels.put(value.getId(), value);
     }
 
-    public Optional<Beam> getBeams(final BeamId id) {
+    public Optional<Beam> getBeam(final BeamId id) {
         if (!beams.containsKey(id) && id.get().isPresent()) {
             id.get().ifPresent(value -> beams.put(id, value));
         }

@@ -2,6 +2,7 @@ package org.metamechanists.quaptics.utils.id;
 
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import org.metamechanists.quaptics.connections.Link;
+import org.metamechanists.quaptics.storage.QuapticCache;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -23,7 +24,7 @@ public class LinkId extends CustomId {
     @Override
     public Optional<Link> get() {
         return DisplayGroup.fromUUID(getUUID()) != null
-                ? Optional.of(new Link(this))
+                ? QuapticCache.getLink(this)
                 : Optional.empty();
     }
 }
