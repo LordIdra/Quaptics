@@ -159,8 +159,8 @@ public class Link {
         return power != 0;
     }
 
-    private double calculateChange(final double initialValue, final double newValue) {
-        return (newValue-initialValue) / initialValue;
+    private static double calculateChange(final double initialValue, final double newValue) {
+        return Math.abs((newValue-initialValue) / initialValue);
     }
 
     public void setPower(final double power) {
@@ -177,8 +177,7 @@ public class Link {
     }
 
     private void setFrequency(final double frequency) {
-        // TODO how can we limit the size of frequency changes?
-        if (calculateChange(this.frequency, frequency) < MAX_POWER_CHANGE_PROPORTION) {
+        if (calculateChange(this.frequency, frequency) < MAX_FREQUENCY_CHANGE_PROPORTION) {
             return;
         }
 
