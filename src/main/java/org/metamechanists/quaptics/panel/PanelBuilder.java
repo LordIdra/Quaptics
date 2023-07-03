@@ -27,7 +27,7 @@ public class PanelBuilder {
     }
 
     public PanelBuilder addAttribute(final String name, final boolean hidden) {
-        final PanelAttribute attribute = new PanelAttribute(location, offset, displaySize);
+        final PanelAttribute attribute = new PanelAttribute(location.clone(), offset.clone(), displaySize);
         attribute.setHidden(hidden);
         attributes.put(name, attribute.getId());
         offset.add(attributeSpacing);

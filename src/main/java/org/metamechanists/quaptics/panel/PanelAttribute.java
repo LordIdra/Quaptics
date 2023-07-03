@@ -29,7 +29,7 @@ public class PanelAttribute {
     private boolean hidden;
 
     public PanelAttribute(final @NotNull Location location, final Vector offset, final Vector3f displaySize) {
-        this.textDisplayId = new TextDisplayId(new TextDisplayBuilder(location.clone().add(offset))
+        this.textDisplayId = new TextDisplayId(new TextDisplayBuilder(location.add(offset))
                 .setTransformation(Transformations.unadjustedScale(displaySize))
                 .setBrightness(15)
                 .setViewRange(0)
