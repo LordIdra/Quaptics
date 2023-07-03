@@ -57,7 +57,7 @@ public class PointPanel {
     }
 
     public void changeLocation(final Location location) {
-        panel.changeLocation(location);
+        panel.changeLocation(location.clone().add(POINT_OFFSET));
     }
 
     public void toggleHidden() {
