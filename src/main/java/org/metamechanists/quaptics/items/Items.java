@@ -9,6 +9,7 @@ import org.metamechanists.quaptics.items.groups.Basic;
 import org.metamechanists.quaptics.items.groups.Guide;
 import org.metamechanists.quaptics.items.groups.Intermediate;
 import org.metamechanists.quaptics.items.groups.Primitive;
+import org.metamechanists.quaptics.items.groups.Testing;
 import org.metamechanists.quaptics.items.groups.Tools;
 
 import java.util.LinkedHashMap;
@@ -27,6 +28,7 @@ public class Items {
         Basic.initialize();
         Intermediate.initialize();
         Advanced.initialize();
+        Testing.initialize();
 
         Slimefun.getRegistry().getAllSlimefunItems().stream()
                 .filter(ConnectedBlock.class::isInstance)
