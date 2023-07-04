@@ -51,7 +51,7 @@ public class CapacitorPanel extends BlockPanel {
 
         setPanelHidden(false);
 
-        panel.setText("chargeText", Lore.chargeBarRaw((int)charge, (int)capacity));
-        panel.setText("chargeBar", Lore.chargeValuesRaw((int)charge, (int)capacity));
+        panel.setText("chargeText", Lore.panelChargeBar((int)charge, (int)capacity));
+        panel.setText("chargeBar", Lore.panelChargeValues((int)charge, (int)capacity));
     }
 }

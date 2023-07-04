@@ -1,7 +1,7 @@
 package org.metamechanists.quaptics.panels;
 
 import lombok.Getter;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.entity.Display;
@@ -77,8 +77,8 @@ public class PanelAttribute {
         saveData();
     }
 
-    public void setText(@NotNull final String text) {
-        getTextDisplay().ifPresent(display -> display.text(LegacyComponentSerializer.legacyAmpersand().deserialize(text)));
+    public void setText(@NotNull final Component text) {
+        getTextDisplay().ifPresent(display -> display.text(text));
     }
 
     public void remove() {

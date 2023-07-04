@@ -1,6 +1,7 @@
 package org.metamechanists.quaptics.panels;
 
 import lombok.Getter;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.entity.Interaction;
 import org.jetbrains.annotations.NotNull;
@@ -60,7 +61,7 @@ public class Panel {
         attributes.values().forEach(attributeId -> attributeId.get().ifPresent(attribute -> attribute.changeLocation(location)));
     }
 
-    public void setText(final String name, final String text) {
+    public void setText(final String name, final Component text) {
         getAttribute(name).ifPresent(attribute -> attribute.setText(text));
     }
 
