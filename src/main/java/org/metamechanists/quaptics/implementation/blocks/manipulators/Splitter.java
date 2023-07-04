@@ -12,10 +12,9 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
+import org.metamechanists.quaptics.connections.ConnectionPointType;
 import org.metamechanists.quaptics.connections.Link;
-import org.metamechanists.quaptics.connections.points.ConnectionPoint;
-import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
-import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
+import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.implementation.blocks.attachments.PowerLossBlock;
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
 import org.metamechanists.quaptics.implementation.blocks.attachments.PowerAnimatedBlock;
@@ -59,10 +58,9 @@ public class Splitter extends ConnectedBlock implements PowerAnimatedBlock, Powe
     @Override
     protected List<ConnectionPoint> generateConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
         final List<ConnectionPoint> points = new ArrayList<>();
-        points.add(new ConnectionPointInput(groupId, "input", formatPointLocation(player, location, inputLocation)));
+        points.add(new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input", formatPointLocation(player, location, inputLocation)));
         IntStream.range(0, settings.getConnections()).forEach(i ->
-            points.add(new ConnectionPointOutput(groupId,
-                    "output " + Objects.toString(i),
+            points.add(new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output " + Objects.toString(i),
                     formatPointLocation(player, location, getRelativeOutputLocation(i)))));
         return points;
     }

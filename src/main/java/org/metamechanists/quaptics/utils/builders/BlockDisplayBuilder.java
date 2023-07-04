@@ -8,6 +8,7 @@ import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Display.Brightness;
 import org.joml.Matrix4f;
 
+@SuppressWarnings("unused")
 public class BlockDisplayBuilder {
     private final Location location;
     private Material material;

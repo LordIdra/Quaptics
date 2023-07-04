@@ -15,10 +15,9 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
+import org.metamechanists.quaptics.connections.ConnectionPointType;
 import org.metamechanists.quaptics.connections.Link;
-import org.metamechanists.quaptics.connections.points.ConnectionPoint;
-import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
-import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
+import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.implementation.blocks.attachments.PowerLossBlock;
 import org.metamechanists.quaptics.implementation.blocks.attachments.UpgraderBlock;
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
@@ -76,8 +75,8 @@ public class Scatterer extends ConnectedBlock implements PowerAnimatedBlock, Pow
     @Override
     protected List<ConnectionPoint> generateConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
         return List.of(
-                new ConnectionPointInput(groupId, "input", formatPointLocation(player, location, inputPointLocation)),
-                new ConnectionPointOutput(groupId, "output", formatPointLocation(player, location, outputPointLocation)));
+                new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input", formatPointLocation(player, location, inputPointLocation)),
+                new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output", formatPointLocation(player, location, outputPointLocation)));
     }
 
     @Override

@@ -22,9 +22,7 @@ import org.jetbrains.annotations.Unmodifiable;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.connections.panels.PointPanel;
-import org.metamechanists.quaptics.connections.points.ConnectionPoint;
-import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
-import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
+import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.implementation.blocks.burnout.BurnoutManager;
 import org.metamechanists.quaptics.implementation.blocks.burnout.BurnoutRunnable;
@@ -171,23 +169,17 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
     }
 
     @NotNull
-    private static List<ConnectionPointOutput> getLinkedOutputs(final Location location) {
-        return getLinkedPoints(location).stream()
-                .filter(ConnectionPointOutput.class::isInstance)
-                .map(ConnectionPointOutput.class::cast)
-                .toList();
+    private static List<ConnectionPoint> getLinkedOutputs(final Location location) {
+        return getLinkedPoints(location).stream().filter(ConnectionPoint::isOutput).toList();
     }
 
     @NotNull
-    private static List<ConnectionPointInput> getLinkedInputs(final Location location) {
-        return getLinkedPoints(location).stream()
-                .filter(ConnectionPointInput.class::isInstance)
-                .map(ConnectionPointInput.class::cast)
-                .toList();
+    private static List<ConnectionPoint> getLinkedInputs(final Location location) {
+        return getLinkedPoints(location).stream().filter(ConnectionPoint::isInput).toList();
     }
 
     @NotNull
-    protected static List<ConnectionPointInput> getEnabledInputs(final Location location) {
+    protected static List<ConnectionPoint> getEnabledInputs(final Location location) {
         return getLinkedInputs(location).stream().filter(ConnectionPoint::isLinkEnabled).toList();
     }
 

@@ -12,10 +12,9 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
+import org.metamechanists.quaptics.connections.ConnectionPointType;
 import org.metamechanists.quaptics.connections.Link;
-import org.metamechanists.quaptics.connections.points.ConnectionPoint;
-import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
-import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
+import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.implementation.blocks.attachments.PowerAnimatedBlock;
 import org.metamechanists.quaptics.implementation.blocks.attachments.PowerLossBlock;
@@ -58,10 +57,10 @@ public class Combiner extends ConnectedBlock implements PowerAnimatedBlock, Powe
 
     @Override
     protected List<ConnectionPoint> generateConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
-        final List<ConnectionPoint> points = IntStream.range(0, settings.getConnections()).mapToObj(i -> new ConnectionPointInput(groupId,
-                "input " + Objects.toString(i),
+        final List<ConnectionPoint> points = IntStream.range(0,
+                settings.getConnections()).mapToObj(i -> new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input " + Objects.toString(i),
                 formatPointLocation(player, location, getRelativeInputLocation(i)))).collect(Collectors.toList());
-        points.add(new ConnectionPointOutput(groupId, "output", formatPointLocation(player, location, outputLocation)));
+        points.add(new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output", formatPointLocation(player, location, outputLocation)));
         return points;
     }
 
@@ -72,7 +71,7 @@ public class Combiner extends ConnectedBlock implements PowerAnimatedBlock, Powe
             return;
         }
 
-        final List<ConnectionPointInput> enabledInputs = getEnabledInputs(location.get());
+        final List<ConnectionPoint> enabledInputs = getEnabledInputs(location.get());
         if (doBurnoutCheck(group, enabledInputs)) {
             return;
         }

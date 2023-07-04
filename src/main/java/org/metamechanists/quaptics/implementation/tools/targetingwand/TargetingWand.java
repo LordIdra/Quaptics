@@ -13,9 +13,7 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.Link;
-import org.metamechanists.quaptics.connections.points.ConnectionPoint;
-import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
-import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
+import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Language;
@@ -41,7 +39,7 @@ public class TargetingWand extends SlimefunItem {
             return;
         }
 
-        if (!(source.get() instanceof ConnectionPointOutput)) {
+        if (!(source.get().isOutput())) {
             Language.sendLanguageMessage(player, "targeting-wand.source-must-be-output");
             return;
         }
@@ -69,26 +67,27 @@ public class TargetingWand extends SlimefunItem {
         point.get().getLink().ifPresent(Link::remove);
     }
 
-    private static void createLink(final Player player, final ConnectionPointId inputId, final ItemStack stack) {
+    private static void createLink(final Player player, final @NotNull ConnectionPointId inputId, final ItemStack stack) {
         final ConnectionPointId outputId = new ConnectionPointId(PersistentDataUtils.getString(stack, Keys.SOURCE));
-        final Optional<ConnectionPointOutput> output = outputId.get().map(ConnectionPointOutput.class::cast);
-        if (output.isEmpty()) {
+        final Optional<ConnectionPoint> output = outputId.get();
+        final Optional<ConnectionPoint> input = inputId.get();
+        if (output.isEmpty() || input.isEmpty()) {
             return;
         }
 
-        if (inputId.get().isEmpty() || !(inputId.get().get() instanceof final ConnectionPointInput input)) {
+        if (!(input.get().isInput())) {
             Language.sendLanguageMessage(player, "targeting-wand.target-must-be-input");
             return;
         }
 
-        final Optional<Location> inputLocation = input.getLocation();
+        final Optional<Location> inputLocation = input.get().getLocation();
         final Optional<Location> outputLocation = output.get().getLocation();
         if (inputLocation.isEmpty() || outputLocation.isEmpty()) {
             return;
         }
 
         final Optional<ConnectionGroup> outputGroup = output.get().getGroup();
-        final Optional<ConnectionGroup> inputGroup = input.getGroup();
+        final Optional<ConnectionGroup> inputGroup = input.get().getGroup();
         if (outputGroup.isEmpty() || inputGroup.isEmpty()) {
             return;
         }
@@ -108,9 +107,9 @@ public class TargetingWand extends SlimefunItem {
             return;
         }
 
-        if (input.getLink().isPresent() && output.get().getLink().isPresent()) {
-            final Optional<ConnectionPointInput> inputPoint = output.get().getLink().get().getInput();
-            final Optional<ConnectionPointOutput> outputPoint = input.getLink().get().getOutput();
+        if (input.get().getLink().isPresent() && output.get().getLink().isPresent()) {
+            final Optional<ConnectionPoint> inputPoint = output.get().getLink().get().getInput();
+            final Optional<ConnectionPoint> outputPoint = input.get().getLink().get().getOutput();
 
             if (inputPoint.isPresent()
                     && inputPoint.get().getId().equals(inputId)
@@ -123,8 +122,8 @@ public class TargetingWand extends SlimefunItem {
         final ConnectedBlock outputBlock = outputGroup.get().getBlock();
         final ConnectedBlock inputBlock = inputGroup.get().getBlock();
 
-        if (input.getLink().isPresent()) {
-            input.getLink().get().remove();
+        if (input.get().getLink().isPresent()) {
+            input.get().getLink().get().remove();
         }
 
         if (output.get().getLink().isPresent()) {

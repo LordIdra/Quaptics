@@ -1,9 +1,8 @@
-package org.metamechanists.quaptics.connections.points;
+package org.metamechanists.quaptics.connections;
 
 import lombok.Getter;
 import org.bukkit.Color;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Display.Brightness;
 import org.bukkit.entity.Interaction;
@@ -11,8 +10,6 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
-import org.metamechanists.quaptics.connections.ConnectionGroup;
-import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.connections.panels.PointPanel;
 import org.metamechanists.quaptics.storage.PersistentDataTraverser;
 import org.metamechanists.quaptics.storage.scheduler.PointPanelUpdateScheduler;
@@ -28,7 +25,7 @@ import org.metamechanists.quaptics.utils.id.PanelId;
 
 import java.util.Optional;
 
-public abstract class ConnectionPoint {
+public class ConnectionPoint {
     private static final float SIZE = 0.1F;
     private static final Vector INTERACTION_OFFSET = new Vector(0, -SIZE/2, 0);
     private static final Color SELECTED_COLOR = Color.fromRGB(0, 255, 0);
@@ -36,6 +33,7 @@ public abstract class ConnectionPoint {
     private static final int CONNECTED_BRIGHTNESS = 15;
     @Getter
     private static final int DISCONNECTED_BRIGHTNESS = 3;
+    private final ConnectionPointType type;
     private final ConnectionGroupId groupId;
     @Getter
     private final InteractionId interactionId;
@@ -45,15 +43,17 @@ public abstract class ConnectionPoint {
     @Getter
     private final String name;
 
-    protected ConnectionPoint(final ConnectionGroupId groupId, final String name, @NotNull final Location location, final Material material) {
+    public ConnectionPoint(final ConnectionPointType type, final ConnectionGroupId groupId, final String name,
+                              @NotNull final Location location) {
         final Interaction interaction = new InteractionBuilder(location.clone().add(INTERACTION_OFFSET))
                 .setWidth(SIZE)
                 .setHeight(SIZE)
                 .build();
+        this.type = type;
         this.groupId = groupId;
         this.interactionId = new InteractionId(interaction.getUniqueId());
         this.blockDisplayId = new BlockDisplayId(new BlockDisplayBuilder(location)
-                .setMaterial(material)
+                .setMaterial(type.getMaterial())
                 .setTransformation(Transformations.adjustedScale(new Vector3f(SIZE, SIZE, SIZE)))
                 .setBrightness(DISCONNECTED_BRIGHTNESS)
                 .build()
@@ -64,8 +64,9 @@ public abstract class ConnectionPoint {
         updatePanel();
     }
 
-    protected ConnectionPoint(final ConnectionPointId pointId) {
+    public ConnectionPoint(final ConnectionPointId pointId) {
         final PersistentDataTraverser traverser = new PersistentDataTraverser(pointId);
+        this.type = traverser.getConnectionPointType("type");
         this.groupId = traverser.getConnectionGroupId("groupId");
         this.blockDisplayId = traverser.getBlockDisplayId("blockDisplayId");
         this.interactionId = traverser.getInteractionId("interactionId");
@@ -74,7 +75,9 @@ public abstract class ConnectionPoint {
         this.name = traverser.getString("name");
     }
 
-    protected void saveData(@NotNull final PersistentDataTraverser traverser) {
+    private void saveData() {
+        final PersistentDataTraverser traverser = new PersistentDataTraverser(getId());
+        traverser.set("type", type);
         traverser.set("groupId", groupId);
         traverser.set("blockDisplayId", blockDisplayId);
         traverser.set("interactionId", interactionId);
@@ -83,7 +86,13 @@ public abstract class ConnectionPoint {
         traverser.set("name", name);
     }
 
-    protected abstract void saveData();
+    public boolean isOutput() {
+        return type == ConnectionPointType.OUTPUT;
+    }
+
+    public boolean isInput() {
+        return type == ConnectionPointType.INPUT;
+    }
 
     public final @NotNull ConnectionPointId getId() {
         return new ConnectionPointId(interactionId);

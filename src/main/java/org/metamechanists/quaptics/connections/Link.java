@@ -7,12 +7,9 @@ import org.jetbrains.annotations.Nullable;
 import org.metamechanists.metalib.sefilib.entity.display.DisplayGroup;
 import org.metamechanists.quaptics.beams.FrequencyColor;
 import org.metamechanists.quaptics.beams.beam.DirectBeam;
-import org.metamechanists.quaptics.connections.points.ConnectionPoint;
-import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
-import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
 import org.metamechanists.quaptics.storage.scheduler.BlockUpdateScheduler;
 import org.metamechanists.quaptics.storage.PersistentDataTraverser;
-import org.metamechanists.quaptics.utils.id.BeamId;
+import org.metamechanists.quaptics.utils.id.DirectBeamId;
 import org.metamechanists.quaptics.utils.id.ConnectionPointId;
 import org.metamechanists.quaptics.utils.id.LinkId;
 
@@ -29,7 +26,7 @@ public class Link {
     private final Location outputLocation;
     private final Location inputLocation;
     private final double maxPower;
-    private @Nullable BeamId beamId;
+    private @Nullable DirectBeamId directBeamId;
     @Getter
     private double power;
     @Getter
@@ -40,8 +37,8 @@ public class Link {
         this.inputId = inputId;
         this.outputId = outputId;
 
-        final ConnectionPointInput input = getInput().get();
-        final ConnectionPointOutput output = getOutput().get();
+        final ConnectionPoint input = getInput().get();
+        final ConnectionPoint output = getOutput().get();
 
         this.inputLocation = input.getLocation().get();
         this.outputLocation = output.getLocation().get();
@@ -65,7 +62,7 @@ public class Link {
         this.id = id;
         this.outputId = traverser.getConnectionPointId("outputId");
         this.inputId = traverser.getConnectionPointId("inputId");
-        this.beamId = traverser.getBeamId("beamId");
+        this.directBeamId = traverser.getBeamId("beamId");
         this.power = traverser.getDouble("power");
         this.frequency = traverser.getDouble("frequency");
         this.maxPower = traverser.getDouble("maxPower");
@@ -77,42 +74,36 @@ public class Link {
         final PersistentDataTraverser traverser = new PersistentDataTraverser(id);
         traverser.set("outputId", outputId);
         traverser.set("inputId", inputId);
-        traverser.set("beamId", beamId);
+        traverser.set("beamId", directBeamId);
         traverser.set("power", power);
         traverser.set("frequency", frequency);
         traverser.set("maxPower", maxPower);
     }
 
-    public Optional<ConnectionPointOutput> getOutput() {
-        if (outputId.get().isEmpty()) {
-            return Optional.empty();
-        }
-        return outputId.get().get() instanceof final ConnectionPointOutput output
-                ? Optional.of(output)
-                : Optional.empty();
+    public Optional<ConnectionPoint> getOutput() {
+        return outputId.get().isEmpty() || !outputId.get().get().isOutput()
+                ? Optional.empty()
+                : Optional.of(outputId.get().get());
     }
 
-    public Optional<ConnectionPointInput> getInput() {
-        if (inputId.get().isEmpty()) {
-            return Optional.empty();
-        }
-        return inputId.get().get() instanceof final ConnectionPointInput input
-                ? Optional.of(input)
-                : Optional.empty();
+    public Optional<ConnectionPoint> getInput() {
+        return inputId.get().isEmpty() || !inputId.get().get().isInput()
+                ? Optional.empty()
+                : Optional.of(inputId.get().get());
     }
 
     private boolean hasBeam() {
-        return beamId != null;
+        return directBeamId != null;
     }
 
     private Optional<DirectBeam> getBeam() {
-        return Optional.ofNullable(beamId).map(DirectBeam::new);
+        return Optional.ofNullable(directBeamId).map(DirectBeam::new);
     }
 
     public void remove() {
         if (hasBeam()) {
             getBeam().ifPresent(DirectBeam::deprecate);
-            beamId = null;
+            directBeamId = null;
         }
 
         getOutput().ifPresent(output -> {
@@ -128,7 +119,7 @@ public class Link {
 
     private void regenerateBeam() {
         getBeam().ifPresent(DirectBeam::deprecate);
-        this.beamId = new DirectBeam(
+        this.directBeamId = new DirectBeam(
                 FrequencyColor.getMaterial(frequency),
                 outputLocation,
                 inputLocation,

@@ -23,7 +23,6 @@ public class Keys {
 
     public final NamespacedKey FACING = newKey("FACING");
     public final NamespacedKey SOURCE = newKey("SOURCE");
-    public final NamespacedKey DATA = newKey("DATA");
 
     public final NamespacedKey CHARGE = newKey("CHARGE");
 

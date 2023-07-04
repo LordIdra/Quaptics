@@ -2,9 +2,7 @@ package org.metamechanists.quaptics.utils.id;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Interaction;
-import org.metamechanists.quaptics.connections.points.ConnectionPoint;
-import org.metamechanists.quaptics.connections.points.ConnectionPointInput;
-import org.metamechanists.quaptics.connections.points.ConnectionPointOutput;
+import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.storage.PersistentDataTraverser;
 import org.metamechanists.quaptics.storage.QuapticCache;
 
@@ -33,6 +31,6 @@ public class ConnectionPointId extends CustomId {
 
         final PersistentDataTraverser traverser = new PersistentDataTraverser(this);
         final String type = traverser.getString("type");
-        return QuapticCache.getConnectionPoint(this).map(("output".equals(type) ? ConnectionPointOutput.class : ConnectionPointInput.class)::cast);
+        return QuapticCache.getConnectionPoint(this);
     }
 }

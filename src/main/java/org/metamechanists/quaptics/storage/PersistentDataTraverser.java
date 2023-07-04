@@ -8,7 +8,8 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.metamechanists.quaptics.Quaptics;
-import org.metamechanists.quaptics.utils.id.BeamId;
+import org.metamechanists.quaptics.connections.ConnectionPointType;
+import org.metamechanists.quaptics.utils.id.DirectBeamId;
 import org.metamechanists.quaptics.utils.id.BlockDisplayId;
 import org.metamechanists.quaptics.utils.id.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.id.ConnectionPointId;
@@ -70,6 +71,9 @@ public class PersistentDataTraverser {
     public void set(@NotNull final String key, @Nullable final CustomId value) {
         set(key, value == null ? null : value.toString());
     }
+    public void set(@NotNull final String key, @NotNull final ConnectionPointType value) {
+        set(key, value.toString());
+    }
     public void set(@NotNull final String key, @NotNull final Map<String, ? extends CustomId> value) {
         set(key + "length", value.size());
         int i = 0;
@@ -97,6 +101,9 @@ public class PersistentDataTraverser {
                 PersistentDataAPI.getDouble(persistentDataHolder, getKey(key + "x")),
                 PersistentDataAPI.getDouble(persistentDataHolder, getKey(key + "y")),
                 PersistentDataAPI.getDouble(persistentDataHolder, getKey(key + "z")));
+    }
+    public @Nullable ConnectionPointType getConnectionPointType(@NotNull final String key) {
+        return ConnectionPointType.valueOf(getString(key));
     }
     public @Nullable BlockDisplayId getBlockDisplayId(@NotNull final String key) {
         final String uuid = getString(key);
@@ -134,9 +141,9 @@ public class PersistentDataTraverser {
         final String uuid = getString(key);
         return uuid == null ? null : new TextDisplayId(uuid);
     }
-    public @Nullable BeamId getBeamId(@NotNull final String key) {
+    public @Nullable DirectBeamId getBeamId(@NotNull final String key) {
         final String uuid = getString(key);
-        return uuid == null ? null : new BeamId(uuid);
+        return uuid == null ? null : new DirectBeamId(uuid);
     }
     public @NotNull Map<String, ConnectionPointId> getPointIdMap(@NotNull final String key) {
         final int size = getInt(key + "length");

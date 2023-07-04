@@ -7,7 +7,6 @@ import org.bukkit.util.Vector;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
-import org.metamechanists.quaptics.utils.id.BeamId;
 import org.metamechanists.quaptics.utils.id.BlockDisplayId;
 
 import java.util.Optional;
@@ -28,11 +27,6 @@ public class ProjectileBeam implements Beam {
                 .setBrightness(15)
                 .build()
                 .getUniqueId());
-    }
-
-    @Override
-    public BeamId getId() {
-        return new BeamId(displayId);
     }
 
     private Optional<BlockDisplay> getDisplay() {
