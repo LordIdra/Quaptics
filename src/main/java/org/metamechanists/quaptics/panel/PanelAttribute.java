@@ -78,7 +78,7 @@ public class PanelAttribute {
     }
 
     public void setText(@NotNull final String text) {
-        getTextDisplay().ifPresent(display -> display.text(LegacyComponentSerializer.legacyAmpersand().deserialize(text)));
+        getTextDisplay().ifPresent(display -> display.text(LegacyComponentSerializer.legacySection().deserialize(text)));
     }
 
     public void remove() {
