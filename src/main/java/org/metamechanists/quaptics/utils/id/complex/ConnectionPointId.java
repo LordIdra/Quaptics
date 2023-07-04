@@ -1,16 +1,17 @@
-package org.metamechanists.quaptics.utils.id;
+package org.metamechanists.quaptics.utils.id.complex;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Interaction;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
-import org.metamechanists.quaptics.storage.PersistentDataTraverser;
 import org.metamechanists.quaptics.storage.QuapticCache;
+import org.metamechanists.quaptics.utils.id.ComplexCustomId;
+import org.metamechanists.quaptics.utils.id.CustomId;
 
 import java.util.Optional;
 import java.util.UUID;
 
 @SuppressWarnings("unused")
-public class ConnectionPointId extends CustomId {
+public class ConnectionPointId extends ComplexCustomId {
     public ConnectionPointId() {
         super();
     }
@@ -24,13 +25,13 @@ public class ConnectionPointId extends CustomId {
         super(uuid);
     }
     @Override
+    public boolean isValid() {
+        return Bukkit.getEntity(getUUID()) instanceof Interaction;
+    }
+    @Override
     public Optional<ConnectionPoint> get() {
-        if (!(Bukkit.getEntity(getUUID()) instanceof Interaction)) {
-            return Optional.empty();
-        }
-
-        final PersistentDataTraverser traverser = new PersistentDataTraverser(this);
-        final String type = traverser.getString("type");
-        return QuapticCache.getConnectionPoint(this);
+        return isValid()
+                ? QuapticCache.getConnectionPoint(this)
+                : Optional.empty();
     }
 }

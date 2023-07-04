@@ -9,9 +9,9 @@ import org.metamechanists.quaptics.beams.beam.DirectBeam;
 import org.metamechanists.quaptics.storage.PersistentDataTraverser;
 import org.metamechanists.quaptics.schedulers.BlockUpdateScheduler;
 import org.metamechanists.quaptics.utils.builders.InteractionBuilder;
-import org.metamechanists.quaptics.utils.id.ConnectionPointId;
-import org.metamechanists.quaptics.utils.id.DirectBeamId;
-import org.metamechanists.quaptics.utils.id.LinkId;
+import org.metamechanists.quaptics.utils.id.complex.ConnectionPointId;
+import org.metamechanists.quaptics.utils.id.complex.DirectBeamId;
+import org.metamechanists.quaptics.utils.id.complex.LinkId;
 
 import java.util.Optional;
 

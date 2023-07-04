@@ -30,8 +30,8 @@ import org.metamechanists.quaptics.panels.Panel;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.builders.ItemDisplayBuilder;
-import org.metamechanists.quaptics.utils.id.ConnectionGroupId;
-import org.metamechanists.quaptics.utils.id.PanelId;
+import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
+import org.metamechanists.quaptics.utils.id.complex.PanelId;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.util.List;

@@ -18,7 +18,7 @@ import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Language;
 import org.metamechanists.quaptics.utils.PersistentDataUtils;
-import org.metamechanists.quaptics.utils.id.ConnectionPointId;
+import org.metamechanists.quaptics.utils.id.complex.ConnectionPointId;
 
 import java.util.Optional;
 

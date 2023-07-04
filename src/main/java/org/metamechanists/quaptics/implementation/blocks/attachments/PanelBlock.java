@@ -6,8 +6,8 @@ import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.implementation.blocks.panels.BlockPanel;
 import org.metamechanists.quaptics.utils.Keys;
-import org.metamechanists.quaptics.utils.id.ConnectionGroupId;
-import org.metamechanists.quaptics.utils.id.PanelId;
+import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
+import org.metamechanists.quaptics.utils.id.complex.PanelId;
 
 import java.util.Optional;
 

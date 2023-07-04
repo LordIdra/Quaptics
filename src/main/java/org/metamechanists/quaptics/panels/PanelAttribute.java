@@ -13,8 +13,8 @@ import org.joml.Vector3f;
 import org.metamechanists.quaptics.storage.PersistentDataTraverser;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.TextDisplayBuilder;
-import org.metamechanists.quaptics.utils.id.PanelAttributeId;
-import org.metamechanists.quaptics.utils.id.TextDisplayId;
+import org.metamechanists.quaptics.utils.id.complex.PanelAttributeId;
+import org.metamechanists.quaptics.utils.id.simple.TextDisplayId;
 
 import java.util.Optional;
 

@@ -9,8 +9,8 @@ import org.joml.Vector3f;
 import org.metamechanists.quaptics.beams.DeprecatedBeamStorage;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
-import org.metamechanists.quaptics.utils.id.BlockDisplayId;
-import org.metamechanists.quaptics.utils.id.DirectBeamId;
+import org.metamechanists.quaptics.utils.id.simple.BlockDisplayId;
+import org.metamechanists.quaptics.utils.id.complex.DirectBeamId;
 
 import java.util.Optional;
 

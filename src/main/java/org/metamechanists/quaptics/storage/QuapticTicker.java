@@ -5,7 +5,7 @@ import org.metamechanists.quaptics.beams.DeprecatedBeamStorage;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.schedulers.BlockUpdateScheduler;
 import org.metamechanists.quaptics.schedulers.PointPanelUpdateScheduler;
-import org.metamechanists.quaptics.utils.id.ConnectionGroupId;
+import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 
 import java.util.Optional;
 

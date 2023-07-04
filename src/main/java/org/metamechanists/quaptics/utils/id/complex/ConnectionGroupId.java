@@ -1,14 +1,17 @@
-package org.metamechanists.quaptics.utils.id;
+package org.metamechanists.quaptics.utils.id.complex;
 
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Interaction;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.storage.QuapticCache;
+import org.metamechanists.quaptics.utils.id.ComplexCustomId;
+import org.metamechanists.quaptics.utils.id.CustomId;
 
 import java.util.Optional;
 import java.util.UUID;
 
 @SuppressWarnings("unused")
-public class ConnectionGroupId extends CustomId {
+public class ConnectionGroupId extends ComplexCustomId {
     public ConnectionGroupId() {
         super();
     }
@@ -22,8 +25,12 @@ public class ConnectionGroupId extends CustomId {
         super(uuid);
     }
     @Override
+    public boolean isValid() {
+        return Bukkit.getEntity(getUUID()) instanceof Interaction;
+    }
+    @Override
     public Optional<ConnectionGroup> get() {
-        return Bukkit.getEntity(getUUID()) != null
+        return isValid()
                 ? QuapticCache.getConnectionGroup(this)
                 : Optional.empty();
     }

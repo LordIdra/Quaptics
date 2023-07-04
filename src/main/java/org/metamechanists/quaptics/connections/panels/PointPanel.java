@@ -8,8 +8,8 @@ import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.panels.Panel;
 import org.metamechanists.quaptics.panels.PanelBuilder;
-import org.metamechanists.quaptics.utils.id.ConnectionPointId;
-import org.metamechanists.quaptics.utils.id.PanelId;
+import org.metamechanists.quaptics.utils.id.complex.ConnectionPointId;
+import org.metamechanists.quaptics.utils.id.complex.PanelId;
 
 import java.util.Optional;
 

@@ -1,7 +1,8 @@
-package org.metamechanists.quaptics.utils.id;
+package org.metamechanists.quaptics.utils.id.simple;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.BlockDisplay;
+import org.metamechanists.quaptics.utils.id.CustomId;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -22,7 +23,7 @@ public class BlockDisplayId extends CustomId {
     }
     @Override
     public Optional<BlockDisplay> get() {
-        return (Bukkit.getEntity(getUUID()) instanceof final BlockDisplay blockDisplay)
+        return Bukkit.getEntity(getUUID()) instanceof final BlockDisplay blockDisplay
                 ? Optional.of(blockDisplay)
                 : Optional.empty();
     }

@@ -16,12 +16,12 @@ import org.metamechanists.quaptics.schedulers.PointPanelUpdateScheduler;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.builders.InteractionBuilder;
-import org.metamechanists.quaptics.utils.id.BlockDisplayId;
-import org.metamechanists.quaptics.utils.id.ConnectionGroupId;
-import org.metamechanists.quaptics.utils.id.ConnectionPointId;
-import org.metamechanists.quaptics.utils.id.InteractionId;
-import org.metamechanists.quaptics.utils.id.LinkId;
-import org.metamechanists.quaptics.utils.id.PanelId;
+import org.metamechanists.quaptics.utils.id.simple.BlockDisplayId;
+import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
+import org.metamechanists.quaptics.utils.id.complex.ConnectionPointId;
+import org.metamechanists.quaptics.utils.id.simple.InteractionId;
+import org.metamechanists.quaptics.utils.id.complex.LinkId;
+import org.metamechanists.quaptics.utils.id.complex.PanelId;
 
 import java.util.Optional;
 

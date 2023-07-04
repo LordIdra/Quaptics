@@ -1,7 +1,8 @@
-package org.metamechanists.quaptics.utils.id;
+package org.metamechanists.quaptics.utils.id.simple;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.TextDisplay;
+import org.metamechanists.quaptics.utils.id.CustomId;
 
 import java.util.Optional;
 import java.util.UUID;

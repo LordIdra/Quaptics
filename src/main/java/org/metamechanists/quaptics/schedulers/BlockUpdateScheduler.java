@@ -1,7 +1,7 @@
 package org.metamechanists.quaptics.schedulers;
 
 import org.jetbrains.annotations.NotNull;
-import org.metamechanists.quaptics.utils.id.ConnectionGroupId;
+import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;

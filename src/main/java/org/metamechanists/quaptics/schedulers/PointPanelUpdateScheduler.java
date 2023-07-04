@@ -3,8 +3,8 @@ package org.metamechanists.quaptics.schedulers;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.metamechanists.quaptics.connections.panels.PointPanel;
-import org.metamechanists.quaptics.utils.id.ConnectionPointId;
-import org.metamechanists.quaptics.utils.id.PanelId;
+import org.metamechanists.quaptics.utils.id.complex.ConnectionPointId;
+import org.metamechanists.quaptics.utils.id.complex.PanelId;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -20,8 +20,8 @@ import org.metamechanists.quaptics.implementation.blocks.base.EnergyConnectedBlo
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
-import org.metamechanists.quaptics.utils.id.ConnectionGroupId;
-import org.metamechanists.quaptics.utils.id.ConnectionPointId;
+import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
+import org.metamechanists.quaptics.utils.id.complex.ConnectionPointId;
 
 import java.util.List;
 import java.util.Optional;

@@ -10,7 +10,7 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.implementation.tools.targetingwand.TargetingWand;
-import org.metamechanists.quaptics.utils.id.ConnectionPointId;
+import org.metamechanists.quaptics.utils.id.complex.ConnectionPointId;
 
 import java.util.Optional;
 

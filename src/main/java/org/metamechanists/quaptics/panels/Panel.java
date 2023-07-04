@@ -6,9 +6,9 @@ import org.bukkit.entity.Interaction;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.storage.PersistentDataTraverser;
 import org.metamechanists.quaptics.utils.builders.InteractionBuilder;
-import org.metamechanists.quaptics.utils.id.InteractionId;
-import org.metamechanists.quaptics.utils.id.PanelAttributeId;
-import org.metamechanists.quaptics.utils.id.PanelId;
+import org.metamechanists.quaptics.utils.id.simple.InteractionId;
+import org.metamechanists.quaptics.utils.id.complex.PanelAttributeId;
+import org.metamechanists.quaptics.utils.id.complex.PanelId;
 
 import java.util.Map;
 import java.util.Objects;

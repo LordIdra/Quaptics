@@ -29,7 +29,7 @@ import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
-import org.metamechanists.quaptics.utils.id.ConnectionGroupId;
+import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 
 import java.util.Collection;
 import java.util.List;

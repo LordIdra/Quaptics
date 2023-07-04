@@ -5,7 +5,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.Quaptics;
 import org.metamechanists.quaptics.utils.Language;
-import org.metamechanists.quaptics.utils.id.ConnectionGroupId;
+import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 
 import java.io.File;
 import java.io.IOException;

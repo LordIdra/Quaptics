@@ -21,7 +21,7 @@ import org.metamechanists.quaptics.implementation.blocks.attachments.PowerLossBl
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
-import org.metamechanists.quaptics.utils.id.ConnectionGroupId;
+import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 
 import java.util.List;
 import java.util.Objects;

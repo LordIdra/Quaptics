@@ -1,15 +1,17 @@
-package org.metamechanists.quaptics.utils.id;
+package org.metamechanists.quaptics.utils.id.complex;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.TextDisplay;
 import org.metamechanists.quaptics.panels.PanelAttribute;
 import org.metamechanists.quaptics.storage.QuapticCache;
+import org.metamechanists.quaptics.utils.id.ComplexCustomId;
+import org.metamechanists.quaptics.utils.id.CustomId;
 
 import java.util.Optional;
 import java.util.UUID;
 
 @SuppressWarnings("unused")
-public class PanelAttributeId extends CustomId {
+public class PanelAttributeId extends ComplexCustomId {
     public PanelAttributeId() {
         super();
     }
@@ -23,8 +25,12 @@ public class PanelAttributeId extends CustomId {
         super(uuid);
     }
     @Override
+    public boolean isValid() {
+        return Bukkit.getEntity(getUUID()) instanceof TextDisplay;
+    }
+    @Override
     public Optional<PanelAttribute> get() {
-        return (Bukkit.getEntity(getUUID()) instanceof TextDisplay)
+        return isValid()
                 ? QuapticCache.getPanelAttribute(this)
                 : Optional.empty();
     }

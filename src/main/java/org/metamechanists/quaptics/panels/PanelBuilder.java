@@ -3,7 +3,7 @@ package org.metamechanists.quaptics.panels;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 import org.joml.Vector3f;
-import org.metamechanists.quaptics.utils.id.PanelAttributeId;
+import org.metamechanists.quaptics.utils.id.complex.PanelAttributeId;
 
 import java.util.HashMap;
 import java.util.Map;

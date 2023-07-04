@@ -12,8 +12,8 @@ import org.metamechanists.quaptics.implementation.tools.QuapticChargeableItem;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.panels.Panel;
 import org.metamechanists.quaptics.panels.PanelBuilder;
-import org.metamechanists.quaptics.utils.id.ConnectionGroupId;
-import org.metamechanists.quaptics.utils.id.PanelId;
+import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
+import org.metamechanists.quaptics.utils.id.complex.PanelId;
 
 import java.util.Optional;
 

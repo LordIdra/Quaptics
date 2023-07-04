@@ -9,7 +9,7 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-import org.metamechanists.quaptics.utils.id.ConnectionPointId;
+import org.metamechanists.quaptics.utils.id.complex.ConnectionPointId;
 
 public class TargetingWandListener implements Listener {
 

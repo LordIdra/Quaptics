@@ -23,7 +23,7 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.utils.Transformations;
-import org.metamechanists.quaptics.utils.id.DisplayGroupId;
+import org.metamechanists.quaptics.utils.id.simple.DisplayGroupId;
 
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;

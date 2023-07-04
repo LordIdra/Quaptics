@@ -1,13 +1,17 @@
-package org.metamechanists.quaptics.utils.id;
+package org.metamechanists.quaptics.utils.id.complex;
 
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Interaction;
 import org.metamechanists.quaptics.panels.Panel;
 import org.metamechanists.quaptics.storage.QuapticCache;
+import org.metamechanists.quaptics.utils.id.ComplexCustomId;
+import org.metamechanists.quaptics.utils.id.CustomId;
 
 import java.util.Optional;
 import java.util.UUID;
 
 @SuppressWarnings("unused")
-public class PanelId extends CustomId {
+public class PanelId extends ComplexCustomId {
     public PanelId() {
         super();
     }
@@ -21,8 +25,12 @@ public class PanelId extends CustomId {
         super(uuid);
     }
     @Override
+    public boolean isValid() {
+        return Bukkit.getEntity(getUUID()) instanceof Interaction;
+    }
+    @Override
     public Optional<Panel> get() {
-        return new InteractionId(this).get().isPresent()
+        return isValid()
                 ? QuapticCache.getPanel(this)
                 : Optional.empty();
     }
