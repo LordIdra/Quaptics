@@ -4,11 +4,11 @@ import lombok.Getter;
 import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.metamechanists.metalib.sefilib.entity.display.DisplayGroup;
 import org.metamechanists.quaptics.beams.FrequencyColor;
 import org.metamechanists.quaptics.beams.beam.DirectBeam;
 import org.metamechanists.quaptics.storage.PersistentDataTraverser;
 import org.metamechanists.quaptics.storage.scheduler.BlockUpdateScheduler;
+import org.metamechanists.quaptics.utils.builders.InteractionBuilder;
 import org.metamechanists.quaptics.utils.id.ConnectionPointId;
 import org.metamechanists.quaptics.utils.id.DirectBeamId;
 import org.metamechanists.quaptics.utils.id.LinkId;
@@ -43,7 +43,7 @@ public class Link {
 
         this.inputLocation = input.getLocation().get();
         this.outputLocation = output.getLocation().get();
-        this.id = new LinkId(new DisplayGroup(inputLocation, 0, 0).getParentUUID());
+        this.id = new LinkId(new InteractionBuilder(inputLocation).setHeight(0).setWidth(0).build().getUniqueId());
         this.maxPower = input.getGroup().get().getBlock().getSettings().getTier().maxPower;
 
         saveData(); // the points being linked will not be able to get the link from the id without this line
