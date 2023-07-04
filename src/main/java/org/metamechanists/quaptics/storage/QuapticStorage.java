@@ -12,16 +12,14 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @UtilityClass
 public class QuapticStorage {
     private final Set<ConnectionGroupId> groupIDs = new HashSet<>();
 
     public @NotNull Set<ConnectionGroupId> getLoadedGroups() {
-        return groupIDs.stream()
-                .filter(id -> id.get().isPresent())
-                .collect(Collectors.toSet());
+        groupIDs.removeIf(id -> id.get().isEmpty());
+        return groupIDs;
     }
 
     private @NotNull List<String> serializeGroupIDs() {

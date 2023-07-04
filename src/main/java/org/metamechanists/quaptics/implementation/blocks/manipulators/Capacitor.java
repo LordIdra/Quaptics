@@ -15,7 +15,7 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
-import org.metamechanists.quaptics.QuapticTicker;
+import org.metamechanists.quaptics.storage.QuapticTicker;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
 import org.metamechanists.quaptics.connections.Link;

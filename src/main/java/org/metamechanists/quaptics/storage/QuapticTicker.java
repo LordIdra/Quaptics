@@ -1,10 +1,9 @@
-package org.metamechanists.quaptics;
+package org.metamechanists.quaptics.storage;
 
 import org.bukkit.scheduler.BukkitRunnable;
 import org.metamechanists.quaptics.beams.DeprecatedBeamStorage;
-import org.metamechanists.quaptics.schedulers.BlockUpdateScheduler;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
-import org.metamechanists.quaptics.storage.QuapticStorage;
+import org.metamechanists.quaptics.schedulers.BlockUpdateScheduler;
 import org.metamechanists.quaptics.schedulers.PointPanelUpdateScheduler;
 import org.metamechanists.quaptics.utils.id.ConnectionGroupId;
 

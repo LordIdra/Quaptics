@@ -8,7 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
-import org.metamechanists.quaptics.QuapticTicker;
+import org.metamechanists.quaptics.storage.QuapticTicker;
 import org.metamechanists.quaptics.beams.DeprecatedBeamStorage;
 import org.metamechanists.quaptics.beams.beam.ProjectileBeam;
 import org.metamechanists.quaptics.implementation.blocks.Settings;

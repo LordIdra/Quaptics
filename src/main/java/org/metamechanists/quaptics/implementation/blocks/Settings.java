@@ -5,7 +5,7 @@ import lombok.Getter;
 import org.bukkit.Material;
 import org.bukkit.entity.SpawnCategory;
 import org.jetbrains.annotations.NotNull;
-import org.metamechanists.quaptics.QuapticTicker;
+import org.metamechanists.quaptics.storage.QuapticTicker;
 import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.items.Tier;
 

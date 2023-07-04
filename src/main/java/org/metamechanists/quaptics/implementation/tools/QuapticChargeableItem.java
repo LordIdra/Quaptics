@@ -13,7 +13,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.metamechanists.quaptics.QuapticTicker;
+import org.metamechanists.quaptics.storage.QuapticTicker;
 import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.items.Lore;
