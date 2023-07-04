@@ -1,11 +1,12 @@
 package org.metamechanists.quaptics.panel;
 
-import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import lombok.Getter;
 import org.bukkit.Location;
+import org.bukkit.entity.Interaction;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.storage.PersistentDataTraverser;
-import org.metamechanists.quaptics.utils.id.DisplayGroupId;
+import org.metamechanists.quaptics.utils.builders.InteractionBuilder;
+import org.metamechanists.quaptics.utils.id.InteractionId;
 import org.metamechanists.quaptics.utils.id.PanelAttributeId;
 import org.metamechanists.quaptics.utils.id.PanelId;
 
@@ -14,38 +15,33 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class Panel {
-
     @Getter
-    private final DisplayGroupId displayGroupId;
+    private final PanelId id;
     @Getter
     private boolean hidden = true;
     private final Map<String, ? extends PanelAttributeId> attributes;
 
-    public Panel(final DisplayGroupId displayGroupId, final Map<String, ? extends PanelAttributeId> attributes) {
-        this.displayGroupId = displayGroupId;
+    public Panel(final Location location, final Map<String, ? extends PanelAttributeId> attributes) {
+        this.id = new PanelId(new InteractionBuilder(location).setHeight(0).setWidth(0).build().getUniqueId());
         this.attributes = attributes;
         saveData();
     }
 
     public Panel(@NotNull final PanelId panelId) {
         final PersistentDataTraverser traverser = new PersistentDataTraverser(panelId);
-        this.displayGroupId = new DisplayGroupId(panelId);
+        this.id = panelId;
         this.hidden = traverser.getBoolean("hidden");
         this.attributes = traverser.getPanelAttributeIdMap("attributes");
     }
 
     private void saveData() {
-        final PersistentDataTraverser traverser = new PersistentDataTraverser(displayGroupId);
+        final PersistentDataTraverser traverser = new PersistentDataTraverser(id);
         traverser.set("hidden", hidden);
         traverser.set("attributes", attributes);
     }
 
-    public PanelId getId() {
-        return new PanelId(displayGroupId);
-    }
-
-    private Optional<DisplayGroup> getDisplayGroup() {
-        return displayGroupId.get();
+    private Optional<Interaction> getInteraction() {
+        return new InteractionId(id).get();
     }
 
     private Optional<PanelAttribute> getAttribute(final String name) {
@@ -60,7 +56,7 @@ public class Panel {
     }
 
     public void changeLocation(final Location location) {
-        getDisplayGroup().ifPresent(displayGroup -> displayGroup.teleport(location));
+        getInteraction().ifPresent(displayGroup -> displayGroup.teleport(location));
         attributes.values().forEach(attributeId -> attributeId.get().ifPresent(attribute -> attribute.changeLocation(location)));
     }
 
@@ -97,6 +93,6 @@ public class Panel {
 
     public void remove() {
         removeAttributes();
-        getDisplayGroup().ifPresent(DisplayGroup::remove);
+        getInteraction().ifPresent(Interaction::remove);
     }
 }
