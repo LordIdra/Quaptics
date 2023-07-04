@@ -1,7 +1,8 @@
 package org.metamechanists.quaptics.items;
 
-import io.github.bakedlibs.dough.common.ChatColors;
 import lombok.experimental.UtilityClass;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.utils.Colors;
@@ -35,8 +36,10 @@ public class Lore {
     private final String PHASE_SUFFIX = " &8°";
     private final double SLIMEFUN_TICKS_PER_SECOND = 2.0;
 
-    private final String PANEL_POWER = ChatColors.color(POWER_SYMBOL + "&7Power &e" + "{power}" + POWER_SUFFIX);
-    private final String PANEL_FREQUENCY = ChatColors.color(FREQUENCY_SYMBOL + "&7Frequency &e" + "{frequency}" + FREQUENCY_SUFFIX);
+    private final String PANEL_POWER = LegacyComponentSerializer.legacyAmpersand().serialize(
+            Component.text(POWER_SYMBOL + "&7Power &e" + "{power}" + POWER_SUFFIX));
+    private final String PANEL_FREQUENCY = LegacyComponentSerializer.legacyAmpersand().serialize(
+            Component.text(FREQUENCY_SYMBOL + "&7Frequency &e" + "{frequency}" + FREQUENCY_SUFFIX));
 
     private String format(final double x) {
         return Objects.toString(Math.abs((int)(x) - x) < ROUND_TO_INT_THRESHOLD
