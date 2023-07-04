@@ -2,6 +2,7 @@ package org.metamechanists.quaptics.panel;
 
 import io.github.bakedlibs.dough.common.ChatColors;
 import lombok.Getter;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.entity.Display;
@@ -85,7 +86,7 @@ public class PanelAttribute {
         if (!text.equals(currentTextCache)) {
             currentTextCache = text;
             saveData();
-            getTextDisplay().ifPresent(display -> display.setText(ChatColors.color(text)));
+            getTextDisplay().ifPresent(display -> display.text(Component.text(ChatColors.color(text))));
         }
     }
 
