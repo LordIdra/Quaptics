@@ -1,11 +1,10 @@
 package org.metamechanists.quaptics.connections.panels;
 
-import io.github.bakedlibs.dough.common.ChatColors;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
-import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
+import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.panel.Panel;
 import org.metamechanists.quaptics.panel.PanelBuilder;
@@ -72,7 +71,7 @@ public class PointPanel {
 
         final ConnectionPoint point = getPoint().get();
 
-        panel.setText("name", ChatColors.color((point.getLink().isPresent() ? "&a" : "&c") + point.getName().toUpperCase()));
+        panel.setText("name", (point.getLink().isPresent() ? "&a" : "&c") + point.getName().toUpperCase());
 
         if (point.getLink().isEmpty()) {
             panel.setAttributeHidden("power", true);
