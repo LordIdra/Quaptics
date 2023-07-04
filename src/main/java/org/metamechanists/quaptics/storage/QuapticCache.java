@@ -28,42 +28,42 @@ public class QuapticCache {
     private final Map<PanelId, Panel> panels = new HashMap<>();
 
     public Optional<DirectBeam> getBeam(final DirectBeamId id) {
-        if (!directBeams.containsKey(id) && id.get().isPresent()) {
+        if (!directBeams.containsKey(id)) {
             directBeams.put(id, new DirectBeam(id));
         }
         return Optional.ofNullable(directBeams.get(id));
     }
 
     public Optional<ConnectionGroup> getConnectionGroup(final ConnectionGroupId id) {
-        if (!connectionGroups.containsKey(id) && id.get().isPresent()) {
+        if (!connectionGroups.containsKey(id)) {
             connectionGroups.put(id, new ConnectionGroup(id));
         }
         return Optional.ofNullable(connectionGroups.get(id));
     }
 
     public Optional<ConnectionPoint> getConnectionPoint(final ConnectionPointId id) {
-        if (!connectionPoints.containsKey(id) && id.get().isPresent()) {
+        if (!connectionPoints.containsKey(id)) {
             connectionPoints.put(id, new ConnectionPoint(id));
         }
         return Optional.ofNullable(connectionPoints.get(id));
     }
 
     public Optional<Link> getLink(final LinkId id) {
-        if (!links.containsKey(id) && id.get().isPresent()) {
+        if (!links.containsKey(id)) {
             links.put(id, new Link(id));
         }
         return Optional.ofNullable(links.get(id));
     }
 
     public Optional<PanelAttribute> getPanelAttribute(final PanelAttributeId id) {
-        if (!panelAttributes.containsKey(id) && id.get().isPresent()) {
+        if (!panelAttributes.containsKey(id)) {
             panelAttributes.put(id, new PanelAttribute(id));
         }
         return Optional.ofNullable(panelAttributes.get(id));
     }
 
     public Optional<Panel> getPanel(final PanelId id) {
-        if (!panels.containsKey(id) && id.get().isPresent()) {
+        if (!panels.containsKey(id)) {
             panels.put(id, new Panel(id));
         }
         return Optional.ofNullable(panels.get(id));
