@@ -2,7 +2,6 @@ package org.metamechanists.quaptics.utils;
 
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
-import org.metamechanists.metalib.utils.ColorUtils;
 
 public enum Colors {
     QUAPTICS("66CCFF"),
@@ -30,6 +29,6 @@ public enum Colors {
             colorStringBuilder.append('&').append(character);
         }
 
-        formattedColor = ColorUtils.formatColors(colorStringBuilder.toString());
+        formattedColor = colorStringBuilder.toString();
     }
 }
