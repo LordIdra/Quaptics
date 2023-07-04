@@ -10,7 +10,6 @@ import org.bukkit.entity.Display.Billboard;
 import org.bukkit.entity.TextDisplay;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.storage.PersistentDataTraverser;
 import org.metamechanists.quaptics.utils.Transformations;
@@ -23,7 +22,6 @@ import java.util.Optional;
 public class PanelAttribute {
     private static final float HIDDEN_VIEW_RANGE = 0;
     private static final float SHOWN_VIEW_RANGE = 1;
-    private @Nullable String currentTextCache;
     private final Vector offset;
     @Getter
     private final TextDisplayId textDisplayId;
@@ -45,14 +43,12 @@ public class PanelAttribute {
     public PanelAttribute(final PanelAttributeId textDisplayId) {
         final PersistentDataTraverser traverser = new PersistentDataTraverser(textDisplayId);
         this.textDisplayId = new TextDisplayId(textDisplayId);
-        this.currentTextCache = traverser.getString("currentTextCache");
         this.offset = traverser.getVector("offset");
         this.hidden = traverser.getBoolean("hidden");
     }
 
     private void saveData() {
         final PersistentDataTraverser traverser = new PersistentDataTraverser(textDisplayId);
-        traverser.set("currentTextCache", currentTextCache);
         traverser.set("offset", offset);
         traverser.set("hidden", hidden);
     }
@@ -83,11 +79,7 @@ public class PanelAttribute {
     }
 
     public void setText(@NotNull final String text) {
-        if (!text.equals(currentTextCache)) {
-            currentTextCache = text;
-            saveData();
-            getTextDisplay().ifPresent(display -> display.text(Component.text(ChatColors.color(text))));
-        }
+        getTextDisplay().ifPresent(display -> display.text(Component.text(ChatColors.color(text))));
     }
 
     public void remove() {
