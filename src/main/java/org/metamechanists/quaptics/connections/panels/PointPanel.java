@@ -71,9 +71,7 @@ public class PointPanel {
 
         final ConnectionPoint point = getPoint().get();
 
-        panel.setText("name", point.getLink().isPresent()
-                ? Lore.panelEnabled(point.getName().toUpperCase())
-                : Lore.panelDisabled(point.getName().toUpperCase()));
+        panel.setText("name", (point.getLink().isPresent() ? "&a" : "&c") + point.getName().toUpperCase());
 
         if (point.getLink().isEmpty()) {
             panel.setAttributeHidden("power", true);

@@ -2,9 +2,7 @@ package org.metamechanists.quaptics.items;
 
 import lombok.experimental.UtilityClass;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TextReplacementConfig;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
-import org.intellij.lang.annotations.RegExp;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.utils.Colors;
@@ -38,19 +36,11 @@ public class Lore {
     private final String PHASE_SUFFIX = " &8°";
     private final double SLIMEFUN_TICKS_PER_SECOND = 2.0;
 
-    private final Component PANEL_POWER = deserialize(POWER_SYMBOL + "&7Power &e" + "{power}" + POWER_SUFFIX);
-    private final Component PANEL_FREQUENCY = deserialize(FREQUENCY_SYMBOL + "&7Frequency &e" + "{frequency}" + FREQUENCY_SUFFIX);
-    private final Component PANEL_ENABLED = deserialize("&a{name}");
-    private final Component PANEL_DISABLED = deserialize("&c{name}");
+    private final String PANEL_POWER = LegacyComponentSerializer.legacyAmpersand().serialize(
+            Component.text(POWER_SYMBOL + "&7Power &e" + "{power}" + POWER_SUFFIX));
+    private final String PANEL_FREQUENCY = LegacyComponentSerializer.legacyAmpersand().serialize(
+            Component.text(FREQUENCY_SYMBOL + "&7Frequency &e" + "{frequency}" + FREQUENCY_SUFFIX));
 
-    private @NotNull Component deserialize(final String value) {
-        return LegacyComponentSerializer.legacyAmpersand().deserialize(value);
-    }
-    private @NotNull Component replace(final @NotNull Component component, @RegExp final String match, final String replacement) {
-        return component.replaceText(TextReplacementConfig.builder()
-                        .match(match)
-                        .replacement(replacement).build());
-    }
     private String format(final double x) {
         return Objects.toString(Math.abs((int)(x) - x) < ROUND_TO_INT_THRESHOLD
                 ? (int) x
@@ -136,6 +126,9 @@ public class Lore {
         return ATTRIBUTE_SYMBOL + CHARGE_SYMBOL + "&7Capacity &e" + Objects.toString(capacity) + CHARGE_SUFFIX;
     }
 
+    public String panelPower(final double power) {
+        return PANEL_POWER.replace("{power}", Objects.toString(power));
+    }
     public String emissionPower(final double emissionPower) {
         return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Emission Power &e" + format(emissionPower) + POWER_SUFFIX;
     }
@@ -149,13 +142,22 @@ public class Lore {
     public String chargeBar(final int charge, final int capacity) {
         return ATTRIBUTE_SYMBOL + CHARGE_SYMBOL + "&7Charge " + progressBar(charge, capacity, Colors.CHARGE.getFormattedColor(), "&7");
     }
+    public String chargeBarRaw(final int charge, final int capacity) {
+        return progressBar(charge, capacity, Colors.CHARGE.getFormattedColor(), "&7");
+    }
     public String chargeValues(final int charge, final int capacity) {
         return ATTRIBUTE_SYMBOL + CHARGE_SYMBOL + "&7" + charge + " &8/ &7" + capacity + CHARGE_SUFFIX;
+    }
+    public String chargeValuesRaw(final int charge, final int capacity) {
+        return "&7" + charge + " &8/ &7" + capacity + CHARGE_SUFFIX;
     }
     public String chargeUsage(final int usage) {
         return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Usage &e" + usage + POWER_SUFFIX;
     }
 
+    public String panelFrequency(final double frequency) {
+        return PANEL_FREQUENCY.replace("{frequency}", Objects.toString(frequency));
+    }
     public String operatingFrequency(final double minFrequency, final double maxFrequency) {
         return ATTRIBUTE_SYMBOL + FREQUENCY_SYMBOL + "&7Operating Frequency &e" + format(minFrequency)
                 + (maxFrequency == 0 ? "+" : " &7- &e" + format(maxFrequency))
@@ -176,24 +178,5 @@ public class Lore {
         final String base = "¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦";
         final int divideAt = filled/(max/20);
         return filledColor + base.substring(0, divideAt) + emptyColor + base.substring(divideAt);
-    }
-
-    public Component panelPower(final double power) {
-        return replace(PANEL_POWER, "{power}", Objects.toString(power));
-    }
-    public Component panelFrequency(final double frequency) {
-        return replace(PANEL_FREQUENCY, "{frequency}", Objects.toString(frequency));
-    }
-    public Component panelEnabled(final String name) {
-        return replace(PANEL_ENABLED, "{name}", name);
-    }
-    public Component panelDisabled(final String name) {
-        return replace(PANEL_DISABLED, "{name}", name);
-    }
-    public Component panelChargeBar(final int charge, final int capacity) {
-        return Component.text(progressBar(charge, capacity, Colors.CHARGE.getFormattedColor(), "&7"));
-    }
-    public Component panelChargeValues(final int charge, final int capacity) {
-        return Component.text("&7" + charge + " &8/ &7" + capacity + CHARGE_SUFFIX);
     }
 }
