@@ -38,10 +38,10 @@ public class Lore {
     private final String PHASE_SUFFIX = " &8°";
     private final double SLIMEFUN_TICKS_PER_SECOND = 2.0;
 
-    private final Component PANEL_POWER = deserialize(POWER_SYMBOL + "&7Power &e" + "power" + POWER_SUFFIX);
-    private final Component PANEL_FREQUENCY = deserialize(FREQUENCY_SYMBOL + "&7Frequency &e" + "frequency" + FREQUENCY_SUFFIX);
-    private final Component PANEL_ENABLED = deserialize("&aname");
-    private final Component PANEL_DISABLED = deserialize("&cname");
+    private final Component PANEL_POWER = deserialize(POWER_SYMBOL + "&7Power &e" + "{power}" + POWER_SUFFIX);
+    private final Component PANEL_FREQUENCY = deserialize(FREQUENCY_SYMBOL + "&7Frequency &e" + "{frequency}" + FREQUENCY_SUFFIX);
+    private final Component PANEL_ENABLED = deserialize("&a{name}");
+    private final Component PANEL_DISABLED = deserialize("&c{name}");
 
     private @NotNull Component deserialize(final String value) {
         return LegacyComponentSerializer.legacyAmpersand().deserialize(value);
@@ -179,16 +179,16 @@ public class Lore {
     }
 
     public Component panelPower(final double power) {
-        return replace(PANEL_POWER, "power", Objects.toString(power));
+        return replace(PANEL_POWER, "{power}", Objects.toString(power));
     }
     public Component panelFrequency(final double frequency) {
-        return replace(PANEL_FREQUENCY, "frequency", Objects.toString(frequency));
+        return replace(PANEL_FREQUENCY, "{frequency}", Objects.toString(frequency));
     }
     public Component panelEnabled(final String name) {
-        return replace(PANEL_ENABLED, "name", name);
+        return replace(PANEL_ENABLED, "{name}", name);
     }
     public Component panelDisabled(final String name) {
-        return replace(PANEL_DISABLED, "name", name);
+        return replace(PANEL_DISABLED, "{name}", name);
     }
     public Component panelChargeBar(final int charge, final int capacity) {
         return Component.text(progressBar(charge, capacity, Colors.CHARGE.getFormattedColor(), "&7"));
