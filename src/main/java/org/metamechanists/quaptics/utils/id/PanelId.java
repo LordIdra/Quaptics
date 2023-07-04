@@ -1,6 +1,5 @@
 package org.metamechanists.quaptics.utils.id;
 
-import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import org.metamechanists.quaptics.panel.Panel;
 import org.metamechanists.quaptics.storage.QuapticCache;
 
@@ -23,7 +22,7 @@ public class PanelId extends CustomId {
     }
     @Override
     public Optional<Panel> get() {
-        return DisplayGroup.fromUUID(getUUID()) != null
+        return new InteractionId(this).get().isPresent()
                 ? QuapticCache.getPanel(this)
                 : Optional.empty();
     }
