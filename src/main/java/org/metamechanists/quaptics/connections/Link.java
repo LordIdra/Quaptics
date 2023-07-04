@@ -7,15 +7,16 @@ import org.jetbrains.annotations.Nullable;
 import org.metamechanists.metalib.sefilib.entity.display.DisplayGroup;
 import org.metamechanists.quaptics.beams.FrequencyColor;
 import org.metamechanists.quaptics.beams.beam.DirectBeam;
-import org.metamechanists.quaptics.storage.scheduler.BlockUpdateScheduler;
 import org.metamechanists.quaptics.storage.PersistentDataTraverser;
-import org.metamechanists.quaptics.utils.id.DirectBeamId;
+import org.metamechanists.quaptics.storage.scheduler.BlockUpdateScheduler;
 import org.metamechanists.quaptics.utils.id.ConnectionPointId;
+import org.metamechanists.quaptics.utils.id.DirectBeamId;
 import org.metamechanists.quaptics.utils.id.LinkId;
 
 import java.util.Optional;
 
 public class Link {
+    private static final int ARBITRARILY_LARGE_NUMBER = 9999999;
     private static final double MAX_POWER_CHANGE_PROPORTION = 0.0001;
     private static final double MAX_FREQUENCY_CHANGE_PROPORTION = 0.0001;
     private static final float MAX_BEAM_SIZE = 0.095F;
@@ -151,6 +152,9 @@ public class Link {
     }
 
     private static double calculateChange(final double initialValue, final double newValue) {
+        if (initialValue == 0) {
+            return newValue == 0 ? 0 : ARBITRARILY_LARGE_NUMBER;
+        }
         return Math.abs((newValue-initialValue) / initialValue);
     }
 
