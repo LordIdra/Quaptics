@@ -7,7 +7,7 @@ import org.jetbrains.annotations.Nullable;
 import org.metamechanists.quaptics.beams.FrequencyColor;
 import org.metamechanists.quaptics.beams.beam.DirectBeam;
 import org.metamechanists.quaptics.storage.PersistentDataTraverser;
-import org.metamechanists.quaptics.storage.scheduler.BlockUpdateScheduler;
+import org.metamechanists.quaptics.schedulers.BlockUpdateScheduler;
 import org.metamechanists.quaptics.utils.builders.InteractionBuilder;
 import org.metamechanists.quaptics.utils.id.ConnectionPointId;
 import org.metamechanists.quaptics.utils.id.DirectBeamId;

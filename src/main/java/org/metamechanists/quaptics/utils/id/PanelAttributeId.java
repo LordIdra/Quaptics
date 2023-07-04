@@ -2,7 +2,7 @@ package org.metamechanists.quaptics.utils.id;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.TextDisplay;
-import org.metamechanists.quaptics.panel.PanelAttribute;
+import org.metamechanists.quaptics.panels.PanelAttribute;
 import org.metamechanists.quaptics.storage.QuapticCache;
 
 import java.util.Optional;

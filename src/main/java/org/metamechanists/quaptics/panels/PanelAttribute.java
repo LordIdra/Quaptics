@@ -1,4 +1,4 @@
-package org.metamechanists.quaptics.panel;
+package org.metamechanists.quaptics.panels;
 
 import lombok.Getter;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;

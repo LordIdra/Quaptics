@@ -12,7 +12,7 @@ import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.connections.panels.PointPanel;
 import org.metamechanists.quaptics.storage.PersistentDataTraverser;
-import org.metamechanists.quaptics.storage.scheduler.PointPanelUpdateScheduler;
+import org.metamechanists.quaptics.schedulers.PointPanelUpdateScheduler;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.builders.InteractionBuilder;

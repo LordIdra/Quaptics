@@ -1,4 +1,4 @@
-package org.metamechanists.quaptics.panel;
+package org.metamechanists.quaptics.panels;
 
 import org.bukkit.Location;
 import org.bukkit.util.Vector;

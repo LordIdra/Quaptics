@@ -10,8 +10,8 @@ import org.metamechanists.quaptics.implementation.blocks.base.DisplayGroupTicker
 import org.metamechanists.quaptics.implementation.blocks.consumers.Charger;
 import org.metamechanists.quaptics.implementation.tools.QuapticChargeableItem;
 import org.metamechanists.quaptics.items.Lore;
-import org.metamechanists.quaptics.panel.Panel;
-import org.metamechanists.quaptics.panel.PanelBuilder;
+import org.metamechanists.quaptics.panels.Panel;
+import org.metamechanists.quaptics.panels.PanelBuilder;
 import org.metamechanists.quaptics.utils.id.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.id.PanelId;
 

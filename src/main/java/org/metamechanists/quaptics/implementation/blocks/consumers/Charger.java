@@ -26,7 +26,7 @@ import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.implementation.blocks.panels.BlockPanel;
 import org.metamechanists.quaptics.implementation.blocks.panels.ChargerPanel;
 import org.metamechanists.quaptics.implementation.tools.QuapticChargeableItem;
-import org.metamechanists.quaptics.panel.Panel;
+import org.metamechanists.quaptics.panels.Panel;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.builders.ItemDisplayBuilder;

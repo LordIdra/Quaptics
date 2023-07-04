@@ -1,4 +1,4 @@
-package org.metamechanists.quaptics.storage.scheduler;
+package org.metamechanists.quaptics.schedulers;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

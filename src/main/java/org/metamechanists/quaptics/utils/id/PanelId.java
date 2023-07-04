@@ -1,6 +1,6 @@
 package org.metamechanists.quaptics.utils.id;
 
-import org.metamechanists.quaptics.panel.Panel;
+import org.metamechanists.quaptics.panels.Panel;
 import org.metamechanists.quaptics.storage.QuapticCache;
 
 import java.util.Optional;

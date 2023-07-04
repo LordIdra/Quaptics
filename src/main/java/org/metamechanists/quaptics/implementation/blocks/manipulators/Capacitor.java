@@ -26,7 +26,7 @@ import org.metamechanists.quaptics.implementation.blocks.attachments.PanelBlock;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.implementation.blocks.panels.BlockPanel;
 import org.metamechanists.quaptics.implementation.blocks.panels.CapacitorPanel;
-import org.metamechanists.quaptics.panel.Panel;
+import org.metamechanists.quaptics.panels.Panel;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;

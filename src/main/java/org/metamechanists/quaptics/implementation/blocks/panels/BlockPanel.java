@@ -4,7 +4,7 @@ import org.bukkit.Location;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
-import org.metamechanists.quaptics.panel.Panel;
+import org.metamechanists.quaptics.panels.Panel;
 import org.metamechanists.quaptics.utils.id.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.id.PanelId;
 
