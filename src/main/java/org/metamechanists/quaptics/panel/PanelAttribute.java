@@ -3,6 +3,7 @@ package org.metamechanists.quaptics.panel;
 import io.github.bakedlibs.dough.common.ChatColors;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.entity.Display;
@@ -79,7 +80,7 @@ public class PanelAttribute {
     }
 
     public void setText(@NotNull final String text) {
-        getTextDisplay().ifPresent(display -> display.text(Component.text(ChatColors.color(text))));
+        getTextDisplay().ifPresent(display -> LegacyComponentSerializer.legacySection().serialize(Component.text(ChatColors.color(text))));
     }
 
     public void remove() {
