@@ -1,5 +1,6 @@
 package org.metamechanists.quaptics.items;
 
+import io.github.bakedlibs.dough.common.ChatColors;
 import lombok.experimental.UtilityClass;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
@@ -33,6 +34,9 @@ public class Lore {
     private final String FREQUENCY_SUFFIX = " &8Hz";
     private final String PHASE_SUFFIX = " &8°";
     private final double SLIMEFUN_TICKS_PER_SECOND = 2.0;
+
+    private final String PANEL_POWER = ChatColors.color(POWER_SYMBOL + "&7Power &e" + "{power}" + POWER_SUFFIX);
+    private final String PANEL_FREQUENCY = ChatColors.color(FREQUENCY_SYMBOL + "&7Frequency &e" + "{frequency}" + FREQUENCY_SUFFIX);
 
     private String format(final double x) {
         return Objects.toString(Math.abs((int)(x) - x) < ROUND_TO_INT_THRESHOLD
@@ -119,8 +123,8 @@ public class Lore {
         return ATTRIBUTE_SYMBOL + CHARGE_SYMBOL + "&7Capacity &e" + Objects.toString(capacity) + CHARGE_SUFFIX;
     }
 
-    public String powerNoArrow(final double power) {
-        return POWER_SYMBOL + "&7Power &e" + Objects.toString(power) + POWER_SUFFIX;
+    public String panelPower(final double power) {
+        return PANEL_POWER.replace("{power}", Objects.toString(power));
     }
     public String emissionPower(final double emissionPower) {
         return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Emission Power &e" + format(emissionPower) + POWER_SUFFIX;
@@ -148,8 +152,8 @@ public class Lore {
         return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Usage &e" + usage + POWER_SUFFIX;
     }
 
-    public String frequencyNoArrow(final double frequency) {
-        return FREQUENCY_SYMBOL + "&7Frequency &e" + Objects.toString(frequency) + FREQUENCY_SUFFIX;
+    public String panelFrequency(final double frequency) {
+        return PANEL_FREQUENCY.replace("{frequency}", Objects.toString(frequency));
     }
     public String operatingFrequency(final double minFrequency, final double maxFrequency) {
         return ATTRIBUTE_SYMBOL + FREQUENCY_SYMBOL + "&7Operating Frequency &e" + format(minFrequency)
