@@ -11,6 +11,7 @@ import org.metamechanists.quaptics.Quaptics;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.implementation.blocks.concentrators.SolarConcentrator;
 import org.metamechanists.quaptics.implementation.blocks.consumers.Charger;
+import org.metamechanists.quaptics.implementation.blocks.consumers.MultiblockClicker;
 import org.metamechanists.quaptics.implementation.blocks.consumers.turrets.ModulatedTurret;
 import org.metamechanists.quaptics.implementation.blocks.manipulators.Capacitor;
 import org.metamechanists.quaptics.implementation.blocks.manipulators.Combiner;
@@ -97,6 +98,10 @@ public class Primitive {
             .mainMaterial(Material.POLISHED_ANDESITE)
             .build();
 
+    public final Settings MULTIBLOCK_CLICKER_1_SETTINGS = Settings.builder()
+            .tier(Tier.PRIMITIVE)
+            .build();
+
     public final SlimefunItemStack SOLAR_CONCENTRATOR_1 = new SlimefunItemStack(
             "QP_SOLAR_CONCENTRATOR_1",
             Material.GLASS_PANE,
@@ -159,6 +164,14 @@ public class Primitive {
                     "&7● Modulated projectiles",
                     "&7● Shoots at nearby entities"));
 
+    public final SlimefunItemStack MULTIBLOCK_CLICKER_1 = new SlimefunItemStack(
+            "MULTIBLOCK_CLICKER_1",
+            Material.SMOOTH_STONE_SLAB,
+            "&6Multiblock Clicker &eI",
+            Lore.create(MULTIBLOCK_CLICKER_1_SETTINGS,
+                    "&7● Shift + Right Click the dispenser of a multiblock",
+                    "&7● Automatically clicks the attached multiblock"));
+
     public void initialize() {
         final SlimefunAddon addon = Quaptics.getInstance();
 
@@ -217,5 +230,12 @@ public class Primitive {
                 RecipeType.NULL,
                 new ItemStack[]{},
                 TURRET_1_PASSIVE_SETTINGS).register(addon);
+
+        new MultiblockClicker(
+                Groups.PRIMITIVE,
+                MULTIBLOCK_CLICKER_1,
+                RecipeType.NULL,
+                new ItemStack[]{},
+                MULTIBLOCK_CLICKER_1_SETTINGS).register(addon);
     }
 }
