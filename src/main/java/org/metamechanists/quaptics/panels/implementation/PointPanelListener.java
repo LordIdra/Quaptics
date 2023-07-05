@@ -1,4 +1,4 @@
-package org.metamechanists.quaptics.connections.panels;
+package org.metamechanists.quaptics.panels.implementation;
 
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import org.bukkit.entity.Entity;

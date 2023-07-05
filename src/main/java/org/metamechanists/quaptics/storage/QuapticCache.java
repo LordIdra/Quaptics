@@ -6,7 +6,7 @@ import org.metamechanists.quaptics.beams.beam.DirectBeam;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.Link;
-import org.metamechanists.quaptics.panels.Panel;
+import org.metamechanists.quaptics.panels.PanelContainer;
 import org.metamechanists.quaptics.panels.PanelAttribute;
 import org.metamechanists.quaptics.utils.id.ComplexCustomId;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
@@ -27,7 +27,7 @@ public class QuapticCache {
     private final Map<ConnectionPointId, ConnectionPoint> connectionPoints = new ConcurrentHashMap<>();
     private final Map<LinkId, Link> links = new ConcurrentHashMap<>();
     private final Map<PanelAttributeId, PanelAttribute> panelAttributes = new ConcurrentHashMap<>();
-    private final Map<PanelId, Panel> panels = new ConcurrentHashMap<>();
+    private final Map<PanelId, PanelContainer> panels = new ConcurrentHashMap<>();
 
     private void garbageCollect(final @NotNull Map<? extends ComplexCustomId, ?> map) {
         map.keySet().stream().filter(x -> !x.isValid()).forEach(map::remove);
@@ -71,9 +71,9 @@ public class QuapticCache {
         }
         return Optional.ofNullable(panelAttributes.get(id));
     }
-    public Optional<Panel> getPanel(final PanelId id) {
+    public Optional<PanelContainer> getPanel(final PanelId id) {
         if (!panels.containsKey(id)) {
-            panels.put(id, new Panel(id));
+            panels.put(id, new PanelContainer(id));
         }
         return Optional.ofNullable(panels.get(id));
     }

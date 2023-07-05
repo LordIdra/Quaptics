@@ -2,7 +2,7 @@ package org.metamechanists.quaptics.utils.id.complex;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Interaction;
-import org.metamechanists.quaptics.panels.Panel;
+import org.metamechanists.quaptics.panels.PanelContainer;
 import org.metamechanists.quaptics.storage.QuapticCache;
 import org.metamechanists.quaptics.utils.id.ComplexCustomId;
 import org.metamechanists.quaptics.utils.id.CustomId;
@@ -29,7 +29,7 @@ public class PanelId extends ComplexCustomId {
         return Bukkit.getEntity(getUUID()) instanceof Interaction;
     }
     @Override
-    public Optional<Panel> get() {
+    public Optional<PanelContainer> get() {
         return isValid()
                 ? QuapticCache.getPanel(this)
                 : Optional.empty();

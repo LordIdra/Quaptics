@@ -8,7 +8,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.metamechanists.metalib.bstats.bukkit.Metrics;
-import org.metamechanists.quaptics.connections.panels.PointPanelListener;
+import org.metamechanists.quaptics.panels.implementation.PointPanelListener;
 import org.metamechanists.quaptics.implementation.blocks.burnout.BurnoutManager;
 import org.metamechanists.quaptics.implementation.tools.targetingwand.TargetingWandListener;
 import org.metamechanists.quaptics.items.Groups;

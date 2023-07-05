@@ -30,7 +30,7 @@ public class PanelBuilder {
         return this;
     }
 
-    public Panel build() {
-        return new Panel(location, attributes);
+    public PanelContainer build() {
+        return new PanelContainer(location, attributes);
     }
 }

@@ -24,9 +24,9 @@ import org.metamechanists.quaptics.implementation.blocks.attachments.PowerLossBl
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
 import org.metamechanists.quaptics.implementation.blocks.attachments.PanelBlock;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
-import org.metamechanists.quaptics.implementation.blocks.panels.BlockPanel;
-import org.metamechanists.quaptics.implementation.blocks.panels.CapacitorPanel;
-import org.metamechanists.quaptics.panels.Panel;
+import org.metamechanists.quaptics.panels.BlockPanel;
+import org.metamechanists.quaptics.panels.implementation.CapacitorPanel;
+import org.metamechanists.quaptics.panels.PanelContainer;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
@@ -94,7 +94,7 @@ public class Capacitor extends ConnectedBlock implements PanelBlock, PowerLossBl
         super.onBreak(location);
         getPanelId(location)
                 .flatMap(PanelId::get)
-                .ifPresent(Panel::remove);
+                .ifPresent(PanelContainer::remove);
     }
 
     @Override

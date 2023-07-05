@@ -23,10 +23,10 @@ import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
 import org.metamechanists.quaptics.implementation.blocks.attachments.PanelBlock;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
-import org.metamechanists.quaptics.implementation.blocks.panels.BlockPanel;
-import org.metamechanists.quaptics.implementation.blocks.panels.ChargerPanel;
+import org.metamechanists.quaptics.panels.BlockPanel;
+import org.metamechanists.quaptics.panels.implementation.ChargerPanel;
 import org.metamechanists.quaptics.implementation.tools.QuapticChargeableItem;
-import org.metamechanists.quaptics.panels.Panel;
+import org.metamechanists.quaptics.panels.PanelContainer;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.builders.ItemDisplayBuilder;
@@ -96,8 +96,8 @@ public class Charger extends ConnectedBlock implements PanelBlock {
     protected void onBreak(@NotNull final Location location) {
         super.onBreak(location);
         final Optional<PanelId> panelId = getPanelId(location);
-        final Optional<Panel> panel = panelId.isPresent() ? panelId.get().get() : Optional.empty();
-        panel.ifPresent(Panel::remove);
+        final Optional<PanelContainer> panel = panelId.isPresent() ? panelId.get().get() : Optional.empty();
+        panel.ifPresent(PanelContainer::remove);
     }
 
     @Override

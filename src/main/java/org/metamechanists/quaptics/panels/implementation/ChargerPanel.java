@@ -1,4 +1,4 @@
-package org.metamechanists.quaptics.implementation.blocks.panels;
+package org.metamechanists.quaptics.panels.implementation;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Display;
@@ -10,7 +10,8 @@ import org.metamechanists.quaptics.implementation.blocks.base.DisplayGroupTicker
 import org.metamechanists.quaptics.implementation.blocks.consumers.Charger;
 import org.metamechanists.quaptics.implementation.tools.QuapticChargeableItem;
 import org.metamechanists.quaptics.items.Lore;
-import org.metamechanists.quaptics.panels.Panel;
+import org.metamechanists.quaptics.panels.BlockPanel;
+import org.metamechanists.quaptics.panels.PanelContainer;
 import org.metamechanists.quaptics.panels.PanelBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.id.complex.PanelId;
@@ -28,8 +29,8 @@ public class ChargerPanel extends BlockPanel {
     }
 
     @Override
-    protected Panel createPanel(@NotNull final Location location) {
-        return new PanelBuilder(location.clone().toCenterLocation().add(BLOCK_OFFSET), SIZE)
+    protected PanelContainer buildPanelContainer(@NotNull final Location location) {
+        return new PanelBuilder(location.clone().toCenterLocation().add(getOffset()), SIZE)
                 .addAttribute("chargeText", false)
                 .addAttribute("chargeBar", false)
                 .build();
@@ -57,8 +58,8 @@ public class ChargerPanel extends BlockPanel {
 
         setPanelHidden(false);
 
-        panel.setText("chargeText", Lore.chargeBarRaw((int)charge, (int)capacity));
-        panel.setText("chargeBar", Lore.chargeValuesRaw((int)charge, (int)capacity));
+        panelContainer.setText("chargeText", Lore.chargeBarRaw((int)charge, (int)capacity));
+        panelContainer.setText("chargeBar", Lore.chargeValuesRaw((int)charge, (int)capacity));
     }
 
     private static Optional<ItemStack> getStack(final @NotNull ConnectionGroupId groupId) {

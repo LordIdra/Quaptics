@@ -1,46 +1,35 @@
-package org.metamechanists.quaptics.implementation.blocks.panels;
+package org.metamechanists.quaptics.panels;
 
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
-import org.metamechanists.quaptics.panels.Panel;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.id.complex.PanelId;
 
 import java.util.Optional;
 
-public abstract class BlockPanel {
-    protected static final Vector BLOCK_OFFSET = new Vector(0, 0.7, 0);
+public abstract class BlockPanel extends Panel {
     protected static final float SIZE = 0.40F;
     protected final ConnectionGroupId groupId;
-    protected final Panel panel;
 
     protected BlockPanel(@NotNull final Location location, final ConnectionGroupId groupId) {
+        super(location);
         this.groupId = groupId;
-        this.panel = createPanel(location);
-        panel.setHidden(false);
+        setPanelHidden(false);
     }
 
-    @SuppressWarnings("OptionalGetWithoutIsPresent")
     protected BlockPanel(@NotNull final PanelId panelId, final ConnectionGroupId groupId) {
+        super(panelId);
         this.groupId = groupId;
-        this.panel = panelId.get().get();
-    }
-
-    public PanelId getId() {
-        return panel.getId();
     }
 
     protected Optional<ConnectionGroup> getGroup() {
         return groupId.get();
     }
 
-    protected void setPanelHidden(final boolean hidden) {
-        panel.setHidden(hidden);
+    @Override
+    protected Vector getOffset() {
+        return new Vector(0.0, 0.7, 0.0);
     }
-
-    protected abstract Panel createPanel(@NotNull Location location);
-
-    public abstract void update();
 }
