@@ -132,14 +132,7 @@ public class Charger extends ConnectedBlock implements PanelBlock {
         QuapticChargeableItem.chargeItem(inputLink.get(), itemDisplay.get());
 
         final Optional<ItemStack> stack = getStack(group);
-        if (stack.isEmpty()) {
-            return;
-        }
-
-        final double charge = QuapticChargeableItem.getCharge(stack.get());
-        final double capacity = QuapticChargeableItem.getCapacity(stack.get());
-
-        setPanelHidden(group, (charge == 0.0) || (capacity == 0.0));
+        setPanelHidden(group, stack.isEmpty());
         updatePanel(group);
     }
 
