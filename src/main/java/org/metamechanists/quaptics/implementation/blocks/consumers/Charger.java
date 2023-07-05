@@ -23,6 +23,7 @@ import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
 import org.metamechanists.quaptics.implementation.blocks.attachments.PanelBlock;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
+import org.metamechanists.quaptics.implementation.blocks.base.DisplayGroupTickerBlock;
 import org.metamechanists.quaptics.panels.BlockPanel;
 import org.metamechanists.quaptics.panels.implementation.ChargerPanel;
 import org.metamechanists.quaptics.implementation.tools.QuapticChargeableItem;
@@ -129,6 +130,16 @@ public class Charger extends ConnectedBlock implements PanelBlock {
         }
 
         QuapticChargeableItem.chargeItem(inputLink.get(), itemDisplay.get());
+
+        final Optional<ItemStack> stack = getStack(group);
+        if (stack.isEmpty()) {
+            return;
+        }
+
+        final double charge = QuapticChargeableItem.getCharge(stack.get());
+        final double capacity = QuapticChargeableItem.getCapacity(stack.get());
+
+        setPanelHidden(group, (charge == 0.0) || (capacity == 0.0));
         updatePanel(group);
     }
 
@@ -191,5 +202,24 @@ public class Charger extends ConnectedBlock implements PanelBlock {
         display.setItemStack(null);
         QuapticChargeableItem.updateLore(itemStack);
         ItemUtils.addOrDropItemMainHand(player, itemStack);
+    }
+
+    public static Optional<ItemStack> getStack(final @NotNull ConnectionGroup group) {
+        final Optional<Location> location = group.getLocation();
+        if (location.isEmpty()) {
+            return Optional.empty();
+        }
+
+        final Optional<Display> display = DisplayGroupTickerBlock.getDisplay(location.get(), "item");
+        if (display.isEmpty()) {
+            return Optional.empty();
+        }
+
+        if (!(display.get() instanceof final ItemDisplay itemDisplay)) {
+            return Optional.empty();
+        }
+
+        final ItemStack stack = itemDisplay.getItemStack();
+        return stack == null || stack.getItemMeta() == null ? Optional.empty() : Optional.of(stack);
     }
 }

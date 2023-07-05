@@ -32,5 +32,15 @@ public interface PanelBlock {
         id.ifPresent(panelId -> createPanel(panelId, group.getId()).update());
     }
 
+    default void setPanelHidden(@NotNull final ConnectionGroup group, final boolean hidden) {
+        final Optional<Location> location = group.getLocation();
+        if (location.isEmpty()) {
+            return;
+        }
+
+        final Optional<PanelId> id = getPanelId(location.get());
+        id.ifPresent(panelId -> createPanel(panelId, group.getId()).setPanelHidden(hidden));
+    }
+
     BlockPanel createPanel(final PanelId panelId, final ConnectionGroupId groupId);
 }

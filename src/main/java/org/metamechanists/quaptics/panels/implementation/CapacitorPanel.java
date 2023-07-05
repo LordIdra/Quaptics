@@ -32,6 +32,10 @@ public class CapacitorPanel extends BlockPanel {
 
     @Override
     public void update() {
+        if (isPanelHidden()) {
+            return;
+        }
+
         final Optional<ConnectionGroup> group = getGroup();
         if (group.isEmpty()) {
             return;
@@ -44,13 +48,6 @@ public class CapacitorPanel extends BlockPanel {
 
         final double capacity = group.get().getBlock().getSettings().getCapacity();
         final double charge = Capacitor.getCharge(location.get());
-
-        if (charge == 0) {
-            setPanelHidden(true);
-            return;
-        }
-
-        setPanelHidden(false);
 
         panelContainer.setText("chargeText", Lore.chargeBarRaw((int)charge, (int)capacity));
         panelContainer.setText("chargeBar", Lore.chargeValuesRaw((int)charge, (int)capacity));

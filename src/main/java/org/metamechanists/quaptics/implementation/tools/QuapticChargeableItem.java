@@ -49,6 +49,12 @@ public abstract class QuapticChargeableItem extends SlimefunItem {
         return PersistentDataAPI.getDouble(stack.getItemMeta(), Keys.CHARGE, 0.0);
     }
 
+    public static double getCapacity(@NotNull final ItemStack itemStack) {
+        final Optional<QuapticChargeableItem> item = fromStack(itemStack);
+        return item.map(quapticChargeableItem -> quapticChargeableItem.settings.getCapacity()).orElse(0.0);
+
+    }
+
     private static void setCharge(@NotNull final ItemStack stack, final double newCharge) {
         final ItemMeta meta = stack.getItemMeta();
         PersistentDataAPI.setDouble(meta, Keys.CHARGE, newCharge);

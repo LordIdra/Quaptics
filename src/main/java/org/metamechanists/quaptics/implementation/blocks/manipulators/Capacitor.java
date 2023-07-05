@@ -107,10 +107,11 @@ public class Capacitor extends ConnectedBlock implements PanelBlock, PowerLossBl
         double charge = getCharge(location.get());
         charge = doCharge(location.get(), charge);
         charge = doDischarge(location.get(), charge);
-        setCharge(location.get(), charge);
 
+        setCharge(location.get(), charge);
         doEmission(location.get(), charge);
         updateConcreteTransformation(location.get());
+        setPanelHidden(group, charge == 0);
         updatePanel(group);
     }
 

@@ -1,18 +1,15 @@
 package org.metamechanists.quaptics.panels.implementation;
 
 import org.bukkit.Location;
-import org.bukkit.entity.Display;
-import org.bukkit.entity.ItemDisplay;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
-import org.metamechanists.quaptics.implementation.blocks.base.DisplayGroupTickerBlock;
 import org.metamechanists.quaptics.implementation.blocks.consumers.Charger;
 import org.metamechanists.quaptics.implementation.tools.QuapticChargeableItem;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.panels.BlockPanel;
-import org.metamechanists.quaptics.panels.PanelContainer;
 import org.metamechanists.quaptics.panels.PanelBuilder;
+import org.metamechanists.quaptics.panels.PanelContainer;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.id.complex.PanelId;
 
@@ -38,51 +35,26 @@ public class ChargerPanel extends BlockPanel {
 
     @Override
     public void update() {
-        setPanelHidden(true);
+        if (isPanelHidden()) {
+            return;
+        }
 
-        final Optional<ItemStack> stack = getStack(groupId);
+        final Optional<ConnectionGroup> group = getGroup();
+        if (group.isEmpty()) {
+            return;
+        }
+
+        final Optional<ItemStack> stack = Charger.getStack(group.get());
         if (stack.isEmpty()) {
             return;
         }
 
-        final Optional<QuapticChargeableItem> item = QuapticChargeableItem.fromStack(stack.get());
-        if (item.isEmpty()) {
-            return;
-        }
-
-        final double capacity = item.get().getSettings().getCapacity();
+        final double capacity = QuapticChargeableItem.getCapacity(stack.get());
         final double charge = QuapticChargeableItem.getCharge(stack.get());
-        if ((charge == 0.0) || (capacity == 0.0)) {
-            return;
-        }
-
-        setPanelHidden(false);
 
         panelContainer.setText("chargeText", Lore.chargeBarRaw((int)charge, (int)capacity));
         panelContainer.setText("chargeBar", Lore.chargeValuesRaw((int)charge, (int)capacity));
     }
 
-    private static Optional<ItemStack> getStack(final @NotNull ConnectionGroupId groupId) {
-        final Optional<ConnectionGroup> group = groupId.get();
-        if (group.isEmpty() || !(group.get().getBlock() instanceof Charger)) {
-            return Optional.empty();
-        }
 
-        final Optional<Location> location = group.get().getLocation();
-        if (location.isEmpty()) {
-            return Optional.empty();
-        }
-
-        final Optional<Display> display = DisplayGroupTickerBlock.getDisplay(location.get(), "item");
-        if (display.isEmpty()) {
-            return Optional.empty();
-        }
-
-        if (!(display.get() instanceof final ItemDisplay itemDisplay)) {
-            return Optional.empty();
-        }
-
-        final ItemStack stack = itemDisplay.getItemStack();
-        return stack == null || stack.getItemMeta() == null ? Optional.empty() : Optional.of(stack);
-    }
 }
