@@ -61,9 +61,14 @@ public class PointPanel {
 
     public void toggleHidden() {
         panel.toggleHidden();
+        //update();
     }
 
     public void update() {
+        if (isPanelHidden()) {
+            return;
+        }
+
         if (getPoint().isEmpty()) {
             remove();
             return;
