@@ -47,21 +47,22 @@ public class PointPanel {
         return Math.round(value*Math.pow(10, 2)) / Math.pow(10, 2);
     }
 
+    public void changeLocation(final @NotNull Location location) {
+        panel.changeLocation(location.clone().add(POINT_OFFSET));
+    }
+
     public boolean isPanelHidden() {
         return panel.isHidden();
     }
 
     public void setPanelHidden(final boolean hidden) {
         panel.setHidden(hidden);
-    }
-
-    public void changeLocation(final @NotNull Location location) {
-        panel.changeLocation(location.clone().add(POINT_OFFSET));
+        update();
     }
 
     public void toggleHidden() {
         panel.toggleHidden();
-        //update();
+        update();
     }
 
     public void update() {
