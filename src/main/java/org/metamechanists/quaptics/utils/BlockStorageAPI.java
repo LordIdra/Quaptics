@@ -101,12 +101,12 @@ public class BlockStorageAPI {
     }
     public Optional<PanelId> getPanelId(final Location location, final String key) {
         return hasData(location, key)
-                ? Optional.empty()
-                : Optional.of(new PanelId(getString(location, key)));
+                ? Optional.of(new PanelId(getString(location, key)))
+                : Optional.empty();
     }
     public Optional<DisplayGroupId> getDisplayGroupId(final Location location, final String key) {
         return hasData(location, key)
-                ? Optional.empty()
-                : Optional.of(new DisplayGroupId(getString(location, key)));
+                ? Optional.of(new DisplayGroupId(getString(location, key)))
+                : Optional.empty();
     }
 }
