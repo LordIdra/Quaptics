@@ -121,7 +121,8 @@ public class MultiblockClicker extends ConnectedBlock {
     @Override
     protected void onRightClick(final Location location, final Player player) {
         final boolean enabled = BlockStorageAPI.getBoolean(location, Keys.BS_ENABLED);
-        BlockStorageAPI.set(location, Keys.BS_POWERED, !enabled);
+        onEnabledAnimation(location, !enabled);
+        BlockStorageAPI.set(location, Keys.BS_ENABLED, !enabled);
     }
 
     @Override
