@@ -31,6 +31,7 @@ public class Lore {
     private final String SPEED_SUFFIX = " &8blocks/s";
     private final String DAMAGE_SUFFIX = " &8dps";
     private final String FREQUENCY_SUFFIX = " &8Hz";
+    private final String USE_INTERVAL_SUFFIX = " &8seconds";
     private final String PHASE_SUFFIX = " &8°";
     private final double SLIMEFUN_TICKS_PER_SECOND = 2.0;
 
@@ -91,6 +92,9 @@ public class Lore {
         if (settings.getDamage() != 0) {
             lore.add(damage(settings.getDamage()));
         }
+        if (settings.getUseInterval() != 0) {
+            lore.add(useInterval(settings.getUseInterval()));
+        }
 
         return lore;
     }
@@ -115,7 +119,7 @@ public class Lore {
         return ATTRIBUTE_SYMBOL + DAMAGE_SYMBOL + "&7Damage &e" + format(damage/SLIMEFUN_TICKS_PER_SECOND) + DAMAGE_SUFFIX;
     }
     public String useInterval(final double useInterval) {
-        return ATTRIBUTE_SYMBOL + SPEED_SYMBOL + "&7Use Interval &e" + format(useInterval);
+        return ATTRIBUTE_SYMBOL + SPEED_SYMBOL + "&7Use Interval &e" + format(useInterval) + USE_INTERVAL_SUFFIX;
     }
 
     public String capacity(final double capacity) {

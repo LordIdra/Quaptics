@@ -173,9 +173,9 @@ public class Primitive {
             Material.DISPENSER,
             "&6Multiblock Clicker &eI",
             Lore.create(MULTIBLOCK_CLICKER_1_SETTINGS,
+                    "&7● &eRight Click &7to enable/disable",
                     "&7● Automatically clicks the attached multiblock",
-                    "&7● Place facing the block you'd usually click to use the multiblock",
-                    "&7● &eRight Click &7to enable/disable"));
+                    "&7● Place facing the block you'd usually click to use the multiblock"));
 
     public void initialize() {
         final SlimefunAddon addon = Quaptics.getInstance();
