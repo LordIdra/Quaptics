@@ -5,6 +5,8 @@ targeting-wand.no-source-selected: "&cNo source selected."
 targeting-wand.source-must-be-output: "&cThe source must be an output point."
 targeting-wand.target-must-be-input: "&cYou can only link to an output point."
 
+multiblock-clicker.not-connected-to-multiblock: "&cNot connected to a multiblock."
+
 too-close: "&cToo close to another component!"
 
 load.failed: "Failed to load laser tickers; if this is not your first run, make sure file permissions are set up correctly."

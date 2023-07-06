@@ -25,6 +25,7 @@ import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
 import org.metamechanists.quaptics.storage.QuapticTicker;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
+import org.metamechanists.quaptics.utils.Language;
 import org.metamechanists.quaptics.utils.SlimefunIsDumbUtils;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
@@ -77,9 +78,8 @@ public class MultiblockClicker extends ConnectedBlock {
             return;
         }
 
-        final Optional<BlockFace> face = BlockStorageAPI.getBlockFace(location.get(), Keys.BS_FACING);
         final Optional<UUID> uuid = BlockStorageAPI.getUuid(location.get(), Keys.BS_OWNER);
-        if (face.isEmpty() || uuid.isEmpty()) {
+        if (uuid.isEmpty()) {
             return;
         }
 
@@ -89,12 +89,13 @@ public class MultiblockClicker extends ConnectedBlock {
             return;
         }
 
-        final Block multiblockBlock = location.get().getBlock().getRelative(face.get());
-        if (multiblockBlock.getBlockData().getMaterial() == Material.AIR) {
+        final Optional<Block> multiblockBlock = getMultiblockBlock(location.get());
+        if (multiblockBlock.isEmpty()) {
+            BlockStorageAPI.set(location.get(), Keys.BS_ENABLED, false);
             return;
         }
 
-        final Optional<MultiBlockMachine> machine = SlimefunIsDumbUtils.getMultiblockMachine(multiblockBlock);
+        final Optional<MultiBlockMachine> machine = SlimefunIsDumbUtils.getMultiblockMachine(multiblockBlock.get());
         if (machine.isEmpty()) {
             return;
         }
@@ -113,8 +114,7 @@ public class MultiblockClicker extends ConnectedBlock {
         }
 
         final int usesInThisTick = (int) (ticksSinceLastUpdate / settings.getUseInterval());
-
-        machine.get().onInteract(owner, multiblockBlock);
+        machine.get().onInteract(owner, multiblockBlock.get());
         ticksSinceLastUpdate -= usesInThisTick * settings.getUseInterval();
         ticksSinceLastUpdate %= settings.getUseInterval();
         BlockStorageAPI.set(location.get(), Keys.BS_TICKS_SINCE_LAST_UPDATE, ticksSinceLastUpdate);
@@ -122,6 +122,17 @@ public class MultiblockClicker extends ConnectedBlock {
 
     @Override
     protected void onRightClick(final Location location, final Player player) {
+        final Optional<Block> multiblockBlock = getMultiblockBlock(location);
+        if (multiblockBlock.isEmpty()) {
+            return;
+        }
+
+        final Optional<MultiBlockMachine> machine = SlimefunIsDumbUtils.getMultiblockMachine(multiblockBlock.get());
+        if (machine.isEmpty()) {
+            Language.sendLanguageMessage(player, "multiblock-clicker.not-connected-to-multiblock");
+            return;
+        }
+
         final boolean enabled = BlockStorageAPI.getBoolean(location, Keys.BS_ENABLED);
         onEnabledAnimation(location, !enabled);
         BlockStorageAPI.set(location, Keys.BS_ENABLED, !enabled);
@@ -129,10 +140,15 @@ public class MultiblockClicker extends ConnectedBlock {
 
     @Override
     public void onInputLinkUpdated(@NotNull final ConnectionGroup group) {
-        //doBurnoutCheck(group, "input");
+        doBurnoutCheck(group, "input");
     }
 
     private static void onEnabledAnimation(final Location location, final boolean enabled) {
         getDisplay(location, "main").ifPresent(value -> value.setBrightness(enabled ? BRIGHTNESS_ON : BRIGHTNESS_OFF));
+    }
+
+    private static Optional<Block> getMultiblockBlock(final @NotNull Location location) {
+        final Optional<BlockFace> face = BlockStorageAPI.getBlockFace(location, Keys.BS_FACING);
+        return face.map(blockFace -> location.getBlock().getRelative(blockFace));
     }
 }
