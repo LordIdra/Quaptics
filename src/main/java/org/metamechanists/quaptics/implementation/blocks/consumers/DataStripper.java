@@ -2,6 +2,7 @@ package org.metamechanists.quaptics.implementation.blocks.consumers;
 
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import org.bukkit.Location;
@@ -9,9 +10,11 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
+import org.metamechanists.metalib.utils.ItemUtils;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
@@ -39,6 +42,7 @@ import java.util.Set;
 
 public class DataStripper extends ConnectedBlock implements PanelBlock, ItemHolderBlock, ProgressBlock {
     private static final Set<Material> FORBIDDEN_BLOCKS = Set.of(Material.BARRIER, Material.BEDROCK, Material.END_PORTAL, Material.STRUCTURE_VOID);
+    private static final double MAX_PROGRESS_DIFFERENCE = 0.00001;
     private final Vector3f mainDisplaySize = new Vector3f(0.5F, 0.3F, 0.5F);
     private final Vector3f glassDisplaySize = new Vector3f(0.4F, 0.15F, 0.4F);
     private final Vector3f itemDisplaySize = new Vector3f(0.5F);
@@ -106,7 +110,6 @@ public class DataStripper extends ConnectedBlock implements PanelBlock, ItemHold
     @Override
     protected void onRightClick(final @NotNull Location location, final @NotNull Player player) {
         final Optional<ItemStack> currentStack = ItemHolderBlock.getStack(location);
-
         final ItemStack newStack = player.getInventory().getItemInMainHand().clone();
         if (newStack.getType().isEmpty()) {
             return;
@@ -122,7 +125,13 @@ public class DataStripper extends ConnectedBlock implements PanelBlock, ItemHold
             return;
         }
 
-        ItemHolderBlock.removeItem(location, player);
+        final double progress = ProgressBlock.getProgress(location);
+        if (Math.abs(progress - settings.getTimePerItem()) < MAX_PROGRESS_DIFFERENCE) {
+            ItemHolderBlock.insertItem(location, stripData(currentStack.get()));
+        }
+
+        //noinspection DataFlowIssue
+        ItemUtils.addOrDropItemMainHand(player, ItemHolderBlock.removeItem(location));
     }
 
     @Override
@@ -143,15 +152,29 @@ public class DataStripper extends ConnectedBlock implements PanelBlock, ItemHold
         progress += QuapticTicker.INTERVAL_TICKS;
         progress = Math.min(progress, settings.getUseInterval());
         ProgressBlock.setProgress(location.get(), progress);
-        updatePanel(group);
 
-        if (progress >= settings.getUseInterval()) {
-            // TODO actually strip data
-        }
+        updatePanel(group);
     }
 
     @Override
     public void onInputLinkUpdated(@NotNull final ConnectionGroup group) {
         doBurnoutCheck(group, "input");
+    }
+
+    private static @NotNull ItemStack stripData(final @NotNull ItemStack inputStack) {
+        final ItemStack intermediaryStack = inputStack.clone();
+
+        if (intermediaryStack.getType() != Material.PLAYER_HEAD || SlimefunItem.getByItem(intermediaryStack) == null) {
+            return intermediaryStack;
+        }
+
+        final SkullMeta itemMeta = (SkullMeta) intermediaryStack.getItemMeta();
+        final ItemStack outputStack = new ItemStack(Material.PLAYER_HEAD);
+        final SkullMeta outputMeta = (SkullMeta) outputStack.getItemMeta();
+
+        outputMeta.setOwnerProfile(itemMeta.getOwnerProfile());
+        outputStack.setItemMeta(outputMeta);
+
+        return outputStack;
     }
 }

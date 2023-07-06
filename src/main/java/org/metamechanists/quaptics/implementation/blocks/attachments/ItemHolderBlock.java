@@ -6,7 +6,7 @@ import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-import org.metamechanists.metalib.utils.ItemUtils;
+import org.jetbrains.annotations.Nullable;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.implementation.blocks.base.DisplayGroupTickerBlock;
 
@@ -64,18 +64,14 @@ public interface ItemHolderBlock {
         player.getInventory().setItemInMainHand(null);
     }
 
-    static void removeItem(@NotNull final Location location, final Player player) {
+    static @Nullable ItemStack removeItem(@NotNull final Location location) {
         final Optional<ItemDisplay> itemDisplay = getItemDisplay(location);
         if (itemDisplay.isEmpty()) {
-            return;
+            return null;
         }
 
         final ItemStack itemStack = itemDisplay.get().getItemStack();
-        if (itemStack == null) {
-            return;
-        }
-
         itemDisplay.get().setItemStack(null);
-        ItemUtils.addOrDropItemMainHand(player, itemStack);
+        return itemStack;
     }
 }
