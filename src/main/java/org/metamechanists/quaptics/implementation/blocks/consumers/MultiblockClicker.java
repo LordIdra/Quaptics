@@ -18,6 +18,7 @@ import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
+import org.metamechanists.quaptics.connections.ConnectionPointType;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.implementation.blocks.attachments.PowerAnimatedBlock;
 import org.metamechanists.quaptics.implementation.blocks.attachments.PoweredBlock;
@@ -28,7 +29,6 @@ import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -37,7 +37,8 @@ public class MultiblockClicker extends ConnectedBlock implements PoweredBlock, P
     private static final Vector RELATIVE_PLATE_LOCATION = new Vector(0, 0, 0.5F);
     private static final Brightness BRIGHTNESS_ON = new Brightness(15, 0);
     private static final Brightness BRIGHTNESS_OFF = new Brightness(3, 0);
-    private final Vector3f attachmentDisplaySize = new Vector3f(0.1F, 0.7F, 0.7F);
+    private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -settings.getConnectionRadius());
+    private final Vector3f attachmentDisplaySize = new Vector3f(0.15F, 0.15F, 0.8F);
     private final Vector3f mainDisplaySize = new Vector3f(0.3F, 0.3F, 0.3F);
 
     public MultiblockClicker(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
@@ -62,8 +63,8 @@ public class MultiblockClicker extends ConnectedBlock implements PoweredBlock, P
 
     @Override
     protected List<ConnectionPoint> generateConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
-        //return List.of(new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input", (player, location, player.getFacing().getDirection())));
-        return new ArrayList<>();
+        return List.of(new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input",
+                formatPointLocation(player, location, inputPointLocation)));
     }
 
     @Override
@@ -76,9 +77,9 @@ public class MultiblockClicker extends ConnectedBlock implements PoweredBlock, P
         final BlockFace face = BlockFace.valueOf(BlockStorage.getLocationInfo(location.get(), Keys.BS_FACING));
         final Block multiblockBlock = location.get().getBlock().getRelative(face);
         final Player owner = Bukkit.getPlayer(UUID.fromString(BlockStorage.getLocationInfo(location.get(), Keys.BS_OWNER)));
-        final boolean enabled = SlimefunIsDumbUtils.getMultiblockMachine(multiblockBlock).isEmpty()
-                || !isPowered(location.get())
-                || owner == null;
+        final boolean enabled = SlimefunIsDumbUtils.getMultiblockMachine(multiblockBlock).isPresent()
+                && isPowered(location.get())
+                && owner != null;
 
         onPoweredAnimation(location.get(), enabled);
 
