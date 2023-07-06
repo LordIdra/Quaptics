@@ -80,12 +80,8 @@ public class MultiblockClicker extends ConnectedBlock implements PowerAnimatedBl
         }
 
         final Optional<BlockFace> face = BlockStorageAPI.getBlockFace(location.get(), Keys.BS_FACING);
-        if (face.isEmpty()) {
-            return;
-        }
-
         final Optional<UUID> uuid = BlockStorageAPI.getUuid(location.get(), Keys.BS_OWNER);
-        if (uuid.isEmpty()) {
+        if (face.isEmpty() || uuid.isEmpty()) {
             return;
         }
 
@@ -98,17 +94,15 @@ public class MultiblockClicker extends ConnectedBlock implements PowerAnimatedBl
         }
 
         final Optional<Link> link = getLink(location.get(), "input");
-        if (link.isEmpty() || settings.isOperational(link)) {
-            onPoweredAnimation(location.get(), false);
+        if (link.isEmpty() || !settings.isOperational(link)) {
             return;
         }
 
         double ticksSinceLastUpdate = BlockStorageAPI.getInt(location.get(), Keys.BS_TICKS_SINCE_LAST_UPDATE);
         ticksSinceLastUpdate += QuapticTicker.INTERVAL_TICKS;
-
-        final boolean enabled = BlockStorageAPI.getBoolean(location.get(), Keys.BS_ENABLED) && owner != null;
+        final boolean enabled = BlockStorageAPI.getBoolean(location.get(), Keys.BS_ENABLED);
         onPoweredAnimation(location.get(), enabled);
-        if (!enabled || ticksSinceLastUpdate < settings.getUseInterval()) {
+        if (!enabled || owner == null || ticksSinceLastUpdate < settings.getUseInterval()) {
             return;
         }
 
