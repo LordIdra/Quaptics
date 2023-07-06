@@ -103,7 +103,7 @@ public class MultiblockClicker extends ConnectedBlock {
         }
 
         final Player owner = Bukkit.getPlayer(uuid.get());
-        double ticksSinceLastUpdate = BlockStorageAPI.getInt(location.get(), Keys.BS_TICKS_SINCE_LAST_UPDATE);
+        int ticksSinceLastUpdate = BlockStorageAPI.getInt(location.get(), Keys.BS_TICKS_SINCE_LAST_UPDATE);
         ticksSinceLastUpdate += QuapticTicker.INTERVAL_TICKS;
         if (owner == null || ticksSinceLastUpdate < settings.getUseInterval()) {
             BlockStorageAPI.set(location.get(), Keys.BS_TICKS_SINCE_LAST_UPDATE, ticksSinceLastUpdate);
