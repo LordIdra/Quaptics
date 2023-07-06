@@ -39,7 +39,7 @@ import java.util.Set;
 
 public class DataStripper extends ConnectedBlock implements PanelBlock, ItemHolderBlock, ProgressBlock {
     private static final Set<Material> FORBIDDEN_BLOCKS = Set.of(Material.BARRIER, Material.BEDROCK, Material.END_PORTAL, Material.STRUCTURE_VOID);
-    private final Vector3f mainDisplaySize = new Vector3f(0.6F, 0.3F, 0.6F);
+    private final Vector3f mainDisplaySize = new Vector3f(0.5F, 0.3F, 0.5F);
     private final Vector3f glassDisplaySize = new Vector3f(0.4F, 0.15F, 0.4F);
     private final Vector3f itemDisplaySize = new Vector3f(0.5F);
     private final Vector3f topOffset = new Vector3f(0, 0.35F, 0);
@@ -61,11 +61,11 @@ public class DataStripper extends ConnectedBlock implements PanelBlock, ItemHold
                 .setTransformation(Transformations.adjustedScaleAndOffset(mainDisplaySize, bottomOffset))
                 .build());
         displayGroup.addDisplay("glassTop", new BlockDisplayBuilder(location.toCenterLocation())
-                .setMaterial(Material.LIGHT_BLUE_STAINED_GLASS)
+                .setMaterial(Material.ORANGE_STAINED_GLASS)
                 .setTransformation(Transformations.adjustedScaleAndOffset(glassDisplaySize, topOffset))
                 .build());
         displayGroup.addDisplay("glassBottom", new BlockDisplayBuilder(location.toCenterLocation())
-                .setMaterial(Material.LIGHT_BLUE_STAINED_GLASS)
+                .setMaterial(Material.ORANGE_STAINED_GLASS)
                 .setTransformation(Transformations.adjustedScaleAndOffset(glassDisplaySize, bottomOffset))
                 .build());
         displayGroup.addDisplay("item", new ItemDisplayBuilder(location.toCenterLocation())
