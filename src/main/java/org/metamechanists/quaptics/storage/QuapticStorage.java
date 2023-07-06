@@ -38,6 +38,10 @@ public class QuapticStorage {
         groupIDs.add(groupId);
     }
 
+    public void removeGroup(final ConnectionGroupId groupId) {
+        groupIDs.remove(groupId);
+    }
+
     private void deserializeGroupIDs(@NotNull final List<String> stringIDs) {
         groupIDs.addAll(stringIDs.stream().map(ConnectionGroupId::new).toList());
     }
