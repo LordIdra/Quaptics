@@ -100,10 +100,9 @@ public class Primitive {
 
     public final Settings MULTIBLOCK_CLICKER_1_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
-            .connectionRadius(0.25F)
+            .connectionRadius(0.35F)
             .useInterval(10)
             .minPower(7)
-            .useInterval(2)
             .build();
 
     public final SlimefunItemStack SOLAR_CONCENTRATOR_1 = new SlimefunItemStack(
