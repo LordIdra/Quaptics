@@ -27,6 +27,7 @@ import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public class MultiblockClicker extends ConnectedBlock {
     private static final float PLATE_DISTANCE = 0.5F;
@@ -65,7 +66,7 @@ public class MultiblockClicker extends ConnectedBlock {
             return;
         }
 
-        final Player owner = Bukkit.getPlayer(BlockStorage.getLocationInfo(location.get(), Keys.BS_OWNER));
+        final Player owner = Bukkit.getPlayer(UUID.fromString(BlockStorage.getLocationInfo(location.get(), Keys.BS_OWNER)));
         if (owner == null) {
             return;
         }
