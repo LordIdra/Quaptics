@@ -102,7 +102,7 @@ public class Primitive {
     public final Settings MULTIBLOCK_CLICKER_1_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
             .connectionRadius(0.35F)
-            .useInterval(10)
+            .timePerItem(10)
             .minPower(7)
             .build();
 
