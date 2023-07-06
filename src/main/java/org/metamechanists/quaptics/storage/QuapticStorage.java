@@ -18,8 +18,16 @@ import java.util.stream.Collectors;
 public class QuapticStorage {
     private final Set<ConnectionGroupId> groupIDs = new HashSet<>();
 
+    private void removeGroupsWithInvalidBlocks() {
+        // If for example an ID changes, getBlock() will return null, which will cause exceptions to be thrown when ticking
+        groupIDs.removeIf(id -> id.get().isPresent() && id.get().get().getBlock() == null);
+    }
+
     public @NotNull Set<ConnectionGroupId> getLoadedGroups() {
-        return groupIDs.stream().filter(id -> id.get().isPresent()).collect(Collectors.toSet());
+        removeGroupsWithInvalidBlocks();
+        return groupIDs.stream()
+                .filter(id -> id.get().isPresent())
+                .collect(Collectors.toSet());
     }
 
     private @NotNull List<String> serializeGroupIDs() {
