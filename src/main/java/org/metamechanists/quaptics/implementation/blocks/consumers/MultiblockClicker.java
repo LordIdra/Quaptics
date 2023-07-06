@@ -30,7 +30,7 @@ import java.util.Optional;
 
 public class MultiblockClicker extends ConnectedBlock {
     private static final float PLATE_DISTANCE = 0.5F;
-    private final Vector3f attachmentDisplaySize = new Vector3f(0.7F, 0.1F, 0.7F);
+    private final Vector3f attachmentDisplaySize = new Vector3f(0.1F, 0.7F, 0.7F);
     private final Vector3f mainDisplaySize = new Vector3f(0.3F, 0.3F, 0.3F);
 
     public MultiblockClicker(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
@@ -41,7 +41,7 @@ public class MultiblockClicker extends ConnectedBlock {
     protected void addDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
         player.getFacing();
         displayGroup.addDisplay("main", new BlockDisplayBuilder(location.toCenterLocation())
-                .setBlockData(Material.LIGHT_GRAY_CONCRETE_POWDER.createBlockData())
+                .setBlockData(Material.LIGHT_GRAY_CONCRETE.createBlockData())
                 .setTransformation(Transformations.adjustedScale(mainDisplaySize))
                 .build());
         displayGroup.addDisplay("attachment", new BlockDisplayBuilder(location.toCenterLocation())
