@@ -84,14 +84,14 @@ public class Capacitor extends ConnectedBlock implements PanelBlock, PowerLossBl
         super.onPlace(event);
         final Location location = event.getBlock().getLocation();
         final Optional<ConnectionGroup> optionalGroup = getGroup(location);
-        optionalGroup.ifPresent(group -> setPanelId(location, new CapacitorPanel(location, group.getId()).getId()));
+        optionalGroup.ifPresent(group -> PanelBlock.setPanelId(location, new CapacitorPanel(location, group.getId()).getId()));
     }
 
     @Override
     @OverridingMethodsMustInvokeSuper
     protected void onBreak(@NotNull final Location location) {
         super.onBreak(location);
-        getPanelId(location)
+        PanelBlock.getPanelId(location)
                 .flatMap(PanelId::get)
                 .ifPresent(PanelContainer::remove);
     }
@@ -132,7 +132,7 @@ public class Capacitor extends ConnectedBlock implements PanelBlock, PowerLossBl
         }
 
         final double chargeRate = settings.isOperational(inputLink)
-                ? calculatePowerLoss(settings, inputLink.get().getPower() / QuapticTicker.QUAPTIC_TICKS_PER_SECOND)
+                ? PowerLossBlock.calculatePowerLoss(settings, inputLink.get().getPower() / QuapticTicker.QUAPTIC_TICKS_PER_SECOND)
                 : 0;
         BlockStorageAPI.set(location.get(), Keys.BS_CHARGE_RATE, chargeRate);
     }
@@ -161,7 +161,7 @@ public class Capacitor extends ConnectedBlock implements PanelBlock, PowerLossBl
 
         final Optional<Link> inputLink = getLink(location, "input");
         if (inputLink.isPresent() && charge == 0) {
-            final double outputPower = calculatePowerLoss(settings, inputLink.get().getPower());
+            final double outputPower = PowerLossBlock.calculatePowerLoss(settings, inputLink.get().getPower());
             if (outputPower < getSettings().getEmissionPower()) {
                 outputLink.get().setPower(outputPower);
                 return;

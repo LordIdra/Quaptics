@@ -11,6 +11,7 @@ import org.metamechanists.quaptics.Quaptics;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.implementation.blocks.concentrators.SolarConcentrator;
 import org.metamechanists.quaptics.implementation.blocks.consumers.Charger;
+import org.metamechanists.quaptics.implementation.blocks.consumers.DataStripper;
 import org.metamechanists.quaptics.implementation.blocks.consumers.MultiblockClicker;
 import org.metamechanists.quaptics.implementation.blocks.consumers.turrets.ModulatedTurret;
 import org.metamechanists.quaptics.implementation.blocks.manipulators.Capacitor;
@@ -105,6 +106,13 @@ public class Primitive {
             .minPower(7)
             .build();
 
+    public final Settings DATA_STRIPPER_1_SETTINGS = Settings.builder()
+            .tier(Tier.PRIMITIVE)
+            .connectionRadius(0.4F)
+            .timePerItem(10)
+            .minPower(6)
+            .build();
+
     public final SlimefunItemStack SOLAR_CONCENTRATOR_1 = new SlimefunItemStack(
             "QP_SOLAR_CONCENTRATOR_1",
             Material.GLASS_PANE,
@@ -140,7 +148,7 @@ public class Primitive {
             "&bCharger &3I",
             Lore.create(CHARGER_1_SETTINGS,
                     "&7● Charges item with Quaptic Energy Units",
-                    "&7● &eRight Click &7an item to place",
+                    "&7● &eRight Click &7an item to insert",
                     "&7● &eRight Click &7again to retrieve"));
 
     public final SlimefunItemStack CAPACITOR_1 = new SlimefunItemStack(
@@ -175,6 +183,15 @@ public class Primitive {
                     "&7● &eRight Click &7to enable/disable",
                     "&7● Automatically clicks the attached multiblock",
                     "&7● Place facing the block you'd usually click to use the multiblock"));
+
+    public final SlimefunItemStack DATA_STRIPPER_1 = new SlimefunItemStack(
+            "QP_DATA_STRIPPER_1",
+            Material.ORANGE_STAINED_GLASS,
+            "&6Data Stripper &eI",
+            Lore.create(DATA_STRIPPER_1_SETTINGS,
+                    "&7● Converts Slimefun blocks into vanilla blocks",
+                    "&7● &eRight Click &7an item to insert",
+                    "&7● &eRight Click &7again to retrieve"));
 
     public void initialize() {
         final SlimefunAddon addon = Quaptics.getInstance();
@@ -241,5 +258,12 @@ public class Primitive {
                 RecipeType.NULL,
                 new ItemStack[]{},
                 MULTIBLOCK_CLICKER_1_SETTINGS).register(addon);
+
+        new DataStripper(
+                Groups.PRIMITIVE,
+                DATA_STRIPPER_1,
+                RecipeType.NULL,
+                new ItemStack[]{},
+                DATA_STRIPPER_1_SETTINGS).register(addon);
     }
 }

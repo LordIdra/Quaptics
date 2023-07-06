@@ -13,11 +13,11 @@ import java.util.Optional;
 
 @FunctionalInterface
 public interface PanelBlock {
-    default Optional<PanelId> getPanelId(final Location location) {
+    static Optional<PanelId> getPanelId(final Location location) {
         return BlockStorageAPI.getPanelId(location, Keys.BS_PANEL_ID);
     }
 
-    default void setPanelId(final Location location, @NotNull final PanelId id) {
+    static void setPanelId(final Location location, @NotNull final PanelId id) {
         BlockStorageAPI.set(location, Keys.BS_PANEL_ID, id);
     }
 

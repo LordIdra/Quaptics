@@ -34,6 +34,7 @@ public class Settings {
     private int connections;
 
     private double useInterval;
+    private double timePerItem;
     private float projectileSpeed;
     private int range;
     private double damage;
@@ -48,12 +49,9 @@ public class Settings {
                 && inputLink.getFrequency() >= minFrequency
                 && ((maxFrequency == 0) || (inputLink.getFrequency() <= maxFrequency));
     }
-
     public boolean isOperational(final @NotNull Optional<? extends Link> inputLink) {
         return inputLink.isPresent() && isOperational(inputLink.get());
     }
-
-
 
     public double stepCharge(final double charge, final double chargeStep) {
         if (charge + chargeStep < 0) {
@@ -61,7 +59,6 @@ public class Settings {
         }
         return Math.min(charge + chargeStep, capacity);
     }
-
     public double stepDischarge(final double charge) {
        return stepCharge(charge, -emissionPower / QuapticTicker.QUAPTIC_TICKS_PER_SECOND);
     }

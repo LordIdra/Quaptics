@@ -4,7 +4,7 @@ import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
-import org.metamechanists.quaptics.implementation.blocks.consumers.Charger;
+import org.metamechanists.quaptics.implementation.blocks.attachments.ItemHolderBlock;
 import org.metamechanists.quaptics.implementation.tools.QuapticChargeableItem;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.panels.BlockPanel;
@@ -44,7 +44,7 @@ public class ChargerPanel extends BlockPanel {
             return;
         }
 
-        final Optional<ItemStack> stack = Charger.getStack(group.get());
+        final Optional<ItemStack> stack = ItemHolderBlock.getStack(group.get());
         if (stack.isEmpty()) {
             return;
         }

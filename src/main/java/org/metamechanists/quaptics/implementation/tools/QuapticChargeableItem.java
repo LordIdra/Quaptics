@@ -8,15 +8,14 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import lombok.Getter;
 import org.bukkit.ChatColor;
-import org.bukkit.entity.ItemDisplay;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.metamechanists.quaptics.storage.QuapticTicker;
 import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.items.Lore;
+import org.metamechanists.quaptics.storage.QuapticTicker;
 import org.metamechanists.quaptics.utils.Keys;
 
 import java.util.ArrayList;
@@ -61,20 +60,19 @@ public abstract class QuapticChargeableItem extends SlimefunItem {
         stack.setItemMeta(meta);
     }
 
-    public static void chargeItem(final Link inputLink, @NotNull final ItemDisplay display) {
-        final ItemStack itemStack = display.getItemStack();
-        if (itemStack == null || itemStack.getItemMeta() == null) {
-            return;
+    public static @NotNull ItemStack chargeItem(final Link inputLink, @NotNull final ItemStack itemStack) {
+        if (itemStack.getItemMeta() == null) {
+            return itemStack;
         }
 
         final Optional<QuapticChargeableItem> item = fromStack(itemStack);
         if (item.isEmpty()) {
-            return;
+            return itemStack;
         }
 
         final double newCharge = item.get().settings.stepCharge(getCharge(itemStack), inputLink.getPower() / QuapticTicker.QUAPTIC_TICKS_PER_SECOND);
         setCharge(itemStack, newCharge);
-        display.setItemStack(itemStack);
+        return itemStack;
     }
 
     private static int getFirstLineMatching(@NotNull final List<String> lore, final Predicate<? super String> matcher) {

@@ -30,6 +30,7 @@ public class Keys {
     public final String BS_FACING = "QP_FACING";
     public final String BS_PANEL_ID = "QP_PANEL_ID";
     public final String BS_BURNOUT = "QP_BURNOUT";
+    public final String BS_PROGRESS = "QP_PROGRESS";
     public final String BS_CHARGE = "QP_CHARGE";
     public final String BS_CHARGE_RATE = "QP_CHARGE_RATE";
     public final String BS_POWERED = "QP_POWERED";

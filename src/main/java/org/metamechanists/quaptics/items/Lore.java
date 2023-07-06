@@ -29,11 +29,12 @@ public class Lore {
     private final String CHARGE_SUFFIX = " &8QEU";
     private final String POWER_SUFFIX = " &8W";
     private final String RANGE_SUFFIX = " &8blocks";
-    private final String SPEED_SUFFIX = " &8blocks/s";
+    private final String PROJECTILE_SPEED_SUFFIX = " &8blocks/s";
     private final String DAMAGE_SUFFIX = " &8dps";
     private final String FREQUENCY_SUFFIX = " &8Hz";
     private final String USE_INTERVAL_SUFFIX = " &8seconds";
     private final String PHASE_SUFFIX = " &8°";
+    private final String TIME_PER_ITEM_SUFFIX = " &8seconds";
     private final double SLIMEFUN_TICKS_PER_SECOND = 2.0;
 
     private String format(final double x) {
@@ -96,6 +97,9 @@ public class Lore {
         if (settings.getUseInterval() != 0) {
             lore.add(useInterval(settings.getUseInterval() / QuapticTicker.QUAPTIC_TICKS_PER_SECOND));
         }
+        if (settings.getTimePerItem() != 0) {
+            lore.add(timePerItem(settings.getTimePerItem()));
+        }
 
         return lore;
     }
@@ -114,13 +118,16 @@ public class Lore {
         return ATTRIBUTE_SYMBOL + RANGE_SYMBOL + "&7Range &e" + Objects.toString(range) + RANGE_SUFFIX;
     }
     public String projectileSpeed(final double speed) {
-        return ATTRIBUTE_SYMBOL + SPEED_SYMBOL + "&7Projectile Speed &e" + format(speed) + SPEED_SUFFIX;
+        return ATTRIBUTE_SYMBOL + SPEED_SYMBOL + "&7Projectile Speed &e" + format(speed) + PROJECTILE_SPEED_SUFFIX;
     }
     public String damage(final double damage) {
         return ATTRIBUTE_SYMBOL + DAMAGE_SYMBOL + "&7Damage &e" + format(damage/SLIMEFUN_TICKS_PER_SECOND) + DAMAGE_SUFFIX;
     }
     public String useInterval(final double useInterval) {
         return ATTRIBUTE_SYMBOL + SPEED_SYMBOL + "&7Use Interval &e" + format(useInterval) + USE_INTERVAL_SUFFIX;
+    }
+    public String timePerItem(final double timePerItem) {
+        return ATTRIBUTE_SYMBOL + SPEED_SYMBOL + "&7Time per item &e" + format(timePerItem) + TIME_PER_ITEM_SUFFIX;
     }
 
     public String capacity(final double capacity) {

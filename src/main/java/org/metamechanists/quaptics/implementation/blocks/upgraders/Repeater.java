@@ -104,7 +104,7 @@ public class Repeater extends ConnectedBlock implements PowerAnimatedBlock, Powe
         }
 
         outputLink.get().setPowerAndFrequency(
-                calculatePowerLoss(settings, inputLink.get()),
+                PowerLossBlock.calculatePowerLoss(settings, inputLink.get()),
                 calculateUpgrade(settings, inputLink.get().getFrequency()));
     }
 

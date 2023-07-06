@@ -19,11 +19,12 @@ import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.implementation.blocks.attachments.ItemHolderBlock;
 import org.metamechanists.quaptics.implementation.blocks.attachments.PanelBlock;
+import org.metamechanists.quaptics.implementation.blocks.attachments.ProgressBlock;
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
-import org.metamechanists.quaptics.implementation.tools.QuapticChargeableItem;
 import org.metamechanists.quaptics.panels.BlockPanel;
 import org.metamechanists.quaptics.panels.PanelContainer;
-import org.metamechanists.quaptics.panels.implementation.ChargerPanel;
+import org.metamechanists.quaptics.panels.implementation.ProgressPanel;
+import org.metamechanists.quaptics.storage.QuapticTicker;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.builders.ItemDisplayBuilder;
@@ -34,15 +35,15 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.util.List;
 import java.util.Optional;
 
-public class Charger extends ConnectedBlock implements PanelBlock, ItemHolderBlock {
-    private final Vector3f mainDisplaySize = new Vector3f(0.7F, 0.3F, 0.7F);
-    private final Vector3f glassDisplaySize = new Vector3f(0.5F, 0.1F, 0.5F);
+public class DataStripper extends ConnectedBlock implements PanelBlock, ItemHolderBlock, ProgressBlock {
+    private final Vector3f mainDisplaySize = new Vector3f(0.6F, 0.3F, 0.6F);
+    private final Vector3f glassDisplaySize = new Vector3f(0.4F, 0.15F, 0.4F);
     private final Vector3f itemDisplaySize = new Vector3f(0.5F);
     private final Vector3f topOffset = new Vector3f(0, 0.35F, 0);
     private final Vector3f bottomOffset = new Vector3f(0, -0.35F, 0);
     private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -settings.getConnectionRadius());
 
-    public Charger(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
+    public DataStripper(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
     }
 
@@ -67,6 +68,7 @@ public class Charger extends ConnectedBlock implements PanelBlock, ItemHolderBlo
         displayGroup.addDisplay("item", new ItemDisplayBuilder(location.toCenterLocation())
                 .setTransformation(Transformations.unadjustedScale(itemDisplaySize))
                 .build());
+        ProgressBlock.setProgress(location, 0);
     }
 
     @Override
@@ -76,7 +78,7 @@ public class Charger extends ConnectedBlock implements PanelBlock, ItemHolderBlo
 
     @Override
     public BlockPanel createPanel(final PanelId panelId, final ConnectionGroupId groupId) {
-        return new ChargerPanel(panelId, groupId);
+        return new ProgressPanel(panelId, groupId);
     }
 
     @Override
@@ -85,7 +87,7 @@ public class Charger extends ConnectedBlock implements PanelBlock, ItemHolderBlo
         super.onPlace(event);
         final Location location = event.getBlock().getLocation();
         final Optional<ConnectionGroup> optionalGroup = getGroup(location);
-        optionalGroup.ifPresent(group -> PanelBlock.setPanelId(location, new ChargerPanel(location, group.getId()).getId()));
+        optionalGroup.ifPresent(group -> PanelBlock.setPanelId(location, new ProgressPanel(location, group.getId()).getId()));
     }
 
     @Override
@@ -116,20 +118,22 @@ public class Charger extends ConnectedBlock implements PanelBlock, ItemHolderBlo
             return;
         }
 
-        final Optional<ItemStack> stack = ItemHolderBlock.getStack(group);
-        setPanelHidden(group, stack.isEmpty());
-        if (stack.isEmpty()) {
-            return;
-        }
+        setPanelHidden(group, ItemHolderBlock.getStack(group).isEmpty());
 
         final Optional<Link> inputLink = getLink(group, "input");
         if (inputLink.isEmpty() || !settings.isOperational(inputLink)) {
             return;
         }
 
-        final ItemStack newStack = QuapticChargeableItem.chargeItem(inputLink.get(), stack.get());
-        ItemHolderBlock.insertItem(location.get(), newStack);
+        double progress = ProgressBlock.getProgress(location.get());
+        progress += QuapticTicker.INTERVAL_TICKS;
+        progress = Math.min(progress, settings.getUseInterval());
+        ProgressBlock.setProgress(location.get(), progress);
         updatePanel(group);
+
+        if (progress >= settings.getUseInterval()) {
+            // TODO actually strip data
+        }
     }
 
     @Override
