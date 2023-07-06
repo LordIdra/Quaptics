@@ -25,6 +25,7 @@ import org.metamechanists.quaptics.implementation.tools.QuapticChargeableItem;
 import org.metamechanists.quaptics.panels.BlockPanel;
 import org.metamechanists.quaptics.panels.PanelContainer;
 import org.metamechanists.quaptics.panels.implementation.ChargerPanel;
+import org.metamechanists.quaptics.utils.Language;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.builders.ItemDisplayBuilder;
@@ -134,6 +135,11 @@ public class Charger extends ConnectedBlock implements PanelBlock, ItemHolderBlo
 
     @Override
     public boolean onInsert(@NotNull final Location location, @NotNull final ItemStack stack, @NotNull final Player player) {
+        if (stack.getAmount() != 1) {
+            Language.sendLanguageMessage(player, "charger.multiple-items");
+            return false;
+        }
+
         return SlimefunItem.getByItem(stack) instanceof QuapticChargeableItem;
     }
 
