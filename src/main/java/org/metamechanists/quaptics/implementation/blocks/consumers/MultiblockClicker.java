@@ -83,29 +83,30 @@ public class MultiblockClicker extends ConnectedBlock {
             return;
         }
 
+        final Player owner = Bukkit.getPlayer(uuid.get());
         final boolean enabled = BlockStorageAPI.getBoolean(location.get(), Keys.BS_ENABLED);
-        onEnabledAnimation(location.get(), enabled);
         if (!enabled) {
             return;
         }
 
         final Optional<Block> multiblockBlock = getMultiblockBlock(location.get());
         if (multiblockBlock.isEmpty()) {
-            BlockStorageAPI.set(location.get(), Keys.BS_ENABLED, false);
+            setEnabled(location.get(), false);
             return;
         }
 
         final Optional<MultiBlockMachine> machine = SlimefunIsDumbUtils.getMultiblockMachine(multiblockBlock.get());
         if (machine.isEmpty()) {
+            setEnabled(location.get(), false);
             return;
         }
 
         final Optional<Link> link = getLink(location.get(), "input");
         if (link.isEmpty() || !settings.isOperational(link)) {
+            setEnabled(location.get(), false);
             return;
         }
 
-        final Player owner = Bukkit.getPlayer(uuid.get());
         int ticksSinceLastUpdate = BlockStorageAPI.getInt(location.get(), Keys.BS_TICKS_SINCE_LAST_UPDATE);
         ticksSinceLastUpdate += QuapticTicker.INTERVAL_TICKS;
         if (owner == null || ticksSinceLastUpdate < settings.getUseInterval()) {
@@ -133,14 +134,26 @@ public class MultiblockClicker extends ConnectedBlock {
             return;
         }
 
+        final Optional<Link> link = getLink(location, "input");
+        if (link.isEmpty() || !settings.isOperational(link)) {
+            Language.sendLanguageMessage(player, "multiblock-clicker.not-powered");
+            setEnabled(location, false);
+            return;
+        }
+
         final boolean enabled = BlockStorageAPI.getBoolean(location, Keys.BS_ENABLED);
         onEnabledAnimation(location, !enabled);
-        BlockStorageAPI.set(location, Keys.BS_ENABLED, !enabled);
+        setEnabled(location, !enabled);
     }
 
     @Override
     public void onInputLinkUpdated(@NotNull final ConnectionGroup group) {
         doBurnoutCheck(group, "input");
+    }
+
+    private static void setEnabled(final Location location, final boolean enabled) {
+        BlockStorageAPI.set(location, Keys.BS_ENABLED, enabled);
+        onEnabledAnimation(location, enabled);
     }
 
     private static void onEnabledAnimation(final Location location, final boolean enabled) {
