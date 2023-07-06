@@ -24,6 +24,7 @@ import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
 import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
+import org.metamechanists.quaptics.implementation.blocks.attachments.PoweredBlock;
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.utils.Keys;
@@ -36,7 +37,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public abstract class Turret extends ConnectedBlock {
+public abstract class Turret extends ConnectedBlock implements PoweredBlock {
     private static final int ARBITRARILY_LARGE_NUMBER = 9999999;
     private final Vector3f mainDisplaySize = new Vector3f(0.6F, 0.6F, 0.6F);
     private final Vector3f barrelSize = new Vector3f(0.18F, 0.18F, settings.getDisplayRadius()*1.3F);
@@ -102,14 +103,6 @@ public abstract class Turret extends ConnectedBlock {
                 .setMaterial(Material.GRAY_CONCRETE)
                 .setTransformation(getBarrelMatrix(from, to))
                 .build();
-    }
-
-    private static void setPowered(final Location location, final boolean powered) {
-        BlockStorage.addBlockInfo(location, Keys.BS_POWERED, java.util.Objects.toString(powered));
-    }
-
-    private static boolean isPowered(final Location location) {
-        return "true".equals(BlockStorage.getLocationInfo(location, Keys.BS_POWERED));
     }
 
     private static void setTarget(@NotNull final Location location, @NotNull final Entity entity) {
