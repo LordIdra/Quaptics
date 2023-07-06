@@ -114,8 +114,8 @@ public class Lore {
     public String damage(final double damage) {
         return ATTRIBUTE_SYMBOL + DAMAGE_SYMBOL + "&7Damage &e" + format(damage/SLIMEFUN_TICKS_PER_SECOND) + DAMAGE_SUFFIX;
     }
-    public String usesPerSecond(final double usesPerSecond) {
-        return ATTRIBUTE_SYMBOL + SPEED_SYMBOL + "&7Uses per second &e" + format(usesPerSecond);
+    public String useInterval(final double useInterval) {
+        return ATTRIBUTE_SYMBOL + SPEED_SYMBOL + "&7Use Interval &e" + format(useInterval);
     }
 
     public String capacity(final double capacity) {

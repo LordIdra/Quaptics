@@ -20,9 +20,9 @@ import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
 import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
-import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.implementation.blocks.attachments.PowerAnimatedBlock;
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
+import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.SlimefunIsDumbUtils;
 import org.metamechanists.quaptics.utils.Transformations;
@@ -31,6 +31,7 @@ import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public class MultiblockClicker extends ConnectedBlock implements PowerAnimatedBlock {
     private static final Vector RELATIVE_PLATE_LOCATION = new Vector(0, 0, 0.5F);
@@ -56,6 +57,7 @@ public class MultiblockClicker extends ConnectedBlock implements PowerAnimatedBl
                 .setBlockData(Material.WHITE_CONCRETE.createBlockData())
                 .setTransformation(Transformations.lookAlong(attachmentDisplaySize, player.getFacing().getDirection().toVector3f()))
                 .build());
+        BlockStorageAPI.set(location, Keys.BS_TICKS_SINCE_LAST_UPDATE, 0);
         BlockStorageAPI.set(location, Keys.BS_OWNER, player.getUniqueId());
         BlockStorageAPI.set(location, Keys.BS_FACING, player.getFacing());
         BlockStorageAPI.set(location, Keys.BS_POWERED, false);
@@ -80,20 +82,35 @@ public class MultiblockClicker extends ConnectedBlock implements PowerAnimatedBl
             return;
         }
 
-        final BlockFace face = BlockStorageAPI.getBlockFace(location.get(), Keys.BS_FACING).get();
-        final Player owner = Bukkit.getPlayer(BlockStorageAPI.getUuid(location.get(), Keys.BS_OWNER).get());
-        final Block multiblockBlock = location.get().getBlock().getRelative(face);
+        final Optional<BlockFace> face = BlockStorageAPI.getBlockFace(location.get(), Keys.BS_FACING);
+        if (face.isEmpty()) {
+            return;
+        }
+
+        final Optional<UUID> uuid = BlockStorageAPI.getUuid(location.get(), Keys.BS_OWNER);
+        if (uuid.isEmpty()) {
+            return;
+        }
+
+        final Player owner = Bukkit.getPlayer(uuid.get());
+        final Block multiblockBlock = location.get().getBlock().getRelative(face.get());
         final boolean enabled = SlimefunIsDumbUtils.getMultiblockMachine(multiblockBlock).isPresent()
                 && BlockStorageAPI.getBoolean(location.get(), Keys.BS_ENABLED)
                 && owner != null;
 
         onPoweredAnimation(location.get(), enabled);
 
-        if (!enabled) {
+        double ticksSinceLastUpdate = BlockStorageAPI.getInt(location.get(), Keys.BS_TICKS_SINCE_LAST_UPDATE);
+        if (!enabled || ticksSinceLastUpdate < settings.getUseInterval()) {
             return;
         }
 
+        final int usesInThisTick = (int) (ticksSinceLastUpdate / settings.getUseInterval());
+
         SlimefunIsDumbUtils.getMultiblockMachine(multiblockBlock).ifPresent(block -> block.onInteract(owner, multiblockBlock));
+        ticksSinceLastUpdate -= usesInThisTick * settings.getUseInterval();
+        ticksSinceLastUpdate %= settings.getUseInterval();
+        BlockStorageAPI.set(location.get(), Keys.BS_TICKS_SINCE_LAST_UPDATE, ticksSinceLastUpdate);
     }
 
     @Override

@@ -45,6 +45,9 @@ public class BlockStorageAPI {
     public void set(final Location location, final String key, final boolean value) {
         set(location, key, Objects.toString(value));
     }
+    public void set(final Location location, final String key, final int value) {
+        set(location, key, Objects.toString(value));
+    }
     public void set(final Location location, final String key, final double value) {
         set(location, key, Objects.toString(value));
     }
@@ -79,6 +82,11 @@ public class BlockStorageAPI {
     public double getDouble(final Location location, final String key) {
         return hasData(location, key)
                 ? Double.parseDouble(getString(location, key))
+                : 0;
+    }
+    public int getInt(final Location location, final String key) {
+        return hasData(location, key)
+                ? Integer.parseInt(getString(location, key))
                 : 0;
     }
     public Optional<UUID> getUuid(final Location location, final String key) {
