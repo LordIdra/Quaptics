@@ -127,7 +127,7 @@ public class DataStripper extends ConnectedBlock implements PanelBlock, ItemHold
 
         double progress = ProgressBlock.getProgress(location.get());
         progress += QuapticTicker.INTERVAL_TICKS;
-        progress = Math.min(progress, settings.getUseInterval());
+        progress = Math.min(progress, settings.getTimePerItem());
         ProgressBlock.setProgress(location.get(), progress);
 
         updatePanel(group);

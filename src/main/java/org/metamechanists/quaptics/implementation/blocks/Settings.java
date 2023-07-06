@@ -33,7 +33,6 @@ public class Settings {
 
     private int connections;
 
-    private double useInterval;
     private double timePerItem;
     private float projectileSpeed;
     private int range;
