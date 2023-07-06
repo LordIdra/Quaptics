@@ -56,7 +56,6 @@ public class MultiblockClicker extends ConnectedBlock {
                 .build());
         displayGroup.addDisplay("attachment", new BlockDisplayBuilder(formatPointLocation(player, location, RELATIVE_PLATE_LOCATION))
                 .setBlockData(Material.WHITE_CONCRETE.createBlockData())
-                        .setViewRange(0.0F)
                 .setTransformation(Transformations.lookAlong(attachmentDisplaySize, player.getFacing().getDirection().toVector3f()))
                 .build());
         BlockStorageAPI.set(location, Keys.BS_TICKS_SINCE_LAST_UPDATE, 0);
@@ -84,16 +83,19 @@ public class MultiblockClicker extends ConnectedBlock {
             return;
         }
 
-        final Block multiblockBlock = location.get().getBlock().getRelative(face.get());
-        final Optional<MultiBlockMachine> machine = SlimefunIsDumbUtils.getMultiblockMachine(multiblockBlock);
-        onAttachmentAnimation(location.get(), machine.isPresent());
-        if (machine.isEmpty()) {
-            return;
-        }
-
         final boolean enabled = BlockStorageAPI.getBoolean(location.get(), Keys.BS_ENABLED);
         onEnabledAnimation(location.get(), enabled);
         if (!enabled) {
+            return;
+        }
+
+        final Block multiblockBlock = location.get().getBlock().getRelative(face.get());
+        if (multiblockBlock.getBlockData().getMaterial() == Material.AIR) {
+            return;
+        }
+
+        final Optional<MultiBlockMachine> machine = SlimefunIsDumbUtils.getMultiblockMachine(multiblockBlock);
+        if (machine.isEmpty()) {
             return;
         }
 
@@ -132,9 +134,5 @@ public class MultiblockClicker extends ConnectedBlock {
 
     private static void onEnabledAnimation(final Location location, final boolean enabled) {
         getDisplay(location, "main").ifPresent(value -> value.setBrightness(enabled ? BRIGHTNESS_ON : BRIGHTNESS_OFF));
-    }
-
-    private static void onAttachmentAnimation(final Location location, final boolean attached) {
-        getDisplay(location, "attachment").ifPresent(value -> value.setViewRange(attached ? VIEW_RANGE_ON : VIEW_RANGE_OFF));
     }
 }
