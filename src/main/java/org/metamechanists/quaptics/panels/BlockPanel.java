@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public abstract class BlockPanel extends Panel {
     protected static final float SIZE = 0.40F;
-    protected final ConnectionGroupId groupId;
+    private final ConnectionGroupId groupId;
 
     protected BlockPanel(@NotNull final Location location, final ConnectionGroupId groupId) {
         super(location);

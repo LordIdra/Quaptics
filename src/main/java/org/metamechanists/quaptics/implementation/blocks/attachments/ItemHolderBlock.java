@@ -73,7 +73,7 @@ public interface ItemHolderBlock {
                 return;
             }
 
-            if (onInsert(location, newStack, player)) {
+            if (onInsert(newStack, player)) {
                 insertItem(location, newStack);
                 player.getInventory().setItemInMainHand(null);
             }
@@ -81,7 +81,7 @@ public interface ItemHolderBlock {
             return;
         }
 
-        final Optional<ItemStack> finalStack = onRemove(location, currentStack.get(), player);
+        final Optional<ItemStack> finalStack = onRemove(location, currentStack.get());
         if (finalStack.isEmpty()) {
             return;
         }
@@ -89,6 +89,6 @@ public interface ItemHolderBlock {
         ItemUtils.addOrDropItemMainHand(player, finalStack.get());
     }
 
-    boolean onInsert(@NotNull final Location location, @NotNull final ItemStack stack, @NotNull final Player player);
-    Optional<ItemStack> onRemove(@NotNull final Location location, @NotNull final ItemStack stack, @NotNull final Player player);
+    boolean onInsert(@NotNull final ItemStack stack, @NotNull final Player player);
+    Optional<ItemStack> onRemove(@NotNull final Location location, @NotNull final ItemStack stack);
 }

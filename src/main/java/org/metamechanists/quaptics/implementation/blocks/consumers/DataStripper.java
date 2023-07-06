@@ -139,7 +139,7 @@ public class DataStripper extends ConnectedBlock implements PanelBlock, ItemHold
     }
 
     @Override
-    public boolean onInsert(@NotNull final Location location, final @NotNull ItemStack stack, @NotNull final Player player) {
+    public boolean onInsert(final @NotNull ItemStack stack, @NotNull final Player player) {
         if (stack.getAmount() != 1) {
             Language.sendLanguageMessage(player, "data-stripper.multiple-items");
             return false;
@@ -154,7 +154,7 @@ public class DataStripper extends ConnectedBlock implements PanelBlock, ItemHold
     }
 
     @Override
-    public Optional<ItemStack> onRemove(@NotNull final Location location, final @NotNull ItemStack stack, @NotNull final Player player) {
+    public Optional<ItemStack> onRemove(@NotNull final Location location, final @NotNull ItemStack stack) {
         final double progress = ProgressBlock.getProgress(location);
         return Math.abs(progress - settings.getTimePerItem()) < MAX_PROGRESS_DIFFERENCE
                 ? Optional.of(stripData(stack))

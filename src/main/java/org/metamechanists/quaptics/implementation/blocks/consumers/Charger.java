@@ -134,7 +134,7 @@ public class Charger extends ConnectedBlock implements PanelBlock, ItemHolderBlo
     }
 
     @Override
-    public boolean onInsert(@NotNull final Location location, @NotNull final ItemStack stack, @NotNull final Player player) {
+    public boolean onInsert(@NotNull final ItemStack stack, @NotNull final Player player) {
         if (stack.getAmount() != 1) {
             Language.sendLanguageMessage(player, "charger.multiple-items");
             return false;
@@ -144,7 +144,7 @@ public class Charger extends ConnectedBlock implements PanelBlock, ItemHolderBlo
     }
 
     @Override
-    public Optional<ItemStack> onRemove(@NotNull final Location location, @NotNull final ItemStack stack, @NotNull final Player player) {
+    public Optional<ItemStack> onRemove(@NotNull final Location location, @NotNull final ItemStack stack) {
         QuapticChargeableItem.updateLore(stack);
         return Optional.of(stack);
     }
