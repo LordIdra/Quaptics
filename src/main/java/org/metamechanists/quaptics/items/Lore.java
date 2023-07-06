@@ -3,6 +3,7 @@ package org.metamechanists.quaptics.items;
 import lombok.experimental.UtilityClass;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
+import org.metamechanists.quaptics.storage.QuapticTicker;
 import org.metamechanists.quaptics.utils.Colors;
 
 import java.util.ArrayList;
@@ -93,7 +94,7 @@ public class Lore {
             lore.add(damage(settings.getDamage()));
         }
         if (settings.getUseInterval() != 0) {
-            lore.add(useInterval(settings.getUseInterval()));
+            lore.add(useInterval(settings.getUseInterval() / QuapticTicker.QUAPTIC_TICKS_PER_SECOND));
         }
 
         return lore;

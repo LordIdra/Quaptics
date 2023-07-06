@@ -35,11 +35,11 @@ import java.util.Optional;
 import java.util.UUID;
 
 public class MultiblockClicker extends ConnectedBlock {
-    private static final Vector RELATIVE_PLATE_LOCATION = new Vector(0, 0, 0.5F);
+    private static final Vector RELATIVE_PLATE_LOCATION = new Vector(0, 0, 0.45F);
     private static final Brightness BRIGHTNESS_ON = new Brightness(15, 0);
     private static final Brightness BRIGHTNESS_OFF = new Brightness(3, 0);
     private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -settings.getConnectionRadius());
-    private final Vector3f attachmentDisplaySize = new Vector3f(0.15F, 0.15F, 0.8F);
+    private final Vector3f attachmentDisplaySize = new Vector3f(0.15F, 0.15F, 0.85F);
     private final Vector3f mainDisplaySize = new Vector3f(0.3F, 0.3F, 0.3F);
 
     public MultiblockClicker(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe,
