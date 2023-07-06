@@ -79,12 +79,6 @@ public class MultiblockClicker extends ConnectedBlock implements PowerAnimatedBl
             return;
         }
 
-        final Optional<Link> link = getLink(location.get(), "input");
-        if (link.isEmpty() || settings.isOperational(link)) {
-            onPoweredAnimation(location.get(), false);
-            return;
-        }
-
         final Optional<BlockFace> face = BlockStorageAPI.getBlockFace(location.get(), Keys.BS_FACING);
         if (face.isEmpty()) {
             return;
@@ -100,6 +94,12 @@ public class MultiblockClicker extends ConnectedBlock implements PowerAnimatedBl
         final Optional<MultiBlockMachine> machine = SlimefunIsDumbUtils.getMultiblockMachine(multiblockBlock);
         onAttachmentAnimation(location.get(), machine.isPresent());
         if (machine.isEmpty()) {
+            return;
+        }
+
+        final Optional<Link> link = getLink(location.get(), "input");
+        if (link.isEmpty() || settings.isOperational(link)) {
+            onPoweredAnimation(location.get(), false);
             return;
         }
 
