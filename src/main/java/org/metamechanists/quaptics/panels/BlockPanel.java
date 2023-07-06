@@ -28,6 +28,7 @@ public abstract class BlockPanel extends Panel {
         return groupId.get();
     }
 
+    @SuppressWarnings("MagicNumber")
     @Override
     protected Vector getOffset() {
         return new Vector(0.0, 0.7, 0.0);

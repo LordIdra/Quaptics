@@ -37,7 +37,7 @@ public abstract class QuapticChargeableItem extends SlimefunItem {
         this.settings = settings;
     }
 
-    public static Optional<QuapticChargeableItem> fromStack(@Nullable final ItemStack stack) {
+    private static Optional<QuapticChargeableItem> fromStack(@Nullable final ItemStack stack) {
         if (!(SlimefunItem.getByItem(stack) instanceof final QuapticChargeableItem chargeableItem)) {
             return Optional.empty();
         }

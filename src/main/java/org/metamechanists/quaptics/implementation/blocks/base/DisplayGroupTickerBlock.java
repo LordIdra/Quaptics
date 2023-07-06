@@ -9,7 +9,6 @@ import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
-import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -22,6 +21,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
+import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.id.simple.DisplayGroupId;
 
@@ -113,12 +113,11 @@ public abstract class DisplayGroupTickerBlock extends SlimefunItem {
     }
 
     private static void setId(@NotNull final DisplayGroup displayGroup, final Location location) {
-        BlockStorage.addBlockInfo(location, KEY_UUID, displayGroup.getParentUUID().toString());
+        BlockStorageAPI.set(location, KEY_UUID, displayGroup.getParentUUID());
     }
 
     protected static Optional<DisplayGroupId> getDisplayGroupId(final Location location) {
-        final String uuid = BlockStorage.getLocationInfo(location, KEY_UUID);
-        return Optional.ofNullable(uuid).map(DisplayGroupId::new);
+        return BlockStorageAPI.getDisplayGroupId(location, KEY_UUID);
     }
 
     public static Optional<DisplayGroup> getDisplayGroup(final Location location) {

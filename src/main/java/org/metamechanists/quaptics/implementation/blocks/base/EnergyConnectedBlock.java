@@ -8,12 +8,12 @@ import io.github.thebusybiscuit.slimefun4.core.attributes.EnergyNetComponent;
 import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNetComponentType;
 import lombok.Getter;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
-import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
+import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
@@ -38,23 +38,17 @@ public abstract class EnergyConnectedBlock extends ConnectedBlock implements Ene
         return COMPONENT_TYPE;
     }
 
-    private static void setPowered(final Location location, final boolean powered) {
-        BlockStorage.addBlockInfo(location, Keys.BS_POWERED, powered ? "true" : "false");
-    }
-
     protected static boolean isPowered(final Location location) {
-        final String powered = BlockStorage.getLocationInfo(location, Keys.BS_POWERED);
-        return "true".equals(powered);
+        return BlockStorageAPI.getBoolean(location, Keys.BS_POWERED);
     }
 
     @Override
     @OverridingMethodsMustInvokeSuper
     public void onSlimefunTick(@NotNull final Block block, final SlimefunItem item, final Config data) {
-        if (getCharge(block.getLocation(), data) >= consumption) {
+        final boolean powered = getCharge(block.getLocation(), data) >= consumption;
+        if (powered) {
             removeCharge(block.getLocation(), consumption);
-            setPowered(block.getLocation(), true);
-            return;
         }
-        setPowered(block.getLocation(), false);
+        BlockStorageAPI.set(block.getLocation(), Keys.BS_POWERED, powered);
     }
 }

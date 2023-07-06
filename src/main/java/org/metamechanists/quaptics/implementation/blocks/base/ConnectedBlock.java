@@ -6,7 +6,6 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockUseHandler;
 import lombok.Getter;
-import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -20,13 +19,14 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Unmodifiable;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
-import org.metamechanists.quaptics.connections.Link;
-import org.metamechanists.quaptics.panels.implementation.PointPanel;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
+import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.implementation.blocks.burnout.BurnoutManager;
 import org.metamechanists.quaptics.implementation.blocks.burnout.BurnoutRunnable;
+import org.metamechanists.quaptics.panels.implementation.PointPanel;
 import org.metamechanists.quaptics.storage.QuapticStorage;
+import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
@@ -127,7 +127,7 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
         });
 
         // TODO make this naturally break, not the forced shit we have going on here
-        BlockStorage.clearBlockInfo(location);
+        BlockStorageAPI.removeData(location);
         location.getBlock().setBlockData(Material.AIR.createBlockData());
         location.getWorld().playSound(location.toCenterLocation(), Sound.ENTITY_GENERIC_EXPLODE, BURNOUT_EXPLODE_VOLUME, BURNOUT_EXPLODE_PITCH);
         new ParticleBuilder(Particle.FLASH).location(location.toCenterLocation()).count(3).spawn();
@@ -139,8 +139,8 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
         }
 
         group.getLocation().ifPresent(location -> {
-             if (BlockStorage.hasBlockInfo(location) && BlockStorage.getLocationInfo(location, Keys.BS_BURNOUT) == null) {
-                 BlockStorage.addBlockInfo(location, Keys.BS_BURNOUT, "true");
+             if (BlockStorageAPI.hasData(location, Keys.BS_BURNOUT)) {
+                 BlockStorageAPI.set(location, Keys.BS_BURNOUT, true);
                  BurnoutManager.addBurnout(new BurnoutRunnable(location));
              }
         });

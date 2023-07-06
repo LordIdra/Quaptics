@@ -6,7 +6,6 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
-import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -21,12 +20,12 @@ import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
+import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
 import org.metamechanists.quaptics.connections.Link;
-import org.metamechanists.quaptics.connections.ConnectionPoint;
-import org.metamechanists.quaptics.implementation.blocks.attachments.PoweredBlock;
-import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
+import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
+import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
@@ -37,7 +36,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public abstract class Turret extends ConnectedBlock implements PoweredBlock {
+public abstract class Turret extends ConnectedBlock {
     private static final int ARBITRARILY_LARGE_NUMBER = 9999999;
     private final Vector3f mainDisplaySize = new Vector3f(0.6F, 0.6F, 0.6F);
     private final Vector3f barrelSize = new Vector3f(0.18F, 0.18F, settings.getDisplayRadius()*1.3F);
@@ -65,7 +64,7 @@ public abstract class Turret extends ConnectedBlock implements PoweredBlock {
 
     @Override
     protected void onSlimefunTick(@NotNull final Block block, final SlimefunItem item, final Config data) {
-        if (isPowered(block.getLocation())) {
+        if (BlockStorageAPI.getBoolean(block.getLocation(), Keys.BS_POWERED)) {
             retarget(block.getLocation());
             shoot(block.getLocation());
         }
@@ -82,7 +81,7 @@ public abstract class Turret extends ConnectedBlock implements PoweredBlock {
             return;
         }
 
-        setPowered(location.get(), false);
+        BlockStorageAPI.set(location.get(), Keys.BS_POWERED, false);
 
         final Optional<Link> inputLink = getLink(location.get(), "input");
         if (inputLink.isEmpty()) {
@@ -90,7 +89,7 @@ public abstract class Turret extends ConnectedBlock implements PoweredBlock {
         }
 
         if (settings.isOperational(inputLink)) {
-            setPowered(location.get(), true);
+            BlockStorageAPI.set(location.get(), Keys.BS_POWERED, true);
         }
     }
 
@@ -106,20 +105,16 @@ public abstract class Turret extends ConnectedBlock implements PoweredBlock {
     }
 
     private static void setTarget(@NotNull final Location location, @NotNull final Entity entity) {
-        BlockStorage.addBlockInfo(location, Keys.BS_TARGET, entity.getUniqueId().toString());
+        BlockStorageAPI.set(location, Keys.BS_TARGET, entity.getUniqueId());
     }
 
     private static void clearTarget(final Location location) {
-        BlockStorage.addBlockInfo(location, Keys.BS_TARGET, null);
+        BlockStorageAPI.set(location, Keys.BS_TARGET, (UUID) null);
     }
 
     private static Optional<LivingEntity> getTarget(final Location location) {
-        final String targetString = BlockStorage.getLocationInfo(location, Keys.BS_TARGET);
-        if (targetString == null) {
-            return Optional.empty();
-        }
-
-        return Optional.ofNullable((LivingEntity) Bukkit.getEntity(UUID.fromString(targetString)));
+        final Optional<UUID> targetUuid = BlockStorageAPI.getUuid(location, Keys.BS_TARGET);
+        return targetUuid.map(uuid -> (LivingEntity) Bukkit.getEntity(uuid));
     }
 
     private static Optional<LivingEntity> getClosestEntity(@NotNull final Collection<? extends Entity> entities, final Location location) {
@@ -136,7 +131,7 @@ public abstract class Turret extends ConnectedBlock implements PoweredBlock {
     }
 
     private void retarget(@NotNull final Location location) {
-        if (BlockStorage.getLocationInfo(location, Keys.BS_TARGET) != null) {
+        if (BlockStorageAPI.hasData(location, Keys.BS_TARGET)) {
             return;
         }
 

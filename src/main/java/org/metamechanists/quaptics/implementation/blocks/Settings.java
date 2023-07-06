@@ -33,6 +33,7 @@ public class Settings {
 
     private int connections;
 
+    private int usesPerSecond;
     private float projectileSpeed;
     private int range;
     private double damage;

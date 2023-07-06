@@ -4,7 +4,6 @@ import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
-import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -17,6 +16,7 @@ import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
+import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.ItemDisplayBuilder;
@@ -63,11 +63,10 @@ public class OscillatingConcentrator extends ConnectedBlock {
     }
 
     private static boolean isEnabled(final Location location) {
-        final String enabledString = BlockStorage.getLocationInfo(location, Keys.BS_POWERED);
-        return enabledString != null && !enabledString.equals("false");
+        return BlockStorageAPI.getBoolean(location, Keys.BS_POWERED);
     }
 
     private static void setEnabled(final Location location, final boolean enabled) {
-        BlockStorage.addBlockInfo(location, Keys.BS_POWERED, enabled ? "true" : "false");
+        BlockStorageAPI.set(location, Keys.BS_POWERED, enabled);
     }
 }

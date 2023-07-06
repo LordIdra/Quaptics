@@ -3,11 +3,12 @@ package org.metamechanists.quaptics.panels.implementation;
 import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
-import org.metamechanists.quaptics.implementation.blocks.manipulators.Capacitor;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.panels.BlockPanel;
-import org.metamechanists.quaptics.panels.PanelContainer;
 import org.metamechanists.quaptics.panels.PanelBuilder;
+import org.metamechanists.quaptics.panels.PanelContainer;
+import org.metamechanists.quaptics.utils.BlockStorageAPI;
+import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.id.complex.PanelId;
 
@@ -47,7 +48,7 @@ public class CapacitorPanel extends BlockPanel {
         }
 
         final double capacity = group.get().getBlock().getSettings().getCapacity();
-        final double charge = Capacitor.getCharge(location.get());
+        final double charge = BlockStorageAPI.getDouble(location.get(), Keys.BS_CHARGE);
 
         panelContainer.setText("chargeText", Lore.chargeBarRaw((int)charge, (int)capacity));
         panelContainer.setText("chargeBar", Lore.chargeValuesRaw((int)charge, (int)capacity));

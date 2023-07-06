@@ -4,7 +4,6 @@ import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
-import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Display;
@@ -15,18 +14,19 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
-import org.metamechanists.quaptics.storage.QuapticTicker;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
+import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
 import org.metamechanists.quaptics.connections.Link;
-import org.metamechanists.quaptics.connections.ConnectionPoint;
+import org.metamechanists.quaptics.implementation.blocks.Settings;
+import org.metamechanists.quaptics.implementation.blocks.attachments.PanelBlock;
 import org.metamechanists.quaptics.implementation.blocks.attachments.PowerLossBlock;
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
-import org.metamechanists.quaptics.implementation.blocks.attachments.PanelBlock;
-import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.panels.BlockPanel;
-import org.metamechanists.quaptics.panels.implementation.CapacitorPanel;
 import org.metamechanists.quaptics.panels.PanelContainer;
+import org.metamechanists.quaptics.panels.implementation.CapacitorPanel;
+import org.metamechanists.quaptics.storage.QuapticTicker;
+import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
@@ -35,7 +35,6 @@ import org.metamechanists.quaptics.utils.id.complex.PanelId;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 public class Capacitor extends ConnectedBlock implements PanelBlock, PowerLossBlock {
@@ -104,11 +103,11 @@ public class Capacitor extends ConnectedBlock implements PanelBlock, PowerLossBl
             return;
         }
 
-        double charge = getCharge(location.get());
+        double charge = BlockStorageAPI.getDouble(location.get(), Keys.BS_CHARGE);
         charge = doCharge(location.get(), charge);
         charge = doDischarge(location.get(), charge);
 
-        setCharge(location.get(), charge);
+        BlockStorageAPI.set(location.get(), Keys.BS_CHARGE, charge);
         doEmission(location.get(), charge);
         updateConcreteTransformation(location.get());
         setPanelHidden(group, charge == 0);
@@ -128,17 +127,18 @@ public class Capacitor extends ConnectedBlock implements PanelBlock, PowerLossBl
 
         final Optional<Link> inputLink = getLink(location.get(), "input");
         if (inputLink.isEmpty()) {
-            setChargeRate(location.get(), 0);
+            BlockStorageAPI.set(location.get(), Keys.BS_CHARGE_RATE, 0);
             return;
         }
 
-        setChargeRate(location.get(), settings.isOperational(inputLink)
+        final double chargeRate = settings.isOperational(inputLink)
                 ? calculatePowerLoss(settings, inputLink.get().getPower() / QuapticTicker.QUAPTIC_TICKS_PER_SECOND)
-                : 0);
+                : 0;
+        BlockStorageAPI.set(location.get(), Keys.BS_CHARGE_RATE, chargeRate);
     }
 
     private double doCharge(final Location location, final double charge) {
-        final double chargeRate = getChargeRate(location);
+        final double chargeRate = BlockStorageAPI.getDouble(location, Keys.BS_CHARGE_RATE);
         return settings.stepCharge(charge, chargeRate);
     }
 
@@ -149,7 +149,7 @@ public class Capacitor extends ConnectedBlock implements PanelBlock, PowerLossBl
         }
 
         final double newCharge = settings.stepDischarge(charge);
-        setCharge(location, newCharge);
+        BlockStorageAPI.set(location, Keys.BS_CHARGE, charge);
         return newCharge;
     }
 
@@ -182,26 +182,8 @@ public class Capacitor extends ConnectedBlock implements PanelBlock, PowerLossBl
     }
 
     private void updateConcreteTransformation(final Location location) {
-        final double charge = getCharge(location);
+        final double charge = BlockStorageAPI.getDouble(location, Keys.BS_CHARGE);
         final Optional<Display> concreteDisplay = getDisplay(location, "concrete");
         concreteDisplay.ifPresent(display -> display.setTransformationMatrix(getConcreteTransformationMatrix(charge)));
-    }
-
-    public static double getCharge(final Location location) {
-        final String chargeString = BlockStorage.getLocationInfo(location, Keys.BS_CHARGE);
-        return chargeString == null ? 0 : Double.parseDouble(chargeString);
-    }
-
-    private static void setCharge(final Location location, final double charge) {
-        BlockStorage.addBlockInfo(location, Keys.BS_CHARGE, Objects.toString(charge));
-    }
-
-    private static double getChargeRate(final Location location) {
-        final String chargeRateString = BlockStorage.getLocationInfo(location, Keys.BS_CHARGE_RATE);
-        return chargeRateString == null ? 0 : Double.parseDouble(chargeRateString);
-    }
-
-    private static void setChargeRate(final Location location, final double chargeRate) {
-        BlockStorage.addBlockInfo(location, Keys.BS_CHARGE_RATE, String.valueOf(chargeRate));
     }
 }

@@ -3,7 +3,6 @@ package org.metamechanists.quaptics.implementation.blocks.burnout;
 import com.destroystokyo.paper.ParticleBuilder;
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import lombok.Getter;
-import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
@@ -16,6 +15,7 @@ import org.metamechanists.quaptics.Quaptics;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
 import org.metamechanists.quaptics.implementation.blocks.base.DisplayGroupTickerBlock;
+import org.metamechanists.quaptics.utils.BlockStorageAPI;
 
 import java.util.Optional;
 
@@ -39,7 +39,7 @@ public class BurnoutRunnable extends BukkitRunnable {
     @Override
     public void run() {
         final Block block = location.getBlock();
-        if (!(BlockStorage.check(block) instanceof final ConnectedBlock connectedBlock)) {
+        if (!(BlockStorageAPI.check(block) instanceof final ConnectedBlock connectedBlock)) {
             return;
         }
 
@@ -93,7 +93,7 @@ public class BurnoutRunnable extends BukkitRunnable {
         this.stopEarly = true;
 
         final Block block = location.getBlock();
-        if (BlockStorage.check(block) instanceof final ConnectedBlock connectedBlock) {
+        if (BlockStorageAPI.check(block) instanceof final ConnectedBlock connectedBlock) {
             connectedBlock.burnout(location);
         }
         BurnoutManager.removeBurnout(this);

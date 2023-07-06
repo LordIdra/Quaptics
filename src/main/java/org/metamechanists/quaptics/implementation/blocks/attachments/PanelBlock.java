@@ -1,10 +1,10 @@
 package org.metamechanists.quaptics.implementation.blocks.attachments;
 
-import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.panels.BlockPanel;
+import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.id.complex.PanelId;
@@ -14,12 +14,11 @@ import java.util.Optional;
 @FunctionalInterface
 public interface PanelBlock {
     default Optional<PanelId> getPanelId(final Location location) {
-        final String panelId = BlockStorage.getLocationInfo(location, Keys.BS_PANEL_ID);
-        return Optional.ofNullable(panelId).map(PanelId::new);
+        return BlockStorageAPI.getPanelId(location, Keys.BS_PANEL_ID);
     }
 
     default void setPanelId(final Location location, @NotNull final PanelId id) {
-        BlockStorage.addBlockInfo(location, Keys.BS_PANEL_ID, id.toString());
+        BlockStorageAPI.set(location, Keys.BS_PANEL_ID, id);
     }
 
     default void updatePanel(@NotNull final ConnectionGroup group) {

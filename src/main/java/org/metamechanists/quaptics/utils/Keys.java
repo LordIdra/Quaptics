@@ -33,5 +33,6 @@ public class Keys {
     public final String BS_CHARGE = "QP_CHARGE";
     public final String BS_CHARGE_RATE = "QP_CHARGE_RATE";
     public final String BS_POWERED = "QP_POWERED";
+    public final String BS_ENABLED = "QP_ENABLED";
     public final String BS_TARGET = "QP_TARGET";
 }
