@@ -165,7 +165,7 @@ public class Primitive {
                     "&7● Shoots at nearby entities"));
 
     public final SlimefunItemStack MULTIBLOCK_CLICKER_1 = new SlimefunItemStack(
-            "MULTIBLOCK_CLICKER_1",
+            "QP_MULTIBLOCK_CLICKER_1",
             Material.SMOOTH_STONE_SLAB,
             "&6Multiblock Clicker &eI",
             Lore.create(MULTIBLOCK_CLICKER_1_SETTINGS,
