@@ -101,19 +101,7 @@ public class Charger extends ConnectedBlock implements PanelBlock, ItemHolderBlo
 
     @Override
     protected void onRightClick(final @NotNull Location location, final @NotNull Player player) {
-        final Optional<ItemStack> stack = ItemHolderBlock.getStack(location);
-        if (stack.isEmpty() || stack.get().getType().isEmpty()) {
-            ItemHolderBlock.insertItem(location, player);
-            return;
-        }
-
-        if (!(SlimefunItem.getByItem(stack.get()) instanceof QuapticChargeableItem)) {
-            return;
-        }
-
-        QuapticChargeableItem.updateLore(stack.get());
-        ItemHolderBlock.insertItem(location, stack.get()); // We insert just before removing to update the lore
-        ItemHolderBlock.removeItem(location, player);
+        interact(location, player);
     }
 
     @Override
@@ -142,5 +130,16 @@ public class Charger extends ConnectedBlock implements PanelBlock, ItemHolderBlo
     @Override
     public void onInputLinkUpdated(@NotNull final ConnectionGroup group) {
         doBurnoutCheck(group, "input");
+    }
+
+    @Override
+    public boolean onInsert(@NotNull final Location location, @NotNull final ItemStack stack, @NotNull final Player player) {
+        return SlimefunItem.getByItem(stack) instanceof QuapticChargeableItem;
+    }
+
+    @Override
+    public Optional<ItemStack> onRemove(@NotNull final Location location, @NotNull final ItemStack stack, @NotNull final Player player) {
+        QuapticChargeableItem.updateLore(stack);
+        return Optional.of(stack);
     }
 }

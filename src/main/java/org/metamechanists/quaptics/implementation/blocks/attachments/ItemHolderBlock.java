@@ -6,7 +6,7 @@ import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.metamechanists.metalib.utils.ItemUtils;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.implementation.blocks.base.DisplayGroupTickerBlock;
 
@@ -54,24 +54,40 @@ public interface ItemHolderBlock {
         itemDisplay.get().setItemStack(itemStack);
     }
 
-    static void insertItem(final Location location, @NotNull final Player player) {
-        final ItemStack itemStack = player.getInventory().getItemInMainHand().clone();
-        if (itemStack.getType().isEmpty()) {
-            return;
-        }
-
-        insertItem(location, itemStack);
-        player.getInventory().setItemInMainHand(null);
-    }
-
-    static @Nullable ItemStack removeItem(@NotNull final Location location) {
+    static Optional<ItemStack> removeItem(@NotNull final Location location) {
         final Optional<ItemDisplay> itemDisplay = getItemDisplay(location);
         if (itemDisplay.isEmpty()) {
-            return null;
+            return Optional.empty();
         }
 
         final ItemStack itemStack = itemDisplay.get().getItemStack();
         itemDisplay.get().setItemStack(null);
-        return itemStack;
+        return Optional.ofNullable(itemStack);
     }
+
+    default void interact(@NotNull final Location location, @NotNull final Player player) {
+        final ItemStack newStack = player.getInventory().getItemInMainHand().clone();
+        if (newStack.getType().isEmpty()) {
+            return;
+        }
+
+        final Optional<ItemStack> currentStack = removeItem(location);
+        if (currentStack.isEmpty() || currentStack.get().getType().isEmpty()) {
+            if (onInsert(location, newStack, player)) {
+                insertItem(location, newStack);
+                player.getInventory().setItemInMainHand(null);
+            }
+            return;
+        }
+
+        final Optional<ItemStack> finalStack = onRemove(location, currentStack.get(), player);
+        if (finalStack.isEmpty()) {
+            return;
+        }
+
+        ItemUtils.addOrDropItemMainHand(player, finalStack.get());
+    }
+
+    boolean onInsert(@NotNull final Location location, @NotNull final ItemStack stack, @NotNull final Player player);
+    Optional<ItemStack> onRemove(@NotNull final Location location, @NotNull final ItemStack stack, @NotNull final Player player);
 }

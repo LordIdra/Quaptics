@@ -14,7 +14,6 @@ import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
-import org.metamechanists.metalib.utils.ItemUtils;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
@@ -109,29 +108,7 @@ public class DataStripper extends ConnectedBlock implements PanelBlock, ItemHold
 
     @Override
     protected void onRightClick(final @NotNull Location location, final @NotNull Player player) {
-        final Optional<ItemStack> currentStack = ItemHolderBlock.getStack(location);
-        final ItemStack newStack = player.getInventory().getItemInMainHand().clone();
-        if (newStack.getType().isEmpty()) {
-            return;
-        }
-
-        if (FORBIDDEN_BLOCKS.contains(newStack.getType())) {
-            Language.sendLanguageMessage(player, "data-stripper.disallowed-block");
-            return;
-        }
-
-        if (currentStack.isEmpty() || currentStack.get().getType().isEmpty()) {
-            ItemHolderBlock.insertItem(location, player);
-            return;
-        }
-
-        final double progress = ProgressBlock.getProgress(location);
-        if (Math.abs(progress - settings.getTimePerItem()) < MAX_PROGRESS_DIFFERENCE) {
-            ItemHolderBlock.insertItem(location, stripData(currentStack.get()));
-        }
-
-        //noinspection DataFlowIssue
-        ItemUtils.addOrDropItemMainHand(player, ItemHolderBlock.removeItem(location));
+        interact(location, player);
     }
 
     @Override
@@ -159,6 +136,30 @@ public class DataStripper extends ConnectedBlock implements PanelBlock, ItemHold
     @Override
     public void onInputLinkUpdated(@NotNull final ConnectionGroup group) {
         doBurnoutCheck(group, "input");
+    }
+
+    @Override
+    public boolean onInsert(@NotNull final Location location, final @NotNull ItemStack stack, @NotNull final Player player) {
+        if (stack.getAmount() != 1) {
+            Language.sendLanguageMessage(player, "data-stripper.multiple-items");
+            return false;
+        }
+
+        if (FORBIDDEN_BLOCKS.contains(stack.getType())) {
+            Language.sendLanguageMessage(player, "data-stripper.disallowed-block");
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public Optional<ItemStack> onRemove(@NotNull final Location location, final @NotNull ItemStack stack, @NotNull final Player player) {
+        final double progress = ProgressBlock.getProgress(location);
+        return Math.abs(progress - settings.getTimePerItem()) < MAX_PROGRESS_DIFFERENCE
+                ? Optional.of(stripData(stack))
+                : Optional.of(stack);
+
     }
 
     private static @NotNull ItemStack stripData(final @NotNull ItemStack inputStack) {

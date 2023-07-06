@@ -8,7 +8,8 @@ targeting-wand.target-must-be-input: "&cYou can only link to an output point."
 multiblock-clicker.not-connected-to-multiblock: "&cNot connected to a multiblock."
 multiblock-clicker.not-powered: "&cYou must power the multiblock clicker before you can enable it."
 
-data-stripper.disallowed-block: "&cnice try :)"
+data-stripper.disallowed-block: "&cNice try :)"
+data-stripper.multiple-items: "&cYou can only insert one item at a time."
 
 too-close: "&cToo close to another component!"
 
