@@ -122,7 +122,7 @@ public class MultiblockClicker extends ConnectedBlock {
     }
 
     @Override
-    protected void onRightClick(final Location location, final Player player) {
+    protected void onRightClick(final @NotNull Location location, final @NotNull Player player) {
         final Optional<Block> multiblockBlock = getMultiblockBlock(location);
         if (multiblockBlock.isEmpty()) {
             return;

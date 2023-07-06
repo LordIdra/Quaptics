@@ -74,7 +74,7 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
         getGroup(location).ifPresent(ConnectionGroup::remove);
     }
 
-    protected void onRightClick(final Location location, final Player player) {}
+    protected void onRightClick(@NotNull final Location location, @NotNull final Player player) {}
 
     private static void changePointLocation(final @NotNull ConnectionPointId pointId, @NotNull final Location newLocation) {
         pointId.get().ifPresent(point -> point.changeLocation(newLocation));

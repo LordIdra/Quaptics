@@ -8,6 +8,8 @@ targeting-wand.target-must-be-input: "&cYou can only link to an output point."
 multiblock-clicker.not-connected-to-multiblock: "&cNot connected to a multiblock."
 multiblock-clicker.not-powered: "&cYou must power the multiblock clicker before you can enable it."
 
+data-stripper.disallowed-block: "&cnice try :)"
+
 too-close: "&cToo close to another component!"
 
 load.failed: "Failed to load laser tickers; if this is not your first run, make sure file permissions are set up correctly."

@@ -1,6 +1,5 @@
 package org.metamechanists.quaptics.implementation.blocks.attachments;
 
-import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import org.bukkit.Location;
 import org.bukkit.entity.Display;
 import org.bukkit.entity.ItemDisplay;
@@ -10,7 +9,6 @@ import org.jetbrains.annotations.NotNull;
 import org.metamechanists.metalib.utils.ItemUtils;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.implementation.blocks.base.DisplayGroupTickerBlock;
-import org.metamechanists.quaptics.implementation.tools.QuapticChargeableItem;
 
 import java.util.Optional;
 
@@ -62,10 +60,6 @@ public interface ItemHolderBlock {
             return;
         }
 
-        if (!(SlimefunItem.getByItem(itemStack) instanceof QuapticChargeableItem)) {
-            return;
-        }
-
         insertItem(location, itemStack);
         player.getInventory().setItemInMainHand(null);
     }
@@ -82,7 +76,6 @@ public interface ItemHolderBlock {
         }
 
         itemDisplay.get().setItemStack(null);
-        QuapticChargeableItem.updateLore(itemStack);
         ItemUtils.addOrDropItemMainHand(player, itemStack);
     }
 }

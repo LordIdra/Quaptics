@@ -2,6 +2,7 @@ package org.metamechanists.quaptics.implementation.blocks.consumers;
 
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import org.bukkit.Location;
@@ -99,13 +100,19 @@ public class Charger extends ConnectedBlock implements PanelBlock, ItemHolderBlo
     }
 
     @Override
-    protected void onRightClick(final Location location, final Player player) {
+    protected void onRightClick(final @NotNull Location location, final @NotNull Player player) {
         final Optional<ItemStack> stack = ItemHolderBlock.getStack(location);
         if (stack.isEmpty() || stack.get().getType().isEmpty()) {
             ItemHolderBlock.insertItem(location, player);
             return;
         }
 
+        if (!(SlimefunItem.getByItem(stack.get()) instanceof QuapticChargeableItem)) {
+            return;
+        }
+
+        QuapticChargeableItem.updateLore(stack.get());
+        ItemHolderBlock.insertItem(location, stack.get()); // We insert just before removing to update the lore
         ItemHolderBlock.removeItem(location, player);
     }
 

@@ -25,6 +25,7 @@ import org.metamechanists.quaptics.panels.BlockPanel;
 import org.metamechanists.quaptics.panels.PanelContainer;
 import org.metamechanists.quaptics.panels.implementation.ProgressPanel;
 import org.metamechanists.quaptics.storage.QuapticTicker;
+import org.metamechanists.quaptics.utils.Language;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.builders.ItemDisplayBuilder;
@@ -34,8 +35,10 @@ import org.metamechanists.quaptics.utils.id.complex.PanelId;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public class DataStripper extends ConnectedBlock implements PanelBlock, ItemHolderBlock, ProgressBlock {
+    private static final Set<Material> FORBIDDEN_BLOCKS = Set.of(Material.BARRIER, Material.BEDROCK, Material.END_PORTAL, Material.STRUCTURE_VOID);
     private final Vector3f mainDisplaySize = new Vector3f(0.6F, 0.3F, 0.6F);
     private final Vector3f glassDisplaySize = new Vector3f(0.4F, 0.15F, 0.4F);
     private final Vector3f itemDisplaySize = new Vector3f(0.5F);
@@ -101,9 +104,20 @@ public class DataStripper extends ConnectedBlock implements PanelBlock, ItemHold
     }
 
     @Override
-    protected void onRightClick(final Location location, final Player player) {
-        final Optional<ItemStack> stack = ItemHolderBlock.getStack(location);
-        if (stack.isEmpty() || stack.get().getType().isEmpty()) {
+    protected void onRightClick(final @NotNull Location location, final @NotNull Player player) {
+        final Optional<ItemStack> currentStack = ItemHolderBlock.getStack(location);
+
+        final ItemStack newStack = player.getInventory().getItemInMainHand().clone();
+        if (newStack.getType().isEmpty()) {
+            return;
+        }
+
+        if (FORBIDDEN_BLOCKS.contains(newStack.getType())) {
+            Language.sendLanguageMessage(player, "data-stripper.disallowed-block");
+            return;
+        }
+
+        if (currentStack.isEmpty() || currentStack.get().getType().isEmpty()) {
             ItemHolderBlock.insertItem(location, player);
             return;
         }
