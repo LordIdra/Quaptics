@@ -65,8 +65,8 @@ public class MultiblockClicker extends ConnectedBlock {
             return;
         }
 
-        final Player player = Bukkit.getPlayer(BlockStorage.getLocationInfo(location.get(), Keys.BS_FACING));
-        if (player == null) {
+        final Player owner = Bukkit.getPlayer(BlockStorage.getLocationInfo(location.get(), Keys.BS_OWNER));
+        if (owner == null) {
             return;
         }
 
@@ -76,7 +76,7 @@ public class MultiblockClicker extends ConnectedBlock {
             return;
         }
 
-        multiblock.onInteract(player, multiblockBlock);
+        multiblock.onInteract(owner, multiblockBlock);
     }
 
     @Override
