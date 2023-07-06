@@ -4,6 +4,7 @@ import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import io.github.thebusybiscuit.slimefun4.core.multiblocks.MultiBlockMachine;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -22,6 +23,7 @@ import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.implementation.blocks.attachments.PowerAnimatedBlock;
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
+import org.metamechanists.quaptics.storage.QuapticTicker;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.SlimefunIsDumbUtils;
@@ -55,6 +57,7 @@ public class MultiblockClicker extends ConnectedBlock implements PowerAnimatedBl
                 .build());
         displayGroup.addDisplay("attachment", new BlockDisplayBuilder(formatPointLocation(player, location, RELATIVE_PLATE_LOCATION))
                 .setBlockData(Material.WHITE_CONCRETE.createBlockData())
+                        .setViewRange(0.0F)
                 .setTransformation(Transformations.lookAlong(attachmentDisplaySize, player.getFacing().getDirection().toVector3f()))
                 .build());
         BlockStorageAPI.set(location, Keys.BS_TICKS_SINCE_LAST_UPDATE, 0);
@@ -94,20 +97,24 @@ public class MultiblockClicker extends ConnectedBlock implements PowerAnimatedBl
 
         final Player owner = Bukkit.getPlayer(uuid.get());
         final Block multiblockBlock = location.get().getBlock().getRelative(face.get());
-        final boolean enabled = SlimefunIsDumbUtils.getMultiblockMachine(multiblockBlock).isPresent()
-                && BlockStorageAPI.getBoolean(location.get(), Keys.BS_ENABLED)
-                && owner != null;
-
-        onPoweredAnimation(location.get(), enabled);
+        final Optional<MultiBlockMachine> machine = SlimefunIsDumbUtils.getMultiblockMachine(multiblockBlock);
+        onAttachmentAnimation(location.get(), machine.isPresent());
+        if (machine.isEmpty()) {
+            return;
+        }
 
         double ticksSinceLastUpdate = BlockStorageAPI.getInt(location.get(), Keys.BS_TICKS_SINCE_LAST_UPDATE);
+        ticksSinceLastUpdate += QuapticTicker.INTERVAL_TICKS;
+
+        final boolean enabled = BlockStorageAPI.getBoolean(location.get(), Keys.BS_ENABLED) && owner != null;
+        onPoweredAnimation(location.get(), enabled);
         if (!enabled || ticksSinceLastUpdate < settings.getUseInterval()) {
             return;
         }
 
         final int usesInThisTick = (int) (ticksSinceLastUpdate / settings.getUseInterval());
 
-        SlimefunIsDumbUtils.getMultiblockMachine(multiblockBlock).ifPresent(block -> block.onInteract(owner, multiblockBlock));
+        machine.get().onInteract(owner, multiblockBlock);
         ticksSinceLastUpdate -= usesInThisTick * settings.getUseInterval();
         ticksSinceLastUpdate %= settings.getUseInterval();
         BlockStorageAPI.set(location.get(), Keys.BS_TICKS_SINCE_LAST_UPDATE, ticksSinceLastUpdate);
@@ -127,5 +134,9 @@ public class MultiblockClicker extends ConnectedBlock implements PowerAnimatedBl
     @Override
     public void onPoweredAnimation(final Location location, final boolean powered) {
         getDisplay(location, "main").ifPresent(value -> value.setBrightness(powered ? BRIGHTNESS_ON : BRIGHTNESS_OFF));
+    }
+
+    private static void onAttachmentAnimation(final Location location, final boolean powered) {
+        getDisplay(location, "attachment").ifPresent(value -> value.setViewRange(powered ? VIEW_RANGE_ON : VIEW_RANGE_OFF));
     }
 }
