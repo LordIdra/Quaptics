@@ -21,7 +21,6 @@ import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
 import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
-import org.metamechanists.quaptics.implementation.blocks.attachments.PowerAnimatedBlock;
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
 import org.metamechanists.quaptics.storage.QuapticTicker;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
@@ -35,7 +34,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public class MultiblockClicker extends ConnectedBlock implements PowerAnimatedBlock {
+public class MultiblockClicker extends ConnectedBlock {
     private static final Vector RELATIVE_PLATE_LOCATION = new Vector(0, 0, 0.5F);
     private static final Brightness BRIGHTNESS_ON = new Brightness(15, 0);
     private static final Brightness BRIGHTNESS_OFF = new Brightness(3, 0);
@@ -85,11 +84,16 @@ public class MultiblockClicker extends ConnectedBlock implements PowerAnimatedBl
             return;
         }
 
-        final Player owner = Bukkit.getPlayer(uuid.get());
         final Block multiblockBlock = location.get().getBlock().getRelative(face.get());
         final Optional<MultiBlockMachine> machine = SlimefunIsDumbUtils.getMultiblockMachine(multiblockBlock);
         onAttachmentAnimation(location.get(), machine.isPresent());
         if (machine.isEmpty()) {
+            return;
+        }
+
+        final boolean enabled = BlockStorageAPI.getBoolean(location.get(), Keys.BS_ENABLED);
+        onEnabledAnimation(location.get(), enabled);
+        if (!enabled) {
             return;
         }
 
@@ -98,11 +102,11 @@ public class MultiblockClicker extends ConnectedBlock implements PowerAnimatedBl
             return;
         }
 
+        final Player owner = Bukkit.getPlayer(uuid.get());
         double ticksSinceLastUpdate = BlockStorageAPI.getInt(location.get(), Keys.BS_TICKS_SINCE_LAST_UPDATE);
         ticksSinceLastUpdate += QuapticTicker.INTERVAL_TICKS;
-        final boolean enabled = BlockStorageAPI.getBoolean(location.get(), Keys.BS_ENABLED);
-        onPoweredAnimation(location.get(), enabled);
-        if (!enabled || owner == null || ticksSinceLastUpdate < settings.getUseInterval()) {
+        if (owner == null || ticksSinceLastUpdate < settings.getUseInterval()) {
+            BlockStorageAPI.set(location.get(), Keys.BS_TICKS_SINCE_LAST_UPDATE, ticksSinceLastUpdate);
             return;
         }
 
@@ -125,12 +129,11 @@ public class MultiblockClicker extends ConnectedBlock implements PowerAnimatedBl
         //doBurnoutCheck(group, "input");
     }
 
-    @Override
-    public void onPoweredAnimation(final Location location, final boolean powered) {
-        getDisplay(location, "main").ifPresent(value -> value.setBrightness(powered ? BRIGHTNESS_ON : BRIGHTNESS_OFF));
+    private static void onEnabledAnimation(final Location location, final boolean enabled) {
+        getDisplay(location, "main").ifPresent(value -> value.setBrightness(enabled ? BRIGHTNESS_ON : BRIGHTNESS_OFF));
     }
 
-    private static void onAttachmentAnimation(final Location location, final boolean powered) {
-        getDisplay(location, "attachment").ifPresent(value -> value.setViewRange(powered ? VIEW_RANGE_ON : VIEW_RANGE_OFF));
+    private static void onAttachmentAnimation(final Location location, final boolean attached) {
+        getDisplay(location, "attachment").ifPresent(value -> value.setViewRange(attached ? VIEW_RANGE_ON : VIEW_RANGE_OFF));
     }
 }
