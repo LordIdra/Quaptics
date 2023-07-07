@@ -8,8 +8,8 @@ import org.metamechanists.quaptics.utils.id.complex.ConfigPanelId;
 public abstract class ConfigPanel {
     protected final ConfigPanelContainer container;
 
-    protected ConfigPanel(@NotNull final Location location) {
-        this.container = buildPanelContainer(location);
+    protected ConfigPanel(@NotNull final Location location, final float rotationY) {
+        this.container = buildPanelContainer(location, rotationY);
     }
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
@@ -45,7 +45,7 @@ public abstract class ConfigPanel {
 
     protected abstract Vector getOffset();
 
-    protected abstract ConfigPanelContainer buildPanelContainer(@NotNull final Location location);
+    protected abstract ConfigPanelContainer buildPanelContainer(@NotNull final Location location, final float rotationY);
 
     public abstract void update();
 }

@@ -13,8 +13,8 @@ public abstract class BlockConfigPanel extends ConfigPanel {
     protected static final float SIZE = 0.40F;
     private final ConnectionGroupId groupId;
 
-    protected BlockConfigPanel(@NotNull final Location location, final ConnectionGroupId groupId) {
-        super(location);
+    protected BlockConfigPanel(@NotNull final Location location, final ConnectionGroupId groupId, final float rotationY) {
+        super(location, rotationY);
         this.groupId = groupId;
         setPanelHidden(false);
     }

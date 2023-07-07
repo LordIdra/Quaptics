@@ -8,6 +8,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.jetbrains.annotations.Nullable;
 import org.metamechanists.quaptics.utils.id.CustomId;
+import org.metamechanists.quaptics.utils.id.complex.ConfigPanelId;
 import org.metamechanists.quaptics.utils.id.complex.InfoPanelId;
 import org.metamechanists.quaptics.utils.id.simple.DisplayGroupId;
 
@@ -99,9 +100,14 @@ public class BlockStorageAPI {
                 ? Optional.of(BlockFace.valueOf(getString(location, key)))
                 : Optional.empty();
     }
-    public Optional<InfoPanelId> getPanelId(final Location location, final String key) {
+    public Optional<InfoPanelId> getInfoPanelId(final Location location, final String key) {
         return hasData(location, key)
                 ? Optional.of(new InfoPanelId(getString(location, key)))
+                : Optional.empty();
+    }
+    public Optional<ConfigPanelId> getConfigPanelId(final Location location, final String key) {
+        return hasData(location, key)
+                ? Optional.of(new ConfigPanelId(getString(location, key)))
                 : Optional.empty();
     }
     public Optional<DisplayGroupId> getDisplayGroupId(final Location location, final String key) {

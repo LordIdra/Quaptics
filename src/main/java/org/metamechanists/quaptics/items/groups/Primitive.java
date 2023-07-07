@@ -116,7 +116,7 @@ public class Primitive {
 
     public final Settings LAUNCHPAD_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
-            .connectionRadius(0.7F)
+            .connectionRadius(0.8F)
             .minPower(3)
             .build();
 
