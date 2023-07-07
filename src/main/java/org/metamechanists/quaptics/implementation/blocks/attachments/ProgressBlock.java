@@ -18,10 +18,10 @@ public interface ProgressBlock {
     }
 
     static void updateProgress(@NotNull final Location location, final double maxTime) {
-        double progress = ProgressBlock.getProgress(location);
-        progress += QuapticTicker.INTERVAL_TICKS;
-        progress = Math.min(progress, maxTime * QuapticTicker.QUAPTIC_TICKS_PER_SECOND);
-        ProgressBlock.setProgress(location, progress);
+        double progress = getProgress(location);
+        progress += 1.0 / QuapticTicker.QUAPTIC_TICKS_PER_SECOND;
+        progress = Math.min(progress, maxTime);
+        setProgress(location, progress);
     }
 
     static String progressBar(final @NotNull ConnectionGroup group) {
