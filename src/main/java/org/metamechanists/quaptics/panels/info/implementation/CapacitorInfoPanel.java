@@ -26,8 +26,8 @@ public class CapacitorInfoPanel extends BlockInfoPanel {
     @Override
     protected InfoPanelContainer buildPanelContainer(@NotNull final Location location) {
         return new InfoPanelBuilder(location.clone().toCenterLocation().add(getOffset()), SIZE)
-                .addAttribute("chargeBar", false)
                 .addAttribute("chargeText", false)
+                .addAttribute("chargeBar", false)
                 .build();
     }
 
@@ -50,7 +50,7 @@ public class CapacitorInfoPanel extends BlockInfoPanel {
         final double capacity = group.get().getBlock().getSettings().getCapacity();
         final double charge = BlockStorageAPI.getDouble(location.get(), Keys.BS_CHARGE);
 
-        container.setText("chargeBar", Lore.chargeBarRaw((int)charge, (int)capacity));
-        container.setText("chargeText", Lore.chargeValuesRaw((int)charge, (int)capacity));
+        container.setText("chargeText", Lore.chargeBarRaw((int)charge, (int)capacity));
+        container.setText("chargeBar", Lore.chargeValuesRaw((int)charge, (int)capacity));
     }
 }

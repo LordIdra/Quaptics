@@ -51,8 +51,7 @@ public class ItemProjector extends ConnectedBlock implements ItemHolderBlock, Po
     private static final double SIZE_MULTIPLY = 0.1;
     private static final Vector3f MAIN_DISPLAY_SIZE = new Vector3f(1.0F, 0.7F, 1.0F);
     private static final Vector3f MAIN_DISPLAY_OFFSET = new Vector3f(0.0F, -0.35F, 0.0F);
-    private static final Vector3f PRISM_DISPLAY_SIZE = new Vector3f(0.5F, 0.5F, 0.5F);
-    private static final Vector PRISM_DISPLAY_OFFSET = new Vector(0, -0.2F, 0);
+    private static final Vector3f PRISM_DISPLAY_SIZE = new Vector3f(0.4F, 0.4F, 0.4F);
     private static final Vector3f ITEM_DISPLAY_ADDITIONAL_SIZE = new Vector3f(0.1F);
     private static final Vector3f ITEM_DISPLAY_ADDITIONAL_OFFSET = new Vector3f(0, 0.6F, 0);
     private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -settings.getConnectionRadius());
@@ -64,10 +63,10 @@ public class ItemProjector extends ConnectedBlock implements ItemHolderBlock, Po
     @Override
     protected void addDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
         displayGroup.addDisplay("main", new BlockDisplayBuilder(location.toCenterLocation())
-                .setBlockData(Material.BLACK_CONCRETE.createBlockData())
+                .setBlockData(Material.LIGHT_GRAY_CONCRETE.createBlockData())
                 .setTransformation(Transformations.adjustedScaleOffset(MAIN_DISPLAY_SIZE, MAIN_DISPLAY_OFFSET))
                 .build());
-        displayGroup.addDisplay("prism", new BlockDisplayBuilder(location.clone().toCenterLocation().subtract(PRISM_DISPLAY_OFFSET))
+        displayGroup.addDisplay("prism", new BlockDisplayBuilder(location.toCenterLocation())
                 .setBlockData(Material.CYAN_STAINED_GLASS.createBlockData())
                 .setTransformation(Transformations.adjustedRotateScale(PRISM_DISPLAY_SIZE, Transformations.GENERIC_ROTATION_ANGLES))
                 .setBrightness(BRIGHTNESS_OFF.getBlockLight())

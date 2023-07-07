@@ -12,7 +12,6 @@ import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.implementation.blocks.concentrators.SolarConcentrator;
 import org.metamechanists.quaptics.implementation.blocks.consumers.Charger;
 import org.metamechanists.quaptics.implementation.blocks.consumers.DataStripper;
-import org.metamechanists.quaptics.implementation.blocks.consumers.ExperienceBattery;
 import org.metamechanists.quaptics.implementation.blocks.consumers.ItemProjector;
 import org.metamechanists.quaptics.implementation.blocks.consumers.launchpad.Launchpad;
 import org.metamechanists.quaptics.implementation.blocks.consumers.MultiblockClicker;
@@ -127,14 +126,6 @@ public class Primitive {
             .connectionRadius(0.6F)
             .build();
 
-    public final Settings EXPERIENCE_BATTERY_1_SETTINGS = Settings.builder()
-            .tier(Tier.PRIMITIVE)
-            .displayRadius(0.5F)
-            .connectionRadius(0.6F)
-            .experienceCapacity(500)
-            .experienceTransferRate(20)
-            .build();
-
     public final SlimefunItemStack SOLAR_CONCENTRATOR_1 = new SlimefunItemStack(
             "QP_SOLAR_CONCENTRATOR_1",
             Material.GLASS_PANE,
@@ -226,21 +217,12 @@ public class Primitive {
 
     public final SlimefunItemStack ITEM_PROJECTOR = new SlimefunItemStack(
             "QP_ITEM_PROJECTOR",
-            Material.BLACK_CONCRETE,
+            Material.LIGHT_BLUE_STAINED_GLASS,
             "&6Item Projector",
             Lore.create(ITEM_PROJECTOR_SETTINGS,
                     "&7● Displays a hologram of an inserted item",
                     "&7● &eRight Click &7an item to insert",
                     "&7● &eRight Click &7again to retrieve"));
-
-    public final SlimefunItemStack EXPERIENCE_BATTERY_1 = new SlimefunItemStack(
-            "QP_EXPERIENCE_BATTERY_1",
-            Material.LIME_CONCRETE,
-            "&6Experience Battery &eI",
-            Lore.create(EXPERIENCE_BATTERY_1_SETTINGS,
-                    "&7● Stores experience",
-                    "&7● &eRight Click &7to toggle charging",
-                    "&7● &eShift Right Click &7to toggle discharging"));
 
     public void initialize() {
         final SlimefunAddon addon = Quaptics.getInstance();
@@ -328,12 +310,5 @@ public class Primitive {
                 RecipeType.NULL,
                 new ItemStack[]{},
                 ITEM_PROJECTOR_SETTINGS).register(addon);
-
-        new ExperienceBattery(
-                Groups.PRIMITIVE,
-                EXPERIENCE_BATTERY_1,
-                RecipeType.NULL,
-                new ItemStack[]{},
-                EXPERIENCE_BATTERY_1_SETTINGS).register(addon);
     }
 }

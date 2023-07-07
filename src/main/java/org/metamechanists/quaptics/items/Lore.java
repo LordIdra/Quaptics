@@ -32,8 +32,6 @@ public class Lore {
     private final String PROJECTILE_SPEED_SUFFIX = " &8blocks/s";
     private final String DAMAGE_SUFFIX = " &8dps";
     private final String FREQUENCY_SUFFIX = " &8Hz";
-    private final String EXPERIENCE_SUFFIX = " &8xp";
-    private final String EXPERIENCE_RATE_SUFFIX = " &8xp/s";
     private final String USE_INTERVAL_SUFFIX = " &8seconds";
     private final String PHASE_SUFFIX = " &8°";
     private final String TIME_PER_ITEM_SUFFIX = " &8seconds";
@@ -102,12 +100,6 @@ public class Lore {
         if (settings.getTimePerItem() != 0) {
             lore.add(timePerItem(settings.getTimePerItem()));
         }
-        if (settings.getExperienceCapacity() != 0) {
-            lore.add(experienceCapacity(settings.getExperienceCapacity()));
-        }
-        if (settings.getExperienceTransferRate() != 0) {
-            lore.add(experienceTransferRate(settings.getExperienceTransferRate()));
-        }
 
         return lore;
     }
@@ -136,15 +128,6 @@ public class Lore {
     }
     public String timePerItem(final double timePerItem) {
         return ATTRIBUTE_SYMBOL + SPEED_SYMBOL + "&7Time per item &e" + format(timePerItem) + TIME_PER_ITEM_SUFFIX;
-    }
-    public String experienceCapacity(final int experienceCapacity) {
-        return ATTRIBUTE_SYMBOL + COUNT_SYMBOL + "&7Max Experience &e" + experienceCapacity + EXPERIENCE_SUFFIX;
-    }
-    public String experienceTransferRate(final int experienceTransferRate) {
-        return ATTRIBUTE_SYMBOL + COUNT_SYMBOL + "&7Experience Transfer Rate &e" + experienceTransferRate + EXPERIENCE_RATE_SUFFIX;
-    }
-    public String storedExperience(final int experience, final int experienceCapacity) {
-        return "&7" + experience + " &8/ &7" + experienceCapacity + EXPERIENCE_SUFFIX;
     }
 
     public String capacity(final double capacity) {

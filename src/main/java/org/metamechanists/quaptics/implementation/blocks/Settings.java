@@ -32,8 +32,7 @@ public class Settings {
     private double frequencyMultiplier;
 
     private int connections;
-    private int experienceCapacity;
-    private int experienceTransferRate;
+
     private double useInterval;
     private double timePerItem;
     private float projectileSpeed;

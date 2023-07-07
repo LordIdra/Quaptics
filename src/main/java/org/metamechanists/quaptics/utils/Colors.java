@@ -15,7 +15,6 @@ public enum Colors {
     FREQUENCY("00ff00"),
     PHASE("FFCC00"),
     CHARGE("87FFFD"),
-    EXPERIENCE("A6FF4D"),
 
     COMPONENTS_MISC("993366");
 
