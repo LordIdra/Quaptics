@@ -156,6 +156,7 @@ public class DataStripper extends ConnectedBlock implements PanelBlock, ItemHold
     @Override
     public Optional<ItemStack> onRemove(@NotNull final Location location, final @NotNull ItemStack stack) {
         final double progress = ProgressBlock.getProgress(location);
+        ProgressBlock.setProgress(location, 0);
         return Math.abs(progress - settings.getTimePerItem()) < MAX_PROGRESS_DIFFERENCE
                 ? Optional.of(stripData(stack))
                 : Optional.of(stack);
