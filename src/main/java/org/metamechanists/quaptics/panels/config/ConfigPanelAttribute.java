@@ -36,7 +36,7 @@ public class ConfigPanelAttribute {
                 .setTransformation(Transformations.unadjustedRotateTranslateScale(displaySize, rotation, keyTranslation))
                 .setText(ChatColors.color(key))
                 .setBrightness(15)
-                .setAlignment(TextAlignment.LEFT)
+                .setAlignment(TextAlignment.RIGHT)
                 .setBackgroundColor(Color.fromARGB(0, 0, 0, 0))
                 .build().getUniqueId());
         this.subId = new TextDisplayId(new TextDisplayBuilder(location.clone().add(offset))
