@@ -37,4 +37,5 @@ public class Keys {
     public final String BS_ENABLED = "QP_ENABLED";
     public final String BS_TARGET = "QP_TARGET";
     public final String BS_TICKS_SINCE_LAST_UPDATE = "QP_TICKS_SINCE_LAST_UPDATE";
+    public final String BS_IS_HOLDING_ITEM = "QP_IS_HOLDING_ITEM";
 }

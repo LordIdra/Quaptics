@@ -25,6 +25,8 @@ import org.metamechanists.quaptics.implementation.tools.QuapticChargeableItem;
 import org.metamechanists.quaptics.panels.info.BlockInfoPanel;
 import org.metamechanists.quaptics.panels.info.InfoPanelContainer;
 import org.metamechanists.quaptics.panels.info.implementation.ChargerInfoPanel;
+import org.metamechanists.quaptics.utils.BlockStorageAPI;
+import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Language;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
@@ -109,6 +111,10 @@ public class Charger extends ConnectedBlock implements InfoPanelBlock, ItemHolde
     public void onQuapticTick(@NotNull final ConnectionGroup group) {
         final Optional<Location> location = group.getLocation();
         if (location.isEmpty()) {
+            return;
+        }
+
+        if (!BlockStorageAPI.getBoolean(location.get(), Keys.BS_IS_HOLDING_ITEM)) {
             return;
         }
 

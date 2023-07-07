@@ -9,6 +9,8 @@ import org.jetbrains.annotations.NotNull;
 import org.metamechanists.metalib.utils.ItemUtils;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.implementation.blocks.base.DisplayGroupTickerBlock;
+import org.metamechanists.quaptics.utils.BlockStorageAPI;
+import org.metamechanists.quaptics.utils.Keys;
 
 import java.util.Optional;
 
@@ -67,6 +69,7 @@ public interface ItemHolderBlock {
 
     default void interact(@NotNull final Location location, @NotNull final Player player) {
         final Optional<ItemStack> currentStack = removeItem(location);
+        BlockStorageAPI.set(location, Keys.BS_IS_HOLDING_ITEM, false);
         if (currentStack.isEmpty() || currentStack.get().getType().isEmpty()) {
             final ItemStack oldStack = player.getInventory().getItemInMainHand().clone();
             final ItemStack newStack = oldStack.clone();
@@ -80,6 +83,7 @@ public interface ItemHolderBlock {
             }
 
             insertItem(location, newStack);
+            BlockStorageAPI.set(location, Keys.BS_IS_HOLDING_ITEM, true);
 
             if (oldStack.getAmount() == 1) {
                 player.getInventory().setItemInMainHand(null);
