@@ -12,6 +12,7 @@ import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.implementation.blocks.concentrators.SolarConcentrator;
 import org.metamechanists.quaptics.implementation.blocks.consumers.Charger;
 import org.metamechanists.quaptics.implementation.blocks.consumers.DataStripper;
+import org.metamechanists.quaptics.implementation.blocks.consumers.ItemProjector;
 import org.metamechanists.quaptics.implementation.blocks.consumers.launchpad.Launchpad;
 import org.metamechanists.quaptics.implementation.blocks.consumers.MultiblockClicker;
 import org.metamechanists.quaptics.implementation.blocks.consumers.turrets.ModulatedTurret;
@@ -120,6 +121,11 @@ public class Primitive {
             .minPower(3)
             .build();
 
+    public final Settings ITEM_PROJECTOR_SETTINGS = Settings.builder()
+            .tier(Tier.PRIMITIVE)
+            .connectionRadius(0.6F)
+            .build();
+
     public final SlimefunItemStack SOLAR_CONCENTRATOR_1 = new SlimefunItemStack(
             "QP_SOLAR_CONCENTRATOR_1",
             Material.GLASS_PANE,
@@ -209,6 +215,15 @@ public class Primitive {
                     "&7● Launch velocity can be configured",
                     "&7● &eWalk onto the launchpad &7to get launched"));
 
+    public final SlimefunItemStack ITEM_PROJECTOR = new SlimefunItemStack(
+            "QP_ITEM_PROJECTOR",
+            Material.LIGHT_BLUE_STAINED_GLASS,
+            "&6Item Projector",
+            Lore.create(ITEM_PROJECTOR_SETTINGS,
+                    "&7● Displays a hologram of an inserted item",
+                    "&7● &eRight Click &7an item to insert",
+                    "&7● &eRight Click &7again to retrieve"));
+
     public void initialize() {
         final SlimefunAddon addon = Quaptics.getInstance();
 
@@ -288,5 +303,12 @@ public class Primitive {
                 RecipeType.NULL,
                 new ItemStack[]{},
                 LAUNCHPAD_SETTINGS).register(addon);
+
+        new ItemProjector(
+                Groups.PRIMITIVE,
+                ITEM_PROJECTOR,
+                RecipeType.NULL,
+                new ItemStack[]{},
+                ITEM_PROJECTOR_SETTINGS).register(addon);
     }
 }

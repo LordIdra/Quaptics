@@ -2,11 +2,13 @@ package org.metamechanists.quaptics.implementation.blocks.consumers;
 
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
-import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.Display;
+import org.bukkit.entity.Display.Brightness;
+import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
@@ -18,16 +20,12 @@ import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
 import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
-import org.metamechanists.quaptics.implementation.blocks.attachments.ItemHolderBlock;
 import org.metamechanists.quaptics.implementation.blocks.attachments.InfoPanelBlock;
+import org.metamechanists.quaptics.implementation.blocks.attachments.ItemHolderBlock;
+import org.metamechanists.quaptics.implementation.blocks.attachments.PowerAnimatedBlock;
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
-import org.metamechanists.quaptics.implementation.tools.QuapticChargeableItem;
-import org.metamechanists.quaptics.panels.info.BlockInfoPanel;
 import org.metamechanists.quaptics.panels.info.InfoPanelContainer;
 import org.metamechanists.quaptics.panels.info.implementation.ChargerInfoPanel;
-import org.metamechanists.quaptics.utils.BlockStorageAPI;
-import org.metamechanists.quaptics.utils.Keys;
-import org.metamechanists.quaptics.utils.Language;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.builders.ItemDisplayBuilder;
@@ -38,49 +36,35 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.util.List;
 import java.util.Optional;
 
-public class Charger extends ConnectedBlock implements InfoPanelBlock, ItemHolderBlock {
-    private final Vector3f mainDisplaySize = new Vector3f(0.7F, 0.3F, 0.7F);
-    private final Vector3f glassDisplaySize = new Vector3f(0.5F, 0.1F, 0.5F);
+public class ItemProjector extends ConnectedBlock implements ItemHolderBlock, PowerAnimatedBlock {
+    private static final Brightness BRIGHTNESS_ON = new Brightness(15, 0);
+    private static final Brightness BRIGHTNESS_OFF = new Brightness(3, 0);
+    private final Vector3f mainDisplaySize = new Vector3f(0.6F, 0.6F, 0.6F);
     private final Vector3f itemDisplaySize = new Vector3f(0.5F);
-    private final Vector3f topOffset = new Vector3f(0, 0.35F, 0);
-    private final Vector3f bottomOffset = new Vector3f(0, -0.35F, 0);
+    private final Vector3f itemDisplayInitialOffset = new Vector3f(0, 0.9F, 0);
     private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -settings.getConnectionRadius());
 
-    public Charger(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
+    public ItemProjector(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
     }
 
     @Override
     protected void addDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
-        displayGroup.addDisplay("mainTop", new BlockDisplayBuilder(location.toCenterLocation())
-                .setBlockData(Material.SMOOTH_STONE_SLAB.createBlockData("[type=top]"))
-                .setTransformation(Transformations.adjustedScaleOffset(mainDisplaySize, topOffset))
-                .build());
-        displayGroup.addDisplay("mainBottom", new BlockDisplayBuilder(location.toCenterLocation())
-                .setBlockData(Material.SMOOTH_STONE_SLAB.createBlockData("[type=bottom]"))
-                .setTransformation(Transformations.adjustedScaleOffset(mainDisplaySize, bottomOffset))
-                .build());
-        displayGroup.addDisplay("glassTop", new BlockDisplayBuilder(location.toCenterLocation())
-                .setMaterial(Material.LIGHT_BLUE_STAINED_GLASS)
-                .setTransformation(Transformations.adjustedScaleOffset(glassDisplaySize, topOffset))
-                .build());
-        displayGroup.addDisplay("glassBottom", new BlockDisplayBuilder(location.toCenterLocation())
-                .setMaterial(Material.LIGHT_BLUE_STAINED_GLASS)
-                .setTransformation(Transformations.adjustedScaleOffset(glassDisplaySize, bottomOffset))
+        displayGroup.addDisplay("main", new BlockDisplayBuilder(location.toCenterLocation())
+                .setBlockData(Material.CYAN_STAINED_GLASS.createBlockData())
+                .setTransformation(Transformations.adjustedRotateScale(mainDisplaySize, Transformations.GENERIC_ROTATION_ANGLES))
+                .setBrightness(BRIGHTNESS_OFF.getBlockLight())
                 .build());
         displayGroup.addDisplay("item", new ItemDisplayBuilder(location.toCenterLocation())
-                .setTransformation(Transformations.unadjustedScale(itemDisplaySize))
+                .setTransformation(Transformations.unadjustedScaleTranslate(itemDisplaySize, itemDisplayInitialOffset))
+                .setViewRange(VIEW_RANGE_OFF)
+                .setBrightness(BRIGHTNESS_ON.getBlockLight())
                 .build());
     }
 
     @Override
     protected List<ConnectionPoint> generateConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
         return List.of(new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input", formatPointLocation(player, location, inputPointLocation)));
-    }
-
-    @Override
-    public BlockInfoPanel createPanel(final InfoPanelId panelId, final ConnectionGroupId groupId) {
-        return new ChargerInfoPanel(panelId, groupId);
     }
 
     @Override
@@ -108,51 +92,47 @@ public class Charger extends ConnectedBlock implements InfoPanelBlock, ItemHolde
     }
 
     @Override
-    public void onQuapticTick(@NotNull final ConnectionGroup group) {
+    public void onInputLinkUpdated(@NotNull final ConnectionGroup group) {
+        doBurnoutCheck(group, "input");
+
         final Optional<Location> location = group.getLocation();
         if (location.isEmpty()) {
             return;
         }
 
-        if (!BlockStorageAPI.getBoolean(location.get(), Keys.BS_IS_HOLDING_ITEM)) {
-            setPanelHidden(group, true);
-            return;
-        }
-
-        final Optional<ItemStack> stack = ItemHolderBlock.getStack(group);
-        setPanelHidden(group, stack.isEmpty());
-        if (stack.isEmpty()) {
-            return;
-        }
-
         final Optional<Link> inputLink = getLink(group, "input");
-        if (inputLink.isEmpty() || !settings.isOperational(inputLink)) {
-            return;
-        }
-
-        final ItemStack newStack = QuapticChargeableItem.chargeItem(inputLink.get(), stack.get());
-        ItemHolderBlock.insertItem(location.get(), newStack);
-        updatePanel(group);
-    }
-
-    @Override
-    public void onInputLinkUpdated(@NotNull final ConnectionGroup group) {
-        doBurnoutCheck(group, "input");
+        onPoweredAnimation(location.get(), inputLink.isPresent() && settings.isOperational(inputLink));
     }
 
     @Override
     public boolean onInsert(@NotNull final ItemStack stack, @NotNull final Player player) {
-        if (!(SlimefunItem.getByItem(stack) instanceof QuapticChargeableItem)) {
-            Language.sendLanguageMessage(player, "charger.not-chargeable");
-            return false;
-        }
-
         return true;
     }
 
     @Override
     public Optional<ItemStack> onRemove(@NotNull final Location location, @NotNull final ItemStack stack) {
-        QuapticChargeableItem.updateLore(stack);
         return Optional.of(stack);
+    }
+
+    @Override
+    protected @NotNull Material getBaseMaterial() {
+        return Material.POLISHED_DEEPSLATE_SLAB;
+    }
+
+    @Override
+    public void onPoweredAnimation(final Location location, final boolean powered) {
+        final Optional<Display> mainDisplay = getDisplay(location, "main");
+        if (mainDisplay.isEmpty()) {
+            return;
+        }
+
+        mainDisplay.get().setBrightness(powered ? BRIGHTNESS_ON : BRIGHTNESS_OFF);
+
+        final Optional<ItemDisplay> itemDisplay = ItemHolderBlock.getItemDisplay(location);
+        if (itemDisplay.isEmpty()) {
+            return;
+        }
+
+        itemDisplay.get().setViewRange(powered ? VIEW_RANGE_ON : VIEW_RANGE_OFF);
     }
 }

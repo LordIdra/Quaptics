@@ -18,6 +18,7 @@ public class ItemDisplayBuilder {
     private Integer brightness;
     private Color glowColor;
     private Billboard billboard;
+    private Float viewRange;
 
     public ItemDisplayBuilder(final Location location) {
         this.location = location;
@@ -42,6 +43,9 @@ public class ItemDisplayBuilder {
             }
             if (billboard != null) {
                 display.setBillboard(billboard);
+            }
+            if (viewRange != null) {
+                display.setViewRange(viewRange);
             }
             display.setDisplayWidth(0);
             display.setDisplayHeight(0);
@@ -71,6 +75,10 @@ public class ItemDisplayBuilder {
     }
     public ItemDisplayBuilder setBillboard(final Billboard billboard) {
         this.billboard = billboard;
+        return this;
+    }
+    public ItemDisplayBuilder setViewRange(final float viewRange) {
+        this.viewRange = viewRange;
         return this;
     }
 }

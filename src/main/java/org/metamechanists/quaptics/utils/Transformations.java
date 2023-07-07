@@ -108,6 +108,9 @@ public class Transformations {
     public Matrix4f unadjustedScale(final Vector3f scale) {
         return new Matrix4f().scale(scale);
     }
+    public Matrix4f unadjustedScaleTranslate(final Vector3f scale, final Vector3f offset) {
+        return new Matrix4f().translate(offset).scale(scale);
+    }
     public Matrix4f unadjustedRotateScale(final Vector3f scale, final Vector3f rotationInRadians) {
         return new Matrix4f()
                 .rotateXYZ(rotationInRadians)
