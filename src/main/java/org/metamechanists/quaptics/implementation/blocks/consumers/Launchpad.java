@@ -70,7 +70,7 @@ public class Launchpad extends ConnectedBlock implements ConfigPanelBlock, Power
         }
 
         ConfigPanelBlock.setPanelId(location, new LaunchpadConfigPanel(
-                formatPointLocation(event.getPlayer(), location.toCenterLocation(), RELATIVE_PANEL_LOCATION),
+                formatPointLocation(event.getPlayer(), location, RELATIVE_PANEL_LOCATION),
                 optionalGroup.get().getId(),
                 (float) Transformations.yawToCardinalDirection(event.getPlayer().getEyeLocation().getYaw()))
                 .getId());
