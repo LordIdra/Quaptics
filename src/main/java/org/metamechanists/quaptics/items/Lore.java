@@ -194,9 +194,9 @@ public class Lore {
 
         if (divideAt < 0) {
             divideAt += 10;
-            firstHalf = firstHalf.substring(0, divideAt) + negativeColor + firstHalf.substring(divideAt, 9);
+            firstHalf = emptyColor + firstHalf.substring(0, divideAt) + negativeColor + firstHalf.substring(divideAt);
         } else if(divideAt > 0) {
-            secondHalf = secondHalf.substring(0, divideAt) + positiveColor + secondHalf.substring(divideAt, 9);
+            secondHalf = positiveColor + secondHalf.substring(0, divideAt) + emptyColor + secondHalf.substring(divideAt);
         }
 
         return firstHalf + secondHalf;

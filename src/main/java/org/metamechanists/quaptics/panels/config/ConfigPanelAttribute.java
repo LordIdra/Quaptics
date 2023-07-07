@@ -68,15 +68,15 @@ public class ConfigPanelAttribute {
 
         final Interaction subButton = new InteractionBuilder(getAdd().get().getLocation().clone().add(
                 new Vector(0.07, 0, 0)
-                        .rotateAroundY(rotation.y)
-                        .add(new Vector(BUTTON_SIZE/2, BUTTON_SIZE/2, BUTTON_SIZE/2))))
+                        .add(new Vector(BUTTON_SIZE/2, BUTTON_SIZE/2, BUTTON_SIZE/2))
+                        .rotateAroundY(rotation.y)))
                 .setWidth(BUTTON_SIZE)
                 .setHeight(BUTTON_SIZE)
                 .build();
         final Interaction addButton = new InteractionBuilder(getSub().get().getLocation().clone().add(
                 new Vector(0.42, 0, 0)
-                        .rotateAroundY(rotation.y)
-                        .add(new Vector(BUTTON_SIZE/2, BUTTON_SIZE/2, BUTTON_SIZE/2))))
+                        .add(new Vector(BUTTON_SIZE/2, BUTTON_SIZE/2, BUTTON_SIZE/2))
+                        .rotateAroundY(rotation.y)))
                 .setWidth(BUTTON_SIZE)
                 .setHeight(BUTTON_SIZE)
                 .build();
