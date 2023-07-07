@@ -48,8 +48,8 @@ public class ExperienceBatteryInfoPanel extends BlockInfoPanel {
             return;
         }
 
-        final int experience = BlockStorageAPI.getInt(location.get(), Keys.BS_EXPERIENCE);
         final int experienceCapacity = group.get().getBlock().getSettings().getExperienceCapacity();
+        final int experience = BlockStorageAPI.getInt(location.get(), Keys.BS_EXPERIENCE);
 
         container.setText("xpText", Lore.progressBar(experience, experienceCapacity, Colors.EXPERIENCE.getFormattedColor(), "&7"));
         container.setText("xpBar", Lore.storedExperience(experience, experienceCapacity));
