@@ -74,7 +74,7 @@ public class ConfigPanelAttribute {
                 .setHeight(BUTTON_SIZE)
                 .build();
         final Interaction addButton = new InteractionBuilder(getSub().get().getLocation().clone().add(
-                new Vector(0.42, 0, 0)
+                new Vector(0.43, 0, 0)
                         .add(new Vector(BUTTON_SIZE/2, BUTTON_SIZE/2, BUTTON_SIZE/2))
                         .rotateAroundY(rotation.y)))
                 .setWidth(BUTTON_SIZE)
