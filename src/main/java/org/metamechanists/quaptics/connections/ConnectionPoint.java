@@ -43,8 +43,8 @@ public class ConnectionPoint {
     @Getter
     private final String name;
 
-    public ConnectionPoint(final ConnectionPointType type, final ConnectionGroupId groupId, final String name,
-                              @NotNull final Location location) {
+    public ConnectionPoint(final @NotNull ConnectionPointType type, final ConnectionGroupId groupId, final String name,
+                           @NotNull final Location location) {
         final Interaction interaction = new InteractionBuilder(location.clone().add(INTERACTION_OFFSET))
                 .setWidth(SIZE)
                 .setHeight(SIZE)
@@ -66,7 +66,7 @@ public class ConnectionPoint {
 
     public ConnectionPoint(final ConnectionPointId pointId) {
         final PersistentDataTraverser traverser = new PersistentDataTraverser(pointId);
-        this.type = traverser.getConnectionPointType("type");
+        this.type = traverser.getConnectionPointType("connectionPointType");
         this.groupId = traverser.getConnectionGroupId("groupId");
         this.blockDisplayId = traverser.getBlockDisplayId("blockDisplayId");
         this.interactionId = traverser.getInteractionId("interactionId");
@@ -77,7 +77,7 @@ public class ConnectionPoint {
 
     private void saveData() {
         final PersistentDataTraverser traverser = new PersistentDataTraverser(getId());
-        traverser.set("type", type);
+        traverser.set("connectionPointType", type);
         traverser.set("groupId", groupId);
         traverser.set("blockDisplayId", blockDisplayId);
         traverser.set("interactionId", interactionId);
