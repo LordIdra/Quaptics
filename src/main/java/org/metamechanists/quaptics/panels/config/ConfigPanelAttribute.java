@@ -23,12 +23,12 @@ import org.metamechanists.quaptics.utils.id.simple.TextDisplayId;
 import java.util.Optional;
 
 public class ConfigPanelAttribute {
-    private static final float BUTTON_SIZE = 0.1F;
+    private static final float BUTTON_SIZE = 0.05F;
     private static final float HIDDEN_VIEW_RANGE = 0;
     private static final float SHOWN_VIEW_RANGE = 1;
     private static final Vector3f KEY_TRANSLATION = new Vector3f(-0.20F, 0.0F, 0.0F);
-    private static final Vector3f SUB_TRANSLATION = new Vector3f(0.05F, 0.0F, 0.0F);
-    private static final Vector3f VALUE_TRANSLATION = new Vector3f(0.25F, 0.0F, 0.0F);
+    private static final Vector3f SUB_TRANSLATION = new Vector3f(0.09F, 0.0F, 0.0F);
+    private static final Vector3f VALUE_TRANSLATION = new Vector3f(0.27F, 0.0F, 0.0F);
     private static final Vector3f ADD_TRANSLATION = new Vector3f(0.45F, 0.0F, 0.0F);
     private final Vector offset;
     private final TextDisplayId keyId;
@@ -66,11 +66,11 @@ public class ConfigPanelAttribute {
                 .setBackgroundColor(Color.fromARGB(0, 0, 0, 0))
                 .build().getUniqueId());
 
-        final Interaction subButton = new InteractionBuilder(getAdd().get().getLocation().clone().add(new Vector(-0.2, 0, 0).rotateAroundY(rotation.y)))
+        final Interaction subButton = new InteractionBuilder(getAdd().get().getLocation().clone().add(new Vector(0.07, 0, 0).rotateAroundY(rotation.y)))
                 .setWidth(BUTTON_SIZE)
                 .setHeight(BUTTON_SIZE)
                 .build();
-        final Interaction addButton = new InteractionBuilder(getSub().get().getLocation().clone().add(new Vector(0.2, 0, 0).rotateAroundY(rotation.y)))
+        final Interaction addButton = new InteractionBuilder(getSub().get().getLocation().clone().add(new Vector(0.45, 0, 0).rotateAroundY(rotation.y)))
                 .setWidth(BUTTON_SIZE)
                 .setHeight(BUTTON_SIZE)
                 .build();
@@ -78,12 +78,12 @@ public class ConfigPanelAttribute {
         final PersistentDataTraverser subButtonTraverser = new PersistentDataTraverser(subButton.getUniqueId());
         subButtonTraverser.set("groupId", groupId);
         subButtonTraverser.set("name", name);
-        subButtonTraverser.set("type", "sub");
+        subButtonTraverser.set("buttonType", "sub");
 
         final PersistentDataTraverser addButtonTraverser = new PersistentDataTraverser(addButton.getUniqueId());
         addButtonTraverser.set("groupId", groupId);
         addButtonTraverser.set("name", name);
-        addButtonTraverser.set("type", "sub");
+        addButtonTraverser.set("buttonType", "add");
 
         this.subButtonId = new InteractionId(subButton.getUniqueId());
         this.addButtonId = new InteractionId(addButton.getUniqueId());
