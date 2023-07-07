@@ -125,7 +125,7 @@ public class ItemProjector extends ConnectedBlock implements ItemHolderBlock, Po
 
     @Override
     protected @NotNull Material getBaseMaterial() {
-        return Material.POLISHED_DEEPSLATE_SLAB;
+        return Material.STRUCTURE_VOID;
     }
 
     @Override
