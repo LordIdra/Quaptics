@@ -21,9 +21,9 @@ public class LaunchpadConfigPanel extends BlockConfigPanel {
     @Override
     protected ConfigPanelContainer buildPanelContainer(@NotNull final Location location, final float rotationY) {
         return new ConfigPanelBuilder(location.clone().add(getOffset()), SIZE, rotationY)
-                .addAttribute("velocityX", "&fVelocity (x)")
-                .addAttribute("velocityY", "&fVelocity (y)")
-                .addAttribute("velocityZ", "&fVelocity (z)")
+                .addAttribute("velocityX", "&faaa")
+                .addAttribute("velocityY", "&faaaaaaa")
+                .addAttribute("velocityZ", "&faaaaaaaaaaaa")
                 .build();
     }
 
@@ -34,7 +34,7 @@ public class LaunchpadConfigPanel extends BlockConfigPanel {
         }
 
         container.setValue("velocityX", "0.35");
-        container.setValue("velocityY", "0.00");
-        container.setValue("velocityZ", "||||||||||");
+        container.setValue("velocityY", "yellow_carpet");
+        container.setValue("velocityZ", "||||||||||||||||||||");
     }
 }
