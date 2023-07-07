@@ -93,7 +93,7 @@ public class ExperienceBattery extends ConnectedBlock implements InfoPanelBlock,
 
     @Override
     protected void onRightClick(final @NotNull Location location, final @NotNull Player player) {
-        if (!BlockStorageAPI.getBoolean(location, Keys.BS_ENABLED)) {
+        if (!BlockStorageAPI.getBoolean(location, Keys.BS_POWERED)) {
             return;
         }
 
