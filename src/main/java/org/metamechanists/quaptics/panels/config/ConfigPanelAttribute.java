@@ -66,11 +66,11 @@ public class ConfigPanelAttribute {
                 .setBackgroundColor(Color.fromARGB(0, 0, 0, 0))
                 .build().getUniqueId());
 
-        final Interaction subButton = new InteractionBuilder(getAdd().get().getLocation().subtract(new Vector(BUTTON_SIZE/2, BUTTON_SIZE/2, BUTTON_SIZE/2)))
+        final Interaction subButton = new InteractionBuilder(getAdd().get().getLocation().clone().add(new Vector(-0.2, 0, 0).rotateAroundY(rotation.y)))
                 .setWidth(BUTTON_SIZE)
                 .setHeight(BUTTON_SIZE)
                 .build();
-        final Interaction addButton = new InteractionBuilder(getSub().get().getLocation().subtract(new Vector(BUTTON_SIZE/2, BUTTON_SIZE/2, BUTTON_SIZE/2)))
+        final Interaction addButton = new InteractionBuilder(getSub().get().getLocation().clone().add(new Vector(0.2, 0, 0).rotateAroundY(rotation.y)))
                 .setWidth(BUTTON_SIZE)
                 .setHeight(BUTTON_SIZE)
                 .build();
