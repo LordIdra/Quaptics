@@ -1,4 +1,4 @@
-package org.metamechanists.quaptics.panels.implementation;
+package org.metamechanists.quaptics.panels.info.implementation;
 
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
@@ -6,24 +6,25 @@ import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.items.Lore;
-import org.metamechanists.quaptics.panels.PanelBuilder;
-import org.metamechanists.quaptics.panels.PanelContainer;
-import org.metamechanists.quaptics.panels.Panel;
+import org.metamechanists.quaptics.panels.info.InfoPanelBuilder;
+import org.metamechanists.quaptics.panels.info.InfoPanelContainer;
+import org.metamechanists.quaptics.panels.info.InfoPanel;
+import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionPointId;
-import org.metamechanists.quaptics.utils.id.complex.PanelId;
+import org.metamechanists.quaptics.utils.id.complex.InfoPanelId;
 
 import java.util.Optional;
 
-public class PointPanel extends Panel {
+public class PointInfoPanel extends InfoPanel {
     private static final float SIZE = 0.25F;
     private final ConnectionPointId pointId;
 
-    public PointPanel(@NotNull final Location location, final ConnectionPointId pointId) {
+    public PointInfoPanel(@NotNull final Location location, final ConnectionPointId pointId) {
         super(location);
         this.pointId = pointId;
     }
 
-    public PointPanel(@NotNull final PanelId panelId, final ConnectionPointId pointId) {
+    public PointInfoPanel(@NotNull final InfoPanelId panelId, final ConnectionPointId pointId) {
         super(panelId);
         this.pointId = pointId;
     }
@@ -39,8 +40,8 @@ public class PointPanel extends Panel {
     }
 
     @Override
-    protected PanelContainer buildPanelContainer(@NotNull final Location location) {
-        return new PanelBuilder(location.clone().add(getOffset()), SIZE)
+    protected InfoPanelContainer buildPanelContainer(@NotNull final Location location) {
+        return new InfoPanelBuilder(location.clone().add(getOffset()), SIZE)
                 .addAttribute("frequency", true)
                 .addAttribute("power", true)
                 .addAttribute("name", false)
@@ -60,20 +61,20 @@ public class PointPanel extends Panel {
 
         final ConnectionPoint point = getPoint().get();
 
-        panelContainer.setText("name", (point.getLink().isPresent() ? "&a" : "&c") + point.getName().toUpperCase());
+        container.setText("name", (point.getLink().isPresent() ? "&a" : "&c") + point.getName().toUpperCase());
 
         if (point.getLink().isEmpty()) {
-            panelContainer.setAttributeHidden("power", true);
-            panelContainer.setAttributeHidden("frequency", true);
+            container.setAttributeHidden("power", true);
+            container.setAttributeHidden("frequency", true);
             return;
         }
 
         final Link link = point.getLink().get();
 
-        panelContainer.setAttributeHidden("power", link.getPower() == 0);
-        panelContainer.setAttributeHidden("frequency", link.getFrequency() == 0);
+        container.setAttributeHidden("power", link.getPower() == 0);
+        container.setAttributeHidden("frequency", link.getFrequency() == 0);
 
-        panelContainer.setText("power", Lore.powerNoArrow(roundTo2dp(link.getPower())));
-        panelContainer.setText("frequency", Lore.frequencyNoArrow(roundTo2dp(link.getFrequency())));
+        container.setText("power", Lore.powerNoArrow(Utils.roundTo2dp(link.getPower())));
+        container.setText("frequency", Lore.frequencyNoArrow(Utils.roundTo2dp(link.getFrequency())));
     }
 }

@@ -1,4 +1,4 @@
-package org.metamechanists.quaptics.panels;
+package org.metamechanists.quaptics.panels.info;
 
 import lombok.Getter;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
@@ -13,21 +13,21 @@ import org.joml.Vector3f;
 import org.metamechanists.quaptics.storage.PersistentDataTraverser;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.TextDisplayBuilder;
-import org.metamechanists.quaptics.utils.id.complex.PanelAttributeId;
+import org.metamechanists.quaptics.utils.id.complex.InfoPanelAttributeId;
 import org.metamechanists.quaptics.utils.id.simple.TextDisplayId;
 
 import java.util.Optional;
 
-public class PanelAttribute {
+public class InfoPanelAttribute {
     private static final float HIDDEN_VIEW_RANGE = 0;
     private static final float SHOWN_VIEW_RANGE = 1;
     private final Vector offset;
     @Getter
-    private final TextDisplayId textDisplayId;
+    private final TextDisplayId id;
     private boolean hidden;
 
-    public PanelAttribute(final @NotNull Location location, final Vector offset, final Vector3f displaySize) {
-        this.textDisplayId = new TextDisplayId(new TextDisplayBuilder(location.add(offset))
+    public InfoPanelAttribute(final @NotNull Location location, final Vector offset, final Vector3f displaySize) {
+        this.id = new TextDisplayId(new TextDisplayBuilder(location.add(offset))
                 .setTransformation(Transformations.unadjustedScale(displaySize))
                 .setBrightness(15)
                 .setViewRange(0)
@@ -39,21 +39,21 @@ public class PanelAttribute {
         saveData();
     }
 
-    public PanelAttribute(final PanelAttributeId textDisplayId) {
-        final PersistentDataTraverser traverser = new PersistentDataTraverser(textDisplayId);
-        this.textDisplayId = new TextDisplayId(textDisplayId);
+    public InfoPanelAttribute(final InfoPanelAttributeId id) {
+        final PersistentDataTraverser traverser = new PersistentDataTraverser(id);
+        this.id = new TextDisplayId(id);
         this.offset = traverser.getVector("offset");
         this.hidden = traverser.getBoolean("hidden");
     }
 
     private void saveData() {
-        final PersistentDataTraverser traverser = new PersistentDataTraverser(textDisplayId);
+        final PersistentDataTraverser traverser = new PersistentDataTraverser(id);
         traverser.set("offset", offset);
         traverser.set("hidden", hidden);
     }
 
-    public PanelAttributeId getId() {
-        return new PanelAttributeId(textDisplayId);
+    public InfoPanelAttributeId getId() {
+        return new InfoPanelAttributeId(id);
     }
 
     public void updateVisibility(final boolean panelHidden) {
@@ -61,7 +61,7 @@ public class PanelAttribute {
     }
 
     private Optional<TextDisplay> getTextDisplay() {
-        return textDisplayId.get();
+        return id.get();
     }
 
     public void changeLocation(final Location location) {

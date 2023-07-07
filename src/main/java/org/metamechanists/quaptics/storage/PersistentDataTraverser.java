@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.metamechanists.quaptics.Quaptics;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
+import org.metamechanists.quaptics.utils.id.complex.ConfigPanelAttributeId;
 import org.metamechanists.quaptics.utils.id.complex.DirectBeamId;
 import org.metamechanists.quaptics.utils.id.simple.BlockDisplayId;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
@@ -17,8 +18,8 @@ import org.metamechanists.quaptics.utils.id.CustomId;
 import org.metamechanists.quaptics.utils.id.simple.DisplayGroupId;
 import org.metamechanists.quaptics.utils.id.simple.InteractionId;
 import org.metamechanists.quaptics.utils.id.complex.LinkId;
-import org.metamechanists.quaptics.utils.id.complex.PanelAttributeId;
-import org.metamechanists.quaptics.utils.id.complex.PanelId;
+import org.metamechanists.quaptics.utils.id.complex.InfoPanelAttributeId;
+import org.metamechanists.quaptics.utils.id.complex.InfoPanelId;
 import org.metamechanists.quaptics.utils.id.simple.TextDisplayId;
 
 import java.util.HashMap;
@@ -129,13 +130,17 @@ public class PersistentDataTraverser {
         final String uuid = getString(key);
         return uuid == null ? null : new LinkId(uuid);
     }
-    public @Nullable PanelAttributeId getPanelAttributeId(@NotNull final String key) {
+    public @Nullable InfoPanelAttributeId getInfoPanelAttributeId(@NotNull final String key) {
         final String uuid = getString(key);
-        return uuid == null ? null : new PanelAttributeId(uuid);
+        return uuid == null ? null : new InfoPanelAttributeId(uuid);
     }
-    public @Nullable PanelId getPanelId(@NotNull final String key) {
+    public @Nullable ConfigPanelAttributeId getConfigPanelAttributeId(@NotNull final String key) {
         final String uuid = getString(key);
-        return uuid == null ? null : new PanelId(uuid);
+        return uuid == null ? null : new ConfigPanelAttributeId(uuid);
+    }
+    public @Nullable InfoPanelId getPanelId(@NotNull final String key) {
+        final String uuid = getString(key);
+        return uuid == null ? null : new InfoPanelId(uuid);
     }
     public @Nullable TextDisplayId getTextDisplayId(@NotNull final String key) {
         final String uuid = getString(key);
@@ -156,13 +161,23 @@ public class PersistentDataTraverser {
 
         return list;
     }
-    
-    public @NotNull Map<String, PanelAttributeId> getPanelAttributeIdMap(@NotNull final String key) {
+    public @NotNull Map<String, InfoPanelAttributeId> getInfoPanelAttributeIdMap(@NotNull final String key) {
         final int size = getInt(key + "length");
-        final Map<String, PanelAttributeId> list = new HashMap<>();
+        final Map<String, InfoPanelAttributeId> list = new HashMap<>();
         IntStream.range(0, size).forEach(i -> {
             final String mapKey = getString(key + i + "key");
-            final PanelAttributeId mapValue = getPanelAttributeId(key + i + "value");
+            final InfoPanelAttributeId mapValue = getInfoPanelAttributeId(key + i + "value");
+            list.put(mapKey, mapValue);
+        });
+
+        return list;
+    }
+    public @NotNull Map<String, ConfigPanelAttributeId> getConfigPanelAttributeIdMap(@NotNull final String key) {
+        final int size = getInt(key + "length");
+        final Map<String, ConfigPanelAttributeId> list = new HashMap<>();
+        IntStream.range(0, size).forEach(i -> {
+            final String mapKey = getString(key + i + "key");
+            final ConfigPanelAttributeId mapValue = getConfigPanelAttributeId(key + i + "value");
             list.put(mapKey, mapValue);
         });
 

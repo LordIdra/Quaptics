@@ -1,25 +1,25 @@
-package org.metamechanists.quaptics.panels;
+package org.metamechanists.quaptics.panels.info;
 
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
-import org.metamechanists.quaptics.utils.id.complex.PanelId;
+import org.metamechanists.quaptics.utils.id.complex.InfoPanelId;
 
 import java.util.Optional;
 
-public abstract class BlockPanel extends Panel {
+public abstract class BlockInfoPanel extends InfoPanel {
     protected static final float SIZE = 0.40F;
     private final ConnectionGroupId groupId;
 
-    protected BlockPanel(@NotNull final Location location, final ConnectionGroupId groupId) {
+    protected BlockInfoPanel(@NotNull final Location location, final ConnectionGroupId groupId) {
         super(location);
         this.groupId = groupId;
         setPanelHidden(false);
     }
 
-    protected BlockPanel(@NotNull final PanelId panelId, final ConnectionGroupId groupId) {
+    protected BlockInfoPanel(@NotNull final InfoPanelId panelId, final ConnectionGroupId groupId) {
         super(panelId);
         this.groupId = groupId;
     }

@@ -38,7 +38,7 @@ public class OscillatingConcentrator extends ConnectedBlock {
     protected void addDisplays(@NotNull final DisplayGroup displayGroup, final @NotNull Location location, final @NotNull Player player) {
         displayGroup.addDisplay("main", new ItemDisplayBuilder(location.clone().toCenterLocation())
                 .setMaterial(Material.BLACK_STAINED_GLASS_PANE)
-                .setTransformation(Transformations.unadjustedRotateAndScale(mainDisplaySize, new Vector3f((float)(Math.PI/2), 0.0F, settings.getRotationY())))
+                .setTransformation(Transformations.unadjustedRotateScale(mainDisplaySize, new Vector3f((float)(Math.PI/2), 0.0F, settings.getRotationY())))
                 .build());
     }
 

@@ -1,8 +1,8 @@
 package org.metamechanists.quaptics.utils.id.complex;
 
 import org.bukkit.Bukkit;
-import org.bukkit.entity.TextDisplay;
-import org.metamechanists.quaptics.panels.PanelAttribute;
+import org.bukkit.entity.Interaction;
+import org.metamechanists.quaptics.panels.config.ConfigPanelContainer;
 import org.metamechanists.quaptics.storage.QuapticCache;
 import org.metamechanists.quaptics.utils.id.ComplexCustomId;
 import org.metamechanists.quaptics.utils.id.CustomId;
@@ -11,27 +11,27 @@ import java.util.Optional;
 import java.util.UUID;
 
 @SuppressWarnings("unused")
-public class PanelAttributeId extends ComplexCustomId {
-    public PanelAttributeId() {
+public class ConfigPanelId extends ComplexCustomId {
+    public ConfigPanelId() {
         super();
     }
-    public PanelAttributeId(final CustomId id) {
+    public ConfigPanelId(final CustomId id) {
         super(id);
     }
-    public PanelAttributeId(final String uuid) {
+    public ConfigPanelId(final String uuid) {
         super(uuid);
     }
-    public PanelAttributeId(final UUID uuid) {
+    public ConfigPanelId(final UUID uuid) {
         super(uuid);
     }
     @Override
     public boolean isValid() {
-        return Bukkit.getEntity(getUUID()) instanceof TextDisplay;
+        return Bukkit.getEntity(getUUID()) instanceof Interaction;
     }
     @Override
-    public Optional<PanelAttribute> get() {
+    public Optional<ConfigPanelContainer> get() {
         return isValid()
-                ? QuapticCache.getPanelAttribute(this)
+                ? QuapticCache.getConfigPanel(this)
                 : Optional.empty();
     }
 }

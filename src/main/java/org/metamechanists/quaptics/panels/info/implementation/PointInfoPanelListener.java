@@ -1,4 +1,4 @@
-package org.metamechanists.quaptics.panels.implementation;
+package org.metamechanists.quaptics.panels.info.implementation;
 
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import org.bukkit.entity.Entity;
@@ -14,7 +14,7 @@ import org.metamechanists.quaptics.utils.id.complex.ConnectionPointId;
 
 import java.util.Optional;
 
-public class PointPanelListener implements Listener {
+public class PointInfoPanelListener implements Listener {
     @EventHandler
     public static void interactEvent(@NotNull final PlayerInteractEntityEvent event) {
         final Entity clickedEntity = event.getRightClicked();

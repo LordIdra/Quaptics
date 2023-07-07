@@ -41,11 +41,11 @@ public class Lens extends ConnectedBlock implements PowerAnimatedBlock, PowerLos
     protected void addDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
         displayGroup.addDisplay("main", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(Material.GLASS)
-                .setTransformation(Transformations.adjustedRotateAndScale(glassDisplaySize, Transformations.GENERIC_ROTATION_ANGLES))
+                .setTransformation(Transformations.adjustedRotateScale(glassDisplaySize, Transformations.GENERIC_ROTATION_ANGLES))
                 .build());
         displayGroup.addDisplay("concrete", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(settings.getTier().concreteMaterial)
-                .setTransformation(Transformations.adjustedRotateAndScale(concreteDisplaySize, Transformations.GENERIC_ROTATION_ANGLES))
+                .setTransformation(Transformations.adjustedRotateScale(concreteDisplaySize, Transformations.GENERIC_ROTATION_ANGLES))
                 .setBrightness(CONCRETE_BRIGHTNESS)
                 .setViewRange(VIEW_RANGE_OFF)
                 .build());

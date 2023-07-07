@@ -2,19 +2,19 @@ package org.metamechanists.quaptics.schedulers;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.metamechanists.quaptics.panels.implementation.PointPanel;
+import org.metamechanists.quaptics.panels.info.implementation.PointInfoPanel;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionPointId;
-import org.metamechanists.quaptics.utils.id.complex.PanelId;
+import org.metamechanists.quaptics.utils.id.complex.InfoPanelId;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public final class PointPanelUpdateScheduler {
-    private static final Map<PanelId, ConnectionPointId> panelsToTick = new HashMap<>();
+    private static final Map<InfoPanelId, ConnectionPointId> panelsToTick = new HashMap<>();
 
     private PointPanelUpdateScheduler() {}
 
-    public static void scheduleUpdate(final @Nullable PanelId panelId, final @NotNull ConnectionPointId pointId) {
+    public static void scheduleUpdate(final @Nullable InfoPanelId panelId, final @NotNull ConnectionPointId pointId) {
         if (panelId != null) {
             panelsToTick.put(panelId, pointId);
         }
@@ -23,7 +23,7 @@ public final class PointPanelUpdateScheduler {
     public static void tick() {
         panelsToTick.forEach((panelId, pointId) -> {
             if (panelId.get().isPresent() && pointId.get().isPresent()) {
-                new PointPanel(panelId, pointId).update();
+                new PointInfoPanel(panelId, pointId).update();
             }
         });
         panelsToTick.clear();

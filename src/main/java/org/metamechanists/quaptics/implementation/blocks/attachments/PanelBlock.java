@@ -3,21 +3,21 @@ package org.metamechanists.quaptics.implementation.blocks.attachments;
 import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
-import org.metamechanists.quaptics.panels.BlockPanel;
+import org.metamechanists.quaptics.panels.info.BlockInfoPanel;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
-import org.metamechanists.quaptics.utils.id.complex.PanelId;
+import org.metamechanists.quaptics.utils.id.complex.InfoPanelId;
 
 import java.util.Optional;
 
 @FunctionalInterface
 public interface PanelBlock {
-    static Optional<PanelId> getPanelId(final Location location) {
+    static Optional<InfoPanelId> getPanelId(final Location location) {
         return BlockStorageAPI.getPanelId(location, Keys.BS_PANEL_ID);
     }
 
-    static void setPanelId(final Location location, @NotNull final PanelId id) {
+    static void setPanelId(final Location location, @NotNull final InfoPanelId id) {
         BlockStorageAPI.set(location, Keys.BS_PANEL_ID, id);
     }
 
@@ -27,7 +27,7 @@ public interface PanelBlock {
             return;
         }
 
-        final Optional<PanelId> id = getPanelId(location.get());
+        final Optional<InfoPanelId> id = getPanelId(location.get());
         id.ifPresent(panelId -> createPanel(panelId, group.getId()).update());
     }
 
@@ -37,9 +37,9 @@ public interface PanelBlock {
             return;
         }
 
-        final Optional<PanelId> id = getPanelId(location.get());
+        final Optional<InfoPanelId> id = getPanelId(location.get());
         id.ifPresent(panelId -> createPanel(panelId, group.getId()).setPanelHidden(hidden));
     }
 
-    BlockPanel createPanel(final PanelId panelId, final ConnectionGroupId groupId);
+    BlockInfoPanel createPanel(final InfoPanelId panelId, final ConnectionGroupId groupId);
 }

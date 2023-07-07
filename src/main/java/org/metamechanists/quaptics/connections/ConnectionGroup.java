@@ -5,7 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.jetbrains.annotations.NotNull;
-import org.metamechanists.quaptics.panels.implementation.PointPanel;
+import org.metamechanists.quaptics.panels.info.implementation.PointInfoPanel;
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
 import org.metamechanists.quaptics.items.Items;
 import org.metamechanists.quaptics.storage.PersistentDataTraverser;
@@ -61,7 +61,7 @@ public class ConnectionGroup {
                 .filter(Optional::isPresent)
                 .map(Optional::get).toList();
     }
-    public List<PointPanel> getPointPanels() {
+    public List<PointInfoPanel> getPointPanels() {
         return getPointList().stream()
                 .map(ConnectionPoint::getPointPanel)
                 .filter(Optional::isPresent)

@@ -1,4 +1,4 @@
-package org.metamechanists.quaptics.panels;
+package org.metamechanists.quaptics.panels.config;
 
 import lombok.Getter;
 import org.bukkit.Location;
@@ -6,32 +6,32 @@ import org.bukkit.entity.Interaction;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.storage.PersistentDataTraverser;
 import org.metamechanists.quaptics.utils.builders.InteractionBuilder;
+import org.metamechanists.quaptics.utils.id.complex.ConfigPanelAttributeId;
+import org.metamechanists.quaptics.utils.id.complex.ConfigPanelId;
 import org.metamechanists.quaptics.utils.id.simple.InteractionId;
-import org.metamechanists.quaptics.utils.id.complex.PanelAttributeId;
-import org.metamechanists.quaptics.utils.id.complex.PanelId;
 
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-public class PanelContainer {
+public class ConfigPanelContainer {
     @Getter
-    private final PanelId id;
+    private final ConfigPanelId id;
     @Getter
     private boolean hidden = true;
-    private final Map<String, ? extends PanelAttributeId> attributes;
+    private final Map<String, ? extends ConfigPanelAttributeId> attributes;
 
-    public PanelContainer(final Location location, final Map<String, ? extends PanelAttributeId> attributes) {
-        this.id = new PanelId(new InteractionBuilder(location).setHeight(0).setWidth(0).build().getUniqueId());
+    public ConfigPanelContainer(final Location location, final Map<String, ? extends ConfigPanelAttributeId> attributes) {
+        this.id = new ConfigPanelId(new InteractionBuilder(location).setHeight(0).setWidth(0).build().getUniqueId());
         this.attributes = attributes;
         saveData();
     }
 
-    public PanelContainer(@NotNull final PanelId panelId) {
+    public ConfigPanelContainer(@NotNull final ConfigPanelId panelId) {
         final PersistentDataTraverser traverser = new PersistentDataTraverser(panelId);
         this.id = panelId;
         this.hidden = traverser.getBoolean("hidden");
-        this.attributes = traverser.getPanelAttributeIdMap("attributes");
+        this.attributes = traverser.getConfigPanelAttributeIdMap("attributes");
     }
 
     private void saveData() {
@@ -44,15 +44,8 @@ public class PanelContainer {
         return new InteractionId(id).get();
     }
 
-    private Optional<PanelAttribute> getAttribute(final String name) {
+    private Optional<ConfigPanelAttribute> getAttribute(final String name) {
         return attributes.get(name).get();
-    }
-
-    public void setAttributeHidden(final String name, final boolean attributeHidden) {
-        getAttribute(name).ifPresent(attribute -> {
-            attribute.setHidden(attributeHidden);
-            attribute.updateVisibility(hidden);
-        });
     }
 
     public void changeLocation(final Location location) {
@@ -60,8 +53,8 @@ public class PanelContainer {
         attributes.values().forEach(attributeId -> attributeId.get().ifPresent(attribute -> attribute.changeLocation(location)));
     }
 
-    public void setText(final String name, final String text) {
-        getAttribute(name).ifPresent(attribute -> attribute.setText(text));
+    public void setValue(final String name, final String value) {
+        getAttribute(name).ifPresent(attribute -> attribute.setValue(value));
     }
 
     public void setHidden(final boolean hidden) {
@@ -78,17 +71,17 @@ public class PanelContainer {
 
     private void updateAttributeVisibility() {
         attributes.values().stream()
-                .map(PanelAttributeId::get)
+                .map(ConfigPanelAttributeId::get)
                 .filter(Objects::nonNull)
-                .forEach(attributeOptional -> attributeOptional.ifPresent(attribute -> attribute.updateVisibility(hidden)));
+                .forEach(attributeOptional -> attributeOptional.ifPresent(attribute -> attribute.setHidden(hidden)));
     }
 
     private void removeAttributes() {
         attributes.values().stream()
-                .map(PanelAttributeId::get)
+                .map(ConfigPanelAttributeId::get)
                 .filter(Optional::isPresent)
                 .map(Optional::get)
-                .forEach(PanelAttribute::remove);
+                .forEach(ConfigPanelAttribute::remove);
     }
 
     public void remove() {

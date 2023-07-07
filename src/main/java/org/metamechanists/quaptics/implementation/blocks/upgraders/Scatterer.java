@@ -54,11 +54,11 @@ public class Scatterer extends ConnectedBlock implements PowerAnimatedBlock, Pow
         final BlockFace face = Transformations.yawToFace(player.getEyeLocation().getYaw());
         displayGroup.addDisplay("main", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(Material.ORANGE_STAINED_GLASS)
-                .setTransformation(Transformations.adjustedRotateAndScale(glassDisplaySize, mainDisplayRotation))
+                .setTransformation(Transformations.adjustedRotateScale(glassDisplaySize, mainDisplayRotation))
                 .build());
         displayGroup.addDisplay("concrete", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(settings.getTier().concreteMaterial)
-                .setTransformation(Transformations.adjustedScaleAndOffset(concreteDisplaySize, concreteOffset))
+                .setTransformation(Transformations.adjustedScaleOffset(concreteDisplaySize, concreteOffset))
                 .setBrightness(CONCRETE_BRIGHTNESS)
                 .build());
         final BlockDisplay comparator = new BlockDisplayBuilder(location.toCenterLocation())
@@ -66,7 +66,7 @@ public class Scatterer extends ConnectedBlock implements PowerAnimatedBlock, Pow
                 .setBlockData(Material.COMPARATOR.createBlockData(
                         "[facing=" + face.name().toLowerCase()
                         + ",powered=false]"))
-                .setTransformation(Transformations.adjustedScaleAndOffset(comparatorDisplaySize, comparatorOffset))
+                .setTransformation(Transformations.adjustedScaleOffset(comparatorDisplaySize, comparatorOffset))
                 .build();
         PersistentDataAPI.setString(comparator, Keys.FACING, face.name().toLowerCase());
         displayGroup.addDisplay("comparator", comparator);

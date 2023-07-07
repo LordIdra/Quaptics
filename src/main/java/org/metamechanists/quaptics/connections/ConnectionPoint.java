@@ -10,7 +10,7 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
-import org.metamechanists.quaptics.panels.implementation.PointPanel;
+import org.metamechanists.quaptics.panels.info.implementation.PointInfoPanel;
 import org.metamechanists.quaptics.storage.PersistentDataTraverser;
 import org.metamechanists.quaptics.schedulers.PointPanelUpdateScheduler;
 import org.metamechanists.quaptics.utils.Transformations;
@@ -21,7 +21,7 @@ import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionPointId;
 import org.metamechanists.quaptics.utils.id.simple.InteractionId;
 import org.metamechanists.quaptics.utils.id.complex.LinkId;
-import org.metamechanists.quaptics.utils.id.complex.PanelId;
+import org.metamechanists.quaptics.utils.id.complex.InfoPanelId;
 
 import java.util.Optional;
 
@@ -38,7 +38,7 @@ public class ConnectionPoint {
     @Getter
     private final InteractionId interactionId;
     private final BlockDisplayId blockDisplayId;
-    private final @Nullable PanelId panelId;
+    private final @Nullable InfoPanelId panelId;
     private @Nullable LinkId linkId;
     @Getter
     private final String name;
@@ -58,7 +58,7 @@ public class ConnectionPoint {
                 .setBrightness(DISCONNECTED_BRIGHTNESS)
                 .build()
                 .getUniqueId());
-        this.panelId = new PointPanel(location, getId()).getId();
+        this.panelId = new PointInfoPanel(location, getId()).getId();
         this.name = name;
         saveData();
         updatePanel();
@@ -112,8 +112,8 @@ public class ConnectionPoint {
                 : Optional.empty();
     }
 
-    public Optional<PointPanel> getPointPanel() {
-        return panelId == null ? Optional.empty() : Optional.of(new PointPanel(panelId, getId()));
+    public Optional<PointInfoPanel> getPointPanel() {
+        return panelId == null ? Optional.empty() : Optional.of(new PointInfoPanel(panelId, getId()));
     }
 
     private Optional<BlockDisplay> getBlockDisplay() {
@@ -130,7 +130,7 @@ public class ConnectionPoint {
 
     public void remove() {
         getLink().ifPresent(Link::remove);
-        getPointPanel().ifPresent(PointPanel::remove);
+        getPointPanel().ifPresent(PointInfoPanel::remove);
         getBlockDisplay().ifPresent(BlockDisplay::remove);
         getInteraction().ifPresent(Interaction::remove);
     }
@@ -147,7 +147,7 @@ public class ConnectionPoint {
     }
 
     public void togglePanelHidden() {
-        getPointPanel().ifPresent(PointPanel::toggleHidden);
+        getPointPanel().ifPresent(PointInfoPanel::togglePanelHidden);
     }
 
     public void unlink() {

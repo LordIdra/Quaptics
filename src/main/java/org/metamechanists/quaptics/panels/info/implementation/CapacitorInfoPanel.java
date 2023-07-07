@@ -1,31 +1,31 @@
-package org.metamechanists.quaptics.panels.implementation;
+package org.metamechanists.quaptics.panels.info.implementation;
 
 import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.items.Lore;
-import org.metamechanists.quaptics.panels.BlockPanel;
-import org.metamechanists.quaptics.panels.PanelBuilder;
-import org.metamechanists.quaptics.panels.PanelContainer;
+import org.metamechanists.quaptics.panels.info.BlockInfoPanel;
+import org.metamechanists.quaptics.panels.info.InfoPanelBuilder;
+import org.metamechanists.quaptics.panels.info.InfoPanelContainer;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
-import org.metamechanists.quaptics.utils.id.complex.PanelId;
+import org.metamechanists.quaptics.utils.id.complex.InfoPanelId;
 
 import java.util.Optional;
 
-public class CapacitorPanel extends BlockPanel {
-    public CapacitorPanel(@NotNull final Location location, final ConnectionGroupId groupId) {
+public class CapacitorInfoPanel extends BlockInfoPanel {
+    public CapacitorInfoPanel(@NotNull final Location location, final ConnectionGroupId groupId) {
         super(location, groupId);
     }
 
-    public CapacitorPanel(@NotNull final PanelId panelId, final ConnectionGroupId groupId) {
+    public CapacitorInfoPanel(@NotNull final InfoPanelId panelId, final ConnectionGroupId groupId) {
         super(panelId, groupId);
     }
 
     @Override
-    protected PanelContainer buildPanelContainer(@NotNull final Location location) {
-        return new PanelBuilder(location.clone().toCenterLocation().add(getOffset()), SIZE)
+    protected InfoPanelContainer buildPanelContainer(@NotNull final Location location) {
+        return new InfoPanelBuilder(location.clone().toCenterLocation().add(getOffset()), SIZE)
                 .addAttribute("chargeText", false)
                 .addAttribute("chargeBar", false)
                 .build();
@@ -50,7 +50,7 @@ public class CapacitorPanel extends BlockPanel {
         final double capacity = group.get().getBlock().getSettings().getCapacity();
         final double charge = BlockStorageAPI.getDouble(location.get(), Keys.BS_CHARGE);
 
-        panelContainer.setText("chargeText", Lore.chargeBarRaw((int)charge, (int)capacity));
-        panelContainer.setText("chargeBar", Lore.chargeValuesRaw((int)charge, (int)capacity));
+        container.setText("chargeText", Lore.chargeBarRaw((int)charge, (int)capacity));
+        container.setText("chargeBar", Lore.chargeValuesRaw((int)charge, (int)capacity));
     }
 }

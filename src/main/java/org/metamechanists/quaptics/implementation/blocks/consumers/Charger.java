@@ -22,15 +22,15 @@ import org.metamechanists.quaptics.implementation.blocks.attachments.ItemHolderB
 import org.metamechanists.quaptics.implementation.blocks.attachments.PanelBlock;
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
 import org.metamechanists.quaptics.implementation.tools.QuapticChargeableItem;
-import org.metamechanists.quaptics.panels.BlockPanel;
-import org.metamechanists.quaptics.panels.PanelContainer;
-import org.metamechanists.quaptics.panels.implementation.ChargerPanel;
+import org.metamechanists.quaptics.panels.info.BlockInfoPanel;
+import org.metamechanists.quaptics.panels.info.InfoPanelContainer;
+import org.metamechanists.quaptics.panels.info.implementation.ChargerInfoPanel;
 import org.metamechanists.quaptics.utils.Language;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.builders.ItemDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
-import org.metamechanists.quaptics.utils.id.complex.PanelId;
+import org.metamechanists.quaptics.utils.id.complex.InfoPanelId;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.util.List;
@@ -52,19 +52,19 @@ public class Charger extends ConnectedBlock implements PanelBlock, ItemHolderBlo
     protected void addDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
         displayGroup.addDisplay("mainTop", new BlockDisplayBuilder(location.toCenterLocation())
                 .setBlockData(Material.SMOOTH_STONE_SLAB.createBlockData("[type=top]"))
-                .setTransformation(Transformations.adjustedScaleAndOffset(mainDisplaySize, topOffset))
+                .setTransformation(Transformations.adjustedScaleOffset(mainDisplaySize, topOffset))
                 .build());
         displayGroup.addDisplay("mainBottom", new BlockDisplayBuilder(location.toCenterLocation())
                 .setBlockData(Material.SMOOTH_STONE_SLAB.createBlockData("[type=bottom]"))
-                .setTransformation(Transformations.adjustedScaleAndOffset(mainDisplaySize, bottomOffset))
+                .setTransformation(Transformations.adjustedScaleOffset(mainDisplaySize, bottomOffset))
                 .build());
         displayGroup.addDisplay("glassTop", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(Material.LIGHT_BLUE_STAINED_GLASS)
-                .setTransformation(Transformations.adjustedScaleAndOffset(glassDisplaySize, topOffset))
+                .setTransformation(Transformations.adjustedScaleOffset(glassDisplaySize, topOffset))
                 .build());
         displayGroup.addDisplay("glassBottom", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(Material.LIGHT_BLUE_STAINED_GLASS)
-                .setTransformation(Transformations.adjustedScaleAndOffset(glassDisplaySize, bottomOffset))
+                .setTransformation(Transformations.adjustedScaleOffset(glassDisplaySize, bottomOffset))
                 .build());
         displayGroup.addDisplay("item", new ItemDisplayBuilder(location.toCenterLocation())
                 .setTransformation(Transformations.unadjustedScale(itemDisplaySize))
@@ -77,8 +77,8 @@ public class Charger extends ConnectedBlock implements PanelBlock, ItemHolderBlo
     }
 
     @Override
-    public BlockPanel createPanel(final PanelId panelId, final ConnectionGroupId groupId) {
-        return new ChargerPanel(panelId, groupId);
+    public BlockInfoPanel createPanel(final InfoPanelId panelId, final ConnectionGroupId groupId) {
+        return new ChargerInfoPanel(panelId, groupId);
     }
 
     @Override
@@ -87,16 +87,16 @@ public class Charger extends ConnectedBlock implements PanelBlock, ItemHolderBlo
         super.onPlace(event);
         final Location location = event.getBlock().getLocation();
         final Optional<ConnectionGroup> optionalGroup = getGroup(location);
-        optionalGroup.ifPresent(group -> PanelBlock.setPanelId(location, new ChargerPanel(location, group.getId()).getId()));
+        optionalGroup.ifPresent(group -> PanelBlock.setPanelId(location, new ChargerInfoPanel(location, group.getId()).getId()));
     }
 
     @Override
     @OverridingMethodsMustInvokeSuper
     protected void onBreak(@NotNull final Location location) {
         super.onBreak(location);
-        final Optional<PanelId> panelId = PanelBlock.getPanelId(location);
-        final Optional<PanelContainer> panel = panelId.isPresent() ? panelId.get().get() : Optional.empty();
-        panel.ifPresent(PanelContainer::remove);
+        final Optional<InfoPanelId> panelId = PanelBlock.getPanelId(location);
+        final Optional<InfoPanelContainer> panel = panelId.isPresent() ? panelId.get().get() : Optional.empty();
+        panel.ifPresent(InfoPanelContainer::remove);
         ItemHolderBlock.getStack(location).ifPresent(stack -> location.getWorld().dropItem(location, stack));
     }
 

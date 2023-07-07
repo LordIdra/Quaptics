@@ -22,16 +22,16 @@ import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.implementation.blocks.attachments.PanelBlock;
 import org.metamechanists.quaptics.implementation.blocks.attachments.PowerLossBlock;
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
-import org.metamechanists.quaptics.panels.BlockPanel;
-import org.metamechanists.quaptics.panels.PanelContainer;
-import org.metamechanists.quaptics.panels.implementation.CapacitorPanel;
+import org.metamechanists.quaptics.panels.info.BlockInfoPanel;
+import org.metamechanists.quaptics.panels.info.InfoPanelContainer;
+import org.metamechanists.quaptics.panels.info.implementation.CapacitorInfoPanel;
 import org.metamechanists.quaptics.storage.QuapticTicker;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
-import org.metamechanists.quaptics.utils.id.complex.PanelId;
+import org.metamechanists.quaptics.utils.id.complex.InfoPanelId;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.util.List;
@@ -53,11 +53,11 @@ public class Capacitor extends ConnectedBlock implements PanelBlock, PowerLossBl
     protected void addDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
         displayGroup.addDisplay("mainGlass", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(Material.GLASS)
-                .setTransformation(Transformations.adjustedRotateAndScale(mainGlassDisplaySize, Transformations.GENERIC_ROTATION_ANGLES))
+                .setTransformation(Transformations.adjustedRotateScale(mainGlassDisplaySize, Transformations.GENERIC_ROTATION_ANGLES))
                 .build());
         displayGroup.addDisplay("tierGlass", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(settings.getTier().glassMaterial)
-                .setTransformation(Transformations.adjustedRotateAndScale(tierGlassDisplaySize, Transformations.GENERIC_ROTATION_ANGLES))
+                .setTransformation(Transformations.adjustedRotateScale(tierGlassDisplaySize, Transformations.GENERIC_ROTATION_ANGLES))
                 .build());
         displayGroup.addDisplay("concrete", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(Material.LIGHT_BLUE_CONCRETE)
@@ -74,8 +74,8 @@ public class Capacitor extends ConnectedBlock implements PanelBlock, PowerLossBl
     }
 
     @Override
-    public BlockPanel createPanel(final PanelId panelId, final ConnectionGroupId groupId) {
-        return new CapacitorPanel(panelId, groupId);
+    public BlockInfoPanel createPanel(final InfoPanelId panelId, final ConnectionGroupId groupId) {
+        return new CapacitorInfoPanel(panelId, groupId);
     }
 
     @Override
@@ -84,7 +84,7 @@ public class Capacitor extends ConnectedBlock implements PanelBlock, PowerLossBl
         super.onPlace(event);
         final Location location = event.getBlock().getLocation();
         final Optional<ConnectionGroup> optionalGroup = getGroup(location);
-        optionalGroup.ifPresent(group -> PanelBlock.setPanelId(location, new CapacitorPanel(location, group.getId()).getId()));
+        optionalGroup.ifPresent(group -> PanelBlock.setPanelId(location, new CapacitorInfoPanel(location, group.getId()).getId()));
     }
 
     @Override
@@ -92,8 +92,8 @@ public class Capacitor extends ConnectedBlock implements PanelBlock, PowerLossBl
     protected void onBreak(@NotNull final Location location) {
         super.onBreak(location);
         PanelBlock.getPanelId(location)
-                .flatMap(PanelId::get)
-                .ifPresent(PanelContainer::remove);
+                .flatMap(InfoPanelId::get)
+                .ifPresent(InfoPanelContainer::remove);
     }
 
     @Override
@@ -176,7 +176,7 @@ public class Capacitor extends ConnectedBlock implements PanelBlock, PowerLossBl
     }
 
     private Matrix4f getConcreteTransformationMatrix(final double charge) {
-        return Transformations.adjustedRotateAndScale(
+        return Transformations.adjustedRotateScale(
                 new Vector3f(maxConcreteDisplaySize).mul((float)(charge/settings.getCapacity())),
                 Transformations.GENERIC_ROTATION_ANGLES);
     }

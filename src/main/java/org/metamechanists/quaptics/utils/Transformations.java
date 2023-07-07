@@ -89,19 +89,13 @@ public class Transformations {
                 .scale(scale);
     }
 
-    public Matrix4f unadjustedScale(final Vector3f scale) {
-        return new Matrix4f().scale(scale);
-    }
-
     public Matrix4f adjustedScale(@NotNull final Vector3f scale) {
         return new Matrix4f().translate(-scale.x/2, -scale.y/2, -scale.z/2).scale(scale);
     }
-
-    public Matrix4f adjustedScaleAndOffset(@NotNull final Vector3f scale, final Vector3f offset) {
+    public Matrix4f adjustedScaleOffset(@NotNull final Vector3f scale, final Vector3f offset) {
         return new Matrix4f().translate(offset).mul(adjustedScale(scale));
     }
-
-    public Matrix4f adjustedRotateAndScale(final Vector3f scale, final Vector3f rotationInRadians) {
+    public Matrix4f adjustedRotateScale(final Vector3f scale, final Vector3f rotationInRadians) {
         final Matrix4f hitboxMatrix = new Matrix4f()
                 .rotateXYZ(rotationInRadians)
                 .scale(scale);
@@ -111,8 +105,17 @@ public class Transformations {
                 .scale(scale);
     }
 
-    public Matrix4f unadjustedRotateAndScale(final Vector3f scale, final Vector3f rotationInRadians) {
+    public Matrix4f unadjustedScale(final Vector3f scale) {
+        return new Matrix4f().scale(scale);
+    }
+    public Matrix4f unadjustedRotateScale(final Vector3f scale, final Vector3f rotationInRadians) {
         return new Matrix4f()
+                .rotateXYZ(rotationInRadians)
+                .scale(scale);
+    }
+    public Matrix4f unadjustedTranslateRotateScale(final Vector3f scale, final Vector3f rotationInRadians, final Vector3f offset) {
+        return new Matrix4f()
+                .translate(offset)
                 .rotateXYZ(rotationInRadians)
                 .scale(scale);
     }

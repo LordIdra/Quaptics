@@ -24,7 +24,7 @@ import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.implementation.blocks.burnout.BurnoutManager;
 import org.metamechanists.quaptics.implementation.blocks.burnout.BurnoutRunnable;
-import org.metamechanists.quaptics.panels.implementation.PointPanel;
+import org.metamechanists.quaptics.panels.info.implementation.PointInfoPanel;
 import org.metamechanists.quaptics.storage.QuapticStorage;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
@@ -98,7 +98,7 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
                 return;
             }
 
-            final boolean isAnyPanelHidden = group.get().getPointPanels().stream().anyMatch(PointPanel::isPanelHidden);
+            final boolean isAnyPanelHidden = group.get().getPointPanels().stream().anyMatch(PointInfoPanel::isPanelHidden);
             group.get().getPointPanels().forEach(panel -> panel.setPanelHidden(!isAnyPanelHidden));
         };
     }

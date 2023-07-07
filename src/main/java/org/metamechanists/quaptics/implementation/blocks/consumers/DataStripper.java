@@ -23,23 +23,21 @@ import org.metamechanists.quaptics.implementation.blocks.attachments.ItemHolderB
 import org.metamechanists.quaptics.implementation.blocks.attachments.PanelBlock;
 import org.metamechanists.quaptics.implementation.blocks.attachments.ProgressBlock;
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
-import org.metamechanists.quaptics.panels.BlockPanel;
-import org.metamechanists.quaptics.panels.PanelContainer;
-import org.metamechanists.quaptics.panels.implementation.ProgressPanel;
+import org.metamechanists.quaptics.panels.info.BlockInfoPanel;
+import org.metamechanists.quaptics.panels.info.InfoPanelContainer;
+import org.metamechanists.quaptics.panels.info.implementation.ProgressInfoPanel;
 import org.metamechanists.quaptics.utils.Language;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.builders.ItemDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
-import org.metamechanists.quaptics.utils.id.complex.PanelId;
+import org.metamechanists.quaptics.utils.id.complex.InfoPanelId;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 public class DataStripper extends ConnectedBlock implements PanelBlock, ItemHolderBlock, ProgressBlock {
-    private static final Set<Material> FORBIDDEN_BLOCKS = Set.of(Material.BARRIER, Material.BEDROCK, Material.END_PORTAL, Material.STRUCTURE_VOID);
     private static final double MAX_PROGRESS_DIFFERENCE = 0.00001;
     private final Vector3f mainDisplaySize = new Vector3f(0.5F, 0.3F, 0.5F);
     private final Vector3f glassDisplaySize = new Vector3f(0.4F, 0.15F, 0.4F);
@@ -56,19 +54,19 @@ public class DataStripper extends ConnectedBlock implements PanelBlock, ItemHold
     protected void addDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
         displayGroup.addDisplay("mainTop", new BlockDisplayBuilder(location.toCenterLocation())
                 .setBlockData(Material.SMOOTH_STONE_SLAB.createBlockData("[type=top]"))
-                .setTransformation(Transformations.adjustedScaleAndOffset(mainDisplaySize, topOffset))
+                .setTransformation(Transformations.adjustedScaleOffset(mainDisplaySize, topOffset))
                 .build());
         displayGroup.addDisplay("mainBottom", new BlockDisplayBuilder(location.toCenterLocation())
                 .setBlockData(Material.SMOOTH_STONE_SLAB.createBlockData("[type=bottom]"))
-                .setTransformation(Transformations.adjustedScaleAndOffset(mainDisplaySize, bottomOffset))
+                .setTransformation(Transformations.adjustedScaleOffset(mainDisplaySize, bottomOffset))
                 .build());
         displayGroup.addDisplay("glassTop", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(Material.ORANGE_STAINED_GLASS)
-                .setTransformation(Transformations.adjustedScaleAndOffset(glassDisplaySize, topOffset))
+                .setTransformation(Transformations.adjustedScaleOffset(glassDisplaySize, topOffset))
                 .build());
         displayGroup.addDisplay("glassBottom", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(Material.ORANGE_STAINED_GLASS)
-                .setTransformation(Transformations.adjustedScaleAndOffset(glassDisplaySize, bottomOffset))
+                .setTransformation(Transformations.adjustedScaleOffset(glassDisplaySize, bottomOffset))
                 .build());
         displayGroup.addDisplay("item", new ItemDisplayBuilder(location.toCenterLocation())
                 .setTransformation(Transformations.unadjustedScale(itemDisplaySize))
@@ -82,8 +80,8 @@ public class DataStripper extends ConnectedBlock implements PanelBlock, ItemHold
     }
 
     @Override
-    public BlockPanel createPanel(final PanelId panelId, final ConnectionGroupId groupId) {
-        return new ProgressPanel(panelId, groupId);
+    public BlockInfoPanel createPanel(final InfoPanelId panelId, final ConnectionGroupId groupId) {
+        return new ProgressInfoPanel(panelId, groupId);
     }
 
     @Override
@@ -92,16 +90,16 @@ public class DataStripper extends ConnectedBlock implements PanelBlock, ItemHold
         super.onPlace(event);
         final Location location = event.getBlock().getLocation();
         final Optional<ConnectionGroup> optionalGroup = getGroup(location);
-        optionalGroup.ifPresent(group -> PanelBlock.setPanelId(location, new ProgressPanel(location, group.getId()).getId()));
+        optionalGroup.ifPresent(group -> PanelBlock.setPanelId(location, new ProgressInfoPanel(location, group.getId()).getId()));
     }
 
     @Override
     @OverridingMethodsMustInvokeSuper
     protected void onBreak(@NotNull final Location location) {
         super.onBreak(location);
-        final Optional<PanelId> panelId = PanelBlock.getPanelId(location);
-        final Optional<PanelContainer> panel = panelId.isPresent() ? panelId.get().get() : Optional.empty();
-        panel.ifPresent(PanelContainer::remove);
+        final Optional<InfoPanelId> panelId = PanelBlock.getPanelId(location);
+        final Optional<InfoPanelContainer> panel = panelId.isPresent() ? panelId.get().get() : Optional.empty();
+        panel.ifPresent(InfoPanelContainer::remove);
         ItemHolderBlock.getStack(location).ifPresent(stack -> location.getWorld().dropItem(location, stack));
     }
 
@@ -138,11 +136,6 @@ public class DataStripper extends ConnectedBlock implements PanelBlock, ItemHold
 
     @Override
     public boolean onInsert(final @NotNull ItemStack stack, @NotNull final Player player) {
-        if (FORBIDDEN_BLOCKS.contains(stack.getType())) {
-            Language.sendLanguageMessage(player, "data-stripper.disallowed-block");
-            return false;
-        }
-
         if (SlimefunItem.getByItem(stack) == null || stack.getType() != Material.PLAYER_HEAD) {
             Language.sendLanguageMessage(player, "data-stripper.not-slimefun-head");
             return false;
