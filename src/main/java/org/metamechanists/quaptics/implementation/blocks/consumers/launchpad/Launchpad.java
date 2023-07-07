@@ -37,7 +37,7 @@ import java.util.Optional;
 
 public class Launchpad extends ConnectedBlock implements ConfigPanelBlock, PowerAnimatedBlock {
     private static final Vector RELATIVE_PANEL_LOCATION = new Vector(0, 0, -0.51);
-    private static final Vector INITIAL_VELOCITY = new Vector(-3, 1, 0);
+    private static final Vector INITIAL_VELOCITY = new Vector(0, 2, 0);
     public static final float MAX_VELOCITY = 10;
     private static final float VELOCITY_POWER = 1.5F;
     private static final float VELOCITY_DIVISOR = 5;
