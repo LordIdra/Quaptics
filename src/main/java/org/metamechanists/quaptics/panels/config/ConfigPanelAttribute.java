@@ -23,7 +23,7 @@ import org.metamechanists.quaptics.utils.id.simple.TextDisplayId;
 import java.util.Optional;
 
 public class ConfigPanelAttribute {
-    private static final float BUTTON_SIZE = 0.05F;
+    private static final float BUTTON_SIZE = 0.08F;
     private static final float HIDDEN_VIEW_RANGE = 0;
     private static final float SHOWN_VIEW_RANGE = 1;
     private static final Vector3f KEY_TRANSLATION = new Vector3f(-0.20F, 0.0F, 0.0F);
