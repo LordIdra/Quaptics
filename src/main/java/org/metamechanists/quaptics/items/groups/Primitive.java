@@ -12,6 +12,7 @@ import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.implementation.blocks.concentrators.SolarConcentrator;
 import org.metamechanists.quaptics.implementation.blocks.consumers.Charger;
 import org.metamechanists.quaptics.implementation.blocks.consumers.DataStripper;
+import org.metamechanists.quaptics.implementation.blocks.consumers.Launchpad;
 import org.metamechanists.quaptics.implementation.blocks.consumers.MultiblockClicker;
 import org.metamechanists.quaptics.implementation.blocks.consumers.turrets.ModulatedTurret;
 import org.metamechanists.quaptics.implementation.blocks.manipulators.Capacitor;
@@ -113,6 +114,12 @@ public class Primitive {
             .minPower(6)
             .build();
 
+    public final Settings LAUNCHPAD_SETTINGS = Settings.builder()
+            .tier(Tier.PRIMITIVE)
+            .connectionRadius(0.7F)
+            .minPower(3)
+            .build();
+
     public final SlimefunItemStack SOLAR_CONCENTRATOR_1 = new SlimefunItemStack(
             "QP_SOLAR_CONCENTRATOR_1",
             Material.GLASS_PANE,
@@ -193,6 +200,15 @@ public class Primitive {
                     "&7● &eRight Click &7with an item to insert",
                     "&7● &eRight Click &7again to retrieve"));
 
+    public final SlimefunItemStack LAUNCHPAD = new SlimefunItemStack(
+            "QP_LAUNCHPAD",
+            Material.LIGHT_GRAY_CONCRETE,
+            "&6Launchpad",
+            Lore.create(LAUNCHPAD_SETTINGS,
+                    "&7● Launches players",
+                    "&7● Launch velocity can be configured",
+                    "&7● &eWalk onto the launchpad &7to get launched"));
+
     public void initialize() {
         final SlimefunAddon addon = Quaptics.getInstance();
 
@@ -265,5 +281,12 @@ public class Primitive {
                 RecipeType.NULL,
                 new ItemStack[]{},
                 DATA_STRIPPER_1_SETTINGS).register(addon);
+
+        new Launchpad(
+                Groups.PRIMITIVE,
+                LAUNCHPAD,
+                RecipeType.NULL,
+                new ItemStack[]{},
+                LAUNCHPAD_SETTINGS).register(addon);
     }
 }

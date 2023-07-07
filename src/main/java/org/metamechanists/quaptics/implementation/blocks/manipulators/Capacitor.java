@@ -19,7 +19,7 @@ import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
 import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
-import org.metamechanists.quaptics.implementation.blocks.attachments.PanelBlock;
+import org.metamechanists.quaptics.implementation.blocks.attachments.InfoPanelBlock;
 import org.metamechanists.quaptics.implementation.blocks.attachments.PowerLossBlock;
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
 import org.metamechanists.quaptics.panels.info.BlockInfoPanel;
@@ -37,7 +37,7 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.util.List;
 import java.util.Optional;
 
-public class Capacitor extends ConnectedBlock implements PanelBlock, PowerLossBlock {
+public class Capacitor extends ConnectedBlock implements InfoPanelBlock, PowerLossBlock {
     private static final int CONCRETE_BRIGHTNESS = 15;
     private final Vector3f mainGlassDisplaySize = new Vector3f(settings.getDisplayRadius()*2.0F);
     private final Vector3f tierGlassDisplaySize = new Vector3f(settings.getDisplayRadius()*1.7F);
@@ -84,14 +84,14 @@ public class Capacitor extends ConnectedBlock implements PanelBlock, PowerLossBl
         super.onPlace(event);
         final Location location = event.getBlock().getLocation();
         final Optional<ConnectionGroup> optionalGroup = getGroup(location);
-        optionalGroup.ifPresent(group -> PanelBlock.setPanelId(location, new CapacitorInfoPanel(location, group.getId()).getId()));
+        optionalGroup.ifPresent(group -> InfoPanelBlock.setPanelId(location, new CapacitorInfoPanel(location, group.getId()).getId()));
     }
 
     @Override
     @OverridingMethodsMustInvokeSuper
     protected void onBreak(@NotNull final Location location) {
         super.onBreak(location);
-        PanelBlock.getPanelId(location)
+        InfoPanelBlock.getPanelId(location)
                 .flatMap(InfoPanelId::get)
                 .ifPresent(InfoPanelContainer::remove);
     }

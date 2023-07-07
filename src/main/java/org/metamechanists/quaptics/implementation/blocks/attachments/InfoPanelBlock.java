@@ -12,7 +12,7 @@ import org.metamechanists.quaptics.utils.id.complex.InfoPanelId;
 import java.util.Optional;
 
 @FunctionalInterface
-public interface PanelBlock {
+public interface InfoPanelBlock {
     static Optional<InfoPanelId> getPanelId(final Location location) {
         return BlockStorageAPI.getPanelId(location, Keys.BS_PANEL_ID);
     }

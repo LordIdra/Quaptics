@@ -20,7 +20,7 @@ import org.metamechanists.quaptics.connections.ConnectionPointType;
 import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.implementation.blocks.attachments.ItemHolderBlock;
-import org.metamechanists.quaptics.implementation.blocks.attachments.PanelBlock;
+import org.metamechanists.quaptics.implementation.blocks.attachments.InfoPanelBlock;
 import org.metamechanists.quaptics.implementation.blocks.attachments.ProgressBlock;
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
 import org.metamechanists.quaptics.panels.info.BlockInfoPanel;
@@ -37,7 +37,7 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.util.List;
 import java.util.Optional;
 
-public class DataStripper extends ConnectedBlock implements PanelBlock, ItemHolderBlock, ProgressBlock {
+public class DataStripper extends ConnectedBlock implements InfoPanelBlock, ItemHolderBlock, ProgressBlock {
     private static final double MAX_PROGRESS_DIFFERENCE = 0.00001;
     private final Vector3f mainDisplaySize = new Vector3f(0.5F, 0.3F, 0.5F);
     private final Vector3f glassDisplaySize = new Vector3f(0.4F, 0.15F, 0.4F);
@@ -90,14 +90,14 @@ public class DataStripper extends ConnectedBlock implements PanelBlock, ItemHold
         super.onPlace(event);
         final Location location = event.getBlock().getLocation();
         final Optional<ConnectionGroup> optionalGroup = getGroup(location);
-        optionalGroup.ifPresent(group -> PanelBlock.setPanelId(location, new ProgressInfoPanel(location, group.getId()).getId()));
+        optionalGroup.ifPresent(group -> InfoPanelBlock.setPanelId(location, new ProgressInfoPanel(location, group.getId()).getId()));
     }
 
     @Override
     @OverridingMethodsMustInvokeSuper
     protected void onBreak(@NotNull final Location location) {
         super.onBreak(location);
-        final Optional<InfoPanelId> panelId = PanelBlock.getPanelId(location);
+        final Optional<InfoPanelId> panelId = InfoPanelBlock.getPanelId(location);
         final Optional<InfoPanelContainer> panel = panelId.isPresent() ? panelId.get().get() : Optional.empty();
         panel.ifPresent(InfoPanelContainer::remove);
         ItemHolderBlock.getStack(location).ifPresent(stack -> location.getWorld().dropItem(location, stack));
