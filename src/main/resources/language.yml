@@ -11,7 +11,7 @@ multiblock-clicker.not-powered: "&cYou must power the multiblock clicker before 
 charger.multiple-items: "&cYou can only insert one item at a time."
 
 data-stripper.disallowed-block: "&cNice try :)"
-data-stripper.not-slimefun-block: "&cYou can only insert Slimefun items."
+data-stripper.not-slimefun-head: "&cYou can only insert Slimefun heads."
 
 too-close: "&cToo close to another component!"
 

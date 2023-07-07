@@ -189,8 +189,8 @@ public class Primitive {
             Material.ORANGE_STAINED_GLASS,
             "&6Data Stripper &eI",
             Lore.create(DATA_STRIPPER_1_SETTINGS,
-                    "&7● Converts Slimefun blocks into vanilla blocks",
-                    "&7● &eRight Click &7an item to insert",
+                    "&7● Converts Slimefun heads into placeable vanilla heads",
+                    "&7● &eRight Click &7with an item to insert",
                     "&7● &eRight Click &7again to retrieve"));
 
     public void initialize() {

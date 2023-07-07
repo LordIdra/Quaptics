@@ -143,8 +143,8 @@ public class DataStripper extends ConnectedBlock implements PanelBlock, ItemHold
             return false;
         }
 
-        if (SlimefunItem.getByItem(stack) == null) {
-            Language.sendLanguageMessage(player, "data-stripper.not-slimefun-block");
+        if (SlimefunItem.getByItem(stack) == null || stack.getType() != Material.PLAYER_HEAD) {
+            Language.sendLanguageMessage(player, "data-stripper.not-slimefun-head");
             return false;
         }
 
@@ -163,7 +163,6 @@ public class DataStripper extends ConnectedBlock implements PanelBlock, ItemHold
 
     private static @NotNull ItemStack stripData(final @NotNull ItemStack inputStack) {
         final ItemStack intermediaryStack = inputStack.clone();
-
         final SkullMeta itemMeta = (SkullMeta) intermediaryStack.getItemMeta();
         final ItemStack outputStack = new ItemStack(Material.PLAYER_HEAD);
         final SkullMeta outputMeta = (SkullMeta) outputStack.getItemMeta();
