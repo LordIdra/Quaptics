@@ -42,4 +42,8 @@ public class Keys {
     public final String BS_IS_HOLDING_ITEM = "QP_IS_HOLDING_ITEM";
     public final String BS_HEIGHT = "QP_HEIGHT";
     public final String BS_SIZE = "QP_SIZE";
+    public final String BS_EXPERIENCE = "QP_EXPERIENCE";
+    public final String BS_CHARGING = "QP_CHARGING";
+    public final String BS_DISCHARGING = "QP_DISCHARGING";
+    public final String BS_PLAYER = "QP_PLAYER";
 }

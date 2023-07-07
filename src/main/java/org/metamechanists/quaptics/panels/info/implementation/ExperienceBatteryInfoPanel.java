@@ -8,26 +8,27 @@ import org.metamechanists.quaptics.panels.info.BlockInfoPanel;
 import org.metamechanists.quaptics.panels.info.InfoPanelBuilder;
 import org.metamechanists.quaptics.panels.info.InfoPanelContainer;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
+import org.metamechanists.quaptics.utils.Colors;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.id.complex.InfoPanelId;
 
 import java.util.Optional;
 
-public class CapacitorInfoPanel extends BlockInfoPanel {
-    public CapacitorInfoPanel(@NotNull final Location location, final ConnectionGroupId groupId) {
+public class ExperienceBatteryInfoPanel extends BlockInfoPanel {
+    public ExperienceBatteryInfoPanel(@NotNull final Location location, final ConnectionGroupId groupId) {
         super(location, groupId);
     }
 
-    public CapacitorInfoPanel(@NotNull final InfoPanelId panelId, final ConnectionGroupId groupId) {
+    public ExperienceBatteryInfoPanel(@NotNull final InfoPanelId panelId, final ConnectionGroupId groupId) {
         super(panelId, groupId);
     }
 
     @Override
     protected InfoPanelContainer buildPanelContainer(@NotNull final Location location) {
         return new InfoPanelBuilder(location.clone().toCenterLocation().add(getOffset()), SIZE)
-                .addAttribute("chargeBar", false)
-                .addAttribute("chargeText", false)
+                .addAttribute("xpText", false)
+                .addAttribute("xpBar", false)
                 .build();
     }
 
@@ -47,10 +48,10 @@ public class CapacitorInfoPanel extends BlockInfoPanel {
             return;
         }
 
-        final double capacity = group.get().getBlock().getSettings().getCapacity();
-        final double charge = BlockStorageAPI.getDouble(location.get(), Keys.BS_CHARGE);
+        final int experienceCapacity = group.get().getBlock().getSettings().getExperienceCapacity();
+        final int experience = BlockStorageAPI.getInt(location.get(), Keys.BS_EXPERIENCE);
 
-        container.setText("chargeBar", Lore.chargeBarRaw((int)charge, (int)capacity));
-        container.setText("chargeText", Lore.chargeValuesRaw((int)charge, (int)capacity));
+        container.setText("xpText", Lore.progressBar(experience, experienceCapacity, Colors.EXPERIENCE.getFormattedColor(), "&7"));
+        container.setText("xpBar", Lore.storedExperience(experience, experienceCapacity));
     }
 }

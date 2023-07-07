@@ -28,6 +28,7 @@ public class Testing {
             Material.BLACK_STAINED_GLASS_PANE,
             "&8Oscillating Concentrator &FI",
             Lore.create(OSCILLATING_CONCENTRATOR_SETTINGS,
+                    "&4&lFOR TESTING ONLY. DO NOT USE IN PRODUCTION.",
                     "&7● Toggles power on/off every tick",
                     "&7● Concentrates epic admin hax into a quaptic ray"));
 
