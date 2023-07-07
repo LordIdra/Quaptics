@@ -115,6 +115,7 @@ public class Charger extends ConnectedBlock implements InfoPanelBlock, ItemHolde
         }
 
         if (!BlockStorageAPI.getBoolean(location.get(), Keys.BS_IS_HOLDING_ITEM)) {
+            setPanelHidden(group, true);
             return;
         }
 
