@@ -38,7 +38,7 @@ import java.util.Optional;
 public class Launchpad extends ConnectedBlock implements ConfigPanelBlock, PowerAnimatedBlock {
     private static final Vector RELATIVE_PANEL_LOCATION = new Vector(0, 0, -0.51);
     private static final Vector INITIAL_VELOCITY = new Vector(2, 2, 0);
-    public static final Vector MAX_VELOCITY = new Vector(10, 10, 10);
+    public static final float MAX_VELOCITY = 10;
     private static final Brightness BRIGHTNESS_ON = new Brightness(15, 0);
     private static final Brightness BRIGHTNESS_OFF = new Brightness(4, 0);
     private static final Vector3f mainDisplaySize = new Vector3f(0.8F, 0.1F, 0.8F);

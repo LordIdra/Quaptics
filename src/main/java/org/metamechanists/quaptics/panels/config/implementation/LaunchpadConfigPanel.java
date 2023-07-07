@@ -11,6 +11,7 @@ import org.metamechanists.quaptics.panels.config.ConfigPanelBuilder;
 import org.metamechanists.quaptics.panels.config.ConfigPanelContainer;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
+import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.id.complex.ConfigPanelId;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 
@@ -49,8 +50,8 @@ public class LaunchpadConfigPanel extends ConfigPanel {
                 "velocityY".equals(name) ? increment : 0,
                 "velocityZ".equals(name) ? increment : 0));
 
+        Utils.clampToRange(velocity.get(), Launchpad.MAX_VELOCITY, -Launchpad.MAX_VELOCITY);
         BlockStorageAPI.set(location, Keys.BS_VELOCITY, velocity.get());
-
         update();
     }
 
@@ -75,9 +76,9 @@ public class LaunchpadConfigPanel extends ConfigPanel {
             return;
         }
 
-        container.setValue("velocityX", Lore.twoWayProgressBar(velocity.get().getX(), Launchpad.MAX_VELOCITY.getX(), "&c", "&a", "&7"));
-        container.setValue("velocityY", Lore.twoWayProgressBar(velocity.get().getY(), Launchpad.MAX_VELOCITY.getY(), "&c", "&a", "&7"));
-        container.setValue("velocityZ", Lore.twoWayProgressBar(velocity.get().getZ(), Launchpad.MAX_VELOCITY.getZ(), "&c", "&a", "&7"));
+        container.setValue("velocityX", Lore.twoWayProgressBar(velocity.get().getX(), Launchpad.MAX_VELOCITY, "&c", "&a", "&7"));
+        container.setValue("velocityY", Lore.twoWayProgressBar(velocity.get().getY(), Launchpad.MAX_VELOCITY, "&c", "&a", "&7"));
+        container.setValue("velocityZ", Lore.twoWayProgressBar(velocity.get().getZ(), Launchpad.MAX_VELOCITY, "&c", "&a", "&7"));
     }
 
     @SuppressWarnings("MagicNumber")
