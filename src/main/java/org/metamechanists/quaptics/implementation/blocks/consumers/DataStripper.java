@@ -124,7 +124,10 @@ public class DataStripper extends ConnectedBlock implements PanelBlock, ItemHold
             return;
         }
 
-        ProgressBlock.updateProgress(location.get(), settings.getTimePerItem());
+        if (ItemHolderBlock.getStack(location.get()).isPresent()) {
+            ProgressBlock.updateProgress(location.get(), settings.getTimePerItem());
+        }
+
         updatePanel(group);
     }
 
@@ -145,6 +148,11 @@ public class DataStripper extends ConnectedBlock implements PanelBlock, ItemHold
             return false;
         }
 
+        if (SlimefunItem.getByItem(stack) == null) {
+            Language.sendLanguageMessage(player, "data-stripper.not-slimefun-block");
+            return false;
+        }
+
         return true;
     }
 
@@ -160,10 +168,6 @@ public class DataStripper extends ConnectedBlock implements PanelBlock, ItemHold
 
     private static @NotNull ItemStack stripData(final @NotNull ItemStack inputStack) {
         final ItemStack intermediaryStack = inputStack.clone();
-
-        if (intermediaryStack.getType() != Material.PLAYER_HEAD || SlimefunItem.getByItem(intermediaryStack) == null) {
-            return intermediaryStack;
-        }
 
         final SkullMeta itemMeta = (SkullMeta) intermediaryStack.getItemMeta();
         final ItemStack outputStack = new ItemStack(Material.PLAYER_HEAD);

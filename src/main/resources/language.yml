@@ -12,6 +12,7 @@ charger.multiple-items: "&cYou can only insert one item at a time."
 
 data-stripper.disallowed-block: "&cNice try :)"
 data-stripper.multiple-items: "&cYou can only insert one item at a time."
+data-stripper.not-slimefun-block: "&cYou can only insert Slimefun items."
 
 too-close: "&cToo close to another component!"
 
