@@ -21,6 +21,10 @@ public class Utils {
         vector.setZ(Math.max(vector.getZ(), min));
     }
 
+    public double clampToRange(final double value, final double min, final double max) {
+        return Math.max(Math.min(value, max), min);
+    }
+
     public boolean equal(final double a, final double b) {
         return Math.abs(a - b) < FLOATING_POINT_THRESHOLD;
     }

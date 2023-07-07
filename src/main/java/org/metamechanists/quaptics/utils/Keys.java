@@ -39,4 +39,6 @@ public class Keys {
     public final String BS_VELOCITY = "QP_VELOCITY";
     public final String BS_TICKS_SINCE_LAST_UPDATE = "QP_TICKS_SINCE_LAST_UPDATE";
     public final String BS_IS_HOLDING_ITEM = "QP_IS_HOLDING_ITEM";
+    public final String BS_HEIGHT = "QP_HEIGHT";
+    public final String BS_SIZE = "QP_SIZE";
 }
