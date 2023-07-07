@@ -7,6 +7,7 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Display;
+import org.bukkit.entity.Display.Billboard;
 import org.bukkit.entity.Display.Brightness;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
@@ -39,8 +40,10 @@ import java.util.Optional;
 public class ItemProjector extends ConnectedBlock implements ItemHolderBlock, PowerAnimatedBlock {
     private static final Brightness BRIGHTNESS_ON = new Brightness(15, 0);
     private static final Brightness BRIGHTNESS_OFF = new Brightness(3, 0);
-    private final Vector3f mainDisplaySize = new Vector3f(0.6F, 0.6F, 0.6F);
-    private final Vector3f itemDisplaySize = new Vector3f(0.5F);
+    private final Vector3f mainDisplaySize = new Vector3f(0.8F, 0.5F, 0.8F);
+    private final Vector3f mainDisplayOffset = new Vector3f(0.0F, -0.25F, 0.0F);
+    private final Vector3f prismDisplaySize = new Vector3f(0.4F, 0.4F, 0.4F);
+    private final Vector3f itemDisplaySize = new Vector3f(0.4F);
     private final Vector3f itemDisplayInitialOffset = new Vector3f(0, 0.9F, 0);
     private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -settings.getConnectionRadius());
 
@@ -51,13 +54,19 @@ public class ItemProjector extends ConnectedBlock implements ItemHolderBlock, Po
     @Override
     protected void addDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
         displayGroup.addDisplay("main", new BlockDisplayBuilder(location.toCenterLocation())
+                .setBlockData(Material.LIGHT_GRAY_CONCRETE.createBlockData())
+                .setTransformation(Transformations.adjustedScaleOffset(mainDisplaySize, mainDisplayOffset))
+                .setBrightness(BRIGHTNESS_OFF.getBlockLight())
+                .build());
+        displayGroup.addDisplay("prism", new BlockDisplayBuilder(location.toCenterLocation())
                 .setBlockData(Material.CYAN_STAINED_GLASS.createBlockData())
-                .setTransformation(Transformations.adjustedRotateScale(mainDisplaySize, Transformations.GENERIC_ROTATION_ANGLES))
+                .setTransformation(Transformations.adjustedRotateScale(prismDisplaySize, Transformations.GENERIC_ROTATION_ANGLES))
                 .setBrightness(BRIGHTNESS_OFF.getBlockLight())
                 .build());
         displayGroup.addDisplay("item", new ItemDisplayBuilder(location.toCenterLocation())
                 .setTransformation(Transformations.unadjustedScaleTranslate(itemDisplaySize, itemDisplayInitialOffset))
                 .setViewRange(VIEW_RANGE_OFF)
+                .setBillboard(Billboard.VERTICAL)
                 .setBrightness(BRIGHTNESS_ON.getBlockLight())
                 .build());
     }
@@ -121,7 +130,7 @@ public class ItemProjector extends ConnectedBlock implements ItemHolderBlock, Po
 
     @Override
     public void onPoweredAnimation(final Location location, final boolean powered) {
-        final Optional<Display> mainDisplay = getDisplay(location, "main");
+        final Optional<Display> mainDisplay = getDisplay(location, "prism");
         if (mainDisplay.isEmpty()) {
             return;
         }
