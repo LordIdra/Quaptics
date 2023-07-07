@@ -21,11 +21,10 @@ import java.util.Optional;
 public class ConfigPanelAttribute {
     private static final float HIDDEN_VIEW_RANGE = 0;
     private static final float SHOWN_VIEW_RANGE = 1;
+    private static final Vector3f KEY_TRANSLATION = new Vector3f(-0.20F, 0.0F, 0.0F);
+    private static final Vector3f SUB_TRANSLATION = new Vector3f(0.05F, 0.0F, 0.0F);
+    private static final Vector3f VALUE_TRANSLATION = new Vector3f(0.25F, 0.0F, 0.0F);
     private static final Vector3f ADD_TRANSLATION = new Vector3f(0.45F, 0.0F, 0.0F);
-    private static final Vector3f KEY_TRANSLATION = new Vector3f(-0.175F, 0.0F, 0.0F);
-    private static final Vector3f SUB_TRANSLATION = new Vector3f(0.15F, 0.0F, 0.0F);
-    private static final Vector3f VALUE_TRANSLATION = new Vector3f(0.30F, 0.0F, 0.0F);
-    private static final Color BUTTON_BACKGROUND = Color.fromARGB(50, 0, 0, 0);
     private final Vector offset;
     private final TextDisplayId keyId;
     private final TextDisplayId subId;
@@ -44,7 +43,7 @@ public class ConfigPanelAttribute {
                 .setTransformation(Transformations.unadjustedRotateTranslateScale(displaySize, rotation, SUB_TRANSLATION))
                 .setBrightness(15)
                 .setText(ChatColors.color("&c-"))
-                .setBackgroundColor(BUTTON_BACKGROUND)
+                .setBackgroundColor(Color.fromARGB(0, 0, 0, 0))
                 .build().getUniqueId());
         this.valueId = new TextDisplayId(new TextDisplayBuilder(location.clone().add(offset))
                 .setTransformation(Transformations.unadjustedRotateTranslateScale(displaySize, rotation, VALUE_TRANSLATION))
@@ -55,7 +54,7 @@ public class ConfigPanelAttribute {
                 .setTransformation(Transformations.unadjustedRotateTranslateScale(displaySize, rotation, ADD_TRANSLATION))
                 .setBrightness(15)
                 .setText(ChatColors.color("&a+"))
-                .setBackgroundColor(BUTTON_BACKGROUND)
+                .setBackgroundColor(Color.fromARGB(0, 0, 0, 0))
                 .build().getUniqueId());
         this.offset = offset;
         saveData();
