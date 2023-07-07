@@ -33,25 +33,25 @@ public class ConfigPanelAttribute {
 
     public ConfigPanelAttribute(@NotNull final String key, final @NotNull Location location, final Vector offset, final Vector3f rotation, final Vector3f displaySize) {
         this.keyId = new TextDisplayId(new TextDisplayBuilder(location.clone().add(offset))
-                .setTransformation(Transformations.unadjustedTranslateRotateScale(displaySize, rotation, keyTranslation))
+                .setTransformation(Transformations.unadjustedRotateTranslateScale(displaySize, rotation, keyTranslation))
                 .setText(ChatColors.color(key))
                 .setBrightness(15)
                 .setAlignment(TextAlignment.LEFT)
                 .setBackgroundColor(Color.fromARGB(0, 0, 0, 0))
                 .build().getUniqueId());
         this.subId = new TextDisplayId(new TextDisplayBuilder(location.clone().add(offset))
-                .setTransformation(Transformations.unadjustedTranslateRotateScale(displaySize, rotation, subTranslation))
+                .setTransformation(Transformations.unadjustedRotateTranslateScale(displaySize, rotation, subTranslation))
                 .setBrightness(15)
                 .setText(ChatColors.color("&c-"))
                 .setBackgroundColor(Color.fromARGB(0, 0, 0, 0))
                 .build().getUniqueId());
         this.valueId = new TextDisplayId(new TextDisplayBuilder(location.clone().add(offset))
-                .setTransformation(Transformations.unadjustedTranslateRotateScale(displaySize, rotation, valueTranslation))
+                .setTransformation(Transformations.unadjustedRotateTranslateScale(displaySize, rotation, valueTranslation))
                 .setBrightness(15)
                 .setBackgroundColor(Color.fromARGB(0, 0, 0, 0))
                 .build().getUniqueId());
         this.addId = new TextDisplayId(new TextDisplayBuilder(location.clone().add(offset))
-                .setTransformation(Transformations.unadjustedTranslateRotateScale(displaySize, rotation, addTranslation))
+                .setTransformation(Transformations.unadjustedRotateTranslateScale(displaySize, rotation, addTranslation))
                 .setBrightness(15)
                 .setText(ChatColors.color("&a+"))
                 .setBackgroundColor(Color.fromARGB(0, 0, 0, 0))
