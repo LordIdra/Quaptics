@@ -83,6 +83,6 @@ public class LaunchpadConfigPanel extends ConfigPanel {
     @SuppressWarnings("MagicNumber")
     @Override
     protected Vector getOffset() {
-        return new Vector(0.0, 0.3, 0.0);
+        return new Vector(0.0, 0.2, 0.0);
     }
 }

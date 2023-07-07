@@ -21,7 +21,7 @@ public class ConfigPanelBuilder {
     public ConfigPanelBuilder(final ConnectionGroupId groupId, final Location location, final float size, final float rotationY) {
         this.groupId = groupId;
         this.displaySize = new Vector3f(size, size, size);
-        this.displayRotation = new Vector3f(0, -rotationY, 0);
+        this.displayRotation = new Vector3f(0, rotationY+180, 0);
         this.attributeSpacing = new Vector(0, size/3.5, 0);
         this.location = location;
         this.offset = new Vector();

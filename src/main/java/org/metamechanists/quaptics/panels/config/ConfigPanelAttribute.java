@@ -38,6 +38,7 @@ public class ConfigPanelAttribute {
     private final TextDisplayId addId;
     private final InteractionId addButtonId;
 
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     public ConfigPanelAttribute(final ConnectionGroupId groupId, @NotNull final String key,
                                 final @NotNull Location location, final Vector offset, final Vector3f rotation, final Vector3f displaySize) {
         this.keyId = new TextDisplayId(new TextDisplayBuilder(location.clone().add(offset))
@@ -65,11 +66,11 @@ public class ConfigPanelAttribute {
                 .setBackgroundColor(Color.fromARGB(0, 0, 0, 0))
                 .build().getUniqueId());
 
-        final Interaction subButton = new InteractionBuilder(location.clone().add(offset))
+        final Interaction subButton = new InteractionBuilder(getAdd().get().getLocation().subtract(new Vector(BUTTON_SIZE/2, BUTTON_SIZE/2, BUTTON_SIZE/2)))
                 .setWidth(BUTTON_SIZE)
                 .setHeight(BUTTON_SIZE)
                 .build();
-        final Interaction addButton = new InteractionBuilder(location.clone().add(offset))
+        final Interaction addButton = new InteractionBuilder(getSub().get().getLocation().subtract(new Vector(BUTTON_SIZE/2, BUTTON_SIZE/2, BUTTON_SIZE/2)))
                 .setWidth(BUTTON_SIZE)
                 .setHeight(BUTTON_SIZE)
                 .build();
