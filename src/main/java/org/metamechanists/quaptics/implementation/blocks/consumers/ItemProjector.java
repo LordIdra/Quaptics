@@ -110,6 +110,7 @@ public class ItemProjector extends ConnectedBlock implements ItemHolderBlock, Po
         final Optional<ConfigPanelId> panelId = ConfigPanelBlock.getPanelId(location);
         final Optional<ConfigPanelContainer> panel = panelId.isPresent() ? panelId.get().get() : Optional.empty();
         panel.ifPresent(ConfigPanelContainer::remove);
+        ItemHolderBlock.getStack(location).ifPresent(stack -> location.getWorld().dropItem(location, stack));
     }
 
     @Override

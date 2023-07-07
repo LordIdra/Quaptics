@@ -81,6 +81,6 @@ public class ItemProjectorConfigPanel extends ConfigPanel {
     @SuppressWarnings("MagicNumber")
     @Override
     protected Vector getOffset() {
-        return new Vector(0.0, -0.1, 0.0);
+        return new Vector(0.0, -0.2, 0.0);
     }
 }
