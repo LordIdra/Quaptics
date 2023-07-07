@@ -22,7 +22,7 @@ public abstract class ConfigPanel {
     }
 
     public void changeLocation(final @NotNull Location location) {
-        container.changeLocation(location.clone().add(getOffset()));
+        container.changeLocation(location.clone().toCenterLocation().add(getOffset()));
     }
 
     public boolean isPanelHidden() {
