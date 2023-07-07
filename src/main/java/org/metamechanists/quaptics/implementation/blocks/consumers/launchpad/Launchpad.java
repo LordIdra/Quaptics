@@ -126,9 +126,9 @@ public class Launchpad extends ConnectedBlock implements ConfigPanelBlock, Power
             return;
         }
 
-        velocity.get().setX(Math.pow(velocity.get().getX(), VELOCITY_POWER));
-        velocity.get().setY(Math.pow(velocity.get().getY(), VELOCITY_POWER));
-        velocity.get().setZ(Math.pow(velocity.get().getZ(), VELOCITY_POWER));
+        velocity.get().setX(calculateFinalVelocity(velocity.get().getX()));
+        velocity.get().setY(calculateFinalVelocity(velocity.get().getY()));
+        velocity.get().setZ(calculateFinalVelocity(velocity.get().getZ()));
 
         velocity.get().multiply(1.0/VELOCITY_DIVISOR);
 
@@ -138,5 +138,12 @@ public class Launchpad extends ConnectedBlock implements ConfigPanelBlock, Power
     @Override
     public void onPoweredAnimation(final Location location, final boolean powered) {
         getDisplay(location, "main").ifPresent(value -> value.setBrightness(powered ? BRIGHTNESS_ON : BRIGHTNESS_OFF));
+    }
+
+    private static double calculateFinalVelocity(final double velocity) {
+        return velocity >= 0
+                ? Math.pow(velocity, VELOCITY_POWER)
+                : -Math.pow(Math.abs(velocity), VELOCITY_POWER);
+
     }
 }
