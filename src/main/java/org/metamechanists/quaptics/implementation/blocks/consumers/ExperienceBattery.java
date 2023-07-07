@@ -26,7 +26,7 @@ import org.metamechanists.quaptics.implementation.blocks.attachments.PowerLossBl
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
 import org.metamechanists.quaptics.panels.info.BlockInfoPanel;
 import org.metamechanists.quaptics.panels.info.InfoPanelContainer;
-import org.metamechanists.quaptics.panels.info.implementation.CapacitorInfoPanel;
+import org.metamechanists.quaptics.panels.info.implementation.ExperienceBatteryInfoPanel;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Transformations;
@@ -70,7 +70,7 @@ public class ExperienceBattery extends ConnectedBlock implements InfoPanelBlock,
 
     @Override
     public BlockInfoPanel createPanel(final InfoPanelId panelId, final ConnectionGroupId groupId) {
-        return new CapacitorInfoPanel(panelId, groupId);
+        return new ExperienceBatteryInfoPanel(panelId, groupId);
     }
 
     @Override
@@ -79,7 +79,7 @@ public class ExperienceBattery extends ConnectedBlock implements InfoPanelBlock,
         super.onPlace(event);
         final Location location = event.getBlock().getLocation();
         final Optional<ConnectionGroup> optionalGroup = getGroup(location);
-        optionalGroup.ifPresent(group -> InfoPanelBlock.setPanelId(location, new CapacitorInfoPanel(location, group.getId()).getId()));
+        optionalGroup.ifPresent(group -> InfoPanelBlock.setPanelId(location, new ExperienceBatteryInfoPanel(location, group.getId()).getId()));
     }
 
     @Override
@@ -97,14 +97,9 @@ public class ExperienceBattery extends ConnectedBlock implements InfoPanelBlock,
             return;
         }
 
-        if (player.isSneaking()) {
-            BlockStorageAPI.set(location, Keys.BS_CHARGING, false);
-            BlockStorageAPI.set(location, Keys.BS_DISCHARGING, true);
-            return;
-        }
-
-        BlockStorageAPI.set(location, Keys.BS_CHARGING, true);
-        BlockStorageAPI.set(location, Keys.BS_DISCHARGING, false);
+        BlockStorageAPI.set(location, Keys.BS_PLAYER, player.getUniqueId());
+        BlockStorageAPI.set(location, Keys.BS_CHARGING, !player.isSneaking());
+        BlockStorageAPI.set(location, Keys.BS_DISCHARGING, player.isSneaking());
     }
 
     @Override
@@ -192,15 +187,15 @@ public class ExperienceBattery extends ConnectedBlock implements InfoPanelBlock,
         BlockStorageAPI.set(location.get(), Keys.BS_POWERED, inputLink.isPresent() && settings.isOperational(inputLink.get()));
     }
 
-    private Matrix4f getConcreteTransformationMatrix(final double charge) {
+    private Matrix4f getConcreteTransformationMatrix(final double experience) {
         return Transformations.adjustedRotateScale(
-                new Vector3f(maxConcreteDisplaySize).mul((float)(charge/settings.getCapacity())),
+                new Vector3f(maxConcreteDisplaySize).mul((float)(experience/settings.getExperienceCapacity())),
                 Transformations.GENERIC_ROTATION_ANGLES);
     }
 
     private void updateConcreteTransformation(final Location location) {
-        final double charge = BlockStorageAPI.getDouble(location, Keys.BS_CHARGE);
+        final double experience = BlockStorageAPI.getDouble(location, Keys.BS_EXPERIENCE);
         final Optional<Display> concreteDisplay = getDisplay(location, "concrete");
-        concreteDisplay.ifPresent(display -> display.setTransformationMatrix(getConcreteTransformationMatrix(charge)));
+        concreteDisplay.ifPresent(display -> display.setTransformationMatrix(getConcreteTransformationMatrix(experience)));
     }
 }
