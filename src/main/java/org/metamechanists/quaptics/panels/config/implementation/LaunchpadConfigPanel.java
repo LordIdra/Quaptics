@@ -50,7 +50,7 @@ public class LaunchpadConfigPanel extends ConfigPanel {
                 "velocityY".equals(name) ? increment : 0,
                 "velocityZ".equals(name) ? increment : 0));
 
-        Utils.clampToRange(velocity.get(), Launchpad.MAX_VELOCITY, -Launchpad.MAX_VELOCITY);
+        Utils.clampToRange(velocity.get(), -Launchpad.MAX_VELOCITY, Launchpad.MAX_VELOCITY);
         BlockStorageAPI.set(location, Keys.BS_VELOCITY, velocity.get());
         update();
     }

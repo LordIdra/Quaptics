@@ -24,6 +24,7 @@ import java.util.Optional;
 
 public class ConfigPanelAttribute {
     private static final float BUTTON_SIZE = 0.08F;
+    private static final Vector BUTTON_ADJUSTMENT = new Vector(BUTTON_SIZE/2, BUTTON_SIZE/2, BUTTON_SIZE/2);
     private static final float HIDDEN_VIEW_RANGE = 0;
     private static final float SHOWN_VIEW_RANGE = 1;
     private static final Vector3f KEY_TRANSLATION = new Vector3f(-0.20F, 0.0F, 0.0F);
@@ -38,9 +39,11 @@ public class ConfigPanelAttribute {
     private final TextDisplayId addId;
     private final InteractionId addButtonId;
 
-    @SuppressWarnings("OptionalGetWithoutIsPresent")
     public ConfigPanelAttribute(final ConnectionGroupId groupId, @NotNull final String name, @NotNull final String key,
-                                final @NotNull Location location, final Vector offset, final Vector3f rotation, final Vector3f displaySize) {
+                                final @NotNull Location location, final Vector offset, final @NotNull Vector3f rotation, final Vector3f displaySize) {
+        final Vector relativeSubButtonTranslation = new Vector(0.07, 0, 0).add(BUTTON_ADJUSTMENT).rotateAroundY(rotation.y);
+        final Vector relativeAddButtonTranslation = new Vector(0.43, 0, 0).add(BUTTON_ADJUSTMENT).rotateAroundY(rotation.y);
+
         this.keyId = new TextDisplayId(new TextDisplayBuilder(location.clone().add(offset))
                 .setTransformation(Transformations.unadjustedRotateTranslateScale(displaySize, rotation, KEY_TRANSLATION))
                 .setText(ChatColors.color(key))
@@ -66,17 +69,11 @@ public class ConfigPanelAttribute {
                 .setBackgroundColor(Color.fromARGB(0, 0, 0, 0))
                 .build().getUniqueId());
 
-        final Interaction subButton = new InteractionBuilder(getAdd().get().getLocation().clone().add(
-                new Vector(0.07, 0, 0)
-                        .add(new Vector(BUTTON_SIZE/2, BUTTON_SIZE/2, BUTTON_SIZE/2))
-                        .rotateAroundY(rotation.y)))
+        final Interaction subButton = new InteractionBuilder(location.clone().add(offset).add(relativeSubButtonTranslation))
                 .setWidth(BUTTON_SIZE)
                 .setHeight(BUTTON_SIZE)
                 .build();
-        final Interaction addButton = new InteractionBuilder(getSub().get().getLocation().clone().add(
-                new Vector(0.43, 0, 0)
-                        .add(new Vector(BUTTON_SIZE/2, BUTTON_SIZE/2, BUTTON_SIZE/2))
-                        .rotateAroundY(rotation.y)))
+        final Interaction addButton = new InteractionBuilder(location.clone().add(offset).add(relativeAddButtonTranslation))
                 .setWidth(BUTTON_SIZE)
                 .setHeight(BUTTON_SIZE)
                 .build();
