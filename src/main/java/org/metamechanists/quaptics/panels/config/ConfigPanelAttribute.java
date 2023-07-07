@@ -21,10 +21,11 @@ import java.util.Optional;
 public class ConfigPanelAttribute {
     private static final float HIDDEN_VIEW_RANGE = 0;
     private static final float SHOWN_VIEW_RANGE = 1;
-    private static final Vector3f keyTranslation = new Vector3f(-0.4F, 0.0F, 0.0F);
-    private static final Vector3f subTranslation = new Vector3f(-0.05F, 0.0F, 0.0F);
-    private static final Vector3f valueTranslation = new Vector3f(0.20F, 0.0F, 0.0F);
-    private static final Vector3f addTranslation = new Vector3f(0.45F, 0.0F, 0.0F);
+    private static final Vector3f ADD_TRANSLATION = new Vector3f(0.45F, 0.0F, 0.0F);
+    private static final Vector3f KEY_TRANSLATION = new Vector3f(-0.175F, 0.0F, 0.0F);
+    private static final Vector3f SUB_TRANSLATION = new Vector3f(0.15F, 0.0F, 0.0F);
+    private static final Vector3f VALUE_TRANSLATION = new Vector3f(0.30F, 0.0F, 0.0F);
+    private static final Color BUTTON_BACKGROUND = Color.fromARGB(50, 0, 0, 0);
     private final Vector offset;
     private final TextDisplayId keyId;
     private final TextDisplayId subId;
@@ -33,28 +34,28 @@ public class ConfigPanelAttribute {
 
     public ConfigPanelAttribute(@NotNull final String key, final @NotNull Location location, final Vector offset, final Vector3f rotation, final Vector3f displaySize) {
         this.keyId = new TextDisplayId(new TextDisplayBuilder(location.clone().add(offset))
-                .setTransformation(Transformations.unadjustedRotateTranslateScale(displaySize, rotation, keyTranslation))
+                .setTransformation(Transformations.unadjustedRotateTranslateScale(displaySize, rotation, KEY_TRANSLATION))
                 .setText(ChatColors.color(key))
                 .setBrightness(15)
                 .setAlignment(TextAlignment.RIGHT)
                 .setBackgroundColor(Color.fromARGB(0, 0, 0, 0))
                 .build().getUniqueId());
         this.subId = new TextDisplayId(new TextDisplayBuilder(location.clone().add(offset))
-                .setTransformation(Transformations.unadjustedRotateTranslateScale(displaySize, rotation, subTranslation))
+                .setTransformation(Transformations.unadjustedRotateTranslateScale(displaySize, rotation, SUB_TRANSLATION))
                 .setBrightness(15)
                 .setText(ChatColors.color("&c-"))
-                .setBackgroundColor(Color.fromARGB(0, 0, 0, 0))
+                .setBackgroundColor(BUTTON_BACKGROUND)
                 .build().getUniqueId());
         this.valueId = new TextDisplayId(new TextDisplayBuilder(location.clone().add(offset))
-                .setTransformation(Transformations.unadjustedRotateTranslateScale(displaySize, rotation, valueTranslation))
+                .setTransformation(Transformations.unadjustedRotateTranslateScale(displaySize, rotation, VALUE_TRANSLATION))
                 .setBrightness(15)
                 .setBackgroundColor(Color.fromARGB(0, 0, 0, 0))
                 .build().getUniqueId());
         this.addId = new TextDisplayId(new TextDisplayBuilder(location.clone().add(offset))
-                .setTransformation(Transformations.unadjustedRotateTranslateScale(displaySize, rotation, addTranslation))
+                .setTransformation(Transformations.unadjustedRotateTranslateScale(displaySize, rotation, ADD_TRANSLATION))
                 .setBrightness(15)
                 .setText(ChatColors.color("&a+"))
-                .setBackgroundColor(Color.fromARGB(0, 0, 0, 0))
+                .setBackgroundColor(BUTTON_BACKGROUND)
                 .build().getUniqueId());
         this.offset = offset;
         saveData();

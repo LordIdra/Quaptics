@@ -10,7 +10,7 @@ import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import java.util.Optional;
 
 public abstract class BlockConfigPanel extends ConfigPanel {
-    protected static final float SIZE = 0.40F;
+    protected static final float SIZE = 0.3F;
     private final ConnectionGroupId groupId;
 
     protected BlockConfigPanel(@NotNull final Location location, final ConnectionGroupId groupId, final float rotationY) {
