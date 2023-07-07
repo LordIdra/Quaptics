@@ -6,6 +6,7 @@ import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.util.Vector;
 import org.jetbrains.annotations.Nullable;
 import org.metamechanists.quaptics.utils.id.CustomId;
 import org.metamechanists.quaptics.utils.id.complex.ConfigPanelId;
@@ -15,6 +16,7 @@ import org.metamechanists.quaptics.utils.id.simple.DisplayGroupId;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 @UtilityClass
 public class BlockStorageAPI {
@@ -52,6 +54,17 @@ public class BlockStorageAPI {
     public void set(final Location location, final String key, final double value) {
         set(location, key, Objects.toString(value));
     }
+    public void set(final Location location, final String key, final @Nullable Vector value) {
+        if (value == null) {
+            removeData(location, key + "x");
+            removeData(location, key + "y");
+            removeData(location, key + "z");
+            return;
+        }
+        set(location, key + "x", value.getX());
+        set(location, key + "y", value.getY());
+        set(location, key + "z", value.getZ());
+    }
     public void set(final Location location, final String key, final @Nullable UUID value) {
         if (value == null) {
             removeData(location, key);
@@ -80,15 +93,20 @@ public class BlockStorageAPI {
     public boolean getBoolean(final Location location, final String key) {
         return "true".equals(getString(location, key));
     }
+    public int getInt(final Location location, final String key) {
+        return hasData(location, key)
+                ? Integer.parseInt(getString(location, key))
+                : 0;
+    }
     public double getDouble(final Location location, final String key) {
         return hasData(location, key)
                 ? Double.parseDouble(getString(location, key))
                 : 0;
     }
-    public int getInt(final Location location, final String key) {
-        return hasData(location, key)
-                ? Integer.parseInt(getString(location, key))
-                : 0;
+    public Optional<Vector> getVector(final Location location, final String key) {
+        return Stream.of("x", "y", "z").allMatch(uuid -> hasData(location, key + uuid))
+                ? Optional.of(new Vector(getDouble(location, key + "x"), getDouble(location, key + "y"), getDouble(location, key + "z")))
+                : Optional.empty();
     }
     public Optional<UUID> getUuid(final Location location, final String key) {
         return hasData(location, key)

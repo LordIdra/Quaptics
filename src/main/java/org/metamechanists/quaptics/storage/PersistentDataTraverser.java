@@ -9,22 +9,24 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.metamechanists.quaptics.Quaptics;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
+import org.metamechanists.quaptics.utils.id.CustomId;
 import org.metamechanists.quaptics.utils.id.complex.ConfigPanelAttributeId;
-import org.metamechanists.quaptics.utils.id.complex.DirectBeamId;
-import org.metamechanists.quaptics.utils.id.simple.BlockDisplayId;
+import org.metamechanists.quaptics.utils.id.complex.ConfigPanelId;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionPointId;
-import org.metamechanists.quaptics.utils.id.CustomId;
-import org.metamechanists.quaptics.utils.id.simple.DisplayGroupId;
-import org.metamechanists.quaptics.utils.id.simple.InteractionId;
-import org.metamechanists.quaptics.utils.id.complex.LinkId;
+import org.metamechanists.quaptics.utils.id.complex.DirectBeamId;
 import org.metamechanists.quaptics.utils.id.complex.InfoPanelAttributeId;
 import org.metamechanists.quaptics.utils.id.complex.InfoPanelId;
+import org.metamechanists.quaptics.utils.id.complex.LinkId;
+import org.metamechanists.quaptics.utils.id.simple.BlockDisplayId;
+import org.metamechanists.quaptics.utils.id.simple.DisplayGroupId;
+import org.metamechanists.quaptics.utils.id.simple.InteractionId;
 import org.metamechanists.quaptics.utils.id.simple.TextDisplayId;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.IntStream;
 
@@ -35,6 +37,10 @@ public class PersistentDataTraverser {
 
     public PersistentDataTraverser(@NotNull final CustomId id) {
         this.persistentDataHolder = Bukkit.getEntity(id.getUUID());
+    }
+
+    public PersistentDataTraverser(@NotNull final UUID id) {
+        this.persistentDataHolder = Bukkit.getEntity(id);
     }
 
     private static @NotNull NamespacedKey getKey(@NotNull final String key) {
@@ -138,9 +144,13 @@ public class PersistentDataTraverser {
         final String uuid = getString(key);
         return uuid == null ? null : new ConfigPanelAttributeId(uuid);
     }
-    public @Nullable InfoPanelId getPanelId(@NotNull final String key) {
+    public @Nullable InfoPanelId getInfoPanelId(@NotNull final String key) {
         final String uuid = getString(key);
         return uuid == null ? null : new InfoPanelId(uuid);
+    }
+    public @Nullable ConfigPanelId getConfigPanelId(@NotNull final String key) {
+        final String uuid = getString(key);
+        return uuid == null ? null : new ConfigPanelId(uuid);
     }
     public @Nullable TextDisplayId getTextDisplayId(@NotNull final String key) {
         final String uuid = getString(key);

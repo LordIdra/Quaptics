@@ -3,7 +3,7 @@ package org.metamechanists.quaptics.implementation.blocks.attachments;
 import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
-import org.metamechanists.quaptics.panels.config.BlockConfigPanel;
+import org.metamechanists.quaptics.panels.config.ConfigPanel;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.id.complex.ConfigPanelId;
@@ -21,14 +21,19 @@ public interface ConfigPanelBlock {
         BlockStorageAPI.set(location, Keys.BS_PANEL_ID, id);
     }
 
-    default void updatePanel(@NotNull final ConnectionGroup group) {
+    default void interact(@NotNull final ConnectionGroup group, final String name, final String type) {
         final Optional<Location> location = group.getLocation();
         if (location.isEmpty()) {
             return;
         }
 
-        final Optional<ConfigPanelId> id = getPanelId(location.get());
-        id.ifPresent(panelId -> createPanel(panelId, group.getId()).update());
+        final Optional<ConfigPanelId> panelId = getPanelId(location.get());
+        if (panelId.isEmpty()) {
+            return;
+        }
+
+        final ConfigPanel panel = createPanel(panelId.get(), group.getId());
+        panel.interact(location.get(), name, type);
     }
 
     default void setPanelHidden(@NotNull final ConnectionGroup group, final boolean hidden) {
@@ -41,5 +46,5 @@ public interface ConfigPanelBlock {
         id.ifPresent(panelId -> createPanel(panelId, group.getId()).setPanelHidden(hidden));
     }
 
-    BlockConfigPanel createPanel(final ConfigPanelId panelId, final ConnectionGroupId groupId);
+    ConfigPanel createPanel(final ConfigPanelId panelId, final ConnectionGroupId groupId);
 }

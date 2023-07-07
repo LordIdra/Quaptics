@@ -182,9 +182,23 @@ public class Lore {
         return PHASE_SYMBOL + "&7Phase &e" + Objects.toString(phase) + PHASE_SUFFIX;
     }
 
-    public String progressBar(final double filled, final double max, final String filledColor, final String emptyColor) {
+    public String progressBar(final double value, final double max, final String filledColor, final String emptyColor) {
         final String base = "¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦";
-        final int divideAt = (int) (filled/(max/20));
+        final int divideAt = (int) (value/(max/20));
         return filledColor + base.substring(0, divideAt) + emptyColor + base.substring(divideAt);
+    }
+    public String twoWayProgressBar(final double value, final double max, final String negativeColor, final String positiveColor, final String emptyColor) {
+        int divideAt = (int) (value/(max/10));
+        String firstHalf = "¦¦¦¦¦¦¦¦¦¦";
+        String secondHalf = "¦¦¦¦¦¦¦¦¦¦";
+
+        if (divideAt < 0) {
+            divideAt += 10;
+            firstHalf = firstHalf.substring(0, divideAt) + negativeColor + firstHalf.substring(divideAt, 9);
+        } else if(divideAt > 0) {
+            secondHalf = secondHalf.substring(0, divideAt) + positiveColor + secondHalf.substring(divideAt, 9);
+        }
+
+        return firstHalf + secondHalf;
     }
 }

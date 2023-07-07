@@ -21,9 +21,11 @@ import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.implementation.blocks.attachments.ConfigPanelBlock;
 import org.metamechanists.quaptics.implementation.blocks.attachments.PowerAnimatedBlock;
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
-import org.metamechanists.quaptics.panels.config.BlockConfigPanel;
+import org.metamechanists.quaptics.panels.config.ConfigPanel;
 import org.metamechanists.quaptics.panels.config.ConfigPanelContainer;
 import org.metamechanists.quaptics.panels.config.implementation.LaunchpadConfigPanel;
+import org.metamechanists.quaptics.utils.BlockStorageAPI;
+import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConfigPanelId;
@@ -35,6 +37,8 @@ import java.util.Optional;
 
 public class Launchpad extends ConnectedBlock implements ConfigPanelBlock, PowerAnimatedBlock {
     private static final Vector RELATIVE_PANEL_LOCATION = new Vector(0, 0, -0.51);
+    private static final Vector INITIAL_VELOCITY = new Vector(2, 2, 0);
+    public static final Vector MAX_VELOCITY = new Vector(10, 10, 10);
     private static final Brightness BRIGHTNESS_ON = new Brightness(15, 0);
     private static final Brightness BRIGHTNESS_OFF = new Brightness(4, 0);
     private static final Vector3f mainDisplaySize = new Vector3f(0.8F, 0.1F, 0.8F);
@@ -52,6 +56,7 @@ public class Launchpad extends ConnectedBlock implements ConfigPanelBlock, Power
                 .setTransformation(Transformations.adjustedScaleOffset(mainDisplaySize, mainDisplayOffset))
                 .setBrightness(BRIGHTNESS_OFF.getBlockLight())
                 .build());
+        BlockStorageAPI.set(location, Keys.BS_VELOCITY, INITIAL_VELOCITY);
     }
 
     @Override
@@ -86,7 +91,7 @@ public class Launchpad extends ConnectedBlock implements ConfigPanelBlock, Power
     }
 
     @Override
-    public BlockConfigPanel createPanel(final ConfigPanelId panelId, final ConnectionGroupId groupId) {
+    public ConfigPanel createPanel(final ConfigPanelId panelId, final ConnectionGroupId groupId) {
         return new LaunchpadConfigPanel(panelId, groupId);
     }
 
@@ -114,7 +119,7 @@ public class Launchpad extends ConnectedBlock implements ConfigPanelBlock, Power
             return;
         }
 
-        player.setVelocity(new Vector(10, 10, 0));
+        BlockStorageAPI.getVector(location, Keys.BS_VELOCITY).ifPresent(player::setVelocity);
     }
 
     @Override

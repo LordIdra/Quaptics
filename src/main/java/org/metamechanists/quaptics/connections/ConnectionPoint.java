@@ -70,7 +70,7 @@ public class ConnectionPoint {
         this.groupId = traverser.getConnectionGroupId("groupId");
         this.blockDisplayId = traverser.getBlockDisplayId("blockDisplayId");
         this.interactionId = traverser.getInteractionId("interactionId");
-        this.panelId = traverser.getPanelId("panelId");
+        this.panelId = traverser.getInfoPanelId("panelId");
         this.linkId = traverser.getLinkId("linkId");
         this.name = traverser.getString("name");
     }
