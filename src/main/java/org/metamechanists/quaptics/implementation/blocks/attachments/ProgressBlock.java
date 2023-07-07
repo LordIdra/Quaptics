@@ -4,6 +4,7 @@ import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.items.Lore;
+import org.metamechanists.quaptics.storage.QuapticTicker;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
 
@@ -14,6 +15,13 @@ public interface ProgressBlock {
 
     static double getProgress(final Location location) {
         return BlockStorageAPI.getDouble(location, Keys.BS_PROGRESS);
+    }
+
+    static void updateProgress(@NotNull final Location location, final double maxTime) {
+        double progress = ProgressBlock.getProgress(location);
+        progress += QuapticTicker.INTERVAL_TICKS;
+        progress = Math.min(progress, maxTime * QuapticTicker.QUAPTIC_TICKS_PER_SECOND);
+        ProgressBlock.setProgress(location, progress);
     }
 
     static String progressBar(final @NotNull ConnectionGroup group) {

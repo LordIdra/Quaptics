@@ -26,7 +26,6 @@ import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
 import org.metamechanists.quaptics.panels.BlockPanel;
 import org.metamechanists.quaptics.panels.PanelContainer;
 import org.metamechanists.quaptics.panels.implementation.ProgressPanel;
-import org.metamechanists.quaptics.storage.QuapticTicker;
 import org.metamechanists.quaptics.utils.Language;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
@@ -125,11 +124,7 @@ public class DataStripper extends ConnectedBlock implements PanelBlock, ItemHold
             return;
         }
 
-        double progress = ProgressBlock.getProgress(location.get());
-        progress += QuapticTicker.INTERVAL_TICKS;
-        progress = Math.min(progress, settings.getTimePerItem());
-        ProgressBlock.setProgress(location.get(), progress);
-
+        ProgressBlock.updateProgress(location.get(), settings.getTimePerItem());
         updatePanel(group);
     }
 
