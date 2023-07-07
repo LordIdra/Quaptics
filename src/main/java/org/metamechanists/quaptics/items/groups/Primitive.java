@@ -129,8 +129,8 @@ public class Primitive {
 
     public final Settings EXPERIENCE_BATTERY_1_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
-            .displayRadius(0.3F)
-            .connectionRadius(0.5F)
+            .displayRadius(0.5F)
+            .connectionRadius(0.6F)
             .experienceCapacity(500)
             .experienceTransferRate(20)
             .build();
