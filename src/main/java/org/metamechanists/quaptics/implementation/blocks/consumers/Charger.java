@@ -140,7 +140,12 @@ public class Charger extends ConnectedBlock implements PanelBlock, ItemHolderBlo
             return false;
         }
 
-        return SlimefunItem.getByItem(stack) instanceof QuapticChargeableItem;
+        if (!(SlimefunItem.getByItem(stack) instanceof QuapticChargeableItem)) {
+            Language.sendLanguageMessage(player, "charger.not-chargeable");
+            return false;
+        }
+
+        return true;
     }
 
     @Override
