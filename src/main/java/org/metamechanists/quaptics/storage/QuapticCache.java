@@ -24,6 +24,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
+@SuppressWarnings("OverlyCoupledClass")
 @UtilityClass
 public class QuapticCache {
     private final Map<DirectBeamId, DirectBeam> directBeams = new ConcurrentHashMap<>();

@@ -3,7 +3,6 @@ package org.metamechanists.quaptics.utils.id.complex;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.TextDisplay;
 import org.metamechanists.quaptics.panels.config.ConfigPanelAttribute;
-import org.metamechanists.quaptics.panels.info.InfoPanelAttribute;
 import org.metamechanists.quaptics.storage.QuapticCache;
 import org.metamechanists.quaptics.utils.id.ComplexCustomId;
 import org.metamechanists.quaptics.utils.id.CustomId;
