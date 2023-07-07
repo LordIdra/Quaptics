@@ -12,7 +12,7 @@ import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.implementation.blocks.concentrators.SolarConcentrator;
 import org.metamechanists.quaptics.implementation.blocks.consumers.Charger;
 import org.metamechanists.quaptics.implementation.blocks.consumers.DataStripper;
-import org.metamechanists.quaptics.implementation.blocks.consumers.Launchpad;
+import org.metamechanists.quaptics.implementation.blocks.consumers.launchpad.Launchpad;
 import org.metamechanists.quaptics.implementation.blocks.consumers.MultiblockClicker;
 import org.metamechanists.quaptics.implementation.blocks.consumers.turrets.ModulatedTurret;
 import org.metamechanists.quaptics.implementation.blocks.manipulators.Capacitor;

@@ -41,8 +41,8 @@ public class ConfigPanelAttribute {
 
     public ConfigPanelAttribute(final ConnectionGroupId groupId, @NotNull final String name, @NotNull final String key,
                                 final @NotNull Location location, final Vector offset, final @NotNull Vector3f rotation, final Vector3f displaySize) {
-        final Vector relativeSubButtonTranslation = new Vector(0.07, 0, 0).add(BUTTON_ADJUSTMENT).rotateAroundY(rotation.y);
-        final Vector relativeAddButtonTranslation = new Vector(0.43, 0, 0).add(BUTTON_ADJUSTMENT).rotateAroundY(rotation.y);
+        final Vector relativeSubButtonTranslation = new Vector(0.07, 0, -0.03).add(BUTTON_ADJUSTMENT).rotateAroundY(rotation.y);
+        final Vector relativeAddButtonTranslation = new Vector(0.43, 0, -0.03).add(BUTTON_ADJUSTMENT).rotateAroundY(rotation.y);
 
         this.keyId = new TextDisplayId(new TextDisplayBuilder(location.clone().add(offset))
                 .setTransformation(Transformations.unadjustedRotateTranslateScale(displaySize, rotation, KEY_TRANSLATION))

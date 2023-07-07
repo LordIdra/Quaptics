@@ -1,4 +1,4 @@
-package org.metamechanists.quaptics.implementation.blocks.consumers;
+package org.metamechanists.quaptics.implementation.blocks.consumers.launchpad;
 
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
@@ -39,6 +39,8 @@ public class Launchpad extends ConnectedBlock implements ConfigPanelBlock, Power
     private static final Vector RELATIVE_PANEL_LOCATION = new Vector(0, 0, -0.51);
     private static final Vector INITIAL_VELOCITY = new Vector(-3, 1, 0);
     public static final float MAX_VELOCITY = 10;
+    private static final float VELOCITY_POWER = 10;
+    private static final float VELOCITY_DIVISOR = 10;
     private static final Brightness BRIGHTNESS_ON = new Brightness(15, 0);
     private static final Brightness BRIGHTNESS_OFF = new Brightness(4, 0);
     private static final Vector3f mainDisplaySize = new Vector3f(0.8F, 0.1F, 0.8F);
@@ -119,7 +121,18 @@ public class Launchpad extends ConnectedBlock implements ConfigPanelBlock, Power
             return;
         }
 
-        BlockStorageAPI.getVector(location, Keys.BS_VELOCITY).ifPresent(player::setVelocity);
+        final Optional<Vector> velocity = BlockStorageAPI.getVector(location, Keys.BS_VELOCITY);
+        if (velocity.isEmpty()) {
+            return;
+        }
+
+        velocity.get().setX(Math.pow(velocity.get().getX(), VELOCITY_POWER));
+        velocity.get().setY(Math.pow(velocity.get().getY(), VELOCITY_POWER));
+        velocity.get().setZ(Math.pow(velocity.get().getZ(), VELOCITY_POWER));
+
+        velocity.get().multiply(1.0/VELOCITY_DIVISOR);
+
+        player.setVelocity(velocity.get());
     }
 
     @Override

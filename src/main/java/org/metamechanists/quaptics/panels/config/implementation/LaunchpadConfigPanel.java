@@ -4,7 +4,7 @@ import org.bukkit.Location;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
-import org.metamechanists.quaptics.implementation.blocks.consumers.Launchpad;
+import org.metamechanists.quaptics.implementation.blocks.consumers.launchpad.Launchpad;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.panels.config.ConfigPanel;
 import org.metamechanists.quaptics.panels.config.ConfigPanelBuilder;

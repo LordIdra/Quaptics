@@ -8,7 +8,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.metamechanists.metalib.bstats.bukkit.Metrics;
-import org.metamechanists.quaptics.implementation.blocks.consumers.turrets.LaunchpadListener;
+import org.metamechanists.quaptics.implementation.blocks.consumers.launchpad.LaunchpadListener;
 import org.metamechanists.quaptics.panels.config.ConfigPanelListener;
 import org.metamechanists.quaptics.panels.info.implementation.PointInfoPanelListener;
 import org.metamechanists.quaptics.implementation.blocks.burnout.BurnoutManager;

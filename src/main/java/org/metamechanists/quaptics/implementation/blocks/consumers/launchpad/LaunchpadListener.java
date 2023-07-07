@@ -1,4 +1,4 @@
-package org.metamechanists.quaptics.implementation.blocks.consumers.turrets;
+package org.metamechanists.quaptics.implementation.blocks.consumers.launchpad;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -7,7 +7,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.jetbrains.annotations.NotNull;
-import org.metamechanists.quaptics.implementation.blocks.consumers.Launchpad;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 
 public class LaunchpadListener implements Listener {
