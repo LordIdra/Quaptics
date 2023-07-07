@@ -68,16 +68,26 @@ public interface ItemHolderBlock {
     default void interact(@NotNull final Location location, @NotNull final Player player) {
         final Optional<ItemStack> currentStack = removeItem(location);
         if (currentStack.isEmpty() || currentStack.get().getType().isEmpty()) {
-            final ItemStack newStack = player.getInventory().getItemInMainHand().clone();
+            final ItemStack oldStack = player.getInventory().getItemInMainHand().clone();
+            final ItemStack newStack = oldStack.clone();
+            newStack.setAmount(1);
             if (newStack.getType().isEmpty()) {
                 return;
             }
 
-            if (onInsert(newStack, player)) {
-                insertItem(location, newStack);
-                player.getInventory().setItemInMainHand(null);
+            if (!onInsert(newStack, player)) {
+                return;
             }
 
+            insertItem(location, newStack);
+
+            if (oldStack.getAmount() == 1) {
+                player.getInventory().setItemInMainHand(null);
+                return;
+            }
+
+            oldStack.clone().setAmount(oldStack.getAmount() - 1);
+            player.getInventory().setItemInMainHand(oldStack);
             return;
         }
 

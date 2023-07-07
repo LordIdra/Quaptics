@@ -138,11 +138,6 @@ public class DataStripper extends ConnectedBlock implements PanelBlock, ItemHold
 
     @Override
     public boolean onInsert(final @NotNull ItemStack stack, @NotNull final Player player) {
-        if (stack.getAmount() != 1) {
-            Language.sendLanguageMessage(player, "data-stripper.multiple-items");
-            return false;
-        }
-
         if (FORBIDDEN_BLOCKS.contains(stack.getType())) {
             Language.sendLanguageMessage(player, "data-stripper.disallowed-block");
             return false;
