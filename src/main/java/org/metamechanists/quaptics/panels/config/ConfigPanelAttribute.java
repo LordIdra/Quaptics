@@ -39,7 +39,7 @@ public class ConfigPanelAttribute {
     private final InteractionId addButtonId;
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
-    public ConfigPanelAttribute(final ConnectionGroupId groupId, @NotNull final String key,
+    public ConfigPanelAttribute(final ConnectionGroupId groupId, @NotNull final String name, @NotNull final String key,
                                 final @NotNull Location location, final Vector offset, final Vector3f rotation, final Vector3f displaySize) {
         this.keyId = new TextDisplayId(new TextDisplayBuilder(location.clone().add(offset))
                 .setTransformation(Transformations.unadjustedRotateTranslateScale(displaySize, rotation, KEY_TRANSLATION))
@@ -77,10 +77,12 @@ public class ConfigPanelAttribute {
 
         final PersistentDataTraverser subButtonTraverser = new PersistentDataTraverser(subButton.getUniqueId());
         subButtonTraverser.set("groupId", groupId);
+        subButtonTraverser.set("name", name);
         subButtonTraverser.set("type", "sub");
 
         final PersistentDataTraverser addButtonTraverser = new PersistentDataTraverser(addButton.getUniqueId());
         addButtonTraverser.set("groupId", groupId);
+        addButtonTraverser.set("name", name);
         addButtonTraverser.set("type", "sub");
 
         this.subButtonId = new InteractionId(subButton.getUniqueId());

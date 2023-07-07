@@ -28,7 +28,7 @@ public class ConfigPanelBuilder {
     }
 
     public ConfigPanelBuilder addAttribute(final String name, final String key) {
-        final ConfigPanelAttribute attribute = new ConfigPanelAttribute(groupId, key, location.clone(), offset.clone(), displayRotation, displaySize);
+        final ConfigPanelAttribute attribute = new ConfigPanelAttribute(groupId, name, key, location.clone(), offset.clone(), displayRotation, displaySize);
         attributes.put(name, attribute.getId());
         offset.add(attributeSpacing);
         return this;
