@@ -24,8 +24,8 @@ public class ConfigPanelBuilder {
         this.offset = new Vector();
     }
 
-    public ConfigPanelBuilder addAttribute(final String name) {
-        final ConfigPanelAttribute attribute = new ConfigPanelAttribute(location.clone(), offset.clone(), displayRotation, displaySize);
+    public ConfigPanelBuilder addAttribute(final String name, final String key) {
+        final ConfigPanelAttribute attribute = new ConfigPanelAttribute(key, location.clone(), offset.clone(), displayRotation, displaySize);
         attributes.put(name, attribute.getId());
         offset.add(attributeSpacing);
         return this;

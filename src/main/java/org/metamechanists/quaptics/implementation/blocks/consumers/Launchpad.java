@@ -37,8 +37,8 @@ public class Launchpad extends ConnectedBlock implements ConfigPanelBlock, Power
     private static final Vector RELATIVE_PANEL_LOCATION = new Vector(0, 0, 0.51);
     private static final Brightness BRIGHTNESS_ON = new Brightness(15, 0);
     private static final Brightness BRIGHTNESS_OFF = new Brightness(4, 0);
-    private static final Vector3f mainDisplaySize = new Vector3f(0.8F, 0.8F, 0.8F);
-    private static final Vector3f mainDisplayOffset = new Vector3f(0, 0.5F, 0);
+    private static final Vector3f mainDisplaySize = new Vector3f(0.8F, 0.1F, 0.8F);
+    private static final Vector3f mainDisplayOffset = new Vector3f(0, 0.51F, 0);
     private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -settings.getConnectionRadius());
 
     public Launchpad(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
@@ -50,6 +50,7 @@ public class Launchpad extends ConnectedBlock implements ConfigPanelBlock, Power
         displayGroup.addDisplay("main", new BlockDisplayBuilder(location.toCenterLocation())
                 .setBlockData(Material.CYAN_CONCRETE_POWDER.createBlockData())
                 .setTransformation(Transformations.adjustedScaleOffset(mainDisplaySize, mainDisplayOffset))
+                .setBrightness(BRIGHTNESS_OFF.getBlockLight())
                 .build());
     }
 

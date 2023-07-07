@@ -5,6 +5,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Display.Billboard;
 import org.bukkit.entity.Display.Brightness;
 import org.bukkit.entity.TextDisplay;
+import org.bukkit.entity.TextDisplay.TextAlignment;
 import org.joml.Matrix4f;
 
 @SuppressWarnings("unused")
@@ -16,6 +17,7 @@ public class TextDisplayBuilder {
     private Color glowColor;
     private Float viewRange;
     private Billboard billboard;
+    private TextAlignment alignment;
     private Color backgroundColor;
 
     public TextDisplayBuilder(final Location location) {
@@ -41,6 +43,9 @@ public class TextDisplayBuilder {
             }
             if (billboard != null) {
                 display.setBillboard(billboard);
+            }
+            if (alignment != null) {
+                display.setAlignment(alignment);
             }
             if (backgroundColor != null) {
                 display.setBackgroundColor(backgroundColor);
@@ -72,6 +77,10 @@ public class TextDisplayBuilder {
     }
     public TextDisplayBuilder setBillboard(final Billboard billboard) {
         this.billboard = billboard;
+        return this;
+    }
+    public TextDisplayBuilder setAlignment(final TextAlignment alignment) {
+        this.alignment = alignment;
         return this;
     }
     public TextDisplayBuilder setBackgroundColor(final Color backgroundColor) {
