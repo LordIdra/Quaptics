@@ -38,6 +38,9 @@ public class Groups {
     public final ItemGroup ADVANCED = new DummyItemGroup(Keys.ADVANCED,
             new CustomItemStack(Material.ORANGE_CONCRETE, Colors.ADVANCED.getFormattedColor() + "Advanced Components"));
 
+    public final ItemGroup TESTING = new DummyItemGroup(Keys.TESTING,
+            new CustomItemStack(Material.GRAY_CONCRETE, Colors.ADVANCED.getFormattedColor() + "Testing"));
+
     public void initialize() {
         final SlimefunAddon addon = Quaptics.getInstance();
         MAIN.addItemGroup(GUIDE);

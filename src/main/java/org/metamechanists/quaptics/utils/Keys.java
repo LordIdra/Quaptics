@@ -20,6 +20,7 @@ public class Keys {
     public final NamespacedKey BASIC = newKey("BASIC");
     public final NamespacedKey INTERMEDIATE = newKey("INTERMEDIATE");
     public final NamespacedKey ADVANCED = newKey("ADVANCED");
+    public final NamespacedKey TESTING = newKey("TESTING");
 
     public final NamespacedKey FACING = newKey("FACING");
     public final NamespacedKey SOURCE = newKey("SOURCE");

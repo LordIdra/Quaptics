@@ -35,7 +35,7 @@ public class Testing {
         final SlimefunAddon addon = Quaptics.getInstance();
 
         new OscillatingConcentrator(
-                Groups.PRIMITIVE,
+                Groups.TESTING,
                 OSCILLATING_CONCENTRATOR,
                 RecipeType.NULL,
                 new ItemStack[]{},
