@@ -26,6 +26,7 @@ import org.metamechanists.quaptics.panels.info.InfoPanelContainer;
 import org.metamechanists.quaptics.storage.QuapticTicker;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
+import org.metamechanists.quaptics.utils.Language;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.builders.ItemDisplayBuilder;
@@ -125,6 +126,8 @@ public class InfusionContainer extends ConnectedBlock implements ItemHolderBlock
             return;
         }
 
+        tickAnimation(location);
+
         if (PILLAR_LOCATIONS.stream().anyMatch(vector -> !isPillarPowered(location.clone().add(vector)))) {
             cancelCraft(location);
             return;
@@ -145,6 +148,7 @@ public class InfusionContainer extends ConnectedBlock implements ItemHolderBlock
             BlockStorageAPI.set(location, Keys.BS_CRAFT_IN_PROGRESS, true);
             return true;
         }
+        Language.sendLanguageMessage(player, "infuser.cannot-be-infused");
         return false;
     }
     @Override

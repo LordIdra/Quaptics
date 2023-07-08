@@ -11,6 +11,8 @@ multiblock-clicker.not-powered: "&cYou must power the multiblock clicker before 
 multiblock.block-name: "&7Block: &3{1}"
 multiblock.valid: "&aMultiblock constructed correctly!"
 
+infuser.cannot-be-infused: "&cThis item cannot be infused."
+
 charger.multiple-items: "&cYou can only insert one item at a time."
 charger.not-chargeable: "&cThis item cannot be charged."
 
