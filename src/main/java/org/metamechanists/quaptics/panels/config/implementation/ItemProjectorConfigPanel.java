@@ -54,7 +54,7 @@ public class ItemProjectorConfigPanel extends ConfigPanel {
         }
 
         if ("mode".equals(name)) {
-            double size = BlockStorageAPI.getDouble(location, Keys.BS_MODE);
+            int size = BlockStorageAPI.getInt(location, Keys.BS_MODE);
             size += "add".equals(type) ? 1 : -1;
             size = Utils.clampToRange(size, 0, ItemProjector.MAX_MODE);
             BlockStorageAPI.set(location, Keys.BS_MODE, size);

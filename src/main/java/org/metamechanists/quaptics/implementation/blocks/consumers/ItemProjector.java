@@ -46,7 +46,7 @@ public class ItemProjector extends ConnectedBlock implements ItemHolderBlock, Po
     private static final Vector RELATIVE_PANEL_LOCATION = new Vector(0, 0, -0.51);
     public static final double MAX_SIZE = 20;
     public static final double MAX_HEIGHT = 20;
-    public static final double MAX_MODE = 3;
+    public static final int MAX_MODE = 3;
     private static final double HEIGHT_MULTIPLY = 0.1;
     private static final double SIZE_MULTIPLY = 0.1;
     private static final Vector3f MAIN_DISPLAY_SIZE = new Vector3f(1.0F, 0.7F, 1.0F);

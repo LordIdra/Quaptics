@@ -27,6 +27,10 @@ public class Utils {
         return Math.max(Math.min(value, max), min);
     }
 
+    public int clampToRange(final int value, final int min, final int max) {
+        return Math.max(Math.min(value, max), min);
+    }
+
     public boolean equal(final double a, final double b) {
         return Math.abs(a - b) < FLOATING_POINT_THRESHOLD;
     }
