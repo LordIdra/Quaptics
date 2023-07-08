@@ -172,7 +172,7 @@ public class InfusionContainer extends ConnectedBlock implements ItemHolderBlock
     }
     @Override
     public void tickAnimation(@NotNull final Location centerLocation, final double timeSeconds) {
-        PILLAR_LOCATIONS.forEach(pillarLocation -> animatePillar(centerLocation, centerLocation.clone().add(PILLAR_1_LOCATION), timeSeconds));
+        PILLAR_LOCATIONS.forEach(pillarLocation -> animatePillar(centerLocation, centerLocation.clone().add(pillarLocation), timeSeconds));
         animateCenter(centerLocation, timeSeconds);
     }
 
