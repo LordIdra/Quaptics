@@ -53,11 +53,11 @@ public class MultiblockClicker extends ConnectedBlock {
         displayGroup.addDisplay("main", new BlockDisplayBuilder(location.toCenterLocation())
                 .setBlockData(Material.CYAN_CONCRETE.createBlockData())
                 .setTransformation(Transformations.adjustedScale(mainDisplaySize))
+                .setBrightness(Utils.BRIGHTNESS_OFF)
                 .build());
         displayGroup.addDisplay("attachment", new BlockDisplayBuilder(formatPointLocation(player, location, RELATIVE_PLATE_LOCATION))
                 .setBlockData(Material.WHITE_CONCRETE.createBlockData())
                 .setTransformation(Transformations.lookAlong(attachmentDisplaySize, player.getFacing().getDirection().toVector3f()))
-                        .setBrightness(Utils.BRIGHTNESS_OFF)
                 .build());
         BlockStorageAPI.set(location, Keys.BS_TICKS_SINCE_LAST_UPDATE, 0);
         BlockStorageAPI.set(location, Keys.BS_FACING, player.getFacing());
