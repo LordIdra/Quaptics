@@ -4,13 +4,10 @@ import com.destroystokyo.paper.ParticleBuilder;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
-import io.github.thebusybiscuit.slimefun4.core.handlers.BlockUseHandler;
-import lombok.Getter;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -38,23 +35,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
+public abstract class ConnectedBlock extends QuapticBlock {
     protected static final int VIEW_RANGE_ON = 1;
     protected static final int VIEW_RANGE_OFF = 0;
     private static final int BURNOUT_EXPLODE_VOLUME = 2;
     private static final float BURNOUT_EXPLODE_PITCH = 1.2F;
 
-    @Getter
-    protected final Settings settings;
-
     protected ConnectedBlock(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe,
                              final Settings settings) {
-        super(itemGroup, item, recipeType, recipe);
-        this.settings = settings;
-        addItemHandler(onRightClick());
+        super(itemGroup, item, recipeType, recipe, settings);
     }
 
     @Override
+    @OverridingMethodsMustInvokeSuper
     protected void onPlace(@NotNull final BlockPlaceEvent event) {
         final Location location = event.getBlock().getLocation();
         final Optional<DisplayGroupId> displayGroupId = getDisplayGroupId(location);
@@ -74,33 +67,20 @@ public abstract class ConnectedBlock extends DisplayGroupTickerBlock {
         getGroup(location).ifPresent(ConnectionGroup::remove);
     }
 
-    protected void onRightClick(@NotNull final Location location, @NotNull final Player player) {}
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    protected void onShiftRightClick(@NotNull final Location location, @NotNull final Player player) {
+        final Optional<ConnectionGroup> group = getGroup(location);
+        if (group.isEmpty()) {
+            return;
+        }
+
+        final boolean isAnyPanelHidden = group.get().getPointPanels().stream().anyMatch(PointInfoPanel::isPanelHidden);
+        group.get().getPointPanels().forEach(panel -> panel.setPanelHidden(!isAnyPanelHidden));
+    }
 
     private static void changePointLocation(final @NotNull ConnectionPointId pointId, @NotNull final Location newLocation) {
         pointId.get().ifPresent(point -> point.changeLocation(newLocation));
-    }
-
-    @NotNull
-    private BlockUseHandler onRightClick() {
-        return event -> {
-            final Block block = event.getClickedBlock().orElse(null);
-            if (block == null) {
-                return;
-            }
-
-            if (!event.getPlayer().isSneaking()) {
-                onRightClick(block.getLocation(), event.getPlayer());
-                return;
-            }
-
-            final Optional<ConnectionGroup> group = getGroup(block.getLocation());
-            if (group.isEmpty()) {
-                return;
-            }
-
-            final boolean isAnyPanelHidden = group.get().getPointPanels().stream().anyMatch(PointInfoPanel::isPanelHidden);
-            group.get().getPointPanels().forEach(panel -> panel.setPanelHidden(!isAnyPanelHidden));
-        };
     }
 
     public static Optional<ConnectionGroup> getGroup(final Location location) {

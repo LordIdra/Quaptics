@@ -8,6 +8,9 @@ targeting-wand.target-must-be-input: "&cYou can only link to an output point."
 multiblock-clicker.not-connected-to-multiblock: "&cNot connected to a multiblock."
 multiblock-clicker.not-powered: "&cYou must power the multiblock clicker before you can enable it."
 
+multiblock.block-name: "&7Block: &3{1}"
+multiblock.valid: "&aMultiblock constructed correctly!"
+
 charger.multiple-items: "&cYou can only insert one item at a time."
 charger.not-chargeable: "&cThis item cannot be charged."
 

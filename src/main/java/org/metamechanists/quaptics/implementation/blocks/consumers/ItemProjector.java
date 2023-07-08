@@ -115,7 +115,7 @@ public class ItemProjector extends ConnectedBlock implements ItemHolderBlock, Po
 
     @Override
     protected void onRightClick(final @NotNull Location location, final @NotNull Player player) {
-        interact(location, player);
+        itemHolderInteract(location, player);
     }
 
     @Override

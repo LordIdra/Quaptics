@@ -8,7 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.metalib.utils.ItemUtils;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
-import org.metamechanists.quaptics.implementation.blocks.base.DisplayGroupTickerBlock;
+import org.metamechanists.quaptics.implementation.blocks.base.QuapticBlock;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
 
@@ -16,7 +16,7 @@ import java.util.Optional;
 
 public interface ItemHolderBlock {
     static Optional<ItemDisplay> getItemDisplay(final Location location) {
-        final Optional<Display> display = DisplayGroupTickerBlock.getDisplay(location, "item");
+        final Optional<Display> display = QuapticBlock.getDisplay(location, "item");
         if (display.isEmpty()) {
             return Optional.empty();
         }
@@ -67,7 +67,7 @@ public interface ItemHolderBlock {
         return Optional.ofNullable(itemStack);
     }
 
-    default void interact(@NotNull final Location location, @NotNull final Player player) {
+    default void itemHolderInteract(@NotNull final Location location, @NotNull final Player player) {
         final Optional<ItemStack> currentStack = removeItem(location);
         BlockStorageAPI.set(location, Keys.BS_IS_HOLDING_ITEM, false);
         if (currentStack.isEmpty() || currentStack.get().getType().isEmpty()) {

@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.Quaptics;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
-import org.metamechanists.quaptics.implementation.blocks.base.DisplayGroupTickerBlock;
+import org.metamechanists.quaptics.implementation.blocks.base.QuapticBlock;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 
 import java.util.Optional;
@@ -43,7 +43,7 @@ public class BurnoutRunnable extends BukkitRunnable {
             return;
         }
 
-        final Optional<DisplayGroup> displayGroup = DisplayGroupTickerBlock.getDisplayGroup(location);
+        final Optional<DisplayGroup> displayGroup = QuapticBlock.getDisplayGroup(location);
         final Optional<ConnectionGroup> connectionGroup = ConnectedBlock.getGroup(location);
         if (displayGroup.isEmpty() || connectionGroup.isEmpty()) {
             return;

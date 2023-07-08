@@ -3,6 +3,8 @@ package org.metamechanists.quaptics.storage;
 import io.github.bakedlibs.dough.data.persistent.PersistentDataAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataHolder;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
@@ -24,10 +26,13 @@ import org.metamechanists.quaptics.utils.id.simple.InteractionId;
 import org.metamechanists.quaptics.utils.id.simple.TextDisplayId;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @SuppressWarnings({"WeakerAccess", "unused"})
@@ -41,6 +46,14 @@ public class PersistentDataTraverser {
 
     public PersistentDataTraverser(@NotNull final UUID id) {
         this.persistentDataHolder = Bukkit.getEntity(id);
+    }
+
+    public PersistentDataTraverser(@NotNull final ItemStack stack) {
+        this.persistentDataHolder = stack.getItemMeta();
+    }
+
+    public void save(@NotNull final ItemStack stack) {
+        stack.setItemMeta((ItemMeta) persistentDataHolder);
     }
 
     private static @NotNull NamespacedKey getKey(@NotNull final String key) {
@@ -87,6 +100,14 @@ public class PersistentDataTraverser {
         for (final Entry<String, ? extends CustomId> pair : value.entrySet()) {
             set(key + i + "key", pair.getKey());
             set(key + i + "value", pair.getValue().toString());
+            i++;
+        }
+    }
+    public void set(@NotNull final String key, @NotNull final List<UUID> value) {
+        set(key + "length", value.size());
+        int i = 0;
+        for (final UUID uuid : value) {
+            set(key + i, uuid.toString());
             i++;
         }
     }
@@ -192,5 +213,15 @@ public class PersistentDataTraverser {
         });
 
         return list;
+    }
+    public @Nullable List<UUID> getUuidList(@NotNull final String key) {
+        final int size = getInt(key + "length");
+        if (size == 0) {
+            return null;
+        }
+        return IntStream.range(0, size)
+                .mapToObj(i -> getString(key + i))
+                .filter(Objects::nonNull)
+                .map(UUID::fromString).collect(Collectors.toList());
     }
 }

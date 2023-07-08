@@ -9,6 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import org.metamechanists.quaptics.Quaptics;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.implementation.tools.LaserPointer;
+import org.metamechanists.quaptics.implementation.tools.multiblockwand.MultiblockWand;
 import org.metamechanists.quaptics.implementation.tools.targetingwand.TargetingWand;
 import org.metamechanists.quaptics.items.Groups;
 import org.metamechanists.quaptics.items.Lore;
@@ -29,6 +30,14 @@ public class Tools {
             "&7● &eRight Click &7again to create a link",
             "&7● &eShift Right Click &7to remove a link");
 
+    public final SlimefunItemStack MULTIBLOCK_WAND = new SlimefunItemStack(
+            "QP_MULTBLOCK_WAND",
+            Material.BLAZE_ROD,
+            "&6Multiblock Wand",
+            "&7● Shows you how to build complex multiblocks",
+            "&7● &eRight Click &7a multiblock to see how to build it",
+            "&7● &eRight Click &7a projected block to see what block it is");
+
     public final SlimefunItemStack LASER_POINTER = new SlimefunItemStack(
             "QP_LASER_POINTER",
             Material.BLACK_CANDLE,
@@ -43,6 +52,12 @@ public class Tools {
         new TargetingWand(
                 Groups.TOOLS,
                 TARGETING_WAND,
+                RecipeType.NULL,
+                new ItemStack[]{}).register(addon);
+
+        new MultiblockWand(
+                Groups.TOOLS,
+                MULTIBLOCK_WAND,
                 RecipeType.NULL,
                 new ItemStack[]{}).register(addon);
 

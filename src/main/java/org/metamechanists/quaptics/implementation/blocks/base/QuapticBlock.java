@@ -7,6 +7,8 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
+import io.github.thebusybiscuit.slimefun4.core.handlers.BlockUseHandler;
+import lombok.Getter;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
 import org.bukkit.Location;
@@ -21,6 +23,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
+import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.id.simple.DisplayGroupId;
@@ -33,14 +36,16 @@ import java.util.Optional;
 
 import static dev.sefiraat.sefilib.slimefun.blocks.DisplayGroupBlock.KEY_UUID;
 
-public abstract class DisplayGroupTickerBlock extends SlimefunItem {
+public abstract class QuapticBlock extends SlimefunItem {
     private static final Vector CENTER_VECTOR = new Vector(0.5, 0.5, 0.5);
     protected static final Vector INITIAL_LINE = new Vector(0, 0, 1);
+    @Getter
+    protected final Settings settings;
 
-    protected DisplayGroupTickerBlock(
-            final ItemGroup itemGroup, final SlimefunItemStack item,
-            final RecipeType recipeType, final ItemStack[] recipe) {
+    protected QuapticBlock(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe);
+        this.settings = settings;
+        addItemHandler(onRightClick());
     }
 
     @NotNull
@@ -65,6 +70,26 @@ public abstract class DisplayGroupTickerBlock extends SlimefunItem {
     protected void onPlace(@NotNull final BlockPlaceEvent event) {}
 
     protected void onBreak(@NotNull final Location location) {}
+
+    protected void onRightClick(@NotNull final Location location, @NotNull final Player player) {}
+
+    protected void onShiftRightClick(@NotNull final Location location, @NotNull final Player player) {}
+
+    @NotNull
+    private BlockUseHandler onRightClick() {
+        return event -> {
+            final Block block = event.getClickedBlock().orElse(null);
+            if (block == null) {
+                return;
+            }
+
+            if (event.getPlayer().isSneaking()) {
+                onShiftRightClick(block.getLocation(), event.getPlayer());
+            } else {
+                onRightClick(block.getLocation(), event.getPlayer());
+            }
+        };
+    }
 
     protected void onSlimefunTick(@NotNull final Block block, final SlimefunItem item, final Config data) {}
 

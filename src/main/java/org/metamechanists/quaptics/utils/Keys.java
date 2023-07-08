@@ -42,4 +42,5 @@ public class Keys {
     public final String BS_IS_HOLDING_ITEM = "QP_IS_HOLDING_ITEM";
     public final String BS_HEIGHT = "QP_HEIGHT";
     public final String BS_SIZE = "QP_SIZE";
+    public final String BS_BLOCK_NAME = "QP_BLOCK_NAME";
 }

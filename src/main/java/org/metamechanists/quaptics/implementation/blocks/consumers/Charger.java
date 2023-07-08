@@ -104,7 +104,7 @@ public class Charger extends ConnectedBlock implements InfoPanelBlock, ItemHolde
 
     @Override
     protected void onRightClick(final @NotNull Location location, final @NotNull Player player) {
-        interact(location, player);
+        itemHolderInteract(location, player);
     }
 
     @Override
