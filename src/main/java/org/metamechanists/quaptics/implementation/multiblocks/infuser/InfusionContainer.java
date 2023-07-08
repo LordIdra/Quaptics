@@ -29,6 +29,7 @@ import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Language;
 import org.metamechanists.quaptics.utils.Particles;
 import org.metamechanists.quaptics.utils.Transformations;
+import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.builders.ItemDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
@@ -62,6 +63,7 @@ public class InfusionContainer extends ConnectedBlock implements ItemHolderBlock
     private static final int PILLAR_PARTICLE_COUNT = 3;
     private static final double PILLAR_PARTICLE_ANIMATION_LENGTH_SECONDS = 0.5;
     private static final double CONTAINER_PARTICLE_RADIUS = 0.5;
+    private static final double CONTAINER_PARTICLE_INTERVAL = 0.5;
 
     private static final Map<ItemStack, ItemStack> RECIPES = Map.of(
             new ItemStack(Material.DEAD_BUSH), Primitive.INFUSED_DEAD_BUSH
@@ -170,7 +172,7 @@ public class InfusionContainer extends ConnectedBlock implements ItemHolderBlock
     @Override
     public void tickAnimation(@NotNull final Location centerLocation, final double timeSeconds) {
         PILLAR_LOCATIONS.forEach(pillarLocation -> animatePillar(centerLocation, centerLocation.clone().add(PILLAR_1_LOCATION), timeSeconds));
-        animateCenter(centerLocation);
+        animateCenter(centerLocation, timeSeconds);
     }
 
     private static boolean isPillarPowered(@NotNull final Location pillarLocation) {
@@ -181,8 +183,10 @@ public class InfusionContainer extends ConnectedBlock implements ItemHolderBlock
                 pillarLocation.clone().toCenterLocation(), center.clone().toCenterLocation(),
                 PILLAR_PARTICLE_COUNT, (timeSinceCraftStarted % PILLAR_PARTICLE_ANIMATION_LENGTH_SECONDS) / PILLAR_PARTICLE_ANIMATION_LENGTH_SECONDS);
     }
-    private static void animateCenter(@NotNull final Location center) {
-        ParticleUtils.sphere(center.clone().toCenterLocation(), Particle.END_ROD, CONTAINER_PARTICLE_RADIUS, false);
+    private static void animateCenter(@NotNull final Location center, final double timeSinceCraftStarted) {
+        if (Utils.equal(timeSinceCraftStarted % CONTAINER_PARTICLE_INTERVAL, 0)) {
+            ParticleUtils.sphere(center.clone().toCenterLocation(), Particle.ENCHANTMENT_TABLE, CONTAINER_PARTICLE_RADIUS, false);
+        }
     }
 
     private void cancelCraft(@NotNull final Location location) {

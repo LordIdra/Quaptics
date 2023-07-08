@@ -16,12 +16,12 @@ public class Particles {
         final Vector3f direction = Transformations.getDirection(from, to);
         final double distance = from.distance(to);
         final float spacing = (float) ((1.0F / (particleCount-1)) * distance);
-        final Location currentLocation = from.clone().add(Vector.fromJOML(new Vector3f(direction).mul((float) (offset * spacing))));
+        final Location currentLocation = from.clone();//.add(Vector.fromJOML(new Vector3f(direction).mul((float) (offset * spacing))));
         final Vector locationIncrement = Vector.fromJOML(new Vector3f(direction).mul(spacing));
 
         IntStream.range(0, particleCount).forEach(i -> {
             currentLocation.add(locationIncrement);
-            from.getWorld().spawnParticle(particle, currentLocation, 1);
+            from.getWorld().spawnParticle(particle, currentLocation, 1, 0, 0, 0);
         });
     }
 }
