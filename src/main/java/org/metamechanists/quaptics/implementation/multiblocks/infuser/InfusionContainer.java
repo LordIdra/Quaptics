@@ -36,7 +36,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 
 public class InfusionContainer extends ConnectedBlock implements ItemHolderBlock, ComplexMultiblock {
@@ -53,7 +52,7 @@ public class InfusionContainer extends ConnectedBlock implements ItemHolderBlock
     private static final Vector PILLAR_2_LOCATION = new Vector(-2, 0, 0);
     private static final Vector PILLAR_3_LOCATION = new Vector(0, 0, 2);
     private static final Vector PILLAR_4_LOCATION = new Vector(0, 0, -2);
-    private static final Stream<Vector> PILLAR_LOCATIONS = Stream.of(PILLAR_1_LOCATION, PILLAR_2_LOCATION, PILLAR_3_LOCATION, PILLAR_4_LOCATION);
+    private static final List<Vector> PILLAR_LOCATIONS = List.of(PILLAR_1_LOCATION, PILLAR_2_LOCATION, PILLAR_3_LOCATION, PILLAR_4_LOCATION);
 
     private static final Vector3f ITEM_DISPLAY_SIZE = new Vector3f(0.5F);
     private static final Vector3f ITEM_DISPLAY_OFFSET = new Vector3f(0, 0.3F, 0);
@@ -126,7 +125,7 @@ public class InfusionContainer extends ConnectedBlock implements ItemHolderBlock
             return;
         }
 
-        if (PILLAR_LOCATIONS.anyMatch(vector -> !isPillarPowered(location.clone().add(vector)))) {
+        if (PILLAR_LOCATIONS.stream().anyMatch(vector -> !isPillarPowered(location.clone().add(vector)))) {
             cancelCraft(location);
             return;
         }
