@@ -27,14 +27,14 @@ import java.util.Optional;
 
 public class InfusionContainer extends QuapticBlock implements ItemHolderBlock, ComplexMultiblock {
     private static final Vector3f BASE_SCALE = new Vector3f(0.9F, 0.6F, 0.9F);
-    private static final Vector3f BASE_OFFSET = new Vector3f(0.0F, 0.3F, 0.0F);
+    private static final Vector3f BASE_OFFSET = new Vector3f(0.0F, -0.3F, 0.0F);
     private static final Vector3f PILLAR_SCALE = new Vector3f(0.2F, 0.8F, 0.2F);
     private static final Vector3f PILLAR_1_OFFSET = new Vector3f(-0.4F, -0.1F, -0.4F);
     private static final Vector3f PILLAR_2_OFFSET = new Vector3f(-0.4F, -0.1F, 0.4F);
     private static final Vector3f PILLAR_3_OFFSET = new Vector3f(0.4F, -0.1F, -0.4F);
     private static final Vector3f PILLAR_4_OFFSET = new Vector3f(0.4F, -0.1F, 0.4F);
     private final Vector3f itemDisplaySize = new Vector3f(0.5F);
-    private final Vector3f itemDisplayOffset = new Vector3f(0, 0.2F, 0);
+    private final Vector3f itemDisplayOffset = new Vector3f(0, 0.3F, 0);
 
 
     public InfusionContainer(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
@@ -43,7 +43,7 @@ public class InfusionContainer extends QuapticBlock implements ItemHolderBlock, 
 
     @Override
     protected void addDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
-        displayGroup.addDisplay("pillar1", new BlockDisplayBuilder(location.toCenterLocation())
+        displayGroup.addDisplay("base", new BlockDisplayBuilder(location.toCenterLocation())
                 .setBlockData(Material.GRAY_CONCRETE.createBlockData())
                 .setTransformation(Transformations.adjustedScaleOffset(BASE_SCALE, BASE_OFFSET))
                 .build());
@@ -100,7 +100,7 @@ public class InfusionContainer extends QuapticBlock implements ItemHolderBlock, 
         return Map.of(
                 new Vector(2, 0, 0), SlimefunItems.ENERGY_REGULATOR,
                 new Vector(-2, 0, -2), SlimefunItems.ANCIENT_PEDESTAL,
-                new Vector(2, 0, 0), new ItemStack(Material.ENCHANTING_TABLE)
+                new Vector(0, 0, 2), new ItemStack(Material.ENCHANTING_TABLE)
         );
     }
 }
