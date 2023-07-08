@@ -68,6 +68,8 @@ public abstract class ConnectedBlock extends QuapticBlock {
         group.get().getPointPanels().forEach(panel -> panel.setPanelHidden(!isAnyPanelHidden));
     }
     public void onInputLinkUpdated(@NotNull final ConnectionGroup group, @NotNull final Location location) {}
+    @SuppressWarnings("unused")
+    public void onQuapticTick(@NotNull final ConnectionGroup group, @NotNull final Location location) {}
 
     @Override
     @OverridingMethodsMustInvokeSuper

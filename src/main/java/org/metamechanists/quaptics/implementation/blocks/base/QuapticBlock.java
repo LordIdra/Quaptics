@@ -26,7 +26,6 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
-import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Transformations;
@@ -122,8 +121,6 @@ public abstract class QuapticBlock extends SlimefunItem {
         };
     }
     protected void onSlimefunTick(@NotNull final Block block, final SlimefunItem item, final Config data) {}
-    @SuppressWarnings("unused")
-    public void onQuapticTick(@NotNull final ConnectionGroup group, @NotNull final Location location) {}
 
     private static void setId(@NotNull final DisplayGroup displayGroup, final Location location) {
         BlockStorageAPI.set(location, KEY_UUID, displayGroup.getParentUUID());
