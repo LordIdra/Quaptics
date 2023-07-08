@@ -18,6 +18,7 @@ import org.metamechanists.quaptics.implementation.blocks.base.QuapticBlock;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 
 import java.util.Optional;
+import java.util.stream.IntStream;
 
 public class BurnoutRunnable extends BukkitRunnable {
     private static final int BURN_TIME_TICKS = 60;
@@ -39,50 +40,51 @@ public class BurnoutRunnable extends BukkitRunnable {
     @Override
     public void run() {
         final Block block = location.getBlock();
-        if (!(BlockStorageAPI.check(block) instanceof final ConnectedBlock connectedBlock)) {
-            return;
-        }
-
         final Optional<DisplayGroup> displayGroup = QuapticBlock.getDisplayGroup(location);
         final Optional<ConnectionGroup> connectionGroup = ConnectedBlock.getGroup(location);
-        if (displayGroup.isEmpty() || connectionGroup.isEmpty()) {
+        if (displayGroup.isEmpty() || connectionGroup.isEmpty() || !(BlockStorageAPI.check(block) instanceof final ConnectedBlock connectedBlock)) {
             return;
         }
 
-        for (int delay = 1; delay < BURN_TIME_TICKS; delay++) {
-            final int ticks = delay;
-            Bukkit.getScheduler().runTaskLater(Quaptics.getInstance(), () -> {
-                if (shouldStopEarly()) {
-                    return;
-                }
+        IntStream.range(1, BURN_TIME_TICKS).forEach(
+                delay -> Bukkit.getScheduler().runTaskLater(Quaptics.getInstance(), () -> tickDisplayGroup(displayGroup.get(), delay), delay));
+        Bukkit.getScheduler().runTaskLater(Quaptics.getInstance(), () -> doFinalBurnout(connectedBlock), BURN_TIME_TICKS);
+    }
 
-                if (ticks % 4 == 0) {
-                    location.getWorld().playSound(centerLocation, Sound.BLOCK_LAVA_EXTINGUISH, FIZZLE_VOLUME, FIZZLE_PITCH);
-                }
-
-                if (ticks % 2 == 0) {
-                    displayGroup.get().getDisplays().values().forEach(display -> {
-                        final Brightness oldBrightness = display.getBrightness();
-                        final Brightness newBrightess = new Brightness(Optional.ofNullable(oldBrightness)
-                                .map(brightness -> Math.max(0, brightness.getBlockLight() - 1))
-                                .orElse(INITIAL_BRIGHTNESS), 0);
-                        display.setBrightness(newBrightess);
-                    });
-
-                    new ParticleBuilder(Particle.LAVA).location(centerLocation).spawn();
-                }
-            }, delay);
+    private void tickDisplayGroup(@NotNull final DisplayGroup displayGroup, final int ticks) {
+        if (shouldStopEarly()) {
+            return;
         }
 
-        Bukkit.getScheduler().runTaskLater(Quaptics.getInstance(), () -> {
-            // TODO: Drop "Burnt Component" Item
-            if (shouldStopEarly()) {
-                return;
-            }
+        if (ticks % 4 == 0) {
+            location.getWorld().playSound(centerLocation, Sound.BLOCK_LAVA_EXTINGUISH, FIZZLE_VOLUME, FIZZLE_PITCH);
+        }
 
-            connectedBlock.burnout(location);
-            BurnoutManager.removeBurnout(this);
-        }, BURN_TIME_TICKS);
+        if (ticks % 2 == 0) {
+            doBurnoutAnimation(displayGroup);
+        }
+    }
+
+    private void doBurnoutAnimation(@NotNull final DisplayGroup displayGroup) {
+        displayGroup.getDisplays().values().forEach(display -> {
+            final Brightness oldBrightness = display.getBrightness();
+            final Brightness newBrightess = new Brightness(Optional.ofNullable(oldBrightness)
+                    .map(brightness -> Math.max(0, brightness.getBlockLight() - 1))
+                    .orElse(INITIAL_BRIGHTNESS), 0);
+            display.setBrightness(newBrightess);
+        });
+
+        new ParticleBuilder(Particle.LAVA).location(centerLocation).spawn();
+    }
+
+    private void doFinalBurnout(final ConnectedBlock connectedBlock) {
+        // TODO: Drop "Burnt Component" Item
+        if (shouldStopEarly()) {
+            return;
+        }
+
+        connectedBlock.burnout(location);
+        BurnoutManager.removeBurnout(this);
     }
 
     private boolean shouldStopEarly() {
