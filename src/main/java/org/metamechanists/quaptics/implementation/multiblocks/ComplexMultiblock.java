@@ -2,7 +2,6 @@ package org.metamechanists.quaptics.implementation.multiblocks;
 
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.utils.ChatUtils;
-import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
 import org.bukkit.Color;
 import org.bukkit.block.Block;
 import org.bukkit.entity.BlockDisplay;
@@ -31,15 +30,19 @@ public interface ComplexMultiblock {
     Color EMPTY_COLOR = Color.fromARGB(255, 255, 255, 0);
     Color WRONG_MATERIAL_COLOR = Color.fromARGB(255, 255, 0, 0);
     Color RIGHT_MATERIAL_COLOR = Color.fromARGB(255, 0, 255, 0);
-    Vector INTERACTION_CORRECTION_OFFSET = new Vector(0, -0.5, 0);
     int DISPLAY_BRIGHTNESS = 15;
     float DISPLAY_SCALE = 0.75F;
 
     private static boolean isStructureBlockValid(final @NotNull Block center, final @NotNull Vector offset, final ItemStack predicted) {
-        final Block block = center.getRelative(offset.getBlockX(), offset.getBlockY(), offset.getBlockZ());
-        final SlimefunItem item = BlockStorageAPI.check(block);
-        final ItemStack actual = item != null ? item.getItem() : new ItemStack(block.getType());
-        return SlimefunUtils.isItemSimilar(predicted, actual, false);
+        final Block actual = center.getRelative(offset.getBlockX(), offset.getBlockY(), offset.getBlockZ());
+        final SlimefunItem predictedSlimefunItem = SlimefunItem.getByItem(predicted);
+        final SlimefunItem actualSlimefunItem = BlockStorageAPI.check(actual);
+
+        if (actualSlimefunItem != null) {
+            return predictedSlimefunItem != null && predictedSlimefunItem.getId().equals(actualSlimefunItem.getId());
+        }
+
+        return predicted.getType() == actual.getType();
     }
 
     private static @NotNull @Unmodifiable List<UUID> visualiseBlock(final @NotNull Block center, final @NotNull Vector offset, final @NotNull ItemStack itemStack) {
@@ -55,7 +58,7 @@ public interface ComplexMultiblock {
         }
 
         final BlockDisplay blockDisplay = blockDisplayBuilder.build();
-        final Interaction interaction = new InteractionBuilder(block.getLocation().toCenterLocation().add(INTERACTION_CORRECTION_OFFSET))
+        final Interaction interaction = new InteractionBuilder(block.getLocation().toCenterLocation().subtract(new Vector(0, DISPLAY_SCALE/2, 0)))
                 .setWidth(DISPLAY_SCALE)
                 .setHeight(DISPLAY_SCALE)
                 .build();
