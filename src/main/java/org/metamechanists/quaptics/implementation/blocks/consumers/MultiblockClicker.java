@@ -28,6 +28,7 @@ import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Language;
 import org.metamechanists.quaptics.utils.SlimefunIsDumbUtils;
 import org.metamechanists.quaptics.utils.Transformations;
+import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 
@@ -37,8 +38,6 @@ import java.util.UUID;
 
 public class MultiblockClicker extends ConnectedBlock {
     private static final Vector RELATIVE_PLATE_LOCATION = new Vector(0, 0, 0.45F);
-    private static final Brightness BRIGHTNESS_ON = new Brightness(15, 0);
-    private static final Brightness BRIGHTNESS_OFF = new Brightness(3, 0);
     private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -settings.getConnectionRadius());
     private final Vector3f attachmentDisplaySize = new Vector3f(0.15F, 0.15F, 0.85F);
     private final Vector3f mainDisplaySize = new Vector3f(0.3F, 0.3F, 0.3F);
@@ -58,6 +57,7 @@ public class MultiblockClicker extends ConnectedBlock {
         displayGroup.addDisplay("attachment", new BlockDisplayBuilder(formatPointLocation(player, location, RELATIVE_PLATE_LOCATION))
                 .setBlockData(Material.WHITE_CONCRETE.createBlockData())
                 .setTransformation(Transformations.lookAlong(attachmentDisplaySize, player.getFacing().getDirection().toVector3f()))
+                        .setBrightness(Utils.BRIGHTNESS_OFF)
                 .build());
         BlockStorageAPI.set(location, Keys.BS_TICKS_SINCE_LAST_UPDATE, 0);
         BlockStorageAPI.set(location, Keys.BS_OWNER, player.getUniqueId());
@@ -157,7 +157,7 @@ public class MultiblockClicker extends ConnectedBlock {
     }
 
     private static void onEnabledAnimation(final Location location, final boolean enabled) {
-        getDisplay(location, "main").ifPresent(value -> value.setBrightness(enabled ? BRIGHTNESS_ON : BRIGHTNESS_OFF));
+        getDisplay(location, "main").ifPresent(value -> value.setBrightness(new Brightness(enabled ? Utils.BRIGHTNESS_ON : Utils.BRIGHTNESS_OFF, 0)));
     }
 
     private static Optional<Block> getMultiblockBlock(final @NotNull Location location) {

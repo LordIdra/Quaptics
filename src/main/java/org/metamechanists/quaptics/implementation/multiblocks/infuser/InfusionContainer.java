@@ -1,4 +1,4 @@
-package org.metamechanists.quaptics.implementation.multiblocks;
+package org.metamechanists.quaptics.implementation.multiblocks.infuser;
 
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
@@ -16,6 +16,7 @@ import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.implementation.blocks.attachments.InfoPanelBlock;
 import org.metamechanists.quaptics.implementation.blocks.attachments.ItemHolderBlock;
 import org.metamechanists.quaptics.implementation.blocks.base.QuapticBlock;
+import org.metamechanists.quaptics.implementation.multiblocks.ComplexMultiblock;
 import org.metamechanists.quaptics.panels.info.InfoPanelContainer;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
@@ -33,8 +34,8 @@ public class InfusionContainer extends QuapticBlock implements ItemHolderBlock, 
     private static final Vector3f PILLAR_2_OFFSET = new Vector3f(-0.4F, -0.1F, 0.4F);
     private static final Vector3f PILLAR_3_OFFSET = new Vector3f(0.4F, -0.1F, -0.4F);
     private static final Vector3f PILLAR_4_OFFSET = new Vector3f(0.4F, -0.1F, 0.4F);
-    private final Vector3f itemDisplaySize = new Vector3f(0.5F);
-    private final Vector3f itemDisplayOffset = new Vector3f(0, 0.3F, 0);
+    private static final Vector3f ITEM_DISPLAY_SIZE = new Vector3f(0.5F);
+    private static final Vector3f ITEM_DISPLAY_OFFSET = new Vector3f(0, 0.3F, 0);
 
 
     public InfusionContainer(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
@@ -64,7 +65,7 @@ public class InfusionContainer extends QuapticBlock implements ItemHolderBlock, 
                 .setTransformation(Transformations.adjustedScaleOffset(PILLAR_SCALE, PILLAR_4_OFFSET))
                 .build());
         displayGroup.addDisplay("item", new ItemDisplayBuilder(location.toCenterLocation())
-                .setTransformation(Transformations.unadjustedScaleTranslate(itemDisplaySize, itemDisplayOffset))
+                .setTransformation(Transformations.unadjustedScaleTranslate(ITEM_DISPLAY_SIZE, ITEM_DISPLAY_OFFSET))
                 .build());
     }
 
@@ -99,8 +100,13 @@ public class InfusionContainer extends QuapticBlock implements ItemHolderBlock, 
     public Map<Vector, ItemStack> getStructure() {
         return Map.of(
                 new Vector(2, 0, 0), new ItemStack(Material.CYAN_CONCRETE),
-                new Vector(-2, 0, -2), SlimefunItems.ANCIENT_PEDESTAL,
+                new Vector(-2, 0, 0), SlimefunItems.ANCIENT_PEDESTAL,
                 new Vector(0, 0, 2), new ItemStack(Material.ENCHANTING_TABLE)
         );
+    }
+
+    @Override
+    public void tickAnimation(@NotNull final Location location) {
+
     }
 }

@@ -29,6 +29,7 @@ import org.metamechanists.quaptics.storage.QuapticTicker;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Transformations;
+import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.id.complex.InfoPanelId;
@@ -38,7 +39,6 @@ import java.util.List;
 import java.util.Optional;
 
 public class Capacitor extends ConnectedBlock implements InfoPanelBlock, PowerLossBlock {
-    private static final int CONCRETE_BRIGHTNESS = 15;
     private final Vector3f mainGlassDisplaySize = new Vector3f(settings.getDisplayRadius()*2.0F);
     private final Vector3f tierGlassDisplaySize = new Vector3f(settings.getDisplayRadius()*1.7F);
     private final Vector3f maxConcreteDisplaySize = new Vector3f(settings.getDisplayRadius()*1.65F);
@@ -62,7 +62,7 @@ public class Capacitor extends ConnectedBlock implements InfoPanelBlock, PowerLo
         displayGroup.addDisplay("concrete", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(Material.LIGHT_BLUE_CONCRETE)
                 .setTransformation(Transformations.none())
-                .setBrightness(CONCRETE_BRIGHTNESS)
+                .setBrightness(Utils.BRIGHTNESS_ON)
                 .build());
     }
 

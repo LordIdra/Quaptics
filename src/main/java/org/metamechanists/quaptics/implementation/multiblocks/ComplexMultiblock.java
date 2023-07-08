@@ -3,6 +3,7 @@ package org.metamechanists.quaptics.implementation.multiblocks;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.utils.ChatUtils;
 import org.bukkit.Color;
+import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Interaction;
@@ -115,4 +116,6 @@ public interface ComplexMultiblock {
     }
 
     Map<Vector, ItemStack> getStructure();
+
+    void tickAnimation(@NotNull final Location location);
 }

@@ -20,6 +20,7 @@ import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
 import org.metamechanists.quaptics.implementation.blocks.attachments.PowerAnimatedBlock;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.utils.Transformations;
+import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 
@@ -27,7 +28,6 @@ import java.util.List;
 import java.util.Optional;
 
 public class Lens extends ConnectedBlock implements PowerAnimatedBlock, PowerLossBlock {
-    private static final int CONCRETE_BRIGHTNESS = 15;
     private final Vector3f glassDisplaySize = new Vector3f(settings.getDisplayRadius()*2);
     private final Vector3f concreteDisplaySize = new Vector3f(settings.getDisplayRadius());
     private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -settings.getConnectionRadius());
@@ -46,7 +46,7 @@ public class Lens extends ConnectedBlock implements PowerAnimatedBlock, PowerLos
         displayGroup.addDisplay("concrete", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(settings.getTier().concreteMaterial)
                 .setTransformation(Transformations.adjustedRotateScale(concreteDisplaySize, Transformations.GENERIC_ROTATION_ANGLES))
-                .setBrightness(CONCRETE_BRIGHTNESS)
+                .setBrightness(Utils.BRIGHTNESS_ON)
                 .setViewRange(VIEW_RANGE_OFF)
                 .build());
     }
@@ -88,6 +88,6 @@ public class Lens extends ConnectedBlock implements PowerAnimatedBlock, PowerLos
 
     @Override
     public void onPoweredAnimation(final Location location, final boolean powered) {
-        getDisplay(location, "concrete").ifPresent(value -> value.setViewRange(powered ? VIEW_RANGE_ON : VIEW_RANGE_OFF));
+        getDisplay(location, "prism").ifPresent(value -> value.setViewRange(powered ? VIEW_RANGE_ON : VIEW_RANGE_OFF));
     }
 }

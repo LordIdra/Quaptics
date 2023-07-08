@@ -23,7 +23,7 @@ public class BurnoutRunnable extends BukkitRunnable {
     private static final int BURN_TIME_TICKS = 60;
     private static final float FIZZLE_VOLUME = 0.1f;
     private static final float FIZZLE_PITCH = 0.8f;
-    private static final int INITIAL_BRIGHTNESS = 14;
+    private static final int INITIAL_BRIGHTNESS = 13;
     @Getter
     private final Location location;
     @Getter

@@ -27,9 +27,10 @@ public class SlimefunIsDumbUtils {
             }
         }
 
-        return multiblocks.isEmpty()
-                ? Optional.empty()
-                : Optional.of((MultiBlockMachine) multiblocks.getLast().getSlimefunItem());
+        if (multiblocks.getLast().getSlimefunItem() instanceof final MultiBlockMachine multiBlockMachine) {
+            return Optional.of(multiBlockMachine);
+        }
+        return Optional.empty();
 
     }
 

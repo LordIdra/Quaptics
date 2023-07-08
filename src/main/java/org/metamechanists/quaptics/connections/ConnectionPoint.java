@@ -14,6 +14,7 @@ import org.metamechanists.quaptics.panels.info.implementation.PointInfoPanel;
 import org.metamechanists.quaptics.storage.PersistentDataTraverser;
 import org.metamechanists.quaptics.schedulers.PointPanelUpdateScheduler;
 import org.metamechanists.quaptics.utils.Transformations;
+import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.builders.InteractionBuilder;
 import org.metamechanists.quaptics.utils.id.simple.BlockDisplayId;
@@ -29,10 +30,6 @@ public class ConnectionPoint {
     private static final float SIZE = 0.1F;
     private static final Vector INTERACTION_OFFSET = new Vector(0, -SIZE/2, 0);
     private static final Color SELECTED_COLOR = Color.fromRGB(0, 255, 0);
-    @Getter
-    private static final int CONNECTED_BRIGHTNESS = 15;
-    @Getter
-    private static final int DISCONNECTED_BRIGHTNESS = 3;
     private final ConnectionPointType type;
     private final ConnectionGroupId groupId;
     @Getter
@@ -43,8 +40,7 @@ public class ConnectionPoint {
     @Getter
     private final String name;
 
-    public ConnectionPoint(final @NotNull ConnectionPointType type, final ConnectionGroupId groupId, final String name,
-                           @NotNull final Location location) {
+    public ConnectionPoint(final @NotNull ConnectionPointType type, final ConnectionGroupId groupId, final String name, @NotNull final Location location) {
         final Interaction interaction = new InteractionBuilder(location.clone().add(INTERACTION_OFFSET))
                 .setWidth(SIZE)
                 .setHeight(SIZE)
@@ -55,7 +51,7 @@ public class ConnectionPoint {
         this.blockDisplayId = new BlockDisplayId(new BlockDisplayBuilder(location)
                 .setMaterial(type.getMaterial())
                 .setTransformation(Transformations.adjustedScale(new Vector3f(SIZE, SIZE, SIZE)))
-                .setBrightness(DISCONNECTED_BRIGHTNESS)
+                .setBrightness(Utils.BRIGHTNESS_OFF)
                 .build()
                 .getUniqueId());
         this.panelId = new PointInfoPanel(location, getId()).getId();
@@ -152,7 +148,7 @@ public class ConnectionPoint {
 
     public void unlink() {
         this.linkId = null;
-        getBlockDisplay().ifPresent(blockDisplay -> blockDisplay.setBrightness(new Brightness(DISCONNECTED_BRIGHTNESS, 0)));
+        getBlockDisplay().ifPresent(blockDisplay -> blockDisplay.setBrightness(new Brightness(Utils.BRIGHTNESS_OFF, 0)));
         saveData();
         updatePanel();
     }
@@ -160,7 +156,7 @@ public class ConnectionPoint {
     public void link(final LinkId linkId) {
         unlink();
         this.linkId = linkId;
-        getBlockDisplay().ifPresent(blockDisplay -> blockDisplay.setBrightness(new Brightness(CONNECTED_BRIGHTNESS, 0)));
+        getBlockDisplay().ifPresent(blockDisplay -> blockDisplay.setBrightness(new Brightness(Utils.BRIGHTNESS_ON, 0)));
         saveData();
         updatePanel();
     }

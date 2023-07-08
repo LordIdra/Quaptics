@@ -25,6 +25,7 @@ import org.metamechanists.quaptics.implementation.blocks.attachments.PowerAnimat
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Transformations;
+import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 
@@ -32,7 +33,6 @@ import java.util.List;
 import java.util.Optional;
 
 public class Scatterer extends ConnectedBlock implements PowerAnimatedBlock, PowerLossBlock, UpgraderBlock {
-    private static final int CONCRETE_BRIGHTNESS = 15;
     private final Vector3f glassDisplaySize = new Vector3f(settings.getDisplayRadius()*2);
     private final Vector3f comparatorDisplaySize = new Vector3f(settings.getDisplayRadius());
     private final Vector3f comparatorOffset = new Vector3f(0.0F, 0.1F, 0.0F);
@@ -59,7 +59,7 @@ public class Scatterer extends ConnectedBlock implements PowerAnimatedBlock, Pow
         displayGroup.addDisplay("concrete", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(settings.getTier().concreteMaterial)
                 .setTransformation(Transformations.adjustedScaleOffset(concreteDisplaySize, concreteOffset))
-                .setBrightness(CONCRETE_BRIGHTNESS)
+                .setBrightness(Utils.BRIGHTNESS_ON)
                 .build());
         final BlockDisplay comparator = new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(Material.COMPARATOR)

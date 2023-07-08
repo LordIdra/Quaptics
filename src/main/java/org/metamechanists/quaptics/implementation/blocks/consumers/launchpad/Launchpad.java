@@ -27,6 +27,7 @@ import org.metamechanists.quaptics.panels.config.implementation.LaunchpadConfigP
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Transformations;
+import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConfigPanelId;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
@@ -41,8 +42,6 @@ public class Launchpad extends ConnectedBlock implements ConfigPanelBlock, Power
     public static final float MAX_VELOCITY = 10;
     private static final float VELOCITY_POWER = 1.5F;
     private static final float VELOCITY_DIVISOR = 5;
-    private static final Brightness BRIGHTNESS_ON = new Brightness(15, 0);
-    private static final Brightness BRIGHTNESS_OFF = new Brightness(4, 0);
     private static final Vector3f mainDisplaySize = new Vector3f(0.8F, 0.1F, 0.8F);
     private static final Vector3f mainDisplayOffset = new Vector3f(0, 0.51F, 0);
     private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -settings.getConnectionRadius());
@@ -56,7 +55,7 @@ public class Launchpad extends ConnectedBlock implements ConfigPanelBlock, Power
         displayGroup.addDisplay("main", new BlockDisplayBuilder(location.toCenterLocation())
                 .setBlockData(Material.CYAN_CONCRETE_POWDER.createBlockData())
                 .setTransformation(Transformations.adjustedScaleOffset(mainDisplaySize, mainDisplayOffset))
-                .setBrightness(BRIGHTNESS_OFF.getBlockLight())
+                .setBrightness(Utils.BRIGHTNESS_OFF)
                 .build());
         BlockStorageAPI.set(location, Keys.BS_VELOCITY, INITIAL_VELOCITY);
     }
@@ -137,7 +136,7 @@ public class Launchpad extends ConnectedBlock implements ConfigPanelBlock, Power
 
     @Override
     public void onPoweredAnimation(final Location location, final boolean powered) {
-        getDisplay(location, "main").ifPresent(value -> value.setBrightness(powered ? BRIGHTNESS_ON : BRIGHTNESS_OFF));
+        getDisplay(location, "main").ifPresent(value -> value.setBrightness(new Brightness(powered ? Utils.BRIGHTNESS_ON : Utils.BRIGHTNESS_OFF, 0)));
     }
 
     private static double calculateFinalVelocity(final double velocity) {

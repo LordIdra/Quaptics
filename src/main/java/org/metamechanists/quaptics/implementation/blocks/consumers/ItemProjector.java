@@ -32,6 +32,7 @@ import org.metamechanists.quaptics.panels.config.implementation.ItemProjectorCon
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Transformations;
+import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.builders.ItemDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConfigPanelId;
@@ -42,8 +43,6 @@ import java.util.List;
 import java.util.Optional;
 
 public class ItemProjector extends ConnectedBlock implements ItemHolderBlock, PowerAnimatedBlock, ConfigPanelBlock {
-    private static final Brightness BRIGHTNESS_ON = new Brightness(15, 0);
-    private static final Brightness BRIGHTNESS_OFF = new Brightness(3, 0);
     private static final Vector RELATIVE_PANEL_LOCATION = new Vector(0, 0, -0.51);
     public static final double MAX_SIZE = 20;
     public static final double MAX_HEIGHT = 20;
@@ -69,13 +68,13 @@ public class ItemProjector extends ConnectedBlock implements ItemHolderBlock, Po
         displayGroup.addDisplay("prism", new BlockDisplayBuilder(location.toCenterLocation())
                 .setBlockData(Material.CYAN_STAINED_GLASS.createBlockData())
                 .setTransformation(Transformations.adjustedRotateScale(PRISM_DISPLAY_SIZE, Transformations.GENERIC_ROTATION_ANGLES))
-                .setBrightness(BRIGHTNESS_OFF.getBlockLight())
+                .setBrightness(Utils.BRIGHTNESS_OFF)
                 .build());
         displayGroup.addDisplay("item", new ItemDisplayBuilder(location.toCenterLocation())
                 .setTransformation(calculateItemTransformation(0, 0))
                 .setViewRange(VIEW_RANGE_OFF)
                 .setBillboard(Billboard.VERTICAL)
-                .setBrightness(BRIGHTNESS_ON.getBlockLight())
+                .setBrightness(Utils.BRIGHTNESS_ON)
                 .build());
         BlockStorageAPI.set(location, Keys.BS_HEIGHT, 0);
         BlockStorageAPI.set(location, Keys.BS_SIZE, ITEM_DISPLAY_ADDITIONAL_SIZE.x);
@@ -148,7 +147,7 @@ public class ItemProjector extends ConnectedBlock implements ItemHolderBlock, Po
             return;
         }
 
-        mainDisplay.get().setBrightness(powered ? BRIGHTNESS_ON : BRIGHTNESS_OFF);
+        mainDisplay.get().setBrightness(new Brightness(powered ? Utils.BRIGHTNESS_ON : Utils.BRIGHTNESS_OFF, 0));
 
         final Optional<ItemDisplay> itemDisplay = ItemHolderBlock.getItemDisplay(location);
         if (itemDisplay.isEmpty()) {

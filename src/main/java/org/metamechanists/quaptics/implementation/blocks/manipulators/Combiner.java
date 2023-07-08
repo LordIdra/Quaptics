@@ -20,6 +20,7 @@ import org.metamechanists.quaptics.implementation.blocks.attachments.PowerAnimat
 import org.metamechanists.quaptics.implementation.blocks.attachments.PowerLossBlock;
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
 import org.metamechanists.quaptics.utils.Transformations;
+import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 
@@ -30,7 +31,6 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Combiner extends ConnectedBlock implements PowerAnimatedBlock, PowerLossBlock {
-    private static final int CONCRETE_BRIGHTNESS = 15;
     private static final double CONNECTION_ANGLE = Math.PI / 2;
     private final Vector inputStartingLocation = new Vector(0.0F, 0.0F, -settings.getConnectionRadius());
     private final Vector outputLocation = new Vector(0.0F, 0.0F, settings.getConnectionRadius());
@@ -49,7 +49,7 @@ public class Combiner extends ConnectedBlock implements PowerAnimatedBlock, Powe
                 .build());
         displayGroup.addDisplay("concrete", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(settings.getTier().concreteMaterial)
-                .setBrightness(CONCRETE_BRIGHTNESS)
+                .setBrightness(Utils.BRIGHTNESS_ON)
                 .setViewRange(VIEW_RANGE_OFF)
                 .setTransformation(Transformations.adjustedRotateScale(concreteDisplaySize, Transformations.GENERIC_ROTATION_ANGLES))
                 .build());
