@@ -120,16 +120,13 @@ public class ItemProjector extends ConnectedBlock implements ItemHolderBlock, Po
     }
 
     @Override
-    public void onInputLinkUpdated(@NotNull final ConnectionGroup group) {
-        doBurnoutCheck(group, "input");
-
-        final Optional<Location> location = group.getLocation();
-        if (location.isEmpty()) {
+    public void onInputLinkUpdated(@NotNull final ConnectionGroup group, @NotNull final Location location) {
+        if (doBurnoutCheck(group, "input")) {
             return;
         }
 
         final Optional<Link> inputLink = getLink(group, "input");
-        onPoweredAnimation(location.get(), inputLink.isPresent() && settings.isOperational(inputLink));
+        onPoweredAnimation(location, inputLink.isPresent() && settings.isOperational(inputLink));
     }
 
     @Override

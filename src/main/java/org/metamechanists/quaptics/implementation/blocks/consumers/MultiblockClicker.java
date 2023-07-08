@@ -147,7 +147,7 @@ public class MultiblockClicker extends ConnectedBlock {
     }
 
     @Override
-    public void onInputLinkUpdated(@NotNull final ConnectionGroup group) {
+    public void onInputLinkUpdated(@NotNull final ConnectionGroup group, @NotNull final Location location) {
         doBurnoutCheck(group, "input");
     }
 

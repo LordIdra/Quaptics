@@ -136,7 +136,7 @@ public class Charger extends ConnectedBlock implements InfoPanelBlock, ItemHolde
     }
 
     @Override
-    public void onInputLinkUpdated(@NotNull final ConnectionGroup group) {
+    public void onInputLinkUpdated(@NotNull final ConnectionGroup group, @NotNull final Location location) {
         doBurnoutCheck(group, "input");
     }
 

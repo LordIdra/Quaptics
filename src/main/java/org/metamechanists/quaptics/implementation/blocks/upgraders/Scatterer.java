@@ -80,19 +80,14 @@ public class Scatterer extends ConnectedBlock implements PowerAnimatedBlock, Pow
     }
 
     @Override
-    public void onInputLinkUpdated(@NotNull final ConnectionGroup group) {
+    public void onInputLinkUpdated(@NotNull final ConnectionGroup group, @NotNull final Location location) {
         if (doBurnoutCheck(group, "input")) {
             return;
         }
 
-        final Optional<Location> location = group.getLocation();
-        if (location.isEmpty()) {
-            return;
-        }
-
-        final Optional<Link> inputLink = getLink(location.get(), "input");
-        final Optional<Link> outputLink = getLink(location.get(), "output");
-        onPoweredAnimation(location.get(), settings.isOperational(inputLink));
+        final Optional<Link> inputLink = getLink(location, "input");
+        final Optional<Link> outputLink = getLink(location, "output");
+        onPoweredAnimation(location, settings.isOperational(inputLink));
         if (outputLink.isEmpty()) {
             return;
         }

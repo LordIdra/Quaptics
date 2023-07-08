@@ -71,25 +71,20 @@ public abstract class Turret extends ConnectedBlock {
     }
 
     @Override
-    public void onInputLinkUpdated(@NotNull final ConnectionGroup group) {
+    public void onInputLinkUpdated(@NotNull final ConnectionGroup group, @NotNull final Location location) {
         if (doBurnoutCheck(group, "input")) {
             return;
         }
 
-        final Optional<Location> location = group.getLocation();
-        if (location.isEmpty()) {
-            return;
-        }
+        BlockStorageAPI.set(location, Keys.BS_POWERED, false);
 
-        BlockStorageAPI.set(location.get(), Keys.BS_POWERED, false);
-
-        final Optional<Link> inputLink = getLink(location.get(), "input");
+        final Optional<Link> inputLink = getLink(location, "input");
         if (inputLink.isEmpty()) {
             return;
         }
 
         if (settings.isOperational(inputLink)) {
-            BlockStorageAPI.set(location.get(), Keys.BS_POWERED, true);
+            BlockStorageAPI.set(location, Keys.BS_POWERED, true);
         }
     }
 

@@ -208,7 +208,7 @@ public abstract class ConnectedBlock extends QuapticBlock {
         return location.isEmpty() ? Optional.empty() : getLink(location.get(), name);
     }
 
-    public void onInputLinkUpdated(@NotNull final ConnectionGroup group) {}
+    public void onInputLinkUpdated(@NotNull final ConnectionGroup group, @NotNull final Location location) {}
 
     private Optional<Location> calculatePointLocationSphere(@NotNull final ConnectionPointId from, @NotNull final ConnectionPointId to) {
         final Optional<ConnectionPoint> fromPoint = from.get();

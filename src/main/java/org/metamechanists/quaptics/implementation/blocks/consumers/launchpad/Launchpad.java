@@ -97,16 +97,13 @@ public class Launchpad extends ConnectedBlock implements ConfigPanelBlock, Power
     }
 
     @Override
-    public void onInputLinkUpdated(@NotNull final ConnectionGroup group) {
-        doBurnoutCheck(group, "input");
-
-        final Optional<Location> location = group.getLocation();
-        if (location.isEmpty()) {
+    public void onInputLinkUpdated(@NotNull final ConnectionGroup group, @NotNull final Location location) {
+        if (doBurnoutCheck(group, "input")) { // TODO make sure all other components check and return
             return;
         }
 
-        final Optional<Link> inputLink = getLink(location.get(), "input");
-        onPoweredAnimation(location.get(), inputLink.isPresent() && settings.isOperational(inputLink));
+        final Optional<Link> inputLink = getLink(location, "input");
+        onPoweredAnimation(location, inputLink.isPresent() && settings.isOperational(inputLink));
     }
 
     @Override

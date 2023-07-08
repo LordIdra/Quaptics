@@ -137,7 +137,7 @@ public class DataStripper extends ConnectedBlock implements InfoPanelBlock, Item
     }
 
     @Override
-    public void onInputLinkUpdated(@NotNull final ConnectionGroup group) {
+    public void onInputLinkUpdated(@NotNull final ConnectionGroup group, @NotNull final Location location) {
         doBurnoutCheck(group, "input");
     }
 

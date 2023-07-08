@@ -66,28 +66,23 @@ public class Splitter extends ConnectedBlock implements PowerAnimatedBlock, Powe
     }
 
     @Override
-    public void onInputLinkUpdated(@NotNull final ConnectionGroup group) {
+    public void onInputLinkUpdated(@NotNull final ConnectionGroup group, @NotNull final Location location) {
         if (doBurnoutCheck(group, "input")) {
             return;
         }
 
-        final Optional<Location> location = group.getLocation();
-        if (location.isEmpty()) {
-            return;
-        }
-
-        final List<Link> outgoingLinks = getOutgoingLinks(location.get());
+        final List<Link> outgoingLinks = getOutgoingLinks(location);
         if (outgoingLinks.isEmpty()) {
             return;
         }
 
-        final Optional<Link> inputLink = getLink(location.get(), "input");
+        final Optional<Link> inputLink = getLink(location, "input");
         if (inputLink.isEmpty()) {
             outgoingLinks.forEach(output -> output.setPower(0));
             return;
         }
 
-        onPoweredAnimation(location.get(), inputLink.get().isEnabled());
+        onPoweredAnimation(location, inputLink.get().isEnabled());
 
         final double outputPower = PowerLossBlock.calculatePowerLoss(settings, inputLink.get().getPower()) / outgoingLinks.size();
         final double outputFrequency = inputLink.get().getFrequency();

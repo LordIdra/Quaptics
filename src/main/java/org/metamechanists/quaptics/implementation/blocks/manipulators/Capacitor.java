@@ -115,26 +115,21 @@ public class Capacitor extends ConnectedBlock implements InfoPanelBlock, PowerLo
     }
 
     @Override
-    public void onInputLinkUpdated(@NotNull final ConnectionGroup group) {
+    public void onInputLinkUpdated(@NotNull final ConnectionGroup group, @NotNull final Location location) {
         if (doBurnoutCheck(group, "input")) {
             return;
         }
 
-        final Optional<Location> location = group.getLocation();
-        if (location.isEmpty()) {
-            return;
-        }
-
-        final Optional<Link> inputLink = getLink(location.get(), "input");
+        final Optional<Link> inputLink = getLink(location, "input");
         if (inputLink.isEmpty()) {
-            BlockStorageAPI.set(location.get(), Keys.BS_CHARGE_RATE, 0);
+            BlockStorageAPI.set(location, Keys.BS_CHARGE_RATE, 0);
             return;
         }
 
         final double chargeRate = settings.isOperational(inputLink)
                 ? PowerLossBlock.calculatePowerLoss(settings, inputLink.get().getPower() / QuapticTicker.QUAPTIC_TICKS_PER_SECOND)
                 : 0;
-        BlockStorageAPI.set(location.get(), Keys.BS_CHARGE_RATE, chargeRate);
+        BlockStorageAPI.set(location, Keys.BS_CHARGE_RATE, chargeRate);
     }
 
     private double doCharge(final Location location, final double charge) {

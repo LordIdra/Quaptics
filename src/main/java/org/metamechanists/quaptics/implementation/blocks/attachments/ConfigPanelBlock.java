@@ -36,6 +36,7 @@ public interface ConfigPanelBlock {
         panel.interact(location.get(), name, type);
     }
 
+    // TODO config panel wand
     default void setPanelHidden(@NotNull final ConnectionGroup group, final boolean hidden) {
         final Optional<Location> location = group.getLocation();
         if (location.isEmpty()) {

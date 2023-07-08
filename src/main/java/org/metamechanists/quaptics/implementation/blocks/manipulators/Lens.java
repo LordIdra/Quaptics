@@ -59,25 +59,24 @@ public class Lens extends ConnectedBlock implements PowerAnimatedBlock, PowerLos
     }
 
     @Override
-    public void onInputLinkUpdated(@NotNull final ConnectionGroup group) {
+    public void onInputLinkUpdated(@NotNull final ConnectionGroup group, @NotNull final Location location) {
         if (doBurnoutCheck(group, "input")) {
             return;
         }
 
         final Optional<ConnectionPoint> input = group.getPoint("input");
-        final Optional<Location> location = group.getLocation();
-        if (input.isEmpty() || location.isEmpty()) {
+        if (input.isEmpty()) {
             return;
         }
 
-        onPoweredAnimation(location.get(), input.get().isLinkEnabled());
+        onPoweredAnimation(location, input.get().isLinkEnabled());
 
-        final Optional<Link> outputLink = getLink(location.get(), "output");
+        final Optional<Link> outputLink = getLink(location, "output");
         if (outputLink.isEmpty()) {
             return;
         }
 
-        final Optional<Link> inputLink = getLink(location.get(), "input");
+        final Optional<Link> inputLink = getLink(location, "input");
         if (inputLink.isEmpty()) {
             outputLink.get().setPower(0);
             return;

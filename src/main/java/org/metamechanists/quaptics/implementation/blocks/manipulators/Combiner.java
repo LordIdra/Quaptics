@@ -65,21 +65,16 @@ public class Combiner extends ConnectedBlock implements PowerAnimatedBlock, Powe
     }
 
     @Override
-    public void onInputLinkUpdated(@NotNull final ConnectionGroup group) {
-        final Optional<Location> location = group.getLocation();
-        if (location.isEmpty()) {
-            return;
-        }
-
-        final List<ConnectionPoint> enabledInputs = getEnabledInputs(location.get());
+    public void onInputLinkUpdated(@NotNull final ConnectionGroup group, @NotNull final Location location) {
+        final List<ConnectionPoint> enabledInputs = getEnabledInputs(location);
         if (doBurnoutCheck(group, enabledInputs)) {
             return;
         }
 
-        onPoweredAnimation(location.get(), !enabledInputs.isEmpty());
+        onPoweredAnimation(location, !enabledInputs.isEmpty());
 
-        final List<Link> incomingLinks = getIncomingLinks(location.get());
-        final Optional<Link> outputLink = getLink(location.get(), "output");
+        final List<Link> incomingLinks = getIncomingLinks(location);
+        final Optional<Link> outputLink = getLink(location, "output");
         if (outputLink.isEmpty()) {
             return;
         }
