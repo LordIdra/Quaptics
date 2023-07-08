@@ -29,7 +29,6 @@ import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Language;
 import org.metamechanists.quaptics.utils.Particles;
 import org.metamechanists.quaptics.utils.Transformations;
-import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.builders.ItemDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
@@ -63,7 +62,7 @@ public class InfusionContainer extends ConnectedBlock implements ItemHolderBlock
     private static final int PILLAR_PARTICLE_COUNT = 3;
     private static final double PILLAR_PARTICLE_ANIMATION_LENGTH_SECONDS = 0.5;
     private static final double CONTAINER_PARTICLE_RADIUS = 0.5;
-    private static final double CONTAINER_PARTICLE_INTERVAL = 0.5;
+    private static final int CONTAINER_PARTICLE_COUNT = 2;
 
     private static final Map<ItemStack, ItemStack> RECIPES = Map.of(
             new ItemStack(Material.DEAD_BUSH), Primitive.INFUSED_DEAD_BUSH
@@ -184,9 +183,7 @@ public class InfusionContainer extends ConnectedBlock implements ItemHolderBlock
                 PILLAR_PARTICLE_COUNT, (timeSinceCraftStarted % PILLAR_PARTICLE_ANIMATION_LENGTH_SECONDS) / PILLAR_PARTICLE_ANIMATION_LENGTH_SECONDS);
     }
     private static void animateCenter(@NotNull final Location center, final double timeSinceCraftStarted) {
-        if (Utils.equal(timeSinceCraftStarted % CONTAINER_PARTICLE_INTERVAL, 0)) {
-            ParticleUtils.sphere(center.clone().toCenterLocation(), Particle.ENCHANTMENT_TABLE, CONTAINER_PARTICLE_RADIUS, false);
-        }
+        ParticleUtils.randomParticle(center.clone().toCenterLocation(), Particle.ENCHANTMENT_TABLE, CONTAINER_PARTICLE_RADIUS, CONTAINER_PARTICLE_COUNT);
     }
 
     private void cancelCraft(@NotNull final Location location) {
