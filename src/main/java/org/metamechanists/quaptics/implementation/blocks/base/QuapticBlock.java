@@ -88,6 +88,8 @@ public abstract class QuapticBlock extends SlimefunItem {
             } else {
                 onRightClick(block.getLocation(), event.getPlayer());
             }
+
+            event.cancel();
         };
     }
 
