@@ -156,6 +156,8 @@ public class InfusionContainer extends ConnectedBlock implements ItemHolderBlock
     }
     @Override
     public Optional<ItemStack> onRemove(@NotNull final Location location, @NotNull final ItemStack stack) {
+        BlockStorageAPI.set(location, Keys.BS_SECONDS_SINCE_CRAFT_STARTED, 0);
+        BlockStorageAPI.set(location, Keys.BS_CRAFT_IN_PROGRESS, false);
         return Optional.of(stack);
     }
 
