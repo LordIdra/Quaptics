@@ -265,7 +265,7 @@ public class Primitive {
 
     private @NotNull ItemStack getInfusedDeadBush() {
         final ItemStack itemStack = new ItemStack(Material.DEAD_BUSH);
-        itemStack.addEnchantment(Enchantment.ARROW_DAMAGE, 1);
+        itemStack.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 1);
         itemStack.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         return itemStack;
     }
