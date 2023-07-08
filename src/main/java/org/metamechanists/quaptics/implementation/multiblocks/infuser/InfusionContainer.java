@@ -1,12 +1,13 @@
 package org.metamechanists.quaptics.implementation.multiblocks.infuser;
 
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
+import dev.sefiraat.sefilib.misc.ParticleUtils;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
-import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
@@ -17,6 +18,7 @@ import org.metamechanists.quaptics.implementation.blocks.attachments.InfoPanelBl
 import org.metamechanists.quaptics.implementation.blocks.attachments.ItemHolderBlock;
 import org.metamechanists.quaptics.implementation.blocks.base.QuapticBlock;
 import org.metamechanists.quaptics.implementation.multiblocks.ComplexMultiblock;
+import org.metamechanists.quaptics.items.groups.Primitive;
 import org.metamechanists.quaptics.panels.info.InfoPanelContainer;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
@@ -30,12 +32,22 @@ public class InfusionContainer extends QuapticBlock implements ItemHolderBlock, 
     private static final Vector3f BASE_SCALE = new Vector3f(0.9F, 0.6F, 0.9F);
     private static final Vector3f BASE_OFFSET = new Vector3f(0.0F, -0.3F, 0.0F);
     private static final Vector3f PILLAR_SCALE = new Vector3f(0.2F, 0.8F, 0.2F);
+
     private static final Vector3f PILLAR_1_OFFSET = new Vector3f(-0.4F, -0.1F, -0.4F);
     private static final Vector3f PILLAR_2_OFFSET = new Vector3f(-0.4F, -0.1F, 0.4F);
     private static final Vector3f PILLAR_3_OFFSET = new Vector3f(0.4F, -0.1F, -0.4F);
     private static final Vector3f PILLAR_4_OFFSET = new Vector3f(0.4F, -0.1F, 0.4F);
+
+    private static final Vector PILLAR_1_LOCATION = new Vector(2, 0, 0);
+    private static final Vector PILLAR_2_LOCATION = new Vector(-2, 0, 0);
+    private static final Vector PILLAR_3_LOCATION = new Vector(0, 0, 2);
+    private static final Vector PILLAR_4_LOCATION = new Vector(0, 0, -2);
+
     private static final Vector3f ITEM_DISPLAY_SIZE = new Vector3f(0.5F);
     private static final Vector3f ITEM_DISPLAY_OFFSET = new Vector3f(0, 0.3F, 0);
+
+    private static final double PILLAR_PARTICLE_SPACING = 0.2;
+    private static final double CONTAINER_PARTICLE_RADIUS = 1.2;
 
 
     public InfusionContainer(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
@@ -99,14 +111,27 @@ public class InfusionContainer extends QuapticBlock implements ItemHolderBlock, 
     @Override
     public Map<Vector, ItemStack> getStructure() {
         return Map.of(
-                new Vector(2, 0, 0), new ItemStack(Material.CYAN_CONCRETE),
-                new Vector(-2, 0, 0), SlimefunItems.ANCIENT_PEDESTAL,
-                new Vector(0, 0, 2), new ItemStack(Material.ENCHANTING_TABLE)
+                PILLAR_1_LOCATION, Primitive.INFUSION_PILLAR,
+                PILLAR_2_LOCATION, Primitive.INFUSION_PILLAR,
+                PILLAR_3_LOCATION, Primitive.INFUSION_PILLAR,
+                PILLAR_4_LOCATION, Primitive.INFUSION_PILLAR
         );
     }
 
     @Override
     public void tickAnimation(@NotNull final Location location) {
+        animatePillar(location.clone().add(PILLAR_1_LOCATION), location);
+        animatePillar(location.clone().add(PILLAR_2_LOCATION), location);
+        animatePillar(location.clone().add(PILLAR_3_LOCATION), location);
+        animatePillar(location.clone().add(PILLAR_4_LOCATION), location);
+        animateCenter(location);
+    }
 
+    private static void animatePillar(@NotNull final Location center, @NotNull final Location pillarLocation) {
+        ParticleUtils.drawLine(Particle.END_ROD, pillarLocation, center, PILLAR_PARTICLE_SPACING);
+    }
+
+    private static void animateCenter(@NotNull final Location center) {
+        org.metamechanists.metalib.utils.ParticleUtils.sphere(center, Particle.ELECTRIC_SPARK, CONTAINER_PARTICLE_RADIUS, false);
     }
 }

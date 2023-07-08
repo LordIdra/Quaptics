@@ -21,6 +21,7 @@ import org.metamechanists.quaptics.implementation.blocks.manipulators.Combiner;
 import org.metamechanists.quaptics.implementation.blocks.manipulators.Lens;
 import org.metamechanists.quaptics.implementation.blocks.manipulators.Splitter;
 import org.metamechanists.quaptics.implementation.multiblocks.infuser.InfusionContainer;
+import org.metamechanists.quaptics.implementation.multiblocks.infuser.InfusionPillar;
 import org.metamechanists.quaptics.items.Groups;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
@@ -131,6 +132,11 @@ public class Primitive {
             .tier(Tier.PRIMITIVE)
             .build();
 
+    public final Settings INFUSION_PILLAR_SETTINGS = Settings.builder()
+            .tier(Tier.PRIMITIVE)
+            .minPower(7)
+            .build();
+
     public final SlimefunItemStack SOLAR_CONCENTRATOR_1 = new SlimefunItemStack(
             "QP_SOLAR_CONCENTRATOR_1",
             Material.GLASS_PANE,
@@ -231,12 +237,19 @@ public class Primitive {
 
     public final SlimefunItemStack INFUSION_CONTAINER = new SlimefunItemStack(
             "QP_INFUSION_CONTAINER",
-            Material.LIGHT_BLUE_STAINED_GLASS,
+            Material.GRAY_CONCRETE,
             "&6Infusion Container",
             Lore.create(ITEM_PROJECTOR_SETTINGS,
                     "&7● Multiblock structure: use the Multiblock Wand to build the structure",
                     "&7● Infuses items",
                     "&7● &eRight Click &7with an item to start infusing"));
+
+    public final SlimefunItemStack INFUSION_PILLAR = new SlimefunItemStack(
+            "QP_INFUSION_PILLAR",
+            Material.BLUE_CONCRETE,
+            "&6Infusion Pillar",
+            Lore.create(INFUSION_PILLAR_SETTINGS,
+                    "&7● Multiblock component"));
 
     public void initialize() {
         final SlimefunAddon addon = Quaptics.getInstance();
@@ -331,5 +344,12 @@ public class Primitive {
                 RecipeType.NULL,
                 new ItemStack[]{},
                 INFUSION_CONTAINER_SETTINGS).register(addon);
+
+        new InfusionPillar(
+                Groups.PRIMITIVE,
+                INFUSION_PILLAR,
+                RecipeType.NULL,
+                new ItemStack[]{},
+                INFUSION_PILLAR_SETTINGS).register(addon);
     }
 }

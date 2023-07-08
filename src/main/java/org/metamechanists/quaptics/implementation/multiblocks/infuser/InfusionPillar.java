@@ -43,7 +43,7 @@ public class InfusionPillar extends ConnectedBlock implements PowerAnimatedBlock
     @Override
     protected void addDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
         displayGroup.addDisplay("pillar", new BlockDisplayBuilder(location.toCenterLocation())
-                .setBlockData(Material.GRAY_CONCRETE.createBlockData())
+                .setBlockData(Material.BLUE_CONCRETE.createBlockData())
                 .setTransformation(Transformations.adjustedScaleOffset(PILLAR_SCALE, PILLAR_OFFSET))
                 .build());
         displayGroup.addDisplay("prism", new BlockDisplayBuilder(location.toCenterLocation())
