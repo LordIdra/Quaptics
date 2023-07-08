@@ -49,17 +49,17 @@ public interface ComplexMultiblock {
         if (block.getType().isEmpty()) {
             blockDisplayBuilder.setGlow(EMPTY_COLOR);
         } else {
-            blockDisplayBuilder.setGlow(isStructureBlockValid(center, offset, itemStack) ? RIGHT_MATERIAL_COLOR : WRONG_MATERIAL_COLOR);
+            blockDisplayBuilder.setGlow(isStructureBlockValid(block, offset, itemStack) ? RIGHT_MATERIAL_COLOR : WRONG_MATERIAL_COLOR);
         }
 
         final BlockDisplay blockDisplay = blockDisplayBuilder.build();
-        final Interaction interaction = new InteractionBuilder(block.getLocation())
+        final Interaction interaction = new InteractionBuilder(block.getLocation().toCenterLocation())
                 .setWidth(DISPLAY_SCALE)
                 .setHeight(DISPLAY_SCALE)
                 .build();
 
-        final SlimefunItem slimefunItem = BlockStorageAPI.check(center);
-        final String blockName = slimefunItem != null ? slimefunItem.getItemName() : itemStack.getType().name();
+        final SlimefunItem slimefunItem = BlockStorageAPI.check(block);
+        final String blockName = slimefunItem != null ? slimefunItem.getItemName() : block.getType().name();
         final PersistentDataTraverser traverser = new PersistentDataTraverser(interaction.getUniqueId());
         traverser.set("blockName", blockName);
 

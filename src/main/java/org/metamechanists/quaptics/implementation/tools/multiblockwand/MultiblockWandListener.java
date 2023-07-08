@@ -3,6 +3,7 @@ package org.metamechanists.quaptics.implementation.tools.multiblockwand;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Interaction;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
@@ -13,6 +14,15 @@ import org.metamechanists.quaptics.storage.PersistentDataTraverser;
 import org.metamechanists.quaptics.utils.Language;
 
 public class MultiblockWandListener implements Listener {
+    private static void projectionRightClicked(final @NotNull Entity interaction, final Player player) {
+        final PersistentDataTraverser traverser = new PersistentDataTraverser(interaction.getUniqueId());
+        if (traverser.getString("blockName") == null) {
+            return;
+        }
+
+        Language.sendLanguageMessage(player, "multiblock.block-name", traverser.getString("blockName"));
+    }
+
     @EventHandler
     public static void interactEvent(@NotNull final PlayerInteractEntityEvent event) {
         final Entity clickedEntity = event.getRightClicked();
@@ -20,17 +30,11 @@ public class MultiblockWandListener implements Listener {
             return;
         }
 
-        final ItemStack heldItem = event.getPlayer().getInventory().getItemInMainHand();
-        if (!(SlimefunItem.getByItem(heldItem) instanceof MultiblockWand)) {
-            return;
+        final ItemStack mainHandItem = event.getPlayer().getInventory().getItemInMainHand();
+        final ItemStack offHandItem = event.getPlayer().getInventory().getItemInOffHand();
+        if ((SlimefunItem.getByItem(mainHandItem) instanceof MultiblockWand) || (SlimefunItem.getByItem(offHandItem) instanceof MultiblockWand)) {
+            projectionRightClicked(clickedEntity, event.getPlayer());
         }
-
-        final PersistentDataTraverser traverser = new PersistentDataTraverser(clickedEntity.getUniqueId());
-        if (traverser.getString("blockName") == null) {
-            return;
-        }
-
-        Language.sendLanguageMessage(event.getPlayer(), "multiblock.block-name", traverser.getString("blockName"));
     }
 
     @EventHandler
