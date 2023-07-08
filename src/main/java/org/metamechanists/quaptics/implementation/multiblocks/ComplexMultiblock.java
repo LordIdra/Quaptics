@@ -35,6 +35,10 @@ public interface ComplexMultiblock {
 
     private static boolean isStructureBlockValid(final @NotNull Block center, final @NotNull Vector offset, final ItemStack predicted) {
         final Block actual = center.getRelative(offset.getBlockX(), offset.getBlockY(), offset.getBlockZ());
+        return isStructureBlockValid(actual, predicted);
+    }
+
+    private static boolean isStructureBlockValid(final @NotNull Block actual, final ItemStack predicted) {
         final SlimefunItem predictedSlimefunItem = SlimefunItem.getByItem(predicted);
         final SlimefunItem actualSlimefunItem = BlockStorageAPI.check(actual);
 
@@ -54,7 +58,7 @@ public interface ComplexMultiblock {
         if (block.getType().isEmpty()) {
             blockDisplayBuilder.setGlow(EMPTY_COLOR);
         } else {
-            blockDisplayBuilder.setGlow(isStructureBlockValid(block, offset, itemStack) ? RIGHT_MATERIAL_COLOR : WRONG_MATERIAL_COLOR);
+            blockDisplayBuilder.setGlow(isStructureBlockValid(block, itemStack) ? RIGHT_MATERIAL_COLOR : WRONG_MATERIAL_COLOR);
         }
 
         final BlockDisplay blockDisplay = blockDisplayBuilder.build();
