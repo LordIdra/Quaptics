@@ -1,6 +1,5 @@
 package org.metamechanists.quaptics.implementation.blocks.attachments;
 
-import io.github.bakedlibs.dough.items.CustomItemStack;
 import org.bukkit.Location;
 import org.bukkit.entity.Display;
 import org.bukkit.entity.ItemDisplay;
@@ -76,7 +75,7 @@ public interface ItemHolderBlock {
             return;
         }
 
-        final ItemStack itemStack = new CustomItemStack(player.getInventory().getItemInMainHand(), 1);
+        final ItemStack itemStack = player.getInventory().getItemInMainHand().asOne();
         if (itemStack.getType().isEmpty() || !onInsert(itemStack, player)) {
             return;
         }
