@@ -12,6 +12,7 @@ multiblock.block-name: "&7Block: &3{1}"
 multiblock.valid: "&aMultiblock constructed correctly!"
 
 infuser.cannot-be-infused: "&cThis item cannot be infused."
+infuser.pillars-not-powered: "&cYou must power all pillars of the infuser before infusing an item."
 
 charger.multiple-items: "&cYou can only insert one item at a time."
 charger.not-chargeable: "&cThis item cannot be charged."

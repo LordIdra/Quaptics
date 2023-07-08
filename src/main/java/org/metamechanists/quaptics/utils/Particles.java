@@ -19,7 +19,7 @@ public class Particles {
         final Location currentLocation = from.clone().add(Vector.fromJOML(new Vector3f(direction).mul((float) (offset * spacing))));
         final Vector locationIncrement = Vector.fromJOML(new Vector3f(direction).mul(spacing));
 
-        IntStream.range(0, particleCount).forEach(i -> {
+        IntStream.range(0, particleCount-1).forEach(i -> {
             from.getWorld().spawnParticle(particle, currentLocation, 1, 0, 0, 0, 0);
             currentLocation.add(locationIncrement);
         });

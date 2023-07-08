@@ -1,5 +1,6 @@
 name: Quaptics
 version: '${project.version}'
+author: Idra
 main: org.metamechanists.quaptics.Quaptics
 api-version: 1.19
 

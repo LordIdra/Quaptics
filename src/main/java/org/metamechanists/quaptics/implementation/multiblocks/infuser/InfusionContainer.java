@@ -62,7 +62,7 @@ public class InfusionContainer extends ConnectedBlock implements ItemHolderBlock
     private static final int PILLAR_PARTICLE_COUNT = 3;
     private static final double PILLAR_PARTICLE_ANIMATION_LENGTH_SECONDS = 0.5;
     private static final double CONTAINER_PARTICLE_RADIUS = 0.5;
-    private static final int CONTAINER_PARTICLE_COUNT = 2;
+    private static final int CONTAINER_PARTICLE_COUNT = 3;
 
     private static final Map<ItemStack, ItemStack> RECIPES = Map.of(
             new ItemStack(Material.DEAD_BUSH), Primitive.INFUSED_DEAD_BUSH
@@ -129,7 +129,7 @@ public class InfusionContainer extends ConnectedBlock implements ItemHolderBlock
             return;
         }
 
-        if (PILLAR_LOCATIONS.stream().anyMatch(vector -> !isPillarPowered(location.clone().add(vector)))) {
+        if (!allPillarsPowered(location)) {
             cancelCraft(location);
             return;
         }
@@ -146,13 +146,19 @@ public class InfusionContainer extends ConnectedBlock implements ItemHolderBlock
     }
     @Override
     public boolean onInsert(@NotNull final Location location, @NotNull final ItemStack stack, @NotNull final Player player) {
-        if (RECIPES.keySet().stream().anyMatch(input -> SlimefunUtils.isItemSimilar(input, stack, false))) {
-            BlockStorageAPI.set(location, Keys.BS_SECONDS_SINCE_CRAFT_STARTED, 0);
-            BlockStorageAPI.set(location, Keys.BS_CRAFT_IN_PROGRESS, true);
-            return true;
+        if (RECIPES.keySet().stream().noneMatch(input -> SlimefunUtils.isItemSimilar(input, stack, false))) {
+            Language.sendLanguageMessage(player, "infuser.cannot-be-infused");
+            return false;
         }
-        Language.sendLanguageMessage(player, "infuser.cannot-be-infused");
-        return false;
+
+        if (!allPillarsPowered(location)) {
+            Language.sendLanguageMessage(player, "infuser.pillars-not-powered");
+            return false;
+        }
+
+        BlockStorageAPI.set(location, Keys.BS_SECONDS_SINCE_CRAFT_STARTED, 0);
+        BlockStorageAPI.set(location, Keys.BS_CRAFT_IN_PROGRESS, true);
+        return true;
     }
     @Override
     public Optional<ItemStack> onRemove(@NotNull final Location location, @NotNull final ItemStack stack) {
@@ -172,12 +178,16 @@ public class InfusionContainer extends ConnectedBlock implements ItemHolderBlock
     }
     @Override
     public void tickAnimation(@NotNull final Location centerLocation, final double timeSeconds) {
+        // TODO make components light up
         PILLAR_LOCATIONS.forEach(pillarLocation -> animatePillar(centerLocation, centerLocation.clone().add(pillarLocation), timeSeconds));
         animateCenter(centerLocation, timeSeconds);
     }
 
     private static boolean isPillarPowered(@NotNull final Location pillarLocation) {
         return BlockStorageAPI.getBoolean(pillarLocation, Keys.BS_POWERED);
+    }
+    private static boolean allPillarsPowered(@NotNull final Location location) {
+        return PILLAR_LOCATIONS.stream().allMatch(vector -> isPillarPowered(location.clone().add(vector)));
     }
     private static void animatePillar(@NotNull final Location center, @NotNull final Location pillarLocation, final double timeSinceCraftStarted) {
         Particles.animatedLine(Particle.ELECTRIC_SPARK,
