@@ -1,7 +1,6 @@
 package org.metamechanists.quaptics.implementation.multiblocks.infuser;
 
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
-import dev.sefiraat.sefilib.misc.ParticleUtils;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
@@ -14,6 +13,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
+import org.metamechanists.metalib.utils.ParticleUtils;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
@@ -27,6 +27,7 @@ import org.metamechanists.quaptics.storage.QuapticTicker;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Language;
+import org.metamechanists.quaptics.utils.Particles;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.builders.ItemDisplayBuilder;
@@ -58,8 +59,9 @@ public class InfusionContainer extends ConnectedBlock implements ItemHolderBlock
     private static final Vector3f ITEM_DISPLAY_SIZE = new Vector3f(0.5F);
     private static final Vector3f ITEM_DISPLAY_OFFSET = new Vector3f(0, 0.3F, 0);
 
-    private static final double PILLAR_PARTICLE_SPACING = 0.2;
-    private static final double CONTAINER_PARTICLE_RADIUS = 1.2;
+    private static final int PILLAR_PARTICLE_COUNT = 3;
+    private static final double PILLAR_PARTICLE_ANIMATION_LENGTH_SECONDS = 0.5;
+    private static final double CONTAINER_PARTICLE_RADIUS = 0.5;
 
     private static final Map<ItemStack, ItemStack> RECIPES = Map.of(
             new ItemStack(Material.DEAD_BUSH), Primitive.INFUSED_DEAD_BUSH
@@ -126,8 +128,6 @@ public class InfusionContainer extends ConnectedBlock implements ItemHolderBlock
             return;
         }
 
-        tickAnimation(location);
-
         if (PILLAR_LOCATIONS.stream().anyMatch(vector -> !isPillarPowered(location.clone().add(vector)))) {
             cancelCraft(location);
             return;
@@ -136,6 +136,8 @@ public class InfusionContainer extends ConnectedBlock implements ItemHolderBlock
         double secondsSinceCraftStarted = BlockStorageAPI.getDouble(location, Keys.BS_SECONDS_SINCE_CRAFT_STARTED);
         secondsSinceCraftStarted += 1.0 / QuapticTicker.QUAPTIC_TICKS_PER_SECOND;
         BlockStorageAPI.set(location, Keys.BS_SECONDS_SINCE_CRAFT_STARTED, secondsSinceCraftStarted);
+
+        tickAnimation(location, secondsSinceCraftStarted);
 
         if (secondsSinceCraftStarted >= settings.getTimePerItem()) {
             completeCraft(location);
@@ -166,19 +168,21 @@ public class InfusionContainer extends ConnectedBlock implements ItemHolderBlock
         );
     }
     @Override
-    public void tickAnimation(@NotNull final Location centerLocation) {
-        PILLAR_LOCATIONS.forEach(pillarLocation -> animatePillar(centerLocation, centerLocation.clone().add(PILLAR_1_LOCATION)));
+    public void tickAnimation(@NotNull final Location centerLocation, final double timeSeconds) {
+        PILLAR_LOCATIONS.forEach(pillarLocation -> animatePillar(centerLocation, centerLocation.clone().add(PILLAR_1_LOCATION), timeSeconds));
         animateCenter(centerLocation);
     }
 
     private static boolean isPillarPowered(@NotNull final Location pillarLocation) {
         return BlockStorageAPI.getBoolean(pillarLocation, Keys.BS_POWERED);
     }
-    private static void animatePillar(@NotNull final Location center, @NotNull final Location pillarLocation) {
-        ParticleUtils.drawLine(Particle.END_ROD, pillarLocation, center, PILLAR_PARTICLE_SPACING);
+    private static void animatePillar(@NotNull final Location center, @NotNull final Location pillarLocation, final double timeSinceCraftStarted) {
+        Particles.animatedLine(Particle.ELECTRIC_SPARK,
+                pillarLocation.clone().toCenterLocation(), center.clone().toCenterLocation(),
+                PILLAR_PARTICLE_COUNT, (timeSinceCraftStarted % PILLAR_PARTICLE_ANIMATION_LENGTH_SECONDS) / PILLAR_PARTICLE_ANIMATION_LENGTH_SECONDS);
     }
     private static void animateCenter(@NotNull final Location center) {
-        org.metamechanists.metalib.utils.ParticleUtils.sphere(center, Particle.ELECTRIC_SPARK, CONTAINER_PARTICLE_RADIUS, false);
+        ParticleUtils.sphere(center.clone().toCenterLocation(), Particle.END_ROD, CONTAINER_PARTICLE_RADIUS, false);
     }
 
     private void cancelCraft(@NotNull final Location location) {
