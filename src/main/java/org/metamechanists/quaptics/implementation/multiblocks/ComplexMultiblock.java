@@ -41,11 +41,11 @@ public interface ComplexMultiblock {
     }
 
     private static @NotNull @Unmodifiable List<UUID> visualiseBlock(final @NotNull Block center, final @NotNull Vector offset, final @NotNull ItemStack itemStack) {
-        final BlockDisplayBuilder blockDisplayBuilder = new BlockDisplayBuilder(center.getLocation().toCenterLocation())
+        final Block block = center.getRelative(offset.getBlockX(), offset.getBlockY(), offset.getBlockZ());
+        final BlockDisplayBuilder blockDisplayBuilder = new BlockDisplayBuilder(block.getLocation().toCenterLocation())
                 .setBrightness(DISPLAY_BRIGHTNESS)
                 .setMaterial(itemStack.getType())
                 .setTransformation(Transformations.adjustedScale(new Vector3f(DISPLAY_SCALE, DISPLAY_SCALE, DISPLAY_SCALE)));
-        final Block block = center.getRelative(offset.getBlockX(), offset.getBlockY(), offset.getBlockZ());
         if (block.getType().isEmpty()) {
             blockDisplayBuilder.setGlow(EMPTY_COLOR);
         } else {

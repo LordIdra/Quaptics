@@ -8,16 +8,17 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.metamechanists.metalib.bstats.bukkit.Metrics;
-import org.metamechanists.quaptics.implementation.blocks.consumers.launchpad.LaunchpadListener;
-import org.metamechanists.quaptics.panels.config.ConfigPanelListener;
-import org.metamechanists.quaptics.panels.info.implementation.PointInfoPanelListener;
 import org.metamechanists.quaptics.implementation.blocks.burnout.BurnoutManager;
+import org.metamechanists.quaptics.implementation.blocks.consumers.launchpad.LaunchpadListener;
+import org.metamechanists.quaptics.implementation.tools.multiblockwand.MultiblockWandListener;
 import org.metamechanists.quaptics.implementation.tools.targetingwand.TargetingWandListener;
 import org.metamechanists.quaptics.items.Groups;
 import org.metamechanists.quaptics.items.Items;
+import org.metamechanists.quaptics.panels.config.ConfigPanelListener;
+import org.metamechanists.quaptics.panels.info.implementation.PointInfoPanelListener;
 import org.metamechanists.quaptics.storage.CacheGarbageCollector;
-import org.metamechanists.quaptics.storage.QuapticTicker;
 import org.metamechanists.quaptics.storage.QuapticStorage;
+import org.metamechanists.quaptics.storage.QuapticTicker;
 import org.metamechanists.quaptics.storage.SaveTask;
 
 public final class Quaptics extends JavaPlugin implements SlimefunAddon {
@@ -32,6 +33,7 @@ public final class Quaptics extends JavaPlugin implements SlimefunAddon {
         pluginManager.registerEvents(new LaunchpadListener(), this);
         pluginManager.registerEvents(new ConfigPanelListener(), this);
         pluginManager.registerEvents(new BurnoutManager(), this);
+        pluginManager.registerEvents(new MultiblockWandListener(), this);
     }
 
     private void initializeRunnables() {
