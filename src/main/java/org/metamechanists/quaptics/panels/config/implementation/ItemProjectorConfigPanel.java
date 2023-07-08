@@ -15,6 +15,7 @@ import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.id.complex.ConfigPanelId;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 
+import java.util.Objects;
 import java.util.Optional;
 
 public class ItemProjectorConfigPanel extends ConfigPanel {
@@ -32,6 +33,7 @@ public class ItemProjectorConfigPanel extends ConfigPanel {
         return new ConfigPanelBuilder(groupId, location.clone().add(getOffset()), SIZE, rotationY)
                 .addAttribute("height", "&fHeight")
                 .addAttribute("size", "&fSize")
+                .addAttribute("mode", "&fMode")
                 .build();
     }
 
@@ -49,6 +51,13 @@ public class ItemProjectorConfigPanel extends ConfigPanel {
             size += "add".equals(type) ? 1 : -1;
             size = Utils.clampToRange(size, 0, ItemProjector.MAX_SIZE);
             BlockStorageAPI.set(location, Keys.BS_SIZE, size);
+        }
+
+        if ("mode".equals(name)) {
+            double size = BlockStorageAPI.getDouble(location, Keys.BS_MODE);
+            size += "add".equals(type) ? 1 : -1;
+            size = Utils.clampToRange(size, 0, ItemProjector.MAX_MODE);
+            BlockStorageAPI.set(location, Keys.BS_MODE, size);
         }
 
         ItemProjector.onConfigUpdated(location);
@@ -73,9 +82,11 @@ public class ItemProjectorConfigPanel extends ConfigPanel {
 
         final double height = BlockStorageAPI.getDouble(location.get(), Keys.BS_HEIGHT);
         final double size = BlockStorageAPI.getDouble(location.get(), Keys.BS_SIZE);
+        final int mode = BlockStorageAPI.getInt(location.get(), Keys.BS_MODE);
 
         container.setValue("height", Lore.progressBar(height, ItemProjector.MAX_HEIGHT, "&c", "&7"));
         container.setValue("size", Lore.progressBar(size, ItemProjector.MAX_SIZE, "&c", "&7"));
+        container.setValue("mode", Objects.toString(mode));
     }
 
     @SuppressWarnings("MagicNumber")
