@@ -91,7 +91,7 @@ public interface ComplexMultiblock {
         final ItemStack mainHandItem = player.getInventory().getItemInMainHand();
         final ItemStack offHandItem = player.getInventory().getItemInOffHand();
 
-        if (SlimefunItem.getByItem(mainHandItem) instanceof  MultiblockWand) {
+        if (SlimefunItem.getByItem(mainHandItem) instanceof MultiblockWand) {
             multiblockInteract(center, player, mainHandItem);
             return true;
         }

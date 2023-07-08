@@ -20,6 +20,7 @@ import org.metamechanists.quaptics.implementation.blocks.manipulators.Capacitor;
 import org.metamechanists.quaptics.implementation.blocks.manipulators.Combiner;
 import org.metamechanists.quaptics.implementation.blocks.manipulators.Lens;
 import org.metamechanists.quaptics.implementation.blocks.manipulators.Splitter;
+import org.metamechanists.quaptics.implementation.multiblocks.InfusionContainer;
 import org.metamechanists.quaptics.items.Groups;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
@@ -126,6 +127,10 @@ public class Primitive {
             .connectionRadius(0.6F)
             .build();
 
+    public final Settings INFUSION_CONTAINER_SETTINGS = Settings.builder()
+            .tier(Tier.PRIMITIVE)
+            .build();
+
     public final SlimefunItemStack SOLAR_CONCENTRATOR_1 = new SlimefunItemStack(
             "QP_SOLAR_CONCENTRATOR_1",
             Material.GLASS_PANE,
@@ -224,6 +229,15 @@ public class Primitive {
                     "&7● &eRight Click &7an item to insert",
                     "&7● &eRight Click &7again to retrieve"));
 
+    public final SlimefunItemStack INFUSION_CONTAINER = new SlimefunItemStack(
+            "QP_INFUSION_CONTAINER",
+            Material.LIGHT_BLUE_STAINED_GLASS,
+            "&6Infusion Container",
+            Lore.create(ITEM_PROJECTOR_SETTINGS,
+                    "&7● Multiblock structure",
+                    "&7● Infuses items",
+                    "&7● &eRight Click &7an item to start infusing"));
+
     public void initialize() {
         final SlimefunAddon addon = Quaptics.getInstance();
 
@@ -310,5 +324,12 @@ public class Primitive {
                 RecipeType.NULL,
                 new ItemStack[]{},
                 ITEM_PROJECTOR_SETTINGS).register(addon);
+
+        new InfusionContainer(
+                Groups.PRIMITIVE,
+                INFUSION_CONTAINER,
+                RecipeType.NULL,
+                new ItemStack[]{},
+                INFUSION_CONTAINER_SETTINGS).register(addon);
     }
 }
