@@ -1,6 +1,7 @@
 package org.metamechanists.quaptics.implementation.multiblocks;
 
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
+import io.github.thebusybiscuit.slimefun4.utils.ChatUtils;
 import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
 import org.bukkit.Color;
 import org.bukkit.block.Block;
@@ -54,13 +55,13 @@ public interface ComplexMultiblock {
         }
 
         final BlockDisplay blockDisplay = blockDisplayBuilder.build();
-        final Interaction interaction = new InteractionBuilder(block.getLocation().toCenterLocation().subtract(INTERACTION_CORRECTION_OFFSET))
+        final Interaction interaction = new InteractionBuilder(block.getLocation().toCenterLocation().add(INTERACTION_CORRECTION_OFFSET))
                 .setWidth(DISPLAY_SCALE)
                 .setHeight(DISPLAY_SCALE)
                 .build();
 
         final SlimefunItem slimefunItem = SlimefunItem.getByItem(itemStack);
-        final String blockName = slimefunItem != null ? slimefunItem.getItemName() : itemStack.getType().name();
+        final String blockName = slimefunItem != null ? slimefunItem.getItemName() : ChatUtils.humanize(itemStack.getType().name());
         final PersistentDataTraverser traverser = new PersistentDataTraverser(interaction.getUniqueId());
         traverser.set("blockName", blockName);
 
