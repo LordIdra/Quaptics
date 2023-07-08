@@ -66,8 +66,8 @@ public class InfusionPillar extends ConnectedBlock implements PowerAnimatedBlock
         }
 
         final Optional<Link> link = getLink(location, "input");
-        onPoweredAnimation(location, link.isPresent() && settings.isOperational(link));
-        BlockStorageAPI.set(location, Keys.BS_POWERED, link.isPresent() && settings.isOperational(link));
+        onPoweredAnimation(location, settings.isOperational(link));
+        BlockStorageAPI.set(location, Keys.BS_POWERED, settings.isOperational(link));
     }
     @Override
     public void onPoweredAnimation(final Location location, final boolean powered) {
