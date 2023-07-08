@@ -3,6 +3,7 @@ package org.metamechanists.quaptics.implementation.tools.targetingwand;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Interaction;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
@@ -13,6 +14,14 @@ import org.metamechanists.quaptics.utils.id.complex.ConnectionPointId;
 
 public class TargetingWandListener implements Listener {
 
+    private static void useWand(final Player player, final @NotNull ConnectionPointId id, final TargetingWand wand, final ItemStack itemStack) {
+        if (id.get().isEmpty()) {
+            return;
+        }
+
+        wand.use(player, id, itemStack);
+    }
+
     @EventHandler
     public static void interactEvent(@NotNull final PlayerInteractEntityEvent event) {
         final Entity clickedEntity = event.getRightClicked();
@@ -20,17 +29,19 @@ public class TargetingWandListener implements Listener {
             return;
         }
 
-        final ItemStack heldItem = event.getPlayer().getInventory().getItemInMainHand();
-        if (!(SlimefunItem.getByItem(heldItem) instanceof final TargetingWand wand)) {
-            return;
-        }
+        final ItemStack mainHandItem = event.getPlayer().getInventory().getItemInMainHand();
+        final ItemStack offHandItem = event.getPlayer().getInventory().getItemInOffHand();
 
         final ConnectionPointId pointId = new ConnectionPointId(clickedEntity.getUniqueId());
-        if (pointId.get().isEmpty()) {
+
+        if (SlimefunItem.getByItem(mainHandItem) instanceof final TargetingWand wand) {
+            useWand(event.getPlayer(), pointId, wand, mainHandItem);
             return;
         }
 
-        wand.use(event.getPlayer(), pointId, heldItem);
+        if (SlimefunItem.getByItem(offHandItem) instanceof final TargetingWand wand) {
+            useWand(event.getPlayer(), pointId, wand, offHandItem);
+        }
     }
 
     @EventHandler
