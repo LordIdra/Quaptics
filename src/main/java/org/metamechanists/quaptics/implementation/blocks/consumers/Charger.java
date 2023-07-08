@@ -77,15 +77,6 @@ public class Charger extends ConnectedBlock implements InfoPanelBlock, ItemHolde
     }
 
     @Override
-    public BlockInfoPanel createPanel(final Location location, @NotNull final ConnectionGroup group) {
-        return new ChargerInfoPanel(location, group.getId());
-    }
-    @Override
-    public BlockInfoPanel getPanel(final InfoPanelId panelId, final ConnectionGroupId groupId) {
-        return new ChargerInfoPanel(panelId, groupId);
-    }
-
-    @Override
     @OverridingMethodsMustInvokeSuper
     protected void onPlace(@NotNull final BlockPlaceEvent event) {
         super.onPlace(event);
@@ -102,7 +93,6 @@ public class Charger extends ConnectedBlock implements InfoPanelBlock, ItemHolde
     protected void onRightClick(final @NotNull Location location, final @NotNull Player player) {
         itemHolderInteract(location, player);
     }
-
     @Override
     public void onQuapticTick(@NotNull final ConnectionGroup group, @NotNull final Location location) {
         if (!BlockStorageAPI.getBoolean(location, Keys.BS_IS_HOLDING_ITEM)) {
@@ -142,5 +132,14 @@ public class Charger extends ConnectedBlock implements InfoPanelBlock, ItemHolde
     public Optional<ItemStack> onRemove(@NotNull final Location location, @NotNull final ItemStack stack) {
         QuapticChargeableItem.updateLore(stack);
         return Optional.of(stack);
+    }
+
+    @Override
+    public BlockInfoPanel createPanel(final Location location, @NotNull final ConnectionGroup group) {
+        return new ChargerInfoPanel(location, group.getId());
+    }
+    @Override
+    public BlockInfoPanel getPanel(final InfoPanelId panelId, final ConnectionGroupId groupId) {
+        return new ChargerInfoPanel(panelId, groupId);
     }
 }

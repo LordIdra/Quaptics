@@ -8,6 +8,8 @@ import org.jetbrains.annotations.NotNull;
 public class Utils {
     public final int BRIGHTNESS_ON = 15;
     public final int BRIGHTNESS_OFF = 3;
+    public final int VIEW_RANGE_ON = 1;
+    public final int VIEW_RANGE_OFF = 0;
     private final double FLOATING_POINT_THRESHOLD = 0.00001;
     public double roundTo2dp(final double value) {
         return Math.round(value*Math.pow(10, 2)) / Math.pow(10, 2);

@@ -84,15 +84,6 @@ public class DataStripper extends ConnectedBlock implements InfoPanelBlock, Item
     }
 
     @Override
-    public BlockInfoPanel createPanel(final Location location, @NotNull final ConnectionGroup group) {
-        return new ProgressInfoPanel(location, group.getId());
-    }
-    @Override
-    public BlockInfoPanel getPanel(final InfoPanelId panelId, final ConnectionGroupId groupId) {
-        return new ProgressInfoPanel(panelId, groupId);
-    }
-
-    @Override
     @OverridingMethodsMustInvokeSuper
     protected void onPlace(@NotNull final BlockPlaceEvent event) {
         super.onPlace(event);
@@ -150,6 +141,15 @@ public class DataStripper extends ConnectedBlock implements InfoPanelBlock, Item
                 ? Optional.of(stripData(stack))
                 : Optional.of(stack);
 
+    }
+
+    @Override
+    public BlockInfoPanel createPanel(final Location location, @NotNull final ConnectionGroup group) {
+        return new ProgressInfoPanel(location, group.getId());
+    }
+    @Override
+    public BlockInfoPanel getPanel(final InfoPanelId panelId, final ConnectionGroupId groupId) {
+        return new ProgressInfoPanel(panelId, groupId);
     }
 
     private static @NotNull ItemStack stripData(final @NotNull ItemStack inputStack) {

@@ -8,7 +8,6 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Display;
 import org.bukkit.entity.Display.Billboard;
-import org.bukkit.entity.Display.Brightness;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -72,7 +71,7 @@ public class ItemProjector extends ConnectedBlock implements ItemHolderBlock, Po
                 .build());
         displayGroup.addDisplay("item", new ItemDisplayBuilder(location.toCenterLocation())
                 .setTransformation(calculateItemTransformation(0, 0))
-                .setViewRange(VIEW_RANGE_OFF)
+                .setViewRange(Utils.VIEW_RANGE_OFF)
                 .setBillboard(Billboard.VERTICAL)
                 .setBrightness(Utils.BRIGHTNESS_ON)
                 .build());
@@ -124,11 +123,8 @@ public class ItemProjector extends ConnectedBlock implements ItemHolderBlock, Po
     }
     @Override
     public void onPoweredAnimation(final Location location, final boolean powered) {
-        final Optional<Display> mainDisplay = getDisplay(location, "prism");
-        mainDisplay.ifPresent(display -> display.setBrightness(new Brightness(powered ? Utils.BRIGHTNESS_ON : Utils.BRIGHTNESS_OFF, 0)));
-
-        final Optional<ItemDisplay> itemDisplay = ItemHolderBlock.getItemDisplay(location);
-        itemDisplay.ifPresent(display -> display.setViewRange(powered ? VIEW_RANGE_ON : VIEW_RANGE_OFF));
+        brightnessAnimation(location, "prism", powered);
+        visibilityAnimation(location, "item", powered);
     }
 
     @Override

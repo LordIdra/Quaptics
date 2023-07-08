@@ -36,13 +36,10 @@ import java.util.List;
 import java.util.Optional;
 
 public abstract class ConnectedBlock extends QuapticBlock {
-    protected static final int VIEW_RANGE_ON = 1;
-    protected static final int VIEW_RANGE_OFF = 0;
     private static final int BURNOUT_EXPLODE_VOLUME = 2;
     private static final float BURNOUT_EXPLODE_PITCH = 1.2F;
 
-    protected ConnectedBlock(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe,
-                             final Settings settings) {
+    protected ConnectedBlock(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
     }
 

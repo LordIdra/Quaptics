@@ -47,7 +47,7 @@ public class Lens extends ConnectedBlock implements PowerAnimatedBlock, PowerLos
                 .setMaterial(settings.getTier().concreteMaterial)
                 .setTransformation(Transformations.adjustedRotateScale(concreteDisplaySize, Transformations.GENERIC_ROTATION_ANGLES))
                 .setBrightness(Utils.BRIGHTNESS_ON)
-                .setViewRange(VIEW_RANGE_OFF)
+                .setViewRange(Utils.VIEW_RANGE_OFF)
                 .build());
     }
     @Override
@@ -85,6 +85,6 @@ public class Lens extends ConnectedBlock implements PowerAnimatedBlock, PowerLos
     }
     @Override
     public void onPoweredAnimation(final Location location, final boolean powered) {
-        getDisplay(location, "prism").ifPresent(value -> value.setViewRange(powered ? VIEW_RANGE_ON : VIEW_RANGE_OFF));
+        visibilityAnimation(location, "concrete", powered);
     }
 }

@@ -6,7 +6,6 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.entity.Display.Brightness;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
@@ -89,7 +88,7 @@ public class Launchpad extends ConnectedBlock implements ConfigPanelBlock, Power
     }
     @Override
     public void onPoweredAnimation(final Location location, final boolean powered) {
-        getDisplay(location, "main").ifPresent(value -> value.setBrightness(new Brightness(powered ? Utils.BRIGHTNESS_ON : Utils.BRIGHTNESS_OFF, 0)));
+        brightnessAnimation(location, "main", powered);
     }
 
     @Override

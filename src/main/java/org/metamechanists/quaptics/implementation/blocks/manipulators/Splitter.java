@@ -50,7 +50,7 @@ public class Splitter extends ConnectedBlock implements PowerAnimatedBlock, Powe
         displayGroup.addDisplay("concrete", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(settings.getTier().concreteMaterial)
                 .setBrightness(Utils.BRIGHTNESS_ON)
-                .setViewRange(VIEW_RANGE_OFF)
+                .setViewRange(Utils.VIEW_RANGE_OFF)
                 .setTransformation(Transformations.adjustedRotateScale(concreteDisplaySize, Transformations.GENERIC_ROTATION_ANGLES))
                 .build());
     }
@@ -89,7 +89,7 @@ public class Splitter extends ConnectedBlock implements PowerAnimatedBlock, Powe
     }
     @Override
     public void onPoweredAnimation(final Location location, final boolean powered) {
-        getDisplay(location, "concrete").ifPresent(value -> value.setViewRange(powered ? VIEW_RANGE_ON : VIEW_RANGE_OFF));
+        visibilityAnimation(location, "concrete", powered);
     }
 
     private @NotNull Vector getRelativeOutputLocation(final int i) {
