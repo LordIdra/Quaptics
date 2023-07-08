@@ -8,6 +8,7 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -30,6 +31,7 @@ import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 public class Repeater extends ConnectedBlock implements PowerAnimatedBlock, PowerLossBlock, UpgraderBlock {
@@ -41,16 +43,13 @@ public class Repeater extends ConnectedBlock implements PowerAnimatedBlock, Powe
     private final Vector3f mainDisplayRotation = new Vector3f((float)(Math.PI/4), (float)(Math.PI/4), 0.0F);
     private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -settings.getConnectionRadius());
     private final Vector outputPointLocation = new Vector(0.0F, 0.0F, settings.getConnectionRadius());
-    private final int delayVisual;
 
-    public Repeater(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe,
-                    final Settings settings, final int delayVisual) {
+    public Repeater(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
-        this.delayVisual = delayVisual;
     }
 
     @Override
-    protected void addDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, @NotNull final Player player) {
+    protected void initDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, @NotNull final Player player) {
         final BlockFace face = Transformations.yawToFace(player.getEyeLocation().getYaw());
         displayGroup.addDisplay("main", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(Material.RED_STAINED_GLASS)
@@ -63,18 +62,14 @@ public class Repeater extends ConnectedBlock implements PowerAnimatedBlock, Powe
                 .build());
         final BlockDisplay repeater = new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(Material.REPEATER)
-                .setBlockData(Material.REPEATER.createBlockData(
-                        "[delay=" + delayVisual
-                        + ",facing=" + face.name().toLowerCase()
-                        + ",powered=false]"))
+                .setBlockData(createRepeaterBlockData(face.name().toLowerCase(), false))
                 .setTransformation(Transformations.adjustedScaleOffset(repeaterDisplaySize, repeaterOffset))
                 .build();
         PersistentDataAPI.setString(repeater, Keys.FACING, face.name().toLowerCase());
         displayGroup.addDisplay("repeater", repeater);
     }
-
     @Override
-    protected List<ConnectionPoint> generateConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
+    protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
         return List.of(
                 new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input", formatPointLocation(player, location, inputPointLocation)),
                 new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output", formatPointLocation(player, location, outputPointLocation)));
@@ -102,18 +97,18 @@ public class Repeater extends ConnectedBlock implements PowerAnimatedBlock, Powe
                 PowerLossBlock.calculatePowerLoss(settings, inputLink.get()),
                 calculateUpgrade(settings, inputLink.get().getFrequency()));
     }
-
     @Override
     public void onPoweredAnimation(final Location location, final boolean powered) {
         final Optional<BlockDisplay> blockDisplay = getBlockDisplay(location, "repeater");
-        blockDisplay.ifPresent(display -> display.setBlock(Material.REPEATER.createBlockData(
-                "[delay=" + delayVisual
-                + ",facing=" + PersistentDataAPI.getString(display, Keys.FACING)
-                + ",powered=" + powered + "]")));
+        blockDisplay.ifPresent(display -> display.setBlock(createRepeaterBlockData(PersistentDataAPI.getString(display, Keys.FACING), powered)));
     }
 
     @Override
     public double calculateUpgrade(@NotNull final Settings settings, final double frequency) {
         return frequency + settings.getFrequencyStep();
+    }
+
+    private @NotNull BlockData createRepeaterBlockData(@NotNull final String facing, final boolean powered) {
+        return Material.REPEATER.createBlockData("[delay=" + settings.getRepeaterDelay() + ",facing=" + facing + ",powered=" + Objects.toString(powered) + "]");
     }
 }

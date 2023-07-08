@@ -1,9 +1,13 @@
 package org.metamechanists.quaptics.implementation.blocks.attachments;
 
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
+import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
 import org.metamechanists.quaptics.panels.config.ConfigPanel;
+import org.metamechanists.quaptics.panels.config.ConfigPanelContainer;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.id.complex.ConfigPanelId;
@@ -11,7 +15,6 @@ import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 
 import java.util.Optional;
 
-@FunctionalInterface
 public interface ConfigPanelBlock {
     static Optional<ConfigPanelId> getPanelId(final Location location) {
         return BlockStorageAPI.getConfigPanelId(location, Keys.BS_PANEL_ID);
@@ -32,7 +35,7 @@ public interface ConfigPanelBlock {
             return;
         }
 
-        final ConfigPanel panel = createPanel(panelId.get(), group.getId());
+        final ConfigPanel panel = getPanel(panelId.get(), group.getId());
         panel.interact(location.get(), name, type);
     }
 
@@ -44,8 +47,21 @@ public interface ConfigPanelBlock {
         }
 
         final Optional<ConfigPanelId> id = getPanelId(location.get());
-        id.ifPresent(panelId -> createPanel(panelId, group.getId()).setPanelHidden(hidden));
+        id.ifPresent(panelId -> getPanel(panelId, group.getId()).setPanelHidden(hidden));
     }
 
-    ConfigPanel createPanel(final ConfigPanelId panelId, final ConnectionGroupId groupId);
+    default void onPlaceConfigPanelBlock(@NotNull final BlockPlaceEvent event) {
+        final Location location = event.getBlock().getLocation();
+        final Optional<ConnectionGroup> group = ConnectedBlock.getGroup(location);
+        group.ifPresent(connectionGroup -> setPanelId(location, createPanel(location, event.getPlayer(), connectionGroup).getId()));
+    }
+
+    default void onBreakConfigPanelBlock(@NotNull final Location location) {
+        final Optional<ConfigPanelId> panelId = getPanelId(location);
+        final Optional<ConfigPanelContainer> panel = panelId.isPresent() ? panelId.get().get() : Optional.empty();
+        panel.ifPresent(ConfigPanelContainer::remove);
+    }
+
+    ConfigPanel createPanel(final Location location, final Player player, @NotNull final ConnectionGroup group);
+    ConfigPanel getPanel(final ConfigPanelId panelId, final ConnectionGroupId groupId);
 }

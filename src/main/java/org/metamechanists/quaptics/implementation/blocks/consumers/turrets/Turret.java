@@ -49,16 +49,15 @@ public abstract class Turret extends ConnectedBlock {
     }
 
     @Override
-    protected void addDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
+    protected void initDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
         displayGroup.addDisplay("main", new BlockDisplayBuilder(location.toCenterLocation())
                         .setMaterial(settings.getMainMaterial())
                         .setTransformation(Transformations.adjustedScale(mainDisplaySize))
                         .build());
         displayGroup.addDisplay("barrel", generateBarrel(location, location.clone().add(barrelLocation).add(new Vector(0, -1, 0))));
     }
-
     @Override
-    protected List<ConnectionPoint> generateConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
+    protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
         return List.of(new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input", formatPointLocation(player, location, inputLocation)));
     }
 
@@ -69,7 +68,6 @@ public abstract class Turret extends ConnectedBlock {
             shoot(block.getLocation());
         }
     }
-
     @Override
     public void onInputLinkUpdated(@NotNull final ConnectionGroup group, @NotNull final Location location) {
         if (doBurnoutCheck(group, "input")) {
@@ -91,27 +89,26 @@ public abstract class Turret extends ConnectedBlock {
     private Matrix4f getBarrelMatrix(@NotNull final Location from, final Location to) {
         return Transformations.lookAlong(barrelSize, Transformations.getDirection(from.clone().add(barrelLocation), to)).translate(barrelTranslation);
     }
-
     private BlockDisplay generateBarrel(@NotNull final Location from, final Location to) {
         return new BlockDisplayBuilder(from.clone().add(barrelLocation))
                 .setMaterial(Material.GRAY_CONCRETE)
                 .setTransformation(getBarrelMatrix(from, to))
                 .build();
     }
+    private void updateBarrelTransformation(final Location location, final LivingEntity target) {
+        getDisplay(location, "barrel").ifPresent(value -> value.setTransformationMatrix(getBarrelMatrix(location, target.getEyeLocation())));
+    }
 
     private static void setTarget(@NotNull final Location location, @NotNull final Entity entity) {
         BlockStorageAPI.set(location, Keys.BS_TARGET, entity.getUniqueId());
     }
-
     private static void clearTarget(final Location location) {
         BlockStorageAPI.set(location, Keys.BS_TARGET, (UUID) null);
     }
-
     private static Optional<LivingEntity> getTarget(final Location location) {
         final Optional<UUID> targetUuid = BlockStorageAPI.getUuid(location, Keys.BS_TARGET);
         return targetUuid.map(uuid -> (LivingEntity) Bukkit.getEntity(uuid));
     }
-
     private static Optional<LivingEntity> getClosestEntity(@NotNull final Collection<? extends Entity> entities, final Location location) {
         LivingEntity target = null;
         double targetDistance = ARBITRARILY_LARGE_NUMBER;
@@ -143,11 +140,6 @@ public abstract class Turret extends ConnectedBlock {
         final Optional<LivingEntity> closestEntity = getClosestEntity(entities, location);
         closestEntity.ifPresent(livingEntity -> setTarget(location, livingEntity));
     }
-
-    private void updateBarrelTransformation(final Location location, final LivingEntity target) {
-        getDisplay(location, "barrel").ifPresent(value -> value.setTransformationMatrix(getBarrelMatrix(location, target.getEyeLocation())));
-    }
-
     private void shoot(final Location location) {
         final Optional<LivingEntity> target = getTarget(location);
         if (target.isEmpty() || target.get().isDead() || location.toCenterLocation().distance(target.get().getLocation()) > settings.getRange()) {
@@ -159,6 +151,5 @@ public abstract class Turret extends ConnectedBlock {
         createProjectile(location.clone().add(barrelLocation), target.get().getEyeLocation());
         target.get().damage(settings.getDamage());
     }
-
     protected abstract void createProjectile(final Location source, final Location target);
 }

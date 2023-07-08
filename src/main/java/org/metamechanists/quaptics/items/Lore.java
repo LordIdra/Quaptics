@@ -47,8 +47,8 @@ public class Lore {
         final List<String> lore = new ArrayList<>();
 
         Collections.addAll(lore, description);
-        lore.add(chargeBar(charge, (int) settings.getCapacity()));
-        lore.add(chargeValues(charge, (int) settings.getCapacity()));
+        lore.add(chargeBar(charge, (int) settings.getChargeCapacity()));
+        lore.add(chargeValues(charge, (int) settings.getChargeCapacity()));
         lore.add(chargeUsage((int) settings.getEmissionPower()));
 
         if (settings.getMinFrequency() != 0 || settings.getMaxFrequency() != 0) {
@@ -61,7 +61,7 @@ public class Lore {
     private @NotNull List<String> fromSettings(@NotNull final Settings settings) {
         final List<String> lore = new ArrayList<>();
 
-        if (settings.getTier() != null && (settings.getEmissionPower() == 0 || settings.getCapacity() != 0)) {
+        if (settings.getTier() != null && (settings.getEmissionPower() == 0 || settings.getChargeCapacity() != 0)) {
             lore.add(operatingPower(settings.getMinPower(), settings.getTier().maxPower));
         }
         if (settings.getEmissionPower() != 0) {
@@ -70,8 +70,8 @@ public class Lore {
         if (settings.getPowerLoss() != 0) {
             lore.add(powerLoss(settings.getPowerLoss()));
         }
-        if (settings.getCapacity() != 0) {
-            lore.add(capacity(settings.getCapacity()));
+        if (settings.getChargeCapacity() != 0) {
+            lore.add(capacity(settings.getChargeCapacity()));
         }
         if (settings.getMaxFrequency() != 0 || settings.getMinFrequency() != 0) {
             lore.add(operatingFrequency(settings.getMinFrequency(), settings.getMaxFrequency()));

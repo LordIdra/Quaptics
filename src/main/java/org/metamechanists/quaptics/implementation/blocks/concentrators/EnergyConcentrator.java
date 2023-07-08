@@ -30,19 +30,27 @@ public class EnergyConcentrator extends EnergyConnectedBlock {
     private final Vector outputLocation = new Vector(0.0F, 0.0F, settings.getConnectionRadius());
     private final Vector3f mainDisplaySize = new Vector3f(settings.getDisplayRadius(), settings.getDisplayRadius(), settings.getConnectionRadius()*2);
 
-    public EnergyConcentrator(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe,
-                              final Settings settings, final int capacity, final int consumption) {
-        super(itemGroup, item, recipeType, recipe, settings, capacity, consumption);
+    public EnergyConcentrator(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
+        super(itemGroup, item, recipeType, recipe, settings);
     }
 
     @Override
-    protected void addDisplays(@NotNull final DisplayGroup displayGroup, final @NotNull Location location, final @NotNull Player player) {
+    protected void initDisplays(@NotNull final DisplayGroup displayGroup, final @NotNull Location location, final @NotNull Player player) {
         displayGroup.addDisplay("main", generateMainBlockDisplay(location, location.clone().add(rotateVectorByEyeDirection(player, INITIAL_LINE))));
     }
+    @Override
+    protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
+        return List.of(new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output", formatPointLocation(player, location, outputLocation)));
+    }
 
     @Override
-    protected List<ConnectionPoint> generateConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
-        return List.of(new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output", formatPointLocation(player, location, outputLocation)));
+    public void onSlimefunTick(@NotNull final Block block, final SlimefunItem item, final Config data) {
+        super.onSlimefunTick(block, item, data);
+        final Location location = block.getLocation();
+        final double power = hasEnoughEnergy(location)
+                ? settings.getEmissionPower()
+                : 0;
+        getLink(location, "output").ifPresent(link -> link.setPower(power));
     }
 
     @Override
@@ -51,23 +59,12 @@ public class EnergyConcentrator extends EnergyConnectedBlock {
         regenerateMainDisplay(from, to);
     }
 
-    @Override
-    public void onSlimefunTick(@NotNull final Block block, final SlimefunItem item, final Config data) {
-        super.onSlimefunTick(block, item, data);
-        final Location location = block.getLocation();
-        final double power = isPowered(location)
-                ? settings.getEmissionPower()
-                : 0;
-        getLink(location, "output").ifPresent(link -> link.setPower(power));
-    }
-
     private BlockDisplay generateMainBlockDisplay(@NotNull final Location from, final Location to) {
         return new BlockDisplayBuilder(from.toCenterLocation())
                 .setMaterial(settings.getTier().concreteMaterial)
                 .setTransformation(Transformations.lookAlong(mainDisplaySize, Transformations.getDirection(from, to)))
                 .build();
     }
-
     private void regenerateMainDisplay(@NotNull final ConnectionPointId from, @NotNull final ConnectionPointId to) {
         final Optional<Location> fromLocation = getGroupLocation(from);
         final Optional<Location> toLocation = getGroupLocation(to);

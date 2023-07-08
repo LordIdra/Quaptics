@@ -18,7 +18,7 @@ import org.metamechanists.quaptics.items.Lore;
 @UtilityClass
 public class Tools {
     public final Settings LASER_POINTER_SETTINGS = Settings.builder()
-            .capacity(1000.0)
+            .chargeCapacity(1000.0)
             .emissionPower(5.0)
             .build();
 

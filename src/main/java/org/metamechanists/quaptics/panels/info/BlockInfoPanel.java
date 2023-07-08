@@ -19,8 +19,8 @@ public abstract class BlockInfoPanel extends InfoPanel {
         setPanelHidden(false);
     }
 
-    protected BlockInfoPanel(@NotNull final InfoPanelId id, final ConnectionGroupId groupId) {
-        super(id);
+    protected BlockInfoPanel(@NotNull final InfoPanelId panelId, final ConnectionGroupId groupId) {
+        super(panelId);
         this.groupId = groupId;
     }
 

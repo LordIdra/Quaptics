@@ -55,7 +55,7 @@ public class InfusionContainer extends QuapticBlock implements ItemHolderBlock, 
     }
 
     @Override
-    protected void addDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
+    protected void initDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
         displayGroup.addDisplay("base", new BlockDisplayBuilder(location.toCenterLocation())
                 .setBlockData(Material.GRAY_CONCRETE.createBlockData())
                 .setTransformation(Transformations.adjustedScaleOffset(BASE_SCALE, BASE_OFFSET))

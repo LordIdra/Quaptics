@@ -23,7 +23,7 @@ import org.metamechanists.quaptics.items.Tier;
 
 import java.util.Set;
 
-@SuppressWarnings({"MagicNumber", "ZeroLengthArrayAllocation", "WeakerAccess"})
+@SuppressWarnings({"ZeroLengthArrayAllocation", "WeakerAccess"})
 @UtilityClass
 public class Basic {
     public final Settings SOLAR_CONCENTRATOR_2_SETTINGS = Settings.builder()
@@ -38,6 +38,8 @@ public class Basic {
             .displayRadius(0.2F)
             .connectionRadius(0.3F)
             .emissionPower(15)
+            .energyCapacity(30)
+            .energyConsumption(30)
             .build();
     public final Settings LENS_2_SETTINGS = Settings.builder()
             .tier(Tier.BASIC)
@@ -82,6 +84,7 @@ public class Basic {
             .minFrequency(0.0)
             .maxFrequency(0.3)
             .frequencyStep(0.1)
+            .repeaterDelay(1)
             .build();
 
     public final Settings SCATTERER_1_SETTINGS = Settings.builder()
@@ -93,6 +96,7 @@ public class Basic {
             .minFrequency(0.2)
             .maxFrequency(1.0)
             .frequencyMultiplier(2.0)
+            .comparatorVisual("compare")
             .build();
 
     public final Settings TURRET_2_HOSTILE_SETTINGS = Settings.builder()
@@ -218,9 +222,7 @@ public class Basic {
                 ENERGY_CONCENTRATOR_1,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                ENERGY_CONCENTRATOR_1_SETTINGS,
-                30,
-                30).register(addon);
+                ENERGY_CONCENTRATOR_1_SETTINGS).register(addon);
 
         new Lens(
                 Groups.BASIC,
@@ -262,16 +264,14 @@ public class Basic {
                 REPEATER_1,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                REPEATER_1_SETTINGS,
-                1).register(addon);
+                REPEATER_1_SETTINGS).register(addon);
 
         new Scatterer(
                 Groups.BASIC,
                 SCATTERER_1,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                SCATTERER_1_SETTINGS,
-                "compare").register(addon);
+                SCATTERER_1_SETTINGS).register(addon);
 
         new DirectTurret(
                 Groups.BASIC,

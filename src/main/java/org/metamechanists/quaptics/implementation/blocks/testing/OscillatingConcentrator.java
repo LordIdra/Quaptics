@@ -23,49 +23,38 @@ import org.metamechanists.quaptics.utils.builders.ItemDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 
 import java.util.List;
-import java.util.Optional;
 
 public class OscillatingConcentrator extends ConnectedBlock {
     private final Vector outputLocation = new Vector(0.0F, 0.0F, settings.getConnectionRadius());
     private final Vector3f mainDisplaySize = new Vector3f(settings.getDisplayRadius()*2);
 
-    public OscillatingConcentrator(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe,
-                                   final Settings settings) {
+    public OscillatingConcentrator(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
     }
 
     @Override
-    protected void addDisplays(@NotNull final DisplayGroup displayGroup, final @NotNull Location location, final @NotNull Player player) {
+    protected void initDisplays(@NotNull final DisplayGroup displayGroup, final @NotNull Location location, final @NotNull Player player) {
         displayGroup.addDisplay("main", new ItemDisplayBuilder(location.clone().toCenterLocation())
                 .setMaterial(Material.BLACK_STAINED_GLASS_PANE)
                 .setTransformation(Transformations.unadjustedRotateScale(mainDisplaySize, new Vector3f((float)(Math.PI/2), 0.0F, settings.getRotationY())))
                 .build());
     }
-
     @Override
-    protected List<ConnectionPoint> generateConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
+    protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
         return List.of(new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output", formatPointLocation(player, location, outputLocation)));
     }
 
     @Override
-    public void onQuapticTick(@NotNull final ConnectionGroup group) {
-        final Optional<Location> location = group.getLocation();
-        if (location.isEmpty()) {
-            return;
-        }
-
-        final boolean enabled = isEnabled(location.get());
-        final double power = enabled
-                ? settings.getEmissionPower()
-                : 0;
-        getLink(location.get(), "output").ifPresent(link -> link.setPower(power));
-        setEnabled(location.get(), !enabled);
+    public void onQuapticTick(@NotNull final ConnectionGroup group, @NotNull final Location location) {
+        final boolean enabled = isEnabled(location);
+        final double power = enabled ? settings.getEmissionPower() : 0;
+        getLink(location, "output").ifPresent(link -> link.setPower(power));
+        setEnabled(location, !enabled);
     }
 
     private static boolean isEnabled(final Location location) {
         return BlockStorageAPI.getBoolean(location, Keys.BS_POWERED);
     }
-
     private static void setEnabled(final Location location, final boolean enabled) {
         BlockStorageAPI.set(location, Keys.BS_POWERED, enabled);
     }

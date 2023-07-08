@@ -16,7 +16,7 @@ import org.metamechanists.quaptics.items.Groups;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
 
-@SuppressWarnings({"MagicNumber", "ZeroLengthArrayAllocation", "WeakerAccess"})
+@SuppressWarnings({"ZeroLengthArrayAllocation", "WeakerAccess"})
 @UtilityClass
 public class Intermediate {
     public final Settings ENERGY_CONCENTRATOR_2_SETTINGS = Settings.builder()
@@ -24,6 +24,8 @@ public class Intermediate {
             .displayRadius(0.175F)
             .connectionRadius(0.35F)
             .emissionPower(100)
+            .energyCapacity(160)
+            .energyConsumption(160)
             .build();
     public final Settings LENS_3_SETTINGS = Settings.builder()
             .tier(Tier.INTERMEDIATE)
@@ -110,9 +112,7 @@ public class Intermediate {
                 ENERGY_CONCENTRATOR_2,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                ENERGY_CONCENTRATOR_2_SETTINGS,
-                160,
-                160).register(addon);
+                ENERGY_CONCENTRATOR_2_SETTINGS).register(addon);
 
         new Lens(
                 Groups.INTERMEDIATE,

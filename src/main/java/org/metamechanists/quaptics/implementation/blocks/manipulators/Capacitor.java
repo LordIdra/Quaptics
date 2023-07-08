@@ -23,7 +23,6 @@ import org.metamechanists.quaptics.implementation.blocks.attachments.InfoPanelBl
 import org.metamechanists.quaptics.implementation.blocks.attachments.PowerLossBlock;
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
 import org.metamechanists.quaptics.panels.info.BlockInfoPanel;
-import org.metamechanists.quaptics.panels.info.InfoPanelContainer;
 import org.metamechanists.quaptics.panels.info.implementation.CapacitorInfoPanel;
 import org.metamechanists.quaptics.storage.QuapticTicker;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
@@ -50,7 +49,7 @@ public class Capacitor extends ConnectedBlock implements InfoPanelBlock, PowerLo
     }
 
     @Override
-    protected void addDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
+    protected void initDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
         displayGroup.addDisplay("mainGlass", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(Material.GLASS)
                 .setTransformation(Transformations.adjustedRotateScale(mainGlassDisplaySize, Transformations.GENERIC_ROTATION_ANGLES))
@@ -65,16 +64,19 @@ public class Capacitor extends ConnectedBlock implements InfoPanelBlock, PowerLo
                 .setBrightness(Utils.BRIGHTNESS_ON)
                 .build());
     }
-
     @Override
-    protected List<ConnectionPoint> generateConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
+    protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
         return List.of(
                 new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input", formatPointLocation(player, location, inputPointLocation)),
                 new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output", formatPointLocation(player, location, outputPointLocation)));
     }
 
     @Override
-    public BlockInfoPanel createPanel(final InfoPanelId panelId, final ConnectionGroupId groupId) {
+    public BlockInfoPanel createPanel(final Location location, final @NotNull ConnectionGroup group) {
+        return new CapacitorInfoPanel(location, group.getId());
+    }
+    @Override
+    public BlockInfoPanel getPanel(final InfoPanelId panelId, final ConnectionGroupId groupId) {
         return new CapacitorInfoPanel(panelId, groupId);
     }
 
@@ -82,38 +84,26 @@ public class Capacitor extends ConnectedBlock implements InfoPanelBlock, PowerLo
     @OverridingMethodsMustInvokeSuper
     protected void onPlace(@NotNull final BlockPlaceEvent event) {
         super.onPlace(event);
-        final Location location = event.getBlock().getLocation();
-        final Optional<ConnectionGroup> optionalGroup = getGroup(location);
-        optionalGroup.ifPresent(group -> InfoPanelBlock.setPanelId(location, new CapacitorInfoPanel(location, group.getId()).getId()));
+        onPlaceInfoPanelBlock(event);
     }
-
     @Override
     @OverridingMethodsMustInvokeSuper
     protected void onBreak(@NotNull final Location location) {
         super.onBreak(location);
-        InfoPanelBlock.getPanelId(location)
-                .flatMap(InfoPanelId::get)
-                .ifPresent(InfoPanelContainer::remove);
+        onBreakInfoPanelBlock(location);
     }
-
     @Override
-    public void onQuapticTick(@NotNull final ConnectionGroup group) {
-        final Optional<Location> location = group.getLocation();
-        if (location.isEmpty()) {
-            return;
-        }
+    public void onQuapticTick(@NotNull final ConnectionGroup group, @NotNull final Location location) {
+        double charge = BlockStorageAPI.getDouble(location, Keys.BS_CHARGE);
+        charge = doCharge(location, charge);
+        charge = doDischarge(location, charge);
 
-        double charge = BlockStorageAPI.getDouble(location.get(), Keys.BS_CHARGE);
-        charge = doCharge(location.get(), charge);
-        charge = doDischarge(location.get(), charge);
-
-        BlockStorageAPI.set(location.get(), Keys.BS_CHARGE, charge);
-        doEmission(location.get(), charge);
-        updateConcreteTransformation(location.get());
+        BlockStorageAPI.set(location, Keys.BS_CHARGE, charge);
+        doEmission(location, charge);
+        updateConcreteTransformation(location);
         setPanelHidden(group, charge == 0);
         updatePanel(group);
     }
-
     @Override
     public void onInputLinkUpdated(@NotNull final ConnectionGroup group, @NotNull final Location location) {
         if (doBurnoutCheck(group, "input")) {
@@ -136,7 +126,6 @@ public class Capacitor extends ConnectedBlock implements InfoPanelBlock, PowerLo
         final double chargeRate = BlockStorageAPI.getDouble(location, Keys.BS_CHARGE_RATE);
         return settings.stepCharge(charge, chargeRate);
     }
-
     private double doDischarge(final Location location, final double charge) {
         final Optional<Link> outputLink = getLink(location, "output");
         if (outputLink.isEmpty()) {
@@ -147,7 +136,6 @@ public class Capacitor extends ConnectedBlock implements InfoPanelBlock, PowerLo
         BlockStorageAPI.set(location, Keys.BS_CHARGE, charge);
         return newCharge;
     }
-
     private void doEmission(final Location location, final double charge) {
         final Optional<Link> outputLink = getLink(location, "output");
         if (outputLink.isEmpty()) {
@@ -169,13 +157,11 @@ public class Capacitor extends ConnectedBlock implements InfoPanelBlock, PowerLo
                         : 0,
                 0);
     }
-
     private Matrix4f getConcreteTransformationMatrix(final double charge) {
         return Transformations.adjustedRotateScale(
-                new Vector3f(maxConcreteDisplaySize).mul((float)(charge/settings.getCapacity())),
+                new Vector3f(maxConcreteDisplaySize).mul((float)(charge/settings.getChargeCapacity())),
                 Transformations.GENERIC_ROTATION_ANGLES);
     }
-
     private void updateConcreteTransformation(final Location location) {
         final double charge = BlockStorageAPI.getDouble(location, Keys.BS_CHARGE);
         final Optional<Display> concreteDisplay = getDisplay(location, "concrete");

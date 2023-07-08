@@ -20,10 +20,15 @@ public class Settings {
     private float displayRadius;
     private float connectionRadius;
     private float rotationY;
+    private String comparatorVisual;
+    private int repeaterDelay;
+
+    private int energyCapacity;
+    private int energyConsumption;
 
     private double minPower;
     private double powerLoss;
-    private double capacity;
+    private double chargeCapacity;
     private double emissionPower;
 
     private double minFrequency;
@@ -57,7 +62,7 @@ public class Settings {
         if (charge + chargeStep < 0) {
             return 0;
         }
-        return Math.min(charge + chargeStep, capacity);
+        return Math.min(charge + chargeStep, chargeCapacity);
     }
     public double stepDischarge(final double charge) {
        return stepCharge(charge, -emissionPower / QuapticTicker.QUAPTIC_TICKS_PER_SECOND);

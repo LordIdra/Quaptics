@@ -46,6 +46,8 @@ public abstract class ConnectedBlock extends QuapticBlock {
         super(itemGroup, item, recipeType, recipe, settings);
     }
 
+    protected abstract List<ConnectionPoint> initConnectionPoints(ConnectionGroupId groupId, Player player, Location location);
+
     @Override
     @OverridingMethodsMustInvokeSuper
     protected void onPlace(@NotNull final BlockPlaceEvent event) {
@@ -56,17 +58,15 @@ public abstract class ConnectedBlock extends QuapticBlock {
         }
 
         final ConnectionGroupId groupId = new ConnectionGroupId(displayGroupId.get());
-        final List<ConnectionPoint> points = generateConnectionPoints(groupId, event.getPlayer(), location);
+        final List<ConnectionPoint> points = initConnectionPoints(groupId, event.getPlayer(), location);
         new ConnectionGroup(groupId, this, points);
         QuapticStorage.addGroup(groupId);
     }
-
     @Override
     @OverridingMethodsMustInvokeSuper
     protected void onBreak(@NotNull final Location location) {
         getGroup(location).ifPresent(ConnectionGroup::remove);
     }
-
     @Override
     @OverridingMethodsMustInvokeSuper
     protected void onShiftRightClick(@NotNull final Location location, @NotNull final Player player) {
@@ -78,23 +78,7 @@ public abstract class ConnectedBlock extends QuapticBlock {
         final boolean isAnyPanelHidden = group.get().getPointPanels().stream().anyMatch(PointInfoPanel::isPanelHidden);
         group.get().getPointPanels().forEach(panel -> panel.setPanelHidden(!isAnyPanelHidden));
     }
-
-    private static void changePointLocation(final @NotNull ConnectionPointId pointId, @NotNull final Location newLocation) {
-        pointId.get().ifPresent(point -> point.changeLocation(newLocation));
-    }
-
-    public static Optional<ConnectionGroup> getGroup(final Location location) {
-        final Optional<DisplayGroupId> displayGroupId = getDisplayGroupId(location);
-        return displayGroupId.isEmpty()
-            ? Optional.empty()
-            : new ConnectionGroupId(displayGroupId.get()).get();
-    }
-
-    protected abstract List<ConnectionPoint> generateConnectionPoints(ConnectionGroupId groupId, Player player, Location location);
-
-    public void connect(@NotNull final ConnectionPointId from, @NotNull final ConnectionPointId to) {
-        calculatePointLocationSphere(from, to).ifPresent(location -> changePointLocation(from, location));
-    }
+    public void onInputLinkUpdated(@NotNull final ConnectionGroup group, @NotNull final Location location) {}
 
     public void burnout(final Location location) {
         // TODO send message to player to inform them what happened
@@ -112,7 +96,6 @@ public abstract class ConnectedBlock extends QuapticBlock {
         location.getWorld().playSound(location.toCenterLocation(), Sound.ENTITY_GENERIC_EXPLODE, BURNOUT_EXPLODE_VOLUME, BURNOUT_EXPLODE_PITCH);
         new ParticleBuilder(Particle.FLASH).location(location.toCenterLocation()).count(3).spawn();
     }
-
     private boolean doBurnoutCheck(@NotNull final ConnectionGroup group, @NotNull final ConnectionPoint point) {
         if (point.getLink().isEmpty() || point.getLink().get().getPower() <= settings.getTier().maxPower) {
             return false;
@@ -127,12 +110,10 @@ public abstract class ConnectedBlock extends QuapticBlock {
 
         return true;
     }
-
     protected boolean doBurnoutCheck(@NotNull final ConnectionGroup group, @NotNull final String pointName) {
         final Optional<ConnectionPoint> point = group.getPoint(pointName);
         return point.isPresent() && doBurnoutCheck(group, point.get());
     }
-
     protected boolean doBurnoutCheck(@NotNull final ConnectionGroup group, final @NotNull List<? extends ConnectionPoint> points) {
         return points.stream().anyMatch(input -> doBurnoutCheck(group, input));
     }
@@ -147,17 +128,14 @@ public abstract class ConnectedBlock extends QuapticBlock {
         return group.get().getPointList().stream().filter(point -> point.getLink().isPresent()).toList();
 
     }
-
     @NotNull
     private static List<ConnectionPoint> getLinkedOutputs(final Location location) {
         return getLinkedPoints(location).stream().filter(ConnectionPoint::isOutput).toList();
     }
-
     @NotNull
     private static List<ConnectionPoint> getLinkedInputs(final Location location) {
         return getLinkedPoints(location).stream().filter(ConnectionPoint::isInput).toList();
     }
-
     @NotNull
     protected static List<ConnectionPoint> getEnabledInputs(final Location location) {
         return getLinkedInputs(location).stream().filter(ConnectionPoint::isLinkEnabled).toList();
@@ -168,27 +146,11 @@ public abstract class ConnectedBlock extends QuapticBlock {
     protected static @Unmodifiable List<Link> getOutgoingLinks(final Location location) {
         return getLinkedOutputs(location).stream().map(output -> output.getLink().get()).toList();
     }
-
     @NotNull
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     protected static @Unmodifiable List<Link> getIncomingLinks(final Location location) {
         return getLinkedInputs(location).stream().map(output -> output.getLink().get()).toList();
     }
-
-    protected static Optional<Location> getGroupLocation(final @NotNull ConnectionPointId pointId) {
-        final Optional<ConnectionPoint> point = pointId.get();
-        if (point.isEmpty()) {
-            return Optional.empty();
-        }
-
-        final Optional<ConnectionGroup> group = point.get().getGroup();
-        if (group.isEmpty()) {
-            return Optional.empty();
-        }
-
-        return group.get().getLocation();
-    }
-
     protected static Optional<Link> getLink(final Location location, final String name) {
         final Optional<ConnectionGroup> group = getGroup(location);
         if (group.isEmpty()) {
@@ -202,13 +164,37 @@ public abstract class ConnectedBlock extends QuapticBlock {
 
         return point.get().getLink();
     }
-
     protected static Optional<Link> getLink(final @NotNull ConnectionGroup group, final String name) {
         final Optional<Location> location = group.getLocation();
         return location.isEmpty() ? Optional.empty() : getLink(location.get(), name);
     }
 
-    public void onInputLinkUpdated(@NotNull final ConnectionGroup group, @NotNull final Location location) {}
+    public void connect(@NotNull final ConnectionPointId from, @NotNull final ConnectionPointId to) {
+        calculatePointLocationSphere(from, to).ifPresent(location -> changePointLocation(from, location));
+    }
+
+    private static void changePointLocation(final @NotNull ConnectionPointId pointId, @NotNull final Location newLocation) {
+        pointId.get().ifPresent(point -> point.changeLocation(newLocation));
+    }
+    public static Optional<ConnectionGroup> getGroup(final Location location) {
+        final Optional<DisplayGroupId> displayGroupId = getDisplayGroupId(location);
+        return displayGroupId.isEmpty()
+                ? Optional.empty()
+                : new ConnectionGroupId(displayGroupId.get()).get();
+    }
+    protected static Optional<Location> getGroupLocation(final @NotNull ConnectionPointId pointId) {
+        final Optional<ConnectionPoint> point = pointId.get();
+        if (point.isEmpty()) {
+            return Optional.empty();
+        }
+
+        final Optional<ConnectionGroup> group = point.get().getGroup();
+        if (group.isEmpty()) {
+            return Optional.empty();
+        }
+
+        return group.get().getLocation();
+    }
 
     private Optional<Location> calculatePointLocationSphere(@NotNull final ConnectionPointId from, @NotNull final ConnectionPointId to) {
         final Optional<ConnectionPoint> fromPoint = from.get();

@@ -18,12 +18,11 @@ import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
 import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
-import org.metamechanists.quaptics.implementation.blocks.attachments.ItemHolderBlock;
 import org.metamechanists.quaptics.implementation.blocks.attachments.InfoPanelBlock;
+import org.metamechanists.quaptics.implementation.blocks.attachments.ItemHolderBlock;
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
 import org.metamechanists.quaptics.implementation.tools.QuapticChargeableItem;
 import org.metamechanists.quaptics.panels.info.BlockInfoPanel;
-import org.metamechanists.quaptics.panels.info.InfoPanelContainer;
 import org.metamechanists.quaptics.panels.info.implementation.ChargerInfoPanel;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
@@ -51,7 +50,7 @@ public class Charger extends ConnectedBlock implements InfoPanelBlock, ItemHolde
     }
 
     @Override
-    protected void addDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
+    protected void initDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
         displayGroup.addDisplay("mainTop", new BlockDisplayBuilder(location.toCenterLocation())
                 .setBlockData(Material.SMOOTH_STONE_SLAB.createBlockData("[type=top]"))
                 .setTransformation(Transformations.adjustedScaleOffset(mainDisplaySize, topOffset))
@@ -72,14 +71,17 @@ public class Charger extends ConnectedBlock implements InfoPanelBlock, ItemHolde
                 .setTransformation(Transformations.unadjustedScale(itemDisplaySize))
                 .build());
     }
-
     @Override
-    protected List<ConnectionPoint> generateConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
+    protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
         return List.of(new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input", formatPointLocation(player, location, inputPointLocation)));
     }
 
     @Override
-    public BlockInfoPanel createPanel(final InfoPanelId panelId, final ConnectionGroupId groupId) {
+    public BlockInfoPanel createPanel(final Location location, @NotNull final ConnectionGroup group) {
+        return new ChargerInfoPanel(location, group.getId());
+    }
+    @Override
+    public BlockInfoPanel getPanel(final InfoPanelId panelId, final ConnectionGroupId groupId) {
         return new ChargerInfoPanel(panelId, groupId);
     }
 
@@ -87,34 +89,23 @@ public class Charger extends ConnectedBlock implements InfoPanelBlock, ItemHolde
     @OverridingMethodsMustInvokeSuper
     protected void onPlace(@NotNull final BlockPlaceEvent event) {
         super.onPlace(event);
-        final Location location = event.getBlock().getLocation();
-        final Optional<ConnectionGroup> optionalGroup = getGroup(location);
-        optionalGroup.ifPresent(group -> InfoPanelBlock.setPanelId(location, new ChargerInfoPanel(location, group.getId()).getId()));
+        onPlaceInfoPanelBlock(event);
     }
-
     @Override
     @OverridingMethodsMustInvokeSuper
     protected void onBreak(@NotNull final Location location) {
         super.onBreak(location);
-        final Optional<InfoPanelId> panelId = InfoPanelBlock.getPanelId(location);
-        final Optional<InfoPanelContainer> panel = panelId.isPresent() ? panelId.get().get() : Optional.empty();
-        panel.ifPresent(InfoPanelContainer::remove);
-        ItemHolderBlock.getStack(location).ifPresent(stack -> location.getWorld().dropItem(location, stack));
+        onBreakInfoPanelBlock(location);
+        onBreakItemHolderBlock(location);
     }
-
     @Override
     protected void onRightClick(final @NotNull Location location, final @NotNull Player player) {
         itemHolderInteract(location, player);
     }
 
     @Override
-    public void onQuapticTick(@NotNull final ConnectionGroup group) {
-        final Optional<Location> location = group.getLocation();
-        if (location.isEmpty()) {
-            return;
-        }
-
-        if (!BlockStorageAPI.getBoolean(location.get(), Keys.BS_IS_HOLDING_ITEM)) {
+    public void onQuapticTick(@NotNull final ConnectionGroup group, @NotNull final Location location) {
+        if (!BlockStorageAPI.getBoolean(location, Keys.BS_IS_HOLDING_ITEM)) {
             setPanelHidden(group, true);
             return;
         }
@@ -131,10 +122,9 @@ public class Charger extends ConnectedBlock implements InfoPanelBlock, ItemHolde
         }
 
         final ItemStack newStack = QuapticChargeableItem.chargeItem(inputLink.get(), stack.get());
-        ItemHolderBlock.insertItem(location.get(), newStack);
+        ItemHolderBlock.insertItem(location, newStack);
         updatePanel(group);
     }
-
     @Override
     public void onInputLinkUpdated(@NotNull final ConnectionGroup group, @NotNull final Location location) {
         doBurnoutCheck(group, "input");
@@ -146,10 +136,8 @@ public class Charger extends ConnectedBlock implements InfoPanelBlock, ItemHolde
             Language.sendLanguageMessage(player, "charger.not-chargeable");
             return false;
         }
-
         return true;
     }
-
     @Override
     public Optional<ItemStack> onRemove(@NotNull final Location location, @NotNull final ItemStack stack) {
         QuapticChargeableItem.updateLore(stack);

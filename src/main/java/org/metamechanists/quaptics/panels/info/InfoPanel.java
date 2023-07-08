@@ -13,8 +13,8 @@ public abstract class InfoPanel {
     }
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
-    protected InfoPanel(@NotNull final InfoPanelId id) {
-        this.container = id.get().get();
+    protected InfoPanel(@NotNull final InfoPanelId panelId) {
+        this.container = panelId.get().get();
     }
 
     public InfoPanelId getId() {

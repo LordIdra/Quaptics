@@ -41,7 +41,7 @@ public class InfusionPillar extends ConnectedBlock implements PowerAnimatedBlock
     }
 
     @Override
-    protected void addDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
+    protected void initDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
         displayGroup.addDisplay("pillar", new BlockDisplayBuilder(location.toCenterLocation())
                 .setBlockData(Material.BLUE_CONCRETE.createBlockData())
                 .setTransformation(Transformations.adjustedScaleOffset(PILLAR_SCALE, PILLAR_OFFSET))
@@ -54,24 +54,19 @@ public class InfusionPillar extends ConnectedBlock implements PowerAnimatedBlock
     }
 
     @Override
-    protected List<ConnectionPoint> generateConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
+    protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
         return List.of(new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input", formatPointLocation(player, location, inputPointLocation)));
     }
 
     @Override
-    public void onInputLinkUpdated(@NotNull final ConnectionGroup group) {
+    public void onInputLinkUpdated(@NotNull final ConnectionGroup group, @NotNull final Location location) {
         if (doBurnoutCheck(group, "input")) {
             return;
         }
 
-        final Optional<Location> location = group.getLocation();
-        if (location.isEmpty()) {
-            return;
-        }
-
-        final Optional<Link> link = getLink(location.get(), "input");
-        onPoweredAnimation(location.get(), link.isPresent() && settings.isOperational(link));
-        BlockStorageAPI.set(location.get(), Keys.BS_POWERED, link.isPresent() && settings.isOperational(link));
+        final Optional<Link> link = getLink(location, "input");
+        onPoweredAnimation(location, link.isPresent() && settings.isOperational(link));
+        BlockStorageAPI.set(location, Keys.BS_POWERED, link.isPresent() && settings.isOperational(link));
     }
 
     @Override

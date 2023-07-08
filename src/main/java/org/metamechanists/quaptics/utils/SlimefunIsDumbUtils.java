@@ -18,7 +18,7 @@ public class SlimefunIsDumbUtils {
     // https://github.com/Slimefun/Slimefun4/blob/master/src/main/java/io/github/thebusybiscuit/slimefun4/implementation/listeners/MultiBlockListener.java#L65
     public Optional<MultiBlockMachine> getMultiblockMachine(final Block block) {
         for (final MultiBlock multiBlock : Slimefun.getRegistry().getMultiBlocks()) {
-            if (!(multiBlock.getSlimefunItem() instanceof MultiBlockMachine multiBlockMachine)) {
+            if (!(multiBlock.getSlimefunItem() instanceof final MultiBlockMachine multiBlockMachine)) {
                 continue;
             }
 

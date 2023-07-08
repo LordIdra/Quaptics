@@ -65,7 +65,7 @@ public class Primitive {
             .tier(Tier.PRIMITIVE)
             .displayRadius(0.3F)
             .connectionRadius(0.6F)
-            .capacity(200)
+            .chargeCapacity(200)
             .emissionPower(3)
             .powerLoss(0.25)
             .build();

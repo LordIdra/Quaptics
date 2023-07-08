@@ -42,7 +42,7 @@ public class Splitter extends ConnectedBlock implements PowerAnimatedBlock, Powe
     }
 
     @Override
-    protected void addDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
+    protected void initDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
         displayGroup.addDisplay("main", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(Material.LIGHT_GRAY_STAINED_GLASS)
                 .setTransformation(Transformations.adjustedRotateScale(glassDisplaySize, Transformations.GENERIC_ROTATION_ANGLES))
@@ -54,9 +54,8 @@ public class Splitter extends ConnectedBlock implements PowerAnimatedBlock, Powe
                 .setTransformation(Transformations.adjustedRotateScale(concreteDisplaySize, Transformations.GENERIC_ROTATION_ANGLES))
                 .build());
     }
-
     @Override
-    protected List<ConnectionPoint> generateConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
+    protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
         final List<ConnectionPoint> points = new ArrayList<>();
         points.add(new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input", formatPointLocation(player, location, inputLocation)));
         IntStream.range(0, settings.getConnections()).forEach(i ->
@@ -88,14 +87,13 @@ public class Splitter extends ConnectedBlock implements PowerAnimatedBlock, Powe
         final double outputFrequency = inputLink.get().getFrequency();
         outgoingLinks.forEach(output -> output.setPowerAndFrequency(outputPower, outputFrequency));
     }
+    @Override
+    public void onPoweredAnimation(final Location location, final boolean powered) {
+        getDisplay(location, "concrete").ifPresent(value -> value.setViewRange(powered ? VIEW_RANGE_ON : VIEW_RANGE_OFF));
+    }
 
     private @NotNull Vector getRelativeOutputLocation(final int i) {
         final double angle = (-CONNECTION_ANGLE /2) + CONNECTION_ANGLE *((double)(i) / (settings.getConnections()-1));
         return outputStartingLocation.clone().rotateAroundY(angle);
-    }
-
-    @Override
-    public void onPoweredAnimation(final Location location, final boolean powered) {
-        getDisplay(location, "concrete").ifPresent(value -> value.setViewRange(powered ? VIEW_RANGE_ON : VIEW_RANGE_OFF));
     }
 }

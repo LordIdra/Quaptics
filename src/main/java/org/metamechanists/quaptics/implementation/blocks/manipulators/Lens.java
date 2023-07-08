@@ -38,7 +38,7 @@ public class Lens extends ConnectedBlock implements PowerAnimatedBlock, PowerLos
     }
 
     @Override
-    protected void addDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
+    protected void initDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
         displayGroup.addDisplay("main", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(Material.GLASS)
                 .setTransformation(Transformations.adjustedRotateScale(glassDisplaySize, Transformations.GENERIC_ROTATION_ANGLES))
@@ -50,9 +50,8 @@ public class Lens extends ConnectedBlock implements PowerAnimatedBlock, PowerLos
                 .setViewRange(VIEW_RANGE_OFF)
                 .build());
     }
-
     @Override
-    protected List<ConnectionPoint> generateConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
+    protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
         return List.of(
                 new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input", formatPointLocation(player, location, inputPointLocation)),
                 new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output", formatPointLocation(player, location, outputPointLocation)));
@@ -84,7 +83,6 @@ public class Lens extends ConnectedBlock implements PowerAnimatedBlock, PowerLos
 
         outputLink.get().setPowerAndFrequency(PowerLossBlock.calculatePowerLoss(settings, inputLink.get()), inputLink.get().getFrequency());
     }
-
     @Override
     public void onPoweredAnimation(final Location location, final boolean powered) {
         getDisplay(location, "prism").ifPresent(value -> value.setViewRange(powered ? VIEW_RANGE_ON : VIEW_RANGE_OFF));

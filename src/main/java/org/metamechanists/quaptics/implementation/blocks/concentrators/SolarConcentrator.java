@@ -33,16 +33,11 @@ public class SolarConcentrator extends ConnectedBlock {
     }
 
     @Override
-    protected void addDisplays(@NotNull final DisplayGroup displayGroup, final @NotNull Location location, final @NotNull Player player) {
+    protected void initDisplays(@NotNull final DisplayGroup displayGroup, final @NotNull Location location, final @NotNull Player player) {
         displayGroup.addDisplay("main", new ItemDisplayBuilder(location.clone().toCenterLocation())
                 .setMaterial(Material.GLASS_PANE)
                 .setTransformation(Transformations.unadjustedRotateScale(mainDisplaySize, new Vector3f((float)(Math.PI/2), 0.0F, settings.getRotationY())))
                 .build());
-    }
-
-    @Override
-    protected List<ConnectionPoint> generateConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
-        return List.of(new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output", formatPointLocation(player, location, outputLocation)));
     }
 
     @Override
@@ -53,5 +48,10 @@ public class SolarConcentrator extends ConnectedBlock {
                 ? settings.getEmissionPower()
                 : 0;
         getLink(location, "output").ifPresent(link -> link.setPower(power));
+    }
+
+    @Override
+    protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
+        return List.of(new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output", formatPointLocation(player, location, outputLocation)));
     }
 }

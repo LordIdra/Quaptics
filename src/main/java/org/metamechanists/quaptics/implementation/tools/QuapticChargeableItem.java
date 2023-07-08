@@ -50,7 +50,7 @@ public abstract class QuapticChargeableItem extends SlimefunItem {
 
     public static double getCapacity(@NotNull final ItemStack itemStack) {
         final Optional<QuapticChargeableItem> item = fromStack(itemStack);
-        return item.map(quapticChargeableItem -> quapticChargeableItem.settings.getCapacity()).orElse(0.0);
+        return item.map(quapticChargeableItem -> quapticChargeableItem.settings.getChargeCapacity()).orElse(0.0);
 
     }
 
@@ -99,11 +99,11 @@ public abstract class QuapticChargeableItem extends SlimefunItem {
         final int chargeValues = getFirstLineMatching(lore, line -> Stream.of("⇨ ◆ ", " / ", "QEU").allMatch(line::contains));
 
         if (chargeBar != -1) {
-            lore.set(chargeBar, ChatColors.color(Lore.chargeBar((int) currentCharge, (int) itemSettings.getCapacity())));
+            lore.set(chargeBar, ChatColors.color(Lore.chargeBar((int) currentCharge, (int) itemSettings.getChargeCapacity())));
         }
 
         if (chargeValues != -1) {
-            lore.set(chargeValues, ChatColors.color(Lore.chargeValues((int) currentCharge, (int) itemSettings.getCapacity())));
+            lore.set(chargeValues, ChatColors.color(Lore.chargeValues((int) currentCharge, (int) itemSettings.getChargeCapacity())));
         }
 
         itemMeta.setLore(lore);

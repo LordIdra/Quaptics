@@ -21,6 +21,7 @@ import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
 import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
+import org.metamechanists.quaptics.implementation.blocks.attachments.PowerAnimatedBlock;
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
 import org.metamechanists.quaptics.storage.QuapticTicker;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
@@ -36,80 +37,76 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public class MultiblockClicker extends ConnectedBlock {
+public class MultiblockClicker extends ConnectedBlock implements PowerAnimatedBlock {
     private static final Vector RELATIVE_PLATE_LOCATION = new Vector(0, 0, 0.45F);
+    private static final Vector3f ATTACHMENT_DISPLAY_SIZE = new Vector3f(0.15F, 0.15F, 0.85F);
+    private static final Vector3f MAIN_DISPLAY_SIZE = new Vector3f(0.3F, 0.3F, 0.3F);
     private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -settings.getConnectionRadius());
-    private final Vector3f attachmentDisplaySize = new Vector3f(0.15F, 0.15F, 0.85F);
-    private final Vector3f mainDisplaySize = new Vector3f(0.3F, 0.3F, 0.3F);
 
-    public MultiblockClicker(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe,
-                             final Settings settings) {
+    public MultiblockClicker(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
     }
 
     @Override
-    protected void addDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
+    protected void initDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
         player.getFacing();
         displayGroup.addDisplay("main", new BlockDisplayBuilder(location.toCenterLocation())
                 .setBlockData(Material.CYAN_CONCRETE.createBlockData())
-                .setTransformation(Transformations.adjustedScale(mainDisplaySize))
+                .setTransformation(Transformations.adjustedScale(MAIN_DISPLAY_SIZE))
                 .setBrightness(Utils.BRIGHTNESS_OFF)
                 .build());
         displayGroup.addDisplay("attachment", new BlockDisplayBuilder(formatPointLocation(player, location, RELATIVE_PLATE_LOCATION))
                 .setBlockData(Material.WHITE_CONCRETE.createBlockData())
-                .setTransformation(Transformations.lookAlong(attachmentDisplaySize, player.getFacing().getDirection().toVector3f()))
+                .setTransformation(Transformations.lookAlong(ATTACHMENT_DISPLAY_SIZE, player.getFacing().getDirection().toVector3f()))
                 .build());
-        BlockStorageAPI.set(location, Keys.BS_TICKS_SINCE_LAST_UPDATE, 0);
         BlockStorageAPI.set(location, Keys.BS_FACING, player.getFacing());
+    }
+    @Override
+    protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
+        return List.of(new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input",
+                formatPointLocation(player, location, inputPointLocation)));
+    }
+    @Override
+    protected void initBlockStorage(@NotNull final Location location) {
+        BlockStorageAPI.set(location, Keys.BS_TICKS_SINCE_LAST_UPDATE, 0);
         BlockStorageAPI.set(location, Keys.BS_POWERED, false);
     }
 
     @Override
-    protected List<ConnectionPoint> generateConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
-        return List.of(new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input",
-                formatPointLocation(player, location, inputPointLocation)));
-    }
-
-    @Override
-    public void onQuapticTick(@NotNull final ConnectionGroup group) {
-        final Optional<Location> location = group.getLocation();
-        if (location.isEmpty()) {
-            return;
-        }
-
-        final Optional<UUID> uuid = BlockStorageAPI.getUuid(location.get(), Keys.BS_PLAYER);
+    public void onQuapticTick(@NotNull final ConnectionGroup group, @NotNull final Location location) {
+        final Optional<UUID> uuid = BlockStorageAPI.getUuid(location, Keys.BS_PLAYER);
         if (uuid.isEmpty()) {
             return;
         }
 
         final Player owner = Bukkit.getPlayer(uuid.get());
-        final boolean enabled = BlockStorageAPI.getBoolean(location.get(), Keys.BS_ENABLED);
+        final boolean enabled = BlockStorageAPI.getBoolean(location, Keys.BS_ENABLED);
         if (!enabled) {
             return;
         }
 
-        final Optional<Block> multiblockBlock = getMultiblockBlock(location.get());
+        final Optional<Block> multiblockBlock = getMultiblockBlock(location);
         if (multiblockBlock.isEmpty()) {
-            setEnabled(location.get(), false);
+            setEnabled(location, false);
             return;
         }
 
         final Optional<MultiBlockMachine> machine = SlimefunIsDumbUtils.getMultiblockMachine(multiblockBlock.get());
         if (machine.isEmpty()) {
-            setEnabled(location.get(), false);
+            setEnabled(location, false);
             return;
         }
 
-        final Optional<Link> link = getLink(location.get(), "input");
+        final Optional<Link> link = getLink(location, "input");
         if (link.isEmpty() || !settings.isOperational(link)) {
-            setEnabled(location.get(), false);
+            setEnabled(location, false);
             return;
         }
 
-        int ticksSinceLastUpdate = BlockStorageAPI.getInt(location.get(), Keys.BS_TICKS_SINCE_LAST_UPDATE);
+        int ticksSinceLastUpdate = BlockStorageAPI.getInt(location, Keys.BS_TICKS_SINCE_LAST_UPDATE);
         ticksSinceLastUpdate += QuapticTicker.INTERVAL_TICKS;
         if (owner == null || ticksSinceLastUpdate < settings.getUseInterval()) {
-            BlockStorageAPI.set(location.get(), Keys.BS_TICKS_SINCE_LAST_UPDATE, ticksSinceLastUpdate);
+            BlockStorageAPI.set(location, Keys.BS_TICKS_SINCE_LAST_UPDATE, ticksSinceLastUpdate);
             return;
         }
 
@@ -117,9 +114,8 @@ public class MultiblockClicker extends ConnectedBlock {
         machine.get().onInteract(owner, multiblockBlock.get());
         ticksSinceLastUpdate -= usesInThisTick * settings.getUseInterval();
         ticksSinceLastUpdate %= settings.getUseInterval();
-        BlockStorageAPI.set(location.get(), Keys.BS_TICKS_SINCE_LAST_UPDATE, ticksSinceLastUpdate);
+        BlockStorageAPI.set(location, Keys.BS_TICKS_SINCE_LAST_UPDATE, ticksSinceLastUpdate);
     }
-
     @Override
     protected void onRightClick(final @NotNull Location location, final @NotNull Player player) {
         final Optional<Block> multiblockBlock = getMultiblockBlock(location);
@@ -142,24 +138,22 @@ public class MultiblockClicker extends ConnectedBlock {
 
         BlockStorageAPI.set(location, Keys.BS_PLAYER, player.getUniqueId());
         final boolean enabled = BlockStorageAPI.getBoolean(location, Keys.BS_ENABLED);
-        onEnabledAnimation(location, !enabled);
+        onPoweredAnimation(location, !enabled);
         setEnabled(location, !enabled);
     }
-
     @Override
     public void onInputLinkUpdated(@NotNull final ConnectionGroup group, @NotNull final Location location) {
         doBurnoutCheck(group, "input");
     }
+    @Override
+    public void onPoweredAnimation(final Location location, final boolean powered) {
+        getDisplay(location, "main").ifPresent(value -> value.setBrightness(new Brightness(powered ? Utils.BRIGHTNESS_ON : Utils.BRIGHTNESS_OFF, 0)));
+    }
 
-    private static void setEnabled(final Location location, final boolean enabled) {
+    private void setEnabled(final Location location, final boolean enabled) {
         BlockStorageAPI.set(location, Keys.BS_ENABLED, enabled);
-        onEnabledAnimation(location, enabled);
+        onPoweredAnimation(location, enabled);
     }
-
-    private static void onEnabledAnimation(final Location location, final boolean enabled) {
-        getDisplay(location, "main").ifPresent(value -> value.setBrightness(new Brightness(enabled ? Utils.BRIGHTNESS_ON : Utils.BRIGHTNESS_OFF, 0)));
-    }
-
     private static Optional<Block> getMultiblockBlock(final @NotNull Location location) {
         final Optional<BlockFace> face = BlockStorageAPI.getBlockFace(location, Keys.BS_FACING);
         return face.map(blockFace -> location.getBlock().getRelative(blockFace));

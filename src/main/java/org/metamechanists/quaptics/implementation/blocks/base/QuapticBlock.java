@@ -48,56 +48,6 @@ public abstract class QuapticBlock extends SlimefunItem {
         addItemHandler(onRightClick());
     }
 
-    @NotNull
-    protected Material getBaseMaterial() {
-        return Material.STRUCTURE_VOID;
-    }
-
-    @ParametersAreNonnullByDefault
-    protected abstract void addDisplays(DisplayGroup displayGroup, Location location, Player player);
-
-    protected static @NotNull Vector rotateVectorByEyeDirection(@NotNull final Player player, @NotNull final Vector vector) {
-        final double rotationAngle = Transformations.yawToCardinalDirection(player.getEyeLocation().getYaw());
-        return vector.clone().rotateAroundY(rotationAngle);
-    }
-
-    protected static @NotNull Location formatPointLocation(final Player player, @NotNull final Location location, final Vector relativeLocation) {
-        final Vector newRelativeLocation = rotateVectorByEyeDirection(player, relativeLocation);
-        newRelativeLocation.add(CENTER_VECTOR);
-        return location.clone().add(newRelativeLocation);
-    }
-
-    protected void onPlace(@NotNull final BlockPlaceEvent event) {}
-
-    protected void onBreak(@NotNull final Location location) {}
-
-    protected void onRightClick(@NotNull final Location location, @NotNull final Player player) {}
-
-    protected void onShiftRightClick(@NotNull final Location location, @NotNull final Player player) {}
-
-    @NotNull
-    private BlockUseHandler onRightClick() {
-        return event -> {
-            final Block block = event.getClickedBlock().orElse(null);
-            if (block == null) {
-                return;
-            }
-
-            if (event.getPlayer().isSneaking()) {
-                onShiftRightClick(block.getLocation(), event.getPlayer());
-            } else {
-                onRightClick(block.getLocation(), event.getPlayer());
-            }
-
-            event.cancel();
-        };
-    }
-
-    protected void onSlimefunTick(@NotNull final Block block, final SlimefunItem item, final Config data) {}
-
-    @SuppressWarnings("unused")
-    public void onQuapticTick(@NotNull final ConnectionGroup group) {}
-
     @Override
     @OverridingMethodsMustInvokeSuper
     public void preRegister() {
@@ -107,9 +57,10 @@ public abstract class QuapticBlock extends SlimefunItem {
                     public void onPlayerPlace(@Nonnull final BlockPlaceEvent event) {
                         final Location location = event.getBlock().getLocation();
                         final DisplayGroup displayGroup = new DisplayGroup(location, 0, 0);
-                        addDisplays(displayGroup, location, event.getPlayer());
+                        initDisplays(displayGroup, location, event.getPlayer());
                         setId(displayGroup, location);
                         event.getBlock().setType(getBaseMaterial());
+                        initBlockStorage(location);
                         onPlace(event);
                     }
                 },
@@ -139,29 +90,67 @@ public abstract class QuapticBlock extends SlimefunItem {
         );
     }
 
+    protected void initBlockStorage(@NotNull final Location location) {}
+    @NotNull
+    protected Material getBaseMaterial() {
+        return Material.STRUCTURE_VOID;
+    }
+    protected static @NotNull Vector rotateVectorByEyeDirection(@NotNull final Player player, @NotNull final Vector vector) {
+        final double rotationAngle = Transformations.yawToCardinalDirection(player.getEyeLocation().getYaw());
+        return vector.clone().rotateAroundY(rotationAngle);
+    }
+    protected static @NotNull Location formatPointLocation(final Player player, @NotNull final Location location, final Vector relativeLocation) {
+        final Vector newRelativeLocation = rotateVectorByEyeDirection(player, relativeLocation);
+        newRelativeLocation.add(CENTER_VECTOR);
+        return location.clone().add(newRelativeLocation);
+    }
+
+    protected void onPlace(@NotNull final BlockPlaceEvent event) {}
+    protected void onBreak(@NotNull final Location location) {}
+    protected void onRightClick(@NotNull final Location location, @NotNull final Player player) {}
+    protected void onShiftRightClick(@NotNull final Location location, @NotNull final Player player) {}
+    @NotNull
+    private BlockUseHandler onRightClick() {
+        return event -> {
+            final Block block = event.getClickedBlock().orElse(null);
+            if (block == null) {
+                return;
+            }
+
+            if (event.getPlayer().isSneaking()) {
+                onShiftRightClick(block.getLocation(), event.getPlayer());
+            } else {
+                onRightClick(block.getLocation(), event.getPlayer());
+            }
+
+            event.cancel();
+        };
+    }
+    protected void onSlimefunTick(@NotNull final Block block, final SlimefunItem item, final Config data) {}
+    @SuppressWarnings("unused")
+    public void onQuapticTick(@NotNull final ConnectionGroup group, @NotNull final Location location) {}
+
     private static void setId(@NotNull final DisplayGroup displayGroup, final Location location) {
         BlockStorageAPI.set(location, KEY_UUID, displayGroup.getParentUUID());
     }
 
+    @ParametersAreNonnullByDefault
+    protected abstract void initDisplays(DisplayGroup displayGroup, Location location, Player player);
     protected static Optional<DisplayGroupId> getDisplayGroupId(final Location location) {
         return BlockStorageAPI.getDisplayGroupId(location, KEY_UUID);
     }
-
     public static Optional<DisplayGroup> getDisplayGroup(final Location location) {
         return getDisplayGroupId(location).map(displayGroupId -> DisplayGroup.fromUUID(displayGroupId.getUUID()));
     }
-
     public static Optional<Display> getDisplay(final Location location, final String name) {
         return getDisplayGroup(location).map(displayGroup -> displayGroup.getDisplays().get(name));
     }
-
     protected static Optional<BlockDisplay> getBlockDisplay(final Location location, final String name) {
         final Optional<Display> display = getDisplay(location, name);
         return display.isPresent() && display.get() instanceof final BlockDisplay blockDisplay
                 ? Optional.of(blockDisplay)
                 : Optional.empty();
     }
-
     protected static void removeDisplay(final @NotNull DisplayGroup displayGroup, final String name) {
         final Display display = displayGroup.removeDisplay(name);
         if (display != null) {

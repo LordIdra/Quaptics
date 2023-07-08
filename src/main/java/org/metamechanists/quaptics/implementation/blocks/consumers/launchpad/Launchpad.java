@@ -22,7 +22,6 @@ import org.metamechanists.quaptics.implementation.blocks.attachments.ConfigPanel
 import org.metamechanists.quaptics.implementation.blocks.attachments.PowerAnimatedBlock;
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
 import org.metamechanists.quaptics.panels.config.ConfigPanel;
-import org.metamechanists.quaptics.panels.config.ConfigPanelContainer;
 import org.metamechanists.quaptics.panels.config.implementation.LaunchpadConfigPanel;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
@@ -42,8 +41,8 @@ public class Launchpad extends ConnectedBlock implements ConfigPanelBlock, Power
     public static final float MAX_VELOCITY = 10;
     private static final float VELOCITY_POWER = 1.5F;
     private static final float VELOCITY_DIVISOR = 5;
-    private static final Vector3f mainDisplaySize = new Vector3f(0.8F, 0.1F, 0.8F);
-    private static final Vector3f mainDisplayOffset = new Vector3f(0, 0.51F, 0);
+    private static final Vector3f MAIN_DISPLAY_SIZE = new Vector3f(0.8F, 0.1F, 0.8F);
+    private static final Vector3f MAIN_DISPLAY_OFFSET = new Vector3f(0, 0.51F, 0);
     private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -settings.getConnectionRadius());
 
     public Launchpad(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
@@ -51,66 +50,63 @@ public class Launchpad extends ConnectedBlock implements ConfigPanelBlock, Power
     }
 
     @Override
-    protected void addDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
+    protected void initDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
         displayGroup.addDisplay("main", new BlockDisplayBuilder(location.toCenterLocation())
                 .setBlockData(Material.CYAN_CONCRETE_POWDER.createBlockData())
-                .setTransformation(Transformations.adjustedScaleOffset(mainDisplaySize, mainDisplayOffset))
+                .setTransformation(Transformations.adjustedScaleOffset(MAIN_DISPLAY_SIZE, MAIN_DISPLAY_OFFSET))
                 .setBrightness(Utils.BRIGHTNESS_OFF)
                 .build());
-        BlockStorageAPI.set(location, Keys.BS_VELOCITY, INITIAL_VELOCITY);
     }
-
     @Override
-    protected List<ConnectionPoint> generateConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
+    protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
         return List.of(new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input", formatPointLocation(player, location, inputPointLocation)));
+    }
+    @Override
+    protected void initBlockStorage(@NotNull final Location location) {
+        BlockStorageAPI.set(location, Keys.BS_VELOCITY, INITIAL_VELOCITY);
     }
 
     @Override
     @OverridingMethodsMustInvokeSuper
     protected void onPlace(@NotNull final BlockPlaceEvent event) {
         super.onPlace(event);
-        final Location location = event.getBlock().getLocation();
-        final Optional<ConnectionGroup> optionalGroup = getGroup(location);
-        if (optionalGroup.isEmpty()) {
-            return;
-        }
-
-        ConfigPanelBlock.setPanelId(location, new LaunchpadConfigPanel(
-                formatPointLocation(event.getPlayer(), location, RELATIVE_PANEL_LOCATION),
-                optionalGroup.get().getId(),
-                (float) Transformations.yawToCardinalDirection(event.getPlayer().getEyeLocation().getYaw()))
-                .getId());
+        onPlaceConfigPanelBlock(event);
     }
-
     @Override
     @OverridingMethodsMustInvokeSuper
     protected void onBreak(@NotNull final Location location) {
         super.onBreak(location);
-        final Optional<ConfigPanelId> panelId = ConfigPanelBlock.getPanelId(location);
-        final Optional<ConfigPanelContainer> panel = panelId.isPresent() ? panelId.get().get() : Optional.empty();
-        panel.ifPresent(ConfigPanelContainer::remove);
+        onBreakConfigPanelBlock(location);
     }
-
-    @Override
-    public ConfigPanel createPanel(final ConfigPanelId panelId, final ConnectionGroupId groupId) {
-        return new LaunchpadConfigPanel(panelId, groupId);
-    }
-
     @Override
     public void onInputLinkUpdated(@NotNull final ConnectionGroup group, @NotNull final Location location) {
-        if (doBurnoutCheck(group, "input")) { // TODO make sure all other components check and return
+        if (doBurnoutCheck(group, "input")) {
             return;
         }
 
         final Optional<Link> inputLink = getLink(location, "input");
         onPoweredAnimation(location, inputLink.isPresent() && settings.isOperational(inputLink));
     }
+    @Override
+    public void onPoweredAnimation(final Location location, final boolean powered) {
+        getDisplay(location, "main").ifPresent(value -> value.setBrightness(new Brightness(powered ? Utils.BRIGHTNESS_ON : Utils.BRIGHTNESS_OFF, 0)));
+    }
+
+    @Override
+    public ConfigPanel createPanel(final Location location, final Player player, @NotNull final ConnectionGroup group) {
+        return new LaunchpadConfigPanel(formatPointLocation(player, location, RELATIVE_PANEL_LOCATION), group.getId(),
+                (float) Transformations.yawToCardinalDirection(player.getEyeLocation().getYaw()));
+    }
+    @Override
+    public ConfigPanel getPanel(final ConfigPanelId panelId, final ConnectionGroupId groupId) {
+        return new LaunchpadConfigPanel(panelId, groupId);
+    }
 
     @Override
     protected @NotNull Material getBaseMaterial() {
         return Material.LIGHT_GRAY_CONCRETE;
     }
-    
+
     public void launch(final Location location, final Player player) {
         final Optional<Link> inputLink = getLink(location, "input");
         if (inputLink.isEmpty() || !settings.isOperational(inputLink)) {
@@ -130,12 +126,6 @@ public class Launchpad extends ConnectedBlock implements ConfigPanelBlock, Power
 
         player.setVelocity(velocity.get());
     }
-
-    @Override
-    public void onPoweredAnimation(final Location location, final boolean powered) {
-        getDisplay(location, "main").ifPresent(value -> value.setBrightness(new Brightness(powered ? Utils.BRIGHTNESS_ON : Utils.BRIGHTNESS_OFF, 0)));
-    }
-
     private static double calculateFinalVelocity(final double velocity) {
         return velocity >= 0
                 ? Math.pow(velocity, VELOCITY_POWER)

@@ -85,6 +85,10 @@ public interface ItemHolderBlock {
         BlockStorageAPI.set(location, Keys.BS_IS_HOLDING_ITEM, true);
     }
 
+    default void onBreakItemHolderBlock(final Location location) {
+        getStack(location).ifPresent(stack -> location.getWorld().dropItem(location, stack));
+    }
+
     boolean onInsert(@NotNull final ItemStack stack, @NotNull final Player player);
     Optional<ItemStack> onRemove(@NotNull final Location location, @NotNull final ItemStack stack);
 }

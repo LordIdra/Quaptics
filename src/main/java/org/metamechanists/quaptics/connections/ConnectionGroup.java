@@ -69,7 +69,8 @@ public class ConnectionGroup {
     }
 
     public void tick() {
-        getBlock().onQuapticTick(this);
+        final Optional<Location> locationOptional = getLocation();
+        locationOptional.ifPresent(location -> getBlock().onQuapticTick(this, location));
     }
 
     public void updatePanels() {

@@ -56,7 +56,7 @@ public class LaunchpadConfigPanel extends ConfigPanel {
     }
 
     @Override
-    public void update() {
+    protected void update() {
         if (isPanelHidden()) {
             return;
         }

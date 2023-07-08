@@ -65,7 +65,7 @@ public class ItemProjectorConfigPanel extends ConfigPanel {
     }
 
     @Override
-    public void update() {
+    protected void update() {
         if (isPanelHidden()) {
             return;
         }

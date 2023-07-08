@@ -35,6 +35,7 @@ public class Keys {
     public final String BS_CHARGE = "QP_CHARGE";
     public final String BS_CHARGE_RATE = "QP_CHARGE_RATE";
     public final String BS_POWERED = "QP_POWERED";
+    public final String BS_ENOUGH_ENERGY = "QP_ENOUGH_ENERGY";
     public final String BS_ENABLED = "QP_ENABLED";
     public final String BS_TARGET = "QP_TARGET";
     public final String BS_VELOCITY = "QP_VELOCITY";
@@ -42,6 +43,5 @@ public class Keys {
     public final String BS_IS_HOLDING_ITEM = "QP_IS_HOLDING_ITEM";
     public final String BS_HEIGHT = "QP_HEIGHT";
     public final String BS_SIZE = "QP_SIZE";
-    public final String BS_BLOCK_NAME = "QP_BLOCK_NAME";
     public final String BS_MODE = "QP_MODE";
 }

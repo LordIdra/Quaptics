@@ -48,11 +48,6 @@ public class ConfigPanelContainer {
         return attributes.get(name).get();
     }
 
-    public void changeLocation(final Location location) {
-        getInteraction().ifPresent(displayGroup -> displayGroup.teleport(location));
-        attributes.values().forEach(attributeId -> attributeId.get().ifPresent(attribute -> attribute.changeLocation(location)));
-    }
-
     public void setValue(final String name, final String value) {
         getAttribute(name).ifPresent(attribute -> attribute.setValue(value));
     }

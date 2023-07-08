@@ -55,5 +55,5 @@ public abstract class ConfigPanel {
     protected abstract Vector getOffset();
     protected abstract ConfigPanelContainer buildPanelContainer(@NotNull final ConnectionGroupId groupId, @NotNull final Location location, final float rotationY);
     public abstract void interact(@NotNull final Location location, final String name, final String type);
-    public abstract void update();
+    protected abstract void update();
 }
