@@ -98,7 +98,7 @@ public class InfusionContainer extends QuapticBlock implements ItemHolderBlock, 
     @Override
     public Map<Vector, ItemStack> getStructure() {
         return Map.of(
-                new Vector(2, 0, 0), SlimefunItems.ENERGY_REGULATOR,
+                new Vector(2, 0, 0), new ItemStack(Material.CYAN_CONCRETE),
                 new Vector(-2, 0, -2), SlimefunItems.ANCIENT_PEDESTAL,
                 new Vector(0, 0, 2), new ItemStack(Material.ENCHANTING_TABLE)
         );

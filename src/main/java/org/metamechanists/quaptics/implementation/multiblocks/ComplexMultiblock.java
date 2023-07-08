@@ -53,7 +53,7 @@ public interface ComplexMultiblock {
         }
 
         final BlockDisplay blockDisplay = blockDisplayBuilder.build();
-        final Interaction interaction = new InteractionBuilder(center.getLocation())
+        final Interaction interaction = new InteractionBuilder(block.getLocation())
                 .setWidth(DISPLAY_SCALE)
                 .setHeight(DISPLAY_SCALE)
                 .build();
@@ -84,6 +84,7 @@ public interface ComplexMultiblock {
             return;
         }
 
+        MultiblockWand.removeProjection(itemStack);
         visualiseStructure(itemStack, center);
     }
 

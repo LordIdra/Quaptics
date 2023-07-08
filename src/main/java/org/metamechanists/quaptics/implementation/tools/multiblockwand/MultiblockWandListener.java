@@ -30,7 +30,7 @@ public class MultiblockWandListener implements Listener {
             return;
         }
 
-        Language.sendLanguageMessage(event.getPlayer(), "muliblock.block-name", traverser.getString("blockName"));
+        Language.sendLanguageMessage(event.getPlayer(), "multiblock.block-name", traverser.getString("blockName"));
     }
 
     @EventHandler
