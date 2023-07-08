@@ -11,27 +11,24 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.Optional;
 
 @UtilityClass
 public class SlimefunIsDumbUtils {
     // https://github.com/Slimefun/Slimefun4/blob/master/src/main/java/io/github/thebusybiscuit/slimefun4/implementation/listeners/MultiBlockListener.java#L65
     public Optional<MultiBlockMachine> getMultiblockMachine(final Block block) {
-        final LinkedList<MultiBlock> multiblocks = new LinkedList<>();
+        for (final MultiBlock multiBlock : Slimefun.getRegistry().getMultiBlocks()) {
+            if (!(multiBlock.getSlimefunItem() instanceof MultiBlockMachine multiBlockMachine)) {
+                continue;
+            }
 
-        for (final MultiBlock mb : Slimefun.getRegistry().getMultiBlocks()) {
-            final Block center = block.getRelative(mb.getTriggerBlock());
-            if (compareMaterials(center, mb.getStructure(), mb.isSymmetric())) {
-                multiblocks.add(mb);
+            final Block center = block.getRelative(multiBlock.getTriggerBlock());
+            if (compareMaterials(center, multiBlock.getStructure(), multiBlock.isSymmetric())) {
+                return Optional.of(multiBlockMachine);
             }
         }
-
-        if (multiblocks.getLast().getSlimefunItem() instanceof final MultiBlockMachine multiBlockMachine) {
-            return Optional.of(multiBlockMachine);
-        }
+        
         return Optional.empty();
-
     }
 
     @ParametersAreNonnullByDefault

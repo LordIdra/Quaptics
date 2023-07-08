@@ -1,5 +1,6 @@
 package org.metamechanists.quaptics.implementation.blocks.attachments;
 
+import io.github.bakedlibs.dough.items.CustomItemStack;
 import org.bukkit.Location;
 import org.bukkit.entity.Display;
 import org.bukkit.entity.ItemDisplay;
@@ -70,37 +71,19 @@ public interface ItemHolderBlock {
     default void itemHolderInteract(@NotNull final Location location, @NotNull final Player player) {
         final Optional<ItemStack> currentStack = removeItem(location);
         BlockStorageAPI.set(location, Keys.BS_IS_HOLDING_ITEM, false);
-        if (currentStack.isEmpty() || currentStack.get().getType().isEmpty()) {
-            final ItemStack oldStack = player.getInventory().getItemInMainHand().clone();
-            final ItemStack newStack = oldStack.clone();
-            newStack.setAmount(1);
-            if (newStack.getType().isEmpty()) {
-                return;
-            }
-
-            if (!onInsert(newStack, player)) {
-                return;
-            }
-
-            insertItem(location, newStack);
-            BlockStorageAPI.set(location, Keys.BS_IS_HOLDING_ITEM, true);
-
-            if (oldStack.getAmount() == 1) {
-                player.getInventory().setItemInMainHand(null);
-                return;
-            }
-
-            oldStack.clone().setAmount(oldStack.getAmount() - 1);
-            player.getInventory().setItemInMainHand(oldStack);
+        if (currentStack.isPresent() && !currentStack.get().getType().isEmpty()) {
+            onRemove(location, currentStack.get()).ifPresent(itemStack -> ItemUtils.addOrDropItemMainHand(player, itemStack));
             return;
         }
 
-        final Optional<ItemStack> finalStack = onRemove(location, currentStack.get());
-        if (finalStack.isEmpty()) {
+        final ItemStack itemStack = new CustomItemStack(player.getInventory().getItemInMainHand(), 1);
+        if (itemStack.getType().isEmpty() || !onInsert(itemStack, player)) {
             return;
         }
 
-        ItemUtils.addOrDropItemMainHand(player, finalStack.get());
+        insertItem(location, itemStack);
+        player.getInventory().getItemInMainHand().subtract();
+        BlockStorageAPI.set(location, Keys.BS_IS_HOLDING_ITEM, true);
     }
 
     boolean onInsert(@NotNull final ItemStack stack, @NotNull final Player player);
