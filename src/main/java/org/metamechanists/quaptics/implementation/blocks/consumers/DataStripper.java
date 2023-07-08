@@ -161,6 +161,11 @@ public class DataStripper extends ConnectedBlock implements InfoPanelBlock, Item
 
     }
 
+    @Override
+    protected @NotNull Material getBaseMaterial() {
+        return Material.BARRIER;
+    }
+
     private static @NotNull ItemStack stripData(final @NotNull ItemStack inputStack) {
         final ItemStack intermediaryStack = inputStack.clone();
         final SkullMeta itemMeta = (SkullMeta) intermediaryStack.getItemMeta();
