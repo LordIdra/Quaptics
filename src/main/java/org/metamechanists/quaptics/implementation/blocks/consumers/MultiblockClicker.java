@@ -60,7 +60,6 @@ public class MultiblockClicker extends ConnectedBlock {
                         .setBrightness(Utils.BRIGHTNESS_OFF)
                 .build());
         BlockStorageAPI.set(location, Keys.BS_TICKS_SINCE_LAST_UPDATE, 0);
-        BlockStorageAPI.set(location, Keys.BS_OWNER, player.getUniqueId());
         BlockStorageAPI.set(location, Keys.BS_FACING, player.getFacing());
         BlockStorageAPI.set(location, Keys.BS_POWERED, false);
     }
@@ -78,7 +77,7 @@ public class MultiblockClicker extends ConnectedBlock {
             return;
         }
 
-        final Optional<UUID> uuid = BlockStorageAPI.getUuid(location.get(), Keys.BS_OWNER);
+        final Optional<UUID> uuid = BlockStorageAPI.getUuid(location.get(), Keys.BS_PLAYER);
         if (uuid.isEmpty()) {
             return;
         }
@@ -141,6 +140,7 @@ public class MultiblockClicker extends ConnectedBlock {
             return;
         }
 
+        BlockStorageAPI.set(location, Keys.BS_PLAYER, player.getUniqueId());
         final boolean enabled = BlockStorageAPI.getBoolean(location, Keys.BS_ENABLED);
         onEnabledAnimation(location, !enabled);
         setEnabled(location, !enabled);

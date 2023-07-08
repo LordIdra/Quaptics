@@ -27,7 +27,7 @@ public class Keys {
 
     public final NamespacedKey CHARGE = newKey("CHARGE");
 
-    public final String BS_OWNER = "QP_OWNER";
+    public final String BS_PLAYER = "QP_PLAYER";
     public final String BS_FACING = "QP_FACING";
     public final String BS_PANEL_ID = "QP_PANEL_ID";
     public final String BS_BURNOUT = "QP_BURNOUT";
