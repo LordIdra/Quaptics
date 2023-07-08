@@ -1,12 +1,16 @@
 package org.metamechanists.quaptics.items.groups;
 
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import lombok.experimental.UtilityClass;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.SpawnCategory;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.Quaptics;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.implementation.blocks.concentrators.SolarConcentrator;
@@ -24,6 +28,7 @@ import org.metamechanists.quaptics.implementation.multiblocks.infuser.InfusionCo
 import org.metamechanists.quaptics.implementation.multiblocks.infuser.InfusionPillar;
 import org.metamechanists.quaptics.items.Groups;
 import org.metamechanists.quaptics.items.Lore;
+import org.metamechanists.quaptics.items.RecipeTypes;
 import org.metamechanists.quaptics.items.Tier;
 
 import java.util.Set;
@@ -130,6 +135,7 @@ public class Primitive {
 
     public final Settings INFUSION_CONTAINER_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
+            .timePerItem(10)
             .build();
 
     public final Settings INFUSION_PILLAR_SETTINGS = Settings.builder()
@@ -252,6 +258,18 @@ public class Primitive {
             Lore.create(INFUSION_PILLAR_SETTINGS,
                     "&7● Multiblock component"));
 
+    public final SlimefunItemStack INFUSED_DEAD_BUSH = new SlimefunItemStack(
+            "QP_INFUSED_DEAD_BUSH",
+            getInfusedDeadBush(),
+            "&cInfused Deadbush");
+
+    private @NotNull ItemStack getInfusedDeadBush() {
+        final ItemStack itemStack = new ItemStack(Material.DEAD_BUSH);
+        itemStack.addEnchantment(Enchantment.ARROW_DAMAGE, 1);
+        itemStack.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        return itemStack;
+    }
+
     public void initialize() {
         final SlimefunAddon addon = Quaptics.getInstance();
 
@@ -352,5 +370,15 @@ public class Primitive {
                 RecipeType.NULL,
                 new ItemStack[]{},
                 INFUSION_PILLAR_SETTINGS).register(addon);
+
+        new SlimefunItem(
+                Groups.PRIMITIVE,
+                INFUSED_DEAD_BUSH,
+                RecipeTypes.RECIPE_INFUSION,
+                new ItemStack[]{
+                        null, null, null,
+                        null, new ItemStack(Material.DEAD_BUSH), null,
+                        null, null, null
+                }).register(addon);
     }
 }

@@ -1,14 +1,9 @@
 package org.metamechanists.quaptics.implementation.blocks.base;
 
-import com.destroystokyo.paper.ParticleBuilder;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Particle;
-import org.bukkit.Sound;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
@@ -36,9 +31,6 @@ import java.util.List;
 import java.util.Optional;
 
 public abstract class ConnectedBlock extends QuapticBlock {
-    private static final int BURNOUT_EXPLODE_VOLUME = 2;
-    private static final float BURNOUT_EXPLODE_PITCH = 1.2F;
-
     protected ConnectedBlock(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
     }
@@ -77,21 +69,12 @@ public abstract class ConnectedBlock extends QuapticBlock {
     }
     public void onInputLinkUpdated(@NotNull final ConnectionGroup group, @NotNull final Location location) {}
 
+    @Override
+    @OverridingMethodsMustInvokeSuper
     public void burnout(final Location location) {
-        // TODO send message to player to inform them what happened
         onBreak(location);
-
         getGroup(location).ifPresent(ConnectionGroup::remove);
-        getDisplayGroup(location).ifPresent(displayGroup -> {
-            displayGroup.getDisplays().values().forEach(Entity::remove);
-            displayGroup.remove();
-        });
-
-        // TODO make this naturally break, not the forced shit we have going on here
-        BlockStorageAPI.removeData(location);
-        location.getBlock().setBlockData(Material.AIR.createBlockData());
-        location.getWorld().playSound(location.toCenterLocation(), Sound.ENTITY_GENERIC_EXPLODE, BURNOUT_EXPLODE_VOLUME, BURNOUT_EXPLODE_PITCH);
-        new ParticleBuilder(Particle.FLASH).location(location.toCenterLocation()).count(3).spawn();
+        super.burnout(location);
     }
     private boolean doBurnoutCheck(@NotNull final ConnectionGroup group, @NotNull final ConnectionPoint point) {
         if (point.getLink().isEmpty() || point.getLink().get().getPower() <= settings.getTier().maxPower) {

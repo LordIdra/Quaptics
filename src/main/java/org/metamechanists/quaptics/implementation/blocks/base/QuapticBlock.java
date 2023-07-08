@@ -1,5 +1,6 @@
 package org.metamechanists.quaptics.implementation.blocks.base;
 
+import com.destroystokyo.paper.ParticleBuilder;
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
@@ -13,9 +14,12 @@ import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Display;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -37,6 +41,8 @@ import java.util.Optional;
 import static dev.sefiraat.sefilib.slimefun.blocks.DisplayGroupBlock.KEY_UUID;
 
 public abstract class QuapticBlock extends SlimefunItem {
+    private static final int BURNOUT_EXPLODE_VOLUME = 2;
+    private static final float BURNOUT_EXPLODE_PITCH = 1.2F;
     private static final Vector CENTER_VECTOR = new Vector(0.5, 0.5, 0.5);
     protected static final Vector INITIAL_LINE = new Vector(0, 0, 1);
     @Getter
@@ -90,20 +96,9 @@ public abstract class QuapticBlock extends SlimefunItem {
         );
     }
 
+    @ParametersAreNonnullByDefault
+    protected abstract void initDisplays(DisplayGroup displayGroup, Location location, Player player);
     protected void initBlockStorage(@NotNull final Location location) {}
-    @NotNull
-    protected Material getBaseMaterial() {
-        return Material.STRUCTURE_VOID;
-    }
-    protected static @NotNull Vector rotateVectorByEyeDirection(@NotNull final Player player, @NotNull final Vector vector) {
-        final double rotationAngle = Transformations.yawToCardinalDirection(player.getEyeLocation().getYaw());
-        return vector.clone().rotateAroundY(rotationAngle);
-    }
-    protected static @NotNull Location formatPointLocation(final Player player, @NotNull final Location location, final Vector relativeLocation) {
-        final Vector newRelativeLocation = rotateVectorByEyeDirection(player, relativeLocation);
-        newRelativeLocation.add(CENTER_VECTOR);
-        return location.clone().add(newRelativeLocation);
-    }
 
     protected void onPlace(@NotNull final BlockPlaceEvent event) {}
     protected void onBreak(@NotNull final Location location) {}
@@ -134,8 +129,35 @@ public abstract class QuapticBlock extends SlimefunItem {
         BlockStorageAPI.set(location, KEY_UUID, displayGroup.getParentUUID());
     }
 
-    @ParametersAreNonnullByDefault
-    protected abstract void initDisplays(DisplayGroup displayGroup, Location location, Player player);
+    @OverridingMethodsMustInvokeSuper
+    public void burnout(final Location location) {
+        getDisplayGroup(location).ifPresent(displayGroup -> {
+            displayGroup.getDisplays().values().forEach(Entity::remove);
+            displayGroup.remove();
+        });
+
+        // TODO make this naturally break, not the forced shit we have going on here
+        BlockStorageAPI.removeData(location);
+        location.getBlock().setBlockData(Material.AIR.createBlockData());
+        location.getWorld().playSound(location.toCenterLocation(), Sound.ENTITY_GENERIC_EXPLODE, BURNOUT_EXPLODE_VOLUME, BURNOUT_EXPLODE_PITCH);
+        new ParticleBuilder(Particle.FLASH).location(location.toCenterLocation()).count(3).spawn();
+    }
+
+
+    @NotNull
+    protected Material getBaseMaterial() {
+        return Material.STRUCTURE_VOID;
+    }
+    protected static @NotNull Vector rotateVectorByEyeDirection(@NotNull final Player player, @NotNull final Vector vector) {
+        final double rotationAngle = Transformations.yawToCardinalDirection(player.getEyeLocation().getYaw());
+        return vector.clone().rotateAroundY(rotationAngle);
+    }
+    protected static @NotNull Location formatPointLocation(final Player player, @NotNull final Location location, final Vector relativeLocation) {
+        final Vector newRelativeLocation = rotateVectorByEyeDirection(player, relativeLocation);
+        newRelativeLocation.add(CENTER_VECTOR);
+        return location.clone().add(newRelativeLocation);
+    }
+
     protected static Optional<DisplayGroupId> getDisplayGroupId(final Location location) {
         return BlockStorageAPI.getDisplayGroupId(location, KEY_UUID);
     }

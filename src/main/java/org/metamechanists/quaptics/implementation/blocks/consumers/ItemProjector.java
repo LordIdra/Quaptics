@@ -114,7 +114,7 @@ public class ItemProjector extends ConnectedBlock implements ItemHolderBlock, Po
         onPoweredAnimation(location, inputLink.isPresent() && settings.isOperational(inputLink));
     }
     @Override
-    public boolean onInsert(@NotNull final ItemStack stack, @NotNull final Player player) {
+    public boolean onInsert(@NotNull final Location location, @NotNull final ItemStack stack, @NotNull final Player player) {
         return true;
     }
     @Override

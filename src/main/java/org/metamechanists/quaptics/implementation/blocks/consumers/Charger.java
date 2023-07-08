@@ -121,7 +121,7 @@ public class Charger extends ConnectedBlock implements InfoPanelBlock, ItemHolde
     }
 
     @Override
-    public boolean onInsert(@NotNull final ItemStack stack, @NotNull final Player player) {
+    public boolean onInsert(@NotNull final Location location, @NotNull final ItemStack stack, @NotNull final Player player) {
         if (!(SlimefunItem.getByItem(stack) instanceof QuapticChargeableItem)) {
             Language.sendLanguageMessage(player, "charger.not-chargeable");
             return false;

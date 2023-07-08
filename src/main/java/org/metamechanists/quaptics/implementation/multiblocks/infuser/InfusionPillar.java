@@ -6,7 +6,6 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.entity.Display.Brightness;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
@@ -55,6 +54,10 @@ public class InfusionPillar extends ConnectedBlock implements PowerAnimatedBlock
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
         return List.of(new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input", formatPointLocation(player, location, inputPointLocation)));
     }
+    @Override
+    protected void initBlockStorage(final @NotNull Location location) {
+        BlockStorageAPI.set(location, Keys.BS_POWERED, false);
+    }
 
     @Override
     public void onInputLinkUpdated(@NotNull final ConnectionGroup group, @NotNull final Location location) {
@@ -68,6 +71,6 @@ public class InfusionPillar extends ConnectedBlock implements PowerAnimatedBlock
     }
     @Override
     public void onPoweredAnimation(final Location location, final boolean powered) {
-        getDisplay(location, "prism").ifPresent(value -> value.setBrightness(new Brightness(powered ? Utils.BRIGHTNESS_ON : Utils.BRIGHTNESS_OFF, 0)));
+        brightnessAnimation(location, "prism", powered);
     }
 }

@@ -125,7 +125,7 @@ public class DataStripper extends ConnectedBlock implements InfoPanelBlock, Item
         doBurnoutCheck(group, "input");
     }
     @Override
-    public boolean onInsert(final @NotNull ItemStack stack, @NotNull final Player player) {
+    public boolean onInsert(@NotNull final Location location, final @NotNull ItemStack stack, @NotNull final Player player) {
         if (SlimefunItem.getByItem(stack) == null || stack.getType() != Material.PLAYER_HEAD) {
             Language.sendLanguageMessage(player, "data-stripper.not-slimefun-head");
             return false;

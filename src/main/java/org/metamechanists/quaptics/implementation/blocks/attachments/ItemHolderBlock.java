@@ -76,7 +76,7 @@ public interface ItemHolderBlock {
         }
 
         final ItemStack itemStack = player.getInventory().getItemInMainHand().asOne();
-        if (itemStack.getType().isEmpty() || !onInsert(itemStack, player)) {
+        if (itemStack.getType().isEmpty() || !onInsert(location, itemStack, player)) {
             return;
         }
 
@@ -89,6 +89,6 @@ public interface ItemHolderBlock {
         getStack(location).ifPresent(stack -> location.getWorld().dropItem(location, stack));
     }
 
-    boolean onInsert(@NotNull final ItemStack stack, @NotNull final Player player);
+    boolean onInsert(@NotNull final Location location, @NotNull final ItemStack stack, @NotNull final Player player);
     Optional<ItemStack> onRemove(@NotNull final Location location, @NotNull final ItemStack stack);
 }
