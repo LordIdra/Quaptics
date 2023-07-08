@@ -30,8 +30,9 @@ public interface ComplexMultiblock {
     Color EMPTY_COLOR = Color.fromARGB(255, 255, 255, 0);
     Color WRONG_MATERIAL_COLOR = Color.fromARGB(255, 255, 0, 0);
     Color RIGHT_MATERIAL_COLOR = Color.fromARGB(255, 0, 255, 0);
+    Vector INTERACTION_CORRECTION_OFFSET = new Vector(0, -0.5, 0);
     int DISPLAY_BRIGHTNESS = 15;
-    float DISPLAY_SCALE = 0.5F;
+    float DISPLAY_SCALE = 0.75F;
 
     private static boolean isStructureBlockValid(final @NotNull Block center, final @NotNull Vector offset, final ItemStack predicted) {
         final Block block = center.getRelative(offset.getBlockX(), offset.getBlockY(), offset.getBlockZ());
@@ -53,13 +54,13 @@ public interface ComplexMultiblock {
         }
 
         final BlockDisplay blockDisplay = blockDisplayBuilder.build();
-        final Interaction interaction = new InteractionBuilder(block.getLocation().toCenterLocation())
+        final Interaction interaction = new InteractionBuilder(block.getLocation().toCenterLocation().subtract(INTERACTION_CORRECTION_OFFSET))
                 .setWidth(DISPLAY_SCALE)
                 .setHeight(DISPLAY_SCALE)
                 .build();
 
-        final SlimefunItem slimefunItem = BlockStorageAPI.check(block);
-        final String blockName = slimefunItem != null ? slimefunItem.getItemName() : block.getType().name();
+        final SlimefunItem slimefunItem = SlimefunItem.getByItem(itemStack);
+        final String blockName = slimefunItem != null ? slimefunItem.getItemName() : itemStack.getType().name();
         final PersistentDataTraverser traverser = new PersistentDataTraverser(interaction.getUniqueId());
         traverser.set("blockName", blockName);
 
