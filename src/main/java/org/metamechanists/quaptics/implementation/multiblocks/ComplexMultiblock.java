@@ -26,7 +26,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-@FunctionalInterface
 public interface ComplexMultiblock {
     Color EMPTY_COLOR = Color.fromARGB(255, 255, 255, 0);
     Color WRONG_MATERIAL_COLOR = Color.fromARGB(255, 255, 0, 0);
