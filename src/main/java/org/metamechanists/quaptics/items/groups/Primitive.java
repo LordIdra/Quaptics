@@ -135,6 +135,7 @@ public class Primitive {
     public final Settings INFUSION_PILLAR_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
             .minPower(7)
+            .connectionRadius(0.3F)
             .build();
 
     public final SlimefunItemStack SOLAR_CONCENTRATOR_1 = new SlimefunItemStack(

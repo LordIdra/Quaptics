@@ -89,7 +89,6 @@ public class InfusionContainer extends QuapticBlock implements ItemHolderBlock, 
         panel.ifPresent(InfoPanelContainer::remove);
         ItemHolderBlock.getStack(location).ifPresent(stack -> location.getWorld().dropItem(location, stack));
     }
-
     @Override
     protected void onRightClick(final @NotNull Location location, final @NotNull Player player) {
         if (multiblockInteract(location.getBlock(), player)) {
@@ -97,12 +96,10 @@ public class InfusionContainer extends QuapticBlock implements ItemHolderBlock, 
         }
         itemHolderInteract(location, player);
     }
-
     @Override
     public boolean onInsert(@NotNull final ItemStack stack, @NotNull final Player player) {
         return true;
     }
-
     @Override
     public Optional<ItemStack> onRemove(@NotNull final Location location, @NotNull final ItemStack stack) {
         return Optional.of(stack);
@@ -117,7 +114,6 @@ public class InfusionContainer extends QuapticBlock implements ItemHolderBlock, 
                 PILLAR_4_LOCATION, Primitive.INFUSION_PILLAR
         );
     }
-
     @Override
     public void tickAnimation(@NotNull final Location location) {
         animatePillar(location.clone().add(PILLAR_1_LOCATION), location);
@@ -130,7 +126,6 @@ public class InfusionContainer extends QuapticBlock implements ItemHolderBlock, 
     private static void animatePillar(@NotNull final Location center, @NotNull final Location pillarLocation) {
         ParticleUtils.drawLine(Particle.END_ROD, pillarLocation, center, PILLAR_PARTICLE_SPACING);
     }
-
     private static void animateCenter(@NotNull final Location center) {
         org.metamechanists.metalib.utils.ParticleUtils.sphere(center, Particle.ELECTRIC_SPARK, CONTAINER_PARTICLE_RADIUS, false);
     }
