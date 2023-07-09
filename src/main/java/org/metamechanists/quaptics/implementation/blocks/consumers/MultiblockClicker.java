@@ -77,7 +77,7 @@ public class MultiblockClicker extends ConnectedBlock implements PowerAnimatedBl
                 .setBlockData(Material.WHITE_CONCRETE.createBlockData())
                 .setTransformation(new TransformationMatrixBuilder()
                         .scale(ATTACHMENT_DISPLAY_SIZE)
-                        .lookAlong(player.getFacing().getDirection().toVector3f())
+                        .lookAlong(player.getFacing())
                         .buildForBlockDisplay())
                 .build());
         BlockStorageAPI.set(location, Keys.BS_FACING, player.getFacing());

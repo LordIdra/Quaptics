@@ -89,9 +89,9 @@ public abstract class Turret extends ConnectedBlock {
 
     private @NotNull Matrix4f getBarrelMatrix(@NotNull final Location from, final Location to) {
         return new TransformationMatrixBuilder()
+                .translate(barrelTranslation)
                 .scale(barrelSize)
                 .lookAlong(from.clone().add(barrelLocation), to)
-                .translate(barrelTranslation)
                 .buildForBlockDisplay();
     }
     private BlockDisplay generateBarrel(@NotNull final Location from, final Location to) {

@@ -1,6 +1,7 @@
 package org.metamechanists.quaptics.utils.transformations;
 
 import org.bukkit.Location;
+import org.bukkit.block.BlockFace;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
@@ -26,7 +27,7 @@ public class TransformationMatrixBuilder {
      * Represents a translation in X, Y, and Z.
      * @param translation The amount by which to translate in the x, y, and z plane
      */
-    public TransformationMatrixBuilder translate(final Vector3f translation) {
+    public TransformationMatrixBuilder translate(final @NotNull Vector3f translation) {
         components.addLast(new TranslationComponent(translation));
         return this;
     }
@@ -35,7 +36,7 @@ public class TransformationMatrixBuilder {
      * Represents a scale transformation in X, Y, and Z.
      * @param scale The amount by which to scale in the x, y, and z plane
      */
-    public TransformationMatrixBuilder scale(final Vector3f scale) {
+    public TransformationMatrixBuilder scale(final @NotNull Vector3f scale) {
         components.addLast(new ScaleComponent(scale));
         return this;
     }
@@ -44,7 +45,7 @@ public class TransformationMatrixBuilder {
      * Represents a rotation in X, Y, and Z.
      * @param rotation The amount by which to rotate in the x, y, and z plane
      */
-    public TransformationMatrixBuilder rotate(final Vector3f rotation) {
+    public TransformationMatrixBuilder rotate(final @NotNull Vector3f rotation) {
         components.addLast(new RotationComponent(rotation));
         return this;
     }
@@ -53,12 +54,16 @@ public class TransformationMatrixBuilder {
      * Represents a look-along transformation without any roll. To visualise what this transformation does, imagine a player in-game rotating their head.
      * @param direction The direction along which to look
      */
-    public TransformationMatrixBuilder lookAlong(final Vector3f direction) {
+    public TransformationMatrixBuilder lookAlong(final @NotNull Vector3f direction) {
         components.addLast(new LookAlongComponent(direction));
         return this;
     }
-    public TransformationMatrixBuilder lookAlong(final Location from, final Location to) {
+    public TransformationMatrixBuilder lookAlong(final @NotNull Location from, final @NotNull Location to) {
         components.addLast(new LookAlongComponent(from, to));
+        return this;
+    }
+    public TransformationMatrixBuilder lookAlong(final @NotNull BlockFace face) {
+        components.addLast(new LookAlongComponent(face.getDirection().toVector3f()));
         return this;
     }
 
