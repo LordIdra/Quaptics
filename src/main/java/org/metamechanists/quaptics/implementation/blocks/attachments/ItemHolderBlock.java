@@ -1,7 +1,6 @@
 package org.metamechanists.quaptics.implementation.blocks.attachments;
 
 import org.bukkit.Location;
-import org.bukkit.entity.Display;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -15,19 +14,6 @@ import org.metamechanists.quaptics.utils.Keys;
 import java.util.Optional;
 
 public interface ItemHolderBlock {
-    static Optional<ItemDisplay> getItemDisplay(final Location location) {
-        final Optional<Display> display = QuapticBlock.getDisplay(location, "item");
-        if (display.isEmpty()) {
-            return Optional.empty();
-        }
-
-        if (!(display.get() instanceof final ItemDisplay itemDisplay)) {
-            return Optional.empty();
-        }
-
-        return Optional.of(itemDisplay);
-    }
-
     static Optional<ItemStack> getStack(final @NotNull ConnectionGroup group) {
         final Optional<Location> location = group.getLocation();
         if (location.isEmpty()) {
@@ -38,7 +24,7 @@ public interface ItemHolderBlock {
     }
 
     static Optional<ItemStack> getStack(final @NotNull Location location) {
-        final Optional<ItemDisplay> itemDisplay = getItemDisplay(location);
+        final Optional<ItemDisplay> itemDisplay = QuapticBlock.getItemDisplay(location, "item");
         if (itemDisplay.isEmpty()) {
             return Optional.empty();
         }
@@ -48,7 +34,7 @@ public interface ItemHolderBlock {
     }
 
     static void insertItem(final Location location, @NotNull final ItemStack itemStack) {
-        final Optional<ItemDisplay> itemDisplay = getItemDisplay(location);
+        final Optional<ItemDisplay> itemDisplay = QuapticBlock.getItemDisplay(location, "item");
         if (itemDisplay.isEmpty()) {
             return;
         }
@@ -57,7 +43,7 @@ public interface ItemHolderBlock {
     }
 
     static Optional<ItemStack> removeItem(@NotNull final Location location) {
-        final Optional<ItemDisplay> itemDisplay = getItemDisplay(location);
+        final Optional<ItemDisplay> itemDisplay = QuapticBlock.getItemDisplay(location, "item");
         if (itemDisplay.isEmpty()) {
             return Optional.empty();
         }

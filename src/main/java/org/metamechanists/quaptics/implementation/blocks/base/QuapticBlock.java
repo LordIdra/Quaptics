@@ -20,6 +20,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Display;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -164,13 +165,19 @@ public abstract class QuapticBlock extends SlimefunItem {
     public static Optional<Display> getDisplay(final Location location, final String name) {
         return getDisplayGroup(location).map(displayGroup -> displayGroup.getDisplays().get(name));
     }
-    protected static Optional<BlockDisplay> getBlockDisplay(final Location location, final String name) {
+    public static Optional<BlockDisplay> getBlockDisplay(final Location location, final String name) {
         final Optional<Display> display = getDisplay(location, name);
         return display.isPresent() && display.get() instanceof final BlockDisplay blockDisplay
                 ? Optional.of(blockDisplay)
                 : Optional.empty();
     }
-    protected static void removeDisplay(final @NotNull DisplayGroup displayGroup, final String name) {
+    public static Optional<ItemDisplay> getItemDisplay(final Location location, final String name) {
+        final Optional<Display> display = getDisplay(location, name);
+        return display.isPresent() && display.get() instanceof final ItemDisplay itemDisplay
+                ? Optional.of(itemDisplay)
+                : Optional.empty();
+    }
+    public static void removeDisplay(final @NotNull DisplayGroup displayGroup, final String name) {
         final Display display = displayGroup.removeDisplay(name);
         if (display != null) {
             display.remove();
