@@ -39,6 +39,7 @@ import org.metamechanists.quaptics.utils.transformations.TransformationUtils;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Optional;
 
 
@@ -158,10 +159,10 @@ public class Polariser extends ConnectedBlock implements PowerAnimatedBlock, Pow
     protected void onRightClick(final @NotNull Location location, final @NotNull Player player) {
         itemHolderInteract(location, player);
     }
-
     @Override
     public boolean onInsert(@NotNull final Location location, @NotNull final ItemStack stack, @NotNull final Player player) {
-        if (PHASE_CHANGES.keySet().stream().noneMatch(keyStack -> SlimefunUtils.isItemSimilar(stack, keyStack, false))) {
+        final Optional<Integer> phaseChange = getPhaseChange(stack);
+        if (phaseChange.isEmpty()) {
             Language.sendLanguageMessage(player, "polariser.not-phase-crystal");
             return false;
         }
@@ -187,9 +188,22 @@ public class Polariser extends ConnectedBlock implements PowerAnimatedBlock, Pow
             return;
         }
 
+        final Optional<Integer> phaseChange = getPhaseChange(itemStack);
+        if (phaseChange.isEmpty()) {
+            return;
+        }
+
         outputLink.get().setPowerFrequencyPhase(
                 PowerLossBlock.calculatePowerLoss(settings, inputLink.get()),
                 inputLink.get().getFrequency(),
-                inputLink.get().getPhase() + PHASE_CHANGES.get(itemStack));
+                inputLink.get().getPhase() + phaseChange.get());
+    }
+    private static Optional<Integer> getPhaseChange(final @NotNull ItemStack itemStack) {
+        for (final Entry<ItemStack, Integer> entry : PHASE_CHANGES.entrySet()) {
+            if (SlimefunUtils.isItemSimilar(entry.getKey(), itemStack, false)) {
+                return Optional.ofNullable(entry.getValue());
+            }
+        }
+        return Optional.empty();
     }
 }
