@@ -50,17 +50,17 @@ public class DiffractionGrating extends ConnectedBlock implements PowerAnimatedB
                     "&7● The size of the increase depends on how close the",
                     "&7  auxiliary input is to the target phase"));
 
-    private static final Vector3f MAIN_SIZE = new Vector3f(0.15F, 0.15F, 0.40F);
-    private static final Vector3f MAIN_OFFSET = new Vector3f(0.0F, 0.0F, 0.20F);
     private static final Vector3f MAIN_ROTATION = new Vector3f(0.0F, 0.0F, 0.0F);
-    private static final Vector3f OUTPUT_SIZE = new Vector3f(0.15F, 0.15F, 0.40F);
-    private static final Vector3f OUTPUT_OFFSET = new Vector3f(0.0F, 0.0F, 0.20F);
+    private static final Vector3f MAIN_SIZE = new Vector3f(0.20F, 0.20F, 0.40F);
+    private static final Vector3f MAIN_OFFSET = new Vector3f(0.0F, 0.0F, 0.20F).rotateY(MAIN_ROTATION.y);
     private static final Vector3f OUTPUT_ROTATION = new Vector3f(0.0F, (float) (-Math.PI * 2/3), 0.0F);
-    private static final Vector3f AUXILIARY_SIZE = new Vector3f(0.15F, 0.15F, 0.40F);
-    private static final Vector3f AUXILIARY_OFFSET = new Vector3f(0.0F, 0.0F, 0.20F);
+    private static final Vector3f OUTPUT_SIZE = new Vector3f(0.20F, 0.20F, 0.40F);
+    private static final Vector3f OUTPUT_OFFSET = new Vector3f(0.0F, 0.0F, 0.20F).rotateY(OUTPUT_ROTATION.y);
     private static final Vector3f AUXILIARY_ROTATION = new Vector3f(0.0F, (float) (Math.PI * 2/3), 0.0F);
-    private static final Vector3f PRISM_SIZE = new Vector3f(0.10F);
+    private static final Vector3f AUXILIARY_SIZE = new Vector3f(0.1F, 0.1F, 0.40F);
+    private static final Vector3f AUXILIARY_OFFSET = new Vector3f(0.0F, 0.0F, 0.20F).rotateY(AUXILIARY_ROTATION.y);
     private static final Vector3f PRISM_ROTATION = new Vector3f(0.0F, (float) (Math.PI/4), 0.0F);
+    private static final Vector3f PRISM_SIZE = new Vector3f(0.25F);
 
     private final Vector mainPointLocation = new Vector(0.0F, 0.0F, getConnectionRadius()).rotateAroundY(MAIN_ROTATION.y);
     private final Vector auxiliaryPointLocation = new Vector(0.0F, 0.0F, getConnectionRadius()).rotateAroundY(AUXILIARY_ROTATION.y);
