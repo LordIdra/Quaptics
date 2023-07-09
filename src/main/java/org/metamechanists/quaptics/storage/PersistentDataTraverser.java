@@ -27,6 +27,7 @@ import org.metamechanists.quaptics.utils.id.simple.InteractionId;
 import org.metamechanists.quaptics.utils.id.simple.TextDisplayId;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -213,7 +214,7 @@ public class PersistentDataTraverser {
     }
     public @NotNull Map<String, InfoPanelAttributeId> getInfoPanelAttributeIdMap(@NotNull final String key) {
         final int size = getInt(key + "length");
-        final Map<String, InfoPanelAttributeId> list = new HashMap<>();
+        final Map<String, InfoPanelAttributeId> list = new LinkedHashMap<>();
         IntStream.range(0, size).forEach(i -> {
             final String mapKey = getString(key + i + "key");
             final InfoPanelAttributeId mapValue = getInfoPanelAttributeId(key + i + "value");
@@ -224,7 +225,7 @@ public class PersistentDataTraverser {
     }
     public @NotNull Map<String, ConfigPanelAttributeId> getConfigPanelAttributeIdMap(@NotNull final String key) {
         final int size = getInt(key + "length");
-        final Map<String, ConfigPanelAttributeId> list = new HashMap<>();
+        final Map<String, ConfigPanelAttributeId> list = new LinkedHashMap<>();
         IntStream.range(0, size).forEach(i -> {
             final String mapKey = getString(key + i + "key");
             final ConfigPanelAttributeId mapValue = getConfigPanelAttributeId(key + i + "value");
