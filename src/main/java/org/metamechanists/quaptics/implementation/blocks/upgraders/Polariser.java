@@ -29,6 +29,7 @@ import org.metamechanists.quaptics.items.groups.Primitive;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Language;
+import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.builders.ItemDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
@@ -64,8 +65,6 @@ public class Polariser extends ConnectedBlock implements PowerAnimatedBlock, Pow
 
     private static final Vector MAIN_INPUT_LOCATION = new Vector(0.0F, 0.0F, -0.45F);
     private static final Vector OUTPUT_LOCATION = new Vector(0.0F, 0.0F, 0.45);
-
-    private static final int CRYSTAL_BRIGHTNESS_OFF = 7;
 
     private static final Map<ItemStack, Integer> PHASE_CHANGES = Map.of(
             Primitive.PHASE_CRYSTAL_1, 1,
@@ -105,14 +104,14 @@ public class Polariser extends ConnectedBlock implements PowerAnimatedBlock, Pow
                         .buildForBlockDisplay())
                 .build());
         displayGroup.addDisplay("item", new ItemDisplayBuilder(location.toCenterLocation())
-                .setBrightness(CRYSTAL_BRIGHTNESS_OFF)
+                .setBrightness(Utils.BRIGHTNESS_ON)
                 .setTransformation(new TransformationMatrixBuilder()
                         .scale(ITEM_SIZE)
                         .translate(ITEM_OFFSET)
                         .buildForItemDisplay())
                 .build());
         displayGroup.addDisplay("item2", new ItemDisplayBuilder(location.toCenterLocation())
-                .setBrightness(CRYSTAL_BRIGHTNESS_OFF)
+                .setBrightness(Utils.BRIGHTNESS_ON)
                 .setTransformation(new TransformationMatrixBuilder()
                         .scale(ITEM_SIZE)
                         .translate(ITEM_OFFSET)
@@ -180,10 +179,10 @@ public class Polariser extends ConnectedBlock implements PowerAnimatedBlock, Pow
     private void updateOutput(@NotNull final Location location, @Nullable final ItemStack itemStack) {
         final Optional<Link> inputLink = getLink(location, "input");
         final Optional<Link> outputLink = getLink(location, "output");
-        final boolean powered = outputLink.isPresent() && inputLink.isPresent() && settings.isOperational(inputLink) && itemStack != null;
+        final boolean powered = inputLink.isPresent() && settings.isOperational(inputLink) && itemStack != null;
         onPoweredAnimation(location, powered);
 
-        if (!powered) {
+        if (!powered || outputLink.isEmpty()) {
             outputLink.ifPresent(Link::disable);
             return;
         }
