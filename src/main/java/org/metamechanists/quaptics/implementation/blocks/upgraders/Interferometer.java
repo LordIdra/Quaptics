@@ -48,8 +48,8 @@ public class Interferometer extends ConnectedBlock implements PowerAnimatedBlock
     private static final Vector3f MAIN_SIZE = new Vector3f(0.30F, 0.30F, 0.90F);
     private static final Vector3f AUXILIARY_SIZE = new Vector3f(0.40F, 0.15F, 0.15F);
     private static final Vector3f AUXILIARY_OFFSET = new Vector3f(0.20F, 0.0F, 0.0F);
-    private static final Vector3f AUXILIARY_ROTATION = new Vector3f(0, (float) (Math.PI/2), 0);
     private static final Vector3f PRISM_SIZE = new Vector3f(0.40F);
+    private static final Vector3f PRISM_ROTATION = new Vector3f(0.0F, (float) (Math.PI/4), 0.0F);
 
     private static final Vector MAIN_INPUT_LOCATION = new Vector(0.0F, 0.0F, -0.50F);
     private static final Vector AUXILIARY_INPUT_LOCATION = new Vector(0.50F, 0.0F, 0.0F);
@@ -84,7 +84,6 @@ public class Interferometer extends ConnectedBlock implements PowerAnimatedBlock
                         .scale(AUXILIARY_SIZE)
                         .translate(AUXILIARY_OFFSET)
                         .lookAlong(face)
-                        .rotate(AUXILIARY_ROTATION)
                         .buildForBlockDisplay())
                 .build());
         displayGroup.addDisplay("prism", new BlockDisplayBuilder(location.toCenterLocation())
@@ -92,7 +91,7 @@ public class Interferometer extends ConnectedBlock implements PowerAnimatedBlock
                 .setBrightness(Utils.BRIGHTNESS_OFF)
                 .setTransformation(new TransformationMatrixBuilder()
                         .scale(PRISM_SIZE)
-                        .rotate(TransformationUtils.PRISM_ROTATION)
+                        .rotate(PRISM_ROTATION)
                         .buildForBlockDisplay())
                 .build());
     }

@@ -4,6 +4,7 @@ import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
@@ -55,8 +56,10 @@ public class Polariser extends ConnectedBlock implements PowerAnimatedBlock, Pow
 
     private static final Vector3f MAIN_SIZE = new Vector3f(0.30F, 0.30F, 0.90F);
     private static final Vector3f PRISM_SIZE = new Vector3f(0.40F);
+    private static final Vector3f PRISM_ROTATION = new Vector3f(0.0F, (float) (Math.PI/4), 0.0F);
     private static final Vector3f ITEM_SIZE = new Vector3f(0.20F);
     private static final Vector3f ITEM_OFFSET = new Vector3f(0, 0.20F, 0);
+    private static final Vector3f ITEM_2_ROTATION = new Vector3f(0.0F, (float) (Math.PI / 2), 0.0F);
 
     private static final Vector MAIN_INPUT_LOCATION = new Vector(0.0F, 0.0F, -0.47F);
     private static final Vector OUTPUT_LOCATION = new Vector(0.0F, 0.0F, 0.47);
@@ -96,13 +99,20 @@ public class Polariser extends ConnectedBlock implements PowerAnimatedBlock, Pow
                 .setBrightness(Utils.BRIGHTNESS_ON)
                 .setTransformation(new TransformationMatrixBuilder()
                         .scale(PRISM_SIZE)
-                        .rotate(TransformationUtils.PRISM_ROTATION)
+                        .rotate(PRISM_ROTATION)
                         .buildForBlockDisplay())
                 .build());
         displayGroup.addDisplay("item", new ItemDisplayBuilder(location.toCenterLocation())
                 .setTransformation(new TransformationMatrixBuilder()
                         .scale(ITEM_SIZE)
                         .translate(ITEM_OFFSET)
+                        .buildForItemDisplay())
+                .build());
+        displayGroup.addDisplay("item2", new ItemDisplayBuilder(location.toCenterLocation())
+                .setTransformation(new TransformationMatrixBuilder()
+                        .scale(ITEM_SIZE)
+                        .translate(ITEM_OFFSET)
+                        .rotate(ITEM_2_ROTATION)
                         .buildForItemDisplay())
                 .build());
     }
@@ -163,14 +173,16 @@ public class Polariser extends ConnectedBlock implements PowerAnimatedBlock, Pow
 
     @Override
     public boolean onInsert(@NotNull final Location location, @NotNull final ItemStack stack, @NotNull final Player player) {
-        if (!PHASE_CHANGES.containsKey(stack)) {
+        if (PHASE_CHANGES.keySet().stream().noneMatch(keyStack -> SlimefunUtils.isItemSimilar(stack, keyStack, false))) {
             Language.sendLanguageMessage(player, "polariser.not-phase-crystal");
             return false;
         }
+        getItemDisplay(location, "item2").ifPresent(display -> display.setItemStack(stack.clone()));
         return true;
     }
     @Override
     public Optional<ItemStack> onRemove(@NotNull final Location location, @NotNull final ItemStack stack) {
+        getItemDisplay(location, "item2").ifPresent(display -> display.setItemStack(new ItemStack(Material.AIR)));
         return Optional.of(stack);
     }
 }
