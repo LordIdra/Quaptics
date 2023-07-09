@@ -162,7 +162,7 @@ public class DiffractionGrating extends ConnectedBlock implements PowerAnimatedB
 
     private static double calculateFrequency(@NotNull final Settings settings, final double frequency, final int phase) {
         final int phaseDifference = Math.abs(phase - settings.getTargetPhase());
-        final double targetPhaseDifference = settings.getTargetPhaseSpread() - Math.max(settings.getTargetPhaseSpread() - phaseDifference, 0);
+        final double targetPhaseDifference = Math.max(settings.getTargetPhaseSpread() - phaseDifference, 0);
         final double targetPhaseProportion = targetPhaseDifference / settings.getTargetPhaseSpread();
         return frequency * (1 + (targetPhaseProportion * (settings.getFrequencyMultiplier() - 1)));
     }
