@@ -34,6 +34,7 @@ import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.id.complex.InfoPanelId;
+import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.util.List;
@@ -70,15 +71,20 @@ public class Capacitor extends ConnectedBlock implements InfoPanelBlock, PowerLo
     protected void initDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
         displayGroup.addDisplay("mainGlass", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(Material.GLASS)
-                .setTransformation(Transformations.adjustedRotateScale(mainGlassDisplaySize, Transformations.GENERIC_ROTATION_ANGLES))
+                .setTransformation(new TransformationMatrixBuilder()
+                        .scale(mainGlassDisplaySize)
+                        .rotate(Transformations.PRISM_ROTATION)
+                        .buildForBlockDisplay())
                 .build());
         displayGroup.addDisplay("tierGlass", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(settings.getTier().glassMaterial)
-                .setTransformation(Transformations.adjustedRotateScale(tierGlassDisplaySize, Transformations.GENERIC_ROTATION_ANGLES))
+                .setTransformation(new TransformationMatrixBuilder()
+                        .scale(tierGlassDisplaySize)
+                        .rotate(Transformations.PRISM_ROTATION)
+                        .buildForBlockDisplay())
                 .build());
         displayGroup.addDisplay("concrete", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(Material.LIGHT_BLUE_CONCRETE)
-                .setTransformation(Transformations.none())
                 .setBrightness(Utils.BRIGHTNESS_ON)
                 .build());
     }
@@ -178,7 +184,7 @@ public class Capacitor extends ConnectedBlock implements InfoPanelBlock, PowerLo
     private Matrix4f getConcreteTransformationMatrix(final double charge) {
         return Transformations.adjustedRotateScale(
                 new Vector3f(maxConcreteDisplaySize).mul((float)(charge/settings.getChargeCapacity())),
-                Transformations.GENERIC_ROTATION_ANGLES);
+                Transformations.PRISM_ROTATION);
     }
     private void updateConcreteTransformation(final Location location) {
         final double charge = BlockStorageAPI.getDouble(location, Keys.BS_CHARGE);

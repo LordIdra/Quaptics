@@ -16,14 +16,14 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
+import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
 import org.metamechanists.quaptics.connections.Link;
-import org.metamechanists.quaptics.connections.ConnectionPoint;
+import org.metamechanists.quaptics.implementation.blocks.Settings;
+import org.metamechanists.quaptics.implementation.blocks.attachments.PowerAnimatedBlock;
 import org.metamechanists.quaptics.implementation.blocks.attachments.PowerLossBlock;
 import org.metamechanists.quaptics.implementation.blocks.attachments.UpgraderBlock;
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
-import org.metamechanists.quaptics.implementation.blocks.attachments.PowerAnimatedBlock;
-import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
 import org.metamechanists.quaptics.utils.Keys;
@@ -31,6 +31,7 @@ import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
+import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
 
 import java.util.List;
 import java.util.Objects;
@@ -72,17 +73,26 @@ public class Scatterer extends ConnectedBlock implements PowerAnimatedBlock, Pow
         final BlockFace face = Transformations.yawToFace(player.getEyeLocation().getYaw());
         displayGroup.addDisplay("main", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(Material.ORANGE_STAINED_GLASS)
-                .setTransformation(Transformations.adjustedRotateScale(glassDisplaySize, Transformations.GENERIC_ROTATION_ANGLES))
+                .setTransformation(new TransformationMatrixBuilder()
+                        .scale(glassDisplaySize)
+                        .rotate(Transformations.PRISM_ROTATION)
+                        .buildForBlockDisplay())
                 .build());
         displayGroup.addDisplay("concrete", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(settings.getTier().concreteMaterial)
-                .setTransformation(Transformations.adjustedScaleOffset(concreteDisplaySize, concreteOffset))
                 .setBrightness(Utils.BRIGHTNESS_ON)
+                .setTransformation(new TransformationMatrixBuilder()
+                        .scale(concreteDisplaySize)
+                        .translate(concreteOffset)
+                        .buildForBlockDisplay())
                 .build());
         final BlockDisplay comparator = new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(Material.COMPARATOR)
                 .setBlockData(createComparatorBlockData(face.name().toLowerCase(), false))
-                .setTransformation(Transformations.adjustedScaleOffset(comparatorDisplaySize, comparatorOffset))
+                .setTransformation(new TransformationMatrixBuilder()
+                        .scale(comparatorDisplaySize)
+                        .translate(comparatorOffset)
+                        .buildForBlockDisplay())
                 .build();
         PersistentDataAPI.setString(comparator, Keys.FACING, face.name().toLowerCase());
         displayGroup.addDisplay("comparator", comparator);

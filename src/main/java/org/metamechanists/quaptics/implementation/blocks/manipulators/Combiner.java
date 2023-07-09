@@ -25,6 +25,7 @@ import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
+import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
 
 import java.util.List;
 import java.util.Objects;
@@ -152,13 +153,19 @@ public class Combiner extends ConnectedBlock implements PowerAnimatedBlock, Powe
     protected void initDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
         displayGroup.addDisplay("glass", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(Material.GRAY_STAINED_GLASS)
-                .setTransformation(Transformations.adjustedRotateScale(glassDisplaySize, Transformations.GENERIC_ROTATION_ANGLES))
+                .setTransformation(new TransformationMatrixBuilder()
+                        .scale(glassDisplaySize)
+                        .rotate(Transformations.PRISM_ROTATION)
+                        .buildForBlockDisplay())
                 .build());
         displayGroup.addDisplay("concrete", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(settings.getTier().concreteMaterial)
                 .setBrightness(Utils.BRIGHTNESS_ON)
                 .setViewRange(Utils.VIEW_RANGE_OFF)
-                .setTransformation(Transformations.adjustedRotateScale(concreteDisplaySize, Transformations.GENERIC_ROTATION_ANGLES))
+                .setTransformation(new TransformationMatrixBuilder()
+                        .scale(concreteDisplaySize)
+                        .rotate(Transformations.PRISM_ROTATION)
+                        .buildForBlockDisplay())
                 .build());
     }
     @Override

@@ -16,9 +16,9 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
+import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
 import org.metamechanists.quaptics.connections.Link;
-import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.implementation.blocks.attachments.PowerAnimatedBlock;
 import org.metamechanists.quaptics.implementation.blocks.attachments.PowerLossBlock;
@@ -31,6 +31,7 @@ import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
+import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
 
 import java.util.List;
 import java.util.Objects;
@@ -72,17 +73,27 @@ public class Repeater extends ConnectedBlock implements PowerAnimatedBlock, Powe
         final BlockFace face = Transformations.yawToFace(player.getEyeLocation().getYaw());
         displayGroup.addDisplay("main", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(Material.RED_STAINED_GLASS)
-                .setTransformation(Transformations.adjustedRotateScale(glassDisplaySize, Transformations.GENERIC_ROTATION_ANGLES))
+                .setTransformation(new TransformationMatrixBuilder()
+                        .scale(glassDisplaySize)
+                        .rotate(Transformations.PRISM_ROTATION)
+                        .buildForBlockDisplay())
                 .build());
         displayGroup.addDisplay("concrete", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(settings.getTier().concreteMaterial)
                 .setTransformation(Transformations.adjustedScaleOffset(concreteDisplaySize, concreteOffset))
                 .setBrightness(Utils.BRIGHTNESS_ON)
+                .setTransformation(new TransformationMatrixBuilder()
+                        .scale(concreteDisplaySize)
+                        .translate(concreteOffset)
+                        .buildForBlockDisplay())
                 .build());
         final BlockDisplay repeater = new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(Material.REPEATER)
                 .setBlockData(createRepeaterBlockData(face.name().toLowerCase(), false))
-                .setTransformation(Transformations.adjustedScaleOffset(repeaterDisplaySize, repeaterOffset))
+                .setTransformation(new TransformationMatrixBuilder()
+                        .scale(repeaterDisplaySize)
+                        .translate(repeaterOffset)
+                        .buildForBlockDisplay())
                 .build();
         PersistentDataAPI.setString(repeater, Keys.FACING, face.name().toLowerCase());
         displayGroup.addDisplay("repeater", repeater);

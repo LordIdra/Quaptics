@@ -30,7 +30,6 @@ import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Language;
 import org.metamechanists.quaptics.utils.SlimefunIsDumbUtils;
-import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
@@ -70,8 +69,10 @@ public class MultiblockClicker extends ConnectedBlock implements PowerAnimatedBl
         player.getFacing();
         displayGroup.addDisplay("main", new BlockDisplayBuilder(location.toCenterLocation())
                 .setBlockData(Material.CYAN_CONCRETE.createBlockData())
-                .setTransformation(Transformations.adjustedScale(MAIN_DISPLAY_SIZE))
                 .setBrightness(Utils.BRIGHTNESS_OFF)
+                .setTransformation(new TransformationMatrixBuilder()
+                        .scale(MAIN_DISPLAY_SIZE)
+                        .buildForBlockDisplay())
                 .build());
         displayGroup.addDisplay("attachment", new BlockDisplayBuilder(formatPointLocation(player, location, RELATIVE_PLATE_LOCATION))
                 .setBlockData(Material.WHITE_CONCRETE.createBlockData())

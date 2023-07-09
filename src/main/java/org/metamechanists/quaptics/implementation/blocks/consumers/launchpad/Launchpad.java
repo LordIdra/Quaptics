@@ -31,6 +31,7 @@ import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConfigPanelId;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
+import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.util.List;
@@ -68,8 +69,11 @@ public class Launchpad extends ConnectedBlock implements ConfigPanelBlock, Power
     protected void initDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
         displayGroup.addDisplay("main", new BlockDisplayBuilder(location.toCenterLocation())
                 .setBlockData(Material.CYAN_CONCRETE_POWDER.createBlockData())
-                .setTransformation(Transformations.adjustedScaleOffset(MAIN_DISPLAY_SIZE, MAIN_DISPLAY_OFFSET))
                 .setBrightness(Utils.BRIGHTNESS_OFF)
+                .setTransformation(new TransformationMatrixBuilder()
+                        .scale(MAIN_DISPLAY_SIZE)
+                        .translate(MAIN_DISPLAY_OFFSET)
+                        .buildForBlockDisplay())
                 .build());
     }
     @Override

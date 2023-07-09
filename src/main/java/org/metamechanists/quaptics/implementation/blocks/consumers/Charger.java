@@ -34,6 +34,7 @@ import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.builders.ItemDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.id.complex.InfoPanelId;
+import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.util.List;
@@ -69,22 +70,37 @@ public class Charger extends ConnectedBlock implements InfoPanelBlock, ItemHolde
     protected void initDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
         displayGroup.addDisplay("mainTop", new BlockDisplayBuilder(location.toCenterLocation())
                 .setBlockData(Material.SMOOTH_STONE_SLAB.createBlockData("[type=top]"))
-                .setTransformation(Transformations.adjustedScaleOffset(mainDisplaySize, topOffset))
+                .setTransformation(new TransformationMatrixBuilder()
+                        .scale(mainDisplaySize)
+                        .translate(topOffset)
+                        .buildForBlockDisplay())
                 .build());
         displayGroup.addDisplay("mainBottom", new BlockDisplayBuilder(location.toCenterLocation())
                 .setBlockData(Material.SMOOTH_STONE_SLAB.createBlockData("[type=bottom]"))
-                .setTransformation(Transformations.adjustedScaleOffset(mainDisplaySize, bottomOffset))
+                .setTransformation(new TransformationMatrixBuilder()
+                        .scale(mainDisplaySize)
+                        .translate(bottomOffset)
+                        .buildForBlockDisplay())
                 .build());
         displayGroup.addDisplay("glassTop", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(Material.LIGHT_BLUE_STAINED_GLASS)
-                .setTransformation(Transformations.adjustedScaleOffset(glassDisplaySize, topOffset))
+                .setTransformation(new TransformationMatrixBuilder()
+                        .scale(glassDisplaySize)
+                        .translate(topOffset)
+                        .buildForBlockDisplay())
                 .build());
         displayGroup.addDisplay("glassBottom", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(Material.LIGHT_BLUE_STAINED_GLASS)
                 .setTransformation(Transformations.adjustedScaleOffset(glassDisplaySize, bottomOffset))
+                .setTransformation(new TransformationMatrixBuilder()
+                        .scale(glassDisplaySize)
+                        .translate(bottomOffset)
+                        .buildForBlockDisplay())
                 .build());
         displayGroup.addDisplay("item", new ItemDisplayBuilder(location.toCenterLocation())
-                .setTransformation(Transformations.unadjustedScale(itemDisplaySize))
+                .setTransformation(new TransformationMatrixBuilder()
+                        .scale(itemDisplaySize)
+                        .buildForItemDisplay())
                 .build());
     }
     @Override

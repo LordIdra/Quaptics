@@ -35,6 +35,7 @@ import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.builders.ItemDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.id.complex.InfoPanelId;
+import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.util.List;
@@ -72,22 +73,36 @@ public class DataStripper extends ConnectedBlock implements InfoPanelBlock, Item
     protected void initDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
         displayGroup.addDisplay("mainTop", new BlockDisplayBuilder(location.toCenterLocation())
                 .setBlockData(Material.SMOOTH_STONE_SLAB.createBlockData("[type=top]"))
-                .setTransformation(Transformations.adjustedScaleOffset(MAIN_DISPLAY_SIZE, TOP_OFFSET))
+                .setTransformation(new TransformationMatrixBuilder()
+                        .scale(MAIN_DISPLAY_SIZE)
+                        .translate(TOP_OFFSET)
+                        .buildForBlockDisplay())
                 .build());
         displayGroup.addDisplay("mainBottom", new BlockDisplayBuilder(location.toCenterLocation())
                 .setBlockData(Material.SMOOTH_STONE_SLAB.createBlockData("[type=bottom]"))
-                .setTransformation(Transformations.adjustedScaleOffset(MAIN_DISPLAY_SIZE, BOTTOM_OFFSET))
+                .setTransformation(new TransformationMatrixBuilder()
+                        .scale(MAIN_DISPLAY_SIZE)
+                        .translate(BOTTOM_OFFSET)
+                        .buildForBlockDisplay())
                 .build());
         displayGroup.addDisplay("glassTop", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(Material.ORANGE_STAINED_GLASS)
-                .setTransformation(Transformations.adjustedScaleOffset(GLASS_DISPLAY_SIZE, TOP_OFFSET))
+                .setTransformation(new TransformationMatrixBuilder()
+                        .scale(GLASS_DISPLAY_SIZE)
+                        .translate(TOP_OFFSET)
+                        .buildForBlockDisplay())
                 .build());
         displayGroup.addDisplay("glassBottom", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(Material.ORANGE_STAINED_GLASS)
-                .setTransformation(Transformations.adjustedScaleOffset(GLASS_DISPLAY_SIZE, BOTTOM_OFFSET))
+                .setTransformation(new TransformationMatrixBuilder()
+                        .scale(GLASS_DISPLAY_SIZE)
+                        .translate(BOTTOM_OFFSET)
+                        .buildForBlockDisplay())
                 .build());
         displayGroup.addDisplay("item", new ItemDisplayBuilder(location.toCenterLocation())
-                .setTransformation(Transformations.unadjustedScale(ITEM_DISPLAY_SIZE))
+                .setTransformation(new TransformationMatrixBuilder()
+                        .scale(ITEM_DISPLAY_SIZE)
+                        .buildForItemDisplay())
                 .build());
 
     }

@@ -20,9 +20,9 @@ import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
-import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.ItemDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
+import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
 
 import java.util.List;
 
@@ -52,7 +52,10 @@ public class OscillatingConcentrator extends ConnectedBlock {
     protected void initDisplays(@NotNull final DisplayGroup displayGroup, final @NotNull Location location, final @NotNull Player player) {
         displayGroup.addDisplay("main", new ItemDisplayBuilder(location.clone().toCenterLocation())
                 .setMaterial(Material.BLACK_STAINED_GLASS_PANE)
-                .setTransformation(Transformations.unadjustedRotateScale(mainDisplaySize, new Vector3f((float)(Math.PI/2), 0.0F, settings.getRotationY())))
+                .setTransformation(new TransformationMatrixBuilder()
+                        .scale(mainDisplaySize)
+                        .rotate((float)(Math.PI/2), 0.0F, settings.getRotationY())
+                        .buildForItemDisplay())
                 .build());
     }
     @Override

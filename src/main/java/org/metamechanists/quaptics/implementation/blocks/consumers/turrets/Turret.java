@@ -52,9 +52,11 @@ public abstract class Turret extends ConnectedBlock {
     @Override
     protected void initDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
         displayGroup.addDisplay("main", new BlockDisplayBuilder(location.toCenterLocation())
-                        .setMaterial(settings.getMainMaterial())
-                        .setTransformation(Transformations.adjustedScale(mainDisplaySize))
-                        .build());
+                .setMaterial(settings.getMainMaterial())
+                .setTransformation(new TransformationMatrixBuilder()
+                        .scale(mainDisplaySize)
+                        .buildForBlockDisplay())
+                .build());
         displayGroup.addDisplay("barrel", generateBarrel(location, location.clone().add(barrelLocation).add(new Vector(0, -1, 0))));
     }
     @Override

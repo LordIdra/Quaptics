@@ -12,13 +12,13 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
+import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
 import org.metamechanists.quaptics.connections.Link;
-import org.metamechanists.quaptics.connections.ConnectionPoint;
+import org.metamechanists.quaptics.implementation.blocks.Settings;
+import org.metamechanists.quaptics.implementation.blocks.attachments.PowerAnimatedBlock;
 import org.metamechanists.quaptics.implementation.blocks.attachments.PowerLossBlock;
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
-import org.metamechanists.quaptics.implementation.blocks.attachments.PowerAnimatedBlock;
-import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
 import org.metamechanists.quaptics.utils.Transformations;
@@ -95,17 +95,17 @@ public class Lens extends ConnectedBlock implements PowerAnimatedBlock, PowerLos
                 .setMaterial(Material.GLASS)
                 .setTransformation(new TransformationMatrixBuilder()
                         .scale(glassDisplaySize)
-                        .rotate(Transformations.GENERIC_ROTATION_ANGLES)
+                        .rotate(Transformations.PRISM_ROTATION)
                         .buildForBlockDisplay())
                 .build());
         displayGroup.addDisplay("concrete", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(settings.getTier().concreteMaterial)
-                .setTransformation(new TransformationMatrixBuilder()
-                        .scale(concreteDisplaySize)
-                        .rotate(Transformations.GENERIC_ROTATION_ANGLES)
-                        .buildForBlockDisplay())
                 .setBrightness(Utils.BRIGHTNESS_ON)
                 .setViewRange(Utils.VIEW_RANGE_OFF)
+                .setTransformation(new TransformationMatrixBuilder()
+                        .scale(concreteDisplaySize)
+                        .rotate(Transformations.PRISM_ROTATION)
+                        .buildForBlockDisplay())
                 .build());
     }
     @Override

@@ -21,10 +21,10 @@ import org.metamechanists.quaptics.implementation.blocks.attachments.PowerLossBl
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
-import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
+import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
 
 import java.util.List;
 import java.util.Optional;
@@ -60,19 +60,27 @@ public class Transformer extends ConnectedBlock implements PowerAnimatedBlock, P
     protected void initDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
         displayGroup.addDisplay("main", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(Material.LIGHT_GRAY_TERRACOTTA)
-                .setTransformation(Transformations.adjustedScale(mainDisplaySize))
+                .setTransformation(new TransformationMatrixBuilder()
+                        .scale(mainDisplaySize)
+                        .buildForBlockDisplay())
                 .build());
         displayGroup.addDisplay("coil1", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(settings.getTier().concreteMaterial)
-                .setTransformation(Transformations.adjustedScaleOffset(coilDisplaySize, firstCoilDisplayOffset))
                 .setBrightness(Utils.BRIGHTNESS_OFF)
                 .setViewRange(Utils.VIEW_RANGE_ON)
+                .setTransformation(new TransformationMatrixBuilder()
+                        .scale(coilDisplaySize)
+                        .rotate(firstCoilDisplayOffset)
+                        .buildForBlockDisplay())
                 .build());
         displayGroup.addDisplay("coil2", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(settings.getTier().concreteMaterial)
-                .setTransformation(Transformations.adjustedScaleOffset(coilDisplaySize, secondCoilDisplayOffset))
                 .setBrightness(Utils.BRIGHTNESS_OFF)
                 .setViewRange(Utils.VIEW_RANGE_ON)
+                .setTransformation(new TransformationMatrixBuilder()
+                        .scale(coilDisplaySize)
+                        .rotate(secondCoilDisplayOffset)
+                        .buildForBlockDisplay())
                 .build());
     }
     @Override

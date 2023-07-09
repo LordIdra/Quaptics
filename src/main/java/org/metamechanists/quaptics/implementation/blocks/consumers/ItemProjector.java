@@ -37,6 +37,7 @@ import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.builders.ItemDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConfigPanelId;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
+import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.util.List;
@@ -77,12 +78,18 @@ public class ItemProjector extends ConnectedBlock implements ItemHolderBlock, Po
     protected void initDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
         displayGroup.addDisplay("main", new BlockDisplayBuilder(location.toCenterLocation())
                 .setBlockData(Material.LIGHT_GRAY_CONCRETE.createBlockData())
-                .setTransformation(Transformations.adjustedScaleOffset(MAIN_DISPLAY_SIZE, MAIN_DISPLAY_OFFSET))
+                .setTransformation(new TransformationMatrixBuilder()
+                        .scale(MAIN_DISPLAY_SIZE)
+                        .translate(MAIN_DISPLAY_OFFSET)
+                        .buildForBlockDisplay())
                 .build());
         displayGroup.addDisplay("prism", new BlockDisplayBuilder(location.toCenterLocation())
                 .setBlockData(Material.CYAN_STAINED_GLASS.createBlockData())
-                .setTransformation(Transformations.adjustedRotateScale(PRISM_DISPLAY_SIZE, Transformations.GENERIC_ROTATION_ANGLES))
                 .setBrightness(Utils.BRIGHTNESS_OFF)
+                .setTransformation(new TransformationMatrixBuilder()
+                        .scale(PRISM_DISPLAY_SIZE)
+                        .translate(Transformations.PRISM_ROTATION)
+                        .buildForBlockDisplay())
                 .build());
         displayGroup.addDisplay("item", new ItemDisplayBuilder(location.toCenterLocation())
                 .setTransformation(calculateItemTransformation(0, 0))
@@ -152,10 +159,11 @@ public class ItemProjector extends ConnectedBlock implements ItemHolderBlock, Po
         return new ItemProjectorConfigPanel(panelId, groupId);
     }
 
-    private static Matrix4f calculateItemTransformation(final double size, final double offset) {
-        return Transformations.unadjustedScaleTranslate(
-                new Vector3f(ITEM_DISPLAY_ADDITIONAL_SIZE).add(new Vector3f((float) size)),
-                new Vector3f(ITEM_DISPLAY_ADDITIONAL_OFFSET).add(new Vector3f(0, (float) offset, 0)));
+    private static @NotNull Matrix4f calculateItemTransformation(final double size, final double offset) {
+        return new TransformationMatrixBuilder()
+                .scale(new Vector3f(ITEM_DISPLAY_ADDITIONAL_SIZE).add(new Vector3f((float) size)))
+                .translate(new Vector3f(ITEM_DISPLAY_ADDITIONAL_OFFSET).add(new Vector3f(0, (float) offset, 0)))
+                .buildForItemDisplay();
     }
     public static void onConfigUpdated(final Location location) {
         final Optional<Display> display = getDisplay(location, "item");
