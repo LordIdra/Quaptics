@@ -46,7 +46,7 @@ public class Polariser extends ConnectedBlock implements PowerAnimatedBlock, Pow
             .powerLoss(0.07)
             .build();
     public static final SlimefunItemStack POLARISER_1 = new SlimefunItemStack(
-            "QP_INTERFEROMETER_1",
+            "QP_POLARISER_1",
             Material.YELLOW_TERRACOTTA,
             "&cPolariser &4I",
             Lore.create(POLARISER_1_SETTINGS,

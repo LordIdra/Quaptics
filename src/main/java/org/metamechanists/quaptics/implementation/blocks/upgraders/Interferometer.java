@@ -41,7 +41,7 @@ public class Interferometer extends ConnectedBlock implements PowerAnimatedBlock
     public static final SlimefunItemStack INTERFEROMETER_1 = new SlimefunItemStack(
             "QP_INTERFEROMETER_1",
             Material.YELLOW_TERRACOTTA,
-            "&cPolariser &4I",
+            "&cInterferometer &4I",
             Lore.create(INTERFEROMETER_1_SETTINGS,
                     "&7● Sets the Phase of the main ray to the phase of the auxiliary ray"));
 
