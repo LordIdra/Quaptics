@@ -33,7 +33,7 @@ public class Lore {
     private final String DAMAGE_SUFFIX = " &8dps";
     private final String FREQUENCY_SUFFIX = " &8Hz";
     private final String USE_INTERVAL_SUFFIX = " &8seconds";
-    private final String PHASE_SUFFIX = " &8°";
+    public final String PHASE_SUFFIX = " &8°";
     private final String TIME_PER_ITEM_SUFFIX = " &8seconds";
     private final double SLIMEFUN_TICKS_PER_SECOND = 2.0;
 

@@ -47,7 +47,7 @@ import static org.metamechanists.quaptics.implementation.multiblocks.infuser.Inf
 public class InfusionContainer extends ConnectedBlock implements ItemHolderBlock, ComplexMultiblock {
     public static final Settings INFUSION_CONTAINER_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
-            .timePerItem(10)
+            .timePerItem(5)
             .build();
     public static final SlimefunItemStack INFUSION_CONTAINER = new SlimefunItemStack(
             "QP_INFUSION_CONTAINER",
@@ -82,7 +82,12 @@ public class InfusionContainer extends ConnectedBlock implements ItemHolderBlock
     private static final int CONTAINER_PARTICLE_COUNT = 3;
 
     private static final Map<ItemStack, ItemStack> RECIPES = Map.of(
-            new ItemStack(Material.DEAD_BUSH), Primitive.INFUSED_DEAD_BUSH
+            new ItemStack(Material.QUARTZ), Primitive.PHASE_CRYSTAL_1,
+            Primitive.PHASE_CRYSTAL_1, Primitive.PHASE_CRYSTAL_5,
+            Primitive.PHASE_CRYSTAL_5, Primitive.PHASE_CRYSTAL_15,
+            Primitive.PHASE_CRYSTAL_15, Primitive.PHASE_CRYSTAL_45,
+            Primitive.PHASE_CRYSTAL_45, Primitive.PHASE_CRYSTAL_90,
+            Primitive.PHASE_CRYSTAL_90, Primitive.PHASE_CRYSTAL_180
     );
 
     public InfusionContainer(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {

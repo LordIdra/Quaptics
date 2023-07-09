@@ -60,13 +60,15 @@ import static org.metamechanists.quaptics.implementation.multiblocks.infuser.Inf
 @SuppressWarnings({"ZeroLengthArrayAllocation", "WeakerAccess"})
 @UtilityClass
 public class Primitive {
-    public final SlimefunItemStack INFUSED_DEAD_BUSH = new SlimefunItemStack(
-            "QP_INFUSED_DEAD_BUSH",
-            getInfusedDeadBush(),
-            "&cInfused Deadbush");
+    public final SlimefunItemStack PHASE_CRYSTAL_1 = new SlimefunItemStack("QP_PHASE_CRYSTAL_1", getPhaseCrystal(), "&7Phase Crystal (&e1°&7)");
+    public final SlimefunItemStack PHASE_CRYSTAL_5 = new SlimefunItemStack("QP_PHASE_CRYSTAL_5", getPhaseCrystal(), "&7Phase Crystal (&e5°&7)");
+    public final SlimefunItemStack PHASE_CRYSTAL_15 = new SlimefunItemStack("QP_PHASE_CRYSTAL_15", getPhaseCrystal(), "&7Phase Crystal (&e15°&7)");
+    public final SlimefunItemStack PHASE_CRYSTAL_45 = new SlimefunItemStack("QP_PHASE_CRYSTAL_45", getPhaseCrystal(), "&7Phase Crystal (&e45°&7)");
+    public final SlimefunItemStack PHASE_CRYSTAL_90 = new SlimefunItemStack("QP_PHASE_CRYSTAL_90", getPhaseCrystal(), "&7Phase Crystal (&e90°&7)");
+    public final SlimefunItemStack PHASE_CRYSTAL_180 = new SlimefunItemStack("QP_PHASE_CRYSTAL_180", getPhaseCrystal(), "&7Phase Crystal (&e180°&7)");
 
-    private @NotNull ItemStack getInfusedDeadBush() {
-        final ItemStack itemStack = new ItemStack(Material.DEAD_BUSH);
+    private @NotNull ItemStack getPhaseCrystal() {
+        final ItemStack itemStack = new ItemStack(Material.QUARTZ);
         itemStack.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 1);
         itemStack.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         return itemStack;
@@ -175,11 +177,61 @@ public class Primitive {
 
         new SlimefunItem(
                 Groups.PRIMITIVE,
-                INFUSED_DEAD_BUSH,
+                PHASE_CRYSTAL_1,
                 RecipeTypes.RECIPE_INFUSION,
                 new ItemStack[]{
                         null, null, null,
-                        null, new ItemStack(Material.DEAD_BUSH), null,
+                        null, new ItemStack(Material.QUARTZ), null,
+                        null, null, null
+                }).register(addon);
+
+        new SlimefunItem(
+                Groups.PRIMITIVE,
+                PHASE_CRYSTAL_5,
+                RecipeTypes.RECIPE_INFUSION,
+                new ItemStack[]{
+                        null, null, null,
+                        null, PHASE_CRYSTAL_1, null,
+                        null, null, null
+                }).register(addon);
+
+        new SlimefunItem(
+                Groups.PRIMITIVE,
+                PHASE_CRYSTAL_15,
+                RecipeTypes.RECIPE_INFUSION,
+                new ItemStack[]{
+                        null, null, null,
+                        null, PHASE_CRYSTAL_5, null,
+                        null, null, null
+                }).register(addon);
+
+        new SlimefunItem(
+                Groups.PRIMITIVE,
+                PHASE_CRYSTAL_45,
+                RecipeTypes.RECIPE_INFUSION,
+                new ItemStack[]{
+                        null, null, null,
+                        null, PHASE_CRYSTAL_15, null,
+                        null, null, null
+                }).register(addon);
+
+        new SlimefunItem(
+                Groups.PRIMITIVE,
+                PHASE_CRYSTAL_90,
+                RecipeTypes.RECIPE_INFUSION,
+                new ItemStack[]{
+                        null, null, null,
+                        null, PHASE_CRYSTAL_45, null,
+                        null, null, null
+                }).register(addon);
+
+        new SlimefunItem(
+                Groups.PRIMITIVE,
+                PHASE_CRYSTAL_90,
+                RecipeTypes.RECIPE_INFUSION,
+                new ItemStack[]{
+                        null, null, null,
+                        null, PHASE_CRYSTAL_45, null,
                         null, null, null
                 }).register(addon);
     }
