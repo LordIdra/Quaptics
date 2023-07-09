@@ -6,6 +6,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
@@ -25,6 +26,7 @@ import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
+import org.metamechanists.quaptics.utils.transformations.TransformationUtils;
 
 import java.util.List;
 import java.util.Optional;
@@ -50,13 +52,13 @@ public class DiffractionGrating extends ConnectedBlock implements PowerAnimatedB
                     "&7● The size of the increase depends on how close the",
                     "&7  auxiliary input is to the target phase"));
 
-    private static final Vector3f MAIN_ROTATION = new Vector3f(0.0F, 0.0F, 0.0F);
+    private static final Vector3f MAIN_ROTATION = new Vector3f(0.0F, (float) (Math.PI * 2/3), 0.0F);
     private static final Vector3f MAIN_SIZE = new Vector3f(0.20F, 0.20F, 0.40F);
     private static final Vector3f MAIN_OFFSET = new Vector3f(0.0F, 0.0F, 0.20F).rotateY(MAIN_ROTATION.y);
     private static final Vector3f OUTPUT_ROTATION = new Vector3f(0.0F, (float) (-Math.PI * 2/3), 0.0F);
     private static final Vector3f OUTPUT_SIZE = new Vector3f(0.20F, 0.20F, 0.40F);
     private static final Vector3f OUTPUT_OFFSET = new Vector3f(0.0F, 0.0F, 0.20F).rotateY(OUTPUT_ROTATION.y);
-    private static final Vector3f AUXILIARY_ROTATION = new Vector3f(0.0F, (float) (Math.PI * 2/3), 0.0F);
+    private static final Vector3f AUXILIARY_ROTATION = new Vector3f(0.0F, 0.0F, 0.0F);
     private static final Vector3f AUXILIARY_SIZE = new Vector3f(0.1F, 0.1F, 0.40F);
     private static final Vector3f AUXILIARY_OFFSET = new Vector3f(0.0F, 0.0F, 0.20F).rotateY(AUXILIARY_ROTATION.y);
     private static final Vector3f PRISM_ROTATION = new Vector3f(0.0F, (float) (Math.PI/4), 0.0F);
@@ -76,10 +78,12 @@ public class DiffractionGrating extends ConnectedBlock implements PowerAnimatedB
     }
     @Override
     protected void initDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, @NotNull final Player player) {
+        final BlockFace face = TransformationUtils.yawToFace(player.getEyeLocation().getYaw());
         displayGroup.addDisplay("main", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(Material.TERRACOTTA)
                 .setTransformation(new TransformationMatrixBuilder()
                         .scale(MAIN_SIZE)
+                        .lookAlong(face)
                         .rotate(MAIN_ROTATION)
                         .translate(MAIN_OFFSET)
                         .buildForBlockDisplay())
@@ -88,6 +92,7 @@ public class DiffractionGrating extends ConnectedBlock implements PowerAnimatedB
                 .setMaterial(Material.TERRACOTTA)
                 .setTransformation(new TransformationMatrixBuilder()
                         .scale(OUTPUT_SIZE)
+                        .lookAlong(face)
                         .rotate(OUTPUT_ROTATION)
                         .translate(OUTPUT_OFFSET)
                         .buildForBlockDisplay())
@@ -96,6 +101,7 @@ public class DiffractionGrating extends ConnectedBlock implements PowerAnimatedB
                 .setMaterial(Material.GRAY_CONCRETE)
                 .setTransformation(new TransformationMatrixBuilder()
                         .scale(AUXILIARY_SIZE)
+                        .lookAlong(face)
                         .rotate(AUXILIARY_ROTATION)
                         .translate(AUXILIARY_OFFSET)
                         .buildForBlockDisplay())
@@ -105,6 +111,7 @@ public class DiffractionGrating extends ConnectedBlock implements PowerAnimatedB
                 .setBrightness(Utils.BRIGHTNESS_OFF)
                 .setTransformation(new TransformationMatrixBuilder()
                         .scale(PRISM_SIZE)
+                        .lookAlong(face)
                         .rotate(PRISM_ROTATION)
                         .buildForBlockDisplay())
                 .build());
@@ -119,26 +126,28 @@ public class DiffractionGrating extends ConnectedBlock implements PowerAnimatedB
 
     @Override
     public void onInputLinkUpdated(@NotNull final ConnectionGroup group, @NotNull final Location location) {
-        if (doBurnoutCheck(group, "input")) {
+        if (doBurnoutCheck(group, "main") || doBurnoutCheck(group, "auxiliary")) {
             return;
         }
 
-        final Optional<Link> inputLink = getLink(location, "input");
+        final Optional<Link> mainLink = getLink(location, "main");
+        final Optional<Link> auxiliaryLink = getLink(location, "auxiliary");
         final Optional<Link> outputLink = getLink(location, "output");
-        onPoweredAnimation(location, settings.isOperational(inputLink));
+        onPoweredAnimation(location, settings.isOperational(mainLink));
+
         if (outputLink.isEmpty()) {
             return;
         }
 
-        if (inputLink.isEmpty() || !settings.isOperational(inputLink.get())) {
+        if (auxiliaryLink.isEmpty() || mainLink.isEmpty() || !settings.isOperational(mainLink)) {
             outputLink.get().disable();
             return;
         }
 
         outputLink.get().setPowerFrequencyPhase(
-                PowerLossBlock.calculatePowerLoss(settings, inputLink.get()),
-                calculateFrequency(settings, inputLink.get().getFrequency(), inputLink.get().getPhase()),
-                inputLink.get().getPhase());
+                PowerLossBlock.calculatePowerLoss(settings, mainLink.get()),
+                calculateFrequency(settings, mainLink.get().getFrequency(), auxiliaryLink.get().getPhase()),
+                mainLink.get().getPhase());
     }
     @Override
     public void onPoweredAnimation(final Location location, final boolean powered) {

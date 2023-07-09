@@ -111,11 +111,11 @@ public class Interferometer extends ConnectedBlock implements PowerAnimatedBlock
         final Optional<Link> auxiliaryLink = getLink(location, "auxiliary");
         final Optional<Link> outputLink = getLink(location, "output");
         onPoweredAnimation(location, settings.isOperational(auxiliaryLink));
-        if (mainLink.isEmpty() || outputLink.isEmpty()) {
+        if (outputLink.isEmpty()) {
             return;
         }
 
-        if (auxiliaryLink.isEmpty() || !settings.isOperational(auxiliaryLink.get())) {
+        if (auxiliaryLink.isEmpty() || mainLink.isEmpty() || !settings.isOperational(mainLink.get())) {
             outputLink.get().disable();
             return;
         }
