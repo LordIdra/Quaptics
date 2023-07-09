@@ -139,14 +139,22 @@ public class DiffractionGrating extends ConnectedBlock implements PowerAnimatedB
         final Optional<Link> mainLink = getLink(location, "main");
         final Optional<Link> auxiliaryLink = getLink(location, "auxiliary");
         final Optional<Link> outputLink = getLink(location, "output");
-        onPoweredAnimation(location, settings.isOperational(mainLink) && auxiliaryLink.isPresent());
+        final boolean powered = auxiliaryLink.isPresent() && mainLink.isPresent() && settings.isOperational(mainLink);
+        onPoweredAnimation(location, powered);
 
         if (outputLink.isEmpty()) {
             return;
         }
 
-        if (auxiliaryLink.isEmpty() || mainLink.isEmpty() || !settings.isOperational(mainLink)) {
+        if (!powered) {
             outputLink.get().disable();
+            return;
+        }
+
+        final double newFrequency = calculateFrequency(settings, mainLink.get().getFrequency(), auxiliaryLink.get().getPhase());
+        if (Utils.equal(newFrequency, mainLink.get().getFrequency())) {
+            outputLink.get().disable();
+            onPoweredAnimation(location, false);
             return;
         }
 
