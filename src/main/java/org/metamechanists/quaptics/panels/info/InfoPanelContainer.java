@@ -111,7 +111,7 @@ public class InfoPanelContainer {
                 .map(Optional::get)
                 .forEach(attribute -> {
                     attribute.changeLocation(location);
-                    location.add(spacing);
+                    location.subtract(spacing);
                 });
     }
 
