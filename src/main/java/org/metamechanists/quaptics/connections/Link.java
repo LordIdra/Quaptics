@@ -221,6 +221,6 @@ public class Link {
     }
 
     public void disable() {
-        setPowerFrequency(0, 0);
+        setPowerFrequencyPhase(0, 0, 0);
     }
 }
