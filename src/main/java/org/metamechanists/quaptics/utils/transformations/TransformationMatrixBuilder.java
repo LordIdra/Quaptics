@@ -3,6 +3,7 @@ package org.metamechanists.quaptics.utils.transformations;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
+import org.metamechanists.quaptics.utils.transformations.components.LookAlongComponent;
 import org.metamechanists.quaptics.utils.transformations.components.RotationComponent;
 import org.metamechanists.quaptics.utils.transformations.components.ScaleComponent;
 import org.metamechanists.quaptics.utils.transformations.components.TransformationMatrixComponent;
@@ -20,16 +21,39 @@ public class TransformationMatrixBuilder {
 
     final Deque<TransformationMatrixComponent> components = new ArrayDeque<>();
 
-    public TransformationMatrixBuilder translate(final Vector3f scale) {
-        components.addLast(new TranslationComponent(scale));
+    /**
+     * Represents a translation in X, Y, and Z.
+     * @param translation The amount by which to translate in the x, y, and z plane
+     */
+    public TransformationMatrixBuilder translate(final Vector3f translation) {
+        components.addLast(new TranslationComponent(translation));
         return this;
     }
+
+    /**
+     * Represents a scale transformation in X, Y, and Z.
+     * @param scale The amount by which to scale in the x, y, and z plane
+     */
     public TransformationMatrixBuilder scale(final Vector3f scale) {
         components.addLast(new ScaleComponent(scale));
         return this;
     }
-    public TransformationMatrixBuilder rotate(final Vector3f scale) {
-        components.addLast(new RotationComponent(scale));
+
+    /**
+     * Represents a rotation in X, Y, and Z.
+     * @param rotation The amount by which to rotate in the x, y, and z plane
+     */
+    public TransformationMatrixBuilder rotate(final Vector3f rotation) {
+        components.addLast(new RotationComponent(rotation));
+        return this;
+    }
+
+    /**
+     * Represents a look-along transformation without any roll. To visualise what this transformation does, imagine a player in-game rotating their head.
+     * @param direction The direction along which to look
+     */
+    public TransformationMatrixBuilder lookAlong(final Vector3f direction) {
+        components.addLast(new LookAlongComponent(direction));
         return this;
     }
 

@@ -4,9 +4,6 @@ import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
-/**
- * Represents a scale transformation in X, Y, and Z.
- */
 public class ScaleComponent implements TransformationMatrixComponent {
     private final Vector3f scale;
 

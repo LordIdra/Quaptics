@@ -11,6 +11,7 @@ import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.simple.BlockDisplayId;
 import org.metamechanists.quaptics.utils.id.complex.DirectBeamId;
+import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
 
 import java.util.Optional;
 
@@ -39,10 +40,12 @@ public class DirectBeam implements Beam {
         return displayId.get();
     }
 
-    private static Matrix4f generateTransformation(final @NotNull Location source, final Location target, final float radius) {
-        final Location midpoint = source.clone().add(target).multiply(0.5);
+    private static @NotNull Matrix4f generateTransformation(final @NotNull Location source, final Location target, final float radius) {
         final Vector3f scale = new Vector3f(radius, radius, (float) source.distance(target));
-        return Transformations.lookAlong(scale, Transformations.getDirection(midpoint, target));
+        return new TransformationMatrixBuilder()
+                .scale(scale)
+                .lookAlong(Transformations.getDirection(source, target))
+                .buildForBlockDisplay();
     }
 
     @Override

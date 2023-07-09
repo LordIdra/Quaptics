@@ -97,7 +97,6 @@ public class Lens extends ConnectedBlock implements PowerAnimatedBlock, PowerLos
                         .scale(glassDisplaySize)
                         .rotate(Transformations.GENERIC_ROTATION_ANGLES)
                         .buildForBlockDisplay())
-                //.setTransformation(Transformations.adjustedRotateScale(glassDisplaySize, Transformations.GENERIC_ROTATION_ANGLES))
                 .build());
         displayGroup.addDisplay("concrete", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(settings.getTier().concreteMaterial)
@@ -105,7 +104,6 @@ public class Lens extends ConnectedBlock implements PowerAnimatedBlock, PowerLos
                         .scale(concreteDisplaySize)
                         .rotate(Transformations.GENERIC_ROTATION_ANGLES)
                         .buildForBlockDisplay())
-                //.setTransformation(Transformations.adjustedRotateScale(concreteDisplaySize, Transformations.GENERIC_ROTATION_ANGLES))
                 .setBrightness(Utils.BRIGHTNESS_ON)
                 .setViewRange(Utils.VIEW_RANGE_OFF)
                 .build());
