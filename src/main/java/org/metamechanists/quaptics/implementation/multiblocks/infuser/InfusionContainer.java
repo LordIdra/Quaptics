@@ -54,7 +54,6 @@ public class InfusionContainer extends ConnectedBlock implements ItemHolderBlock
             Material.GRAY_CONCRETE,
             "&6Infusion Container",
             Lore.create(INFUSION_CONTAINER_SETTINGS,
-                    "&c● Explodes if any pillar loses power during an infusion",
                     "&7● Multiblock structure: use the Multiblock Wand to build the structure",
                     "&7● Infuses items",
                     "&7● &eRight Click &7with an item to start infusing"));

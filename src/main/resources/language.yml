@@ -1,4 +1,5 @@
 targeting-wand.different-worlds: "&cSource and target cannot be in different worlds."
+targeting-wand.too-far: "&cSource and target points are too far apart."
 targeting-wand.same-connection-point: "&cSource and target cannot be the same connection point."
 targeting-wand.same-connection-group: "&cSource and target cannot be from the same block."
 targeting-wand.no-source-selected: "&cNo source selected."
