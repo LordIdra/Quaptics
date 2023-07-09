@@ -133,26 +133,14 @@ public class Polariser extends ConnectedBlock implements PowerAnimatedBlock, Pow
         }
 
         final Optional<Link> inputLink = getLink(location, "input");
-        final Optional<Link> outputLink = getLink(location, "output");
         onPoweredAnimation(location, settings.isOperational(inputLink));
-        if (outputLink.isEmpty()) {
-            return;
-        }
-
-        if (inputLink.isEmpty() || !settings.isOperational(inputLink.get())) {
-            outputLink.get().disable();
-            return;
-        }
 
         final Optional<ItemStack> itemStack = ItemHolderBlock.getStack(location);
         if (itemStack.isEmpty()) {
             return;
         }
 
-        outputLink.get().setPowerFrequencyPhase(
-                PowerLossBlock.calculatePowerLoss(settings, inputLink.get()),
-                inputLink.get().getFrequency(),
-                inputLink.get().getPhase() + PHASE_CHANGES.get(itemStack.get()));
+        updateOutput(location, itemStack.get());
     }
     @Override
     public void onPoweredAnimation(final Location location, final boolean powered) {
@@ -176,11 +164,30 @@ public class Polariser extends ConnectedBlock implements PowerAnimatedBlock, Pow
             return false;
         }
         getItemDisplay(location, "item2").ifPresent(display -> display.setItemStack(stack.clone()));
+        updateOutput(location, stack);
         return true;
     }
     @Override
     public Optional<ItemStack> onRemove(@NotNull final Location location, @NotNull final ItemStack stack) {
         getItemDisplay(location, "item2").ifPresent(display -> display.setItemStack(new ItemStack(Material.AIR)));
         return Optional.of(stack);
+    }
+
+    private void updateOutput(@NotNull final Location location, @NotNull final ItemStack itemStack) {
+        final Optional<Link> inputLink = getLink(location, "input");
+        final Optional<Link> outputLink = getLink(location, "output");
+        if (outputLink.isEmpty()) {
+            return;
+        }
+
+        if (inputLink.isEmpty() || !settings.isOperational(inputLink)) {
+            outputLink.get().disable();
+            return;
+        }
+
+        outputLink.get().setPowerFrequencyPhase(
+                PowerLossBlock.calculatePowerLoss(settings, inputLink.get()),
+                inputLink.get().getFrequency(),
+                inputLink.get().getPhase() + PHASE_CHANGES.get(itemStack));
     }
 }
