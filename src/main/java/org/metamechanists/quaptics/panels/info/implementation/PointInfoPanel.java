@@ -42,6 +42,7 @@ public class PointInfoPanel extends InfoPanel {
     @Override
     protected InfoPanelContainer buildPanelContainer(@NotNull final Location location) {
         return new InfoPanelBuilder(location.clone().add(getOffset()), SIZE)
+                .addAttribute("phase", true)
                 .addAttribute("frequency", true)
                 .addAttribute("power", true)
                 .addAttribute("name", false)
@@ -66,6 +67,7 @@ public class PointInfoPanel extends InfoPanel {
         if (point.getLink().isEmpty()) {
             container.setAttributeHidden("power", true);
             container.setAttributeHidden("frequency", true);
+            container.setAttributeHidden("phase", true);
             return;
         }
 
@@ -73,8 +75,10 @@ public class PointInfoPanel extends InfoPanel {
 
         container.setAttributeHidden("power", link.getPower() == 0);
         container.setAttributeHidden("frequency", link.getFrequency() == 0);
+        container.setAttributeHidden("phase", link.getPhase() == 0);
 
         container.setText("power", Lore.powerNoArrow(Utils.roundTo2dp(link.getPower())));
         container.setText("frequency", Lore.frequencyNoArrow(Utils.roundTo2dp(link.getFrequency())));
+        container.setText("phase", Lore.frequencyNoArrow(link.getPhase()));
     }
 }

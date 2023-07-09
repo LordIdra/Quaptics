@@ -63,6 +63,10 @@ public class SolarConcentrator extends ConnectedBlock {
     }
 
     @Override
+    protected float getConnectionRadius() {
+        return settings.getConnectionRadius();
+    }
+    @Override
     protected void initDisplays(@NotNull final DisplayGroup displayGroup, final @NotNull Location location, final @NotNull Player player) {
         displayGroup.addDisplay("main", new ItemDisplayBuilder(location.clone().toCenterLocation())
                 .setMaterial(Material.GLASS_PANE)

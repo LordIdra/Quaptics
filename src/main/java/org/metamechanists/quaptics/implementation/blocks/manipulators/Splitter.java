@@ -127,13 +127,18 @@ public class Splitter extends ConnectedBlock implements PowerAnimatedBlock, Powe
     private static final double CONNECTION_ANGLE = Math.PI / 2;
     private static final Vector3f GLASS_DISPLAY_SIZE = new Vector3f(0.50F);
     private static final Vector3f CONCRETE_DISPLAY_SIZE = new Vector3f(0.25F);
-    private static final Vector INPUT_LOCATION = new Vector(0.0F, 0.0F, -0.60F);
-    private static final Vector OUTPUT_STARTING_LOCATION = new Vector(0.0F, 0.0F, 0.60F);
+
+    private final Vector inputLocation = new Vector(0.0F, 0.0F, -getConnectionRadius());
+    private final Vector outputStartingLocation = new Vector(0.0F, 0.0F, getConnectionRadius());
 
     public Splitter(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
     }
 
+    @Override
+    protected float getConnectionRadius() {
+        return 0.60F;
+    }
     @Override
     protected void initDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
         displayGroup.addDisplay("main", new BlockDisplayBuilder(location.toCenterLocation())
@@ -156,7 +161,7 @@ public class Splitter extends ConnectedBlock implements PowerAnimatedBlock, Powe
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
         final List<ConnectionPoint> points = new ArrayList<>();
-        points.add(new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input", formatPointLocation(player, location, INPUT_LOCATION)));
+        points.add(new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input", formatPointLocation(player, location, inputLocation)));
         IntStream.range(0, settings.getConnections()).forEach(i ->
             points.add(new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output " + Objects.toString(i),
                     formatPointLocation(player, location, getRelativeOutputLocation(i)))));
@@ -184,7 +189,7 @@ public class Splitter extends ConnectedBlock implements PowerAnimatedBlock, Powe
 
         final double outputPower = PowerLossBlock.calculatePowerLoss(settings, inputLink.get().getPower()) / outgoingLinks.size();
         final double outputFrequency = inputLink.get().getFrequency();
-        outgoingLinks.forEach(output -> output.setPowerAndFrequency(outputPower, outputFrequency));
+        outgoingLinks.forEach(output -> output.setPowerFrequency(outputPower, outputFrequency));
     }
     @Override
     public void onPoweredAnimation(final Location location, final boolean powered) {
@@ -193,6 +198,6 @@ public class Splitter extends ConnectedBlock implements PowerAnimatedBlock, Powe
 
     private @NotNull Vector getRelativeOutputLocation(final int i) {
         final double angle = (-CONNECTION_ANGLE /2) + CONNECTION_ANGLE *((double)(i) / (settings.getConnections()-1));
-        return OUTPUT_STARTING_LOCATION.clone().rotateAroundY(angle);
+        return outputStartingLocation.clone().rotateAroundY(angle);
     }
 }

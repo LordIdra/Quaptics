@@ -83,6 +83,10 @@ public class EnergyConcentrator extends EnergyConnectedBlock {
     }
 
     @Override
+    protected float getConnectionRadius() {
+        return settings.getConnectionRadius();
+    }
+    @Override
     protected void initDisplays(@NotNull final DisplayGroup displayGroup, final @NotNull Location location, final @NotNull Player player) {
         displayGroup.addDisplay("main", generateMainDisplay(location, location.clone().add(rotateVectorByEyeDirection(player, INITIAL_LINE))));
     }

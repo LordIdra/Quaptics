@@ -22,6 +22,8 @@ import org.metamechanists.quaptics.implementation.blocks.manipulators.Capacitor;
 import org.metamechanists.quaptics.implementation.blocks.manipulators.Combiner;
 import org.metamechanists.quaptics.implementation.blocks.manipulators.Lens;
 import org.metamechanists.quaptics.implementation.blocks.manipulators.Splitter;
+import org.metamechanists.quaptics.implementation.blocks.upgraders.Interferometer;
+import org.metamechanists.quaptics.implementation.blocks.upgraders.Polariser;
 import org.metamechanists.quaptics.implementation.multiblocks.infuser.InfusionContainer;
 import org.metamechanists.quaptics.implementation.multiblocks.infuser.InfusionPillar;
 import org.metamechanists.quaptics.items.Groups;
@@ -51,6 +53,10 @@ import static org.metamechanists.quaptics.implementation.blocks.manipulators.Len
 import static org.metamechanists.quaptics.implementation.blocks.manipulators.Lens.LENS_1_SETTINGS;
 import static org.metamechanists.quaptics.implementation.blocks.manipulators.Splitter.SPLITTER_1_2;
 import static org.metamechanists.quaptics.implementation.blocks.manipulators.Splitter.SPLITTER_1_2_SETTINGS;
+import static org.metamechanists.quaptics.implementation.blocks.upgraders.Interferometer.INTERFEROMETER_1;
+import static org.metamechanists.quaptics.implementation.blocks.upgraders.Interferometer.INTERFEROMETER_1_SETTINGS;
+import static org.metamechanists.quaptics.implementation.blocks.upgraders.Polariser.POLARISER_1;
+import static org.metamechanists.quaptics.implementation.blocks.upgraders.Polariser.POLARISER_1_SETTINGS;
 import static org.metamechanists.quaptics.implementation.multiblocks.infuser.InfusionContainer.INFUSION_CONTAINER;
 import static org.metamechanists.quaptics.implementation.multiblocks.infuser.InfusionContainer.INFUSION_CONTAINER_SETTINGS;
 import static org.metamechanists.quaptics.implementation.multiblocks.infuser.InfusionPillar.INFUSION_PILLAR;
@@ -175,6 +181,20 @@ public class Primitive {
                 new ItemStack[]{},
                 INFUSION_PILLAR_SETTINGS).register(addon);
 
+        new Polariser(
+                Groups.PRIMITIVE,
+                POLARISER_1,
+                RecipeType.NULL,
+                new ItemStack[]{},
+                POLARISER_1_SETTINGS).register(addon);
+
+        new Interferometer(
+                Groups.PRIMITIVE,
+                INTERFEROMETER_1,
+                RecipeType.NULL,
+                new ItemStack[]{},
+                INTERFEROMETER_1_SETTINGS).register(addon);
+
         new SlimefunItem(
                 Groups.PRIMITIVE,
                 PHASE_CRYSTAL_1,
@@ -212,16 +232,6 @@ public class Primitive {
                 new ItemStack[]{
                         null, null, null,
                         null, PHASE_CRYSTAL_15, null,
-                        null, null, null
-                }).register(addon);
-
-        new SlimefunItem(
-                Groups.PRIMITIVE,
-                PHASE_CRYSTAL_90,
-                RecipeTypes.RECIPE_INFUSION,
-                new ItemStack[]{
-                        null, null, null,
-                        null, PHASE_CRYSTAL_45, null,
                         null, null, null
                 }).register(addon);
 

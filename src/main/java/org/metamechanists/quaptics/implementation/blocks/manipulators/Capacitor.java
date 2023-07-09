@@ -59,13 +59,18 @@ public class Capacitor extends ConnectedBlock implements InfoPanelBlock, PowerLo
     private static final Vector3f MAIN_GLASS_DISPLAY_SIZE = new Vector3f(0.60F);
     private static final Vector3f TIER_GLASS_DISPLAY_SIZE = new Vector3f(0.51F);
     private static final Vector3f MAX_CONCRETE_DISPLAY_SIZE = new Vector3f(0.49F);
-    private static final Vector INPUT_POINT_LOCATION = new Vector(0.0F, 0.0F, -0.60F);
-    private static final Vector OUTPUT_POINT_LOCATION = new Vector(0.0F, 0.0F, 0.60F);
+
+    private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -getConnectionRadius());
+    private final Vector outputPointLocation = new Vector(0.0F, 0.0F, getConnectionRadius());
 
     public Capacitor(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
     }
 
+    @Override
+    protected float getConnectionRadius() {
+        return 0.60F;
+    }
     @Override
     protected void initDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
         displayGroup.addDisplay("mainGlass", new BlockDisplayBuilder(location.toCenterLocation())
@@ -90,8 +95,8 @@ public class Capacitor extends ConnectedBlock implements InfoPanelBlock, PowerLo
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
         return List.of(
-                new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input", formatPointLocation(player, location, INPUT_POINT_LOCATION)),
-                new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output", formatPointLocation(player, location, OUTPUT_POINT_LOCATION)));
+                new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input", formatPointLocation(player, location, inputPointLocation)),
+                new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output", formatPointLocation(player, location, outputPointLocation)));
     }
 
     @Override
@@ -174,7 +179,7 @@ public class Capacitor extends ConnectedBlock implements InfoPanelBlock, PowerLo
             }
         }
 
-        outputLink.get().setPowerAndFrequency(
+        outputLink.get().setPowerFrequency(
                 (charge > settings.getEmissionPower() / QuapticTicker.QUAPTIC_TICKS_PER_SECOND)
                         ? settings.getEmissionPower()
                         : 0,

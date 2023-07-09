@@ -42,15 +42,20 @@ public class InfusionPillar extends ConnectedBlock implements PowerAnimatedBlock
             Lore.create(INFUSION_PILLAR_SETTINGS,
                     "&7● Multiblock component"));
 
-    private static final Vector3f PILLAR_SCALE = new Vector3f(0.3F, 0.4F, 0.3F);
-    private static final Vector3f PILLAR_OFFSET = new Vector3f(0.0F, -0.3F, 0.0F);
-    private static final Vector3f PRISM_SCALE = new Vector3f(0.2F, 0.2F, 0.2F);
-    private static final Vector INPUT_POINT_LOCATION = new Vector(0.0F, 0.0F, -0.3F);
+    private static final Vector3f PILLAR_SCALE = new Vector3f(0.30F, 0.40F, 0.30F);
+    private static final Vector3f PILLAR_OFFSET = new Vector3f(0.0F, -0.30F, 0.0F);
+    private static final Vector3f PRISM_SCALE = new Vector3f(0.20F);
+
+    private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -getConnectionRadius());
 
     public InfusionPillar(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
     }
 
+    @Override
+    protected float getConnectionRadius() {
+        return 0.30F;
+    }
     @Override
     protected void initDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
         displayGroup.addDisplay("pillar", new BlockDisplayBuilder(location.toCenterLocation())
@@ -70,7 +75,7 @@ public class InfusionPillar extends ConnectedBlock implements PowerAnimatedBlock
     }
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
-        return List.of(new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input", formatPointLocation(player, location, INPUT_POINT_LOCATION)));
+        return List.of(new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input", formatPointLocation(player, location, inputPointLocation)));
     }
     @Override
     protected void initBlockStorage(final @NotNull Location location) {

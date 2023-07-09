@@ -74,13 +74,18 @@ public class Lens extends ConnectedBlock implements PowerAnimatedBlock, PowerLos
 
     private static final Vector3f GLASS_DISPLAY_SIZE = new Vector3f(0.20F);
     private static final Vector3f CONCRETE_DISPLAY_SIZE = new Vector3f(0.10F);
-    private static final Vector INPUT_POINT_LOCATION = new Vector(0.0F, 0.0F, -0.30F);
-    private static final Vector OUTPUT_POINT_LOCATION = new Vector(0.0F, 0.0F, 0.30F);
+
+    private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -getConnectionRadius());
+    private final Vector outputPointLocation = new Vector(0.0F, 0.0F, getConnectionRadius());
 
     public Lens(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
     }
 
+    @Override
+    protected float getConnectionRadius() {
+        return 0.30F;
+    }
     @Override
     protected void initDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
         displayGroup.addDisplay("main", new BlockDisplayBuilder(location.toCenterLocation())
@@ -103,8 +108,8 @@ public class Lens extends ConnectedBlock implements PowerAnimatedBlock, PowerLos
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
         return List.of(
-                new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input", formatPointLocation(player, location, INPUT_POINT_LOCATION)),
-                new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output", formatPointLocation(player, location, OUTPUT_POINT_LOCATION)));
+                new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input", formatPointLocation(player, location, inputPointLocation)),
+                new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output", formatPointLocation(player, location, outputPointLocation)));
     }
 
     @Override
@@ -131,7 +136,7 @@ public class Lens extends ConnectedBlock implements PowerAnimatedBlock, PowerLos
             return;
         }
 
-        outputLink.get().setPowerAndFrequency(PowerLossBlock.calculatePowerLoss(settings, inputLink.get()), inputLink.get().getFrequency());
+        outputLink.get().setPowerFrequency(PowerLossBlock.calculatePowerLoss(settings, inputLink.get()), inputLink.get().getFrequency());
     }
     @Override
     public void onPoweredAnimation(final Location location, final boolean powered) {

@@ -20,6 +20,8 @@ charger.not-chargeable: "&cThis item cannot be charged."
 
 data-stripper.not-slimefun-head: "&cYou can only insert Slimefun heads."
 
+polariser.not-phase-crystal: "&cYou can only insert Phase Crystals."
+
 too-close: "&cToo close to another component!"
 
 load.failed: "Failed to load laser tickers; if this is not your first run, make sure file permissions are set up correctly."

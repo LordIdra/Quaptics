@@ -17,57 +17,44 @@ import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
 import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
-import org.metamechanists.quaptics.implementation.blocks.attachments.ItemHolderBlock;
 import org.metamechanists.quaptics.implementation.blocks.attachments.PowerAnimatedBlock;
 import org.metamechanists.quaptics.implementation.blocks.attachments.PowerLossBlock;
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
-import org.metamechanists.quaptics.items.groups.Primitive;
-import org.metamechanists.quaptics.utils.BlockStorageAPI;
-import org.metamechanists.quaptics.utils.Keys;
-import org.metamechanists.quaptics.utils.Language;
 import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
-import org.metamechanists.quaptics.utils.builders.ItemDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionPointId;
 import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
 import org.metamechanists.quaptics.utils.transformations.TransformationUtils;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 
-public class Polariser extends ConnectedBlock implements PowerAnimatedBlock, PowerLossBlock, ItemHolderBlock {
-    public static final Settings POLARISER_1_SETTINGS = Settings.builder()
+public class Interferometer extends ConnectedBlock implements PowerAnimatedBlock, PowerLossBlock {
+    public static final Settings INTERFEROMETER_1_SETTINGS = Settings.builder()
             .tier(Tier.BASIC)
             .powerLoss(0.07)
             .build();
-    public static final SlimefunItemStack POLARISER_1 = new SlimefunItemStack(
+    public static final SlimefunItemStack INTERFEROMETER_1 = new SlimefunItemStack(
             "QP_INTERFEROMETER_1",
             Material.YELLOW_TERRACOTTA,
             "&cPolariser &4I",
-            Lore.create(POLARISER_1_SETTINGS,
+            Lore.create(INTERFEROMETER_1_SETTINGS,
                     "&7● Sets the Phase of the main ray to the phase of the auxiliary ray"));
 
     private static final Vector3f MAIN_SIZE = new Vector3f(0.30F, 0.30F, 0.90F);
+    private static final Vector3f AUXILIARYE_SIZE = new Vector3f(0.40F, 0.15F, 0.15F);
+    private static final Vector3f AUXILIARYE_OFFSET = new Vector3f(0.20F, 0.0F, 0.0F);
     private static final Vector3f PRISM_SIZE = new Vector3f(0.20F);
-    private static final Vector3f ITEM_SIZE = new Vector3f(0.20F);
-    private static final Vector3f ITEM_OFFSET = new Vector3f(0, 0.20F, 0);
 
     private static final Vector MAIN_INPUT_LOCATION = new Vector(0.0F, 0.0F, -0.50F);
-    private static final Vector OUTPUT_LOCATION = new Vector(0.0F, 0.0F, 0.50);
+    private static final Vector AUXILIARY_INPUT_LOCATION = new Vector(0.50F, 0.0F, 0.0F);
+    private static final Vector outputLocation = new Vector(0.0F, 0.0F, 0.50);
 
-    private static final Map<ItemStack, Integer> PHASE_CHANGES = Map.of(
-            Primitive.PHASE_CRYSTAL_1, 1,
-            Primitive.PHASE_CRYSTAL_5, 5,
-            Primitive.PHASE_CRYSTAL_15, 15,
-            Primitive.PHASE_CRYSTAL_45, 45,
-            Primitive.PHASE_CRYSTAL_90, 90);
-
-    public Polariser(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
+    public Interferometer(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
     }
 
@@ -90,76 +77,59 @@ public class Polariser extends ConnectedBlock implements PowerAnimatedBlock, Pow
                         .lookAlong(face)
                         .buildForBlockDisplay())
                 .build());
+        displayGroup.addDisplay("auxiliary", new BlockDisplayBuilder(location.toCenterLocation())
+                .setMaterial(Material.GRAY_CONCRETE)
+                .setTransformation(new TransformationMatrixBuilder()
+                        .scale(AUXILIARYE_SIZE)
+                        .translate(AUXILIARYE_OFFSET)
+                        .lookAlong(face)
+                        .rotate(0, (float) (Math.PI/2), 0)
+                        .buildForBlockDisplay())
+                .build());
         displayGroup.addDisplay("prism", new BlockDisplayBuilder(location.toCenterLocation())
-                .setMaterial(settings.getTier().glassMaterial)
-                .setBrightness(Utils.BRIGHTNESS_ON)
+                .setMaterial(settings.getTier().concreteMaterial)
+                .setBrightness(Utils.BRIGHTNESS_OFF)
                 .setTransformation(new TransformationMatrixBuilder()
                         .scale(PRISM_SIZE)
                         .rotate(TransformationUtils.PRISM_ROTATION)
                         .buildForBlockDisplay())
                 .build());
-        displayGroup.addDisplay("item", new ItemDisplayBuilder(location.toCenterLocation())
-                .setTransformation(new TransformationMatrixBuilder()
-                        .scale(ITEM_SIZE)
-                        .translate(ITEM_OFFSET)
-                        .buildForItemDisplay())
-                .build());
     }
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
         return List.of(
-                new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input", formatPointLocation(player, location, MAIN_INPUT_LOCATION)),
-                new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output", formatPointLocation(player, location, OUTPUT_LOCATION)));
+                new ConnectionPoint(ConnectionPointType.INPUT, groupId, "mainInput", formatPointLocation(player, location, MAIN_INPUT_LOCATION)),
+                new ConnectionPoint(ConnectionPointType.INPUT, groupId, "auxiliaryInput", formatPointLocation(player, location, AUXILIARY_INPUT_LOCATION)),
+                new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output", formatPointLocation(player, location, outputLocation)));
     }
 
     @Override
     public void onInputLinkUpdated(@NotNull final ConnectionGroup group, @NotNull final Location location) {
-        if (doBurnoutCheck(group, "input")) {
+        if (doBurnoutCheck(group, "mainInput") || doBurnoutCheck(group, "auxiliaryInput")) {
             return;
         }
 
-        if (!BlockStorageAPI.getBoolean(location, Keys.BS_IS_HOLDING_ITEM)) {
-            onPoweredAnimation(location, false);
-            return;
-        }
-
-        final Optional<Link> inputLink = getLink(location, "input");
+        final Optional<Link> mainLink = getLink(location, "mainInput");
+        final Optional<Link> auxiliaryLink = getLink(location, "auxiliaryInput");
         final Optional<Link> outputLink = getLink(location, "output");
-        onPoweredAnimation(location, settings.isOperational(inputLink));
-        if (outputLink.isEmpty()) {
+        onPoweredAnimation(location, settings.isOperational(auxiliaryLink));
+        if (mainLink.isEmpty() || outputLink.isEmpty()) {
             return;
         }
 
-        if (inputLink.isEmpty() || !settings.isOperational(inputLink.get())) {
+        if (auxiliaryLink.isEmpty() || !settings.isOperational(auxiliaryLink.get())) {
             outputLink.get().disable();
             return;
         }
 
-        final Optional<ItemStack> itemStack = ItemHolderBlock.getStack(location);
-        if (itemStack.isEmpty()) {
-            return;
-        }
-
         outputLink.get().setPowerFrequencyPhase(
-                PowerLossBlock.calculatePowerLoss(settings, inputLink.get()),
-                inputLink.get().getFrequency(),
-                inputLink.get().getPhase() + PHASE_CHANGES.get(itemStack.get()));
+                PowerLossBlock.calculatePowerLoss(settings, mainLink.get()),
+                mainLink.get().getFrequency(),
+                auxiliaryLink.get().getPhase());
     }
+
     @Override
     public void onPoweredAnimation(final Location location, final boolean powered) {
         brightnessAnimation(location, "prism", powered);
-    }
-
-    @Override
-    public boolean onInsert(@NotNull final Location location, @NotNull final ItemStack stack, @NotNull final Player player) {
-        if (!PHASE_CHANGES.containsKey(stack)) {
-            Language.sendLanguageMessage(player, "polariser.not-phase-crystal");
-            return false;
-        }
-        return true;
-    }
-    @Override
-    public Optional<ItemStack> onRemove(@NotNull final Location location, @NotNull final ItemStack stack) {
-        return Optional.of(stack);
     }
 }

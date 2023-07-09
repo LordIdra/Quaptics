@@ -48,13 +48,18 @@ public class Transformer extends ConnectedBlock implements PowerAnimatedBlock, P
     private static final Vector3f COIL_DISPLAY_SIZE = new Vector3f(0.20F, 0.60F, 0.20F);
     private static final Vector3f FIRST_COIL_DISPLAY_OFFSET = new Vector3f(0.0F, 0.0F, 0.25F);
     private static final Vector3f SECOND_COIL_DISPLAY_OFFSET = new Vector3f(0.0F, 0.0F, -0.25F);
-    private static final Vector INPUT_POINT_LOCATION = new Vector(0.0F, 0.0F, -0.55F);
-    private static final Vector OUTPUT_POINT_LOCATION = new Vector(0.0F, 0.0F, 0.55F);
+
+    private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -getConnectionRadius());
+    private final Vector outputPointLocation = new Vector(0.0F, 0.0F, getConnectionRadius());
 
     public Transformer(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
     }
 
+    @Override
+    protected float getConnectionRadius() {
+        return 0.55F;
+    }
     @Override
     protected void initDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
         displayGroup.addDisplay("main", new BlockDisplayBuilder(location.toCenterLocation())
@@ -85,8 +90,8 @@ public class Transformer extends ConnectedBlock implements PowerAnimatedBlock, P
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
         return List.of(
-                new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input", formatPointLocation(player, location, INPUT_POINT_LOCATION)),
-                new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output", formatPointLocation(player, location, OUTPUT_POINT_LOCATION)));
+                new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input", formatPointLocation(player, location, inputPointLocation)),
+                new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output", formatPointLocation(player, location, outputPointLocation)));
     }
 
     @Override
@@ -109,7 +114,7 @@ public class Transformer extends ConnectedBlock implements PowerAnimatedBlock, P
             return;
         }
 
-        outputLink.get().setPowerAndFrequency(settings.getEmissionPower(), inputLink.get().getFrequency());
+        outputLink.get().setPowerFrequency(settings.getEmissionPower(), inputLink.get().getFrequency());
     }
     @Override
     public void onPoweredAnimation(final Location location, final boolean powered) {

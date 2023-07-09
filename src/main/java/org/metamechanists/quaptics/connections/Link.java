@@ -32,6 +32,8 @@ public class Link {
     private double power;
     @Getter
     private double frequency;
+    @Getter
+    private int phase;
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     public Link(final ConnectionPointId inputId, final ConnectionPointId outputId) {
@@ -170,7 +172,6 @@ public class Link {
         updatePanels();
         getInput().ifPresent(Link::updateGroup);
     }
-
     private void setFrequency(final double frequency) {
         if (calculateChange(this.frequency, frequency) < MAX_FREQUENCY_CHANGE_PROPORTION) {
             return;
@@ -183,13 +184,34 @@ public class Link {
         updatePanels();
         getInput().ifPresent(Link::updateGroup);
     }
+    private void setPhase(final int phase) {
+        int newPhase = phase;
+        if (newPhase > 360) {
+            newPhase -= 360;
+        }
 
-    public void setPowerAndFrequency(final double power, final double frequency) {
+        if (this.phase == newPhase) {
+            return;
+        }
+
+        this.phase = newPhase;
+
+        saveData();
+        updateBeam();
+        updatePanels();
+        getInput().ifPresent(Link::updateGroup);
+    }
+    public void setPowerFrequency(final double power, final double frequency) {
         setPower(power);
         setFrequency(frequency);
     }
+    public void setPowerFrequencyPhase(final double power, final double frequency, final int phase) {
+        setPower(power);
+        setFrequency(frequency);
+        setPhase(phase);
+    }
 
     public void disable() {
-        setPowerAndFrequency(0, 0);
+        setPowerFrequency(0, 0);
     }
 }

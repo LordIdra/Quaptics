@@ -35,6 +35,7 @@ public abstract class ConnectedBlock extends QuapticBlock {
         super(itemGroup, item, recipeType, recipe, settings);
     }
 
+    protected abstract float getConnectionRadius();
     protected abstract List<ConnectionPoint> initConnectionPoints(ConnectionGroupId groupId, Player player, Location location);
 
     @Override
@@ -178,7 +179,7 @@ public abstract class ConnectedBlock extends QuapticBlock {
         return group.get().getLocation();
     }
 
-    private Optional<Location> calculatePointLocationSphere(@NotNull final ConnectionPointId from, @NotNull final ConnectionPointId to) {
+    protected Optional<Location> calculatePointLocationSphere(@NotNull final ConnectionPointId from, @NotNull final ConnectionPointId to) {
         final Optional<ConnectionPoint> fromPoint = from.get();
         final Optional<ConnectionPoint> toPoint = to.get();
         if (fromPoint.isEmpty() || toPoint.isEmpty()) {
@@ -197,7 +198,7 @@ public abstract class ConnectedBlock extends QuapticBlock {
             return Optional.empty();
         }
 
-        final Vector radiusDirection = Vector.fromJOML(TransformationUtils.getDirection(fromLocation.get(), toLocation.get()).mul(settings.getConnectionRadius()));
+        final Vector radiusDirection = Vector.fromJOML(TransformationUtils.getDirection(fromLocation.get(), toLocation.get()).mul(getConnectionRadius()));
         return Optional.of(fromLocation.get().clone().toCenterLocation().add(radiusDirection));
     }
 }

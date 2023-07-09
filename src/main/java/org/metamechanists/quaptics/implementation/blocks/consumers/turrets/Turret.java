@@ -49,6 +49,10 @@ public abstract class Turret extends ConnectedBlock {
     }
 
     @Override
+    protected float getConnectionRadius() {
+        return settings.getConnectionRadius();
+    }
+    @Override
     protected void initDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
         displayGroup.addDisplay("main", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(settings.getMainMaterial())

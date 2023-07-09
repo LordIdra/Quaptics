@@ -57,12 +57,17 @@ public class Charger extends ConnectedBlock implements InfoPanelBlock, ItemHolde
     private static final Vector3f ITEM_DISPLAY_SIZE = new Vector3f(0.50F);
     private static final Vector3f TOP_OFFSET = new Vector3f(0, 0.35F, 0);
     private static final Vector3f BOTTOM_OFFSET = new Vector3f(0, -0.35F, 0);
-    private static final Vector INPUT_POINT_LOCATION = new Vector(0.0F, 0.0F, -0.60F);
+
+    private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -getConnectionRadius());
 
     public Charger(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
     }
 
+    @Override
+    protected float getConnectionRadius() {
+        return 0.60F;
+    }
     @Override
     protected void initDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
         displayGroup.addDisplay("mainTop", new BlockDisplayBuilder(location.toCenterLocation())
@@ -101,7 +106,7 @@ public class Charger extends ConnectedBlock implements InfoPanelBlock, ItemHolde
     }
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
-        return List.of(new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input", formatPointLocation(player, location, INPUT_POINT_LOCATION)));
+        return List.of(new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input", formatPointLocation(player, location, inputPointLocation)));
     }
 
     @Override

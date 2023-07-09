@@ -39,13 +39,17 @@ public class OscillatingConcentrator extends ConnectedBlock {
                     "&7● Toggles power on/off every tick",
                     "&7● Concentrates epic admin hax into a quaptic ray"));
 
-    private static final Vector OUTPUT_LOCATION = new Vector(0.0F, 0.0F, 0.45F);
     private static final Vector3f MAIN_DISPLAY_SIZE = new Vector3f(0.90F);
+    private final Vector outputLocation = new Vector(0.0F, 0.0F, getConnectionRadius());
 
     public OscillatingConcentrator(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
     }
 
+    @Override
+    protected float getConnectionRadius() {
+        return 0.45F;
+    }
     @Override
     protected void initDisplays(@NotNull final DisplayGroup displayGroup, final @NotNull Location location, final @NotNull Player player) {
         displayGroup.addDisplay("main", new ItemDisplayBuilder(location.clone().toCenterLocation())
@@ -58,7 +62,7 @@ public class OscillatingConcentrator extends ConnectedBlock {
     }
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
-        return List.of(new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output", formatPointLocation(player, location, OUTPUT_LOCATION)));
+        return List.of(new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output", formatPointLocation(player, location, outputLocation)));
     }
 
     @Override

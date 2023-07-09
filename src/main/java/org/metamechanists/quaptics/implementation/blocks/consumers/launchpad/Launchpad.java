@@ -59,12 +59,17 @@ public class Launchpad extends ConnectedBlock implements ConfigPanelBlock, Power
     private static final Vector RELATIVE_PANEL_LOCATION = new Vector(0, 0, -0.51F);
     private static final Vector3f MAIN_DISPLAY_SIZE = new Vector3f(0.80F, 0.10F, 0.80F);
     private static final Vector3f MAIN_DISPLAY_OFFSET = new Vector3f(0.0F, 0.51F, 0.0F);
-    private static final Vector inputPointLocation = new Vector(0.0F, 0.0F, -0.80F);
+
+    private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -getConnectionRadius());
 
     public Launchpad(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
     }
 
+    @Override
+    protected float getConnectionRadius() {
+        return 0.80F;
+    }
     @Override
     protected void initDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
         displayGroup.addDisplay("main", new BlockDisplayBuilder(location.toCenterLocation())

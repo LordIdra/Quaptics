@@ -126,13 +126,18 @@ public class Combiner extends ConnectedBlock implements PowerAnimatedBlock, Powe
     private static final double CONNECTION_ANGLE = Math.PI / 2;
     private static final Vector3f GLASS_DISPLAY_SIZE = new Vector3f(0.50F);
     private static final Vector3f CONCRETE_DISPLAY_SIZE = new Vector3f(0.25F);
-    private static final Vector INPUT_STARTING_LOCATION = new Vector(0.0F, 0.0F, -0.60F);
-    private static final Vector OUTPUT_LOCATION = new Vector(0.0F, 0.0F, 0.60F);
+
+    private final Vector inputStartingLocation = new Vector(0.0F, 0.0F, -getConnectionRadius());
+    private final Vector outputLocation = new Vector(0.0F, 0.0F, getConnectionRadius());
 
     public Combiner(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
     }
 
+    @Override
+    protected float getConnectionRadius() {
+        return 0.60F;
+    }
     @Override
     protected void initDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
         displayGroup.addDisplay("glass", new BlockDisplayBuilder(location.toCenterLocation())
@@ -157,7 +162,7 @@ public class Combiner extends ConnectedBlock implements PowerAnimatedBlock, Powe
         final List<ConnectionPoint> points = IntStream.range(0,
                 settings.getConnections()).mapToObj(i -> new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input " + Objects.toString(i),
                 formatPointLocation(player, location, getRelativeInputLocation(i)))).collect(Collectors.toList());
-        points.add(new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output", formatPointLocation(player, location, OUTPUT_LOCATION)));
+        points.add(new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output", formatPointLocation(player, location, outputLocation)));
         return points;
     }
 
@@ -178,7 +183,7 @@ public class Combiner extends ConnectedBlock implements PowerAnimatedBlock, Powe
 
         final double inputPower = incomingLinks.stream().mapToDouble(Link::getPower).sum();
         final double inputFrequency = incomingLinks.stream().mapToDouble(Link::getFrequency).min().orElse(0.0);
-        outputLink.get().setPowerAndFrequency(PowerLossBlock.calculatePowerLoss(settings, inputPower), inputFrequency);
+        outputLink.get().setPowerFrequency(PowerLossBlock.calculatePowerLoss(settings, inputPower), inputFrequency);
     }
     @Override
     public void onPoweredAnimation(final Location location, final boolean powered) {
@@ -187,6 +192,6 @@ public class Combiner extends ConnectedBlock implements PowerAnimatedBlock, Powe
 
     private @NotNull Vector getRelativeInputLocation(final int i) {
         final double angle = (-CONNECTION_ANGLE /2) + CONNECTION_ANGLE *((double)(i) / (settings.getConnections()-1));
-        return INPUT_STARTING_LOCATION.clone().rotateAroundY(angle);
+        return inputStartingLocation.clone().rotateAroundY(angle);
     }
 }

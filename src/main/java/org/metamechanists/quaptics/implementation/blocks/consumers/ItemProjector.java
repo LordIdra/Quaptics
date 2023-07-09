@@ -67,12 +67,17 @@ public class ItemProjector extends ConnectedBlock implements ItemHolderBlock, Po
     private static final Vector3f PRISM_DISPLAY_SIZE = new Vector3f(0.4F, 0.4F, 0.4F);
     private static final Vector3f ITEM_DISPLAY_ADDITIONAL_SIZE = new Vector3f(0.1F);
     private static final Vector3f ITEM_DISPLAY_ADDITIONAL_OFFSET = new Vector3f(0, 0.6F, 0);
-    private static final Vector INPUT_POINT_LOCATION = new Vector(0.0F, 0.0F, -0.6F);
+
+    private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -getConnectionRadius());
 
     public ItemProjector(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
     }
 
+    @Override
+    protected float getConnectionRadius() {
+        return 0.6F;
+    }
     @Override
     protected void initDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
         displayGroup.addDisplay("main", new BlockDisplayBuilder(location.toCenterLocation())
@@ -87,7 +92,7 @@ public class ItemProjector extends ConnectedBlock implements ItemHolderBlock, Po
                 .setBrightness(Utils.BRIGHTNESS_OFF)
                 .setTransformation(new TransformationMatrixBuilder()
                         .scale(PRISM_DISPLAY_SIZE)
-                        .translate(TransformationUtils.PRISM_ROTATION)
+                        .rotate(TransformationUtils.PRISM_ROTATION)
                         .buildForBlockDisplay())
                 .build());
         displayGroup.addDisplay("item", new ItemDisplayBuilder(location.toCenterLocation())
@@ -99,7 +104,7 @@ public class ItemProjector extends ConnectedBlock implements ItemHolderBlock, Po
     }
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
-        return List.of(new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input", formatPointLocation(player, location, INPUT_POINT_LOCATION)));
+        return List.of(new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input", formatPointLocation(player, location, inputPointLocation)));
     }
     @Override
     protected void initBlockStorage(@NotNull final Location location) {

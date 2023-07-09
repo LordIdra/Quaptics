@@ -57,12 +57,17 @@ public class MultiblockClicker extends ConnectedBlock implements PowerAnimatedBl
     private static final Vector RELATIVE_PLATE_LOCATION = new Vector(0, 0, 0.45F);
     private static final Vector3f ATTACHMENT_DISPLAY_SIZE = new Vector3f(0.15F, 0.15F, 0.85F);
     private static final Vector3f MAIN_DISPLAY_SIZE = new Vector3f(0.3F, 0.3F, 0.3F);
-    private static final Vector INPUT_POINT_LOCATION = new Vector(0.0F, 0.0F, -0.35F);
+
+    private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -getConnectionRadius());
 
     public MultiblockClicker(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
     }
 
+    @Override
+    protected float getConnectionRadius() {
+        return 0.35F;
+    }
     @Override
     protected void initDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
         player.getFacing();
@@ -85,7 +90,7 @@ public class MultiblockClicker extends ConnectedBlock implements PowerAnimatedBl
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
         return List.of(new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input",
-                formatPointLocation(player, location, INPUT_POINT_LOCATION)));
+                formatPointLocation(player, location, inputPointLocation)));
     }
     @Override
     protected void initBlockStorage(@NotNull final Location location) {

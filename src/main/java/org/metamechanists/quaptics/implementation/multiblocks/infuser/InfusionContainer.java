@@ -95,6 +95,10 @@ public class InfusionContainer extends ConnectedBlock implements ItemHolderBlock
     }
 
     @Override
+    protected float getConnectionRadius() {
+        return 0.0F;
+    }
+    @Override
     protected void initDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
         displayGroup.addDisplay("base", new BlockDisplayBuilder(location.toCenterLocation())
                 .setBlockData(Material.GRAY_CONCRETE.createBlockData())
