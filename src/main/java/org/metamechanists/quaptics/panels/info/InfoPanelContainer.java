@@ -3,15 +3,15 @@ package org.metamechanists.quaptics.panels.info;
 import lombok.Getter;
 import org.bukkit.Location;
 import org.bukkit.entity.Interaction;
+import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.storage.PersistentDataTraverser;
 import org.metamechanists.quaptics.utils.builders.InteractionBuilder;
-import org.metamechanists.quaptics.utils.id.simple.InteractionId;
 import org.metamechanists.quaptics.utils.id.complex.InfoPanelAttributeId;
 import org.metamechanists.quaptics.utils.id.complex.InfoPanelId;
+import org.metamechanists.quaptics.utils.id.simple.InteractionId;
 
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 
 public class InfoPanelContainer {
@@ -19,10 +19,12 @@ public class InfoPanelContainer {
     private final InfoPanelId id;
     @Getter
     private boolean hidden = true;
+    private final Vector spacing;
     private final Map<String, ? extends InfoPanelAttributeId> attributes;
 
-    public InfoPanelContainer(final Location location, final Map<String, ? extends InfoPanelAttributeId> attributes) {
+    public InfoPanelContainer(final Location location, final Vector spacing, final Map<String, ? extends InfoPanelAttributeId> attributes) {
         this.id = new InfoPanelId(new InteractionBuilder(location).setHeight(0).setWidth(0).build().getUniqueId());
+        this.spacing = spacing;
         this.attributes = attributes;
         saveData();
     }
@@ -31,12 +33,14 @@ public class InfoPanelContainer {
         final PersistentDataTraverser traverser = new PersistentDataTraverser(panelId);
         this.id = panelId;
         this.hidden = traverser.getBoolean("hidden");
+        this.spacing = traverser.getVector("spacing");
         this.attributes = traverser.getInfoPanelAttributeIdMap("attributes");
     }
 
     private void saveData() {
         final PersistentDataTraverser traverser = new PersistentDataTraverser(id);
         traverser.set("hidden", hidden);
+        traverser.set("spacing", spacing);
         traverser.set("attributes", attributes);
     }
 
@@ -53,6 +57,7 @@ public class InfoPanelContainer {
             attribute.setHidden(attributeHidden);
             attribute.updateVisibility(hidden);
         });
+        reorderAttributes();
     }
 
     public void changeLocation(final Location location) {
@@ -77,9 +82,10 @@ public class InfoPanelContainer {
     }
 
     private void updateAttributeVisibility() {
+        reorderAttributes();
         attributes.values().stream()
                 .map(InfoPanelAttributeId::get)
-                .filter(Objects::nonNull)
+                .filter(Optional::isPresent)
                 .forEach(attributeOptional -> attributeOptional.ifPresent(attribute -> attribute.updateVisibility(hidden)));
     }
 
@@ -89,6 +95,24 @@ public class InfoPanelContainer {
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .forEach(InfoPanelAttribute::remove);
+    }
+
+    private void reorderAttributes() {
+        final Optional<Interaction> interaction = getInteraction();
+        if (interaction.isEmpty()) {
+            return;
+        }
+
+        final Location location = interaction.get().getLocation().clone();
+
+        attributes.values().stream()
+                .map(InfoPanelAttributeId::get)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .forEach(attribute -> {
+                    attribute.changeLocation(location);
+                    location.add(spacing);
+                });
     }
 
     public void remove() {

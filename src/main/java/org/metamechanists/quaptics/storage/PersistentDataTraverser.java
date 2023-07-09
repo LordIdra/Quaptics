@@ -9,6 +9,7 @@ import org.bukkit.persistence.PersistentDataHolder;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Vector3f;
 import org.metamechanists.quaptics.Quaptics;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
 import org.metamechanists.quaptics.utils.id.CustomId;
@@ -88,6 +89,18 @@ public class PersistentDataTraverser {
         set(key + "y", value.getY());
         set(key + "z", value.getZ());
     }
+    public void set(@NotNull final String key, @Nullable final Vector3f value) {
+        if (value == null) {
+            PersistentDataAPI.remove(persistentDataHolder, getKey(key + "x"));
+            PersistentDataAPI.remove(persistentDataHolder, getKey(key + "y"));
+            PersistentDataAPI.remove(persistentDataHolder, getKey(key + "z"));
+            return;
+        }
+
+        set(key + "x", value.x);
+        set(key + "y", value.y);
+        set(key + "z", value.z);
+    }
     public void set(@NotNull final String key, @Nullable final CustomId value) {
         set(key, value == null ? null : value.toString());
     }
@@ -129,6 +142,12 @@ public class PersistentDataTraverser {
                 PersistentDataAPI.getDouble(persistentDataHolder, getKey(key + "x")),
                 PersistentDataAPI.getDouble(persistentDataHolder, getKey(key + "y")),
                 PersistentDataAPI.getDouble(persistentDataHolder, getKey(key + "z")));
+    }
+    public @Nullable Vector3f getVector3f(@NotNull final String key) {
+        return new Vector3f(
+                PersistentDataAPI.getFloat(persistentDataHolder, getKey(key + "x")),
+                PersistentDataAPI.getFloat(persistentDataHolder, getKey(key + "y")),
+                PersistentDataAPI.getFloat(persistentDataHolder, getKey(key + "z")));
     }
     public @Nullable ConnectionPointType getConnectionPointType(@NotNull final String key) {
         return ConnectionPointType.valueOf(getString(key));

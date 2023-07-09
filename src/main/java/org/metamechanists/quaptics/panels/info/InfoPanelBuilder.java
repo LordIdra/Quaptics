@@ -31,6 +31,6 @@ public class InfoPanelBuilder {
     }
 
     public InfoPanelContainer build() {
-        return new InfoPanelContainer(location, attributes);
+        return new InfoPanelContainer(location, attributeSpacing, attributes);
     }
 }
