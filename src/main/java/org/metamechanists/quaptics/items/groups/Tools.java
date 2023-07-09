@@ -1,51 +1,24 @@
 package org.metamechanists.quaptics.items.groups;
 
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
-import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import lombok.experimental.UtilityClass;
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.metamechanists.quaptics.Quaptics;
-import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.implementation.tools.LaserPointer;
 import org.metamechanists.quaptics.implementation.tools.multiblockwand.MultiblockWand;
 import org.metamechanists.quaptics.implementation.tools.targetingwand.TargetingWand;
 import org.metamechanists.quaptics.items.Groups;
-import org.metamechanists.quaptics.items.Lore;
+
+import static org.metamechanists.quaptics.implementation.tools.LaserPointer.LASER_POINTER;
+import static org.metamechanists.quaptics.implementation.tools.LaserPointer.LASER_POINTER_SETTINGS;
+import static org.metamechanists.quaptics.implementation.tools.multiblockwand.MultiblockWand.MULTIBLOCK_WAND;
+import static org.metamechanists.quaptics.implementation.tools.targetingwand.TargetingWand.TARGETING_WAND;
+
 
 @SuppressWarnings({"ZeroLengthArrayAllocation", "WeakerAccess"})
 @UtilityClass
 public class Tools {
-    public final Settings LASER_POINTER_SETTINGS = Settings.builder()
-            .chargeCapacity(1000.0)
-            .emissionPower(5.0)
-            .build();
-
-    public final SlimefunItemStack TARGETING_WAND = new SlimefunItemStack(
-            "QP_TARGETING_WAND",
-            Material.BLAZE_ROD,
-            "&6Targeting Wand",
-            "&7● &eRight Click &7to select a source",
-            "&7● &eRight Click &7again to create a link",
-            "&7● &eShift Right Click &7to remove a link");
-
-    public final SlimefunItemStack MULTIBLOCK_WAND = new SlimefunItemStack(
-            "QP_MULTBLOCK_WAND",
-            Material.BLAZE_ROD,
-            "&6Multiblock Wand",
-            "&7● Shows you how to build complex multiblocks",
-            "&7● &eRight Click &7a multiblock to see how to build it",
-            "&7● &eRight Click &7a projected block to see what block it is");
-
-    public final SlimefunItemStack LASER_POINTER = new SlimefunItemStack(
-            "QP_LASER_POINTER",
-            Material.BLACK_CANDLE,
-            "&fLaser Pointer",
-            Lore.buildChargeableLore(LASER_POINTER_SETTINGS, 0,
-                    "&7● &eRight Click &7to toggle the pointer",
-                    "&7● &eShift Right Click &7to change the color"));
-
     public void initialize() {
         final SlimefunAddon addon = Quaptics.getInstance();
 

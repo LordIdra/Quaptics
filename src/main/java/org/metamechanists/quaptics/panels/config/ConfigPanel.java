@@ -43,15 +43,7 @@ public abstract class ConfigPanel {
         return container.isHidden();
     }
 
-    public void toggleHidden() {
-        container.toggleHidden();
-        update();
-    }
-
-    public void remove() {
-        container.remove();
-    }
-
+    @SuppressWarnings("unused")
     protected abstract Vector getOffset();
     protected abstract ConfigPanelContainer buildPanelContainer(@NotNull final ConnectionGroupId groupId, @NotNull final Location location, final float rotationY);
     public abstract void interact(@NotNull final Location location, final String name, final String type);

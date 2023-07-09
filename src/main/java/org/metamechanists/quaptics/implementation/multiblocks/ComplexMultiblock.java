@@ -116,5 +116,6 @@ public interface ComplexMultiblock {
 
     Map<Vector, ItemStack> getStructure();
 
+    @SuppressWarnings("unused")
     void tickAnimation(@NotNull final Location centerLocation, final double timeSeconds);
 }

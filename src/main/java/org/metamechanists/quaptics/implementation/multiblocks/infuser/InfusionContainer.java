@@ -21,6 +21,8 @@ import org.metamechanists.quaptics.implementation.blocks.attachments.InfoPanelBl
 import org.metamechanists.quaptics.implementation.blocks.attachments.ItemHolderBlock;
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
 import org.metamechanists.quaptics.implementation.multiblocks.ComplexMultiblock;
+import org.metamechanists.quaptics.items.Lore;
+import org.metamechanists.quaptics.items.Tier;
 import org.metamechanists.quaptics.items.groups.Primitive;
 import org.metamechanists.quaptics.panels.info.InfoPanelContainer;
 import org.metamechanists.quaptics.storage.QuapticTicker;
@@ -39,8 +41,24 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import static org.metamechanists.quaptics.implementation.multiblocks.infuser.InfusionPillar.INFUSION_PILLAR;
+
 
 public class InfusionContainer extends ConnectedBlock implements ItemHolderBlock, ComplexMultiblock {
+    public static final Settings INFUSION_CONTAINER_SETTINGS = Settings.builder()
+            .tier(Tier.PRIMITIVE)
+            .timePerItem(10)
+            .build();
+    public static final SlimefunItemStack INFUSION_CONTAINER = new SlimefunItemStack(
+            "QP_INFUSION_CONTAINER",
+            Material.GRAY_CONCRETE,
+            "&6Infusion Container",
+            Lore.create(INFUSION_CONTAINER_SETTINGS,
+                    "&c● Explodes if any pillar loses power during an infusion",
+                    "&7● Multiblock structure: use the Multiblock Wand to build the structure",
+                    "&7● Infuses items",
+                    "&7● &eRight Click &7with an item to start infusing"));
+
     private static final Vector3f BASE_SCALE = new Vector3f(0.9F, 0.6F, 0.9F);
     private static final Vector3f BASE_OFFSET = new Vector3f(0.0F, -0.3F, 0.0F);
     private static final Vector3f PILLAR_SCALE = new Vector3f(0.2F, 0.8F, 0.2F);
@@ -170,10 +188,10 @@ public class InfusionContainer extends ConnectedBlock implements ItemHolderBlock
     @Override
     public Map<Vector, ItemStack> getStructure() {
         return Map.of(
-                PILLAR_1_LOCATION, Primitive.INFUSION_PILLAR,
-                PILLAR_2_LOCATION, Primitive.INFUSION_PILLAR,
-                PILLAR_3_LOCATION, Primitive.INFUSION_PILLAR,
-                PILLAR_4_LOCATION, Primitive.INFUSION_PILLAR
+                PILLAR_1_LOCATION, INFUSION_PILLAR,
+                PILLAR_2_LOCATION, INFUSION_PILLAR,
+                PILLAR_3_LOCATION, INFUSION_PILLAR,
+                PILLAR_4_LOCATION, INFUSION_PILLAR
         );
     }
     @Override

@@ -3,9 +3,10 @@ package org.metamechanists.quaptics.items;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import lombok.experimental.UtilityClass;
-import org.metamechanists.quaptics.items.groups.Primitive;
 import org.metamechanists.quaptics.utils.Colors;
 import org.metamechanists.quaptics.utils.Keys;
+
+import static org.metamechanists.quaptics.implementation.multiblocks.infuser.InfusionContainer.INFUSION_CONTAINER;
 
 
 @SuppressWarnings("PublicConstructorInNonPublicClass")
@@ -18,7 +19,7 @@ public class RecipeTypes {
             super(
                     Keys.RECIPE_INFUSION_CONTAINER,
                     new CustomItemStack(
-                            Primitive.INFUSION_CONTAINER.clone(),
+                            INFUSION_CONTAINER.clone(),
                             Colors.QUAPTICS + "Infusion",
                             "&7Made in the Infuser multiblock")
             );

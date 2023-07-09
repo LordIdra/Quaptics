@@ -23,6 +23,8 @@ import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.implementation.blocks.attachments.PowerAnimatedBlock;
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
+import org.metamechanists.quaptics.items.Lore;
+import org.metamechanists.quaptics.items.Tier;
 import org.metamechanists.quaptics.storage.QuapticTicker;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
@@ -38,6 +40,21 @@ import java.util.Optional;
 import java.util.UUID;
 
 public class MultiblockClicker extends ConnectedBlock implements PowerAnimatedBlock {
+    public static final Settings MULTIBLOCK_CLICKER_1_SETTINGS = Settings.builder()
+            .tier(Tier.PRIMITIVE)
+            .connectionRadius(0.35F)
+            .useInterval(10)
+            .minPower(7)
+            .build();
+    public static final SlimefunItemStack MULTIBLOCK_CLICKER_1 = new SlimefunItemStack(
+            "QP_MULTIBLOCK_CLICKER_1",
+            Material.DISPENSER,
+            "&6Multiblock Clicker &eI",
+            Lore.create(MULTIBLOCK_CLICKER_1_SETTINGS,
+                    "&7● &eRight Click &7to enable/disable",
+                    "&7● Automatically clicks the attached multiblock",
+                    "&7● Place facing the block you'd usually click to use the multiblock"));
+
     private static final Vector RELATIVE_PLATE_LOCATION = new Vector(0, 0, 0.45F);
     private static final Vector3f ATTACHMENT_DISPLAY_SIZE = new Vector3f(0.15F, 0.15F, 0.85F);
     private static final Vector3f MAIN_DISPLAY_SIZE = new Vector3f(0.3F, 0.3F, 0.3F);

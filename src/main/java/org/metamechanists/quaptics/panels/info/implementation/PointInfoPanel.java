@@ -24,8 +24,8 @@ public class PointInfoPanel extends InfoPanel {
         this.pointId = pointId;
     }
 
-    public PointInfoPanel(@NotNull final InfoPanelId id, final ConnectionPointId pointId) {
-        super(id);
+    public PointInfoPanel(@NotNull final InfoPanelId panelId, final ConnectionPointId pointId) {
+        super(panelId);
         this.pointId = pointId;
     }
 

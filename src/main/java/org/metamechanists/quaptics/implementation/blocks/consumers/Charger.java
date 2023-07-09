@@ -22,6 +22,8 @@ import org.metamechanists.quaptics.implementation.blocks.attachments.InfoPanelBl
 import org.metamechanists.quaptics.implementation.blocks.attachments.ItemHolderBlock;
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
 import org.metamechanists.quaptics.implementation.tools.QuapticChargeableItem;
+import org.metamechanists.quaptics.items.Lore;
+import org.metamechanists.quaptics.items.Tier;
 import org.metamechanists.quaptics.panels.info.BlockInfoPanel;
 import org.metamechanists.quaptics.panels.info.implementation.ChargerInfoPanel;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
@@ -38,6 +40,20 @@ import java.util.List;
 import java.util.Optional;
 
 public class Charger extends ConnectedBlock implements InfoPanelBlock, ItemHolderBlock {
+    public static final Settings CHARGER_1_SETTINGS = Settings.builder()
+            .tier(Tier.PRIMITIVE)
+            .displayRadius(0.4F)
+            .connectionRadius(0.6F)
+            .build();
+    public static final SlimefunItemStack CHARGER_1 = new SlimefunItemStack(
+            "QP_CHARGER_1",
+            Material.LIGHT_BLUE_STAINED_GLASS,
+            "&bCharger &3I",
+            Lore.create(CHARGER_1_SETTINGS,
+                    "&7● Charges item with Quaptic Energy Units",
+                    "&7● &eRight Click &7an item to insert",
+                    "&7● &eRight Click &7again to retrieve"));
+
     private final Vector3f mainDisplaySize = new Vector3f(0.7F, 0.3F, 0.7F);
     private final Vector3f glassDisplaySize = new Vector3f(0.5F, 0.1F, 0.5F);
     private final Vector3f itemDisplaySize = new Vector3f(0.5F);

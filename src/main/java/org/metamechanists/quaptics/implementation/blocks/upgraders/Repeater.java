@@ -24,6 +24,8 @@ import org.metamechanists.quaptics.implementation.blocks.attachments.PowerAnimat
 import org.metamechanists.quaptics.implementation.blocks.attachments.PowerLossBlock;
 import org.metamechanists.quaptics.implementation.blocks.attachments.UpgraderBlock;
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
+import org.metamechanists.quaptics.items.Lore;
+import org.metamechanists.quaptics.items.Tier;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.Utils;
@@ -35,6 +37,24 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class Repeater extends ConnectedBlock implements PowerAnimatedBlock, PowerLossBlock, UpgraderBlock {
+    public static final Settings REPEATER_1_SETTINGS = Settings.builder()
+            .tier(Tier.BASIC)
+            .displayRadius(0.25F)
+            .connectionRadius(0.5F)
+            .minPower(15)
+            .powerLoss(0.05)
+            .minFrequency(0.0)
+            .maxFrequency(0.3)
+            .frequencyStep(0.1)
+            .repeaterDelay(1)
+            .build();
+    public static final SlimefunItemStack REPEATER_1 = new SlimefunItemStack(
+            "QP_REPEATER_1",
+            Material.RED_STAINED_GLASS,
+            "&cRepeater &4I",
+            Lore.create(REPEATER_1_SETTINGS,
+                    "&7● Increases the frequency of a quaptic ray"));
+
     private final Vector3f glassDisplaySize = new Vector3f(settings.getDisplayRadius()*2);
     private final Vector3f repeaterDisplaySize = new Vector3f(settings.getDisplayRadius());
     private final Vector3f repeaterOffset = new Vector3f(0.0F, 0.1F, 0.0F);

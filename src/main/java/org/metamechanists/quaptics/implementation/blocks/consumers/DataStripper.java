@@ -23,6 +23,8 @@ import org.metamechanists.quaptics.implementation.blocks.attachments.InfoPanelBl
 import org.metamechanists.quaptics.implementation.blocks.attachments.ItemHolderBlock;
 import org.metamechanists.quaptics.implementation.blocks.attachments.ProgressBlock;
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
+import org.metamechanists.quaptics.items.Lore;
+import org.metamechanists.quaptics.items.Tier;
 import org.metamechanists.quaptics.panels.info.BlockInfoPanel;
 import org.metamechanists.quaptics.panels.info.implementation.ProgressInfoPanel;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
@@ -39,6 +41,21 @@ import java.util.List;
 import java.util.Optional;
 
 public class DataStripper extends ConnectedBlock implements InfoPanelBlock, ItemHolderBlock, ProgressBlock {
+    public static final Settings DATA_STRIPPER_1_SETTINGS = Settings.builder()
+            .tier(Tier.PRIMITIVE)
+            .connectionRadius(0.4F)
+            .timePerItem(10)
+            .minPower(6)
+            .build();
+    public static final SlimefunItemStack DATA_STRIPPER_1 = new SlimefunItemStack(
+            "QP_DATA_STRIPPER_1",
+            Material.ORANGE_STAINED_GLASS,
+            "&6Data Stripper &eI",
+            Lore.create(DATA_STRIPPER_1_SETTINGS,
+                    "&7● Converts Slimefun heads into placeable vanilla heads",
+                    "&7● &eRight Click &7with an item to insert",
+                    "&7● &eRight Click &7again to retrieve"));
+
     private static final double MAX_PROGRESS_DIFFERENCE = 0.00001;
     private static final Vector3f MAIN_DISPLAY_SIZE = new Vector3f(0.5F, 0.3F, 0.5F);
     private static final Vector3f GLASS_DISPLAY_SIZE = new Vector3f(0.4F, 0.15F, 0.4F);

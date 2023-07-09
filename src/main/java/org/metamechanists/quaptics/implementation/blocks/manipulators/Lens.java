@@ -19,6 +19,8 @@ import org.metamechanists.quaptics.implementation.blocks.attachments.PowerLossBl
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
 import org.metamechanists.quaptics.implementation.blocks.attachments.PowerAnimatedBlock;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
+import org.metamechanists.quaptics.items.Lore;
+import org.metamechanists.quaptics.items.Tier;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
@@ -28,6 +30,55 @@ import java.util.List;
 import java.util.Optional;
 
 public class Lens extends ConnectedBlock implements PowerAnimatedBlock, PowerLossBlock {
+    public static final Settings LENS_1_SETTINGS = Settings.builder()
+            .tier(Tier.PRIMITIVE)
+            .displayRadius(0.24F)
+            .connectionRadius(0.48F)
+            .powerLoss(0.1)
+            .build();
+    public static final Settings LENS_2_SETTINGS = Settings.builder()
+            .tier(Tier.BASIC)
+            .displayRadius(0.21F)
+            .connectionRadius(0.42F)
+            .powerLoss(0.07)
+            .build();
+    public static final Settings LENS_3_SETTINGS = Settings.builder()
+            .tier(Tier.INTERMEDIATE)
+            .displayRadius(0.18F)
+            .connectionRadius(0.36F)
+            .powerLoss(0.04)
+            .build();
+    public static final Settings LENS_4_SETTINGS = Settings.builder()
+            .tier(Tier.ADVANCED)
+            .displayRadius(0.15F)
+            .connectionRadius(0.30F)
+            .powerLoss(0.02)
+            .build();
+    public static final SlimefunItemStack LENS_1 = new SlimefunItemStack(
+            "QP_LENS_1",
+            Material.GLASS,
+            "&9Lens &bI",
+            Lore.create(LENS_1_SETTINGS,
+                    "&7● Redirects a quaptic ray"));
+    public static final SlimefunItemStack LENS_2 = new SlimefunItemStack(
+            "QP_LENS_2",
+            Material.GLASS,
+            "&9Lens &bII",
+            Lore.create(LENS_2_SETTINGS,
+                    "&7● &bRedirects &7a quaptic ray"));
+    public static final SlimefunItemStack LENS_3 = new SlimefunItemStack(
+            "QP_LENS_3",
+            Material.GLASS,
+            "&9Lens &bIII",
+            Lore.create(LENS_3_SETTINGS,
+                    "&7● Redirects a quaptic ray"));
+    public static final SlimefunItemStack LENS_4 = new SlimefunItemStack(
+            "QP_LENS_4",
+            Material.GLASS,
+            "&9Lens &bIV",
+            Lore.create(LENS_4_SETTINGS,
+                    "&7● Redirects a quaptic ray"));
+
     private final Vector3f glassDisplaySize = new Vector3f(settings.getDisplayRadius()*2);
     private final Vector3f concreteDisplaySize = new Vector3f(settings.getDisplayRadius());
     private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -settings.getConnectionRadius());

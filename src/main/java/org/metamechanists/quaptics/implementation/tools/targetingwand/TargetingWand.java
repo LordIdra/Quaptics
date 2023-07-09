@@ -7,6 +7,7 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -23,6 +24,14 @@ import org.metamechanists.quaptics.utils.id.complex.ConnectionPointId;
 import java.util.Optional;
 
 public class TargetingWand extends SlimefunItem {
+    public static final SlimefunItemStack TARGETING_WAND = new SlimefunItemStack(
+            "QP_TARGETING_WAND",
+            Material.BLAZE_ROD,
+            "&6Targeting Wand",
+            "&7● &eRight Click &7to select a source",
+            "&7● &eRight Click &7again to create a link",
+            "&7● &eShift Right Click &7to remove a link");
+
     private static final float MIN_POINT_SEPARATION = 0.0001F;
 
     public TargetingWand(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe) {
@@ -32,7 +41,6 @@ public class TargetingWand extends SlimefunItem {
     private static boolean isSourceSet(@NotNull final ItemStack stack) {
         return stack.getItemMeta().getPersistentDataContainer().has(Keys.SOURCE);
     }
-
     private static void setSource(final Player player, @NotNull final ConnectionPointId sourceId, final ItemStack stack) {
         final Optional<ConnectionPoint> source = sourceId.get();
         if (source.isEmpty()) {
@@ -47,7 +55,6 @@ public class TargetingWand extends SlimefunItem {
         source.get().select();
         PersistentDataUtils.setString(stack, Keys.SOURCE, sourceId.toString());
     }
-
     public static void unsetSource(final ItemStack stack) {
         if (isSourceSet(stack)) {
             final ConnectionPointId sourcePointId = new ConnectionPointId(PersistentDataUtils.getString(stack, Keys.SOURCE));
@@ -66,7 +73,6 @@ public class TargetingWand extends SlimefunItem {
 
         point.get().getLink().ifPresent(Link::remove);
     }
-
     private static void createLink(final Player player, final @NotNull ConnectionPointId inputId, final ItemStack stack) {
         final ConnectionPointId outputId = new ConnectionPointId(PersistentDataUtils.getString(stack, Keys.SOURCE));
         final Optional<ConnectionPoint> output = outputId.get();

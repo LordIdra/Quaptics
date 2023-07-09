@@ -22,6 +22,8 @@ import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.implementation.blocks.attachments.InfoPanelBlock;
 import org.metamechanists.quaptics.implementation.blocks.attachments.PowerLossBlock;
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
+import org.metamechanists.quaptics.items.Lore;
+import org.metamechanists.quaptics.items.Tier;
 import org.metamechanists.quaptics.panels.info.BlockInfoPanel;
 import org.metamechanists.quaptics.panels.info.implementation.CapacitorInfoPanel;
 import org.metamechanists.quaptics.storage.QuapticTicker;
@@ -38,6 +40,22 @@ import java.util.List;
 import java.util.Optional;
 
 public class Capacitor extends ConnectedBlock implements InfoPanelBlock, PowerLossBlock {
+    public static final Settings CAPACITOR_1_SETTINGS = Settings.builder()
+            .tier(Tier.PRIMITIVE)
+            .displayRadius(0.3F)
+            .connectionRadius(0.6F)
+            .chargeCapacity(200)
+            .emissionPower(3)
+            .powerLoss(0.25)
+            .build();
+    public static final SlimefunItemStack CAPACITOR_1 = new SlimefunItemStack(
+            "QP_CAPACITOR_1",
+            Material.LIGHT_BLUE_CONCRETE,
+            "&3Capacitor &bI",
+            Lore.create(CAPACITOR_1_SETTINGS,
+                    "&7● Stores charge",
+                    "&7● Outputs at a constant power"));
+
     private final Vector3f mainGlassDisplaySize = new Vector3f(settings.getDisplayRadius()*2.0F);
     private final Vector3f tierGlassDisplaySize = new Vector3f(settings.getDisplayRadius()*1.7F);
     private final Vector3f maxConcreteDisplaySize = new Vector3f(settings.getDisplayRadius()*1.65F);

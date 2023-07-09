@@ -5,6 +5,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -17,6 +18,14 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class MultiblockWand extends SlimefunItem {
+    public static final SlimefunItemStack MULTIBLOCK_WAND = new SlimefunItemStack(
+            "QP_MULTBLOCK_WAND",
+            Material.BLAZE_ROD,
+            "&6Multiblock Wand",
+            "&7● Shows you how to build complex multiblocks",
+            "&7● &eRight Click &7a multiblock to see how to build it",
+            "&7● &eRight Click &7a projected block to see what block it is");
+
     public MultiblockWand(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }

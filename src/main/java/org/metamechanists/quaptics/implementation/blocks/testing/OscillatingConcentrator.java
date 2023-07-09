@@ -16,6 +16,8 @@ import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
+import org.metamechanists.quaptics.items.Lore;
+import org.metamechanists.quaptics.items.Tier;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Transformations;
@@ -25,6 +27,20 @@ import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import java.util.List;
 
 public class OscillatingConcentrator extends ConnectedBlock {
+    public static final Settings OSCILLATING_CONCENTRATOR_SETTINGS = Settings.builder()
+            .tier(Tier.TESTING)
+            .displayRadius(0.45F)
+            .connectionRadius(0.45F)
+            .emissionPower(1)
+            .build();
+    public static final SlimefunItemStack OSCILLATING_CONCENTRATOR = new SlimefunItemStack(
+            "QP_TESTING_OSCILLATING_CONCENTRATOR",
+            Material.BLACK_STAINED_GLASS_PANE,
+            "&8Oscillating Concentrator &FI",
+            Lore.create(OSCILLATING_CONCENTRATOR_SETTINGS,
+                    "&7● Toggles power on/off every tick",
+                    "&7● Concentrates epic admin hax into a quaptic ray"));
+
     private final Vector outputLocation = new Vector(0.0F, 0.0F, settings.getConnectionRadius());
     private final Vector3f mainDisplaySize = new Vector3f(settings.getDisplayRadius()*2);
 

@@ -60,10 +60,6 @@ public class ConfigPanelContainer {
         }
     }
 
-    public void toggleHidden() {
-        setHidden(!hidden);
-    }
-
     private void updateAttributeVisibility() {
         attributes.values().stream()
                 .map(ConfigPanelAttributeId::get)

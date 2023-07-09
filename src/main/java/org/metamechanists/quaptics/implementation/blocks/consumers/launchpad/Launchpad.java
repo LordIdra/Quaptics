@@ -20,6 +20,8 @@ import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.implementation.blocks.attachments.ConfigPanelBlock;
 import org.metamechanists.quaptics.implementation.blocks.attachments.PowerAnimatedBlock;
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
+import org.metamechanists.quaptics.items.Lore;
+import org.metamechanists.quaptics.items.Tier;
 import org.metamechanists.quaptics.panels.config.ConfigPanel;
 import org.metamechanists.quaptics.panels.config.implementation.LaunchpadConfigPanel;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
@@ -35,6 +37,20 @@ import java.util.List;
 import java.util.Optional;
 
 public class Launchpad extends ConnectedBlock implements ConfigPanelBlock, PowerAnimatedBlock {
+    public static final Settings LAUNCHPAD_SETTINGS = Settings.builder()
+            .tier(Tier.PRIMITIVE)
+            .connectionRadius(0.8F)
+            .minPower(3)
+            .build();
+    public static final SlimefunItemStack LAUNCHPAD = new SlimefunItemStack(
+            "QP_LAUNCHPAD",
+            Material.LIGHT_GRAY_CONCRETE,
+            "&6Launchpad",
+            Lore.create(LAUNCHPAD_SETTINGS,
+                    "&7● Launches players",
+                    "&7● Launch velocity can be configured",
+                    "&7● &eWalk onto the launchpad &7to get launched"));
+
     private static final Vector RELATIVE_PANEL_LOCATION = new Vector(0, 0, -0.51);
     private static final Vector INITIAL_VELOCITY = new Vector(0, 0, 0);
     public static final float MAX_VELOCITY = 10;

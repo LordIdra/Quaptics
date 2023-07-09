@@ -19,6 +19,8 @@ import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.implementation.blocks.attachments.PowerAnimatedBlock;
 import org.metamechanists.quaptics.implementation.blocks.attachments.PowerLossBlock;
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
+import org.metamechanists.quaptics.items.Lore;
+import org.metamechanists.quaptics.items.Tier;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
@@ -31,6 +33,111 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Combiner extends ConnectedBlock implements PowerAnimatedBlock, PowerLossBlock {
+    public static final Settings COMBINER_1_2_SETTINGS = Settings.builder()
+            .tier(Tier.PRIMITIVE)
+            .displayRadius(0.4F)
+            .connectionRadius(0.8F)
+            .powerLoss(0.2)
+            .connections(2)
+            .build();
+    public static final Settings COMBINER_2_2_SETTINGS = Settings.builder()
+            .tier(Tier.BASIC)
+            .displayRadius(0.35F)
+            .connectionRadius(0.7F)
+            .powerLoss(0.14)
+            .connections(2)
+            .build();
+    public static final Settings COMBINER_2_3_SETTINGS = Settings.builder()
+            .tier(Tier.BASIC)
+            .displayRadius(0.4F)
+            .connectionRadius(0.8F)
+            .powerLoss(0.14)
+            .connections(3)
+            .build();
+    public static final Settings COMBINER_3_2_SETTINGS = Settings.builder()
+            .tier(Tier.INTERMEDIATE)
+            .displayRadius(0.3F)
+            .connectionRadius(0.6F)
+            .powerLoss(0.08)
+            .connections(2)
+            .build();
+    public static final Settings COMBINER_3_3_SETTINGS = Settings.builder()
+            .tier(Tier.INTERMEDIATE)
+            .displayRadius(0.35F)
+            .connectionRadius(0.7F)
+            .powerLoss(0.08)
+            .connections(3)
+            .build();
+    public static final Settings COMBINER_4_2_SETTINGS = Settings.builder()
+            .tier(Tier.ADVANCED)
+            .displayRadius(0.25F)
+            .connectionRadius(0.5F)
+            .powerLoss(0.05)
+            .connections(2)
+            .build();
+    public static final Settings COMBINER_4_3_SETTINGS = Settings.builder()
+            .tier(Tier.ADVANCED)
+            .displayRadius(0.3F)
+            .connectionRadius(0.6F)
+            .powerLoss(0.05)
+            .connections(3)
+            .build();
+    public static final Settings COMBINER_4_4_SETTINGS = Settings.builder()
+            .tier(Tier.ADVANCED)
+            .displayRadius(0.35F)
+            .connectionRadius(0.7F)
+            .powerLoss(0.05)
+            .connections(4)
+            .build();
+    public static final SlimefunItemStack COMBINER_1_2 = new SlimefunItemStack(
+            "QP_COMBINER_1_2",
+            Material.GRAY_STAINED_GLASS,
+            "&9Combiner &eI &8(2 connections)",
+            Lore.create(COMBINER_1_2_SETTINGS,
+                    "&7● Combines multiple quaptic rays into one"));
+    public static final SlimefunItemStack COMBINER_2_2 = new SlimefunItemStack(
+            "QP_COMBINER_2_2",
+            Material.GRAY_STAINED_GLASS,
+            "&9Combiner &eII &8(2 connections)",
+            Lore.create(COMBINER_2_2_SETTINGS,
+                    "&7● Combines multiple quaptic rays into one"));
+    public static final SlimefunItemStack COMBINER_2_3 = new SlimefunItemStack(
+            "QP_COMBINER_2_3",
+            Material.GRAY_STAINED_GLASS,
+            "&9Combiner &eII &8(3 connections)",
+            Lore.create(COMBINER_2_3_SETTINGS,
+                    "&7● Combines multiple quaptic rays into one"));
+    public static final SlimefunItemStack COMBINER_3_2 = new SlimefunItemStack(
+            "QP_COMBINER_3_2",
+            Material.GRAY_STAINED_GLASS,
+            "&9Combiner &eIII &8(2 connections)",
+            Lore.create(COMBINER_3_2_SETTINGS,
+                    "&7● Combines multiple quaptic rays into one"));
+    public static final SlimefunItemStack COMBINER_3_3 = new SlimefunItemStack(
+            "QP_COMBINER_3_3",
+            Material.GRAY_STAINED_GLASS,
+            "&9Combiner &eIII &8(3 connections)",
+            Lore.create(COMBINER_3_3_SETTINGS,
+                    "&7● Combines multiple quaptic rays into one"));
+    public static final SlimefunItemStack COMBINER_4_2 = new SlimefunItemStack(
+            "QP_COMBINER_4_2",
+            Material.GRAY_STAINED_GLASS,
+            "&9Combiner &eIV &8(2 connections)",
+            Lore.create(COMBINER_4_2_SETTINGS,
+                    "&7● Combines multiple quaptic rays into one"));
+    public static final SlimefunItemStack COMBINER_4_3 = new SlimefunItemStack(
+            "QP_COMBINER_4_3",
+            Material.GRAY_STAINED_GLASS,
+            "&9Combiner &eIV &8(3 connections)",
+            Lore.create(COMBINER_4_3_SETTINGS,
+                    "&7● Combines multiple quaptic rays into one"));
+    public static final SlimefunItemStack COMBINER_4_4 = new SlimefunItemStack(
+            "QP_COMBINER_4_4",
+            Material.GRAY_STAINED_GLASS,
+            "&9Combiner &eIV &8(4 connections)",
+            Lore.create(COMBINER_4_4_SETTINGS,
+                    "&7● Combines multiple quaptic rays into one"));
+
     private static final double CONNECTION_ANGLE = Math.PI / 2;
     private final Vector inputStartingLocation = new Vector(0.0F, 0.0F, -settings.getConnectionRadius());
     private final Vector outputLocation = new Vector(0.0F, 0.0F, settings.getConnectionRadius());

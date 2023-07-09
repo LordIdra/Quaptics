@@ -25,6 +25,8 @@ import org.metamechanists.quaptics.implementation.blocks.attachments.ConfigPanel
 import org.metamechanists.quaptics.implementation.blocks.attachments.ItemHolderBlock;
 import org.metamechanists.quaptics.implementation.blocks.attachments.PowerAnimatedBlock;
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
+import org.metamechanists.quaptics.items.Lore;
+import org.metamechanists.quaptics.items.Tier;
 import org.metamechanists.quaptics.panels.config.ConfigPanel;
 import org.metamechanists.quaptics.panels.config.implementation.ItemProjectorConfigPanel;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
@@ -41,6 +43,19 @@ import java.util.List;
 import java.util.Optional;
 
 public class ItemProjector extends ConnectedBlock implements ItemHolderBlock, PowerAnimatedBlock, ConfigPanelBlock {
+    public static final Settings ITEM_PROJECTOR_SETTINGS = Settings.builder()
+            .tier(Tier.PRIMITIVE)
+            .connectionRadius(0.6F)
+            .build();
+    public static final SlimefunItemStack ITEM_PROJECTOR = new SlimefunItemStack(
+            "QP_ITEM_PROJECTOR",
+            Material.LIGHT_BLUE_STAINED_GLASS,
+            "&6Item Projector",
+            Lore.create(ITEM_PROJECTOR_SETTINGS,
+                    "&7● Displays a hologram of an inserted item",
+                    "&7● &eRight Click &7an item to insert",
+                    "&7● &eRight Click &7again to retrieve"));
+
     private static final Vector RELATIVE_PANEL_LOCATION = new Vector(0, 0, -0.51);
     public static final double MAX_SIZE = 20;
     public static final double MAX_HEIGHT = 20;

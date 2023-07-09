@@ -18,6 +18,8 @@ import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.implementation.blocks.attachments.PowerAnimatedBlock;
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
+import org.metamechanists.quaptics.items.Lore;
+import org.metamechanists.quaptics.items.Tier;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Transformations;
@@ -29,6 +31,18 @@ import java.util.List;
 import java.util.Optional;
 
 public class InfusionPillar extends ConnectedBlock implements PowerAnimatedBlock {
+    public static final Settings INFUSION_PILLAR_SETTINGS = Settings.builder()
+            .tier(Tier.PRIMITIVE)
+            .minPower(7)
+            .connectionRadius(0.3F)
+            .build();
+    public static final SlimefunItemStack INFUSION_PILLAR = new SlimefunItemStack(
+            "QP_INFUSION_PILLAR",
+            Material.BLUE_CONCRETE,
+            "&6Infusion Pillar",
+            Lore.create(INFUSION_PILLAR_SETTINGS,
+                    "&7● Multiblock component"));
+
     private static final Vector3f PILLAR_SCALE = new Vector3f(0.3F, 0.4F, 0.3F);
     private static final Vector3f PILLAR_OFFSET = new Vector3f(0.0F, -0.3F, 0.0F);
     private static final Vector3f PRISM_SCALE = new Vector3f(0.2F, 0.2F, 0.2F);

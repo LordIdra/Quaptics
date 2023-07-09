@@ -140,15 +140,6 @@ public class ConfigPanelAttribute {
         return addButtonId.get();
     }
 
-    public void changeLocation(final Location location) {
-        getKey().ifPresent(display -> display.teleport(location.clone().add(offset)));
-        getSub().ifPresent(display -> display.teleport(location.clone().add(offset)));
-        getSubButton().ifPresent(display -> display.teleport(location.clone().add(offset)));
-        getValue().ifPresent(display -> display.teleport(location.clone().add(offset)));
-        getAdd().ifPresent(display -> display.teleport(location.clone().add(offset)));
-        getAddButton().ifPresent(display -> display.teleport(location.clone().add(offset)));
-    }
-
     public void setValue(@NotNull final String text) {
         getValue().ifPresent(display -> display.text(LegacyComponentSerializer.legacyAmpersand().deserialize(text)));
     }

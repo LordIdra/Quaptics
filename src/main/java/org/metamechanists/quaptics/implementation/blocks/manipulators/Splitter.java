@@ -19,6 +19,8 @@ import org.metamechanists.quaptics.implementation.blocks.attachments.PowerLossBl
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
 import org.metamechanists.quaptics.implementation.blocks.attachments.PowerAnimatedBlock;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
+import org.metamechanists.quaptics.items.Lore;
+import org.metamechanists.quaptics.items.Tier;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
@@ -31,6 +33,112 @@ import java.util.Optional;
 import java.util.stream.IntStream;
 
 public class Splitter extends ConnectedBlock implements PowerAnimatedBlock, PowerLossBlock {
+    public static final Settings SPLITTER_1_2_SETTINGS = Settings.builder()
+            .tier(Tier.PRIMITIVE)
+            .displayRadius(0.4F)
+            .connectionRadius(0.8F)
+            .powerLoss(0.2)
+            .connections(2)
+            .build();
+    public static final Settings SPLITTER_2_2_SETTINGS = Settings.builder()
+            .tier(Tier.BASIC)
+            .displayRadius(0.35F)
+            .connectionRadius(0.7F)
+            .powerLoss(0.14)
+            .connections(2)
+            .build();
+    public static final Settings SPLITTER_2_3_SETTINGS = Settings.builder()
+            .tier(Tier.BASIC)
+            .displayRadius(0.4F)
+            .connectionRadius(0.8F)
+            .powerLoss(0.14)
+            .connections(3)
+            .build();
+    public static final Settings SPLITTER_3_2_SETTINGS = Settings.builder()
+            .tier(Tier.INTERMEDIATE)
+            .displayRadius(0.3F)
+            .connectionRadius(0.6F)
+            .powerLoss(0.08)
+            .connections(2)
+            .build();
+    public static final Settings SPLITTER_3_3_SETTINGS = Settings.builder()
+            .tier(Tier.INTERMEDIATE)
+            .displayRadius(0.35F)
+            .connectionRadius(0.7F)
+            .powerLoss(0.08)
+            .connections(3)
+            .build();
+    public static final Settings SPLITTER_4_2_SETTINGS = Settings.builder()
+            .tier(Tier.ADVANCED)
+            .displayRadius(0.25F)
+            .connectionRadius(0.5F)
+            .powerLoss(0.05)
+            .connections(2)
+            .build();
+    public static final Settings SPLITTER_4_3_SETTINGS = Settings.builder()
+            .tier(Tier.ADVANCED)
+            .displayRadius(0.3F)
+            .connectionRadius(0.6F)
+            .powerLoss(0.05)
+            .connections(3)
+            .build();
+    public static final Settings SPLITTER_4_4_SETTINGS = Settings.builder()
+            .tier(Tier.ADVANCED)
+            .displayRadius(0.35F)
+            .connectionRadius(0.7F)
+            .powerLoss(0.05)
+            .connections(4)
+            .build();
+    public static final SlimefunItemStack SPLITTER_1_2 = new SlimefunItemStack(
+            "QP_SPLITTER_1_2",
+            Material.LIGHT_GRAY_STAINED_GLASS,
+            "&9Splitter &eI &8(2 connections)",
+            Lore.create(SPLITTER_1_2_SETTINGS,
+                    "&7● Splits one quaptic ray into multiple"));
+    public static final SlimefunItemStack SPLITTER_2_2 = new SlimefunItemStack(
+            "QP_SPLITTER_2_2",
+            Material.LIGHT_GRAY_STAINED_GLASS,
+            "&9Splitter &eII &8(2 connections)",
+            Lore.create(SPLITTER_2_2_SETTINGS,
+                    "&7● Splits one quaptic ray into multiple"));
+    public static final SlimefunItemStack SPLITTER_2_3 = new SlimefunItemStack(
+            "QP_SPLITTER_2_3",
+            Material.LIGHT_GRAY_STAINED_GLASS,
+            "&9Splitter &eII &8(3 connections)",
+            Lore.create(SPLITTER_2_3_SETTINGS,
+                    "&7● Splits one quaptic ray into multiple"));
+    public static final SlimefunItemStack SPLITTER_3_2 = new SlimefunItemStack(
+            "QP_SPLITTER_3_2",
+            Material.LIGHT_GRAY_STAINED_GLASS,
+            "&9Splitter &eIII &8(2 connections)",
+            Lore.create(SPLITTER_3_2_SETTINGS,
+                    "&7● Splits one quaptic ray into multiple"));
+    public static final SlimefunItemStack SPLITTER_3_3 = new SlimefunItemStack(
+            "QP_SPLITTER_3_3",
+            Material.LIGHT_GRAY_STAINED_GLASS,
+            "&9Splitter &eIII &8(3 connections)",
+            Lore.create(SPLITTER_3_3_SETTINGS,
+                    "&7● Splits one quaptic ray into multiple"));
+    public static final SlimefunItemStack SPLITTER_4_2 = new SlimefunItemStack(
+            "QP_SPLITTER_4_2",
+            Material.LIGHT_GRAY_STAINED_GLASS,
+            "&9Splitter &eIV &8(2 connections)",
+            Lore.create(SPLITTER_4_2_SETTINGS,
+                    "&7● Splits one quaptic ray into multiple"));
+    public static final SlimefunItemStack SPLITTER_4_3 = new SlimefunItemStack(
+            "QP_SPLITTER_4_3",
+            Material.LIGHT_GRAY_STAINED_GLASS,
+            "&9Splitter &eIV &8(3 connections)",
+            Lore.create(SPLITTER_4_3_SETTINGS,
+                    "&7● Splits one quaptic ray into multiple"));
+    public static final SlimefunItemStack SPLITTER_4_4 = new SlimefunItemStack(
+            "QP_SPLITTER_4_4",
+            Material.LIGHT_GRAY_STAINED_GLASS,
+            "&9Splitter &eIV &8(4 connections)",
+            Lore.create(SPLITTER_4_4_SETTINGS,
+                    "&7● Splits one quaptic ray into multiple"));
+
+
     private static final double CONNECTION_ANGLE = Math.PI / 2;
     private final Vector inputLocation = new Vector(0.0F, 0.0F, -settings.getConnectionRadius());
     private final Vector outputStartingLocation = new Vector(0.0F, 0.0F, settings.getConnectionRadius());

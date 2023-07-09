@@ -24,6 +24,8 @@ import org.metamechanists.quaptics.implementation.blocks.attachments.UpgraderBlo
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
 import org.metamechanists.quaptics.implementation.blocks.attachments.PowerAnimatedBlock;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
+import org.metamechanists.quaptics.items.Lore;
+import org.metamechanists.quaptics.items.Tier;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.Utils;
@@ -35,6 +37,24 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class Scatterer extends ConnectedBlock implements PowerAnimatedBlock, PowerLossBlock, UpgraderBlock {
+    public static final Settings SCATTERER_1_SETTINGS = Settings.builder()
+            .tier(Tier.BASIC)
+            .displayRadius(0.25F)
+            .connectionRadius(0.5F)
+            .minPower(40)
+            .powerLoss(0.05)
+            .minFrequency(0.2)
+            .maxFrequency(1.0)
+            .frequencyMultiplier(2.0)
+            .comparatorVisual("compare")
+            .build();
+    public static final SlimefunItemStack SCATTERER_1 = new SlimefunItemStack(
+            "QP_SCATTERER_1",
+            Material.ORANGE_STAINED_GLASS,
+            "&cScatterer &4I",
+            Lore.create(SCATTERER_1_SETTINGS,
+                    "&7● Increases the frequency of a quaptic ray"));
+
     private final Vector3f glassDisplaySize = new Vector3f(settings.getDisplayRadius()*2);
     private final Vector3f comparatorDisplaySize = new Vector3f(settings.getDisplayRadius());
     private final Vector3f comparatorOffset = new Vector3f(0.0F, 0.1F, 0.0F);

@@ -39,17 +39,6 @@ public interface ConfigPanelBlock {
         panel.interact(location.get(), name, type);
     }
 
-    // TODO config panel wand
-    default void setPanelHidden(@NotNull final ConnectionGroup group, final boolean hidden) {
-        final Optional<Location> location = group.getLocation();
-        if (location.isEmpty()) {
-            return;
-        }
-
-        final Optional<ConfigPanelId> id = getPanelId(location.get());
-        id.ifPresent(panelId -> getPanel(panelId, group.getId()).setPanelHidden(hidden));
-    }
-
     default void onPlaceConfigPanelBlock(@NotNull final BlockPlaceEvent event) {
         final Location location = event.getBlock().getLocation();
         final Optional<ConnectionGroup> group = ConnectedBlock.getGroup(location);
