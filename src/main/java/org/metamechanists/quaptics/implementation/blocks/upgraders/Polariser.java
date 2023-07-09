@@ -28,7 +28,6 @@ import org.metamechanists.quaptics.items.groups.Primitive;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Language;
-import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.builders.ItemDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
@@ -57,12 +56,12 @@ public class Polariser extends ConnectedBlock implements PowerAnimatedBlock, Pow
     private static final Vector3f MAIN_SIZE = new Vector3f(0.30F, 0.30F, 0.90F);
     private static final Vector3f PRISM_SIZE = new Vector3f(0.40F);
     private static final Vector3f PRISM_ROTATION = new Vector3f(0.0F, (float) (Math.PI/4), 0.0F);
-    private static final Vector3f ITEM_SIZE = new Vector3f(0.20F);
-    private static final Vector3f ITEM_OFFSET = new Vector3f(0, 0.20F, 0);
+    private static final Vector3f ITEM_SIZE = new Vector3f(0.40F);
+    private static final Vector3f ITEM_OFFSET = new Vector3f(0, 0.30F, 0);
     private static final Vector3f ITEM_2_ROTATION = new Vector3f(0.0F, (float) (Math.PI / 2), 0.0F);
 
-    private static final Vector MAIN_INPUT_LOCATION = new Vector(0.0F, 0.0F, -0.47F);
-    private static final Vector OUTPUT_LOCATION = new Vector(0.0F, 0.0F, 0.47);
+    private static final Vector MAIN_INPUT_LOCATION = new Vector(0.0F, 0.0F, -0.45F);
+    private static final Vector OUTPUT_LOCATION = new Vector(0.0F, 0.0F, 0.45);
 
     private static final Map<ItemStack, Integer> PHASE_CHANGES = Map.of(
             Primitive.PHASE_CRYSTAL_1, 1,
@@ -95,8 +94,7 @@ public class Polariser extends ConnectedBlock implements PowerAnimatedBlock, Pow
                         .buildForBlockDisplay())
                 .build());
         displayGroup.addDisplay("prism", new BlockDisplayBuilder(location.toCenterLocation())
-                .setMaterial(settings.getTier().glassMaterial)
-                .setBrightness(Utils.BRIGHTNESS_ON)
+                .setMaterial(settings.getTier().concreteMaterial)
                 .setTransformation(new TransformationMatrixBuilder()
                         .scale(PRISM_SIZE)
                         .rotate(PRISM_ROTATION)

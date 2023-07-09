@@ -22,7 +22,6 @@ import org.metamechanists.quaptics.implementation.blocks.attachments.PowerLossBl
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
-import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionPointId;
@@ -47,13 +46,13 @@ public class Interferometer extends ConnectedBlock implements PowerAnimatedBlock
 
     private static final Vector3f MAIN_SIZE = new Vector3f(0.30F, 0.30F, 0.90F);
     private static final Vector3f AUXILIARY_SIZE = new Vector3f(0.40F, 0.15F, 0.15F);
-    private static final Vector3f AUXILIARY_OFFSET = new Vector3f(0.20F, 0.0F, 0.0F);
+    private static final Vector3f AUXILIARY_OFFSET = new Vector3f(-0.20F, 0.0F, 0.0F);
     private static final Vector3f PRISM_SIZE = new Vector3f(0.40F);
     private static final Vector3f PRISM_ROTATION = new Vector3f(0.0F, (float) (Math.PI/4), 0.0F);
 
-    private static final Vector MAIN_INPUT_LOCATION = new Vector(0.0F, 0.0F, -0.50F);
-    private static final Vector AUXILIARY_INPUT_LOCATION = new Vector(0.50F, 0.0F, 0.0F);
-    private static final Vector OUTPUT_LOCATION = new Vector(0.0F, 0.0F, 0.50);
+    private static final Vector MAIN_INPUT_LOCATION = new Vector(0.0F, 0.0F, -0.45F);
+    private static final Vector AUXILIARY_INPUT_LOCATION = new Vector(0.45F, 0.0F, 0.0F);
+    private static final Vector OUTPUT_LOCATION = new Vector(0.0F, 0.0F, 0.45);
 
     public Interferometer(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
@@ -88,7 +87,6 @@ public class Interferometer extends ConnectedBlock implements PowerAnimatedBlock
                 .build());
         displayGroup.addDisplay("prism", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(settings.getTier().concreteMaterial)
-                .setBrightness(Utils.BRIGHTNESS_OFF)
                 .setTransformation(new TransformationMatrixBuilder()
                         .scale(PRISM_SIZE)
                         .rotate(PRISM_ROTATION)
