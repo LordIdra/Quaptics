@@ -8,6 +8,7 @@ import org.metamechanists.quaptics.beams.FrequencyColor;
 import org.metamechanists.quaptics.beams.beam.DirectBeam;
 import org.metamechanists.quaptics.storage.PersistentDataTraverser;
 import org.metamechanists.quaptics.schedulers.BlockUpdateScheduler;
+import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.builders.InteractionBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionPointId;
 import org.metamechanists.quaptics.utils.id.complex.DirectBeamId;
@@ -19,6 +20,7 @@ public class Link {
     private static final int ARBITRARILY_LARGE_NUMBER = 9999999;
     private static final double MAX_POWER_CHANGE_PROPORTION = 0.0001;
     private static final double MAX_FREQUENCY_CHANGE_PROPORTION = 0.0001;
+    private static final float MIN_BEAM_SIZE = 0.005F;
     private static final float MAX_BEAM_SIZE = 0.095F;
     @Getter
     private final LinkId id;
@@ -137,7 +139,7 @@ public class Link {
         }
 
         beam.get().setMaterial(FrequencyColor.getMaterial(frequency));
-        beam.get().setRadius(outputLocation, inputLocation, Math.min((float)(power / maxPower) * MAX_BEAM_SIZE, MAX_BEAM_SIZE));
+        beam.get().setRadius(outputLocation, inputLocation, Utils.clampToRange((float) (power / maxPower) * MAX_BEAM_SIZE, MIN_BEAM_SIZE, MAX_BEAM_SIZE));
     }
 
     private void updatePanels() {

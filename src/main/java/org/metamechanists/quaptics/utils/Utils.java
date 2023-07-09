@@ -29,6 +29,10 @@ public class Utils {
         return Math.max(Math.min(value, max), min);
     }
 
+    public float clampToRange(final float value, final float min, final float max) {
+        return Math.max(Math.min(value, max), min);
+    }
+
     public int clampToRange(final int value, final int min, final int max) {
         return Math.max(Math.min(value, max), min);
     }

@@ -36,7 +36,7 @@ public class PointInfoPanel extends InfoPanel {
     @SuppressWarnings("MagicNumber")
     @Override
     protected Vector getOffset() {
-        return new Vector(0.0, 0.7, 0.0);
+        return new Vector(0.0, 0.4, 0.0);
     }
 
     @Override
