@@ -16,9 +16,9 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
+import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
 import org.metamechanists.quaptics.connections.Link;
-import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.implementation.blocks.attachments.PowerAnimatedBlock;
 import org.metamechanists.quaptics.implementation.blocks.attachments.PowerLossBlock;
@@ -28,18 +28,16 @@ import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Transformations;
-import org.metamechanists.quaptics.utils.Utils;
-import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-public class Repeater extends ConnectedBlock implements PowerAnimatedBlock, PowerLossBlock, UpgraderBlock {
-    public static final Settings REPEATER_1_SETTINGS = Settings.builder()
+
+public class Polariser extends ConnectedBlock implements PowerAnimatedBlock, PowerLossBlock, UpgraderBlock {
+    public static final Settings POLARISER_1_SETTINGS = Settings.builder()
             .tier(Tier.BASIC)
-            .displayRadius(0.25F)
             .connectionRadius(0.5F)
             .minPower(15)
             .powerLoss(0.05)
@@ -48,50 +46,53 @@ public class Repeater extends ConnectedBlock implements PowerAnimatedBlock, Powe
             .frequencyStep(0.1)
             .repeaterDelay(1)
             .build();
-    public static final SlimefunItemStack REPEATER_1 = new SlimefunItemStack(
-            "QP_REPEATER_1",
-            Material.RED_STAINED_GLASS,
-            "&cRepeater &4I",
-            Lore.create(REPEATER_1_SETTINGS,
-                    "&7● Increases the frequency of a quaptic ray"));
+    public static final SlimefunItemStack POLARISER_1 = new SlimefunItemStack(
+            "QP_AUGMENTER_1",
+            Material.YELLOW_TERRACOTTA,
+            "&cPolariser &4I",
+            Lore.create(POLARISER_1_SETTINGS,
+                    "&7● Increases the Phase of a quaptic ray",
+                    "&7● Requires a Phase Crystal to operate",
+                    "&7● &eRight Click &7with a phase crystal to insert it"));
 
-    private final Vector3f glassDisplaySize = new Vector3f(settings.getDisplayRadius()*2);
-    private final Vector3f repeaterDisplaySize = new Vector3f(settings.getDisplayRadius());
-    private final Vector3f repeaterOffset = new Vector3f(0.0F, 0.1F, 0.0F);
-    private final Vector3f concreteDisplaySize = new Vector3f(settings.getDisplayRadius()+0.01F, 0.075F, settings.getDisplayRadius()+0.01F);
-    private final Vector3f concreteOffset = new Vector3f(0.0F, -0.05F, 0.0F);
-    private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -settings.getConnectionRadius());
-    private final Vector outputPointLocation = new Vector(0.0F, 0.0F, settings.getConnectionRadius());
+    private static final Vector3f PRISM_SIZE = new Vector3f(0.3F);
+    private static final Vector3f MAIN_TUBE_SIZE = new Vector3f(0.3F, 0.3F, 0.9F);
+    private static final Vector3f AUXILIARY_TUBE_SIZE = new Vector3f(0.4F, 0.15F, 0.15F);
+    private static final Vector3f AUXILIARY_TUBE_OFFSET = new Vector3f(0.2F, 0.0F, 0.0F);
+    private final Vector mainInputLocation = new Vector(0.0F, 0.0F, -settings.getConnectionRadius());
+    private final Vector auxiliaryInputLocation = new Vector(settings.getConnectionRadius(), 0.0F, 0.0F);
+    private final Vector outputLocation = new Vector(0.0F, 0.0F, settings.getConnectionRadius());
 
-    public Repeater(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
+    public Polariser(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
     }
 
     @Override
     protected void initDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, @NotNull final Player player) {
         final BlockFace face = Transformations.yawToFace(player.getEyeLocation().getYaw());
-        displayGroup.addDisplay("main", new BlockDisplayBuilder(location.toCenterLocation())
-                .setMaterial(Material.RED_STAINED_GLASS)
-                .setTransformation(Transformations.adjustedRotateScale(glassDisplaySize, Transformations.GENERIC_ROTATION_ANGLES))
-                .build());
-        displayGroup.addDisplay("concrete", new BlockDisplayBuilder(location.toCenterLocation())
-                .setMaterial(settings.getTier().concreteMaterial)
-                .setTransformation(Transformations.adjustedScaleOffset(concreteDisplaySize, concreteOffset))
-                .setBrightness(Utils.BRIGHTNESS_ON)
-                .build());
-        final BlockDisplay repeater = new BlockDisplayBuilder(location.toCenterLocation())
-                .setMaterial(Material.REPEATER)
-                .setBlockData(createRepeaterBlockData(face.name().toLowerCase(), false))
-                .setTransformation(Transformations.adjustedScaleOffset(repeaterDisplaySize, repeaterOffset))
-                .build();
-        PersistentDataAPI.setString(repeater, Keys.FACING, face.name().toLowerCase());
-        displayGroup.addDisplay("repeater", repeater);
+        //displayGroup.addDisplay("main", new BlockDisplayBuilder(location.toCenterLocation())
+        //        .setMaterial(Material.RED_STAINED_GLASS)
+        //        .setTransformation(Transformations.adjustedRotateScale(glassDisplaySize, mainDisplayRotation))
+        //        .build());
+        //displayGroup.addDisplay("concrete", new BlockDisplayBuilder(location.toCenterLocation())
+        //        .setMaterial(settings.getTier().concreteMaterial)
+        //        .setTransformation(Transformations.adjustedScaleOffset(concreteDisplaySize, concreteOffset))
+        //        .setBrightness(Utils.BRIGHTNESS_ON)
+        //        .build());
+        //final BlockDisplay repeater = new BlockDisplayBuilder(location.toCenterLocation())
+        //        .setMaterial(Material.REPEATER)
+        //        .setBlockData(createRepeaterBlockData(face.name().toLowerCase(), false))
+        //        .setTransformation(Transformations.adjustedScaleOffset(repeaterDisplaySize, REPEATER_OFFSET))
+        //        .build();
+        //PersistentDataAPI.setString(repeater, Keys.FACING, face.name().toLowerCase());
+        //displayGroup.addDisplay("repeater", repeater);
     }
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
         return List.of(
-                new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input", formatPointLocation(player, location, inputPointLocation)),
-                new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output", formatPointLocation(player, location, outputPointLocation)));
+                new ConnectionPoint(ConnectionPointType.INPUT, groupId, "mainInput", formatPointLocation(player, location, mainInputLocation)),
+                new ConnectionPoint(ConnectionPointType.INPUT, groupId, "auxiliaryInput", formatPointLocation(player, location, auxiliaryInputLocation)),
+                new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output", formatPointLocation(player, location, outputLocation)));
     }
 
     @Override

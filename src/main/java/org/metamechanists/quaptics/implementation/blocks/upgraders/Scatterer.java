@@ -60,7 +60,6 @@ public class Scatterer extends ConnectedBlock implements PowerAnimatedBlock, Pow
     private final Vector3f comparatorOffset = new Vector3f(0.0F, 0.1F, 0.0F);
     private final Vector3f concreteDisplaySize = new Vector3f(settings.getDisplayRadius()+0.01F, 0.075F, settings.getDisplayRadius()+0.01F);
     private final Vector3f concreteOffset = new Vector3f(0.0F, -0.05F, 0.0F);
-    private final Vector3f mainDisplayRotation = new Vector3f((float)(Math.PI/4), (float)(Math.PI/4), 0.0F);
     private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -settings.getConnectionRadius());
     private final Vector outputPointLocation = new Vector(0.0F, 0.0F, settings.getConnectionRadius());
 
@@ -73,7 +72,7 @@ public class Scatterer extends ConnectedBlock implements PowerAnimatedBlock, Pow
         final BlockFace face = Transformations.yawToFace(player.getEyeLocation().getYaw());
         displayGroup.addDisplay("main", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(Material.ORANGE_STAINED_GLASS)
-                .setTransformation(Transformations.adjustedRotateScale(glassDisplaySize, mainDisplayRotation))
+                .setTransformation(Transformations.adjustedRotateScale(glassDisplaySize, Transformations.GENERIC_ROTATION_ANGLES))
                 .build());
         displayGroup.addDisplay("concrete", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(settings.getTier().concreteMaterial)
