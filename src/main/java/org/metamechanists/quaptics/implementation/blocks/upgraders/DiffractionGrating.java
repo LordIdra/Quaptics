@@ -83,9 +83,9 @@ public class DiffractionGrating extends ConnectedBlock implements PowerAnimatedB
                 .setMaterial(Material.TERRACOTTA)
                 .setTransformation(new TransformationMatrixBuilder()
                         .scale(MAIN_SIZE)
-                        .lookAlong(face)
                         .rotate(MAIN_ROTATION)
                         .translate(MAIN_OFFSET)
+                        .lookAlong(face)
                         .buildForBlockDisplay())
                 .build());
         displayGroup.addDisplay("output", new BlockDisplayBuilder(location.toCenterLocation())
