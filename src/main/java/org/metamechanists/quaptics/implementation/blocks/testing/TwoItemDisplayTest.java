@@ -30,19 +30,19 @@ public class TwoItemDisplayTest extends ConnectedBlock implements ItemHolderBloc
             .build();
     public static final SlimefunItemStack DOUBLE_ITEM_TEST = new SlimefunItemStack(
             "DOUBLE_ITEM_TEST",
-            Material.LIGHT_BLUE_STAINED_GLASS,
+            Material.TINTED_GLASS,
             "&dDouble Item Test",
             Lore.create(DOUBLE_ITEM_TEST_SETTINGS,
                     "&7● Has &e2 &7Items :P",
                     "&7● &eFear &7my code Idra"));
 
     private static final Vector3f BASE_SCALE = new Vector3f(0.90F, 0.30F, 0.90F);
-    private static final Vector3f BASE_TRANSLATION = new Vector3f(0, -0.7F, 0);
+    private static final Vector3f BASE_TRANSLATION = new Vector3f(0, -0.5F, 0);
     private static final Vector3f MAIN_SCALE = new Vector3f(0.70F, 0.15F, 0.70F);
-    private static final Vector3f MAIN_ROTATION = new Vector3f((float)(Math.PI/4), 0, 0);
-    private static final Vector3f MAIN_TRANSLATION = new Vector3f(0, -0.35F, 0);
+    private static final Vector3f MAIN_ROTATION = new Vector3f(0, (float)(Math.PI/4), 0);
+    private static final Vector3f MAIN_TRANSLATION = new Vector3f(0, -0.20F, 0);
     private static final Vector3f ITEM_SCALE = new Vector3f(0.50F);
-    private static final Vector3f ITEM_ROTATION = new Vector3f((float)(Math.PI/4), 0, 0);
+    private static final Vector3f ITEM_ROTATION = new Vector3f(0, (float)(Math.PI/4), 0);
 
     public TwoItemDisplayTest(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
@@ -56,7 +56,7 @@ public class TwoItemDisplayTest extends ConnectedBlock implements ItemHolderBloc
     @Override
     public void initDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, @NotNull final Player player) {
         displayGroup.addDisplay("base", new BlockDisplayBuilder(location.toCenterLocation())
-                .setMaterial(Material.AMETHYST_BLOCK)
+                .setMaterial(Material.YELLOW_CONCRETE)
                 .setTransformation(new TransformationMatrixBuilder()
                         .scale(BASE_SCALE)
                         .translate(BASE_TRANSLATION)
