@@ -40,8 +40,6 @@ import java.util.Optional;
 public class Repeater extends ConnectedBlock implements PowerAnimatedBlock, PowerLossBlock, UpgraderBlock {
     public static final Settings REPEATER_1_SETTINGS = Settings.builder()
             .tier(Tier.BASIC)
-            .displayRadius(0.25F)
-            .connectionRadius(0.5F)
             .minPower(15)
             .powerLoss(0.05)
             .minFrequency(0.0)
@@ -56,13 +54,13 @@ public class Repeater extends ConnectedBlock implements PowerAnimatedBlock, Powe
             Lore.create(REPEATER_1_SETTINGS,
                     "&7● Increases the frequency of a quaptic ray"));
 
-    private final Vector3f glassDisplaySize = new Vector3f(settings.getDisplayRadius()*2);
-    private final Vector3f repeaterDisplaySize = new Vector3f(settings.getDisplayRadius());
-    private final Vector3f repeaterOffset = new Vector3f(0.0F, 0.1F, 0.0F);
-    private final Vector3f concreteDisplaySize = new Vector3f(settings.getDisplayRadius()+0.01F, 0.075F, settings.getDisplayRadius()+0.01F);
-    private final Vector3f concreteOffset = new Vector3f(0.0F, -0.05F, 0.0F);
-    private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -settings.getConnectionRadius());
-    private final Vector outputPointLocation = new Vector(0.0F, 0.0F, settings.getConnectionRadius());
+    private static final Vector3f GLASS_DISPLAY_SIZE = new Vector3f(0.50F);
+    private static final Vector3f REPEATER_DISPLAY_SIZE = new Vector3f(0.25F);
+    private static final Vector3f REPEATER_OFFSET = new Vector3f(0.0F, 0.10F, 0.0F);
+    private static final Vector3f CONCRETE_DISPLAY_SIZE = new Vector3f(0.26F, 0.075F, 0.26F);
+    private static final Vector3f CONCRETE_OFFSET = new Vector3f(0.0F, -0.05F, 0.0F);
+    private static final Vector INPUT_POINT_LOCATION = new Vector(0.0F, 0.0F, -0.50F);
+    private static final Vector OUTPUT_POINT_LOCATION = new Vector(0.0F, 0.0F, 0.50F);
 
     public Repeater(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
@@ -74,25 +72,25 @@ public class Repeater extends ConnectedBlock implements PowerAnimatedBlock, Powe
         displayGroup.addDisplay("main", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(Material.RED_STAINED_GLASS)
                 .setTransformation(new TransformationMatrixBuilder()
-                        .scale(glassDisplaySize)
+                        .scale(GLASS_DISPLAY_SIZE)
                         .rotate(Transformations.PRISM_ROTATION)
                         .buildForBlockDisplay())
                 .build());
         displayGroup.addDisplay("concrete", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(settings.getTier().concreteMaterial)
-                .setTransformation(Transformations.adjustedScaleOffset(concreteDisplaySize, concreteOffset))
+                .setTransformation(Transformations.adjustedScaleOffset(CONCRETE_DISPLAY_SIZE, CONCRETE_OFFSET))
                 .setBrightness(Utils.BRIGHTNESS_ON)
                 .setTransformation(new TransformationMatrixBuilder()
-                        .scale(concreteDisplaySize)
-                        .translate(concreteOffset)
+                        .scale(CONCRETE_DISPLAY_SIZE)
+                        .translate(CONCRETE_OFFSET)
                         .buildForBlockDisplay())
                 .build());
         final BlockDisplay repeater = new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(Material.REPEATER)
                 .setBlockData(createRepeaterBlockData(face.name().toLowerCase(), false))
                 .setTransformation(new TransformationMatrixBuilder()
-                        .scale(repeaterDisplaySize)
-                        .translate(repeaterOffset)
+                        .scale(REPEATER_DISPLAY_SIZE)
+                        .translate(REPEATER_OFFSET)
                         .buildForBlockDisplay())
                 .build();
         PersistentDataAPI.setString(repeater, Keys.FACING, face.name().toLowerCase());
@@ -101,8 +99,8 @@ public class Repeater extends ConnectedBlock implements PowerAnimatedBlock, Powe
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
         return List.of(
-                new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input", formatPointLocation(player, location, inputPointLocation)),
-                new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output", formatPointLocation(player, location, outputPointLocation)));
+                new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input", formatPointLocation(player, location, INPUT_POINT_LOCATION)),
+                new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output", formatPointLocation(player, location, OUTPUT_POINT_LOCATION)));
     }
 
     @Override

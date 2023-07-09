@@ -38,7 +38,6 @@ import java.util.Optional;
 public class Polariser extends ConnectedBlock implements PowerAnimatedBlock, PowerLossBlock, UpgraderBlock {
     public static final Settings POLARISER_1_SETTINGS = Settings.builder()
             .tier(Tier.BASIC)
-            .connectionRadius(0.5F)
             .minPower(15)
             .powerLoss(0.05)
             .minFrequency(0.0)
@@ -55,13 +54,13 @@ public class Polariser extends ConnectedBlock implements PowerAnimatedBlock, Pow
                     "&7● Requires a Phase Crystal to operate",
                     "&7● &eRight Click &7with a phase crystal to insert it"));
 
-    private static final Vector3f PRISM_SIZE = new Vector3f(0.3F);
-    private static final Vector3f MAIN_TUBE_SIZE = new Vector3f(0.3F, 0.3F, 0.9F);
-    private static final Vector3f AUXILIARY_TUBE_SIZE = new Vector3f(0.4F, 0.15F, 0.15F);
-    private static final Vector3f AUXILIARY_TUBE_OFFSET = new Vector3f(0.2F, 0.0F, 0.0F);
-    private final Vector mainInputLocation = new Vector(0.0F, 0.0F, -settings.getConnectionRadius());
-    private final Vector auxiliaryInputLocation = new Vector(settings.getConnectionRadius(), 0.0F, 0.0F);
-    private final Vector outputLocation = new Vector(0.0F, 0.0F, settings.getConnectionRadius());
+    private static final Vector3f PRISM_SIZE = new Vector3f(0.30F);
+    private static final Vector3f MAIN_TUBE_SIZE = new Vector3f(0.30F, 0.30F, 0.90F);
+    private static final Vector3f AUXILIARY_TUBE_SIZE = new Vector3f(0.40F, 0.15F, 0.15F);
+    private static final Vector3f AUXILIARY_TUBE_OFFSET = new Vector3f(0.20F, 0.0F, 0.0F);
+    private static final Vector mainInputLocation = new Vector(0.0F, 0.0F, -0.50F);
+    private static final Vector auxiliaryInputLocation = new Vector(0.50F, 0.0F, 0.0F);
+    private static final Vector outputLocation = new Vector(0.0F, 0.0F, 0.50F);
 
     public Polariser(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);

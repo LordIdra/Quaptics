@@ -33,7 +33,6 @@ import java.util.Optional;
 public class Transformer extends ConnectedBlock implements PowerAnimatedBlock, PowerLossBlock {
     public static final Settings TRANSFORMER_1_SETTINGS = Settings.builder()
             .tier(Tier.BASIC)
-            .connectionRadius(0.55F)
             .emissionPower(10)
             .minPower(10)
             .build();
@@ -45,12 +44,12 @@ public class Transformer extends ConnectedBlock implements PowerAnimatedBlock, P
                     "&7● Drops the power of a quaptic ray",
                     "&7● Excess input power is wasted"));
 
-    private final Vector3f mainDisplaySize = new Vector3f(0.3F, 0.3F, 0.8F);
-    private final Vector3f coilDisplaySize = new Vector3f(0.2F, 0.6F, 0.2F);
-    private final Vector3f firstCoilDisplayOffset = new Vector3f(0.0F, 0.0F, 0.25F);
-    private final Vector3f secondCoilDisplayOffset = new Vector3f(0.0F, 0.0F, -0.25F);
-    private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -settings.getConnectionRadius());
-    private final Vector outputPointLocation = new Vector(0.0F, 0.0F, settings.getConnectionRadius());
+    private static final Vector3f MAIN_DISPLAY_SIZE = new Vector3f(0.30F, 0.30F, 0.80F);
+    private static final Vector3f COIL_DISPLAY_SIZE = new Vector3f(0.20F, 0.60F, 0.20F);
+    private static final Vector3f FIRST_COIL_DISPLAY_OFFSET = new Vector3f(0.0F, 0.0F, 0.25F);
+    private static final Vector3f SECOND_COIL_DISPLAY_OFFSET = new Vector3f(0.0F, 0.0F, -0.25F);
+    private static final Vector INPUT_POINT_LOCATION = new Vector(0.0F, 0.0F, -0.55F);
+    private static final Vector OUTPUT_POINT_LOCATION = new Vector(0.0F, 0.0F, 0.55F);
 
     public Transformer(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
@@ -61,7 +60,7 @@ public class Transformer extends ConnectedBlock implements PowerAnimatedBlock, P
         displayGroup.addDisplay("main", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(Material.LIGHT_GRAY_TERRACOTTA)
                 .setTransformation(new TransformationMatrixBuilder()
-                        .scale(mainDisplaySize)
+                        .scale(MAIN_DISPLAY_SIZE)
                         .buildForBlockDisplay())
                 .build());
         displayGroup.addDisplay("coil1", new BlockDisplayBuilder(location.toCenterLocation())
@@ -69,8 +68,8 @@ public class Transformer extends ConnectedBlock implements PowerAnimatedBlock, P
                 .setBrightness(Utils.BRIGHTNESS_OFF)
                 .setViewRange(Utils.VIEW_RANGE_ON)
                 .setTransformation(new TransformationMatrixBuilder()
-                        .scale(coilDisplaySize)
-                        .rotate(firstCoilDisplayOffset)
+                        .scale(COIL_DISPLAY_SIZE)
+                        .rotate(FIRST_COIL_DISPLAY_OFFSET)
                         .buildForBlockDisplay())
                 .build());
         displayGroup.addDisplay("coil2", new BlockDisplayBuilder(location.toCenterLocation())
@@ -78,16 +77,16 @@ public class Transformer extends ConnectedBlock implements PowerAnimatedBlock, P
                 .setBrightness(Utils.BRIGHTNESS_OFF)
                 .setViewRange(Utils.VIEW_RANGE_ON)
                 .setTransformation(new TransformationMatrixBuilder()
-                        .scale(coilDisplaySize)
-                        .rotate(secondCoilDisplayOffset)
+                        .scale(COIL_DISPLAY_SIZE)
+                        .rotate(SECOND_COIL_DISPLAY_OFFSET)
                         .buildForBlockDisplay())
                 .build());
     }
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
         return List.of(
-                new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input", formatPointLocation(player, location, inputPointLocation)),
-                new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output", formatPointLocation(player, location, outputPointLocation)));
+                new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input", formatPointLocation(player, location, INPUT_POINT_LOCATION)),
+                new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output", formatPointLocation(player, location, OUTPUT_POINT_LOCATION)));
     }
 
     @Override

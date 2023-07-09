@@ -43,7 +43,6 @@ import java.util.Optional;
 public class Capacitor extends ConnectedBlock implements InfoPanelBlock, PowerLossBlock {
     public static final Settings CAPACITOR_1_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
-            .displayRadius(0.3F)
             .connectionRadius(0.6F)
             .chargeCapacity(200)
             .emissionPower(3)
@@ -57,11 +56,11 @@ public class Capacitor extends ConnectedBlock implements InfoPanelBlock, PowerLo
                     "&7● Stores charge",
                     "&7● Outputs at a constant power"));
 
-    private final Vector3f mainGlassDisplaySize = new Vector3f(settings.getDisplayRadius()*2.0F);
-    private final Vector3f tierGlassDisplaySize = new Vector3f(settings.getDisplayRadius()*1.7F);
-    private final Vector3f maxConcreteDisplaySize = new Vector3f(settings.getDisplayRadius()*1.65F);
-    private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -settings.getConnectionRadius());
-    private final Vector outputPointLocation = new Vector(0.0F, 0.0F, settings.getConnectionRadius());
+    private static final Vector3f MAIN_GLASS_DISPLAY_SIZE = new Vector3f(0.60F);
+    private static final Vector3f TIER_GLASS_DISPLAY_SIZE = new Vector3f(0.51F);
+    private static final Vector3f MAX_CONCRETE_DISPLAY_SIZE = new Vector3f(0.49F);
+    private static final Vector INPUT_POINT_LOCATION = new Vector(0.0F, 0.0F, -0.60F);
+    private static final Vector OUTPUT_POINT_LOCATION = new Vector(0.0F, 0.0F, 0.60F);
 
     public Capacitor(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
@@ -72,14 +71,14 @@ public class Capacitor extends ConnectedBlock implements InfoPanelBlock, PowerLo
         displayGroup.addDisplay("mainGlass", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(Material.GLASS)
                 .setTransformation(new TransformationMatrixBuilder()
-                        .scale(mainGlassDisplaySize)
+                        .scale(MAIN_GLASS_DISPLAY_SIZE)
                         .rotate(Transformations.PRISM_ROTATION)
                         .buildForBlockDisplay())
                 .build());
         displayGroup.addDisplay("tierGlass", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(settings.getTier().glassMaterial)
                 .setTransformation(new TransformationMatrixBuilder()
-                        .scale(tierGlassDisplaySize)
+                        .scale(TIER_GLASS_DISPLAY_SIZE)
                         .rotate(Transformations.PRISM_ROTATION)
                         .buildForBlockDisplay())
                 .build());
@@ -91,8 +90,8 @@ public class Capacitor extends ConnectedBlock implements InfoPanelBlock, PowerLo
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
         return List.of(
-                new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input", formatPointLocation(player, location, inputPointLocation)),
-                new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output", formatPointLocation(player, location, outputPointLocation)));
+                new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input", formatPointLocation(player, location, INPUT_POINT_LOCATION)),
+                new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output", formatPointLocation(player, location, OUTPUT_POINT_LOCATION)));
     }
 
     @Override
@@ -183,7 +182,7 @@ public class Capacitor extends ConnectedBlock implements InfoPanelBlock, PowerLo
     }
     private Matrix4f getConcreteTransformationMatrix(final double charge) {
         return Transformations.adjustedRotateScale(
-                new Vector3f(maxConcreteDisplaySize).mul((float)(charge/settings.getChargeCapacity())),
+                new Vector3f(MAX_CONCRETE_DISPLAY_SIZE).mul((float)(charge/settings.getChargeCapacity())),
                 Transformations.PRISM_ROTATION);
     }
     private void updateConcreteTransformation(final Location location) {

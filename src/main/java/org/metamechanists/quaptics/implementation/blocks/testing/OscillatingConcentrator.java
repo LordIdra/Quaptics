@@ -29,8 +29,6 @@ import java.util.List;
 public class OscillatingConcentrator extends ConnectedBlock {
     public static final Settings OSCILLATING_CONCENTRATOR_SETTINGS = Settings.builder()
             .tier(Tier.TESTING)
-            .displayRadius(0.45F)
-            .connectionRadius(0.45F)
             .emissionPower(1)
             .build();
     public static final SlimefunItemStack OSCILLATING_CONCENTRATOR = new SlimefunItemStack(
@@ -41,8 +39,8 @@ public class OscillatingConcentrator extends ConnectedBlock {
                     "&7● Toggles power on/off every tick",
                     "&7● Concentrates epic admin hax into a quaptic ray"));
 
-    private final Vector outputLocation = new Vector(0.0F, 0.0F, settings.getConnectionRadius());
-    private final Vector3f mainDisplaySize = new Vector3f(settings.getDisplayRadius()*2);
+    private static final Vector OUTPUT_LOCATION = new Vector(0.0F, 0.0F, 0.45F);
+    private static final Vector3f MAIN_DISPLAY_SIZE = new Vector3f(0.90F);
 
     public OscillatingConcentrator(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
@@ -53,14 +51,14 @@ public class OscillatingConcentrator extends ConnectedBlock {
         displayGroup.addDisplay("main", new ItemDisplayBuilder(location.clone().toCenterLocation())
                 .setMaterial(Material.BLACK_STAINED_GLASS_PANE)
                 .setTransformation(new TransformationMatrixBuilder()
-                        .scale(mainDisplaySize)
+                        .scale(MAIN_DISPLAY_SIZE)
                         .rotate((float)(Math.PI/2), 0.0F, settings.getRotationY())
                         .buildForItemDisplay())
                 .build());
     }
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
-        return List.of(new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output", formatPointLocation(player, location, outputLocation)));
+        return List.of(new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output", formatPointLocation(player, location, OUTPUT_LOCATION)));
     }
 
     @Override

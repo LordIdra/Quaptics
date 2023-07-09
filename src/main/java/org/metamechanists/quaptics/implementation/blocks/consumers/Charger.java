@@ -43,8 +43,6 @@ import java.util.Optional;
 public class Charger extends ConnectedBlock implements InfoPanelBlock, ItemHolderBlock {
     public static final Settings CHARGER_1_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
-            .displayRadius(0.4F)
-            .connectionRadius(0.6F)
             .build();
     public static final SlimefunItemStack CHARGER_1 = new SlimefunItemStack(
             "QP_CHARGER_1",
@@ -55,12 +53,12 @@ public class Charger extends ConnectedBlock implements InfoPanelBlock, ItemHolde
                     "&7● &eRight Click &7an item to insert",
                     "&7● &eRight Click &7again to retrieve"));
 
-    private final Vector3f mainDisplaySize = new Vector3f(0.7F, 0.3F, 0.7F);
-    private final Vector3f glassDisplaySize = new Vector3f(0.5F, 0.1F, 0.5F);
-    private final Vector3f itemDisplaySize = new Vector3f(0.5F);
-    private final Vector3f topOffset = new Vector3f(0, 0.35F, 0);
-    private final Vector3f bottomOffset = new Vector3f(0, -0.35F, 0);
-    private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -settings.getConnectionRadius());
+    private static final Vector3f MAIN_DISPLAY_SIZE = new Vector3f(0.70F, 0.30F, 0.70F);
+    private static final Vector3f GLASS_DISPLAY_SIZE = new Vector3f(0.50F, 0.10F, 0.50F);
+    private static final Vector3f ITEM_DISPLAY_SIZE = new Vector3f(0.50F);
+    private static final Vector3f TOP_OFFSET = new Vector3f(0, 0.35F, 0);
+    private static final Vector3f BOTTOM_OFFSET = new Vector3f(0, -0.35F, 0);
+    private static final Vector INPUT_POINT_LOCATION = new Vector(0.0F, 0.0F, -0.60F);
 
     public Charger(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
@@ -71,41 +69,41 @@ public class Charger extends ConnectedBlock implements InfoPanelBlock, ItemHolde
         displayGroup.addDisplay("mainTop", new BlockDisplayBuilder(location.toCenterLocation())
                 .setBlockData(Material.SMOOTH_STONE_SLAB.createBlockData("[type=top]"))
                 .setTransformation(new TransformationMatrixBuilder()
-                        .scale(mainDisplaySize)
-                        .translate(topOffset)
+                        .scale(MAIN_DISPLAY_SIZE)
+                        .translate(TOP_OFFSET)
                         .buildForBlockDisplay())
                 .build());
         displayGroup.addDisplay("mainBottom", new BlockDisplayBuilder(location.toCenterLocation())
                 .setBlockData(Material.SMOOTH_STONE_SLAB.createBlockData("[type=bottom]"))
                 .setTransformation(new TransformationMatrixBuilder()
-                        .scale(mainDisplaySize)
-                        .translate(bottomOffset)
+                        .scale(MAIN_DISPLAY_SIZE)
+                        .translate(BOTTOM_OFFSET)
                         .buildForBlockDisplay())
                 .build());
         displayGroup.addDisplay("glassTop", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(Material.LIGHT_BLUE_STAINED_GLASS)
                 .setTransformation(new TransformationMatrixBuilder()
-                        .scale(glassDisplaySize)
-                        .translate(topOffset)
+                        .scale(GLASS_DISPLAY_SIZE)
+                        .translate(TOP_OFFSET)
                         .buildForBlockDisplay())
                 .build());
         displayGroup.addDisplay("glassBottom", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(Material.LIGHT_BLUE_STAINED_GLASS)
-                .setTransformation(Transformations.adjustedScaleOffset(glassDisplaySize, bottomOffset))
+                .setTransformation(Transformations.adjustedScaleOffset(GLASS_DISPLAY_SIZE, BOTTOM_OFFSET))
                 .setTransformation(new TransformationMatrixBuilder()
-                        .scale(glassDisplaySize)
-                        .translate(bottomOffset)
+                        .scale(GLASS_DISPLAY_SIZE)
+                        .translate(BOTTOM_OFFSET)
                         .buildForBlockDisplay())
                 .build());
         displayGroup.addDisplay("item", new ItemDisplayBuilder(location.toCenterLocation())
                 .setTransformation(new TransformationMatrixBuilder()
-                        .scale(itemDisplaySize)
+                        .scale(ITEM_DISPLAY_SIZE)
                         .buildForItemDisplay())
                 .build());
     }
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
-        return List.of(new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input", formatPointLocation(player, location, inputPointLocation)));
+        return List.of(new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input", formatPointLocation(player, location, INPUT_POINT_LOCATION)));
     }
 
     @Override

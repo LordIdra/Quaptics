@@ -30,7 +30,6 @@ import org.metamechanists.quaptics.panels.info.implementation.ProgressInfoPanel;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Language;
-import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.builders.ItemDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
@@ -44,7 +43,6 @@ import java.util.Optional;
 public class DataStripper extends ConnectedBlock implements InfoPanelBlock, ItemHolderBlock, ProgressBlock {
     public static final Settings DATA_STRIPPER_1_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
-            .connectionRadius(0.4F)
             .timePerItem(10)
             .minPower(6)
             .build();
@@ -58,12 +56,12 @@ public class DataStripper extends ConnectedBlock implements InfoPanelBlock, Item
                     "&7● &eRight Click &7again to retrieve"));
 
     private static final double MAX_PROGRESS_DIFFERENCE = 0.00001;
-    private static final Vector3f MAIN_DISPLAY_SIZE = new Vector3f(0.5F, 0.3F, 0.5F);
-    private static final Vector3f GLASS_DISPLAY_SIZE = new Vector3f(0.4F, 0.15F, 0.4F);
-    private static final Vector3f ITEM_DISPLAY_SIZE = new Vector3f(0.5F);
+    private static final Vector3f MAIN_DISPLAY_SIZE = new Vector3f(0.50F, 0.30F, 0.50F);
+    private static final Vector3f GLASS_DISPLAY_SIZE = new Vector3f(0.40F, 0.15F, 0.40F);
+    private static final Vector3f ITEM_DISPLAY_SIZE = new Vector3f(0.50F);
     private static final Vector3f TOP_OFFSET = new Vector3f(0, 0.35F, 0);
     private static final Vector3f BOTTOM_OFFSET = new Vector3f(0, -0.35F, 0);
-    private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -settings.getConnectionRadius());
+    private static final Vector INPUT_POINT_LOCATION = new Vector(0.0F, 0.0F, -0.40F);
 
     public DataStripper(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
@@ -108,7 +106,7 @@ public class DataStripper extends ConnectedBlock implements InfoPanelBlock, Item
     }
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
-        return List.of(new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input", formatPointLocation(player, location, inputPointLocation)));
+        return List.of(new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input", formatPointLocation(player, location, INPUT_POINT_LOCATION)));
     }
     @Override
     protected void initBlockStorage(@NotNull final Location location) {

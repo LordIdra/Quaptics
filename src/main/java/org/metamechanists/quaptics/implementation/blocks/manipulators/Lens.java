@@ -33,26 +33,18 @@ import java.util.Optional;
 public class Lens extends ConnectedBlock implements PowerAnimatedBlock, PowerLossBlock {
     public static final Settings LENS_1_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
-            .displayRadius(0.24F)
-            .connectionRadius(0.48F)
             .powerLoss(0.1)
             .build();
     public static final Settings LENS_2_SETTINGS = Settings.builder()
             .tier(Tier.BASIC)
-            .displayRadius(0.21F)
-            .connectionRadius(0.42F)
             .powerLoss(0.07)
             .build();
     public static final Settings LENS_3_SETTINGS = Settings.builder()
             .tier(Tier.INTERMEDIATE)
-            .displayRadius(0.18F)
-            .connectionRadius(0.36F)
             .powerLoss(0.04)
             .build();
     public static final Settings LENS_4_SETTINGS = Settings.builder()
             .tier(Tier.ADVANCED)
-            .displayRadius(0.15F)
-            .connectionRadius(0.30F)
             .powerLoss(0.02)
             .build();
     public static final SlimefunItemStack LENS_1 = new SlimefunItemStack(
@@ -80,10 +72,10 @@ public class Lens extends ConnectedBlock implements PowerAnimatedBlock, PowerLos
             Lore.create(LENS_4_SETTINGS,
                     "&7● Redirects a quaptic ray"));
 
-    private final Vector3f glassDisplaySize = new Vector3f(settings.getDisplayRadius()*2);
-    private final Vector3f concreteDisplaySize = new Vector3f(settings.getDisplayRadius());
-    private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -settings.getConnectionRadius());
-    private final Vector outputPointLocation = new Vector(0.0F, 0.0F, settings.getConnectionRadius());
+    private static final Vector3f GLASS_DISPLAY_SIZE = new Vector3f(0.20F);
+    private static final Vector3f CONCRETE_DISPLAY_SIZE = new Vector3f(0.10F);
+    private static final Vector INPUT_POINT_LOCATION = new Vector(0.0F, 0.0F, -0.30F);
+    private static final Vector OUTPUT_POINT_LOCATION = new Vector(0.0F, 0.0F, 0.30F);
 
     public Lens(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
@@ -94,7 +86,7 @@ public class Lens extends ConnectedBlock implements PowerAnimatedBlock, PowerLos
         displayGroup.addDisplay("main", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(Material.GLASS)
                 .setTransformation(new TransformationMatrixBuilder()
-                        .scale(glassDisplaySize)
+                        .scale(GLASS_DISPLAY_SIZE)
                         .rotate(Transformations.PRISM_ROTATION)
                         .buildForBlockDisplay())
                 .build());
@@ -103,7 +95,7 @@ public class Lens extends ConnectedBlock implements PowerAnimatedBlock, PowerLos
                 .setBrightness(Utils.BRIGHTNESS_ON)
                 .setViewRange(Utils.VIEW_RANGE_OFF)
                 .setTransformation(new TransformationMatrixBuilder()
-                        .scale(concreteDisplaySize)
+                        .scale(CONCRETE_DISPLAY_SIZE)
                         .rotate(Transformations.PRISM_ROTATION)
                         .buildForBlockDisplay())
                 .build());
@@ -111,8 +103,8 @@ public class Lens extends ConnectedBlock implements PowerAnimatedBlock, PowerLos
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
         return List.of(
-                new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input", formatPointLocation(player, location, inputPointLocation)),
-                new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output", formatPointLocation(player, location, outputPointLocation)));
+                new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input", formatPointLocation(player, location, INPUT_POINT_LOCATION)),
+                new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output", formatPointLocation(player, location, OUTPUT_POINT_LOCATION)));
     }
 
     @Override

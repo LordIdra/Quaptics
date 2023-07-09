@@ -40,7 +40,6 @@ import java.util.Optional;
 public class Launchpad extends ConnectedBlock implements ConfigPanelBlock, PowerAnimatedBlock {
     public static final Settings LAUNCHPAD_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
-            .connectionRadius(0.8F)
             .minPower(3)
             .build();
     public static final SlimefunItemStack LAUNCHPAD = new SlimefunItemStack(
@@ -52,14 +51,15 @@ public class Launchpad extends ConnectedBlock implements ConfigPanelBlock, Power
                     "&7● Launch velocity can be configured",
                     "&7● &eWalk onto the launchpad &7to get launched"));
 
-    private static final Vector RELATIVE_PANEL_LOCATION = new Vector(0, 0, -0.51);
     private static final Vector INITIAL_VELOCITY = new Vector(0, 0, 0);
-    public static final float MAX_VELOCITY = 10;
-    private static final float VELOCITY_POWER = 1.5F;
+    private static final float VELOCITY_POWER = 1.50F;
     private static final float VELOCITY_DIVISOR = 5;
-    private static final Vector3f MAIN_DISPLAY_SIZE = new Vector3f(0.8F, 0.1F, 0.8F);
-    private static final Vector3f MAIN_DISPLAY_OFFSET = new Vector3f(0, 0.51F, 0);
-    private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -settings.getConnectionRadius());
+    public static final float MAX_VELOCITY = 10;
+
+    private static final Vector RELATIVE_PANEL_LOCATION = new Vector(0, 0, -0.51F);
+    private static final Vector3f MAIN_DISPLAY_SIZE = new Vector3f(0.80F, 0.10F, 0.80F);
+    private static final Vector3f MAIN_DISPLAY_OFFSET = new Vector3f(0.0F, 0.51F, 0.0F);
+    private static final Vector inputPointLocation = new Vector(0.0F, 0.0F, -0.80F);
 
     public Launchpad(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);

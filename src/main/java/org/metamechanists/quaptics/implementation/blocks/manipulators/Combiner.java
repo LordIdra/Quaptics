@@ -36,57 +36,41 @@ import java.util.stream.IntStream;
 public class Combiner extends ConnectedBlock implements PowerAnimatedBlock, PowerLossBlock {
     public static final Settings COMBINER_1_2_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
-            .displayRadius(0.4F)
-            .connectionRadius(0.8F)
             .powerLoss(0.2)
             .connections(2)
             .build();
     public static final Settings COMBINER_2_2_SETTINGS = Settings.builder()
             .tier(Tier.BASIC)
-            .displayRadius(0.35F)
-            .connectionRadius(0.7F)
             .powerLoss(0.14)
             .connections(2)
             .build();
     public static final Settings COMBINER_2_3_SETTINGS = Settings.builder()
             .tier(Tier.BASIC)
-            .displayRadius(0.4F)
-            .connectionRadius(0.8F)
             .powerLoss(0.14)
             .connections(3)
             .build();
     public static final Settings COMBINER_3_2_SETTINGS = Settings.builder()
             .tier(Tier.INTERMEDIATE)
-            .displayRadius(0.3F)
-            .connectionRadius(0.6F)
             .powerLoss(0.08)
             .connections(2)
             .build();
     public static final Settings COMBINER_3_3_SETTINGS = Settings.builder()
             .tier(Tier.INTERMEDIATE)
-            .displayRadius(0.35F)
-            .connectionRadius(0.7F)
             .powerLoss(0.08)
             .connections(3)
             .build();
     public static final Settings COMBINER_4_2_SETTINGS = Settings.builder()
             .tier(Tier.ADVANCED)
-            .displayRadius(0.25F)
-            .connectionRadius(0.5F)
             .powerLoss(0.05)
             .connections(2)
             .build();
     public static final Settings COMBINER_4_3_SETTINGS = Settings.builder()
             .tier(Tier.ADVANCED)
-            .displayRadius(0.3F)
-            .connectionRadius(0.6F)
             .powerLoss(0.05)
             .connections(3)
             .build();
     public static final Settings COMBINER_4_4_SETTINGS = Settings.builder()
             .tier(Tier.ADVANCED)
-            .displayRadius(0.35F)
-            .connectionRadius(0.7F)
             .powerLoss(0.05)
             .connections(4)
             .build();
@@ -140,10 +124,10 @@ public class Combiner extends ConnectedBlock implements PowerAnimatedBlock, Powe
                     "&7● Combines multiple quaptic rays into one"));
 
     private static final double CONNECTION_ANGLE = Math.PI / 2;
-    private final Vector inputStartingLocation = new Vector(0.0F, 0.0F, -settings.getConnectionRadius());
-    private final Vector outputLocation = new Vector(0.0F, 0.0F, settings.getConnectionRadius());
-    private final Vector3f glassDisplaySize = new Vector3f(settings.getDisplayRadius()*2);
-    private final Vector3f concreteDisplaySize = new Vector3f(settings.getDisplayRadius());
+    private static final Vector3f GLASS_DISPLAY_SIZE = new Vector3f(0.50F);
+    private static final Vector3f CONCRETE_DISPLAY_SIZE = new Vector3f(0.25F);
+    private static final Vector INPUT_STARTING_LOCATION = new Vector(0.0F, 0.0F, -0.60F);
+    private static final Vector OUTPUT_LOCATION = new Vector(0.0F, 0.0F, 0.60F);
 
     public Combiner(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
@@ -154,7 +138,7 @@ public class Combiner extends ConnectedBlock implements PowerAnimatedBlock, Powe
         displayGroup.addDisplay("glass", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(Material.GRAY_STAINED_GLASS)
                 .setTransformation(new TransformationMatrixBuilder()
-                        .scale(glassDisplaySize)
+                        .scale(GLASS_DISPLAY_SIZE)
                         .rotate(Transformations.PRISM_ROTATION)
                         .buildForBlockDisplay())
                 .build());
@@ -163,7 +147,7 @@ public class Combiner extends ConnectedBlock implements PowerAnimatedBlock, Powe
                 .setBrightness(Utils.BRIGHTNESS_ON)
                 .setViewRange(Utils.VIEW_RANGE_OFF)
                 .setTransformation(new TransformationMatrixBuilder()
-                        .scale(concreteDisplaySize)
+                        .scale(CONCRETE_DISPLAY_SIZE)
                         .rotate(Transformations.PRISM_ROTATION)
                         .buildForBlockDisplay())
                 .build());
@@ -173,7 +157,7 @@ public class Combiner extends ConnectedBlock implements PowerAnimatedBlock, Powe
         final List<ConnectionPoint> points = IntStream.range(0,
                 settings.getConnections()).mapToObj(i -> new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input " + Objects.toString(i),
                 formatPointLocation(player, location, getRelativeInputLocation(i)))).collect(Collectors.toList());
-        points.add(new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output", formatPointLocation(player, location, outputLocation)));
+        points.add(new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output", formatPointLocation(player, location, OUTPUT_LOCATION)));
         return points;
     }
 
@@ -203,6 +187,6 @@ public class Combiner extends ConnectedBlock implements PowerAnimatedBlock, Powe
 
     private @NotNull Vector getRelativeInputLocation(final int i) {
         final double angle = (-CONNECTION_ANGLE /2) + CONNECTION_ANGLE *((double)(i) / (settings.getConnections()-1));
-        return inputStartingLocation.clone().rotateAroundY(angle);
+        return INPUT_STARTING_LOCATION.clone().rotateAroundY(angle);
     }
 }

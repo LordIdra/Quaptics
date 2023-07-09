@@ -127,7 +127,7 @@ public abstract class QuapticBlock extends SlimefunItem {
     }
 
     @OverridingMethodsMustInvokeSuper
-    public void burnout(final Location location) {
+    protected void burnout(final Location location) {
         getDisplayGroup(location).ifPresent(displayGroup -> {
             displayGroup.getDisplays().values().forEach(Entity::remove);
             displayGroup.remove();

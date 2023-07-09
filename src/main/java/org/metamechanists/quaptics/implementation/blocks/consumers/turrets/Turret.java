@@ -27,7 +27,6 @@ import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
-import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
@@ -39,10 +38,10 @@ import java.util.UUID;
 
 public abstract class Turret extends ConnectedBlock {
     private static final int ARBITRARILY_LARGE_NUMBER = 9999999;
-    private final Vector3f mainDisplaySize = new Vector3f(0.6F, 0.6F, 0.6F);
+    private static final Vector3f mainDisplaySize = new Vector3f(0.6F, 0.6F, 0.6F);
+    private static final Vector barrelLocation = new Vector(0.5, 0.7, 0.5);
     private final Vector3f barrelSize = new Vector3f(0.18F, 0.18F, settings.getDisplayRadius()*1.3F);
     private final Vector3f barrelTranslation = new Vector3f(0, 0, settings.getDisplayRadius()*0.8F);
-    private final Vector barrelLocation = new Vector(0.5, 0.7, 0.5);
     private final Vector inputLocation = new Vector(0.0F, 0.0F, -settings.getConnectionRadius());
 
     protected Turret(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
