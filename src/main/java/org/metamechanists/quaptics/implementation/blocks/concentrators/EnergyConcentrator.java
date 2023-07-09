@@ -16,14 +16,14 @@ import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
-import org.metamechanists.quaptics.implementation.blocks.base.EnergyConnectedBlock;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
+import org.metamechanists.quaptics.implementation.blocks.base.EnergyConnectedBlock;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
-import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionPointId;
+import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
 
 import java.util.List;
 import java.util.Optional;
@@ -84,7 +84,7 @@ public class EnergyConcentrator extends EnergyConnectedBlock {
 
     @Override
     protected void initDisplays(@NotNull final DisplayGroup displayGroup, final @NotNull Location location, final @NotNull Player player) {
-        displayGroup.addDisplay("main", generateMainBlockDisplay(location, location.clone().add(rotateVectorByEyeDirection(player, INITIAL_LINE))));
+        displayGroup.addDisplay("main", generateMainDisplay(location, location.clone().add(rotateVectorByEyeDirection(player, INITIAL_LINE))));
     }
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
@@ -107,10 +107,13 @@ public class EnergyConcentrator extends EnergyConnectedBlock {
         regenerateMainDisplay(from, to);
     }
 
-    private BlockDisplay generateMainBlockDisplay(@NotNull final Location from, final Location to) {
+    private BlockDisplay generateMainDisplay(@NotNull final Location from, final Location to) {
         return new BlockDisplayBuilder(from.toCenterLocation())
                 .setMaterial(settings.getTier().concreteMaterial)
-                .setTransformation(Transformations.lookAlong(mainDisplaySize, Transformations.getDirection(from, to)))
+                .setTransformation(new TransformationMatrixBuilder()
+                        .scale(mainDisplaySize)
+                        .lookAlong(from, to)
+                        .buildForBlockDisplay())
                 .build();
     }
     private void regenerateMainDisplay(@NotNull final ConnectionPointId from, @NotNull final ConnectionPointId to) {
@@ -126,6 +129,6 @@ public class EnergyConcentrator extends EnergyConnectedBlock {
         }
 
         removeDisplay(fromDisplayGroup.get(), "main");
-        fromDisplayGroup.get().addDisplay("main", generateMainBlockDisplay(fromLocation.get(), toLocation.get()));
+        fromDisplayGroup.get().addDisplay("main", generateMainDisplay(fromLocation.get(), toLocation.get()));
     }
 }

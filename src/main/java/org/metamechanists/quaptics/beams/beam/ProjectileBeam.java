@@ -8,6 +8,7 @@ import org.joml.Vector3f;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.simple.BlockDisplayId;
+import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
 
 import java.util.Optional;
 
@@ -23,7 +24,10 @@ public class ProjectileBeam implements Beam {
         this.lifespanTicks = (int) (Transformations.getDisplacement(source, target).length() / speed) + 1;
         this.displayId = new BlockDisplayId(new BlockDisplayBuilder(source)
                 .setMaterial(material)
-                .setTransformation(Transformations.lookAlong(scale, Transformations.getDirection(source, target)))
+                .setTransformation(new TransformationMatrixBuilder()
+                        .scale(scale)
+                        .lookAlong(source, target)
+                        .buildForBlockDisplay())
                 .setBrightness(15)
                 .build()
                 .getUniqueId());

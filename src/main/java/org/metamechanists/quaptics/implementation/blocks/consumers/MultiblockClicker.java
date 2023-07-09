@@ -34,6 +34,7 @@ import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
+import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
 
 import java.util.List;
 import java.util.Optional;
@@ -74,7 +75,10 @@ public class MultiblockClicker extends ConnectedBlock implements PowerAnimatedBl
                 .build());
         displayGroup.addDisplay("attachment", new BlockDisplayBuilder(formatPointLocation(player, location, RELATIVE_PLATE_LOCATION))
                 .setBlockData(Material.WHITE_CONCRETE.createBlockData())
-                .setTransformation(Transformations.lookAlong(ATTACHMENT_DISPLAY_SIZE, player.getFacing().getDirection().toVector3f()))
+                .setTransformation(new TransformationMatrixBuilder()
+                        .scale(ATTACHMENT_DISPLAY_SIZE)
+                        .lookAlong(player.getFacing().getDirection().toVector3f())
+                        .buildForBlockDisplay())
                 .build());
         BlockStorageAPI.set(location, Keys.BS_FACING, player.getFacing());
     }

@@ -30,6 +30,7 @@ import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
+import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
 
 import java.util.Collection;
 import java.util.List;
@@ -86,8 +87,12 @@ public abstract class Turret extends ConnectedBlock {
         }
     }
 
-    private Matrix4f getBarrelMatrix(@NotNull final Location from, final Location to) {
-        return Transformations.lookAlong(barrelSize, Transformations.getDirection(from.clone().add(barrelLocation), to)).translate(barrelTranslation);
+    private @NotNull Matrix4f getBarrelMatrix(@NotNull final Location from, final Location to) {
+        return new TransformationMatrixBuilder()
+                .scale(barrelSize)
+                .lookAlong(from.clone().add(barrelLocation), to)
+                .translate(barrelTranslation)
+                .buildForBlockDisplay();
     }
     private BlockDisplay generateBarrel(@NotNull final Location from, final Location to) {
         return new BlockDisplayBuilder(from.clone().add(barrelLocation))

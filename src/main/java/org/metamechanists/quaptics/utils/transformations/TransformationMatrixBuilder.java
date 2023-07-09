@@ -1,5 +1,6 @@
 package org.metamechanists.quaptics.utils.transformations;
 
+import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
@@ -19,7 +20,7 @@ import java.util.Deque;
 public class TransformationMatrixBuilder {
     private static final Vector3f BLOCK_DISPLAY_ADJUSTMENT = new Vector3f(-0.5F);
 
-    final Deque<TransformationMatrixComponent> components = new ArrayDeque<>();
+    private final Deque<TransformationMatrixComponent> components = new ArrayDeque<>();
 
     /**
      * Represents a translation in X, Y, and Z.
@@ -54,6 +55,10 @@ public class TransformationMatrixBuilder {
      */
     public TransformationMatrixBuilder lookAlong(final Vector3f direction) {
         components.addLast(new LookAlongComponent(direction));
+        return this;
+    }
+    public TransformationMatrixBuilder lookAlong(final Location from, final Location to) {
+        components.addLast(new LookAlongComponent(from, to));
         return this;
     }
 
