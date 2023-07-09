@@ -11,7 +11,7 @@ public class LookAlongComponent implements TransformationMatrixComponent {
     }
 
     private float getAngleX() {
-        return (float) Math.atan2(direction.y, Math.sqrt(direction.x*direction.x + direction.z*direction.z));
+        return (float) -Math.atan2(direction.y, Math.sqrt(direction.x*direction.x + direction.z*direction.z));
     }
     private float getAngleY() {
         return (float) Math.atan2(direction.x, direction.z);
