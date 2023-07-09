@@ -97,7 +97,7 @@ public class Transformer extends ConnectedBlock implements PowerAnimatedBlock, P
             return;
         }
 
-        if (inputLink.isEmpty()) {
+        if (inputLink.isEmpty() || !settings.isOperational(inputLink)) {
             outputLink.get().disable();
             return;
         }
