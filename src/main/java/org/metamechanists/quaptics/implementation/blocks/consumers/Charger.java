@@ -29,7 +29,6 @@ import org.metamechanists.quaptics.panels.info.implementation.ChargerInfoPanel;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Language;
-import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.builders.ItemDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
@@ -89,7 +88,6 @@ public class Charger extends ConnectedBlock implements InfoPanelBlock, ItemHolde
                 .build());
         displayGroup.addDisplay("glassBottom", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(Material.LIGHT_BLUE_STAINED_GLASS)
-                .setTransformation(Transformations.adjustedScaleOffset(GLASS_DISPLAY_SIZE, BOTTOM_OFFSET))
                 .setTransformation(new TransformationMatrixBuilder()
                         .scale(GLASS_DISPLAY_SIZE)
                         .translate(BOTTOM_OFFSET)

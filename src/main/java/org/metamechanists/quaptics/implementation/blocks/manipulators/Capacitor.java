@@ -29,12 +29,12 @@ import org.metamechanists.quaptics.panels.info.implementation.CapacitorInfoPanel
 import org.metamechanists.quaptics.storage.QuapticTicker;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
-import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.id.complex.InfoPanelId;
 import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
+import org.metamechanists.quaptics.utils.transformations.TransformationUtils;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.util.List;
@@ -72,14 +72,14 @@ public class Capacitor extends ConnectedBlock implements InfoPanelBlock, PowerLo
                 .setMaterial(Material.GLASS)
                 .setTransformation(new TransformationMatrixBuilder()
                         .scale(MAIN_GLASS_DISPLAY_SIZE)
-                        .rotate(Transformations.PRISM_ROTATION)
+                        .rotate(TransformationUtils.PRISM_ROTATION)
                         .buildForBlockDisplay())
                 .build());
         displayGroup.addDisplay("tierGlass", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(settings.getTier().glassMaterial)
                 .setTransformation(new TransformationMatrixBuilder()
                         .scale(TIER_GLASS_DISPLAY_SIZE)
-                        .rotate(Transformations.PRISM_ROTATION)
+                        .rotate(TransformationUtils.PRISM_ROTATION)
                         .buildForBlockDisplay())
                 .build());
         displayGroup.addDisplay("concrete", new BlockDisplayBuilder(location.toCenterLocation())
@@ -180,10 +180,11 @@ public class Capacitor extends ConnectedBlock implements InfoPanelBlock, PowerLo
                         : 0,
                 0);
     }
-    private Matrix4f getConcreteTransformationMatrix(final double charge) {
-        return Transformations.adjustedRotateScale(
-                new Vector3f(MAX_CONCRETE_DISPLAY_SIZE).mul((float)(charge/settings.getChargeCapacity())),
-                Transformations.PRISM_ROTATION);
+    private @NotNull Matrix4f getConcreteTransformationMatrix(final double charge) {
+        return new TransformationMatrixBuilder()
+                .scale(new Vector3f(MAX_CONCRETE_DISPLAY_SIZE).mul((float)(charge/settings.getChargeCapacity())))
+                .rotate(TransformationUtils.PRISM_ROTATION)
+                .buildForBlockDisplay();
     }
     private void updateConcreteTransformation(final Location location) {
         final double charge = BlockStorageAPI.getDouble(location, Keys.BS_CHARGE);

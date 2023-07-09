@@ -26,12 +26,12 @@ import org.metamechanists.quaptics.panels.config.ConfigPanel;
 import org.metamechanists.quaptics.panels.config.implementation.LaunchpadConfigPanel;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
-import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConfigPanelId;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
+import org.metamechanists.quaptics.utils.transformations.TransformationUtils;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.util.List;
@@ -114,7 +114,7 @@ public class Launchpad extends ConnectedBlock implements ConfigPanelBlock, Power
     @Override
     public ConfigPanel createPanel(final Location location, final Player player, @NotNull final ConnectionGroup group) {
         return new LaunchpadConfigPanel(formatPointLocation(player, location, RELATIVE_PANEL_LOCATION), group.getId(),
-                (float) Transformations.yawToCardinalDirection(player.getEyeLocation().getYaw()));
+                (float) TransformationUtils.yawToCardinalDirection(player.getEyeLocation().getYaw()));
     }
     @Override
     public ConfigPanel getPanel(final ConfigPanelId panelId, final ConnectionGroupId groupId) {

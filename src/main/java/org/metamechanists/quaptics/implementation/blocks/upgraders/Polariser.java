@@ -27,8 +27,8 @@ import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
 import org.metamechanists.quaptics.utils.Keys;
-import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
+import org.metamechanists.quaptics.utils.transformations.TransformationUtils;
 
 import java.util.List;
 import java.util.Objects;
@@ -68,7 +68,7 @@ public class Polariser extends ConnectedBlock implements PowerAnimatedBlock, Pow
 
     @Override
     protected void initDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, @NotNull final Player player) {
-        final BlockFace face = Transformations.yawToFace(player.getEyeLocation().getYaw());
+        final BlockFace face = TransformationUtils.yawToFace(player.getEyeLocation().getYaw());
         //displayGroup.addDisplay("main", new BlockDisplayBuilder(location.toCenterLocation())
         //        .setMaterial(Material.RED_STAINED_GLASS)
         //        .setTransformation(Transformations.adjustedRotateScale(glassDisplaySize, mainDisplayRotation))

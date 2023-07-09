@@ -7,10 +7,9 @@ import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.beams.DeprecatedBeamStorage;
-import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
-import org.metamechanists.quaptics.utils.id.simple.BlockDisplayId;
 import org.metamechanists.quaptics.utils.id.complex.DirectBeamId;
+import org.metamechanists.quaptics.utils.id.simple.BlockDisplayId;
 import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
 
 import java.util.Optional;
@@ -44,7 +43,7 @@ public class DirectBeam implements Beam {
         final Vector3f scale = new Vector3f(radius, radius, (float) source.distance(target));
         return new TransformationMatrixBuilder()
                 .scale(scale)
-                .lookAlong(Transformations.getDirection(source, target))
+                .lookAlong(source, target)
                 .buildForBlockDisplay();
     }
 

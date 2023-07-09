@@ -6,6 +6,7 @@ import org.bukkit.Particle;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
+import org.metamechanists.quaptics.utils.transformations.TransformationUtils;
 
 import java.util.stream.IntStream;
 
@@ -13,7 +14,7 @@ import java.util.stream.IntStream;
 @UtilityClass
 public class Particles {
     public void animatedLine(final Particle particle, @NotNull final Location from, @NotNull final Location to, final int particleCount, final double offset) {
-        final Vector3f direction = Transformations.getDirection(from, to);
+        final Vector3f direction = TransformationUtils.getDirection(from, to);
         final double distance = from.distance(to);
         final float spacing = (float) ((1.0F / (particleCount-1)) * distance);
         final Location currentLocation = from.clone().add(Vector.fromJOML(new Vector3f(direction).mul((float) (offset * spacing))));

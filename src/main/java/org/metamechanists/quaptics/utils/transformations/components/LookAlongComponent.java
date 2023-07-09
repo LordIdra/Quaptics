@@ -4,7 +4,8 @@ import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
-import org.metamechanists.quaptics.utils.Transformations;
+import org.metamechanists.quaptics.utils.transformations.TransformationUtils;
+
 
 /**
  * LookAlong is slightly more complex than the other components. Bukkit's coordinate system does not work very well with regular JOML vectors in the context of LookAlong.
@@ -18,7 +19,7 @@ public class LookAlongComponent implements TransformationMatrixComponent {
     }
 
     public LookAlongComponent(@NotNull final Location from, @NotNull final Location to) {
-        this.direction = Transformations.getDirection(from, to);
+        this.direction = TransformationUtils.getDirection(from, to);
     }
 
     private float getAngleX() {

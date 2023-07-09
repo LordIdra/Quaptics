@@ -12,13 +12,13 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.storage.PersistentDataTraverser;
-import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.InteractionBuilder;
 import org.metamechanists.quaptics.utils.builders.TextDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConfigPanelAttributeId;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.id.simple.InteractionId;
 import org.metamechanists.quaptics.utils.id.simple.TextDisplayId;
+import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
 
 import java.util.Optional;
 
@@ -45,28 +45,44 @@ public class ConfigPanelAttribute {
         final Vector relativeAddButtonTranslation = new Vector(0.41, -0.03, -0.08).add(BUTTON_ADJUSTMENT).rotateAroundY(rotation.y);
 
         this.keyId = new TextDisplayId(new TextDisplayBuilder(location.clone().add(offset))
-                .setTransformation(Transformations.unadjustedRotateTranslateScale(displaySize, rotation, KEY_TRANSLATION))
                 .setText(ChatColors.color(key))
                 .setBrightness(15)
                 .setAlignment(TextAlignment.RIGHT)
                 .setBackgroundColor(Color.fromARGB(0, 0, 0, 0))
+                .setTransformation(new TransformationMatrixBuilder()
+                        .scale(displaySize)
+                        .translate(KEY_TRANSLATION)
+                        .rotate(rotation)
+                        .buildForTextDisplay())
                 .build().getUniqueId());
         this.subId = new TextDisplayId(new TextDisplayBuilder(location.clone().add(offset))
-                .setTransformation(Transformations.unadjustedRotateTranslateScale(displaySize, rotation, SUB_TRANSLATION))
                 .setBrightness(15)
                 .setText(ChatColors.color("&c-"))
                 .setBackgroundColor(Color.fromARGB(0, 0, 0, 0))
+                .setTransformation(new TransformationMatrixBuilder()
+                        .scale(displaySize)
+                        .translate(SUB_TRANSLATION)
+                        .rotate(rotation)
+                        .buildForTextDisplay())
                 .build().getUniqueId());
         this.valueId = new TextDisplayId(new TextDisplayBuilder(location.clone().add(offset))
-                .setTransformation(Transformations.unadjustedRotateTranslateScale(displaySize, rotation, VALUE_TRANSLATION))
                 .setBrightness(15)
                 .setBackgroundColor(Color.fromARGB(0, 0, 0, 0))
+                .setTransformation(new TransformationMatrixBuilder()
+                        .scale(displaySize)
+                        .translate(VALUE_TRANSLATION)
+                        .rotate(rotation)
+                        .buildForTextDisplay())
                 .build().getUniqueId());
         this.addId = new TextDisplayId(new TextDisplayBuilder(location.clone().add(offset))
-                .setTransformation(Transformations.unadjustedRotateTranslateScale(displaySize, rotation, ADD_TRANSLATION))
                 .setBrightness(15)
                 .setText(ChatColors.color("&a+"))
                 .setBackgroundColor(Color.fromARGB(0, 0, 0, 0))
+                .setTransformation(new TransformationMatrixBuilder()
+                        .scale(displaySize)
+                        .translate(ADD_TRANSLATION)
+                        .rotate(rotation)
+                        .buildForTextDisplay())
                 .build().getUniqueId());
 
         final Interaction subButton = new InteractionBuilder(location.clone().add(offset).add(relativeSubButtonTranslation))

@@ -21,11 +21,11 @@ import org.metamechanists.quaptics.implementation.blocks.attachments.PowerLossBl
 import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
-import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
+import org.metamechanists.quaptics.utils.transformations.TransformationUtils;
 
 import java.util.List;
 import java.util.Optional;
@@ -87,7 +87,7 @@ public class Lens extends ConnectedBlock implements PowerAnimatedBlock, PowerLos
                 .setMaterial(Material.GLASS)
                 .setTransformation(new TransformationMatrixBuilder()
                         .scale(GLASS_DISPLAY_SIZE)
-                        .rotate(Transformations.PRISM_ROTATION)
+                        .rotate(TransformationUtils.PRISM_ROTATION)
                         .buildForBlockDisplay())
                 .build());
         displayGroup.addDisplay("concrete", new BlockDisplayBuilder(location.toCenterLocation())
@@ -96,7 +96,7 @@ public class Lens extends ConnectedBlock implements PowerAnimatedBlock, PowerLos
                 .setViewRange(Utils.VIEW_RANGE_OFF)
                 .setTransformation(new TransformationMatrixBuilder()
                         .scale(CONCRETE_DISPLAY_SIZE)
-                        .rotate(Transformations.PRISM_ROTATION)
+                        .rotate(TransformationUtils.PRISM_ROTATION)
                         .buildForBlockDisplay())
                 .build());
     }

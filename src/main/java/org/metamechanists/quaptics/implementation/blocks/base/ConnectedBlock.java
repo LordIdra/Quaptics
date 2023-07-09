@@ -20,10 +20,10 @@ import org.metamechanists.quaptics.panels.info.implementation.PointInfoPanel;
 import org.metamechanists.quaptics.storage.QuapticStorage;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
-import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionPointId;
 import org.metamechanists.quaptics.utils.id.simple.DisplayGroupId;
+import org.metamechanists.quaptics.utils.transformations.TransformationUtils;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.util.ArrayList;
@@ -191,13 +191,13 @@ public abstract class ConnectedBlock extends QuapticBlock {
             return Optional.empty();
         }
 
-        final Optional<Location> fromLocation =  fromGroup.get().getLocation();
-        final Optional<Location> toLocation =  toGroup.get().getLocation();
+        final Optional<Location> fromLocation = fromGroup.get().getLocation();
+        final Optional<Location> toLocation = toGroup.get().getLocation();
         if (fromLocation.isEmpty() || toLocation.isEmpty()) {
             return Optional.empty();
         }
 
-        final Vector radiusDirection = Vector.fromJOML(Transformations.getDirection(fromLocation.get(), toLocation.get()).mul(settings.getConnectionRadius()));
+        final Vector radiusDirection = Vector.fromJOML(TransformationUtils.getDirection(fromLocation.get(), toLocation.get()).mul(settings.getConnectionRadius()));
         return Optional.of(fromLocation.get().clone().toCenterLocation().add(radiusDirection));
     }
 }

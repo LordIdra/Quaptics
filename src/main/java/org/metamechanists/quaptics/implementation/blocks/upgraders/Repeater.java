@@ -27,11 +27,11 @@ import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
 import org.metamechanists.quaptics.utils.Keys;
-import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
+import org.metamechanists.quaptics.utils.transformations.TransformationUtils;
 
 import java.util.List;
 import java.util.Objects;
@@ -68,17 +68,16 @@ public class Repeater extends ConnectedBlock implements PowerAnimatedBlock, Powe
 
     @Override
     protected void initDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, @NotNull final Player player) {
-        final BlockFace face = Transformations.yawToFace(player.getEyeLocation().getYaw());
+        final BlockFace face = TransformationUtils.yawToFace(player.getEyeLocation().getYaw());
         displayGroup.addDisplay("main", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(Material.RED_STAINED_GLASS)
                 .setTransformation(new TransformationMatrixBuilder()
                         .scale(GLASS_DISPLAY_SIZE)
-                        .rotate(Transformations.PRISM_ROTATION)
+                        .rotate(TransformationUtils.PRISM_ROTATION)
                         .buildForBlockDisplay())
                 .build());
         displayGroup.addDisplay("concrete", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(settings.getTier().concreteMaterial)
-                .setTransformation(Transformations.adjustedScaleOffset(CONCRETE_DISPLAY_SIZE, CONCRETE_OFFSET))
                 .setBrightness(Utils.BRIGHTNESS_ON)
                 .setTransformation(new TransformationMatrixBuilder()
                         .scale(CONCRETE_DISPLAY_SIZE)

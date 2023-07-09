@@ -28,8 +28,8 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
-import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.id.simple.DisplayGroupId;
+import org.metamechanists.quaptics.utils.transformations.TransformationUtils;
 
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
@@ -146,7 +146,7 @@ public abstract class QuapticBlock extends SlimefunItem {
         return Material.STRUCTURE_VOID;
     }
     protected static @NotNull Vector rotateVectorByEyeDirection(@NotNull final Player player, @NotNull final Vector vector) {
-        final double rotationAngle = Transformations.yawToCardinalDirection(player.getEyeLocation().getYaw());
+        final double rotationAngle = TransformationUtils.yawToCardinalDirection(player.getEyeLocation().getYaw());
         return vector.clone().rotateAroundY(rotationAngle);
     }
     protected static @NotNull Location formatPointLocation(final Player player, @NotNull final Location location, final Vector relativeLocation) {

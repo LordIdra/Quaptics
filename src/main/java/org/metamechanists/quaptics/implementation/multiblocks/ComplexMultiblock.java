@@ -17,9 +17,9 @@ import org.metamechanists.quaptics.implementation.tools.multiblockwand.Multibloc
 import org.metamechanists.quaptics.storage.PersistentDataTraverser;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Language;
-import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.builders.InteractionBuilder;
+import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +54,9 @@ public interface ComplexMultiblock {
         final BlockDisplayBuilder blockDisplayBuilder = new BlockDisplayBuilder(block.getLocation().toCenterLocation())
                 .setBrightness(DISPLAY_BRIGHTNESS)
                 .setMaterial(itemStack.getType())
-                .setTransformation(Transformations.adjustedScale(new Vector3f(DISPLAY_SCALE, DISPLAY_SCALE, DISPLAY_SCALE)));
+                .setTransformation(new TransformationMatrixBuilder()
+                        .scale(new Vector3f(DISPLAY_SCALE))
+                        .buildForBlockDisplay());
         if (block.getType().isEmpty()) {
             blockDisplayBuilder.setGlow(EMPTY_COLOR);
         } else {

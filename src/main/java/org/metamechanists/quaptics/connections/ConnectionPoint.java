@@ -11,18 +11,18 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.panels.info.implementation.PointInfoPanel;
-import org.metamechanists.quaptics.storage.PersistentDataTraverser;
 import org.metamechanists.quaptics.schedulers.PointPanelUpdateScheduler;
-import org.metamechanists.quaptics.utils.Transformations;
+import org.metamechanists.quaptics.storage.PersistentDataTraverser;
 import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.builders.InteractionBuilder;
-import org.metamechanists.quaptics.utils.id.simple.BlockDisplayId;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionPointId;
-import org.metamechanists.quaptics.utils.id.simple.InteractionId;
-import org.metamechanists.quaptics.utils.id.complex.LinkId;
 import org.metamechanists.quaptics.utils.id.complex.InfoPanelId;
+import org.metamechanists.quaptics.utils.id.complex.LinkId;
+import org.metamechanists.quaptics.utils.id.simple.BlockDisplayId;
+import org.metamechanists.quaptics.utils.id.simple.InteractionId;
+import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
 
 import java.util.Optional;
 
@@ -50,10 +50,11 @@ public class ConnectionPoint {
         this.interactionId = new InteractionId(interaction.getUniqueId());
         this.blockDisplayId = new BlockDisplayId(new BlockDisplayBuilder(location)
                 .setMaterial(type.getMaterial())
-                .setTransformation(Transformations.adjustedScale(new Vector3f(SIZE, SIZE, SIZE)))
                 .setBrightness(Utils.BRIGHTNESS_OFF)
-                .build()
-                .getUniqueId());
+                .setTransformation(new TransformationMatrixBuilder()
+                        .scale(new Vector3f(SIZE))
+                        .buildForBlockDisplay())
+                .build().getUniqueId());
         this.panelId = new PointInfoPanel(location, getId()).getId();
         this.name = name;
         saveData();

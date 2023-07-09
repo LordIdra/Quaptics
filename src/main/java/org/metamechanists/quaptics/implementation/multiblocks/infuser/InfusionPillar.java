@@ -22,10 +22,10 @@ import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
-import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
+import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
 
 import java.util.List;
 import java.util.Optional;
@@ -34,7 +34,6 @@ public class InfusionPillar extends ConnectedBlock implements PowerAnimatedBlock
     public static final Settings INFUSION_PILLAR_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
             .minPower(7)
-            .connectionRadius(0.3F)
             .build();
     public static final SlimefunItemStack INFUSION_PILLAR = new SlimefunItemStack(
             "QP_INFUSION_PILLAR",
@@ -46,7 +45,7 @@ public class InfusionPillar extends ConnectedBlock implements PowerAnimatedBlock
     private static final Vector3f PILLAR_SCALE = new Vector3f(0.3F, 0.4F, 0.3F);
     private static final Vector3f PILLAR_OFFSET = new Vector3f(0.0F, -0.3F, 0.0F);
     private static final Vector3f PRISM_SCALE = new Vector3f(0.2F, 0.2F, 0.2F);
-    private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -settings.getConnectionRadius());
+    private static final Vector INPUT_POINT_LOCATION = new Vector(0.0F, 0.0F, -0.3F);
 
     public InfusionPillar(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
@@ -56,17 +55,22 @@ public class InfusionPillar extends ConnectedBlock implements PowerAnimatedBlock
     protected void initDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
         displayGroup.addDisplay("pillar", new BlockDisplayBuilder(location.toCenterLocation())
                 .setBlockData(Material.BLUE_CONCRETE.createBlockData())
-                .setTransformation(Transformations.adjustedScaleOffset(PILLAR_SCALE, PILLAR_OFFSET))
+                .setTransformation(new TransformationMatrixBuilder()
+                        .scale(PILLAR_SCALE)
+                        .translate(PILLAR_OFFSET)
+                        .buildForBlockDisplay())
                 .build());
         displayGroup.addDisplay("prism", new BlockDisplayBuilder(location.toCenterLocation())
                 .setBlockData(Material.LIGHT_BLUE_STAINED_GLASS.createBlockData())
-                .setTransformation(Transformations.adjustedScale(PRISM_SCALE))
                 .setBrightness(Utils.BRIGHTNESS_OFF)
+                .setTransformation(new TransformationMatrixBuilder()
+                        .scale(PRISM_SCALE)
+                        .buildForBlockDisplay())
                 .build());
     }
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
-        return List.of(new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input", formatPointLocation(player, location, inputPointLocation)));
+        return List.of(new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input", formatPointLocation(player, location, INPUT_POINT_LOCATION)));
     }
     @Override
     protected void initBlockStorage(final @NotNull Location location) {

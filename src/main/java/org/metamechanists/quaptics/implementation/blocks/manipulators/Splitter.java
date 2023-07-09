@@ -21,11 +21,11 @@ import org.metamechanists.quaptics.implementation.blocks.attachments.PowerAnimat
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
-import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
+import org.metamechanists.quaptics.utils.transformations.TransformationUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -140,7 +140,7 @@ public class Splitter extends ConnectedBlock implements PowerAnimatedBlock, Powe
                 .setMaterial(Material.LIGHT_GRAY_STAINED_GLASS)
                 .setTransformation(new TransformationMatrixBuilder()
                         .scale(GLASS_DISPLAY_SIZE)
-                        .rotate(Transformations.PRISM_ROTATION)
+                        .rotate(TransformationUtils.PRISM_ROTATION)
                         .buildForBlockDisplay())
                 .build());
         displayGroup.addDisplay("concrete", new BlockDisplayBuilder(location.toCenterLocation())
@@ -149,7 +149,7 @@ public class Splitter extends ConnectedBlock implements PowerAnimatedBlock, Powe
                 .setViewRange(Utils.VIEW_RANGE_OFF)
                 .setTransformation(new TransformationMatrixBuilder()
                         .scale(CONCRETE_DISPLAY_SIZE)
-                        .rotate(Transformations.PRISM_ROTATION)
+                        .rotate(TransformationUtils.PRISM_ROTATION)
                         .buildForBlockDisplay())
                 .build());
     }
