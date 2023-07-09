@@ -140,6 +140,6 @@ public class Scatterer extends ConnectedBlock implements PowerAnimatedBlock, Pow
     }
 
     private @NotNull BlockData createComparatorBlockData(@NotNull final String facing, final boolean powered) {
-        return Material.COMPARATOR.createBlockData("[delay=" + settings.getComparatorVisual() + ",facing=" + facing + ",powered=" + Objects.toString(powered) + "]");
+        return Material.COMPARATOR.createBlockData("[mode=" + settings.getComparatorVisual() + ",facing=" + facing + ",powered=" + Objects.toString(powered) + "]");
     }
 }
