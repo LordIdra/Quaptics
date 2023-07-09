@@ -185,7 +185,7 @@ public class Splitter extends ConnectedBlock implements PowerAnimatedBlock, Powe
 
         final Optional<Link> inputLink = getLink(location, "input");
         if (inputLink.isEmpty()) {
-            outgoingLinks.forEach(output -> output.setPower(0));
+            outgoingLinks.forEach(Link::disable);
             return;
         }
 

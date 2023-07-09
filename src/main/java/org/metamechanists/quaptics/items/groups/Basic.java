@@ -11,6 +11,7 @@ import org.metamechanists.quaptics.implementation.blocks.consumers.turrets.Direc
 import org.metamechanists.quaptics.implementation.blocks.manipulators.Combiner;
 import org.metamechanists.quaptics.implementation.blocks.manipulators.Lens;
 import org.metamechanists.quaptics.implementation.blocks.manipulators.Splitter;
+import org.metamechanists.quaptics.implementation.blocks.manipulators.Transformer;
 import org.metamechanists.quaptics.implementation.blocks.upgraders.Repeater;
 import org.metamechanists.quaptics.implementation.blocks.upgraders.Scatterer;
 import org.metamechanists.quaptics.items.Groups;
@@ -33,6 +34,8 @@ import static org.metamechanists.quaptics.implementation.blocks.manipulators.Spl
 import static org.metamechanists.quaptics.implementation.blocks.manipulators.Splitter.SPLITTER_2_2_SETTINGS;
 import static org.metamechanists.quaptics.implementation.blocks.manipulators.Splitter.SPLITTER_2_3;
 import static org.metamechanists.quaptics.implementation.blocks.manipulators.Splitter.SPLITTER_2_3_SETTINGS;
+import static org.metamechanists.quaptics.implementation.blocks.manipulators.Transformer.TRANSFORMER_1;
+import static org.metamechanists.quaptics.implementation.blocks.manipulators.Transformer.TRANSFORMER_1_SETTINGS;
 import static org.metamechanists.quaptics.implementation.blocks.upgraders.Repeater.REPEATER_1;
 import static org.metamechanists.quaptics.implementation.blocks.upgraders.Repeater.REPEATER_1_SETTINGS;
 import static org.metamechanists.quaptics.implementation.blocks.upgraders.Scatterer.SCATTERER_1;
@@ -45,12 +48,9 @@ public class Basic {
     public void initialize() {
         final SlimefunAddon addon = Quaptics.getInstance();
 
-        new SolarConcentrator(
-                Groups.BASIC,
-                SOLAR_CONCENTRATOR_2,
-                RecipeType.NULL,
-                new ItemStack[]{},
-                SOLAR_CONCENTRATOR_2_SETTINGS).register(addon);
+        new SolarConcentrator(Groups.BASIC, SOLAR_CONCENTRATOR_2, RecipeType.NULL, new ItemStack[] {
+
+                }, SOLAR_CONCENTRATOR_2_SETTINGS).register(addon);
 
         new EnergyConcentrator(
                 Groups.BASIC,
@@ -121,5 +121,12 @@ public class Basic {
                 RecipeType.NULL,
                 new ItemStack[]{},
                 TURRET_2_PASSIVE_SETTINGS).register(addon);
+
+        new Transformer(
+                Groups.BASIC,
+                TRANSFORMER_1,
+                RecipeType.NULL,
+                new ItemStack[]{},
+                TRANSFORMER_1_SETTINGS).register(addon);
     }
 }

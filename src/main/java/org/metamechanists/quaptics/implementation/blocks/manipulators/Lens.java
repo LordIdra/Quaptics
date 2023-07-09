@@ -128,7 +128,7 @@ public class Lens extends ConnectedBlock implements PowerAnimatedBlock, PowerLos
 
         final Optional<Link> inputLink = getLink(location, "input");
         if (inputLink.isEmpty()) {
-            outputLink.get().setPower(0);
+            outputLink.get().disable();
             return;
         }
 
