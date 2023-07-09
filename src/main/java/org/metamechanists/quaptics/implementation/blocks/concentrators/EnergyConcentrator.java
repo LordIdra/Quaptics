@@ -34,24 +34,24 @@ public class EnergyConcentrator extends EnergyConnectedBlock {
             .displayRadius(0.2F)
             .connectionRadius(0.3F)
             .emissionPower(15)
-            .energyCapacity(30)
             .energyConsumption(30)
+            .energyCapacity(60)
             .build();
     public static final Settings ENERGY_CONCENTRATOR_2_SETTINGS = Settings.builder()
             .tier(Tier.INTERMEDIATE)
             .displayRadius(0.175F)
             .connectionRadius(0.35F)
             .emissionPower(100)
-            .energyCapacity(160)
             .energyConsumption(160)
+            .energyCapacity(320)
             .build();
     public static final Settings ENERGY_CONCENTRATOR_3_SETTINGS = Settings.builder()
             .tier(Tier.ADVANCED)
             .displayRadius(0.15F)
             .connectionRadius(0.4F)
             .emissionPower(1250)
-            .energyCapacity(680)
             .energyConsumption(680)
+            .energyCapacity(1360)
             .build();
     public static final SlimefunItemStack ENERGY_CONCENTRATOR_1 = new SlimefunItemStack(
             "QP_ENERGY_CONCENTRATOR_1",

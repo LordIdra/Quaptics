@@ -139,7 +139,7 @@ public class DiffractionGrating extends ConnectedBlock implements PowerAnimatedB
         final Optional<Link> mainLink = getLink(location, "main");
         final Optional<Link> auxiliaryLink = getLink(location, "auxiliary");
         final Optional<Link> outputLink = getLink(location, "output");
-        onPoweredAnimation(location, settings.isOperational(mainLink));
+        onPoweredAnimation(location, settings.isOperational(mainLink) && auxiliaryLink.isPresent());
 
         if (outputLink.isEmpty()) {
             return;

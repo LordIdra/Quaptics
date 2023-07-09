@@ -182,7 +182,11 @@ public class Polariser extends ConnectedBlock implements PowerAnimatedBlock, Pow
         final boolean powered = inputLink.isPresent() && settings.isOperational(inputLink) && itemStack != null;
         onPoweredAnimation(location, powered);
 
-        if (!powered || outputLink.isEmpty()) {
+        if (outputLink.isEmpty()) {
+            return;
+        }
+
+        if (!powered) {
             outputLink.ifPresent(Link::disable);
             return;
         }
