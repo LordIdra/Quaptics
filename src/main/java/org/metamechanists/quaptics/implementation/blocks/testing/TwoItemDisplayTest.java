@@ -37,12 +37,12 @@ public class TwoItemDisplayTest extends ConnectedBlock implements ItemHolderBloc
                     "&7● &eFear &7my code Idra"));
 
     private static final Vector3f BASE_SCALE = new Vector3f(0.90F, 0.30F, 0.90F);
-    private static final Vector3f BASE_TRANSLATION = new Vector3f(0, -0.5F, 0);
-    private static final Vector3f MAIN_SCALE = new Vector3f(0.70F, 0.15F, 0.70F);
+    private static final Vector3f BASE_TRANSLATION = new Vector3f(0, -0.3F, 0);
+    private static final Vector3f MAIN_SCALE = new Vector3f(0.50F, 0.15F, 0.50F);
     private static final Vector3f MAIN_ROTATION = new Vector3f(0, (float)(Math.PI/4), 0);
-    private static final Vector3f MAIN_TRANSLATION = new Vector3f(0, -0.20F, 0);
+    private static final Vector3f MAIN_TRANSLATION = new Vector3f(0, -0.15F, 0);
     private static final Vector3f ITEM_SCALE = new Vector3f(0.50F);
-    private static final Vector3f ITEM_ROTATION = new Vector3f(0, (float)(Math.PI/4), 0);
+    private static final Vector3f ITEM_ROTATION = new Vector3f(0, 90, 0);
 
     public TwoItemDisplayTest(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
@@ -63,7 +63,7 @@ public class TwoItemDisplayTest extends ConnectedBlock implements ItemHolderBloc
                         .buildForBlockDisplay())
                 .build());
         displayGroup.addDisplay("main", new BlockDisplayBuilder(location.toCenterLocation())
-                .setMaterial(Material.TINTED_GLASS)
+                .setMaterial(Material.YELLOW_STAINED_GLASS)
                 .setTransformation(new TransformationMatrixBuilder()
                         .scale(MAIN_SCALE)
                         .rotate(MAIN_ROTATION)
