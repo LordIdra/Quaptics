@@ -7,7 +7,6 @@ import org.bukkit.Location;
 import org.bukkit.entity.Display;
 import org.bukkit.entity.Display.Billboard;
 import org.bukkit.entity.TextDisplay;
-import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.storage.PersistentDataTraverser;
@@ -21,13 +20,12 @@ import java.util.Optional;
 public class InfoPanelAttribute {
     private static final float HIDDEN_VIEW_RANGE = 0;
     private static final float SHOWN_VIEW_RANGE = 1;
-    private final Vector offset;
     @Getter
     private final TextDisplayId id;
     private boolean hidden;
 
-    public InfoPanelAttribute(final @NotNull Location location, final Vector offset, final Vector3f displaySize) {
-        this.id = new TextDisplayId(new TextDisplayBuilder(location.add(offset))
+    public InfoPanelAttribute(final @NotNull Location location, final Vector3f displaySize) {
+        this.id = new TextDisplayId(new TextDisplayBuilder(location)
                 .setTransformation(new TransformationMatrixBuilder()
                         .scale(displaySize)
                         .buildForTextDisplay())
@@ -36,7 +34,6 @@ public class InfoPanelAttribute {
                 .setBillboard(Billboard.VERTICAL)
                 .setBackgroundColor(Color.fromARGB(0, 0, 0, 0))
                 .build().getUniqueId());
-        this.offset = offset;
         this.hidden = false;
         saveData();
     }
@@ -44,13 +41,11 @@ public class InfoPanelAttribute {
     public InfoPanelAttribute(final InfoPanelAttributeId id) {
         final PersistentDataTraverser traverser = new PersistentDataTraverser(id);
         this.id = new TextDisplayId(id);
-        this.offset = traverser.getVector("offset");
         this.hidden = traverser.getBoolean("hidden");
     }
 
     private void saveData() {
         final PersistentDataTraverser traverser = new PersistentDataTraverser(id);
-        traverser.set("offset", offset);
         traverser.set("hidden", hidden);
     }
 
@@ -67,7 +62,7 @@ public class InfoPanelAttribute {
     }
 
     public void changeLocation(final Location location) {
-        getTextDisplay().ifPresent(display -> display.teleport(location.clone().add(offset)));
+        getTextDisplay().ifPresent(display -> display.teleport(location.clone()));
     }
 
     public void setHidden(final boolean hidden) {
