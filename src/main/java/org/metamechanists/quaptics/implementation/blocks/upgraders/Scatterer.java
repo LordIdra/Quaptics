@@ -124,9 +124,10 @@ public class Scatterer extends ConnectedBlock implements PowerAnimatedBlock, Pow
             return;
         }
 
-        outputLink.get().setPowerFrequency(
+        outputLink.get().setPowerFrequencyPhase(
                 PowerLossBlock.calculatePowerLoss(settings, inputLink.get()),
-                calculateFrequency(settings, inputLink.get().getFrequency()));
+                calculateFrequency(settings, inputLink.get().getFrequency()),
+                inputLink.get().getPhase());
     }
     @Override
     public void onPoweredAnimation(final Location location, final boolean powered) {

@@ -96,19 +96,19 @@ public class Interferometer extends ConnectedBlock implements PowerAnimatedBlock
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
         return List.of(
-                new ConnectionPoint(ConnectionPointType.INPUT, groupId, "mainInput", formatPointLocation(player, location, MAIN_INPUT_LOCATION)),
-                new ConnectionPoint(ConnectionPointType.INPUT, groupId, "auxiliaryInput", formatPointLocation(player, location, AUXILIARY_INPUT_LOCATION)),
+                new ConnectionPoint(ConnectionPointType.INPUT, groupId, "main", formatPointLocation(player, location, MAIN_INPUT_LOCATION)),
+                new ConnectionPoint(ConnectionPointType.INPUT, groupId, "auxiliary", formatPointLocation(player, location, AUXILIARY_INPUT_LOCATION)),
                 new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output", formatPointLocation(player, location, OUTPUT_LOCATION)));
     }
 
     @Override
     public void onInputLinkUpdated(@NotNull final ConnectionGroup group, @NotNull final Location location) {
-        if (doBurnoutCheck(group, "mainInput") || doBurnoutCheck(group, "auxiliaryInput")) {
+        if (doBurnoutCheck(group, "main") || doBurnoutCheck(group, "auxiliary")) {
             return;
         }
 
-        final Optional<Link> mainLink = getLink(location, "mainInput");
-        final Optional<Link> auxiliaryLink = getLink(location, "auxiliaryInput");
+        final Optional<Link> mainLink = getLink(location, "main");
+        final Optional<Link> auxiliaryLink = getLink(location, "auxiliary");
         final Optional<Link> outputLink = getLink(location, "output");
         onPoweredAnimation(location, settings.isOperational(auxiliaryLink));
         if (mainLink.isEmpty() || outputLink.isEmpty()) {

@@ -136,7 +136,10 @@ public class Lens extends ConnectedBlock implements PowerAnimatedBlock, PowerLos
             return;
         }
 
-        outputLink.get().setPowerFrequency(PowerLossBlock.calculatePowerLoss(settings, inputLink.get()), inputLink.get().getFrequency());
+        outputLink.get().setPowerFrequencyPhase(
+                PowerLossBlock.calculatePowerLoss(settings, inputLink.get()),
+                inputLink.get().getFrequency(),
+                inputLink.get().getPhase());
     }
     @Override
     public void onPoweredAnimation(final Location location, final boolean powered) {

@@ -114,7 +114,10 @@ public class Transformer extends ConnectedBlock implements PowerAnimatedBlock, P
             return;
         }
 
-        outputLink.get().setPowerFrequency(settings.getEmissionPower(), inputLink.get().getFrequency());
+        outputLink.get().setPowerFrequencyPhase(
+                settings.getEmissionPower(),
+                inputLink.get().getFrequency(),
+                inputLink.get().getPhase());
     }
     @Override
     public void onPoweredAnimation(final Location location, final boolean powered) {

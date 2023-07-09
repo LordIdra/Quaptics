@@ -189,7 +189,8 @@ public class Splitter extends ConnectedBlock implements PowerAnimatedBlock, Powe
 
         final double outputPower = PowerLossBlock.calculatePowerLoss(settings, inputLink.get().getPower()) / outgoingLinks.size();
         final double outputFrequency = inputLink.get().getFrequency();
-        outgoingLinks.forEach(output -> output.setPowerFrequency(outputPower, outputFrequency));
+        final int outputPhase = inputLink.get().getPhase();
+        outgoingLinks.forEach(output -> output.setPowerFrequencyPhase(outputPower, outputFrequency, outputPhase));
     }
     @Override
     public void onPoweredAnimation(final Location location, final boolean powered) {

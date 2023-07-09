@@ -183,7 +183,11 @@ public class Combiner extends ConnectedBlock implements PowerAnimatedBlock, Powe
 
         final double inputPower = incomingLinks.stream().mapToDouble(Link::getPower).sum();
         final double inputFrequency = incomingLinks.stream().mapToDouble(Link::getFrequency).min().orElse(0.0);
-        outputLink.get().setPowerFrequency(PowerLossBlock.calculatePowerLoss(settings, inputPower), inputFrequency);
+        final int inputPhase = incomingLinks.stream().mapToInt(Link::getPhase).min().orElse(0);
+        outputLink.get().setPowerFrequencyPhase(
+                PowerLossBlock.calculatePowerLoss(settings, inputPower),
+                inputFrequency,
+                inputPhase);
     }
     @Override
     public void onPoweredAnimation(final Location location, final boolean powered) {
