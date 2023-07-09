@@ -36,6 +36,9 @@ public class Settings {
     private double frequencyStep;
     private double frequencyMultiplier;
 
+    private int targetPhase;
+    private int targetPhaseSpread;
+
     private int connections;
 
     private double useInterval;

@@ -22,6 +22,7 @@ import org.metamechanists.quaptics.implementation.blocks.manipulators.Capacitor;
 import org.metamechanists.quaptics.implementation.blocks.manipulators.Combiner;
 import org.metamechanists.quaptics.implementation.blocks.manipulators.Lens;
 import org.metamechanists.quaptics.implementation.blocks.manipulators.Splitter;
+import org.metamechanists.quaptics.implementation.blocks.upgraders.DiffractionGrating;
 import org.metamechanists.quaptics.implementation.blocks.upgraders.Interferometer;
 import org.metamechanists.quaptics.implementation.blocks.upgraders.Polariser;
 import org.metamechanists.quaptics.implementation.multiblocks.infuser.InfusionContainer;
@@ -53,6 +54,8 @@ import static org.metamechanists.quaptics.implementation.blocks.manipulators.Len
 import static org.metamechanists.quaptics.implementation.blocks.manipulators.Lens.LENS_1_SETTINGS;
 import static org.metamechanists.quaptics.implementation.blocks.manipulators.Splitter.SPLITTER_1_2;
 import static org.metamechanists.quaptics.implementation.blocks.manipulators.Splitter.SPLITTER_1_2_SETTINGS;
+import static org.metamechanists.quaptics.implementation.blocks.upgraders.DiffractionGrating.DIFFRACTION_GRATING_1;
+import static org.metamechanists.quaptics.implementation.blocks.upgraders.DiffractionGrating.DIFFRACTION_GRATING_1_SETTINGS;
 import static org.metamechanists.quaptics.implementation.blocks.upgraders.Interferometer.INTERFEROMETER_1;
 import static org.metamechanists.quaptics.implementation.blocks.upgraders.Interferometer.INTERFEROMETER_1_SETTINGS;
 import static org.metamechanists.quaptics.implementation.blocks.upgraders.Polariser.POLARISER_1;
@@ -194,6 +197,13 @@ public class Primitive {
                 RecipeType.NULL,
                 new ItemStack[]{},
                 INTERFEROMETER_1_SETTINGS).register(addon);
+
+        new DiffractionGrating(
+                Groups.PRIMITIVE,
+                DIFFRACTION_GRATING_1,
+                RecipeType.NULL,
+                new ItemStack[]{},
+                DIFFRACTION_GRATING_1_SETTINGS).register(addon);
 
         new SlimefunItem(
                 Groups.PRIMITIVE,

@@ -100,6 +100,9 @@ public class Lore {
         if (settings.getTimePerItem() != 0) {
             lore.add(timePerItem(settings.getTimePerItem()));
         }
+        if (settings.getTargetPhase() != 0) {
+            lore.add(targetPhase(settings.getTargetPhase()));
+        }
 
         return lore;
     }
@@ -180,6 +183,9 @@ public class Lore {
 
     public String phaseNoArrow(final int phase) {
         return PHASE_SYMBOL + "&7Phase &e" + Objects.toString(phase) + PHASE_SUFFIX;
+    }
+    public String targetPhase(final int phase) {
+        return ATTRIBUTE_SYMBOL + PHASE_SYMBOL + "&7Target Phase &e" + Objects.toString(phase) + PHASE_SUFFIX;
     }
 
     public String progressBar(final double value, final double max, final String filledColor, final String emptyColor) {
