@@ -79,6 +79,6 @@ public class PointInfoPanel extends InfoPanel {
 
         container.setText("power", Lore.powerNoArrow(Utils.roundTo2dp(link.getPower())));
         container.setText("frequency", Lore.frequencyNoArrow(Utils.roundTo2dp(link.getFrequency())));
-        container.setText("phase", Lore.frequencyNoArrow(link.getPhase()));
+        container.setText("phase", Lore.phaseNoArrow(link.getPhase()));
     }
 }
