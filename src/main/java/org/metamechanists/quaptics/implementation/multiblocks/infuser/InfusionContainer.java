@@ -216,8 +216,9 @@ public class InfusionContainer extends ConnectedBlock implements ItemHolderBlock
         ParticleUtils.randomParticle(center.clone().toCenterLocation(), Particle.ENCHANTMENT_TABLE, CONTAINER_PARTICLE_RADIUS, CONTAINER_PARTICLE_COUNT);
     }
 
-    private void cancelCraft(@NotNull final Location location) {
-        burnout(location);
+    private static void cancelCraft(@NotNull final Location location) {
+        BlockStorageAPI.set(location, Keys.BS_SECONDS_SINCE_CRAFT_STARTED, 0);
+        BlockStorageAPI.set(location, Keys.BS_CRAFT_IN_PROGRESS, false);
     }
     private static void completeCraft(@NotNull final Location location) {
         final Optional<ItemStack> stack = ItemHolderBlock.getStack(location);
