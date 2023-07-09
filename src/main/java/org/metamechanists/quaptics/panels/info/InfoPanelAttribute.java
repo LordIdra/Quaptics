@@ -11,10 +11,10 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.storage.PersistentDataTraverser;
-import org.metamechanists.quaptics.utils.Transformations;
 import org.metamechanists.quaptics.utils.builders.TextDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.InfoPanelAttributeId;
 import org.metamechanists.quaptics.utils.id.simple.TextDisplayId;
+import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
 
 import java.util.Optional;
 
@@ -28,7 +28,9 @@ public class InfoPanelAttribute {
 
     public InfoPanelAttribute(final @NotNull Location location, final Vector offset, final Vector3f displaySize) {
         this.id = new TextDisplayId(new TextDisplayBuilder(location.add(offset))
-                .setTransformation(Transformations.unadjustedScale(displaySize))
+                .setTransformation(new TransformationMatrixBuilder()
+                        .scale(displaySize)
+                        .buildForTextDisplay())
                 .setBrightness(15)
                 .setViewRange(0)
                 .setBillboard(Billboard.VERTICAL)
