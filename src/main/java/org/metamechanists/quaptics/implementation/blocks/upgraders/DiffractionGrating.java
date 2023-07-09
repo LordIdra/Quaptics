@@ -64,9 +64,9 @@ public class DiffractionGrating extends ConnectedBlock implements PowerAnimatedB
     private static final Vector3f PRISM_ROTATION = new Vector3f(0.0F, (float) (Math.PI/4), 0.0F);
     private static final Vector3f PRISM_SIZE = new Vector3f(0.25F);
 
-    private final Vector mainPointLocation = new Vector(0.0F, 0.0F, getConnectionRadius()).rotateAroundY(MAIN_ROTATION.y);
-    private final Vector auxiliaryPointLocation = new Vector(0.0F, 0.0F, getConnectionRadius()).rotateAroundY(AUXILIARY_ROTATION.y);
-    private final Vector outputPointLocation = new Vector(0.0F, 0.0F, getConnectionRadius()).rotateAroundY(OUTPUT_ROTATION.y);
+    private final Vector mainPointLocation = new Vector(0.0F, 0.0F, -getConnectionRadius()).rotateAroundY(MAIN_ROTATION.y);
+    private final Vector auxiliaryPointLocation = new Vector(0.0F, 0.0F, -getConnectionRadius()).rotateAroundY(AUXILIARY_ROTATION.y);
+    private final Vector outputPointLocation = new Vector(0.0F, 0.0F, -getConnectionRadius()).rotateAroundY(OUTPUT_ROTATION.y);
 
     public DiffractionGrating(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
@@ -92,18 +92,18 @@ public class DiffractionGrating extends ConnectedBlock implements PowerAnimatedB
                 .setMaterial(Material.TERRACOTTA)
                 .setTransformation(new TransformationMatrixBuilder()
                         .scale(OUTPUT_SIZE)
-                        .lookAlong(face)
                         .rotate(OUTPUT_ROTATION)
                         .translate(OUTPUT_OFFSET)
+                        .lookAlong(face)
                         .buildForBlockDisplay())
                 .build());
         displayGroup.addDisplay("auxiliary", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(Material.GRAY_CONCRETE)
                 .setTransformation(new TransformationMatrixBuilder()
                         .scale(AUXILIARY_SIZE)
-                        .lookAlong(face)
                         .rotate(AUXILIARY_ROTATION)
                         .translate(AUXILIARY_OFFSET)
+                        .lookAlong(face)
                         .buildForBlockDisplay())
                 .build());
         displayGroup.addDisplay("prism", new BlockDisplayBuilder(location.toCenterLocation())
