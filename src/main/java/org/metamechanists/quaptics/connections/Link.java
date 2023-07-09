@@ -128,7 +128,7 @@ public class Link {
                 FrequencyColor.getMaterial(frequency),
                 outputLocation,
                 inputLocation,
-                Math.min((float)(power / maxPower) * MAX_BEAM_SIZE, MAX_BEAM_SIZE))
+                calculateRadius())
                 .getId();
     }
 
@@ -139,7 +139,7 @@ public class Link {
         }
 
         beam.get().setMaterial(FrequencyColor.getMaterial(frequency));
-        beam.get().setRadius(outputLocation, inputLocation, Utils.clampToRange((float) (power / maxPower) * MAX_BEAM_SIZE, MIN_BEAM_SIZE, MAX_BEAM_SIZE));
+        beam.get().setRadius(outputLocation, inputLocation, calculateRadius());
     }
 
     private void updatePanels() {
@@ -153,6 +153,13 @@ public class Link {
 
     public boolean isEnabled() {
         return power != 0;
+    }
+
+    private float calculateRadius() {
+        if (power == 0) {
+            return 0;
+        }
+        return Utils.clampToRange((float) (power / maxPower) * MAX_BEAM_SIZE, MIN_BEAM_SIZE, MAX_BEAM_SIZE);
     }
 
     private static double calculateChange(final double initialValue, final double newValue) {

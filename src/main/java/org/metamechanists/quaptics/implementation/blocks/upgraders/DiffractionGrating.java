@@ -25,6 +25,7 @@ import org.metamechanists.quaptics.items.Tier;
 import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
+import org.metamechanists.quaptics.utils.id.complex.ConnectionPointId;
 import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
 import org.metamechanists.quaptics.utils.transformations.TransformationUtils;
 
@@ -59,7 +60,7 @@ public class DiffractionGrating extends ConnectedBlock implements PowerAnimatedB
     private static final Vector3f OUTPUT_SIZE = new Vector3f(0.20F, 0.20F, 0.40F);
     private static final Vector3f OUTPUT_OFFSET = new Vector3f(0.0F, 0.0F, 0.20F).rotateY(OUTPUT_ROTATION.y);
     private static final Vector3f AUXILIARY_ROTATION = new Vector3f(0.0F, 0.0F, 0.0F);
-    private static final Vector3f AUXILIARY_SIZE = new Vector3f(0.1F, 0.1F, 0.40F);
+    private static final Vector3f AUXILIARY_SIZE = new Vector3f(0.15F, 0.15F, 0.40F);
     private static final Vector3f AUXILIARY_OFFSET = new Vector3f(0.0F, 0.0F, 0.20F).rotateY(AUXILIARY_ROTATION.y);
     private static final Vector3f PRISM_ROTATION = new Vector3f(0.0F, (float) (Math.PI/4), 0.0F);
     private static final Vector3f PRISM_SIZE = new Vector3f(0.25F);
@@ -75,6 +76,11 @@ public class DiffractionGrating extends ConnectedBlock implements PowerAnimatedB
     @Override
     protected float getConnectionRadius() {
         return 0.40F;
+    }
+    @Override
+    protected Optional<Location> calculatePointLocationSphere(@NotNull final ConnectionPointId from, @NotNull final ConnectionPointId to) {
+        final Optional<ConnectionPoint> point = from.get();
+        return point.isPresent() ? point.get().getLocation() : Optional.empty();
     }
     @Override
     protected void initDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, @NotNull final Player player) {
