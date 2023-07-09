@@ -54,14 +54,14 @@ public class TransformationMatrixBuilder {
     }
 
     /**
-     * Represents a rotation in X, Y, and Z.
+     * Represents a rotation in X, Y, and Z (angles in radians)
      */
     public TransformationMatrixBuilder rotate(final @NotNull Vector3f rotation) {
         components.addLast(new RotationComponent(rotation));
         return this;
     }
     /**
-     * Represents a rotation in X, Y, and Z.
+     * Represents a rotation in X, Y, and Z (angles in radians)
      */
     public TransformationMatrixBuilder rotate(final float x, final float y, final float z) {
         rotate(new Vector3f(x, y, z));

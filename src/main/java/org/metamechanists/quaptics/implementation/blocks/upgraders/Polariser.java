@@ -35,6 +35,7 @@ import org.metamechanists.quaptics.utils.id.complex.ConnectionPointId;
 import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
 import org.metamechanists.quaptics.utils.transformations.TransformationUtils;
 
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -53,12 +54,12 @@ public class Polariser extends ConnectedBlock implements PowerAnimatedBlock, Pow
                     "&7● Sets the Phase of the main ray to the phase of the auxiliary ray"));
 
     private static final Vector3f MAIN_SIZE = new Vector3f(0.30F, 0.30F, 0.90F);
-    private static final Vector3f PRISM_SIZE = new Vector3f(0.20F);
+    private static final Vector3f PRISM_SIZE = new Vector3f(0.40F);
     private static final Vector3f ITEM_SIZE = new Vector3f(0.20F);
     private static final Vector3f ITEM_OFFSET = new Vector3f(0, 0.20F, 0);
 
-    private static final Vector MAIN_INPUT_LOCATION = new Vector(0.0F, 0.0F, -0.50F);
-    private static final Vector OUTPUT_LOCATION = new Vector(0.0F, 0.0F, 0.50);
+    private static final Vector MAIN_INPUT_LOCATION = new Vector(0.0F, 0.0F, -0.47F);
+    private static final Vector OUTPUT_LOCATION = new Vector(0.0F, 0.0F, 0.47);
 
     private static final Map<ItemStack, Integer> PHASE_CHANGES = Map.of(
             Primitive.PHASE_CRYSTAL_1, 1,
@@ -148,6 +149,16 @@ public class Polariser extends ConnectedBlock implements PowerAnimatedBlock, Pow
     @Override
     public void onPoweredAnimation(final Location location, final boolean powered) {
         brightnessAnimation(location, "prism", powered);
+    }
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    protected void onBreak(@NotNull final Location location) {
+        super.onBreak(location);
+        onBreakItemHolderBlock(location);
+    }
+    @Override
+    protected void onRightClick(final @NotNull Location location, final @NotNull Player player) {
+        itemHolderInteract(location, player);
     }
 
     @Override

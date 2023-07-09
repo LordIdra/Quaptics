@@ -46,13 +46,14 @@ public class Interferometer extends ConnectedBlock implements PowerAnimatedBlock
                     "&7● Sets the Phase of the main ray to the phase of the auxiliary ray"));
 
     private static final Vector3f MAIN_SIZE = new Vector3f(0.30F, 0.30F, 0.90F);
-    private static final Vector3f AUXILIARYE_SIZE = new Vector3f(0.40F, 0.15F, 0.15F);
-    private static final Vector3f AUXILIARYE_OFFSET = new Vector3f(0.20F, 0.0F, 0.0F);
-    private static final Vector3f PRISM_SIZE = new Vector3f(0.20F);
+    private static final Vector3f AUXILIARY_SIZE = new Vector3f(0.40F, 0.15F, 0.15F);
+    private static final Vector3f AUXILIARY_OFFSET = new Vector3f(0.20F, 0.0F, 0.0F);
+    private static final Vector3f AUXILIARY_ROTATION = new Vector3f(0, (float) (Math.PI/2), 0);
+    private static final Vector3f PRISM_SIZE = new Vector3f(0.40F);
 
     private static final Vector MAIN_INPUT_LOCATION = new Vector(0.0F, 0.0F, -0.50F);
     private static final Vector AUXILIARY_INPUT_LOCATION = new Vector(0.50F, 0.0F, 0.0F);
-    private static final Vector outputLocation = new Vector(0.0F, 0.0F, 0.50);
+    private static final Vector OUTPUT_LOCATION = new Vector(0.0F, 0.0F, 0.50);
 
     public Interferometer(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
@@ -80,10 +81,10 @@ public class Interferometer extends ConnectedBlock implements PowerAnimatedBlock
         displayGroup.addDisplay("auxiliary", new BlockDisplayBuilder(location.toCenterLocation())
                 .setMaterial(Material.GRAY_CONCRETE)
                 .setTransformation(new TransformationMatrixBuilder()
-                        .scale(AUXILIARYE_SIZE)
-                        .translate(AUXILIARYE_OFFSET)
+                        .scale(AUXILIARY_SIZE)
+                        .translate(AUXILIARY_OFFSET)
                         .lookAlong(face)
-                        .rotate(0, (float) (Math.PI/2), 0)
+                        .rotate(AUXILIARY_ROTATION)
                         .buildForBlockDisplay())
                 .build());
         displayGroup.addDisplay("prism", new BlockDisplayBuilder(location.toCenterLocation())
@@ -100,7 +101,7 @@ public class Interferometer extends ConnectedBlock implements PowerAnimatedBlock
         return List.of(
                 new ConnectionPoint(ConnectionPointType.INPUT, groupId, "mainInput", formatPointLocation(player, location, MAIN_INPUT_LOCATION)),
                 new ConnectionPoint(ConnectionPointType.INPUT, groupId, "auxiliaryInput", formatPointLocation(player, location, AUXILIARY_INPUT_LOCATION)),
-                new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output", formatPointLocation(player, location, outputLocation)));
+                new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output", formatPointLocation(player, location, OUTPUT_LOCATION)));
     }
 
     @Override
