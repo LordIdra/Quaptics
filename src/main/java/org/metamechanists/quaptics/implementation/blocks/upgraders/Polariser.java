@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
@@ -63,6 +64,8 @@ public class Polariser extends ConnectedBlock implements PowerAnimatedBlock, Pow
     private static final Vector MAIN_INPUT_LOCATION = new Vector(0.0F, 0.0F, -0.45F);
     private static final Vector OUTPUT_LOCATION = new Vector(0.0F, 0.0F, 0.45);
 
+    private static final int CRYSTAL_BRIGHTNESS_OFF = 7;
+
     private static final Map<ItemStack, Integer> PHASE_CHANGES = Map.of(
             Primitive.PHASE_CRYSTAL_1, 1,
             Primitive.PHASE_CRYSTAL_5, 5,
@@ -101,12 +104,14 @@ public class Polariser extends ConnectedBlock implements PowerAnimatedBlock, Pow
                         .buildForBlockDisplay())
                 .build());
         displayGroup.addDisplay("item", new ItemDisplayBuilder(location.toCenterLocation())
+                .setBrightness(CRYSTAL_BRIGHTNESS_OFF)
                 .setTransformation(new TransformationMatrixBuilder()
                         .scale(ITEM_SIZE)
                         .translate(ITEM_OFFSET)
                         .buildForItemDisplay())
                 .build());
         displayGroup.addDisplay("item2", new ItemDisplayBuilder(location.toCenterLocation())
+                .setBrightness(CRYSTAL_BRIGHTNESS_OFF)
                 .setTransformation(new TransformationMatrixBuilder()
                         .scale(ITEM_SIZE)
                         .translate(ITEM_OFFSET)
@@ -131,9 +136,6 @@ public class Polariser extends ConnectedBlock implements PowerAnimatedBlock, Pow
             onPoweredAnimation(location, false);
             return;
         }
-
-        final Optional<Link> inputLink = getLink(location, "input");
-        onPoweredAnimation(location, settings.isOperational(inputLink));
 
         final Optional<ItemStack> itemStack = ItemHolderBlock.getStack(location);
         if (itemStack.isEmpty()) {
@@ -170,18 +172,18 @@ public class Polariser extends ConnectedBlock implements PowerAnimatedBlock, Pow
     @Override
     public Optional<ItemStack> onRemove(@NotNull final Location location, @NotNull final ItemStack stack) {
         getItemDisplay(location, "item2").ifPresent(display -> display.setItemStack(new ItemStack(Material.AIR)));
+        updateOutput(location, null);
         return Optional.of(stack);
     }
 
-    private void updateOutput(@NotNull final Location location, @NotNull final ItemStack itemStack) {
+    private void updateOutput(@NotNull final Location location, @Nullable final ItemStack itemStack) {
         final Optional<Link> inputLink = getLink(location, "input");
         final Optional<Link> outputLink = getLink(location, "output");
-        if (outputLink.isEmpty()) {
-            return;
-        }
+        final boolean powered = outputLink.isPresent() && inputLink.isPresent() && settings.isOperational(inputLink) && itemStack != null;
+        onPoweredAnimation(location, powered);
 
-        if (inputLink.isEmpty() || !settings.isOperational(inputLink)) {
-            outputLink.get().disable();
+        if (!powered) {
+            outputLink.ifPresent(Link::disable);
             return;
         }
 

@@ -8,8 +8,11 @@ import org.metamechanists.quaptics.utils.Utils;
 
 @FunctionalInterface
 public interface PowerAnimatedBlock {
+    default void brightnessAnimation(final Location location, final String name, final boolean powered, final int brightnessOn) {
+        QuapticBlock.getDisplay(location, name).ifPresent(value -> value.setBrightness(new Brightness(powered ? brightnessOn : Utils.BRIGHTNESS_OFF, 0)));
+    }
     default void brightnessAnimation(final Location location, final String name, final boolean powered) {
-        QuapticBlock.getDisplay(location, name).ifPresent(value -> value.setBrightness(new Brightness(powered ? Utils.BRIGHTNESS_ON : Utils.BRIGHTNESS_OFF, 0)));
+        brightnessAnimation(location, name, powered, Utils.BRIGHTNESS_ON);
     }
     default void visibilityAnimation(final Location location, final String name, final boolean powered) {
         QuapticBlock.getDisplay(location, name).ifPresent(value -> value.setViewRange(powered ? Utils.VIEW_RANGE_ON : Utils.VIEW_RANGE_OFF));
