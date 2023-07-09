@@ -33,20 +33,22 @@ import java.util.Optional;
 public class Transformer extends ConnectedBlock implements PowerAnimatedBlock, PowerLossBlock {
     public static final Settings TRANSFORMER_1_SETTINGS = Settings.builder()
             .tier(Tier.BASIC)
-            .connectionRadius(0.48F)
+            .connectionRadius(0.55F)
             .emissionPower(10)
+            .minPower(10)
             .build();
     public static final SlimefunItemStack TRANSFORMER_1 = new SlimefunItemStack(
             "QP_TRANSFORMER_1",
-            Material.CYAN_TERRACOTTA,
+            Material.LIGHT_GRAY_TERRACOTTA,
             "&9Transformer &bI",
             Lore.create(TRANSFORMER_1_SETTINGS,
-                    "&7● Drops the power of a quaptic ray"));
+                    "&7● Drops the power of a quaptic ray",
+                    "&7● Excess input power is wasted"));
 
     private final Vector3f mainDisplaySize = new Vector3f(0.3F, 0.3F, 0.8F);
     private final Vector3f coilDisplaySize = new Vector3f(0.2F, 0.6F, 0.2F);
-    private final Vector3f firstCoilDisplayOffset = new Vector3f(0.0F, 0.0F, 0.3F);
-    private final Vector3f secondCoilDisplayOffset = new Vector3f(0.0F, 0.0F, -0.3F);
+    private final Vector3f firstCoilDisplayOffset = new Vector3f(0.0F, 0.0F, 0.25F);
+    private final Vector3f secondCoilDisplayOffset = new Vector3f(0.0F, 0.0F, -0.25F);
     private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -settings.getConnectionRadius());
     private final Vector outputPointLocation = new Vector(0.0F, 0.0F, settings.getConnectionRadius());
 
@@ -57,7 +59,7 @@ public class Transformer extends ConnectedBlock implements PowerAnimatedBlock, P
     @Override
     protected void initDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
         displayGroup.addDisplay("main", new BlockDisplayBuilder(location.toCenterLocation())
-                .setMaterial(Material.CYAN_TERRACOTTA)
+                .setMaterial(Material.LIGHT_GRAY_TERRACOTTA)
                 .setTransformation(Transformations.adjustedScale(mainDisplaySize))
                 .build());
         displayGroup.addDisplay("coil1", new BlockDisplayBuilder(location.toCenterLocation())
