@@ -5,14 +5,14 @@ import org.bukkit.util.Vector;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.utils.id.complex.InfoPanelAttributeId;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class InfoPanelBuilder {
     private final Vector3f displaySize;
     private final Vector attributeSpacing;
     private final Location location;
-    private final Map<String, InfoPanelAttributeId> attributes = new HashMap<>();
+    private final Map<String, InfoPanelAttributeId> attributes = new LinkedHashMap<>();
 
     public InfoPanelBuilder(final Location location, final float size) {
         this.displaySize = new Vector3f(size, size, size);
