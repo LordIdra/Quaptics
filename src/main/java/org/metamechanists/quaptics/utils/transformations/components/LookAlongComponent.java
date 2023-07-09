@@ -1,17 +1,24 @@
 package org.metamechanists.quaptics.utils.transformations.components;
 
 import org.jetbrains.annotations.NotNull;
+import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
-public class LookAlongComponent extends RotationComponent {
+public class LookAlongComponent implements TransformationMatrixComponent {
+    private final Vector3f direction;
     public LookAlongComponent(@NotNull final Vector3f direction) {
-        super(new Vector3f(getAngleX(direction), getAngleY(direction), 0));
+        this.direction = direction;
     }
 
-    private static float getAngleX(@NotNull final Vector3f direction) {
+    private float getAngleX() {
         return (float) Math.atan2(direction.y, Math.sqrt(direction.x*direction.x + direction.z*direction.z));
     }
-    private static float getAngleY(@NotNull final Vector3f direction) {
+    private float getAngleY() {
         return (float) Math.atan2(direction.x, direction.z);
+    }
+
+    @Override
+    public void apply(@NotNull final Matrix4f matrix) {
+        matrix.rotateY(getAngleY()).rotateX(getAngleX());
     }
 }
