@@ -42,10 +42,10 @@ public class PointInfoPanel extends InfoPanel {
     @Override
     protected InfoPanelContainer buildPanelContainer(@NotNull final Location location) {
         return new InfoPanelBuilder(location.clone().add(getOffset()), SIZE)
-                .addAttribute("phase", true)
-                .addAttribute("frequency", true)
-                .addAttribute("power", true)
                 .addAttribute("name", false)
+                .addAttribute("power", true)
+                .addAttribute("frequency", true)
+                .addAttribute("phase", true)
                 .build();
     }
 

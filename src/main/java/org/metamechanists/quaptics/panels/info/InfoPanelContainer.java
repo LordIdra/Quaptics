@@ -110,6 +110,7 @@ public class InfoPanelContainer {
                 .map(InfoPanelAttributeId::get)
                 .filter(Optional::isPresent)
                 .map(Optional::get)
+                .filter(InfoPanelAttribute::isVisible)
                 .forEach(attribute -> {
                     attribute.changeLocation(location);
                     location.subtract(spacing);

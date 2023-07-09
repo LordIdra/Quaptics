@@ -74,6 +74,10 @@ public class InfoPanelAttribute {
         saveData();
     }
 
+    public boolean isVisible() {
+        return !hidden;
+    }
+
     public void setText(@NotNull final String text) {
         getTextDisplay().ifPresent(display -> display.text(LegacyComponentSerializer.legacyAmpersand().deserialize(text)));
     }
