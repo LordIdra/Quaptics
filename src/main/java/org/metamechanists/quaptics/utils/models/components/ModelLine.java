@@ -16,8 +16,8 @@ import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBui
 public class ModelLine implements ModelComponent {
     private final BlockDisplayBuilder main = new BlockDisplayBuilder();
 
-    private Vector3f from;
-    private Vector3f to;
+    private Vector3f from = new Vector3f();
+    private Vector3f to = new Vector3f();
     private float thickness;
     private float extraLength;
 

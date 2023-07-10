@@ -18,9 +18,9 @@ import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBui
 public class ModelItem implements ModelComponent {
     private final ItemDisplayBuilder main = new ItemDisplayBuilder();
 
-    private Vector3f location;
-    private Vector3f size;
-    private Vector3d rotation;
+    private Vector3f location = new Vector3f();
+    private Vector3f size = new Vector3f();
+    private Vector3d rotation = new Vector3d();
 
     /**
      * @param location The center of the cuboid containing the item

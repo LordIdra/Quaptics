@@ -17,9 +17,9 @@ import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBui
 public class ModelCuboid implements ModelComponent {
     private final BlockDisplayBuilder main = new BlockDisplayBuilder();
 
-    private Vector3f location;
-    private Vector3f size;
-    private Vector3d rotation;
+    private Vector3f location = new Vector3f();
+    private Vector3f size = new Vector3f();
+    private Vector3d rotation = new Vector3d();
 
     /**
      * @param location The center of the cuboid
