@@ -50,10 +50,10 @@ public class EntanglementContainer extends ConnectedBlock implements ComplexMult
     private static final Vector3f PILLAR_3_OFFSET = new Vector3f(0.0F, 0.0F, 0.4F);
     private static final Vector3f PILLAR_4_OFFSET = new Vector3f(0.0F, 0.0F, -0.4F);
 
-    private static final Vector3f FRAME_1_SCALE = new Vector3f(0.6F, 0.4F, 0.62F);
-    private static final Vector3f FRAME_2_SCALE = new Vector3f(0.6F, 0.4F, 0.2F);
+    private static final Vector3f FRAME_1_SCALE = new Vector3f(0.6F, 0.4F, 0.2F);
+    private static final Vector3f FRAME_2_SCALE = new Vector3f(0.2F, 0.4F, 0.6F);
     private static final Vector3f FRAME_3_SCALE = new Vector3f(0.2F, 0.4F, 0.6F);
-    private static final Vector3f FRAME_4_SCALE = new Vector3f(0.2F, 0.4F, 0.6F);
+    private static final Vector3f FRAME_4_SCALE = new Vector3f(0.6F, 0.4F, 0.2F);
     private static final Vector3f FRAME_1_OFFSET = new Vector3f(0.20F, 0.0F, 0.20F);
     private static final Vector3f FRAME_2_OFFSET = new Vector3f(0.20F, 0.0F, -0.20F);
     private static final Vector3f FRAME_3_OFFSET = new Vector3f(-0.20F, 0.0F, 0.20F);
