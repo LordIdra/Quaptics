@@ -105,7 +105,7 @@ public class TransformationMatrixBuilder {
      * @return The matrix representing the transformation formed by all the components
      */
     public @NotNull Matrix4f buildForBlockDisplay() {
-        components.addFirst(new TranslationComponent(BLOCK_DISPLAY_ADJUSTMENT));
+        components.addLast(new TranslationComponent(BLOCK_DISPLAY_ADJUSTMENT));
         return build();
     }
     public @NotNull Matrix4f buildForItemDisplay() {
