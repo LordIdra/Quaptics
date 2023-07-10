@@ -50,11 +50,11 @@ public class EntanglementContainer extends ConnectedBlock implements ComplexMult
     private static final Vector3f PILLAR_3_OFFSET = new Vector3f(0.0F, 0.0F, 0.4F);
     private static final Vector3f PILLAR_4_OFFSET = new Vector3f(0.0F, 0.0F, -0.4F);
 
-    private static final Vector3f FRAME_SCALE = new Vector3f(0.5F, 0.4F, 0.5F);
-    private static final Vector3f FRAME_1_OFFSET = new Vector3f(0.4F, 0.0F, 0.4F);
-    private static final Vector3f FRAME_2_OFFSET = new Vector3f(0.4F, 0.0F, -0.4F);
-    private static final Vector3f FRAME_3_OFFSET = new Vector3f(-0.4F, 0.0F, 0.4F);
-    private static final Vector3f FRAME_4_OFFSET = new Vector3f(-0.4F, 0.0F, -0.4F);
+    private static final Vector3f FRAME_SCALE = new Vector3f(0.2F, 0.4F, 0.6F);
+    private static final Vector3f FRAME_1_OFFSET = new Vector3f(0.3F, 0.0F, 0.3F);
+    private static final Vector3f FRAME_2_OFFSET = new Vector3f(0.3F, 0.0F, -0.3F);
+    private static final Vector3f FRAME_3_OFFSET = new Vector3f(-0.3F, 0.0F, 0.3F);
+    private static final Vector3f FRAME_4_OFFSET = new Vector3f(-0.3F, 0.0F, -0.3F);
     private static final Vector3f FRAME_1_ROTATION = new Vector3f(0.0F, (float) (Math.PI / 4), 0.0F);
     private static final Vector3f FRAME_2_ROTATION = new Vector3f(0.0F, (float) (-Math.PI / 4), 0.0F);
     private static final Vector3f FRAME_3_ROTATION = new Vector3f(0.0F, (float) (Math.PI / 4), 0.0F);
