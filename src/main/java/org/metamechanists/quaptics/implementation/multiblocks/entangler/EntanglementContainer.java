@@ -77,7 +77,7 @@ public class EntanglementContainer extends ConnectedBlock implements ItemHolderB
 
     private static final int MAGNET_PARTICLE_COUNT = 2;
     private final double magnetParticleAnimationLengthSeconds = settings.getTimePerItem();
-    private final double centerParticleAnimationLengthSeconds = settings.getTimePerItem() / 16.0;
+    private final double centerParticleAnimationLengthSeconds = settings.getTimePerItem() / 8.0;
     private static final double MAGNET_PARTICLE_SPEED = 0.02;
     private static final double CONTAINER_PARTICLE_RADIUS = 0.8;
     private static final int CONTAINER_PARTICLE_COUNT = 3;
@@ -252,7 +252,7 @@ public class EntanglementContainer extends ConnectedBlock implements ItemHolderB
     }
 
     private void animatePillar(@NotNull final Location center, @NotNull final Location pillarLocation, final double timeSinceCraftStarted) {
-        Particles.animatedLine(Particle.GLOW,
+        Particles.animatedLine(Particle.GLOW_SQUID_INK,
                 pillarLocation.clone().toCenterLocation(),
                 center.clone().toCenterLocation(),
                 MAGNET_PARTICLE_COUNT,
@@ -286,14 +286,15 @@ public class EntanglementContainer extends ConnectedBlock implements ItemHolderB
         BlockStorageAPI.set(location, Keys.BS_CRAFT_IN_PROGRESS, false);
     }
     private static void completeCraft(@NotNull final Location location) {
+        animateCenterCompleted(location);
+        BlockStorageAPI.set(location, Keys.BS_SECONDS_SINCE_CRAFT_STARTED, 0);
+        BlockStorageAPI.set(location, Keys.BS_CRAFT_IN_PROGRESS, false);
+
         final Optional<ItemStack> stack = ItemHolderBlock.getStack(location);
         if (stack.isEmpty()) {
             return;
         }
 
-        animateCenterCompleted(location);
-        BlockStorageAPI.set(location, Keys.BS_SECONDS_SINCE_CRAFT_STARTED, 0);
-        BlockStorageAPI.set(location, Keys.BS_CRAFT_IN_PROGRESS, false);
         ItemHolderBlock.insertItem(location, RECIPES.get(stack.get()));
     }
 }
