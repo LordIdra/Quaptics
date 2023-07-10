@@ -26,7 +26,8 @@ import org.metamechanists.quaptics.implementation.blocks.upgraders.DiffractionGr
 import org.metamechanists.quaptics.implementation.blocks.upgraders.Interferometer;
 import org.metamechanists.quaptics.implementation.blocks.upgraders.Polariser;
 import org.metamechanists.quaptics.implementation.multiblocks.entangler.EntanglementContainer;
-import org.metamechanists.quaptics.implementation.multiblocks.entangler.EntanglementMagnet;
+import org.metamechanists.quaptics.implementation.multiblocks.entangler.magnet.EntanglementMagnetBottom;
+import org.metamechanists.quaptics.implementation.multiblocks.entangler.magnet.EntanglementMagnetTop;
 import org.metamechanists.quaptics.implementation.multiblocks.infuser.InfusionContainer;
 import org.metamechanists.quaptics.implementation.multiblocks.infuser.InfusionPillar;
 import org.metamechanists.quaptics.items.Groups;
@@ -64,8 +65,9 @@ import static org.metamechanists.quaptics.implementation.blocks.upgraders.Polari
 import static org.metamechanists.quaptics.implementation.blocks.upgraders.Polariser.POLARISER_1_SETTINGS;
 import static org.metamechanists.quaptics.implementation.multiblocks.entangler.EntanglementContainer.ENTANGLEMENT_CONTAINER;
 import static org.metamechanists.quaptics.implementation.multiblocks.entangler.EntanglementContainer.ENTANGLEMENT_CONTAINER_SETTINGS;
-import static org.metamechanists.quaptics.implementation.multiblocks.entangler.EntanglementMagnet.ENTANGLEMENT_MAGNET;
-import static org.metamechanists.quaptics.implementation.multiblocks.entangler.EntanglementMagnet.ENTANGLEMENT_MAGNET_SETTINGS;
+import static org.metamechanists.quaptics.implementation.multiblocks.entangler.magnet.EntanglementMagnetBottom.ENTANGLEMENT_MAGNET_BOTTOM_SETTINGS;
+import static org.metamechanists.quaptics.implementation.multiblocks.entangler.magnet.EntanglementMagnetTop.ENTANGLEMENT_MAGNET_TOP;
+import static org.metamechanists.quaptics.implementation.multiblocks.entangler.magnet.EntanglementMagnetTop.ENTANGLEMENT_MAGNET_TOP_SETTINGS;
 import static org.metamechanists.quaptics.implementation.multiblocks.infuser.InfusionContainer.INFUSION_CONTAINER;
 import static org.metamechanists.quaptics.implementation.multiblocks.infuser.InfusionContainer.INFUSION_CONTAINER_SETTINGS;
 import static org.metamechanists.quaptics.implementation.multiblocks.infuser.InfusionPillar.INFUSION_PILLAR;
@@ -219,12 +221,19 @@ public class Primitive {
                 new ItemStack[]{},
                 DIFFRACTION_GRATING_1_SETTINGS).register(addon);
 
-        new EntanglementMagnet(
+        new EntanglementMagnetTop(
                 Groups.PRIMITIVE,
-                ENTANGLEMENT_MAGNET,
+                ENTANGLEMENT_MAGNET_TOP,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                ENTANGLEMENT_MAGNET_SETTINGS).register(addon);
+                ENTANGLEMENT_MAGNET_TOP_SETTINGS).register(addon);
+
+        new EntanglementMagnetBottom(
+                Groups.PRIMITIVE,
+                ENTANGLEMENT_MAGNET_TOP,
+                RecipeType.NULL,
+                new ItemStack[]{},
+                ENTANGLEMENT_MAGNET_BOTTOM_SETTINGS).register(addon);
 
         new EntanglementContainer(
                 Groups.PRIMITIVE,

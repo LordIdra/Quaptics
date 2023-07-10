@@ -27,7 +27,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static org.metamechanists.quaptics.implementation.multiblocks.entangler.EntanglementMagnet.ENTANGLEMENT_MAGNET;
+import static org.metamechanists.quaptics.implementation.multiblocks.entangler.magnet.EntanglementMagnetBottom.ENTANGLEMENT_MAGNET_BOTTOM;
+import static org.metamechanists.quaptics.implementation.multiblocks.entangler.magnet.EntanglementMagnetTop.ENTANGLEMENT_MAGNET_TOP;
 
 
 public class EntanglementContainer extends ConnectedBlock implements ComplexMultiblock {
@@ -50,10 +51,10 @@ public class EntanglementContainer extends ConnectedBlock implements ComplexMult
     private static final Vector3f PILLAR_3_OFFSET = new Vector3f(0.0F, 0.0F, 0.4F);
     private static final Vector3f PILLAR_4_OFFSET = new Vector3f(0.0F, 0.0F, -0.4F);
 
-    private static final Vector3f FRAME_1_SCALE = new Vector3f(0.6F, 0.4F, 0.2F);
-    private static final Vector3f FRAME_2_SCALE = new Vector3f(0.2F, 0.4F, 0.6F);
-    private static final Vector3f FRAME_3_SCALE = new Vector3f(0.2F, 0.4F, 0.6F);
-    private static final Vector3f FRAME_4_SCALE = new Vector3f(0.6F, 0.4F, 0.2F);
+    private static final Vector3f FRAME_1_SCALE = new Vector3f(0.2F, 0.4F, 0.6F);
+    private static final Vector3f FRAME_2_SCALE = new Vector3f(0.6F, 0.4F, 0.2F);
+    private static final Vector3f FRAME_3_SCALE = new Vector3f(0.6F, 0.4F, 0.2F);
+    private static final Vector3f FRAME_4_SCALE = new Vector3f(0.2F, 0.4F, 0.6F);
     private static final Vector3f FRAME_1_OFFSET = new Vector3f(0.20F, 0.0F, 0.20F);
     private static final Vector3f FRAME_2_OFFSET = new Vector3f(0.20F, 0.0F, -0.20F);
     private static final Vector3f FRAME_3_OFFSET = new Vector3f(-0.20F, 0.0F, 0.20F);
@@ -148,14 +149,14 @@ public class EntanglementContainer extends ConnectedBlock implements ComplexMult
     @Override
     public Map<Vector, ItemStack> getStructure() {
         return Map.of(
-                MAGNET_1_LOCATION, ENTANGLEMENT_MAGNET,
+                MAGNET_1_LOCATION, ENTANGLEMENT_MAGNET_TOP,
                 new Vector(0, 3, 0), new ItemStack(Material.AIR),
                 new Vector(0, 2, 0), new ItemStack(Material.AIR),
                 new Vector(0, 1, 0), new ItemStack(Material.AIR),
                 new Vector(0, -1, 0), new ItemStack(Material.AIR),
                 new Vector(0, -2, 0), new ItemStack(Material.AIR),
                 new Vector(0, -3, 0), new ItemStack(Material.AIR),
-                MAGNET_2_LOCATION, ENTANGLEMENT_MAGNET
+                MAGNET_2_LOCATION, ENTANGLEMENT_MAGNET_BOTTOM
         );
     }
 
