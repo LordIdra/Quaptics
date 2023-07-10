@@ -6,8 +6,10 @@ import org.bukkit.Location;
 import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Display.Brightness;
 import org.bukkit.entity.Interaction;
+import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Vector3f;
 import org.metamechanists.quaptics.panels.info.implementation.PointInfoPanel;
 import org.metamechanists.quaptics.schedulers.PointPanelUpdateScheduler;
 import org.metamechanists.quaptics.storage.PersistentDataTraverser;
@@ -24,6 +26,7 @@ import org.metamechanists.quaptics.utils.models.components.ModelCuboid;
 import java.util.Optional;
 
 public class ConnectionPoint {
+    private static final Vector3f INTERACTION_OFFSET = new Vector3f(0.0F, 0.50F, 0.0F);
     private static final float SIZE = 0.1F;
     private static final Color SELECTED_COLOR = Color.fromRGB(0, 255, 0);
     private static final ModelCuboid BLOCK_DISPLAY = new ModelCuboid()
@@ -117,7 +120,7 @@ public class ConnectionPoint {
     }
     public void changeLocation(@NotNull final Location location) {
         getBlockDisplay().ifPresent(blockDisplay -> blockDisplay.teleport(location));
-        getInteraction().ifPresent(interaction -> interaction.teleport(location));
+        getInteraction().ifPresent(interaction -> interaction.teleport(location.clone().add(Vector.fromJOML(INTERACTION_OFFSET))));
         getPointPanel().ifPresent(panel -> panel.changeLocation(location));
         saveData();
     }
