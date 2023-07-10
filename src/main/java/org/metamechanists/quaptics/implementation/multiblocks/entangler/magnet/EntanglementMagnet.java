@@ -31,16 +31,16 @@ import java.util.List;
 import java.util.Optional;
 
 
-public abstract class EntanglementMagnet extends ConnectedBlock implements PowerAnimatedBlock {
-    public static final Settings ENTANGLEMENT_MAGNET_BOTTOM_SETTINGS = Settings.builder()
+public class EntanglementMagnet extends ConnectedBlock implements PowerAnimatedBlock {
+    public static final Settings ENTANGLEMENT_MAGNET_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
             .minPower(7)
             .build();
-    public static final SlimefunItemStack ENTANGLEMENT_MAGNET_BOTTOM = new SlimefunItemStack(
-            "QP_ENTANGLEMENT_MAGNET_BOTTOM",
+    public static final SlimefunItemStack ENTANGLEMENT_MAGNET = new SlimefunItemStack(
+            "QP_ENTANGLEMENT_MAGNET",
             Material.ORANGE_CONCRETE,
-            "&6Entanglement Magnet &8(bottom)",
-            Lore.create(ENTANGLEMENT_MAGNET_BOTTOM_SETTINGS,
+            "&6Entanglement Magnet",
+            Lore.create(ENTANGLEMENT_MAGNET_SETTINGS,
                     "&7● Multiblock component"));
 
     private static final Vector3f BASE_SCALE = new Vector3f(0.80F, 0.40F, 0.80F);
@@ -64,7 +64,7 @@ public abstract class EntanglementMagnet extends ConnectedBlock implements Power
 
     private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -getConnectionRadius());
 
-    protected EntanglementMagnet(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
+    public EntanglementMagnet(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
     }
 

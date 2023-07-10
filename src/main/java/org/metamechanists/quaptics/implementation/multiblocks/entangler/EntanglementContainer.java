@@ -38,8 +38,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import static org.metamechanists.quaptics.implementation.multiblocks.entangler.magnet.EntanglementMagnetBottom.ENTANGLEMENT_MAGNET_BOTTOM;
-import static org.metamechanists.quaptics.implementation.multiblocks.entangler.magnet.EntanglementMagnetTop.ENTANGLEMENT_MAGNET_TOP;
+import static org.metamechanists.quaptics.implementation.multiblocks.entangler.magnet.EntanglementMagnet.ENTANGLEMENT_MAGNET;
 
 
 public class EntanglementContainer extends ConnectedBlock implements ItemHolderBlock, ComplexMultiblock {
@@ -238,8 +237,8 @@ public class EntanglementContainer extends ConnectedBlock implements ItemHolderB
     @Override
     public Map<Vector, ItemStack> getStructure() {
         return Map.of(
-                MAGNET_1_LOCATION, ENTANGLEMENT_MAGNET_TOP,
-                MAGNET_2_LOCATION, ENTANGLEMENT_MAGNET_BOTTOM
+                MAGNET_1_LOCATION, ENTANGLEMENT_MAGNET,
+                MAGNET_2_LOCATION, ENTANGLEMENT_MAGNET
         );
     }
     @Override
