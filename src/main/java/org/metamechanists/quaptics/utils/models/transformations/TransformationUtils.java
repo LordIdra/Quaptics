@@ -1,4 +1,4 @@
-package org.metamechanists.quaptics.utils.transformations;
+package org.metamechanists.quaptics.utils.models.transformations;
 
 import lombok.experimental.UtilityClass;
 import org.bukkit.Location;

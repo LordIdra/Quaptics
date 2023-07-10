@@ -22,7 +22,7 @@ import org.metamechanists.quaptics.utils.id.complex.InfoPanelId;
 import org.metamechanists.quaptics.utils.id.complex.LinkId;
 import org.metamechanists.quaptics.utils.id.simple.BlockDisplayId;
 import org.metamechanists.quaptics.utils.id.simple.InteractionId;
-import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
+import org.metamechanists.quaptics.utils.models.transformations.TransformationMatrixBuilder;
 
 import java.util.Optional;
 

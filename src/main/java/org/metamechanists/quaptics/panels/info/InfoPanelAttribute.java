@@ -13,7 +13,7 @@ import org.metamechanists.quaptics.storage.PersistentDataTraverser;
 import org.metamechanists.quaptics.utils.builders.TextDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.InfoPanelAttributeId;
 import org.metamechanists.quaptics.utils.id.simple.TextDisplayId;
-import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
+import org.metamechanists.quaptics.utils.models.transformations.TransformationMatrixBuilder;
 
 import java.util.Optional;
 

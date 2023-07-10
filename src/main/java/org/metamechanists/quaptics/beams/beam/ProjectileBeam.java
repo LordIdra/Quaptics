@@ -7,8 +7,8 @@ import org.bukkit.util.Vector;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.simple.BlockDisplayId;
-import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
-import org.metamechanists.quaptics.utils.transformations.TransformationUtils;
+import org.metamechanists.quaptics.utils.models.transformations.TransformationMatrixBuilder;
+import org.metamechanists.quaptics.utils.models.transformations.TransformationUtils;
 
 import java.util.Optional;
 

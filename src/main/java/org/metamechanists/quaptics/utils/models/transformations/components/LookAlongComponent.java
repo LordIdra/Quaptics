@@ -1,10 +1,10 @@
-package org.metamechanists.quaptics.utils.transformations.components;
+package org.metamechanists.quaptics.utils.models.transformations.components;
 
 import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
-import org.metamechanists.quaptics.utils.transformations.TransformationUtils;
+import org.metamechanists.quaptics.utils.models.transformations.TransformationUtils;
 
 
 /**

@@ -18,18 +18,31 @@ import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.implementation.attachments.PowerAnimatedBlock;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
+import org.metamechanists.quaptics.items.Lore;
+import org.metamechanists.quaptics.items.Tier;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
-import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
+import org.metamechanists.quaptics.utils.models.transformations.TransformationMatrixBuilder;
 
 import java.util.List;
 import java.util.Optional;
 
 
 public abstract class EntanglementMagnet extends ConnectedBlock implements PowerAnimatedBlock {
+    public static final Settings ENTANGLEMENT_MAGNET_BOTTOM_SETTINGS = Settings.builder()
+            .tier(Tier.PRIMITIVE)
+            .minPower(7)
+            .build();
+    public static final SlimefunItemStack ENTANGLEMENT_MAGNET_BOTTOM = new SlimefunItemStack(
+            "QP_ENTANGLEMENT_MAGNET_BOTTOM",
+            Material.ORANGE_CONCRETE,
+            "&6Entanglement Magnet &8(bottom)",
+            Lore.create(ENTANGLEMENT_MAGNET_BOTTOM_SETTINGS,
+                    "&7● Multiblock component"));
+
     private static final Vector3f BASE_SCALE = new Vector3f(0.80F, 0.40F, 0.80F);
     private static final Vector3f BASE_OFFSET = new Vector3f(0.0F, 0.0F, 0.0F);
     private static final Vector3f BASE_ROTATION = new Vector3f(0.0F, (float) (Math.PI / 4), 0.0F);
@@ -42,6 +55,12 @@ public abstract class EntanglementMagnet extends ConnectedBlock implements Power
     private static final Vector3f COIL_2_OFFSET = new Vector3f(0.30F, 0.0F, -0.30F);
     private static final Vector3f COIL_3_OFFSET = new Vector3f(-0.30F, 0.0F, 0.30F);
     private static final Vector3f COIL_4_OFFSET = new Vector3f(-0.30F, 0.0F, -0.30F);
+    private static final Vector3f BOTTOM_PLATE_SCALE = new Vector3f(0.50F, 0.10F, 0.50F);
+    private static final Vector3f BOTTOM_PLATE_OFFSET = new Vector3f(0.0F, 0.20F, 0.0F);
+    private static final Vector3f BOTTOM_PLATE_ROTATION = new Vector3f(0.0F, (float) (Math.PI / 4), 0.0F);
+    private static final Vector3f TOP_PLATE_SCALE = new Vector3f(0.50F, 0.10F, 0.50F);
+    private static final Vector3f TOP_PLATE_OFFSET = new Vector3f(0.0F, -0.20F, 0.0F);
+    private static final Vector3f TOP_PLATE_ROTATION = new Vector3f(0.0F, (float) (Math.PI / 4), 0.0F);
 
     private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -getConnectionRadius());
 
@@ -61,6 +80,22 @@ public abstract class EntanglementMagnet extends ConnectedBlock implements Power
                         .scale(BASE_SCALE)
                         .rotate(BASE_ROTATION)
                         .translate(BASE_OFFSET)
+                        .buildForBlockDisplay())
+                .build());
+        displayGroup.addDisplay("bottom_plate", new BlockDisplayBuilder(location.toCenterLocation())
+                .setBlockData(Material.LIGHT_GRAY_CONCRETE.createBlockData())
+                .setTransformation(new TransformationMatrixBuilder()
+                        .scale(BOTTOM_PLATE_SCALE)
+                        .rotate(BOTTOM_PLATE_ROTATION)
+                        .translate(BOTTOM_PLATE_OFFSET)
+                        .buildForBlockDisplay())
+                .build());
+        displayGroup.addDisplay("top_plate", new BlockDisplayBuilder(location.toCenterLocation())
+                .setBlockData(Material.LIGHT_GRAY_CONCRETE.createBlockData())
+                .setTransformation(new TransformationMatrixBuilder()
+                        .scale(TOP_PLATE_SCALE)
+                        .rotate(TOP_PLATE_ROTATION)
+                        .translate(TOP_PLATE_OFFSET)
                         .buildForBlockDisplay())
                 .build());
         displayGroup.addDisplay("coil1", new BlockDisplayBuilder(location.toCenterLocation())

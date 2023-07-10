@@ -36,8 +36,8 @@ import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.builders.ItemDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConfigPanelId;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
-import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
-import org.metamechanists.quaptics.utils.transformations.TransformationUtils;
+import org.metamechanists.quaptics.utils.models.transformations.TransformationMatrixBuilder;
+import org.metamechanists.quaptics.utils.models.transformations.TransformationUtils;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.util.List;

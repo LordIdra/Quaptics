@@ -24,8 +24,8 @@ import org.metamechanists.quaptics.items.Tier;
 import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
-import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
-import org.metamechanists.quaptics.utils.transformations.TransformationUtils;
+import org.metamechanists.quaptics.utils.models.transformations.TransformationMatrixBuilder;
+import org.metamechanists.quaptics.utils.models.transformations.TransformationUtils;
 
 import java.util.List;
 import java.util.Objects;

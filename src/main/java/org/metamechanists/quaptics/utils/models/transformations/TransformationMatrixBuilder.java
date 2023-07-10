@@ -1,15 +1,15 @@
-package org.metamechanists.quaptics.utils.transformations;
+package org.metamechanists.quaptics.utils.models.transformations;
 
 import org.bukkit.Location;
 import org.bukkit.block.BlockFace;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
-import org.metamechanists.quaptics.utils.transformations.components.LookAlongComponent;
-import org.metamechanists.quaptics.utils.transformations.components.RotationComponent;
-import org.metamechanists.quaptics.utils.transformations.components.ScaleComponent;
-import org.metamechanists.quaptics.utils.transformations.components.TransformationMatrixComponent;
-import org.metamechanists.quaptics.utils.transformations.components.TranslationComponent;
+import org.metamechanists.quaptics.utils.models.transformations.components.LookAlongComponent;
+import org.metamechanists.quaptics.utils.models.transformations.components.RotationComponent;
+import org.metamechanists.quaptics.utils.models.transformations.components.ScaleComponent;
+import org.metamechanists.quaptics.utils.models.transformations.components.TransformationMatrixComponent;
+import org.metamechanists.quaptics.utils.models.transformations.components.TranslationComponent;
 
 import java.util.ArrayDeque;
 import java.util.Deque;

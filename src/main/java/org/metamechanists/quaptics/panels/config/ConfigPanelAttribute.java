@@ -18,7 +18,7 @@ import org.metamechanists.quaptics.utils.id.complex.ConfigPanelAttributeId;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.id.simple.InteractionId;
 import org.metamechanists.quaptics.utils.id.simple.TextDisplayId;
-import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
+import org.metamechanists.quaptics.utils.models.transformations.TransformationMatrixBuilder;
 
 import java.util.Optional;
 
