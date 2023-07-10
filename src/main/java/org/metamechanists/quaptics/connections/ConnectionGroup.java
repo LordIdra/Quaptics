@@ -9,6 +9,7 @@ import org.metamechanists.quaptics.panels.info.implementation.PointInfoPanel;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
 import org.metamechanists.quaptics.items.Items;
 import org.metamechanists.quaptics.storage.PersistentDataTraverser;
+import org.metamechanists.quaptics.storage.QuapticStorage;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionPointId;
 
@@ -79,5 +80,6 @@ public class ConnectionGroup {
 
     public void remove() {
         getPointList().forEach(ConnectionPoint::remove);
+        QuapticStorage.removeGroup(id);
     }
 }
