@@ -30,8 +30,8 @@ import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConfigPanelId;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
-import org.metamechanists.quaptics.utils.models.transformations.TransformationMatrixBuilder;
-import org.metamechanists.quaptics.utils.models.transformations.TransformationUtils;
+import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
+import org.metamechanists.quaptics.utils.transformations.TransformationUtils;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.util.List;
@@ -71,15 +71,17 @@ public class Launchpad extends ConnectedBlock implements ConfigPanelBlock, Power
         return 0.80F;
     }
     @Override
-    protected void initDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
-        displayGroup.addDisplay("main", new BlockDisplayBuilder(location.toCenterLocation())
-                .setBlockData(Material.CYAN_CONCRETE_POWDER.createBlockData())
-                .setBrightness(Utils.BRIGHTNESS_OFF)
-                .setTransformation(new TransformationMatrixBuilder()
+    protected DisplayGroup initModel(final @NotNull Location location, final @NotNull Player player) {
+        final DisplayGroup displayGroup = new DisplayGroup(location);
+        displayGroup.addDisplay("main", new BlockDisplayBuilder()
+                .blockData(Material.CYAN_CONCRETE_POWDER.createBlockData())
+                .brightness(Utils.BRIGHTNESS_OFF)
+                .transformation(new TransformationMatrixBuilder()
                         .scale(MAIN_DISPLAY_SIZE)
                         .translate(MAIN_DISPLAY_OFFSET)
                         .buildForBlockDisplay())
-                .build());
+                .build(location.toCenterLocation()));
+        return displayGroup;
     }
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {

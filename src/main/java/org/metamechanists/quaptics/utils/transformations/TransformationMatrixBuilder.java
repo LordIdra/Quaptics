@@ -1,15 +1,16 @@
-package org.metamechanists.quaptics.utils.models.transformations;
+package org.metamechanists.quaptics.utils.transformations;
 
 import org.bukkit.Location;
 import org.bukkit.block.BlockFace;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
+import org.joml.Vector3d;
 import org.joml.Vector3f;
-import org.metamechanists.quaptics.utils.models.transformations.components.LookAlongComponent;
-import org.metamechanists.quaptics.utils.models.transformations.components.RotationComponent;
-import org.metamechanists.quaptics.utils.models.transformations.components.ScaleComponent;
-import org.metamechanists.quaptics.utils.models.transformations.components.TransformationMatrixComponent;
-import org.metamechanists.quaptics.utils.models.transformations.components.TranslationComponent;
+import org.metamechanists.quaptics.utils.transformations.components.LookAlong;
+import org.metamechanists.quaptics.utils.transformations.components.Rotation;
+import org.metamechanists.quaptics.utils.transformations.components.Scale;
+import org.metamechanists.quaptics.utils.transformations.components.TransformationMatrixComponent;
+import org.metamechanists.quaptics.utils.transformations.components.Translation;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
@@ -18,6 +19,7 @@ import java.util.Deque;
 /**
  * Builds a transformation matrix by combining {@link TransformationMatrixComponent}s
  */
+@SuppressWarnings("unused")
 public class TransformationMatrixBuilder {
     private static final Vector3f BLOCK_DISPLAY_ADJUSTMENT = new Vector3f(-0.5F);
 
@@ -27,7 +29,7 @@ public class TransformationMatrixBuilder {
      * Represents a translation in X, Y, and Z.
      */
     public TransformationMatrixBuilder translate(final @NotNull Vector3f translation) {
-        components.addLast(new TranslationComponent(translation));
+        components.addLast(new Translation(translation));
         return this;
     }
     /**
@@ -42,7 +44,7 @@ public class TransformationMatrixBuilder {
      * Represents a scale transformation in X, Y, and Z.
      */
     public TransformationMatrixBuilder scale(final @NotNull Vector3f scale) {
-        components.addLast(new ScaleComponent(scale));
+        components.addLast(new Scale(scale));
         return this;
     }
     /**
@@ -55,16 +57,17 @@ public class TransformationMatrixBuilder {
 
     /**
      * Represents a rotation in X, Y, and Z (angles in radians)
+     * The rotation takes a Vector3d instead of a Vector3f because most rotations are in terms of Math.PI, which is a double
      */
-    public TransformationMatrixBuilder rotate(final @NotNull Vector3f rotation) {
-        components.addLast(new RotationComponent(rotation));
+    public TransformationMatrixBuilder rotate(final @NotNull Vector3d rotation) {
+        components.addLast(new Rotation(rotation));
         return this;
     }
     /**
      * Represents a rotation in X, Y, and Z (angles in radians)
      */
-    public TransformationMatrixBuilder rotate(final float x, final float y, final float z) {
-        rotate(new Vector3f(x, y, z));
+    public TransformationMatrixBuilder rotate(final double x, final double y, final double z) {
+        rotate(new Vector3d(x, y, z));
         return this;
     }
 
@@ -72,31 +75,39 @@ public class TransformationMatrixBuilder {
      * Represents a look-along transformation without any roll. To visualise what this transformation does, imagine a player in-game rotating their head.
      */
     public TransformationMatrixBuilder lookAlong(final @NotNull Vector3f direction) {
-        components.addLast(new LookAlongComponent(direction));
+        components.addLast(new LookAlong(direction));
         return this;
     }
     /**
      * Represents a look-along transformation without any roll. To visualise what this transformation does, imagine a player in-game rotating their head.
      */
     public TransformationMatrixBuilder lookAlong(final @NotNull Location from, final @NotNull Location to) {
-        components.addLast(new LookAlongComponent(from, to));
+        components.addLast(new LookAlong(from, to));
+        return this;
+    }
+    /**
+     * Represents a look-along transformation without any roll. To visualise what this transformation does, imagine a player in-game rotating their head.
+     */
+    public TransformationMatrixBuilder lookAlong(final @NotNull Vector3f from, final @NotNull Vector3f to) {
+        components.addLast(new LookAlong(from, to));
         return this;
     }
     /**
      * Represents a look-along transformation without any roll. To visualise what this transformation does, imagine a player in-game rotating their head.
      */
     public TransformationMatrixBuilder lookAlong(final @NotNull BlockFace face) {
-        components.addLast(new LookAlongComponent(face.getDirection().toVector3f()));
+        components.addLast(new LookAlong(face.getDirection().toVector3f()));
         return this;
     }
 
     private @NotNull Matrix4f build() {
-        // Reverse order is used because JOML applies transformations in reverse order
-        // For example new Matrix4f().scale(xyz).rotate(xyz) first rotates and then scales, which is unintuitive and so we want to reverse this behaviour
         final Matrix4f matrix = new Matrix4f();
+
+        // Apply each transformation in turn
         while (!components.isEmpty()) {
             components.removeFirst().apply(matrix);
         }
+
         return matrix;
     }
 
@@ -105,7 +116,7 @@ public class TransformationMatrixBuilder {
      * @return The matrix representing the transformation formed by all the components
      */
     public @NotNull Matrix4f buildForBlockDisplay() {
-        components.addLast(new TranslationComponent(BLOCK_DISPLAY_ADJUSTMENT));
+        components.addLast(new Translation(BLOCK_DISPLAY_ADJUSTMENT));
         return build();
     }
     public @NotNull Matrix4f buildForItemDisplay() {

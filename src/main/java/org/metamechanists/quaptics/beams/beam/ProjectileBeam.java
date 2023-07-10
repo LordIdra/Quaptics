@@ -7,8 +7,8 @@ import org.bukkit.util.Vector;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.simple.BlockDisplayId;
-import org.metamechanists.quaptics.utils.models.transformations.TransformationMatrixBuilder;
-import org.metamechanists.quaptics.utils.models.transformations.TransformationUtils;
+import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
+import org.metamechanists.quaptics.utils.transformations.TransformationUtils;
 
 import java.util.Optional;
 
@@ -19,17 +19,16 @@ public class ProjectileBeam implements Beam {
     private int ageTicks;
 
     public ProjectileBeam(final Material material, final Location source, final Location target, final Vector3f scale, final float speed) {
-        super();
         this.velocity = TransformationUtils.getDisplacement(source, target).normalize().mul(speed);
         this.lifespanTicks = (int) (TransformationUtils.getDisplacement(source, target).length() / speed) + 1;
-        this.displayId = new BlockDisplayId(new BlockDisplayBuilder(source)
-                .setMaterial(material)
-                .setTransformation(new TransformationMatrixBuilder()
+        this.displayId = new BlockDisplayId(new BlockDisplayBuilder()
+                .material(material)
+                .transformation(new TransformationMatrixBuilder()
                         .scale(scale)
                         .lookAlong(source, target)
                         .buildForBlockDisplay())
-                .setBrightness(15)
-                .build()
+                .brightness(15)
+                .build(source)
                 .getUniqueId());
     }
 

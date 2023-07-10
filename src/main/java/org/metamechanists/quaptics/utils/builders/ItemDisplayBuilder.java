@@ -7,11 +7,11 @@ import org.bukkit.entity.Display.Billboard;
 import org.bukkit.entity.Display.Brightness;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 
 @SuppressWarnings("unused")
-public class ItemDisplayBuilder {
-    private final Location location;
+public class ItemDisplayBuilder implements DisplayBuilder {
     private Material material;
     private ItemStack itemStack;
     private Matrix4f transformation;
@@ -20,10 +20,8 @@ public class ItemDisplayBuilder {
     private Billboard billboard;
     private Float viewRange;
 
-    public ItemDisplayBuilder(final Location location) {
-        this.location = location;
-    }
-    public ItemDisplay build() {
+    @Override
+    public ItemDisplay build(@NotNull final Location location) {
         return location.getWorld().spawn(location, ItemDisplay.class, display -> {
             if (material != null) {
                 display.setItemStack(new ItemStack(material));
@@ -52,32 +50,32 @@ public class ItemDisplayBuilder {
         });
     }
 
-    public ItemDisplayBuilder setMaterial(final Material material) {
+    public ItemDisplayBuilder material(final Material material) {
         this.material = material;
         return this;
     }
-    public ItemDisplayBuilder setItemStack(final ItemStack itemStack) {
+    public ItemDisplayBuilder itemStack(final ItemStack itemStack) {
         // Overrides material
         this.itemStack = itemStack;
         return this;
     }
-    public ItemDisplayBuilder setTransformation(final Matrix4f transformation) {
+    public ItemDisplayBuilder transformation(final Matrix4f transformation) {
         this.transformation = transformation;
         return this;
     }
-    public ItemDisplayBuilder setBrightness(final int brightness) {
+    public ItemDisplayBuilder brightness(final int brightness) {
         this.brightness = brightness;
         return this;
     }
-    public ItemDisplayBuilder setGlow(final Color glowColor) {
+    public ItemDisplayBuilder glow(final Color glowColor) {
         this.glowColor = glowColor;
         return this;
     }
-    public ItemDisplayBuilder setBillboard(final Billboard billboard) {
+    public ItemDisplayBuilder billboard(final Billboard billboard) {
         this.billboard = billboard;
         return this;
     }
-    public ItemDisplayBuilder setViewRange(final float viewRange) {
+    public ItemDisplayBuilder viewRange(final float viewRange) {
         this.viewRange = viewRange;
         return this;
     }

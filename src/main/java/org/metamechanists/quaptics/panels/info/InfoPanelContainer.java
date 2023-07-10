@@ -23,7 +23,7 @@ public class InfoPanelContainer {
     private final Map<String, ? extends InfoPanelAttributeId> attributes;
 
     public InfoPanelContainer(final Location location, final Vector spacing, final Map<String, ? extends InfoPanelAttributeId> attributes) {
-        this.id = new InfoPanelId(new InteractionBuilder(location).setHeight(0).setWidth(0).build().getUniqueId());
+        this.id = new InfoPanelId(new InteractionBuilder().height(0).width(0).build(location).getUniqueId());
         this.spacing = spacing;
         this.attributes = attributes;
         saveData();

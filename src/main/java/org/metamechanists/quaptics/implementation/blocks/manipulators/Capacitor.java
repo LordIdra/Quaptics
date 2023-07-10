@@ -18,10 +18,10 @@ import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
 import org.metamechanists.quaptics.connections.Link;
-import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.implementation.attachments.InfoPanelBlock;
 import org.metamechanists.quaptics.implementation.attachments.PowerLossBlock;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
+import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
 import org.metamechanists.quaptics.panels.info.BlockInfoPanel;
@@ -33,8 +33,8 @@ import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.id.complex.InfoPanelId;
-import org.metamechanists.quaptics.utils.models.transformations.TransformationMatrixBuilder;
-import org.metamechanists.quaptics.utils.models.transformations.TransformationUtils;
+import org.metamechanists.quaptics.utils.models.components.ModelDiamond;
+import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.util.List;
@@ -72,25 +72,27 @@ public class Capacitor extends ConnectedBlock implements InfoPanelBlock, PowerLo
         return 0.60F;
     }
     @Override
-    protected void initDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
-        displayGroup.addDisplay("mainGlass", new BlockDisplayBuilder(location.toCenterLocation())
-                .setMaterial(Material.GLASS)
-                .setTransformation(new TransformationMatrixBuilder()
+    protected DisplayGroup initModel(final @NotNull Location location, final @NotNull Player player) {
+        final DisplayGroup displayGroup = new DisplayGroup(location);
+        displayGroup.addDisplay("mainGlass", new BlockDisplayBuilder()
+                .material(Material.GLASS)
+                .transformation(new TransformationMatrixBuilder()
                         .scale(MAIN_GLASS_DISPLAY_SIZE)
-                        .rotate(TransformationUtils.PRISM_ROTATION)
+                        .rotate(ModelDiamond.ROTATION)
                         .buildForBlockDisplay())
-                .build());
-        displayGroup.addDisplay("tierGlass", new BlockDisplayBuilder(location.toCenterLocation())
-                .setMaterial(settings.getTier().glassMaterial)
-                .setTransformation(new TransformationMatrixBuilder()
+                .build(location.toCenterLocation()));
+        displayGroup.addDisplay("tierGlass", new BlockDisplayBuilder()
+                .material(settings.getTier().glassMaterial)
+                .transformation(new TransformationMatrixBuilder()
                         .scale(TIER_GLASS_DISPLAY_SIZE)
-                        .rotate(TransformationUtils.PRISM_ROTATION)
+                        .rotate(ModelDiamond.ROTATION)
                         .buildForBlockDisplay())
-                .build());
-        displayGroup.addDisplay("concrete", new BlockDisplayBuilder(location.toCenterLocation())
-                .setMaterial(Material.LIGHT_BLUE_CONCRETE)
-                .setBrightness(Utils.BRIGHTNESS_ON)
-                .build());
+                .build(location.toCenterLocation()));
+        displayGroup.addDisplay("concrete", new BlockDisplayBuilder()
+                .material(Material.LIGHT_BLUE_CONCRETE)
+                .brightness(Utils.BRIGHTNESS_ON)
+                .build(location.toCenterLocation()));
+        return displayGroup;
     }
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
@@ -188,7 +190,7 @@ public class Capacitor extends ConnectedBlock implements InfoPanelBlock, PowerLo
     private @NotNull Matrix4f getConcreteTransformationMatrix(final double charge) {
         return new TransformationMatrixBuilder()
                 .scale(new Vector3f(MAX_CONCRETE_DISPLAY_SIZE).mul((float)(charge/settings.getChargeCapacity())))
-                .rotate(TransformationUtils.PRISM_ROTATION)
+                .rotate(ModelDiamond.ROTATION)
                 .buildForBlockDisplay();
     }
     private void updateConcreteTransformation(final Location location) {

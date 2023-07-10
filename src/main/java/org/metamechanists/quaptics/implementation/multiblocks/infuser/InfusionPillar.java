@@ -25,7 +25,7 @@ import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
-import org.metamechanists.quaptics.utils.models.transformations.TransformationMatrixBuilder;
+import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
 
 import java.util.List;
 import java.util.Optional;
@@ -57,21 +57,23 @@ public class InfusionPillar extends ConnectedBlock implements PowerAnimatedBlock
         return 0.30F;
     }
     @Override
-    protected void initDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
-        displayGroup.addDisplay("pillar", new BlockDisplayBuilder(location.toCenterLocation())
-                .setBlockData(Material.BLUE_CONCRETE.createBlockData())
-                .setTransformation(new TransformationMatrixBuilder()
+    protected DisplayGroup initModel(final @NotNull Location location, final @NotNull Player player) {
+        final DisplayGroup displayGroup = new DisplayGroup(location);
+        displayGroup.addDisplay("pillar", new BlockDisplayBuilder()
+                .blockData(Material.BLUE_CONCRETE.createBlockData())
+                .transformation(new TransformationMatrixBuilder()
                         .scale(PILLAR_SCALE)
                         .translate(PILLAR_OFFSET)
                         .buildForBlockDisplay())
-                .build());
-        displayGroup.addDisplay("prism", new BlockDisplayBuilder(location.toCenterLocation())
-                .setBlockData(Material.LIGHT_BLUE_STAINED_GLASS.createBlockData())
-                .setBrightness(Utils.BRIGHTNESS_OFF)
-                .setTransformation(new TransformationMatrixBuilder()
+                .build(location.toCenterLocation()));
+        displayGroup.addDisplay("prism", new BlockDisplayBuilder()
+                .blockData(Material.LIGHT_BLUE_STAINED_GLASS.createBlockData())
+                .brightness(Utils.BRIGHTNESS_OFF)
+                .transformation(new TransformationMatrixBuilder()
                         .scale(PRISM_SCALE)
                         .buildForBlockDisplay())
-                .build());
+                .build(location.toCenterLocation()));
+        return displayGroup;
     }
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {

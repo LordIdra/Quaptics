@@ -33,7 +33,7 @@ import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.builders.ItemDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.id.complex.InfoPanelId;
-import org.metamechanists.quaptics.utils.models.transformations.TransformationMatrixBuilder;
+import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.util.List;
@@ -69,40 +69,42 @@ public class Charger extends ConnectedBlock implements InfoPanelBlock, ItemHolde
         return 0.60F;
     }
     @Override
-    protected void initDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
-        displayGroup.addDisplay("mainTop", new BlockDisplayBuilder(location.toCenterLocation())
-                .setBlockData(Material.SMOOTH_STONE_SLAB.createBlockData("[type=top]"))
-                .setTransformation(new TransformationMatrixBuilder()
+    protected DisplayGroup initModel(final @NotNull Location location, final @NotNull Player player) {
+        final DisplayGroup displayGroup = new DisplayGroup(location);
+        displayGroup.addDisplay("mainTop", new BlockDisplayBuilder()
+                .blockData(Material.SMOOTH_STONE_SLAB.createBlockData("[type=top]"))
+                .transformation(new TransformationMatrixBuilder()
                         .scale(MAIN_DISPLAY_SIZE)
                         .translate(TOP_OFFSET)
                         .buildForBlockDisplay())
-                .build());
-        displayGroup.addDisplay("mainBottom", new BlockDisplayBuilder(location.toCenterLocation())
-                .setBlockData(Material.SMOOTH_STONE_SLAB.createBlockData("[type=bottom]"))
-                .setTransformation(new TransformationMatrixBuilder()
+                .build(location.toCenterLocation()));
+        displayGroup.addDisplay("mainBottom", new BlockDisplayBuilder()
+                .blockData(Material.SMOOTH_STONE_SLAB.createBlockData("[type=bottom]"))
+                .transformation(new TransformationMatrixBuilder()
                         .scale(MAIN_DISPLAY_SIZE)
                         .translate(BOTTOM_OFFSET)
                         .buildForBlockDisplay())
-                .build());
-        displayGroup.addDisplay("glassTop", new BlockDisplayBuilder(location.toCenterLocation())
-                .setMaterial(Material.LIGHT_BLUE_STAINED_GLASS)
-                .setTransformation(new TransformationMatrixBuilder()
+                .build(location.toCenterLocation()));
+        displayGroup.addDisplay("glassTop", new BlockDisplayBuilder()
+                .material(Material.LIGHT_BLUE_STAINED_GLASS)
+                .transformation(new TransformationMatrixBuilder()
                         .scale(GLASS_DISPLAY_SIZE)
                         .translate(TOP_OFFSET)
                         .buildForBlockDisplay())
-                .build());
-        displayGroup.addDisplay("glassBottom", new BlockDisplayBuilder(location.toCenterLocation())
-                .setMaterial(Material.LIGHT_BLUE_STAINED_GLASS)
-                .setTransformation(new TransformationMatrixBuilder()
+                .build(location.toCenterLocation()));
+        displayGroup.addDisplay("glassBottom", new BlockDisplayBuilder()
+                .material(Material.LIGHT_BLUE_STAINED_GLASS)
+                .transformation(new TransformationMatrixBuilder()
                         .scale(GLASS_DISPLAY_SIZE)
                         .translate(BOTTOM_OFFSET)
                         .buildForBlockDisplay())
-                .build());
-        displayGroup.addDisplay("item", new ItemDisplayBuilder(location.toCenterLocation())
-                .setTransformation(new TransformationMatrixBuilder()
+                .build(location.toCenterLocation()));
+        displayGroup.addDisplay("item", new ItemDisplayBuilder()
+                .transformation(new TransformationMatrixBuilder()
                         .scale(ITEM_DISPLAY_SIZE)
                         .buildForItemDisplay())
-                .build());
+                .build(location.toCenterLocation()));
+        return displayGroup;
     }
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {

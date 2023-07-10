@@ -1,13 +1,13 @@
-package org.metamechanists.quaptics.utils.models.transformations.components;
+package org.metamechanists.quaptics.utils.transformations.components;
 
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
-public class ScaleComponent implements TransformationMatrixComponent {
+public class Scale implements TransformationMatrixComponent {
     private final Vector3f scale;
 
-    public ScaleComponent(@NotNull final Vector3f scale) {
+    public Scale(@NotNull final Vector3f scale) {
         this.scale = scale;
     }
 

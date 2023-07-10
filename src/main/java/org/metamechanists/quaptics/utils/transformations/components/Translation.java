@@ -1,13 +1,13 @@
-package org.metamechanists.quaptics.utils.models.transformations.components;
+package org.metamechanists.quaptics.utils.transformations.components;
 
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
-public class TranslationComponent implements TransformationMatrixComponent {
+public class Translation implements TransformationMatrixComponent {
     private final Vector3f translation;
 
-    public TranslationComponent(@NotNull final Vector3f translation) {
+    public Translation(@NotNull final Vector3f translation) {
         this.translation = translation;
     }
 

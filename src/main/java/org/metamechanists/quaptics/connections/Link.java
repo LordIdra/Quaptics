@@ -47,7 +47,7 @@ public class Link {
 
         this.inputLocation = input.getLocation().get();
         this.outputLocation = output.getLocation().get();
-        this.id = new LinkId(new InteractionBuilder(inputLocation).setHeight(0).setWidth(0).build().getUniqueId());
+        this.id = new LinkId(new InteractionBuilder().height(0).width(0).build(inputLocation).getUniqueId());
         this.maxPower = input.getGroup().get().getBlock().getSettings().getTier().maxPower;
 
         saveData(); // the points being linked will not be able to get the link from the id without this line

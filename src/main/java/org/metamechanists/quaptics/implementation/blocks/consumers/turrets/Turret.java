@@ -29,7 +29,7 @@ import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
-import org.metamechanists.quaptics.utils.models.transformations.TransformationMatrixBuilder;
+import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
 
 import java.util.Collection;
 import java.util.List;
@@ -53,14 +53,16 @@ public abstract class Turret extends ConnectedBlock {
         return settings.getConnectionRadius();
     }
     @Override
-    protected void initDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
-        displayGroup.addDisplay("main", new BlockDisplayBuilder(location.toCenterLocation())
-                .setMaterial(settings.getMainMaterial())
-                .setTransformation(new TransformationMatrixBuilder()
+    protected DisplayGroup initModel(final @NotNull Location location, final @NotNull Player player) {
+        final DisplayGroup displayGroup = new DisplayGroup(location);
+        displayGroup.addDisplay("main", new BlockDisplayBuilder()
+                .material(settings.getMainMaterial())
+                .transformation(new TransformationMatrixBuilder()
                         .scale(mainDisplaySize)
                         .buildForBlockDisplay())
-                .build());
+                .build(location.toCenterLocation()));
         displayGroup.addDisplay("barrel", generateBarrel(location, location.clone().add(barrelLocation).add(new Vector(0, -1, 0))));
+        return displayGroup;
     }
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
@@ -100,10 +102,10 @@ public abstract class Turret extends ConnectedBlock {
                 .buildForBlockDisplay();
     }
     private BlockDisplay generateBarrel(@NotNull final Location from, final Location to) {
-        return new BlockDisplayBuilder(from.clone().add(barrelLocation))
-                .setMaterial(Material.GRAY_CONCRETE)
-                .setTransformation(getBarrelMatrix(from, to))
-                .build();
+        return new BlockDisplayBuilder()
+                .material(Material.GRAY_CONCRETE)
+                .transformation(getBarrelMatrix(from, to))
+                .build(from.clone().add(barrelLocation));
     }
     private void updateBarrelTransformation(final Location location, final LivingEntity target) {
         getDisplay(location, "barrel").ifPresent(value -> value.setTransformationMatrix(getBarrelMatrix(location, target.getEyeLocation())));

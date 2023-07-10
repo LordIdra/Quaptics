@@ -30,7 +30,7 @@ import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.id.simple.DisplayGroupId;
-import org.metamechanists.quaptics.utils.models.transformations.TransformationUtils;
+import org.metamechanists.quaptics.utils.transformations.TransformationUtils;
 
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
@@ -62,8 +62,7 @@ public abstract class QuapticBlock extends SlimefunItem {
                     @Override
                     public void onPlayerPlace(@Nonnull final BlockPlaceEvent event) {
                         final Location location = event.getBlock().getLocation();
-                        final DisplayGroup displayGroup = new DisplayGroup(location, 0, 0);
-                        initDisplays(displayGroup, location, event.getPlayer());
+                        final DisplayGroup displayGroup = initModel(location, event.getPlayer());
                         setId(displayGroup, location);
                         event.getBlock().setType(getBaseMaterial());
                         initBlockStorage(location);
@@ -97,7 +96,7 @@ public abstract class QuapticBlock extends SlimefunItem {
     }
 
     @ParametersAreNonnullByDefault
-    protected abstract void initDisplays(DisplayGroup displayGroup, Location location, Player player);
+    protected abstract DisplayGroup initModel(Location location, Player player);
     protected void initBlockStorage(@NotNull final Location location) {}
 
     protected void onPlace(@NotNull final BlockPlaceEvent event) {}

@@ -36,8 +36,9 @@ import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.builders.ItemDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConfigPanelId;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
-import org.metamechanists.quaptics.utils.models.transformations.TransformationMatrixBuilder;
-import org.metamechanists.quaptics.utils.models.transformations.TransformationUtils;
+import org.metamechanists.quaptics.utils.models.components.ModelDiamond;
+import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
+import org.metamechanists.quaptics.utils.transformations.TransformationUtils;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.util.List;
@@ -79,28 +80,30 @@ public class ItemProjector extends ConnectedBlock implements ItemHolderBlock, Po
         return 0.6F;
     }
     @Override
-    protected void initDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
-        displayGroup.addDisplay("main", new BlockDisplayBuilder(location.toCenterLocation())
-                .setBlockData(Material.LIGHT_GRAY_CONCRETE.createBlockData())
-                .setTransformation(new TransformationMatrixBuilder()
+    protected DisplayGroup initModel(final @NotNull Location location, final @NotNull Player player) {
+        final DisplayGroup displayGroup = new DisplayGroup(location);
+        displayGroup.addDisplay("main", new BlockDisplayBuilder()
+                .blockData(Material.LIGHT_GRAY_CONCRETE.createBlockData())
+                .transformation(new TransformationMatrixBuilder()
                         .scale(MAIN_DISPLAY_SIZE)
                         .translate(MAIN_DISPLAY_OFFSET)
                         .buildForBlockDisplay())
-                .build());
-        displayGroup.addDisplay("prism", new BlockDisplayBuilder(location.toCenterLocation())
-                .setBlockData(Material.CYAN_STAINED_GLASS.createBlockData())
-                .setBrightness(Utils.BRIGHTNESS_OFF)
-                .setTransformation(new TransformationMatrixBuilder()
+                .build(location.toCenterLocation()));
+        displayGroup.addDisplay("prism", new BlockDisplayBuilder()
+                .blockData(Material.CYAN_STAINED_GLASS.createBlockData())
+                .brightness(Utils.BRIGHTNESS_OFF)
+                .transformation(new TransformationMatrixBuilder()
                         .scale(PRISM_DISPLAY_SIZE)
-                        .rotate(TransformationUtils.PRISM_ROTATION)
+                        .rotate(ModelDiamond.ROTATION)
                         .buildForBlockDisplay())
-                .build());
-        displayGroup.addDisplay("item", new ItemDisplayBuilder(location.toCenterLocation())
-                .setTransformation(calculateItemTransformation(0, 0))
-                .setViewRange(Utils.VIEW_RANGE_OFF)
-                .setBillboard(Billboard.VERTICAL)
-                .setBrightness(Utils.BRIGHTNESS_ON)
-                .build());
+                .build(location.toCenterLocation()));
+        displayGroup.addDisplay("item", new ItemDisplayBuilder()
+                .transformation(calculateItemTransformation(0, 0))
+                .viewRange(Utils.VIEW_RANGE_OFF)
+                .billboard(Billboard.VERTICAL)
+                .brightness(Utils.BRIGHTNESS_ON)
+                .build(location.toCenterLocation()));
+        return displayGroup;
     }
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {

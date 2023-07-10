@@ -33,7 +33,7 @@ import org.metamechanists.quaptics.utils.SlimefunIsDumbUtils;
 import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
-import org.metamechanists.quaptics.utils.models.transformations.TransformationMatrixBuilder;
+import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
 
 import java.util.List;
 import java.util.Optional;
@@ -69,23 +69,25 @@ public class MultiblockClicker extends ConnectedBlock implements PowerAnimatedBl
         return 0.35F;
     }
     @Override
-    protected void initDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
+    protected DisplayGroup initModel(final @NotNull Location location, final @NotNull Player player) {
+        final DisplayGroup displayGroup = new DisplayGroup(location);
         player.getFacing();
-        displayGroup.addDisplay("main", new BlockDisplayBuilder(location.toCenterLocation())
-                .setBlockData(Material.CYAN_CONCRETE.createBlockData())
-                .setBrightness(Utils.BRIGHTNESS_OFF)
-                .setTransformation(new TransformationMatrixBuilder()
+        displayGroup.addDisplay("main", new BlockDisplayBuilder()
+                .blockData(Material.CYAN_CONCRETE.createBlockData())
+                .brightness(Utils.BRIGHTNESS_OFF)
+                .transformation(new TransformationMatrixBuilder()
                         .scale(MAIN_DISPLAY_SIZE)
                         .buildForBlockDisplay())
-                .build());
-        displayGroup.addDisplay("attachment", new BlockDisplayBuilder(formatPointLocation(player, location, RELATIVE_PLATE_LOCATION))
-                .setBlockData(Material.WHITE_CONCRETE.createBlockData())
-                .setTransformation(new TransformationMatrixBuilder()
+                .build(location.toCenterLocation()));
+        displayGroup.addDisplay("attachment", new BlockDisplayBuilder()
+                .blockData(Material.WHITE_CONCRETE.createBlockData())
+                .transformation(new TransformationMatrixBuilder()
                         .scale(ATTACHMENT_DISPLAY_SIZE)
                         .lookAlong(player.getFacing())
                         .buildForBlockDisplay())
-                .build());
+                .build(formatPointLocation(player, location, RELATIVE_PLATE_LOCATION)));
         BlockStorageAPI.set(location, Keys.BS_FACING, player.getFacing());
+        return displayGroup;
     }
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {

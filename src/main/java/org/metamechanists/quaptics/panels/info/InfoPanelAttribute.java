@@ -13,7 +13,7 @@ import org.metamechanists.quaptics.storage.PersistentDataTraverser;
 import org.metamechanists.quaptics.utils.builders.TextDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.InfoPanelAttributeId;
 import org.metamechanists.quaptics.utils.id.simple.TextDisplayId;
-import org.metamechanists.quaptics.utils.models.transformations.TransformationMatrixBuilder;
+import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
 
 import java.util.Optional;
 
@@ -25,15 +25,15 @@ public class InfoPanelAttribute {
     private boolean hidden;
 
     public InfoPanelAttribute(final @NotNull Location location, final Vector3f displaySize) {
-        this.id = new TextDisplayId(new TextDisplayBuilder(location)
-                .setTransformation(new TransformationMatrixBuilder()
+        this.id = new TextDisplayId(new TextDisplayBuilder()
+                .transformation(new TransformationMatrixBuilder()
                         .scale(displaySize)
                         .buildForTextDisplay())
-                .setBrightness(15)
-                .setViewRange(0)
-                .setBillboard(Billboard.VERTICAL)
-                .setBackgroundColor(Color.fromARGB(0, 0, 0, 0))
-                .build().getUniqueId());
+                .brightness(15)
+                .viewRange(0)
+                .billboard(Billboard.VERTICAL)
+                .backgroundColor(Color.fromARGB(0, 0, 0, 0))
+                .build(location).getUniqueId());
         this.hidden = false;
         saveData();
     }

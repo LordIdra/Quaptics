@@ -12,14 +12,12 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Unmodifiable;
-import org.joml.Vector3f;
 import org.metamechanists.quaptics.implementation.tools.multiblockwand.MultiblockWand;
 import org.metamechanists.quaptics.storage.PersistentDataTraverser;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Language;
-import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.builders.InteractionBuilder;
-import org.metamechanists.quaptics.utils.models.transformations.TransformationMatrixBuilder;
+import org.metamechanists.quaptics.utils.models.components.ModelCuboid;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +29,10 @@ public interface ComplexMultiblock {
     Color WRONG_MATERIAL_COLOR = Color.fromARGB(255, 255, 0, 0);
     Color RIGHT_MATERIAL_COLOR = Color.fromARGB(255, 0, 255, 0);
     int DISPLAY_BRIGHTNESS = 15;
-    float DISPLAY_SCALE = 0.75F;
+    float DISPLAY_SIZE = 0.75F;
+    ModelCuboid GHOST_BLOCK_DISPLAY = new ModelCuboid()
+            .size(DISPLAY_SIZE)
+            .brightness(DISPLAY_BRIGHTNESS);
 
     private static boolean isStructureBlockValid(final @NotNull Block center, final @NotNull Vector offset, final ItemStack predicted) {
         final Block actual = center.getRelative(offset.getBlockX(), offset.getBlockY(), offset.getBlockZ());
@@ -51,23 +52,17 @@ public interface ComplexMultiblock {
 
     private static @NotNull @Unmodifiable List<UUID> visualiseBlock(final @NotNull Block center, final @NotNull Vector offset, final @NotNull ItemStack itemStack) {
         final Block block = center.getRelative(offset.getBlockX(), offset.getBlockY(), offset.getBlockZ());
-        final BlockDisplayBuilder blockDisplayBuilder = new BlockDisplayBuilder(block.getLocation().toCenterLocation())
-                .setBrightness(DISPLAY_BRIGHTNESS)
-                .setMaterial(itemStack.getType())
-                .setTransformation(new TransformationMatrixBuilder()
-                        .scale(new Vector3f(DISPLAY_SCALE))
-                        .buildForBlockDisplay());
         if (block.getType().isEmpty()) {
-            blockDisplayBuilder.setGlow(EMPTY_COLOR);
+            GHOST_BLOCK_DISPLAY.glow(EMPTY_COLOR);
         } else {
-            blockDisplayBuilder.setGlow(isStructureBlockValid(block, itemStack) ? RIGHT_MATERIAL_COLOR : WRONG_MATERIAL_COLOR);
+            GHOST_BLOCK_DISPLAY.glow(isStructureBlockValid(block, itemStack) ? RIGHT_MATERIAL_COLOR : WRONG_MATERIAL_COLOR);
         }
 
-        final BlockDisplay blockDisplay = blockDisplayBuilder.build();
-        final Interaction interaction = new InteractionBuilder(block.getLocation().toCenterLocation().subtract(new Vector(0, DISPLAY_SCALE/2, 0)))
-                .setWidth(DISPLAY_SCALE)
-                .setHeight(DISPLAY_SCALE)
-                .build();
+        final BlockDisplay blockDisplay = GHOST_BLOCK_DISPLAY.build(center);
+        final Interaction interaction = new InteractionBuilder()
+                .width(DISPLAY_SIZE)
+                .height(DISPLAY_SIZE)
+                .build(block.getLocation().toCenterLocation().subtract(new Vector(0, DISPLAY_SIZE/2, 0)));
 
         final SlimefunItem slimefunItem = SlimefunItem.getByItem(itemStack);
         final String blockName = slimefunItem != null ? slimefunItem.getItemName() : ChatUtils.humanize(itemStack.getType().name());

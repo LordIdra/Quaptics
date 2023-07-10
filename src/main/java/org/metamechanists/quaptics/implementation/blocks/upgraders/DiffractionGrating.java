@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
+import org.joml.Vector3d;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
@@ -26,8 +27,8 @@ import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionPointId;
-import org.metamechanists.quaptics.utils.models.transformations.TransformationMatrixBuilder;
-import org.metamechanists.quaptics.utils.models.transformations.TransformationUtils;
+import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
+import org.metamechanists.quaptics.utils.transformations.TransformationUtils;
 
 import java.util.List;
 import java.util.Optional;
@@ -53,16 +54,16 @@ public class DiffractionGrating extends ConnectedBlock implements PowerAnimatedB
                     "&7● The size of the increase depends on how close the",
                     "&7  auxiliary input is to the target phase"));
 
-    private static final Vector3f MAIN_ROTATION = new Vector3f(0.0F, (float) (Math.PI * 2/3), 0.0F);
+    private static final Vector3d MAIN_ROTATION = new Vector3d(0.0F, Math.PI * 2/3, 0.0F);
     private static final Vector3f MAIN_SIZE = new Vector3f(0.20F, 0.20F, 0.40F);
-    private static final Vector3f MAIN_OFFSET = new Vector3f(0.0F, 0.0F, 0.20F).rotateY(MAIN_ROTATION.y);
-    private static final Vector3f OUTPUT_ROTATION = new Vector3f(0.0F, (float) (-Math.PI * 2/3), 0.0F);
+    private static final Vector3f MAIN_OFFSET = new Vector3f(0.0F, 0.0F, 0.20F).rotateY((float) MAIN_ROTATION.y);
+    private static final Vector3d OUTPUT_ROTATION = new Vector3d(0.0F, -Math.PI * 2/3, 0.0F);
     private static final Vector3f OUTPUT_SIZE = new Vector3f(0.20F, 0.20F, 0.40F);
-    private static final Vector3f OUTPUT_OFFSET = new Vector3f(0.0F, 0.0F, 0.20F).rotateY(OUTPUT_ROTATION.y);
-    private static final Vector3f AUXILIARY_ROTATION = new Vector3f(0.0F, 0.0F, 0.0F);
+    private static final Vector3f OUTPUT_OFFSET = new Vector3f(0.0F, 0.0F, 0.20F).rotateY((float) OUTPUT_ROTATION.y);
+    private static final Vector3d AUXILIARY_ROTATION = new Vector3d(0.0F, 0.0F, 0.0F);
     private static final Vector3f AUXILIARY_SIZE = new Vector3f(0.15F, 0.15F, 0.40F);
-    private static final Vector3f AUXILIARY_OFFSET = new Vector3f(0.0F, 0.0F, 0.20F).rotateY(AUXILIARY_ROTATION.y);
-    private static final Vector3f PRISM_ROTATION = new Vector3f(0.0F, (float) (Math.PI/4), 0.0F);
+    private static final Vector3f AUXILIARY_OFFSET = new Vector3f(0.0F, 0.0F, 0.20F).rotateY((float) AUXILIARY_ROTATION.y);
+    private static final Vector3d PRISM_ROTATION = new Vector3d(0.0F, Math.PI/4, 0.0F);
     private static final Vector3f PRISM_SIZE = new Vector3f(0.25F);
 
     private final Vector mainPointLocation = new Vector(0.0F, 0.0F, -getConnectionRadius()).rotateAroundY(MAIN_ROTATION.y);
@@ -83,44 +84,46 @@ public class DiffractionGrating extends ConnectedBlock implements PowerAnimatedB
         return point.isPresent() ? point.get().getLocation() : Optional.empty();
     }
     @Override
-    protected void initDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, @NotNull final Player player) {
+    protected DisplayGroup initModel(final @NotNull Location location, final @NotNull Player player) {
+        final DisplayGroup displayGroup = new DisplayGroup(location);
         final BlockFace face = TransformationUtils.yawToFace(player.getEyeLocation().getYaw());
-        displayGroup.addDisplay("main", new BlockDisplayBuilder(location.toCenterLocation())
-                .setMaterial(Material.TERRACOTTA)
-                .setTransformation(new TransformationMatrixBuilder()
+        displayGroup.addDisplay("main", new BlockDisplayBuilder()
+                .material(Material.TERRACOTTA)
+                .transformation(new TransformationMatrixBuilder()
                         .scale(MAIN_SIZE)
                         .rotate(MAIN_ROTATION)
                         .translate(MAIN_OFFSET)
                         .lookAlong(face)
                         .buildForBlockDisplay())
-                .build());
-        displayGroup.addDisplay("output", new BlockDisplayBuilder(location.toCenterLocation())
-                .setMaterial(Material.TERRACOTTA)
-                .setTransformation(new TransformationMatrixBuilder()
+                .build(location.toCenterLocation()));
+        displayGroup.addDisplay("output", new BlockDisplayBuilder()
+                .material(Material.TERRACOTTA)
+                .transformation(new TransformationMatrixBuilder()
                         .scale(OUTPUT_SIZE)
                         .rotate(OUTPUT_ROTATION)
                         .translate(OUTPUT_OFFSET)
                         .lookAlong(face)
                         .buildForBlockDisplay())
-                .build());
-        displayGroup.addDisplay("auxiliary", new BlockDisplayBuilder(location.toCenterLocation())
-                .setMaterial(Material.GRAY_CONCRETE)
-                .setTransformation(new TransformationMatrixBuilder()
+                .build(location.toCenterLocation()));
+        displayGroup.addDisplay("auxiliary", new BlockDisplayBuilder()
+                .material(Material.GRAY_CONCRETE)
+                .transformation(new TransformationMatrixBuilder()
                         .scale(AUXILIARY_SIZE)
                         .rotate(AUXILIARY_ROTATION)
                         .translate(AUXILIARY_OFFSET)
                         .lookAlong(face)
                         .buildForBlockDisplay())
-                .build());
-        displayGroup.addDisplay("prism", new BlockDisplayBuilder(location.toCenterLocation())
-                .setMaterial(settings.getTier().concreteMaterial)
-                .setBrightness(Utils.BRIGHTNESS_OFF)
-                .setTransformation(new TransformationMatrixBuilder()
+                .build(location.toCenterLocation()));
+        displayGroup.addDisplay("prism", new BlockDisplayBuilder()
+                .material(settings.getTier().concreteMaterial)
+                .brightness(Utils.BRIGHTNESS_OFF)
+                .transformation(new TransformationMatrixBuilder()
                         .scale(PRISM_SIZE)
                         .lookAlong(face)
                         .rotate(PRISM_ROTATION)
                         .buildForBlockDisplay())
-                .build());
+                .build(location.toCenterLocation()));
+        return displayGroup;
     }
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {

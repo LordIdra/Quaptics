@@ -22,7 +22,7 @@ public class ConfigPanelContainer {
     private final Map<String, ? extends ConfigPanelAttributeId> attributes;
 
     public ConfigPanelContainer(final Location location, final Map<String, ? extends ConfigPanelAttributeId> attributes) {
-        this.id = new ConfigPanelId(new InteractionBuilder(location).setHeight(0).setWidth(0).build().getUniqueId());
+        this.id = new ConfigPanelId(new InteractionBuilder().height(0).width(0).build(location).getUniqueId());
         this.attributes = attributes;
         saveData();
     }

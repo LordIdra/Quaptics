@@ -29,8 +29,9 @@ import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
-import org.metamechanists.quaptics.utils.models.transformations.TransformationMatrixBuilder;
-import org.metamechanists.quaptics.utils.models.transformations.TransformationUtils;
+import org.metamechanists.quaptics.utils.models.components.ModelDiamond;
+import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
+import org.metamechanists.quaptics.utils.transformations.TransformationUtils;
 
 import java.util.List;
 import java.util.Objects;
@@ -71,33 +72,35 @@ public class Scatterer extends ConnectedBlock implements PowerAnimatedBlock, Pow
         return 0.50F;
     }
     @Override
-    protected void initDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, @NotNull final Player player) {
+    protected DisplayGroup initModel(final @NotNull Location location, final @NotNull Player player) {
+        final DisplayGroup displayGroup = new DisplayGroup(location);
         final BlockFace face = TransformationUtils.yawToFace(player.getEyeLocation().getYaw());
-        displayGroup.addDisplay("main", new BlockDisplayBuilder(location.toCenterLocation())
-                .setMaterial(Material.ORANGE_STAINED_GLASS)
-                .setTransformation(new TransformationMatrixBuilder()
+        displayGroup.addDisplay("main", new BlockDisplayBuilder()
+                .material(Material.ORANGE_STAINED_GLASS)
+                .transformation(new TransformationMatrixBuilder()
                         .scale(GLASS_DISPLAY_SIZE)
-                        .rotate(TransformationUtils.PRISM_ROTATION)
+                        .rotate(ModelDiamond.ROTATION)
                         .buildForBlockDisplay())
-                .build());
-        displayGroup.addDisplay("concrete", new BlockDisplayBuilder(location.toCenterLocation())
-                .setMaterial(settings.getTier().concreteMaterial)
-                .setBrightness(Utils.BRIGHTNESS_ON)
-                .setTransformation(new TransformationMatrixBuilder()
+                .build(location.toCenterLocation()));
+        displayGroup.addDisplay("concrete", new BlockDisplayBuilder()
+                .material(settings.getTier().concreteMaterial)
+                .brightness(Utils.BRIGHTNESS_ON)
+                .transformation(new TransformationMatrixBuilder()
                         .scale(CONCRETE_DISPLAY_SIZE)
                         .translate(CONCRETE_OFFSET)
                         .buildForBlockDisplay())
-                .build());
-        final BlockDisplay comparator = new BlockDisplayBuilder(location.toCenterLocation())
-                .setMaterial(Material.COMPARATOR)
-                .setBlockData(createComparatorBlockData(face.name().toLowerCase(), false))
-                .setTransformation(new TransformationMatrixBuilder()
+                .build(location.toCenterLocation()));
+        final BlockDisplay comparator = new BlockDisplayBuilder()
+                .material(Material.COMPARATOR)
+                .blockData(createComparatorBlockData(face.name().toLowerCase(), false))
+                .transformation(new TransformationMatrixBuilder()
                         .scale(COMPARATOR_DISPLAY_SIZE)
                         .translate(COMPARATOR_OFFSET)
                         .buildForBlockDisplay())
-                .build();
+                .build(location.toCenterLocation());
         PersistentDataAPI.setString(comparator, Keys.FACING, face.name().toLowerCase());
         displayGroup.addDisplay("comparator", comparator);
+        return displayGroup;
     }
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
@@ -135,7 +138,7 @@ public class Scatterer extends ConnectedBlock implements PowerAnimatedBlock, Pow
         blockDisplay.ifPresent(display -> display.setBlock(createComparatorBlockData(PersistentDataAPI.getString(display, Keys.FACING), powered)));
     }
 
-    private double calculateFrequency(@NotNull final Settings settings, final double frequency) {
+    private static double calculateFrequency(@NotNull final Settings settings, final double frequency) {
         return frequency * settings.getFrequencyMultiplier();
     }
 

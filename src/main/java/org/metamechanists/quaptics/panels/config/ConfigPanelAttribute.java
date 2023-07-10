@@ -10,6 +10,7 @@ import org.bukkit.entity.TextDisplay;
 import org.bukkit.entity.TextDisplay.TextAlignment;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
+import org.joml.Vector3d;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.storage.PersistentDataTraverser;
 import org.metamechanists.quaptics.utils.builders.InteractionBuilder;
@@ -18,7 +19,7 @@ import org.metamechanists.quaptics.utils.id.complex.ConfigPanelAttributeId;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.id.simple.InteractionId;
 import org.metamechanists.quaptics.utils.id.simple.TextDisplayId;
-import org.metamechanists.quaptics.utils.models.transformations.TransformationMatrixBuilder;
+import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
 
 import java.util.Optional;
 
@@ -40,59 +41,63 @@ public class ConfigPanelAttribute {
     private final InteractionId addButtonId;
 
     public ConfigPanelAttribute(final ConnectionGroupId groupId, @NotNull final String name, @NotNull final String key,
-                                final @NotNull Location location, final Vector offset, final @NotNull Vector3f rotation, final Vector3f displaySize) {
+                                final @NotNull Location location, final Vector offset, final @NotNull Vector3d rotation, final Vector3f displaySize) {
         final Vector relativeSubButtonTranslation = new Vector(0.05, -0.03, -0.08).add(BUTTON_ADJUSTMENT).rotateAroundY(rotation.y);
         final Vector relativeAddButtonTranslation = new Vector(0.41, -0.03, -0.08).add(BUTTON_ADJUSTMENT).rotateAroundY(rotation.y);
 
-        this.keyId = new TextDisplayId(new TextDisplayBuilder(location.clone().add(offset))
-                .setText(ChatColors.color(key))
-                .setBrightness(15)
-                .setAlignment(TextAlignment.RIGHT)
-                .setBackgroundColor(Color.fromARGB(0, 0, 0, 0))
-                .setTransformation(new TransformationMatrixBuilder()
+        this.keyId = new TextDisplayId(new TextDisplayBuilder()
+                .text(ChatColors.color(key))
+                .brightness(15)
+                .alignment(TextAlignment.RIGHT)
+                .backgroundColor(Color.fromARGB(0, 0, 0, 0))
+                .transformation(new TransformationMatrixBuilder()
                         .scale(displaySize)
                         .translate(KEY_TRANSLATION)
                         .rotate(rotation)
                         .buildForTextDisplay())
-                .build().getUniqueId());
-        this.subId = new TextDisplayId(new TextDisplayBuilder(location.clone().add(offset))
-                .setBrightness(15)
-                .setText(ChatColors.color("&c-"))
-                .setBackgroundColor(Color.fromARGB(0, 0, 0, 0))
-                .setTransformation(new TransformationMatrixBuilder()
+                .build(location.clone().add(offset))
+                .getUniqueId());
+        this.subId = new TextDisplayId(new TextDisplayBuilder()
+                .brightness(15)
+                .text(ChatColors.color("&c-"))
+                .backgroundColor(Color.fromARGB(0, 0, 0, 0))
+                .transformation(new TransformationMatrixBuilder()
                         .scale(displaySize)
                         .translate(SUB_TRANSLATION)
                         .rotate(rotation)
                         .buildForTextDisplay())
-                .build().getUniqueId());
-        this.valueId = new TextDisplayId(new TextDisplayBuilder(location.clone().add(offset))
-                .setBrightness(15)
-                .setBackgroundColor(Color.fromARGB(0, 0, 0, 0))
-                .setTransformation(new TransformationMatrixBuilder()
+                .build(location.clone().add(offset))
+                .getUniqueId());
+        this.valueId = new TextDisplayId(new TextDisplayBuilder()
+                .brightness(15)
+                .backgroundColor(Color.fromARGB(0, 0, 0, 0))
+                .transformation(new TransformationMatrixBuilder()
                         .scale(displaySize)
                         .translate(VALUE_TRANSLATION)
                         .rotate(rotation)
                         .buildForTextDisplay())
-                .build().getUniqueId());
-        this.addId = new TextDisplayId(new TextDisplayBuilder(location.clone().add(offset))
-                .setBrightness(15)
-                .setText(ChatColors.color("&a+"))
-                .setBackgroundColor(Color.fromARGB(0, 0, 0, 0))
-                .setTransformation(new TransformationMatrixBuilder()
+                .build(location.clone().add(offset))
+                .getUniqueId());
+        this.addId = new TextDisplayId(new TextDisplayBuilder()
+                .brightness(15)
+                .text(ChatColors.color("&a+"))
+                .backgroundColor(Color.fromARGB(0, 0, 0, 0))
+                .transformation(new TransformationMatrixBuilder()
                         .scale(displaySize)
                         .translate(ADD_TRANSLATION)
                         .rotate(rotation)
                         .buildForTextDisplay())
-                .build().getUniqueId());
+                .build(location.clone().add(offset))
+                .getUniqueId());
 
-        final Interaction subButton = new InteractionBuilder(location.clone().add(offset).add(relativeSubButtonTranslation))
-                .setWidth(BUTTON_SIZE)
-                .setHeight(BUTTON_SIZE)
-                .build();
-        final Interaction addButton = new InteractionBuilder(location.clone().add(offset).add(relativeAddButtonTranslation))
-                .setWidth(BUTTON_SIZE)
-                .setHeight(BUTTON_SIZE)
-                .build();
+        final Interaction subButton = new InteractionBuilder()
+                .width(BUTTON_SIZE)
+                .height(BUTTON_SIZE)
+                .build(location.clone().add(offset).add(relativeSubButtonTranslation));
+        final Interaction addButton = new InteractionBuilder()
+                .width(BUTTON_SIZE)
+                .height(BUTTON_SIZE)
+                .build(location.clone().add(offset).add(relativeAddButtonTranslation));
 
         final PersistentDataTraverser subButtonTraverser = new PersistentDataTraverser(subButton.getUniqueId());
         subButtonTraverser.set("groupId", groupId);

@@ -31,7 +31,7 @@ import org.metamechanists.quaptics.utils.Particles;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.builders.ItemDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
-import org.metamechanists.quaptics.utils.models.transformations.TransformationMatrixBuilder;
+import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -96,48 +96,50 @@ public class InfusionContainer extends ConnectedBlock implements ItemHolderBlock
         return 0.0F;
     }
     @Override
-    protected void initDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
-        displayGroup.addDisplay("base", new BlockDisplayBuilder(location.toCenterLocation())
-                .setBlockData(Material.GRAY_CONCRETE.createBlockData())
-                .setTransformation(new TransformationMatrixBuilder()
+    protected DisplayGroup initModel(final @NotNull Location location, final @NotNull Player player) {
+        final DisplayGroup displayGroup = new DisplayGroup(location);
+        displayGroup.addDisplay("base", new BlockDisplayBuilder()
+                .blockData(Material.GRAY_CONCRETE.createBlockData())
+                .transformation(new TransformationMatrixBuilder()
                         .scale(BASE_SCALE)
                         .translate(BASE_OFFSET)
                         .buildForBlockDisplay())
-                .build());
-        displayGroup.addDisplay("pillar1", new BlockDisplayBuilder(location.toCenterLocation())
-                .setBlockData(Material.WHITE_CONCRETE.createBlockData())
-                .setTransformation(new TransformationMatrixBuilder()
+                .build(location.toCenterLocation()));
+        displayGroup.addDisplay("pillar1", new BlockDisplayBuilder()
+                .blockData(Material.WHITE_CONCRETE.createBlockData())
+                .transformation(new TransformationMatrixBuilder()
                         .scale(PILLAR_SCALE)
                         .translate(PILLAR_1_OFFSET)
                         .buildForBlockDisplay())
-                .build());
-        displayGroup.addDisplay("pillar2", new BlockDisplayBuilder(location.toCenterLocation())
-                .setBlockData(Material.WHITE_CONCRETE.createBlockData())
-                .setTransformation(new TransformationMatrixBuilder()
+                .build(location.toCenterLocation()));
+        displayGroup.addDisplay("pillar2", new BlockDisplayBuilder()
+                .blockData(Material.WHITE_CONCRETE.createBlockData())
+                .transformation(new TransformationMatrixBuilder()
                         .scale(PILLAR_SCALE)
                         .translate(PILLAR_2_OFFSET)
                         .buildForBlockDisplay())
-                .build());
-        displayGroup.addDisplay("pillar3", new BlockDisplayBuilder(location.toCenterLocation())
-                .setBlockData(Material.WHITE_CONCRETE.createBlockData())
-                .setTransformation(new TransformationMatrixBuilder()
+                .build(location.toCenterLocation()));
+        displayGroup.addDisplay("pillar3", new BlockDisplayBuilder()
+                .blockData(Material.WHITE_CONCRETE.createBlockData())
+                .transformation(new TransformationMatrixBuilder()
                         .scale(PILLAR_SCALE)
                         .translate(PILLAR_3_OFFSET)
                         .buildForBlockDisplay())
-                .build());
-        displayGroup.addDisplay("pillar4", new BlockDisplayBuilder(location.toCenterLocation())
-                .setBlockData(Material.WHITE_CONCRETE.createBlockData())
-                .setTransformation(new TransformationMatrixBuilder()
+                .build(location.toCenterLocation()));
+        displayGroup.addDisplay("pillar4", new BlockDisplayBuilder()
+                .blockData(Material.WHITE_CONCRETE.createBlockData())
+                .transformation(new TransformationMatrixBuilder()
                         .scale(PILLAR_SCALE)
                         .translate(PILLAR_4_OFFSET)
                         .buildForBlockDisplay())
-                .build());
-        displayGroup.addDisplay("item", new ItemDisplayBuilder(location.toCenterLocation())
-                .setTransformation(new TransformationMatrixBuilder()
+                .build(location.toCenterLocation()));
+        displayGroup.addDisplay("item", new ItemDisplayBuilder()
+                .transformation(new TransformationMatrixBuilder()
                         .scale(ITEM_DISPLAY_SIZE)
                         .translate(ITEM_DISPLAY_OFFSET)
                         .buildForItemDisplay())
-                .build());
+                .build(location.toCenterLocation()));
+        return displayGroup;
     }
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {

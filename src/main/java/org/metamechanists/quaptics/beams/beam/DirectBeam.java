@@ -7,23 +7,27 @@ import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.beams.DeprecatedBeamStorage;
-import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
+import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.id.complex.DirectBeamId;
 import org.metamechanists.quaptics.utils.id.simple.BlockDisplayId;
-import org.metamechanists.quaptics.utils.models.transformations.TransformationMatrixBuilder;
+import org.metamechanists.quaptics.utils.models.components.ModelLine;
+import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
+import org.metamechanists.quaptics.utils.transformations.TransformationUtils;
 
 import java.util.Optional;
 
 public class DirectBeam implements Beam {
     private final BlockDisplayId displayId;
 
-    public DirectBeam(final Material material, @NotNull final Location source, final Location target, final float radius) {
-        final Location midpoint = source.clone().add(target).multiply(0.5);
-        this.displayId = new BlockDisplayId(new BlockDisplayBuilder(midpoint)
-                .setMaterial(material)
-                .setTransformation(generateTransformation(source, target, radius))
-                .setBrightness(15)
-                .build()
+    public DirectBeam(final Material material, @NotNull final Location source, final Location target, final float thickness) {
+        final Location midpoint = TransformationUtils.getMidpoint(source, target);
+        this.displayId = new BlockDisplayId(new ModelLine()
+                .from(TransformationUtils.getDisplacement(midpoint, source))
+                .to(TransformationUtils.getDisplacement(midpoint, target))
+                .thickness(thickness)
+                .brightness(Utils.BRIGHTNESS_ON)
+                .material(material)
+                .build(midpoint)
                 .getUniqueId());
     }
 
@@ -68,8 +72,13 @@ public class DirectBeam implements Beam {
         getDisplay().ifPresent(display -> display.setBlock(material.createBlockData()));
     }
 
-    public void setRadius(final @NotNull Location source, final Location target, final float radius) {
-        getDisplay().ifPresent(display -> display.setTransformationMatrix(generateTransformation(source, target, radius)));
+    public void setRadius(final @NotNull Location source, final Location target, final float thickness) {
+        final Location midpoint = TransformationUtils.getMidpoint(source, target);
+        getDisplay().ifPresent(display -> display.setTransformationMatrix(new ModelLine()
+                .from(TransformationUtils.getDisplacement(midpoint, source))
+                .to(TransformationUtils.getDisplacement(midpoint, target))
+                .thickness(thickness)
+                .getMatrix()));
     }
 }
 

@@ -6,7 +6,7 @@ import org.bukkit.Particle;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
-import org.metamechanists.quaptics.utils.models.transformations.TransformationUtils;
+import org.metamechanists.quaptics.utils.transformations.TransformationUtils;
 
 import java.util.stream.IntStream;
 

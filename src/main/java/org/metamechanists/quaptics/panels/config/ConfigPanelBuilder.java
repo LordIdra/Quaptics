@@ -2,6 +2,7 @@ package org.metamechanists.quaptics.panels.config;
 
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
+import org.joml.Vector3d;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.utils.id.complex.ConfigPanelAttributeId;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
@@ -12,7 +13,7 @@ import java.util.Map;
 public class ConfigPanelBuilder {
     private final ConnectionGroupId groupId;
     private final Vector3f displaySize;
-    private final Vector3f displayRotation;
+    private final Vector3d displayRotation;
     private final Vector attributeSpacing;
     private final Location location;
     private final Vector offset;
@@ -21,7 +22,7 @@ public class ConfigPanelBuilder {
     public ConfigPanelBuilder(final ConnectionGroupId groupId, final Location location, final float size, final float rotationY) {
         this.groupId = groupId;
         this.displaySize = new Vector3f(size, size, size);
-        this.displayRotation = new Vector3f(0, (float) (rotationY+Math.PI), 0);
+        this.displayRotation = new Vector3d(0, rotationY+Math.PI, 0);
         this.attributeSpacing = new Vector(0, size/3.5, 0);
         this.location = location;
         this.offset = new Vector();

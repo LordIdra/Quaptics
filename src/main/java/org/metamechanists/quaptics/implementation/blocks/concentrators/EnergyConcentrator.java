@@ -7,31 +7,30 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
-import org.joml.Vector3f;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
-import org.metamechanists.quaptics.implementation.blocks.Settings;
+import org.metamechanists.quaptics.implementation.attachments.PowerAnimatedBlock;
 import org.metamechanists.quaptics.implementation.base.EnergyConnectedBlock;
+import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
-import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
+import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
-import org.metamechanists.quaptics.utils.id.complex.ConnectionPointId;
-import org.metamechanists.quaptics.utils.models.transformations.TransformationMatrixBuilder;
+import org.metamechanists.quaptics.utils.models.ModelBuilder;
+import org.metamechanists.quaptics.utils.models.components.ModelCuboid;
+import org.metamechanists.quaptics.utils.models.components.ModelDiamond;
 
 import java.util.List;
-import java.util.Optional;
 
-public class EnergyConcentrator extends EnergyConnectedBlock {
+public class EnergyConcentrator extends EnergyConnectedBlock implements PowerAnimatedBlock {
     public static final Settings ENERGY_CONCENTRATOR_1_SETTINGS = Settings.builder()
             .tier(Tier.BASIC)
-            .displayRadius(0.2F)
             .connectionRadius(0.3F)
             .emissionPower(15)
             .energyConsumption(30)
@@ -39,7 +38,6 @@ public class EnergyConcentrator extends EnergyConnectedBlock {
             .build();
     public static final Settings ENERGY_CONCENTRATOR_2_SETTINGS = Settings.builder()
             .tier(Tier.INTERMEDIATE)
-            .displayRadius(0.175F)
             .connectionRadius(0.35F)
             .emissionPower(100)
             .energyConsumption(160)
@@ -47,7 +45,6 @@ public class EnergyConcentrator extends EnergyConnectedBlock {
             .build();
     public static final Settings ENERGY_CONCENTRATOR_3_SETTINGS = Settings.builder()
             .tier(Tier.ADVANCED)
-            .displayRadius(0.15F)
             .connectionRadius(0.4F)
             .emissionPower(1250)
             .energyConsumption(680)
@@ -76,7 +73,6 @@ public class EnergyConcentrator extends EnergyConnectedBlock {
                     "&7● Concentrates energy into a quaptic ray"));
 
     private final Vector outputLocation = new Vector(0.0F, 0.0F, settings.getConnectionRadius());
-    private final Vector3f mainDisplaySize = new Vector3f(settings.getDisplayRadius(), settings.getDisplayRadius(), settings.getConnectionRadius()*2);
 
     public EnergyConcentrator(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
@@ -87,8 +83,21 @@ public class EnergyConcentrator extends EnergyConnectedBlock {
         return settings.getConnectionRadius();
     }
     @Override
-    protected void initDisplays(@NotNull final DisplayGroup displayGroup, final @NotNull Location location, final @NotNull Player player) {
-        displayGroup.addDisplay("main", generateMainDisplay(location, location.clone().add(rotateVectorByEyeDirection(player, INITIAL_LINE))));
+    protected DisplayGroup initModel(final @NotNull Location location, final @NotNull Player player) {
+        return new ModelBuilder()
+                .add("center", new ModelCuboid()
+                        .material(settings.getTier().concreteMaterial)
+                        .brightness(Utils.BRIGHTNESS_OFF)
+                        .rotation(Math.PI / 2)
+                        .size(0.3F))
+                .add("plate", new ModelCuboid()
+                        .material(Material.GRAY_CONCRETE)
+                        .rotation(Math.PI / 2)
+                        .size(0.8F))
+                .add("glass", new ModelDiamond()
+                        .material(Material.GLASS)
+                        .size(0.8F))
+                .build(location);
     }
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
@@ -104,35 +113,8 @@ public class EnergyConcentrator extends EnergyConnectedBlock {
                 : 0;
         getLink(location, "output").ifPresent(link -> link.setPower(power));
     }
-
     @Override
-    public void connect(@NotNull final ConnectionPointId from, @NotNull final ConnectionPointId to) {
-        super.connect(from, to);
-        regenerateMainDisplay(from, to);
-    }
-
-    private BlockDisplay generateMainDisplay(@NotNull final Location from, final Location to) {
-        return new BlockDisplayBuilder(from.toCenterLocation())
-                .setMaterial(settings.getTier().concreteMaterial)
-                .setTransformation(new TransformationMatrixBuilder()
-                        .scale(mainDisplaySize)
-                        .lookAlong(from, to)
-                        .buildForBlockDisplay())
-                .build();
-    }
-    private void regenerateMainDisplay(@NotNull final ConnectionPointId from, @NotNull final ConnectionPointId to) {
-        final Optional<Location> fromLocation = getGroupLocation(from);
-        final Optional<Location> toLocation = getGroupLocation(to);
-        if (toLocation.isEmpty() || fromLocation.isEmpty()) {
-            return;
-        }
-
-        final Optional<DisplayGroup> fromDisplayGroup = getDisplayGroup(fromLocation.get());
-        if (fromDisplayGroup.isEmpty()) {
-            return;
-        }
-
-        removeDisplay(fromDisplayGroup.get(), "main");
-        fromDisplayGroup.get().addDisplay("main", generateMainDisplay(fromLocation.get(), toLocation.get()));
+    public void onPoweredAnimation(final Location location, final boolean powered) {
+        brightnessAnimation(location, "center", powered);
     }
 }

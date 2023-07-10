@@ -24,7 +24,7 @@ import org.metamechanists.quaptics.items.Tier;
 import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
-import org.metamechanists.quaptics.utils.models.transformations.TransformationMatrixBuilder;
+import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
 
 import java.util.List;
 import java.util.Optional;
@@ -61,31 +61,33 @@ public class Transformer extends ConnectedBlock implements PowerAnimatedBlock, P
         return 0.55F;
     }
     @Override
-    protected void initDisplays(@NotNull final DisplayGroup displayGroup, @NotNull final Location location, final @NotNull Player player) {
-        displayGroup.addDisplay("main", new BlockDisplayBuilder(location.toCenterLocation())
-                .setMaterial(Material.LIGHT_GRAY_TERRACOTTA)
-                .setTransformation(new TransformationMatrixBuilder()
+    protected DisplayGroup initModel(final @NotNull Location location, final @NotNull Player player) {
+        final DisplayGroup displayGroup = new DisplayGroup(location);
+        displayGroup.addDisplay("main", new BlockDisplayBuilder()
+                .material(Material.LIGHT_GRAY_TERRACOTTA)
+                .transformation(new TransformationMatrixBuilder()
                         .scale(MAIN_DISPLAY_SIZE)
                         .buildForBlockDisplay())
-                .build());
-        displayGroup.addDisplay("coil1", new BlockDisplayBuilder(location.toCenterLocation())
-                .setMaterial(settings.getTier().concreteMaterial)
-                .setBrightness(Utils.BRIGHTNESS_OFF)
-                .setViewRange(Utils.VIEW_RANGE_ON)
-                .setTransformation(new TransformationMatrixBuilder()
+                .build(location.toCenterLocation()));
+        displayGroup.addDisplay("coil1", new BlockDisplayBuilder()
+                .material(settings.getTier().concreteMaterial)
+                .brightness(Utils.BRIGHTNESS_OFF)
+                .viewRange(Utils.VIEW_RANGE_ON)
+                .transformation(new TransformationMatrixBuilder()
                         .scale(COIL_DISPLAY_SIZE)
-                        .rotate(FIRST_COIL_DISPLAY_OFFSET)
+                        .translate(FIRST_COIL_DISPLAY_OFFSET)
                         .buildForBlockDisplay())
-                .build());
-        displayGroup.addDisplay("coil2", new BlockDisplayBuilder(location.toCenterLocation())
-                .setMaterial(settings.getTier().concreteMaterial)
-                .setBrightness(Utils.BRIGHTNESS_OFF)
-                .setViewRange(Utils.VIEW_RANGE_ON)
-                .setTransformation(new TransformationMatrixBuilder()
+                .build(location.toCenterLocation()));
+        displayGroup.addDisplay("coil2", new BlockDisplayBuilder()
+                .material(settings.getTier().concreteMaterial)
+                .brightness(Utils.BRIGHTNESS_OFF)
+                .viewRange(Utils.VIEW_RANGE_ON)
+                .transformation(new TransformationMatrixBuilder()
                         .scale(COIL_DISPLAY_SIZE)
-                        .rotate(SECOND_COIL_DISPLAY_OFFSET)
+                        .translate(SECOND_COIL_DISPLAY_OFFSET)
                         .buildForBlockDisplay())
-                .build());
+                .build(location.toCenterLocation()));
+        return displayGroup;
     }
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
