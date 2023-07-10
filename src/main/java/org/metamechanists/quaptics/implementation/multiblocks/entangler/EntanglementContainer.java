@@ -56,19 +56,19 @@ public class EntanglementContainer extends ConnectedBlock implements ItemHolderB
                     "&7● &eRight Click &7with an item to start the entanglement process"));
 
     private static final Vector3f PILLAR_SCALE = new Vector3f(0.1F, 3.2F, 0.1F);
-    private static final Vector3f PILLAR_1_OFFSET = new Vector3f(0.4F, 0.0F, 0.0F);
-    private static final Vector3f PILLAR_2_OFFSET = new Vector3f(-0.4F, 0.0F, 0.0F);
-    private static final Vector3f PILLAR_3_OFFSET = new Vector3f(0.0F, 0.0F, 0.4F);
-    private static final Vector3f PILLAR_4_OFFSET = new Vector3f(0.0F, 0.0F, -0.4F);
+    private static final Vector3f PILLAR_1_OFFSET = new Vector3f(0.7F, 0.0F, 0.0F);
+    private static final Vector3f PILLAR_2_OFFSET = new Vector3f(-0.7F, 0.0F, 0.0F);
+    private static final Vector3f PILLAR_3_OFFSET = new Vector3f(0.0F, 0.0F, 0.7F);
+    private static final Vector3f PILLAR_4_OFFSET = new Vector3f(0.0F, 0.0F, -0.7F);
 
-    private static final Vector3f FRAME_1_SCALE = new Vector3f(0.2F, 0.4F, 0.74F);
-    private static final Vector3f FRAME_2_SCALE = new Vector3f(0.74F, 0.4F, 0.2F);
-    private static final Vector3f FRAME_3_SCALE = new Vector3f(0.74F, 0.4F, 0.2F);
-    private static final Vector3f FRAME_4_SCALE = new Vector3f(0.2F, 0.4F, 0.74F);
-    private static final Vector3f FRAME_1_OFFSET = new Vector3f(0.20F, 0.0F, 0.20F);
-    private static final Vector3f FRAME_2_OFFSET = new Vector3f(0.20F, 0.0F, -0.20F);
-    private static final Vector3f FRAME_3_OFFSET = new Vector3f(-0.20F, 0.0F, 0.20F);
-    private static final Vector3f FRAME_4_OFFSET = new Vector3f(-0.20F, 0.0F, -0.20F);
+    private static final Vector3f FRAME_1_SCALE = new Vector3f(0.20F, 0.40F, 1.20F);
+    private static final Vector3f FRAME_2_SCALE = new Vector3f(1.2F, 0.40F, 0.20F);
+    private static final Vector3f FRAME_3_SCALE = new Vector3f(1.2F, 0.40F, 0.20F);
+    private static final Vector3f FRAME_4_SCALE = new Vector3f(0.20F, 0.40F, 1.20F);
+    private static final Vector3f FRAME_1_OFFSET = new Vector3f(0.35F, 0.0F, 0.35F);
+    private static final Vector3f FRAME_2_OFFSET = new Vector3f(0.35F, 0.0F, -0.35F);
+    private static final Vector3f FRAME_3_OFFSET = new Vector3f(-0.35F, 0.0F, 0.35F);
+    private static final Vector3f FRAME_4_OFFSET = new Vector3f(-0.35F, 0.0F, -0.35F);
     private static final Vector3f FRAME_ROTATION = new Vector3f(0.0F, (float) (-Math.PI / 4), 0.0F);
 
     private static final Vector MAGNET_1_LOCATION = new Vector(0, 4, 0);
@@ -252,7 +252,7 @@ public class EntanglementContainer extends ConnectedBlock implements ItemHolderB
     }
 
     private void animatePillar(@NotNull final Location center, @NotNull final Location pillarLocation, final double timeSinceCraftStarted) {
-        Particles.animatedLine(Particle.GLOW_SQUID_INK,
+        Particles.animatedLine(Particle.SCULK_CHARGE_POP,
                 pillarLocation.clone().toCenterLocation(),
                 center.clone().toCenterLocation(),
                 MAGNET_PARTICLE_COUNT,
