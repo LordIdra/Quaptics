@@ -32,9 +32,14 @@ public class ModelCuboid implements ModelComponent {
      * @param size The size of the cuboid (ie: the distance from one side to the other) on each axis
      */
     public ModelCuboid size(@NotNull final Vector3f size) {
-        // TODO add sizes/rotations with x, y, z as parameter
         this.size = size;
         return this;
+    }
+    /**
+     * Sets the size of the cuboid (ie: the distance from one side to the other) on each axis
+     */
+    public ModelCuboid size(final float x, final float y, final float z) {
+        return size(new Vector3f(x, y, z));
     }
     /**
      * @param size The size of the cuboid (ie: the distance from one side to the other) on all three axes - this forms a cube
@@ -48,6 +53,12 @@ public class ModelCuboid implements ModelComponent {
     public ModelCuboid rotation(@NotNull final Vector3d rotation) {
         this.rotation = rotation;
         return this;
+    }
+    /**
+     * Sets the rotation of the cuboid in radians
+     */
+    public ModelCuboid rotation(final double x, final double y, final double z) {
+        return rotation(new Vector3d(x, y, z));
     }
     /**
      * @param rotationY The rotation of the cuboid around the Y axis in radians

@@ -13,31 +13,31 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
-import org.joml.Vector3f;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
+import org.metamechanists.quaptics.connections.Link;
+import org.metamechanists.quaptics.implementation.attachments.PowerAnimatedBlock;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
-import org.metamechanists.quaptics.utils.builders.ItemDisplayBuilder;
+import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
-import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
+import org.metamechanists.quaptics.utils.models.ModelBuilder;
+import org.metamechanists.quaptics.utils.models.components.ModelCuboid;
+import org.metamechanists.quaptics.utils.models.components.ModelItem;
 
 import java.util.List;
+import java.util.Optional;
 
-public class SolarConcentrator extends ConnectedBlock {
+
+public class SolarConcentrator extends ConnectedBlock implements PowerAnimatedBlock {
     public static final Settings SOLAR_CONCENTRATOR_1_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
-            .displayRadius(0.45F)
-            .connectionRadius(0.45F)
             .emissionPower(1)
             .build();
     public static final Settings SOLAR_CONCENTRATOR_2_SETTINGS = Settings.builder()
             .tier(Tier.BASIC)
-            .displayRadius(0.35F)
-            .connectionRadius(0.35F)
-            .rotationY((float)(Math.PI/4))
             .emissionPower(10)
             .build();
     public static final SlimefunItemStack SOLAR_CONCENTRATOR_1 = new SlimefunItemStack(
@@ -55,8 +55,7 @@ public class SolarConcentrator extends ConnectedBlock {
                     "&7● Only works during the day",
                     "&7● Concentrates sunlight into a quaptic ray"));
 
-    private final Vector outputLocation = new Vector(0.0F, 0.0F, settings.getConnectionRadius());
-    private final Vector3f mainDisplaySize = new Vector3f(settings.getDisplayRadius()*2);
+    private final Vector outputLocation = new Vector(0.0F, 0.0F, getConnectionRadius());
 
     public SolarConcentrator(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
@@ -64,19 +63,24 @@ public class SolarConcentrator extends ConnectedBlock {
 
     @Override
     protected float getConnectionRadius() {
-        return settings.getConnectionRadius();
+        return 0.55F;
     }
     @Override
     protected DisplayGroup initModel(final @NotNull Location location, final @NotNull Player player) {
-        final DisplayGroup displayGroup = new DisplayGroup(location);
-        displayGroup.addDisplay("main", new ItemDisplayBuilder()
-                .material(Material.GLASS_PANE)
-                .transformation(new TransformationMatrixBuilder()
-                        .scale(mainDisplaySize)
-                        .rotate(Math.PI/2, 0.0, settings.getRotationY())
-                        .buildForItemDisplay())
-                .build(location.clone().toCenterLocation()));
-        return displayGroup;
+        return new ModelBuilder()
+                .add("center", new ModelCuboid()
+                        .material(settings.getTier().concreteMaterial)
+                        .brightness(Utils.BRIGHTNESS_OFF)
+                        .size(0.10F))
+                .add("panel", new ModelItem()
+                        .material(Material.GLASS_PANE)
+                        .rotation(Math.PI / 2, Math.PI / 4, 0)
+                        .size(0.90F))
+                .build(location);
+    }
+    @Override
+    protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
+        return List.of(new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output", formatPointLocation(player, location, outputLocation)));
     }
 
     @Override
@@ -86,11 +90,12 @@ public class SolarConcentrator extends ConnectedBlock {
         final double power = block.getWorld().isDayTime()
                 ? settings.getEmissionPower()
                 : 0;
-        getLink(location, "output").ifPresent(link -> link.setPower(power));
+        final Optional<Link> linkOptional = getLink(location, "output");
+        onPoweredAnimation(location, linkOptional.isPresent() && block.getWorld().isDayTime());
+        linkOptional.ifPresent(link -> link.setPower(power));
     }
-
     @Override
-    protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
-        return List.of(new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output", formatPointLocation(player, location, outputLocation)));
+    public void onPoweredAnimation(final Location location, final boolean powered) {
+        brightnessAnimation(location, "center", powered);
     }
 }

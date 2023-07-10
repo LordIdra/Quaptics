@@ -23,18 +23,37 @@ public class ModelItem implements ModelComponent {
     private Vector3d rotation = new Vector3d();
 
     /**
-     * @param location The center of the cuboid containing the item
+     * @param location The center of the cube containing the item
      */
     public ModelItem location(@NotNull final Vector3f location) {
         this.location = location;
         return this;
     }
     /**
-     * @param size The size of the cuboid containing the item (ie: the distance from one side to the other) on all three axex
+     * @param size The size of the cube containing the item (ie: the distance from one side to the other) on all three axex
      */
     public ModelItem size(final float size) {
         this.size = new Vector3f(size);
         return this;
+    }
+    /**
+     * @param rotation The rotation of the cube containing the item in radians
+     */
+    public ModelItem rotation(@NotNull final Vector3d rotation) {
+        this.rotation = rotation;
+        return this;
+    }
+    /**
+     * Sets the rotation of the cube containing the item in radians
+     */
+    public ModelItem rotation(final double x, final double y, final double z) {
+        return rotation(new Vector3d(x, y, z));
+    }
+    /**
+     * @param rotationY The rotation of the cube containing the item around the Y axis in radians
+     */
+    public ModelItem rotation(final double rotationY) {
+        return rotation(new Vector3d(0, rotationY, 0));
     }
 
     /**

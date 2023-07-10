@@ -13,9 +13,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
-import org.joml.Vector3f;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
+import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.implementation.attachments.PowerAnimatedBlock;
 import org.metamechanists.quaptics.implementation.base.EnergyConnectedBlock;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
@@ -25,9 +25,10 @@ import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.models.ModelBuilder;
 import org.metamechanists.quaptics.utils.models.components.ModelCuboid;
-import org.metamechanists.quaptics.utils.models.components.ModelDiamond;
 
 import java.util.List;
+import java.util.Optional;
+
 
 public class EnergyConcentrator extends EnergyConnectedBlock implements PowerAnimatedBlock {
     public static final Settings ENERGY_CONCENTRATOR_1_SETTINGS = Settings.builder()
@@ -89,15 +90,15 @@ public class EnergyConcentrator extends EnergyConnectedBlock implements PowerAni
                 .add("center", new ModelCuboid()
                         .material(settings.getTier().concreteMaterial)
                         .brightness(Utils.BRIGHTNESS_OFF)
-                        .rotation(Math.PI / 4)
-                        .size(0.3F))
+                        .size(0.1F))
                 .add("plate", new ModelCuboid()
                         .material(Material.GRAY_CONCRETE)
                         .rotation(Math.PI / 4)
-                        .size(new Vector3f(0.6F, 0.1F, 0.6F)))
-                .add("glass", new ModelDiamond()
+                        .size(0.6F, 0.1F, 0.6F))
+                .add("glass", new ModelCuboid()
                         .material(Material.GLASS)
-                        .size(0.8F))
+                        .rotation(Math.PI / 4)
+                        .size(0.4F))
                 .build(location);
     }
     @Override
@@ -112,7 +113,9 @@ public class EnergyConcentrator extends EnergyConnectedBlock implements PowerAni
         final double power = hasEnoughEnergy(location)
                 ? settings.getEmissionPower()
                 : 0;
-        getLink(location, "output").ifPresent(link -> link.setPower(power));
+        final Optional<Link> linkOptional = getLink(location, "output");
+        onPoweredAnimation(location, linkOptional.isPresent() && hasEnoughEnergy(location));
+        linkOptional.ifPresent(link -> link.setPower(power));
     }
     @Override
     public void onPoweredAnimation(final Location location, final boolean powered) {
