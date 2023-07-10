@@ -32,6 +32,7 @@ public class ModelCuboid implements ModelComponent {
      * @param size The size of the cuboid (ie: the distance from one side to the other) on each axis
      */
     public ModelCuboid size(@NotNull final Vector3f size) {
+        // TODO add sizes/rotations with x, y, z as parameter
         this.size = size;
         return this;
     }
