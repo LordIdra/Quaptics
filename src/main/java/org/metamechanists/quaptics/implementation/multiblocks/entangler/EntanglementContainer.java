@@ -82,7 +82,7 @@ public class EntanglementContainer extends ConnectedBlock implements ItemHolderB
     private static final int MAGNET_PARTICLE_COUNT = 2;
     private final double magnetParticleAnimationLengthSeconds = settings.getTimePerItem();
     private final double centerParticleAnimationLengthSeconds = settings.getTimePerItem() / 8.0;
-    private static final double MAGNET_PARTICLE_SPEED = 0.02;
+    private static final double MAGNET_PARTICLE_SPEED = 0.05;
     private static final double CONTAINER_PARTICLE_RADIUS = 1.2;
     private static final int CONTAINER_PARTICLE_COUNT = 3;
     private static final double COMPLETED_PARTICLE_SPEED = 0.1;
