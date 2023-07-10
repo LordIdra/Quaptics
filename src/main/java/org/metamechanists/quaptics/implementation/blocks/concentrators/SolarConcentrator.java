@@ -74,7 +74,7 @@ public class SolarConcentrator extends ConnectedBlock implements PowerAnimatedBl
                         .size(0.10F))
                 .add("panel", new ModelItem()
                         .material(Material.GLASS_PANE)
-                        .rotation(Math.PI / 2, Math.PI / 4, 0)
+                        .rotation(Math.PI / 2, 0, 0)
                         .size(0.90F))
                 .build(location);
     }

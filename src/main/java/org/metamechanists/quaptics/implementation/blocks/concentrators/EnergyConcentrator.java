@@ -90,7 +90,7 @@ public class EnergyConcentrator extends EnergyConnectedBlock implements PowerAni
                 .add("center", new ModelCuboid()
                         .material(settings.getTier().concreteMaterial)
                         .brightness(Utils.BRIGHTNESS_OFF)
-                        .size(0.1F))
+                        .size(0.2F))
                 .add("plate", new ModelCuboid()
                         .material(Material.GRAY_CONCRETE)
                         .rotation(Math.PI / 4)
