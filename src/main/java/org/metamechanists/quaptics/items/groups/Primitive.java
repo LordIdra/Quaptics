@@ -65,6 +65,7 @@ import static org.metamechanists.quaptics.implementation.blocks.upgraders.Polari
 import static org.metamechanists.quaptics.implementation.blocks.upgraders.Polariser.POLARISER_1_SETTINGS;
 import static org.metamechanists.quaptics.implementation.multiblocks.entangler.EntanglementContainer.ENTANGLEMENT_CONTAINER;
 import static org.metamechanists.quaptics.implementation.multiblocks.entangler.EntanglementContainer.ENTANGLEMENT_CONTAINER_SETTINGS;
+import static org.metamechanists.quaptics.implementation.multiblocks.entangler.magnet.EntanglementMagnetBottom.ENTANGLEMENT_MAGNET_BOTTOM;
 import static org.metamechanists.quaptics.implementation.multiblocks.entangler.magnet.EntanglementMagnetBottom.ENTANGLEMENT_MAGNET_BOTTOM_SETTINGS;
 import static org.metamechanists.quaptics.implementation.multiblocks.entangler.magnet.EntanglementMagnetTop.ENTANGLEMENT_MAGNET_TOP;
 import static org.metamechanists.quaptics.implementation.multiblocks.entangler.magnet.EntanglementMagnetTop.ENTANGLEMENT_MAGNET_TOP_SETTINGS;
@@ -230,7 +231,7 @@ public class Primitive {
 
         new EntanglementMagnetBottom(
                 Groups.PRIMITIVE,
-                ENTANGLEMENT_MAGNET_TOP,
+                ENTANGLEMENT_MAGNET_BOTTOM,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 ENTANGLEMENT_MAGNET_BOTTOM_SETTINGS).register(addon);
