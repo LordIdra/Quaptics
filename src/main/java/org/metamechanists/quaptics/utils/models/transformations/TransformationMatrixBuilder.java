@@ -95,7 +95,7 @@ public class TransformationMatrixBuilder {
         // For example new Matrix4f().scale(xyz).rotate(xyz) first rotates and then scales, which is unintuitive and so we want to reverse this behaviour
         final Matrix4f matrix = new Matrix4f();
         while (!components.isEmpty()) {
-            components.removeLast().apply(matrix);
+            components.removeFirst().apply(matrix);
         }
         return matrix;
     }
