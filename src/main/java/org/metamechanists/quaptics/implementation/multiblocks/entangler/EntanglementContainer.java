@@ -29,6 +29,7 @@ import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Language;
 import org.metamechanists.quaptics.utils.Particles;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
+import org.metamechanists.quaptics.utils.builders.ItemDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
 
@@ -55,7 +56,7 @@ public class EntanglementContainer extends ConnectedBlock implements ItemHolderB
                     "&7● Entangles items",
                     "&7● &eRight Click &7with an item to start the entanglement process"));
 
-    private static final Vector3f PILLAR_SCALE = new Vector3f(0.1F, 3.2F, 0.1F);
+    private static final Vector3f PILLAR_SCALE = new Vector3f(0.1F, 0.8F, 0.1F);
     private static final Vector3f PILLAR_1_OFFSET = new Vector3f(0.7F, 0.0F, 0.0F);
     private static final Vector3f PILLAR_2_OFFSET = new Vector3f(-0.7F, 0.0F, 0.0F);
     private static final Vector3f PILLAR_3_OFFSET = new Vector3f(0.0F, 0.0F, 0.7F);
@@ -74,6 +75,9 @@ public class EntanglementContainer extends ConnectedBlock implements ItemHolderB
     private static final Vector MAGNET_1_LOCATION = new Vector(0, 4, 0);
     private static final Vector MAGNET_2_LOCATION = new Vector(0, -4, 0);
     private static final List<Vector> MAGNET_LOCATIONS = List.of(MAGNET_1_LOCATION, MAGNET_2_LOCATION);
+
+    private static final Vector3f ITEM_DISPLAY_SIZE = new Vector3f(0.8F);
+    private static final Vector3f ITEM_DISPLAY_OFFSET = new Vector3f(0.0F, 0.0F, 0.0F);
 
     private static final int MAGNET_PARTICLE_COUNT = 2;
     private final double magnetParticleAnimationLengthSeconds = settings.getTimePerItem();
@@ -157,6 +161,12 @@ public class EntanglementContainer extends ConnectedBlock implements ItemHolderB
                         .rotate(FRAME_ROTATION)
                         .translate(FRAME_4_OFFSET)
                         .buildForBlockDisplay())
+                .build());
+        displayGroup.addDisplay("item", new ItemDisplayBuilder(location.toCenterLocation())
+                .setTransformation(new TransformationMatrixBuilder()
+                        .scale(ITEM_DISPLAY_SIZE)
+                        .translate(ITEM_DISPLAY_OFFSET)
+                        .buildForItemDisplay())
                 .build());
     }
     @Override
