@@ -15,7 +15,7 @@ multiblock.valid: "&aMultiblock constructed correctly!"
 infuser.cannot-be-infused: "&cThis item cannot be infused."
 infuser.pillars-not-powered: "&cYou must power all pillars of the infuser before infusing an item."
 
-entangler.cannot-be-entangled: "&cTHis item cannot be entangled."
+entangler.cannot-be-entangled: "&cThis item cannot be entangled."
 entangler.magnets-not-powered: "&cYou must power all magnets of the entangler before infusing an item."
 
 charger.multiple-items: "&cYou can only insert one item at a time."

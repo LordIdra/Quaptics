@@ -13,13 +13,12 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
-import org.metamechanists.metalib.utils.ParticleUtils;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
-import org.metamechanists.quaptics.implementation.blocks.Settings;
+import org.metamechanists.quaptics.implementation.attachments.ComplexMultiblock;
 import org.metamechanists.quaptics.implementation.attachments.ItemHolderBlock;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
-import org.metamechanists.quaptics.implementation.attachments.ComplexMultiblock;
+import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
 import org.metamechanists.quaptics.items.groups.Primitive;
@@ -75,10 +74,11 @@ public class EntanglementContainer extends ConnectedBlock implements ItemHolderB
     private static final Vector MAGNET_2_LOCATION = new Vector(0, -4, 0);
     private static final List<Vector> MAGNET_LOCATIONS = List.of(MAGNET_1_LOCATION, MAGNET_2_LOCATION);
 
-    private static final int MAGNET_PARTICLE_COUNT = 1;
-    private static final double MAGNET_PARTICLE_ANIMATION_LENGTH_SECONDS = 0.5;
+    private static final int MAGNET_PARTICLE_COUNT = 2;
+    private final double magnetParticleAnimationLengthSeconds = settings.getTimePerItem();
+    private final double centerParticleAnimationLengthSeconds = settings.getTimePerItem() / 4.0;
     private static final double MAGNET_PARTICLE_SPEED = 0.05;
-    private static final double CONTAINER_PARTICLE_RADIUS = 0.5;
+    private static final double CONTAINER_PARTICLE_RADIUS = 0.8;
     private static final int CONTAINER_PARTICLE_COUNT = 3;
 
     private static final Map<ItemStack, ItemStack> RECIPES = Map.of(
@@ -248,20 +248,20 @@ public class EntanglementContainer extends ConnectedBlock implements ItemHolderB
         return MAGNET_LOCATIONS.stream().allMatch(vector -> isMagnetPowered(location.clone().add(vector)));
     }
 
-    private static void animatePillar(@NotNull final Location center, @NotNull final Location pillarLocation, final double timeSinceCraftStarted) {
-        Particles.animatedLine(Particle.ELECTRIC_SPARK,
+    private void animatePillar(@NotNull final Location center, @NotNull final Location pillarLocation, final double timeSinceCraftStarted) {
+        Particles.animatedLine(Particle.GLOW,
                 pillarLocation.clone().toCenterLocation(),
                 center.clone().toCenterLocation(),
                 MAGNET_PARTICLE_COUNT,
-                (timeSinceCraftStarted % MAGNET_PARTICLE_ANIMATION_LENGTH_SECONDS) / MAGNET_PARTICLE_ANIMATION_LENGTH_SECONDS,
+                (timeSinceCraftStarted % magnetParticleAnimationLengthSeconds) / magnetParticleAnimationLengthSeconds,
                 MAGNET_PARTICLE_SPEED);
     }
-    private static void animateCenter(@NotNull final Location center, final double timeSinceCraftStarted) {
-        Particles.animatedHorizontalCircle(Particle.GLOW,
+    private void animateCenter(@NotNull final Location center, final double timeSinceCraftStarted) {
+        Particles.animatedHorizontalCircle(Particle.ELECTRIC_SPARK,
                 center.clone().toCenterLocation(),
                 CONTAINER_PARTICLE_RADIUS,
                 CONTAINER_PARTICLE_COUNT,
-                (timeSinceCraftStarted % MAGNET_PARTICLE_ANIMATION_LENGTH_SECONDS) / MAGNET_PARTICLE_ANIMATION_LENGTH_SECONDS,
+                (timeSinceCraftStarted % centerParticleAnimationLengthSeconds) / centerParticleAnimationLengthSeconds,
                 0);
     }
 
