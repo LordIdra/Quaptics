@@ -43,21 +43,21 @@ public class EntanglementMagnet extends ConnectedBlock implements PowerAnimatedB
             Lore.create(ENTANGLEMENT_MAGNET_SETTINGS,
                     "&7● Multiblock component"));
 
-    private static final Vector3f BASE_SCALE = new Vector3f(0.80F, 0.70F, 0.80F);
+    private static final Vector3f BASE_SCALE = new Vector3f(0.80F, 0.40F, 0.80F);
     private static final Vector3f BASE_OFFSET = new Vector3f(0.0F, 0.0F, 0.0F);
     private static final Vector3f BASE_ROTATION = new Vector3f(0.0F, (float) (Math.PI / 4), 0.0F);
     private static final Vector3f PLATE_SCALE = new Vector3f(0.50F, 0.10F, 0.50F);
-    private static final Vector3f PLATE_OFFSET = new Vector3f(0.0F, 0.35F, 0.0F);
+    private static final Vector3f PLATE_OFFSET = new Vector3f(0.0F, 0.20F, 0.0F);
     private static final Vector3f PLATE_ROTATION = new Vector3f(0.0F, (float) (Math.PI / 4), 0.0F);
     private static final Vector3f COIL_1_SCALE = new Vector3f(0.60F, 0.20F, 0.10F);
     private static final Vector3f COIL_2_SCALE = new Vector3f(0.10F, 0.20F, 0.60F);
     private static final Vector3f COIL_3_SCALE = new Vector3f(0.10F, 0.20F, 0.60F);
-    private static final Vector3f COIL_4_SCALE = new Vector3f(0.10F, 0.20F, 0.60F);
+    private static final Vector3f COIL_4_SCALE = new Vector3f(0.60F, 0.20F, 0.10F);
     private static final Vector3f COIL_ROTATION = new Vector3f(0.0F, (float) (Math.PI / 4), 0.0F);
-    private static final Vector3f COIL_1_OFFSET = new Vector3f(0.30F, -0.20F, 0.30F);
-    private static final Vector3f COIL_2_OFFSET = new Vector3f(0.30F, -0.20F, -0.30F);
-    private static final Vector3f COIL_3_OFFSET = new Vector3f(-0.30F, -0.20F, 0.30F);
-    private static final Vector3f COIL_4_OFFSET = new Vector3f(-0.30F, -0.20F, -0.30F);
+    private static final Vector3f COIL_1_OFFSET = new Vector3f(0.30F, 0.0F, 0.30F);
+    private static final Vector3f COIL_2_OFFSET = new Vector3f(0.30F, 0.0F, -0.30F);
+    private static final Vector3f COIL_3_OFFSET = new Vector3f(-0.30F, 0.0F, 0.30F);
+    private static final Vector3f COIL_4_OFFSET = new Vector3f(-0.30F, 0.0F, -0.30F);
 
     private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -getConnectionRadius());
 
