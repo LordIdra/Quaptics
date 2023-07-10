@@ -33,21 +33,18 @@ import java.util.Optional;
 public class EnergyConcentrator extends EnergyConnectedBlock implements PowerAnimatedBlock {
     public static final Settings ENERGY_CONCENTRATOR_1_SETTINGS = Settings.builder()
             .tier(Tier.BASIC)
-            .connectionRadius(0.3F)
             .emissionPower(15)
             .energyConsumption(30)
             .energyCapacity(60)
             .build();
     public static final Settings ENERGY_CONCENTRATOR_2_SETTINGS = Settings.builder()
             .tier(Tier.INTERMEDIATE)
-            .connectionRadius(0.35F)
             .emissionPower(100)
             .energyConsumption(160)
             .energyCapacity(320)
             .build();
     public static final Settings ENERGY_CONCENTRATOR_3_SETTINGS = Settings.builder()
             .tier(Tier.ADVANCED)
-            .connectionRadius(0.4F)
             .emissionPower(1250)
             .energyConsumption(680)
             .energyCapacity(1360)
@@ -74,7 +71,7 @@ public class EnergyConcentrator extends EnergyConnectedBlock implements PowerAni
                     "&7● Consumes energy",
                     "&7● Concentrates energy into a quaptic ray"));
 
-    private final Vector outputLocation = new Vector(0.0F, 0.0F, settings.getConnectionRadius());
+    private final Vector outputLocation = new Vector(0.0F, 0.0F,getConnectionRadius());
 
     public EnergyConcentrator(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
@@ -82,7 +79,7 @@ public class EnergyConcentrator extends EnergyConnectedBlock implements PowerAni
 
     @Override
     protected float getConnectionRadius() {
-        return settings.getConnectionRadius();
+        return 0.55F;
     }
     @Override
     protected DisplayGroup initModel(final @NotNull Location location, final @NotNull Player player) {

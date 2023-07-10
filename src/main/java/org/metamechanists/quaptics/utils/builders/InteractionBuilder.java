@@ -14,7 +14,7 @@ public class InteractionBuilder {
 
         // Account for Mojang deciding to center the entity on Y but not X and Z for some reason
         if (height != null) {
-            finalLocation.subtract(0, height, 0);
+            finalLocation.subtract(0, height/2, 0);
         }
 
         return location.getWorld().spawn(finalLocation, Interaction.class, interaction -> {
