@@ -1,5 +1,6 @@
 package org.metamechanists.quaptics.storage;
 
+import lombok.Getter;
 import lombok.experimental.UtilityClass;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
@@ -12,17 +13,11 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @UtilityClass
 public class QuapticStorage {
+    @Getter
     private final Set<ConnectionGroupId> groupIDs = new HashSet<>();
-
-    public @NotNull Set<ConnectionGroupId> getLoadedGroups() {
-        return groupIDs.stream()
-                .filter(id -> id.get().isPresent())
-                .collect(Collectors.toSet());
-    }
 
     private @NotNull List<String> serializeGroupIDs() {
         return groupIDs.stream().map(id -> id.getUUID().toString()).toList();

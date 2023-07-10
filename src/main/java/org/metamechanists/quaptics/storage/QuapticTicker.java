@@ -15,7 +15,7 @@ public class QuapticTicker extends BukkitRunnable {
 
     @Override
     public void run() {
-        QuapticStorage.getLoadedGroups().stream()
+        QuapticStorage.getGroupIDs().stream()
                 .map(ConnectionGroupId::get)
                 .filter(Optional::isPresent)
                 .map(Optional::get)
