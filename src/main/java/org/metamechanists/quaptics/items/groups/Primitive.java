@@ -25,6 +25,8 @@ import org.metamechanists.quaptics.implementation.blocks.manipulators.Splitter;
 import org.metamechanists.quaptics.implementation.blocks.upgraders.DiffractionGrating;
 import org.metamechanists.quaptics.implementation.blocks.upgraders.Interferometer;
 import org.metamechanists.quaptics.implementation.blocks.upgraders.Polariser;
+import org.metamechanists.quaptics.implementation.multiblocks.entangler.EntanglementContainer;
+import org.metamechanists.quaptics.implementation.multiblocks.entangler.EntanglementMagnet;
 import org.metamechanists.quaptics.implementation.multiblocks.infuser.InfusionContainer;
 import org.metamechanists.quaptics.implementation.multiblocks.infuser.InfusionPillar;
 import org.metamechanists.quaptics.items.Groups;
@@ -60,6 +62,10 @@ import static org.metamechanists.quaptics.implementation.blocks.upgraders.Interf
 import static org.metamechanists.quaptics.implementation.blocks.upgraders.Interferometer.INTERFEROMETER_1_SETTINGS;
 import static org.metamechanists.quaptics.implementation.blocks.upgraders.Polariser.POLARISER_1;
 import static org.metamechanists.quaptics.implementation.blocks.upgraders.Polariser.POLARISER_1_SETTINGS;
+import static org.metamechanists.quaptics.implementation.multiblocks.entangler.EntanglementContainer.ENTANGLEMENT_CONTAINER;
+import static org.metamechanists.quaptics.implementation.multiblocks.entangler.EntanglementContainer.ENTANGLEMENT_CONTAINER_SETTINGS;
+import static org.metamechanists.quaptics.implementation.multiblocks.entangler.EntanglementMagnet.ENTANGLEMENT_MAGNET;
+import static org.metamechanists.quaptics.implementation.multiblocks.entangler.EntanglementMagnet.ENTANGLEMENT_MAGNET_SETTINGS;
 import static org.metamechanists.quaptics.implementation.multiblocks.infuser.InfusionContainer.INFUSION_CONTAINER;
 import static org.metamechanists.quaptics.implementation.multiblocks.infuser.InfusionContainer.INFUSION_CONTAINER_SETTINGS;
 import static org.metamechanists.quaptics.implementation.multiblocks.infuser.InfusionPillar.INFUSION_PILLAR;
@@ -75,9 +81,17 @@ public class Primitive {
     public final SlimefunItemStack PHASE_CRYSTAL_45 = new SlimefunItemStack("QP_PHASE_CRYSTAL_45", getPhaseCrystal(), "&7Phase Crystal (&e45°&7)");
     public final SlimefunItemStack PHASE_CRYSTAL_90 = new SlimefunItemStack("QP_PHASE_CRYSTAL_90", getPhaseCrystal(), "&7Phase Crystal (&e90°&7)");
     public final SlimefunItemStack PHASE_CRYSTAL_180 = new SlimefunItemStack("QP_PHASE_CRYSTAL_180", getPhaseCrystal(), "&7Phase Crystal (&e180°&7)");
+    public final SlimefunItemStack ENTANGLED_CORE = new SlimefunItemStack("QP_ENTANGLED_CORE", getEntangledCore(), "&dEntangled Core");
 
     private @NotNull ItemStack getPhaseCrystal() {
         final ItemStack itemStack = new ItemStack(Material.QUARTZ);
+        itemStack.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 1);
+        itemStack.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        return itemStack;
+    }
+
+    private @NotNull ItemStack getEntangledCore() {
+        final ItemStack itemStack = new ItemStack(Material.HEART_OF_THE_SEA);
         itemStack.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 1);
         itemStack.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         return itemStack;
@@ -205,6 +219,20 @@ public class Primitive {
                 new ItemStack[]{},
                 DIFFRACTION_GRATING_1_SETTINGS).register(addon);
 
+        new EntanglementMagnet(
+                Groups.PRIMITIVE,
+                ENTANGLEMENT_MAGNET,
+                RecipeType.NULL,
+                new ItemStack[]{},
+                ENTANGLEMENT_MAGNET_SETTINGS).register(addon);
+
+        new EntanglementContainer(
+                Groups.PRIMITIVE,
+                ENTANGLEMENT_CONTAINER,
+                RecipeType.NULL,
+                new ItemStack[]{},
+                ENTANGLEMENT_CONTAINER_SETTINGS).register(addon);
+
         new SlimefunItem(
                 Groups.PRIMITIVE,
                 PHASE_CRYSTAL_1,
@@ -254,5 +282,15 @@ public class Primitive {
                         null, PHASE_CRYSTAL_45, null,
                         null, null, null
                 }).register(addon);
+
+        //new SlimefunItem(
+        //        Groups.PRIMITIVE,
+        //        ENTANGLED_CORE,
+        //        RecipeTypes.RECIPE_ENTANGLEMENT,
+        //        new ItemStack[]{
+        //                null, null, null,
+        //                null, new ItemStack(Material.DEAD_BUSH), null,
+        //                null, null, null
+        //        }).register(addon);
     }
 }
