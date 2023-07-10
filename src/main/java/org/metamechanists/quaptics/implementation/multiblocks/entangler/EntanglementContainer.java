@@ -239,12 +239,6 @@ public class EntanglementContainer extends ConnectedBlock implements ItemHolderB
     public Map<Vector, ItemStack> getStructure() {
         return Map.of(
                 MAGNET_1_LOCATION, ENTANGLEMENT_MAGNET_TOP,
-                new Vector(0, 3, 0), new ItemStack(Material.AIR),
-                new Vector(0, 2, 0), new ItemStack(Material.AIR),
-                new Vector(0, 1, 0), new ItemStack(Material.AIR),
-                new Vector(0, -1, 0), new ItemStack(Material.AIR),
-                new Vector(0, -2, 0), new ItemStack(Material.AIR),
-                new Vector(0, -3, 0), new ItemStack(Material.AIR),
                 MAGNET_2_LOCATION, ENTANGLEMENT_MAGNET_BOTTOM
         );
     }
