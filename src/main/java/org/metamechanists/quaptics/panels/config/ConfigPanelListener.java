@@ -7,7 +7,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
-import org.metamechanists.quaptics.implementation.blocks.attachments.ConfigPanelBlock;
+import org.metamechanists.quaptics.implementation.attachments.ConfigPanelBlock;
 import org.metamechanists.quaptics.storage.PersistentDataTraverser;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 

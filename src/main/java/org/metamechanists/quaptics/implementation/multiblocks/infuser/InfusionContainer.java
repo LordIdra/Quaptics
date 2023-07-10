@@ -17,14 +17,12 @@ import org.metamechanists.metalib.utils.ParticleUtils;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
-import org.metamechanists.quaptics.implementation.blocks.attachments.InfoPanelBlock;
-import org.metamechanists.quaptics.implementation.blocks.attachments.ItemHolderBlock;
-import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
-import org.metamechanists.quaptics.implementation.multiblocks.ComplexMultiblock;
+import org.metamechanists.quaptics.implementation.attachments.ItemHolderBlock;
+import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
+import org.metamechanists.quaptics.implementation.attachments.ComplexMultiblock;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
 import org.metamechanists.quaptics.items.groups.Primitive;
-import org.metamechanists.quaptics.panels.info.InfoPanelContainer;
 import org.metamechanists.quaptics.storage.QuapticTicker;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
@@ -33,7 +31,6 @@ import org.metamechanists.quaptics.utils.Particles;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.builders.ItemDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
-import org.metamechanists.quaptics.utils.id.complex.InfoPanelId;
 import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
 
 import java.util.ArrayList;
@@ -155,10 +152,7 @@ public class InfusionContainer extends ConnectedBlock implements ItemHolderBlock
     @Override
     protected void onBreak(@NotNull final Location location) {
         super.onBreak(location);
-        final Optional<InfoPanelId> panelId = InfoPanelBlock.getPanelId(location);
-        final Optional<InfoPanelContainer> panel = panelId.isPresent() ? panelId.get().get() : Optional.empty();
-        panel.ifPresent(InfoPanelContainer::remove);
-        ItemHolderBlock.getStack(location).ifPresent(stack -> location.getWorld().dropItem(location, stack));
+        onBreakItemHolderBlock(location);
     }
     @Override
     protected void onRightClick(final @NotNull Location location, final @NotNull Player player) {
@@ -235,8 +229,11 @@ public class InfusionContainer extends ConnectedBlock implements ItemHolderBlock
     }
     private static void animatePillar(@NotNull final Location center, @NotNull final Location pillarLocation, final double timeSinceCraftStarted) {
         Particles.animatedLine(Particle.ELECTRIC_SPARK,
-                pillarLocation.clone().toCenterLocation(), center.clone().toCenterLocation(),
-                PILLAR_PARTICLE_COUNT, (timeSinceCraftStarted % PILLAR_PARTICLE_ANIMATION_LENGTH_SECONDS) / PILLAR_PARTICLE_ANIMATION_LENGTH_SECONDS);
+                pillarLocation.clone().toCenterLocation(),
+                center.clone().toCenterLocation(),
+                PILLAR_PARTICLE_COUNT,
+                (timeSinceCraftStarted % PILLAR_PARTICLE_ANIMATION_LENGTH_SECONDS) / PILLAR_PARTICLE_ANIMATION_LENGTH_SECONDS,
+                0);
     }
     private static void animateCenter(@NotNull final Location center, final double timeSinceCraftStarted) {
         ParticleUtils.randomParticle(center.clone().toCenterLocation(), Particle.ENCHANTMENT_TABLE, CONTAINER_PARTICLE_RADIUS, CONTAINER_PARTICLE_COUNT);

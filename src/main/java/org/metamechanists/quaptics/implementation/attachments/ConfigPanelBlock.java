@@ -1,11 +1,11 @@
-package org.metamechanists.quaptics.implementation.blocks.attachments;
+package org.metamechanists.quaptics.implementation.attachments;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
-import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
+import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
 import org.metamechanists.quaptics.panels.config.ConfigPanel;
 import org.metamechanists.quaptics.panels.config.ConfigPanelContainer;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;

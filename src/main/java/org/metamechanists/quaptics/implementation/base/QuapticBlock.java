@@ -1,4 +1,4 @@
-package org.metamechanists.quaptics.implementation.blocks.base;
+package org.metamechanists.quaptics.implementation.base;
 
 import com.destroystokyo.paper.ParticleBuilder;
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;

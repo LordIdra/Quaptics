@@ -4,29 +4,32 @@ import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
+import org.metamechanists.metalib.utils.ParticleUtils;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
-import org.metamechanists.quaptics.implementation.blocks.attachments.InfoPanelBlock;
-import org.metamechanists.quaptics.implementation.blocks.attachments.ItemHolderBlock;
-import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
-import org.metamechanists.quaptics.implementation.multiblocks.ComplexMultiblock;
+import org.metamechanists.quaptics.implementation.attachments.ItemHolderBlock;
+import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
+import org.metamechanists.quaptics.implementation.attachments.ComplexMultiblock;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
-import org.metamechanists.quaptics.panels.info.InfoPanelContainer;
+import org.metamechanists.quaptics.items.groups.Primitive;
 import org.metamechanists.quaptics.storage.QuapticTicker;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
+import org.metamechanists.quaptics.utils.Language;
+import org.metamechanists.quaptics.utils.Particles;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
-import org.metamechanists.quaptics.utils.id.complex.InfoPanelId;
 import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
 
 import java.util.ArrayList;
@@ -38,7 +41,7 @@ import static org.metamechanists.quaptics.implementation.multiblocks.entangler.m
 import static org.metamechanists.quaptics.implementation.multiblocks.entangler.magnet.EntanglementMagnetTop.ENTANGLEMENT_MAGNET_TOP;
 
 
-public class EntanglementContainer extends ConnectedBlock implements ComplexMultiblock {
+public class EntanglementContainer extends ConnectedBlock implements ItemHolderBlock, ComplexMultiblock {
     public static final Settings ENTANGLEMENT_CONTAINER_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
             .timePerItem(10)
@@ -52,16 +55,16 @@ public class EntanglementContainer extends ConnectedBlock implements ComplexMult
                     "&7● Entangles items",
                     "&7● &eRight Click &7with an item to start the entanglement process"));
 
-    private static final Vector3f PILLAR_SCALE = new Vector3f(0.1F, 1.6F, 0.1F);
+    private static final Vector3f PILLAR_SCALE = new Vector3f(0.1F, 3.2F, 0.1F);
     private static final Vector3f PILLAR_1_OFFSET = new Vector3f(0.4F, 0.0F, 0.0F);
     private static final Vector3f PILLAR_2_OFFSET = new Vector3f(-0.4F, 0.0F, 0.0F);
     private static final Vector3f PILLAR_3_OFFSET = new Vector3f(0.0F, 0.0F, 0.4F);
     private static final Vector3f PILLAR_4_OFFSET = new Vector3f(0.0F, 0.0F, -0.4F);
 
-    private static final Vector3f FRAME_1_SCALE = new Vector3f(0.2F, 0.4F, 0.7F);
-    private static final Vector3f FRAME_2_SCALE = new Vector3f(0.7F, 0.4F, 0.2F);
-    private static final Vector3f FRAME_3_SCALE = new Vector3f(0.7F, 0.4F, 0.2F);
-    private static final Vector3f FRAME_4_SCALE = new Vector3f(0.2F, 0.4F, 0.7F);
+    private static final Vector3f FRAME_1_SCALE = new Vector3f(0.2F, 0.4F, 0.74F);
+    private static final Vector3f FRAME_2_SCALE = new Vector3f(0.74F, 0.4F, 0.2F);
+    private static final Vector3f FRAME_3_SCALE = new Vector3f(0.74F, 0.4F, 0.2F);
+    private static final Vector3f FRAME_4_SCALE = new Vector3f(0.2F, 0.4F, 0.74F);
     private static final Vector3f FRAME_1_OFFSET = new Vector3f(0.20F, 0.0F, 0.20F);
     private static final Vector3f FRAME_2_OFFSET = new Vector3f(0.20F, 0.0F, -0.20F);
     private static final Vector3f FRAME_3_OFFSET = new Vector3f(-0.20F, 0.0F, 0.20F);
@@ -71,6 +74,16 @@ public class EntanglementContainer extends ConnectedBlock implements ComplexMult
     private static final Vector MAGNET_1_LOCATION = new Vector(0, 4, 0);
     private static final Vector MAGNET_2_LOCATION = new Vector(0, -4, 0);
     private static final List<Vector> MAGNET_LOCATIONS = List.of(MAGNET_1_LOCATION, MAGNET_2_LOCATION);
+
+    private static final int MAGNET_PARTICLE_COUNT = 1;
+    private static final double MAGNET_PARTICLE_ANIMATION_LENGTH_SECONDS = 0.5;
+    private static final double MAGNET_PARTICLE_SPEED = 0.05;
+    private static final double CONTAINER_PARTICLE_RADIUS = 0.5;
+    private static final int CONTAINER_PARTICLE_COUNT = 3;
+
+    private static final Map<ItemStack, ItemStack> RECIPES = Map.of(
+            new ItemStack(Material.DEAD_BUSH), Primitive.ENTANGLED_CORE
+    );
 
     public EntanglementContainer(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
@@ -156,14 +169,14 @@ public class EntanglementContainer extends ConnectedBlock implements ComplexMult
     @Override
     protected void onBreak(@NotNull final Location location) {
         super.onBreak(location);
-        final Optional<InfoPanelId> panelId = InfoPanelBlock.getPanelId(location);
-        final Optional<InfoPanelContainer> panel = panelId.isPresent() ? panelId.get().get() : Optional.empty();
-        panel.ifPresent(InfoPanelContainer::remove);
-        ItemHolderBlock.getStack(location).ifPresent(stack -> location.getWorld().dropItem(location, stack));
+        onBreakItemHolderBlock(location);
     }
     @Override
     protected void onRightClick(final @NotNull Location location, final @NotNull Player player) {
-        multiblockInteract(location.getBlock(), player);
+        if (multiblockInteract(location.getBlock(), player)) {
+            return;
+        }
+        itemHolderInteract(location, player);
     }
     @Override
     public void onQuapticTick(@NotNull final ConnectionGroup group, @NotNull final Location location) {
@@ -172,7 +185,7 @@ public class EntanglementContainer extends ConnectedBlock implements ComplexMult
         }
 
         if (!allMagnetsPowered(location)) {
-            // TODO cancel craft
+            completeCraft(location);
             return;
         }
 
@@ -183,8 +196,30 @@ public class EntanglementContainer extends ConnectedBlock implements ComplexMult
         tickAnimation(location, secondsSinceCraftStarted);
 
         if (secondsSinceCraftStarted >= settings.getTimePerItem()) {
-            // TODO complete craft
+            cancelCraft(location);
         }
+    }
+    @Override
+    public boolean onInsert(@NotNull final Location location, @NotNull final ItemStack stack, @NotNull final Player player) {
+        if (RECIPES.keySet().stream().noneMatch(input -> SlimefunUtils.isItemSimilar(input, stack, false))) {
+            Language.sendLanguageMessage(player, "entangler.cannot-be-entangled");
+            return false;
+        }
+
+        if (!allMagnetsPowered(location)) {
+            Language.sendLanguageMessage(player, "entangler.magnets-not-powered");
+            return false;
+        }
+
+        BlockStorageAPI.set(location, Keys.BS_SECONDS_SINCE_CRAFT_STARTED, 0);
+        BlockStorageAPI.set(location, Keys.BS_CRAFT_IN_PROGRESS, true);
+        return true;
+    }
+    @Override
+    public Optional<ItemStack> onRemove(@NotNull final Location location, @NotNull final ItemStack stack) {
+        BlockStorageAPI.set(location, Keys.BS_SECONDS_SINCE_CRAFT_STARTED, 0);
+        BlockStorageAPI.set(location, Keys.BS_CRAFT_IN_PROGRESS, false);
+        return Optional.of(stack);
     }
 
     @Override
@@ -202,7 +237,8 @@ public class EntanglementContainer extends ConnectedBlock implements ComplexMult
     }
     @Override
     public void tickAnimation(@NotNull final Location centerLocation, final double timeSeconds) {
-
+        MAGNET_LOCATIONS.forEach(magnetLocation -> animatePillar(centerLocation, centerLocation.clone().add(magnetLocation), timeSeconds));
+        animateCenter(centerLocation, timeSeconds);
     }
 
     private static boolean isMagnetPowered(@NotNull final Location pillarLocation) {
@@ -210,5 +246,37 @@ public class EntanglementContainer extends ConnectedBlock implements ComplexMult
     }
     private static boolean allMagnetsPowered(@NotNull final Location location) {
         return MAGNET_LOCATIONS.stream().allMatch(vector -> isMagnetPowered(location.clone().add(vector)));
+    }
+
+    private static void animatePillar(@NotNull final Location center, @NotNull final Location pillarLocation, final double timeSinceCraftStarted) {
+        Particles.animatedLine(Particle.ELECTRIC_SPARK,
+                pillarLocation.clone().toCenterLocation(),
+                center.clone().toCenterLocation(),
+                MAGNET_PARTICLE_COUNT,
+                (timeSinceCraftStarted % MAGNET_PARTICLE_ANIMATION_LENGTH_SECONDS) / MAGNET_PARTICLE_ANIMATION_LENGTH_SECONDS,
+                MAGNET_PARTICLE_SPEED);
+    }
+    private static void animateCenter(@NotNull final Location center, final double timeSinceCraftStarted) {
+        Particles.animatedHorizontalCircle(Particle.GLOW,
+                center.clone().toCenterLocation(),
+                CONTAINER_PARTICLE_RADIUS,
+                CONTAINER_PARTICLE_COUNT,
+                (timeSinceCraftStarted % MAGNET_PARTICLE_ANIMATION_LENGTH_SECONDS) / MAGNET_PARTICLE_ANIMATION_LENGTH_SECONDS,
+                0);
+    }
+
+    private static void cancelCraft(@NotNull final Location location) {
+        BlockStorageAPI.set(location, Keys.BS_SECONDS_SINCE_CRAFT_STARTED, 0);
+        BlockStorageAPI.set(location, Keys.BS_CRAFT_IN_PROGRESS, false);
+    }
+    private static void completeCraft(@NotNull final Location location) {
+        final Optional<ItemStack> stack = ItemHolderBlock.getStack(location);
+        if (stack.isEmpty()) {
+            return;
+        }
+
+        BlockStorageAPI.set(location, Keys.BS_SECONDS_SINCE_CRAFT_STARTED, 0);
+        BlockStorageAPI.set(location, Keys.BS_CRAFT_IN_PROGRESS, false);
+        ItemHolderBlock.insertItem(location, RECIPES.get(stack.get()));
     }
 }

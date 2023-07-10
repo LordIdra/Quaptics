@@ -1,10 +1,10 @@
-package org.metamechanists.quaptics.implementation.blocks.attachments;
+package org.metamechanists.quaptics.implementation.attachments;
 
 import org.bukkit.Location;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
-import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
+import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
 import org.metamechanists.quaptics.panels.info.BlockInfoPanel;
 import org.metamechanists.quaptics.panels.info.InfoPanelContainer;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;

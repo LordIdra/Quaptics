@@ -1,4 +1,4 @@
-package org.metamechanists.quaptics.implementation.blocks.base;
+package org.metamechanists.quaptics.implementation.base;
 
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;

@@ -1,4 +1,4 @@
-package org.metamechanists.quaptics.implementation.multiblocks;
+package org.metamechanists.quaptics.implementation.attachments;
 
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.utils.ChatUtils;

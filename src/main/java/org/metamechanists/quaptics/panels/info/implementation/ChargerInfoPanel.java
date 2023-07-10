@@ -4,7 +4,7 @@ import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
-import org.metamechanists.quaptics.implementation.blocks.attachments.ItemHolderBlock;
+import org.metamechanists.quaptics.implementation.attachments.ItemHolderBlock;
 import org.metamechanists.quaptics.implementation.tools.QuapticChargeableItem;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.panels.info.BlockInfoPanel;

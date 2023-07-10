@@ -1,4 +1,4 @@
-package org.metamechanists.quaptics.implementation.blocks.attachments;
+package org.metamechanists.quaptics.implementation.attachments;
 
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.connections.Link;

@@ -13,8 +13,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.Quaptics;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
-import org.metamechanists.quaptics.implementation.blocks.base.ConnectedBlock;
-import org.metamechanists.quaptics.implementation.blocks.base.QuapticBlock;
+import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
+import org.metamechanists.quaptics.implementation.base.QuapticBlock;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 
 import java.util.Optional;

@@ -1,4 +1,4 @@
-package org.metamechanists.quaptics.implementation.blocks.attachments;
+package org.metamechanists.quaptics.implementation.attachments;
 
 import org.bukkit.Location;
 import org.bukkit.entity.ItemDisplay;
@@ -7,7 +7,7 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.metalib.utils.ItemUtils;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
-import org.metamechanists.quaptics.implementation.blocks.base.QuapticBlock;
+import org.metamechanists.quaptics.implementation.base.QuapticBlock;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
 

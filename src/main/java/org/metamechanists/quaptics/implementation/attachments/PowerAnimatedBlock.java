@@ -1,8 +1,8 @@
-package org.metamechanists.quaptics.implementation.blocks.attachments;
+package org.metamechanists.quaptics.implementation.attachments;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Display.Brightness;
-import org.metamechanists.quaptics.implementation.blocks.base.QuapticBlock;
+import org.metamechanists.quaptics.implementation.base.QuapticBlock;
 import org.metamechanists.quaptics.utils.Utils;
 
 

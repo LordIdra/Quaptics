@@ -3,7 +3,7 @@ package org.metamechanists.quaptics.panels.info.implementation;
 import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
-import org.metamechanists.quaptics.implementation.blocks.attachments.ProgressBlock;
+import org.metamechanists.quaptics.implementation.attachments.ProgressBlock;
 import org.metamechanists.quaptics.panels.info.BlockInfoPanel;
 import org.metamechanists.quaptics.panels.info.InfoPanelBuilder;
 import org.metamechanists.quaptics.panels.info.InfoPanelContainer;
