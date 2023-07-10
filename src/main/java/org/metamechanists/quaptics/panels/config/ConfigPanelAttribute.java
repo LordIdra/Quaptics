@@ -42,8 +42,8 @@ public class ConfigPanelAttribute {
 
     public ConfigPanelAttribute(final ConnectionGroupId groupId, @NotNull final String name, @NotNull final String key,
                                 final @NotNull Location location, final Vector offset, final @NotNull Vector3d rotation, final Vector3f displaySize) {
-        final Vector relativeSubButtonTranslation = new Vector(0.05, -0.03, -0.08).add(BUTTON_ADJUSTMENT).rotateAroundY(rotation.y);
-        final Vector relativeAddButtonTranslation = new Vector(0.41, -0.03, -0.08).add(BUTTON_ADJUSTMENT).rotateAroundY(rotation.y);
+        final Vector relativeSubButtonTranslation = new Vector(0.05, 0, -0.08).add(BUTTON_ADJUSTMENT).rotateAroundY(rotation.y);
+        final Vector relativeAddButtonTranslation = new Vector(0.40, 0, -0.08).add(BUTTON_ADJUSTMENT).rotateAroundY(rotation.y);
 
         this.keyId = new TextDisplayId(new TextDisplayBuilder()
                 .text(ChatColors.color(key))
