@@ -48,13 +48,13 @@ public class EntanglementMagnet extends ConnectedBlock implements PowerAnimatedB
     private static final Vector3f BASE_ROTATION = new Vector3f(0.0F, (float) (Math.PI / 4), 0.0F);
     private static final Vector3f COIL_SCALE = new Vector3f(0.10F, 0.20F, 0.60F);
     private static final Vector3f COIL_1_ROTATION = new Vector3f(0.0F, (float) (Math.PI / 4), 0.0F);
-    private static final Vector3f COIL_2_ROTATION = new Vector3f(0.0F, (float) (-Math.PI / 4), 0.0F);
-    private static final Vector3f COIL_3_ROTATION = new Vector3f(0.0F, (float) (Math.PI / 4), 0.0F);
+    private static final Vector3f COIL_2_ROTATION = new Vector3f(0.0F, (float) (Math.PI / 4), 0.0F);
+    private static final Vector3f COIL_3_ROTATION = new Vector3f(0.0F, (float) (-Math.PI / 4), 0.0F);
     private static final Vector3f COIL_4_ROTATION = new Vector3f(0.0F, (float) (-Math.PI / 4), 0.0F);
-    private static final Vector3f COIL_1_OFFSET = new Vector3f(0.3F, 0.0F, 0.3F);
-    private static final Vector3f COIL_2_OFFSET = new Vector3f(0.3F, 0.0F, -0.3F);
-    private static final Vector3f COIL_3_OFFSET = new Vector3f(-0.3F, 0.0F, 0.3F);
-    private static final Vector3f COIL_4_OFFSET = new Vector3f(-0.3F, 0.0F, -0.3F);
+    private static final Vector3f COIL_1_OFFSET = new Vector3f(0.25F, -0.20F, 0.25F);
+    private static final Vector3f COIL_2_OFFSET = new Vector3f(0.25F, -0.20F, -0.25F);
+    private static final Vector3f COIL_3_OFFSET = new Vector3f(-0.25F, -0.20F, 0.25F);
+    private static final Vector3f COIL_4_OFFSET = new Vector3f(-0.25F, -0.20F, -0.25F);
 
     private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -getConnectionRadius());
 
