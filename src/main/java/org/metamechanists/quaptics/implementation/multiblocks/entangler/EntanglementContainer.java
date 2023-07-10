@@ -1,5 +1,6 @@
 package org.metamechanists.quaptics.implementation.multiblocks.entangler;
 
+import com.destroystokyo.paper.ParticleBuilder;
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
@@ -13,7 +14,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
-import org.metamechanists.metalib.utils.ParticleUtils;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.implementation.attachments.ComplexMultiblock;
@@ -82,6 +82,7 @@ public class EntanglementContainer extends ConnectedBlock implements ItemHolderB
     private static final double CONTAINER_PARTICLE_RADIUS = 0.8;
     private static final int CONTAINER_PARTICLE_COUNT = 3;
     private static final double COMPLETED_PARTICLE_SPEED = 0.1;
+    private static final int COMPLETED_PARTICLE_COUNT = 200;
 
     private static final Map<ItemStack, ItemStack> RECIPES = Map.of(
             new ItemStack(Material.DEAD_BUSH), Primitive.ENTANGLED_CORE
@@ -265,11 +266,19 @@ public class EntanglementContainer extends ConnectedBlock implements ItemHolderB
                 CONTAINER_PARTICLE_COUNT,
                 (timeSinceCraftStarted % centerParticleAnimationLengthSeconds) / centerParticleAnimationLengthSeconds,
                 0);
+        Particles.animatedHorizontalCircle(Particle.ELECTRIC_SPARK,
+                center.clone().toCenterLocation(),
+                CONTAINER_PARTICLE_RADIUS,
+                CONTAINER_PARTICLE_COUNT,
+                1 - ((timeSinceCraftStarted % centerParticleAnimationLengthSeconds) / centerParticleAnimationLengthSeconds),
+                0);
     }
     private static void animateCenterCompleted(@NotNull final Location center) {
-        ParticleUtils.sphereOut(center.clone().toCenterLocation(),
-                Particle.FIREWORKS_SPARK,
-                COMPLETED_PARTICLE_SPEED);
+        new ParticleBuilder(Particle.FIREWORKS_SPARK)
+                .location(center.toCenterLocation())
+                .extra(COMPLETED_PARTICLE_SPEED)
+                .count(COMPLETED_PARTICLE_COUNT)
+                .spawn();
     }
 
     private static void cancelCraft(@NotNull final Location location) {
