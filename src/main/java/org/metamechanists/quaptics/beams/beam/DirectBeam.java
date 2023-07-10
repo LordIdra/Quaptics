@@ -42,8 +42,8 @@ public class DirectBeam implements Beam {
     private static @NotNull Matrix4f generateTransformation(final @NotNull Location source, final Location target, final float radius) {
         final Vector3f scale = new Vector3f(radius, radius, (float) source.distance(target));
         return new TransformationMatrixBuilder()
-                .scale(scale)
                 .lookAlong(source, target)
+                .scale(scale)
                 .buildForBlockDisplay();
     }
 
