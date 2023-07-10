@@ -13,6 +13,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
+import org.metamechanists.metalib.utils.ParticleUtils;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.implementation.attachments.ComplexMultiblock;
@@ -76,10 +77,11 @@ public class EntanglementContainer extends ConnectedBlock implements ItemHolderB
 
     private static final int MAGNET_PARTICLE_COUNT = 2;
     private final double magnetParticleAnimationLengthSeconds = settings.getTimePerItem();
-    private final double centerParticleAnimationLengthSeconds = settings.getTimePerItem() / 4.0;
-    private static final double MAGNET_PARTICLE_SPEED = 0.05;
+    private final double centerParticleAnimationLengthSeconds = settings.getTimePerItem() / 16.0;
+    private static final double MAGNET_PARTICLE_SPEED = 0.02;
     private static final double CONTAINER_PARTICLE_RADIUS = 0.8;
     private static final int CONTAINER_PARTICLE_COUNT = 3;
+    private static final double COMPLETED_PARTICLE_SPEED = 0.1;
 
     private static final Map<ItemStack, ItemStack> RECIPES = Map.of(
             new ItemStack(Material.DEAD_BUSH), Primitive.ENTANGLED_CORE
@@ -264,6 +266,11 @@ public class EntanglementContainer extends ConnectedBlock implements ItemHolderB
                 (timeSinceCraftStarted % centerParticleAnimationLengthSeconds) / centerParticleAnimationLengthSeconds,
                 0);
     }
+    private static void animateCenterCompleted(@NotNull final Location center) {
+        ParticleUtils.sphereOut(center.clone().toCenterLocation(),
+                Particle.FIREWORKS_SPARK,
+                COMPLETED_PARTICLE_SPEED);
+    }
 
     private static void cancelCraft(@NotNull final Location location) {
         BlockStorageAPI.set(location, Keys.BS_SECONDS_SINCE_CRAFT_STARTED, 0);
@@ -275,6 +282,7 @@ public class EntanglementContainer extends ConnectedBlock implements ItemHolderB
             return;
         }
 
+        animateCenterCompleted(location);
         BlockStorageAPI.set(location, Keys.BS_SECONDS_SINCE_CRAFT_STARTED, 0);
         BlockStorageAPI.set(location, Keys.BS_CRAFT_IN_PROGRESS, false);
         ItemHolderBlock.insertItem(location, RECIPES.get(stack.get()));
