@@ -50,7 +50,7 @@ public class EntanglementContainer extends ConnectedBlock implements ComplexMult
     private static final Vector3f PILLAR_3_OFFSET = new Vector3f(0.0F, 0.0F, 0.4F);
     private static final Vector3f PILLAR_4_OFFSET = new Vector3f(0.0F, 0.0F, -0.4F);
 
-    private static final Vector3f FRAME_SCALE = new Vector3f(0.2F, 0.4F, 0.2F);
+    private static final Vector3f FRAME_SCALE = new Vector3f(0.5F, 0.4F, 0.5F);
     private static final Vector3f FRAME_1_OFFSET = new Vector3f(0.4F, 0.0F, 0.4F);
     private static final Vector3f FRAME_2_OFFSET = new Vector3f(0.4F, 0.0F, -0.4F);
     private static final Vector3f FRAME_3_OFFSET = new Vector3f(-0.4F, 0.0F, 0.4F);
@@ -106,32 +106,32 @@ public class EntanglementContainer extends ConnectedBlock implements ComplexMult
                 .setBlockData(Material.BLUE_CONCRETE.createBlockData())
                 .setTransformation(new TransformationMatrixBuilder()
                         .scale(FRAME_SCALE)
-                        .translate(FRAME_1_OFFSET)
                         .rotate(FRAME_1_ROTATION)
+                        .translate(FRAME_1_OFFSET)
                         .buildForBlockDisplay())
                 .build());
         displayGroup.addDisplay("frame2", new BlockDisplayBuilder(location.toCenterLocation())
                 .setBlockData(Material.BLUE_CONCRETE.createBlockData())
                 .setTransformation(new TransformationMatrixBuilder()
                         .scale(FRAME_SCALE)
-                        .translate(FRAME_2_OFFSET)
                         .rotate(FRAME_2_ROTATION)
+                        .translate(FRAME_2_OFFSET)
                         .buildForBlockDisplay())
                 .build());
         displayGroup.addDisplay("frame3", new BlockDisplayBuilder(location.toCenterLocation())
                 .setBlockData(Material.BLUE_CONCRETE.createBlockData())
                 .setTransformation(new TransformationMatrixBuilder()
                         .scale(FRAME_SCALE)
-                        .translate(FRAME_3_OFFSET)
                         .rotate(FRAME_3_ROTATION)
+                        .translate(FRAME_3_OFFSET)
                         .buildForBlockDisplay())
                 .build());
         displayGroup.addDisplay("frame4", new BlockDisplayBuilder(location.toCenterLocation())
                 .setBlockData(Material.BLUE_CONCRETE.createBlockData())
                 .setTransformation(new TransformationMatrixBuilder()
                         .scale(FRAME_SCALE)
-                        .translate(FRAME_4_OFFSET)
                         .rotate(FRAME_4_ROTATION)
+                        .translate(FRAME_4_OFFSET)
                         .buildForBlockDisplay())
                 .build());
     }

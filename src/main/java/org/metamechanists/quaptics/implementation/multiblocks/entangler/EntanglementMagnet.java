@@ -38,7 +38,7 @@ public class EntanglementMagnet extends ConnectedBlock implements PowerAnimatedB
             .build();
     public static final SlimefunItemStack ENTANGLEMENT_MAGNET = new SlimefunItemStack(
             "QP_ENTANGLEMENT_MAGNET",
-            Material.BLUE_CONCRETE,
+            Material.ORANGE_CONCRETE,
             "&6Entanglement Magnet",
             Lore.create(ENTANGLEMENT_MAGNET_SETTINGS,
                     "&7● Multiblock component"));
@@ -46,15 +46,15 @@ public class EntanglementMagnet extends ConnectedBlock implements PowerAnimatedB
     private static final Vector3f BASE_SCALE = new Vector3f(0.80F, 0.70F, 0.80F);
     private static final Vector3f BASE_OFFSET = new Vector3f(0.0F, -0.35F, 0.0F);
     private static final Vector3f BASE_ROTATION = new Vector3f(0.0F, (float) (Math.PI / 4), 0.0F);
-    private static final Vector3f COIL_SCALE = new Vector3f(0.20F, 0.70F, 0.20F);
+    private static final Vector3f COIL_SCALE = new Vector3f(0.40F, 0.20F, 0.40F);
     private static final Vector3f COIL_1_ROTATION = new Vector3f(0.0F, (float) (Math.PI / 4), 0.0F);
     private static final Vector3f COIL_2_ROTATION = new Vector3f(0.0F, (float) (-Math.PI / 4), 0.0F);
     private static final Vector3f COIL_3_ROTATION = new Vector3f(0.0F, (float) (Math.PI / 4), 0.0F);
     private static final Vector3f COIL_4_ROTATION = new Vector3f(0.0F, (float) (-Math.PI / 4), 0.0F);
-    private static final Vector3f COIL_1_OFFSET = new Vector3f(0.0F, 0.3F, 0.3F);
-    private static final Vector3f COIL_2_OFFSET = new Vector3f(0.0F, 0.3F, -0.3F);
-    private static final Vector3f COIL_3_OFFSET = new Vector3f(0.0F, -0.3F, 0.3F);
-    private static final Vector3f COIL_4_OFFSET = new Vector3f(0.0F, -0.3F, -0.3F);
+    private static final Vector3f COIL_1_OFFSET = new Vector3f(0.3F, 0.0F, 0.3F);
+    private static final Vector3f COIL_2_OFFSET = new Vector3f(0.3F, 0.0F, -0.3F);
+    private static final Vector3f COIL_3_OFFSET = new Vector3f(-0.3F, 0.0F, 0.3F);
+    private static final Vector3f COIL_4_OFFSET = new Vector3f(-0.3F, 0.0F, -0.3F);
 
     private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -getConnectionRadius());
 
