@@ -188,7 +188,7 @@ public class EntanglementContainer extends ConnectedBlock implements ItemHolderB
         }
 
         if (!allMagnetsPowered(location)) {
-            completeCraft(location);
+            cancelCraft(location);
             return;
         }
 
@@ -199,7 +199,7 @@ public class EntanglementContainer extends ConnectedBlock implements ItemHolderB
         tickAnimation(location, secondsSinceCraftStarted);
 
         if (secondsSinceCraftStarted >= settings.getTimePerItem()) {
-            cancelCraft(location);
+            completeCraft(location);
         }
     }
     @Override
@@ -256,7 +256,7 @@ public class EntanglementContainer extends ConnectedBlock implements ItemHolderB
                 pillarLocation.clone().toCenterLocation(),
                 center.clone().toCenterLocation(),
                 MAGNET_PARTICLE_COUNT,
-                (timeSinceCraftStarted % magnetParticleAnimationLengthSeconds) / magnetParticleAnimationLengthSeconds,
+                (timeSinceCraftStarted % magnetParticleAnimationLengthSeconds) / (magnetParticleAnimationLengthSeconds+0.001),
                 MAGNET_PARTICLE_SPEED);
     }
     private void animateCenter(@NotNull final Location center, final double timeSinceCraftStarted) {
