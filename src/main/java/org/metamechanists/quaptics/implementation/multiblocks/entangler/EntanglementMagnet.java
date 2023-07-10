@@ -46,6 +46,9 @@ public class EntanglementMagnet extends ConnectedBlock implements PowerAnimatedB
     private static final Vector3f BASE_SCALE = new Vector3f(0.80F, 0.70F, 0.80F);
     private static final Vector3f BASE_OFFSET = new Vector3f(0.0F, -0.35F, 0.0F);
     private static final Vector3f BASE_ROTATION = new Vector3f(0.0F, (float) (Math.PI / 4), 0.0F);
+    private static final Vector3f PLATE_SCALE = new Vector3f(0.50F, 0.10F, 0.50F);
+    private static final Vector3f PLATE_OFFSET = new Vector3f(0.0F, 0.0F, 0.0F);
+    private static final Vector3f PLATE_ROTATION = new Vector3f(0.0F, (float) (Math.PI / 4), 0.0F);
     private static final Vector3f COIL_SCALE = new Vector3f(0.10F, 0.20F, 0.60F);
     private static final Vector3f COIL_1_ROTATION = new Vector3f(0.0F, (float) (Math.PI / 4), 0.0F);
     private static final Vector3f COIL_2_ROTATION = new Vector3f(0.0F, (float) (Math.PI / 4), 0.0F);
@@ -76,12 +79,20 @@ public class EntanglementMagnet extends ConnectedBlock implements PowerAnimatedB
                         .translate(BASE_OFFSET)
                         .buildForBlockDisplay())
                 .build());
+        displayGroup.addDisplay("plate", new BlockDisplayBuilder(location.toCenterLocation())
+                .setBlockData(Material.LIGHT_GRAY_CONCRETE.createBlockData())
+                .setTransformation(new TransformationMatrixBuilder()
+                        .scale(PLATE_SCALE)
+                        .rotate(PLATE_ROTATION)
+                        .translate(PLATE_OFFSET)
+                        .buildForBlockDisplay())
+                .build());
         displayGroup.addDisplay("coil1", new BlockDisplayBuilder(location.toCenterLocation())
                 .setBlockData(Material.ORANGE_CONCRETE.createBlockData())
                 .setBrightness(Utils.BRIGHTNESS_OFF)
                 .setTransformation(new TransformationMatrixBuilder()
-                        .scale(COIL_SCALE)
                         .rotate(COIL_1_ROTATION)
+                        .scale(COIL_SCALE)
                         .translate(COIL_1_OFFSET)
                         .buildForBlockDisplay())
                 .build());
@@ -89,8 +100,8 @@ public class EntanglementMagnet extends ConnectedBlock implements PowerAnimatedB
                 .setBlockData(Material.ORANGE_CONCRETE.createBlockData())
                 .setBrightness(Utils.BRIGHTNESS_OFF)
                 .setTransformation(new TransformationMatrixBuilder()
-                        .scale(COIL_SCALE)
                         .rotate(COIL_2_ROTATION)
+                        .scale(COIL_SCALE)
                         .translate(COIL_2_OFFSET)
                         .buildForBlockDisplay())
                 .build());
@@ -98,8 +109,8 @@ public class EntanglementMagnet extends ConnectedBlock implements PowerAnimatedB
                 .setBlockData(Material.ORANGE_CONCRETE.createBlockData())
                 .setBrightness(Utils.BRIGHTNESS_OFF)
                 .setTransformation(new TransformationMatrixBuilder()
-                        .scale(COIL_SCALE)
                         .rotate(COIL_3_ROTATION)
+                        .scale(COIL_SCALE)
                         .translate(COIL_3_OFFSET)
                         .buildForBlockDisplay())
                 .build());
@@ -107,8 +118,8 @@ public class EntanglementMagnet extends ConnectedBlock implements PowerAnimatedB
                 .setBlockData(Material.ORANGE_CONCRETE.createBlockData())
                 .setBrightness(Utils.BRIGHTNESS_OFF)
                 .setTransformation(new TransformationMatrixBuilder()
-                        .scale(COIL_SCALE)
                         .rotate(COIL_4_ROTATION)
+                        .scale(COIL_SCALE)
                         .translate(COIL_4_OFFSET)
                         .buildForBlockDisplay())
                 .build());
