@@ -56,16 +56,16 @@ public class EntanglementContainer extends ConnectedBlock implements ItemHolderB
                     "&7● Entangles items",
                     "&7● &eRight Click &7with an item to start the entanglement process"));
 
-    private static final Vector3f PILLAR_SCALE = new Vector3f(0.1F, 0.8F, 0.1F);
+    private static final Vector3f PILLAR_SCALE = new Vector3f(0.1F, 2.4F, 0.1F);
     private static final Vector3f PILLAR_1_OFFSET = new Vector3f(0.7F, 0.0F, 0.0F);
     private static final Vector3f PILLAR_2_OFFSET = new Vector3f(-0.7F, 0.0F, 0.0F);
     private static final Vector3f PILLAR_3_OFFSET = new Vector3f(0.0F, 0.0F, 0.7F);
     private static final Vector3f PILLAR_4_OFFSET = new Vector3f(0.0F, 0.0F, -0.7F);
 
-    private static final Vector3f FRAME_1_SCALE = new Vector3f(0.20F, 0.40F, 1.20F);
-    private static final Vector3f FRAME_2_SCALE = new Vector3f(1.2F, 0.40F, 0.20F);
-    private static final Vector3f FRAME_3_SCALE = new Vector3f(1.2F, 0.40F, 0.20F);
-    private static final Vector3f FRAME_4_SCALE = new Vector3f(0.20F, 0.40F, 1.20F);
+    private static final Vector3f FRAME_1_SCALE = new Vector3f(0.10F, 0.40F, 1.20F);
+    private static final Vector3f FRAME_2_SCALE = new Vector3f(1.20F, 0.40F, 0.10F);
+    private static final Vector3f FRAME_3_SCALE = new Vector3f(1.20F, 0.40F, 0.10F);
+    private static final Vector3f FRAME_4_SCALE = new Vector3f(0.10F, 0.40F, 1.20F);
     private static final Vector3f FRAME_1_OFFSET = new Vector3f(0.35F, 0.0F, 0.35F);
     private static final Vector3f FRAME_2_OFFSET = new Vector3f(0.35F, 0.0F, -0.35F);
     private static final Vector3f FRAME_3_OFFSET = new Vector3f(-0.35F, 0.0F, 0.35F);
@@ -83,7 +83,7 @@ public class EntanglementContainer extends ConnectedBlock implements ItemHolderB
     private final double magnetParticleAnimationLengthSeconds = settings.getTimePerItem();
     private final double centerParticleAnimationLengthSeconds = settings.getTimePerItem() / 8.0;
     private static final double MAGNET_PARTICLE_SPEED = 0.02;
-    private static final double CONTAINER_PARTICLE_RADIUS = 0.8;
+    private static final double CONTAINER_PARTICLE_RADIUS = 1.2;
     private static final int CONTAINER_PARTICLE_COUNT = 3;
     private static final double COMPLETED_PARTICLE_SPEED = 0.1;
     private static final int COMPLETED_PARTICLE_COUNT = 200;
