@@ -17,6 +17,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
+import org.joml.Vector3f;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
@@ -89,9 +90,11 @@ public abstract class Turret extends ConnectedBlock {
     }
 
     private static @NotNull Matrix4f getBarrelMatrix(@NotNull final Location from, final Location to) {
+        final Vector3f barrelOffset = new Vector3f(0, 0.2F, 0);
+        final Vector3f barrelDirection = TransformationUtils.getDirection(from.clone().add(Vector.fromJOML(barrelOffset)), to);
         return new ModelLine()
-                .from(0, 0.2F, 0)
-                .to(TransformationUtils.getDirection(from.clone().add(0, 0.2F, 0), to).mul(1.6F))
+                .from(barrelOffset)
+                .to(barrelOffset.add(barrelDirection.mul(1.6F)))
                 .thickness(0.2F)
                 .getMatrix();
     }
