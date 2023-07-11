@@ -30,11 +30,23 @@ public class ModelLine implements ModelComponent {
         return this;
     }
     /**
+     * Sets the start point of the line
+     */
+    public ModelLine from(final float x, final float y, final float z) {
+        return from(new Vector3f(x, y, z));
+    }
+    /**
      * @param from The end point of the line
      */
     public ModelLine to(final Vector3f to) {
         this.to = to;
         return this;
+    }
+    /**
+     * Sets the end point of the line
+     */
+    public ModelLine to(final float x, final float y, final float z) {
+        return to(new Vector3f(x, y, z));
     }
     /**
      * @param from How thick the line is from one side to the other

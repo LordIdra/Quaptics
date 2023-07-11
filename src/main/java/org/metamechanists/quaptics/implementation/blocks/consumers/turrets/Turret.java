@@ -17,7 +17,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
-import org.joml.Vector3f;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
@@ -26,7 +25,6 @@ import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
-import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.models.ModelBuilder;
 import org.metamechanists.quaptics.utils.models.components.ModelCuboid;
@@ -55,9 +53,7 @@ public abstract class Turret extends ConnectedBlock {
         return new ModelBuilder()
                 .add("plate", new ModelCuboid()
                         .material(settings.getMainMaterial())
-                        .brightness(Utils.BRIGHTNESS_OFF)
-                        .location(0, 0.6F, 0)
-                        .size(0.6F, 0.6F, 0.6F))
+                        .size(0.6F))
                 .add("barrel", new ModelCuboid()
                         .material(Material.GRAY_CONCRETE))
                 .build(location);
@@ -94,9 +90,9 @@ public abstract class Turret extends ConnectedBlock {
 
     private static @NotNull Matrix4f getBarrelMatrix(@NotNull final Location from, final Location to) {
         return new ModelLine()
-                .from(new Vector3f())
-                .to(TransformationUtils.getDirection(from, to).mul(0.5F))
-                .thickness(0.1F)
+                .from(0, 0.2F, 0)
+                .to(TransformationUtils.getDirection(from.clone().add(0, 0.2F, 0), to).mul(1.6F))
+                .thickness(0.2F)
                 .getMatrix();
     }
     private static void updateBarrelTransformation(final Location location, final LivingEntity target) {
