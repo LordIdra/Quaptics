@@ -7,7 +7,7 @@ public enum Colors {
     QUAPTICS("66CCFF"),
 
     PRIMITIVE("996633"),
-    BASIC("8C8C8C"),
+    BASIC("339933"),
     INTERMEDIATE("FFCC00"),
     ADVANCED("FF6600"),
 

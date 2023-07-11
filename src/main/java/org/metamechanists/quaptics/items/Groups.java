@@ -30,7 +30,7 @@ public class Groups {
             new CustomItemStack(Material.BROWN_CONCRETE, Colors.PRIMITIVE.getFormattedColor() + "Primitive Components"));
 
     public final ItemGroup BASIC = new DummyItemGroup(Keys.BASIC,
-            new CustomItemStack(Material.GRAY_CONCRETE, Colors.BASIC.getFormattedColor() + "Basic Components"));
+            new CustomItemStack(Material.GREEN_CONCRETE, Colors.BASIC.getFormattedColor() + "Basic Components"));
 
     public final ItemGroup INTERMEDIATE = new DummyItemGroup(Keys.INTERMEDIATE,
             new CustomItemStack(Material.YELLOW_CONCRETE, Colors.INTERMEDIATE.getFormattedColor() + "Intermediate Components"));
