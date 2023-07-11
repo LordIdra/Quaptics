@@ -10,21 +10,20 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
-import org.joml.Vector3f;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
 import org.metamechanists.quaptics.connections.Link;
-import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.implementation.attachments.PowerAnimatedBlock;
 import org.metamechanists.quaptics.implementation.attachments.PowerLossBlock;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
+import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
 import org.metamechanists.quaptics.utils.Utils;
-import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
-import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
+import org.metamechanists.quaptics.utils.models.ModelBuilder;
+import org.metamechanists.quaptics.utils.models.components.ModelCuboid;
 
 import java.util.List;
 import java.util.Optional;
@@ -38,16 +37,11 @@ public class Transformer extends ConnectedBlock implements PowerAnimatedBlock, P
             .build();
     public static final SlimefunItemStack TRANSFORMER_1 = new SlimefunItemStack(
             "QP_TRANSFORMER_1",
-            Material.LIGHT_GRAY_TERRACOTTA,
+            Material.BLACK_TERRACOTTA,
             "&9Transformer &bI",
             Lore.create(TRANSFORMER_1_SETTINGS,
                     "&7● Drops the power of a quaptic ray",
                     "&7● Excess input power is wasted"));
-
-    private static final Vector3f MAIN_DISPLAY_SIZE = new Vector3f(0.30F, 0.30F, 0.80F);
-    private static final Vector3f COIL_DISPLAY_SIZE = new Vector3f(0.20F, 0.60F, 0.20F);
-    private static final Vector3f FIRST_COIL_DISPLAY_OFFSET = new Vector3f(0.0F, 0.0F, 0.25F);
-    private static final Vector3f SECOND_COIL_DISPLAY_OFFSET = new Vector3f(0.0F, 0.0F, -0.25F);
 
     private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -getConnectionRadius());
     private final Vector outputPointLocation = new Vector(0.0F, 0.0F, getConnectionRadius());
@@ -62,32 +56,20 @@ public class Transformer extends ConnectedBlock implements PowerAnimatedBlock, P
     }
     @Override
     protected DisplayGroup initModel(final @NotNull Location location, final @NotNull Player player) {
-        final DisplayGroup displayGroup = new DisplayGroup(location);
-        displayGroup.addDisplay("main", new BlockDisplayBuilder()
-                .material(Material.LIGHT_GRAY_TERRACOTTA)
-                .transformation(new TransformationMatrixBuilder()
-                        .scale(MAIN_DISPLAY_SIZE)
-                        .buildForBlockDisplay())
-                .build(location.toCenterLocation()));
-        displayGroup.addDisplay("coil1", new BlockDisplayBuilder()
-                .material(settings.getTier().concreteMaterial)
-                .brightness(Utils.BRIGHTNESS_OFF)
-                .viewRange(Utils.VIEW_RANGE_ON)
-                .transformation(new TransformationMatrixBuilder()
-                        .scale(COIL_DISPLAY_SIZE)
-                        .translate(FIRST_COIL_DISPLAY_OFFSET)
-                        .buildForBlockDisplay())
-                .build(location.toCenterLocation()));
-        displayGroup.addDisplay("coil2", new BlockDisplayBuilder()
-                .material(settings.getTier().concreteMaterial)
-                .brightness(Utils.BRIGHTNESS_OFF)
-                .viewRange(Utils.VIEW_RANGE_ON)
-                .transformation(new TransformationMatrixBuilder()
-                        .scale(COIL_DISPLAY_SIZE)
-                        .translate(SECOND_COIL_DISPLAY_OFFSET)
-                        .buildForBlockDisplay())
-                .build(location.toCenterLocation()));
-        return displayGroup;
+        return new ModelBuilder()
+                .add("main", new ModelCuboid()
+                        .material(Material.BLACK_TERRACOTTA))
+                .add("coil1", new ModelCuboid()
+                        .material(settings.getTier().concreteMaterial)
+                        .brightness(Utils.BRIGHTNESS_OFF)
+                        .location(0.0F, 0.0F, 0.25F)
+                        .size(0.20F, 0.60F, 0.20F))
+                .add("coil2", new ModelCuboid()
+                        .material(settings.getTier().concreteMaterial)
+                        .brightness(Utils.BRIGHTNESS_OFF)
+                        .location(0.0F, 0.0F, -0.25F)
+                        .size(0.20F, 0.60F, 0.20F))
+                .build(location);
     }
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {

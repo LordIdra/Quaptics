@@ -29,6 +29,12 @@ public class ModelCuboid implements ModelComponent {
         return this;
     }
     /**
+     * Sets the center of the cuboid
+     */
+    public ModelCuboid location(final float x, final float y, final float z) {
+        return location(new Vector3f(x, y, z));
+    }
+    /**
      * @param size The size of the cuboid (ie: the distance from one side to the other) on each axis
      */
     public ModelCuboid size(@NotNull final Vector3f size) {

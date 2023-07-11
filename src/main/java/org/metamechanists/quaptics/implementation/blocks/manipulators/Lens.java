@@ -10,7 +10,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
-import org.joml.Vector3f;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
@@ -22,10 +21,9 @@ import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
 import org.metamechanists.quaptics.utils.Utils;
-import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
+import org.metamechanists.quaptics.utils.models.ModelBuilder;
 import org.metamechanists.quaptics.utils.models.components.ModelDiamond;
-import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
 
 import java.util.List;
 import java.util.Optional;
@@ -47,6 +45,7 @@ public class Lens extends ConnectedBlock implements PowerAnimatedBlock, PowerLos
             .tier(Tier.ADVANCED)
             .powerLoss(0.02)
             .build();
+
     public static final SlimefunItemStack LENS_1 = new SlimefunItemStack(
             "QP_LENS_1",
             Material.GLASS,
@@ -72,9 +71,6 @@ public class Lens extends ConnectedBlock implements PowerAnimatedBlock, PowerLos
             Lore.create(LENS_4_SETTINGS,
                     "&7● Redirects a quaptic ray"));
 
-    private static final Vector3f GLASS_DISPLAY_SIZE = new Vector3f(0.20F);
-    private static final Vector3f CONCRETE_DISPLAY_SIZE = new Vector3f(0.10F);
-
     private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -getConnectionRadius());
     private final Vector outputPointLocation = new Vector(0.0F, 0.0F, getConnectionRadius());
 
@@ -88,24 +84,15 @@ public class Lens extends ConnectedBlock implements PowerAnimatedBlock, PowerLos
     }
     @Override
     protected DisplayGroup initModel(final @NotNull Location location, final @NotNull Player player) {
-        final DisplayGroup displayGroup = new DisplayGroup(location);
-        displayGroup.addDisplay("main", new BlockDisplayBuilder()
-                .material(Material.GLASS)
-                .transformation(new TransformationMatrixBuilder()
-                        .scale(GLASS_DISPLAY_SIZE)
-                        .rotate(ModelDiamond.ROTATION)
-                        .buildForBlockDisplay())
-                .build(location.toCenterLocation()));
-        displayGroup.addDisplay("concrete", new BlockDisplayBuilder()
-                .material(settings.getTier().concreteMaterial)
-                .brightness(Utils.BRIGHTNESS_ON)
-                .viewRange(Utils.VIEW_RANGE_OFF)
-                .transformation(new TransformationMatrixBuilder()
-                        .scale(CONCRETE_DISPLAY_SIZE)
-                        .rotate(ModelDiamond.ROTATION)
-                        .buildForBlockDisplay())
-                .build(location.toCenterLocation()));
-        return displayGroup;
+        return new ModelBuilder()
+                .add("concrete", new ModelDiamond()
+                        .material(settings.getTier().concreteMaterial)
+                        .brightness(Utils.BRIGHTNESS_OFF)
+                        .size(0.2F))
+                .add("glass", new ModelDiamond()
+                        .material(Material.GLASS)
+                        .size(0.6F))
+                .build(location);
     }
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
@@ -145,6 +132,6 @@ public class Lens extends ConnectedBlock implements PowerAnimatedBlock, PowerLos
     }
     @Override
     public void onPoweredAnimation(final Location location, final boolean powered) {
-        visibilityAnimation(location, "concrete", powered);
+        brightnessAnimation(location, "concrete", powered);
     }
 }

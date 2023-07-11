@@ -10,7 +10,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
-import org.joml.Vector3f;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
@@ -22,10 +21,9 @@ import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
 import org.metamechanists.quaptics.utils.Utils;
-import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
+import org.metamechanists.quaptics.utils.models.ModelBuilder;
 import org.metamechanists.quaptics.utils.models.components.ModelDiamond;
-import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -124,9 +122,7 @@ public class Splitter extends ConnectedBlock implements PowerAnimatedBlock, Powe
                     "&7● Splits one quaptic ray into multiple"));
 
 
-    private static final double CONNECTION_ANGLE = Math.PI / 2;
-    private static final Vector3f GLASS_DISPLAY_SIZE = new Vector3f(0.50F);
-    private static final Vector3f CONCRETE_DISPLAY_SIZE = new Vector3f(0.25F);
+    private static final double CONNECTION_ANGLE = Math.PI * 2/3;
 
     private final Vector inputLocation = new Vector(0.0F, 0.0F, -getConnectionRadius());
     private final Vector outputStartingLocation = new Vector(0.0F, 0.0F, getConnectionRadius());
@@ -137,28 +133,19 @@ public class Splitter extends ConnectedBlock implements PowerAnimatedBlock, Powe
 
     @Override
     protected float getConnectionRadius() {
-        return 0.60F;
+        return 0.50F;
     }
     @Override
     protected DisplayGroup initModel(final @NotNull Location location, final @NotNull Player player) {
-        final DisplayGroup displayGroup = new DisplayGroup(location);
-        displayGroup.addDisplay("main", new BlockDisplayBuilder()
-                .material(Material.LIGHT_GRAY_STAINED_GLASS)
-                .transformation(new TransformationMatrixBuilder()
-                        .scale(GLASS_DISPLAY_SIZE)
-                        .rotate(ModelDiamond.ROTATION)
-                        .buildForBlockDisplay())
-                .build(location.toCenterLocation()));
-        displayGroup.addDisplay("concrete", new BlockDisplayBuilder()
-                .material(settings.getTier().concreteMaterial)
-                .brightness(Utils.BRIGHTNESS_ON)
-                .viewRange(Utils.VIEW_RANGE_OFF)
-                .transformation(new TransformationMatrixBuilder()
-                        .scale(CONCRETE_DISPLAY_SIZE)
-                        .rotate(ModelDiamond.ROTATION)
-                        .buildForBlockDisplay())
-                .build(location.toCenterLocation()));
-        return displayGroup;
+        return new ModelBuilder()
+                .add("concrete", new ModelDiamond()
+                        .material(settings.getTier().concreteMaterial)
+                        .brightness(Utils.BRIGHTNESS_OFF)
+                        .size(0.3F))
+                .add("glass", new ModelDiamond()
+                        .material(Material.LIGHT_GRAY_STAINED_GLASS)
+                        .size(0.9F))
+                .build(location);
     }
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {

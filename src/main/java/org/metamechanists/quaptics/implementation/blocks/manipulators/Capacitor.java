@@ -13,7 +13,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
-import org.joml.Vector3f;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
@@ -30,11 +29,10 @@ import org.metamechanists.quaptics.storage.QuapticTicker;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Utils;
-import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.id.complex.InfoPanelId;
+import org.metamechanists.quaptics.utils.models.ModelBuilder;
 import org.metamechanists.quaptics.utils.models.components.ModelDiamond;
-import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.util.List;
@@ -56,9 +54,7 @@ public class Capacitor extends ConnectedBlock implements InfoPanelBlock, PowerLo
                     "&7● Stores charge",
                     "&7● Outputs at a constant power"));
 
-    private static final Vector3f MAIN_GLASS_DISPLAY_SIZE = new Vector3f(0.60F);
-    private static final Vector3f TIER_GLASS_DISPLAY_SIZE = new Vector3f(0.51F);
-    private static final Vector3f MAX_CONCRETE_DISPLAY_SIZE = new Vector3f(0.49F);
+    private static final float MAX_CONCRETE_DISPLAY_SIZE = 0.37F;
 
     private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -getConnectionRadius());
     private final Vector outputPointLocation = new Vector(0.0F, 0.0F, getConnectionRadius());
@@ -73,26 +69,17 @@ public class Capacitor extends ConnectedBlock implements InfoPanelBlock, PowerLo
     }
     @Override
     protected DisplayGroup initModel(final @NotNull Location location, final @NotNull Player player) {
-        final DisplayGroup displayGroup = new DisplayGroup(location);
-        displayGroup.addDisplay("mainGlass", new BlockDisplayBuilder()
-                .material(Material.GLASS)
-                .transformation(new TransformationMatrixBuilder()
-                        .scale(MAIN_GLASS_DISPLAY_SIZE)
-                        .rotate(ModelDiamond.ROTATION)
-                        .buildForBlockDisplay())
-                .build(location.toCenterLocation()));
-        displayGroup.addDisplay("tierGlass", new BlockDisplayBuilder()
-                .material(settings.getTier().glassMaterial)
-                .transformation(new TransformationMatrixBuilder()
-                        .scale(TIER_GLASS_DISPLAY_SIZE)
-                        .rotate(ModelDiamond.ROTATION)
-                        .buildForBlockDisplay())
-                .build(location.toCenterLocation()));
-        displayGroup.addDisplay("concrete", new BlockDisplayBuilder()
-                .material(Material.LIGHT_BLUE_CONCRETE)
-                .brightness(Utils.BRIGHTNESS_ON)
-                .build(location.toCenterLocation()));
-        return displayGroup;
+        return new ModelBuilder()
+                .add("concrete", new ModelDiamond()
+                        .material(settings.getTier().concreteMaterial)
+                        .brightness(Utils.BRIGHTNESS_ON))
+                .add("mainGlass", new ModelDiamond()
+                        .material(Material.GLASS)
+                        .size(0.85F))
+                .add("tierGlass", new ModelDiamond()
+                        .material(settings.getTier().glassMaterial)
+                        .size(0.80F))
+                .build(location);
     }
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
@@ -188,10 +175,9 @@ public class Capacitor extends ConnectedBlock implements InfoPanelBlock, PowerLo
                 0);
     }
     private @NotNull Matrix4f getConcreteTransformationMatrix(final double charge) {
-        return new TransformationMatrixBuilder()
-                .scale(new Vector3f(MAX_CONCRETE_DISPLAY_SIZE).mul((float)(charge/settings.getChargeCapacity())))
-                .rotate(ModelDiamond.ROTATION)
-                .buildForBlockDisplay();
+        return new ModelDiamond()
+                .size(MAX_CONCRETE_DISPLAY_SIZE * (float)(charge/settings.getChargeCapacity()))
+                .getMatrix();
     }
     private void updateConcreteTransformation(final Location location) {
         final double charge = BlockStorageAPI.getDouble(location, Keys.BS_CHARGE);
