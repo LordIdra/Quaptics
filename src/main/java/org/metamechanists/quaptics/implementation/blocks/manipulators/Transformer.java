@@ -58,7 +58,9 @@ public class Transformer extends ConnectedBlock implements PowerAnimatedBlock, P
     protected DisplayGroup initModel(final @NotNull Location location, final @NotNull Player player) {
         return new ModelBuilder()
                 .add("main", new ModelCuboid()
-                        .material(Material.BLACK_TERRACOTTA))
+                        .material(Material.WHITE_TERRACOTTA)
+                        .location(0.0F, 0.0F, 0.25F)
+                        .size(0.30F, 0.30F, 0.80F))
                 .add("coil1", new ModelCuboid()
                         .material(settings.getTier().concreteMaterial)
                         .brightness(Utils.BRIGHTNESS_OFF)
