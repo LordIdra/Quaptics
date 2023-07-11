@@ -20,8 +20,7 @@ import java.util.Set;
 public class DirectTurret extends Turret {
     public static final Settings TURRET_2_HOSTILE_SETTINGS = Settings.builder()
             .tier(Tier.BASIC)
-            .displayRadius(0.60F)
-            .connectionRadius(0.65F)
+            .connectionRadius(0.55F)
             .minPower(40)
             .minFrequency(1.0)
             .range(7)
@@ -32,8 +31,7 @@ public class DirectTurret extends Turret {
             .build();
     public static final Settings TURRET_2_PASSIVE_SETTINGS = Settings.builder()
             .tier(Tier.BASIC)
-            .displayRadius(0.60F)
-            .connectionRadius(0.65F)
+            .connectionRadius(0.55F)
             .minPower(40)
             .minFrequency(6)
             .range(7)

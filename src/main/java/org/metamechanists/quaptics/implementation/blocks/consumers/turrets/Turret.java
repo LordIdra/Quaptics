@@ -10,7 +10,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -23,13 +22,16 @@ import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
 import org.metamechanists.quaptics.connections.Link;
-import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
+import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
-import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
+import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
-import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
+import org.metamechanists.quaptics.utils.models.ModelBuilder;
+import org.metamechanists.quaptics.utils.models.components.ModelCuboid;
+import org.metamechanists.quaptics.utils.models.components.ModelLine;
+import org.metamechanists.quaptics.utils.transformations.TransformationUtils;
 
 import java.util.Collection;
 import java.util.List;
@@ -38,10 +40,6 @@ import java.util.UUID;
 
 public abstract class Turret extends ConnectedBlock {
     private static final int ARBITRARILY_LARGE_NUMBER = 9999999;
-    private static final Vector3f mainDisplaySize = new Vector3f(0.6F, 0.6F, 0.6F);
-    private static final Vector barrelLocation = new Vector(0.5, 0.7, 0.5);
-    private final Vector3f barrelSize = new Vector3f(0.18F, 0.18F, settings.getDisplayRadius()*1.3F);
-    private final Vector3f barrelTranslation = new Vector3f(0, 0, settings.getDisplayRadius()*0.8F);
     private final Vector inputLocation = new Vector(0.0F, 0.0F, -settings.getConnectionRadius());
 
     protected Turret(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
@@ -54,15 +52,15 @@ public abstract class Turret extends ConnectedBlock {
     }
     @Override
     protected DisplayGroup initModel(final @NotNull Location location, final @NotNull Player player) {
-        final DisplayGroup displayGroup = new DisplayGroup(location);
-        displayGroup.addDisplay("main", new BlockDisplayBuilder()
-                .material(settings.getMainMaterial())
-                .transformation(new TransformationMatrixBuilder()
-                        .scale(mainDisplaySize)
-                        .buildForBlockDisplay())
-                .build(location.toCenterLocation()));
-        displayGroup.addDisplay("barrel", generateBarrel(location, location.clone().add(barrelLocation).add(new Vector(0, -1, 0))));
-        return displayGroup;
+        return new ModelBuilder()
+                .add("plate", new ModelCuboid()
+                        .material(settings.getMainMaterial())
+                        .brightness(Utils.BRIGHTNESS_OFF)
+                        .location(0, 0.6F, 0)
+                        .size(0.6F, 0.6F, 0.6F))
+                .add("barrel", new ModelCuboid()
+                        .material(Material.GRAY_CONCRETE))
+                .build(location);
     }
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
@@ -94,20 +92,14 @@ public abstract class Turret extends ConnectedBlock {
         }
     }
 
-    private @NotNull Matrix4f getBarrelMatrix(@NotNull final Location from, final Location to) {
-        return new TransformationMatrixBuilder()
-                .translate(barrelTranslation)
-                .scale(barrelSize)
-                .lookAlong(from.clone().add(barrelLocation), to)
-                .buildForBlockDisplay();
+    private static @NotNull Matrix4f getBarrelMatrix(@NotNull final Location from, final Location to) {
+        return new ModelLine()
+                .from(new Vector3f())
+                .to(TransformationUtils.getDirection(from, to).mul(0.5F))
+                .thickness(0.1F)
+                .getMatrix();
     }
-    private BlockDisplay generateBarrel(@NotNull final Location from, final Location to) {
-        return new BlockDisplayBuilder()
-                .material(Material.GRAY_CONCRETE)
-                .transformation(getBarrelMatrix(from, to))
-                .build(from.clone().add(barrelLocation));
-    }
-    private void updateBarrelTransformation(final Location location, final LivingEntity target) {
+    private static void updateBarrelTransformation(final Location location, final LivingEntity target) {
         getDisplay(location, "barrel").ifPresent(value -> value.setTransformationMatrix(getBarrelMatrix(location, target.getEyeLocation())));
     }
 
@@ -160,7 +152,7 @@ public abstract class Turret extends ConnectedBlock {
         }
 
         updateBarrelTransformation(location, target.get());
-        createProjectile(location.clone().add(barrelLocation), target.get().getEyeLocation());
+        createProjectile(location, target.get().getEyeLocation());
         target.get().damage(settings.getDamage());
     }
     protected abstract void createProjectile(final Location source, final Location target);

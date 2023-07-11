@@ -18,11 +18,11 @@ import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
 import org.metamechanists.quaptics.connections.Link;
-import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.implementation.attachments.InfoPanelBlock;
 import org.metamechanists.quaptics.implementation.attachments.ItemHolderBlock;
 import org.metamechanists.quaptics.implementation.attachments.ProgressBlock;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
+import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
 import org.metamechanists.quaptics.panels.info.BlockInfoPanel;
@@ -30,11 +30,11 @@ import org.metamechanists.quaptics.panels.info.implementation.ProgressInfoPanel;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Language;
-import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
-import org.metamechanists.quaptics.utils.builders.ItemDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.id.complex.InfoPanelId;
-import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
+import org.metamechanists.quaptics.utils.models.ModelBuilder;
+import org.metamechanists.quaptics.utils.models.components.ModelCuboid;
+import org.metamechanists.quaptics.utils.models.components.ModelItem;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.util.List;
@@ -74,41 +74,26 @@ public class DataStripper extends ConnectedBlock implements InfoPanelBlock, Item
     }
     @Override
     protected DisplayGroup initModel(final @NotNull Location location, final @NotNull Player player) {
-        final DisplayGroup displayGroup = new DisplayGroup(location);
-        displayGroup.addDisplay("mainTop", new BlockDisplayBuilder()
-                .blockData(Material.SMOOTH_STONE_SLAB.createBlockData("[type=top]"))
-                .transformation(new TransformationMatrixBuilder()
-                        .scale(MAIN_DISPLAY_SIZE)
-                        .translate(TOP_OFFSET)
-                        .buildForBlockDisplay())
-                .build(location.toCenterLocation()));
-        displayGroup.addDisplay("mainBottom", new BlockDisplayBuilder()
-                .blockData(Material.SMOOTH_STONE_SLAB.createBlockData("[type=bottom]"))
-                .transformation(new TransformationMatrixBuilder()
-                        .scale(MAIN_DISPLAY_SIZE)
-                        .translate(BOTTOM_OFFSET)
-                        .buildForBlockDisplay())
-                .build(location.toCenterLocation()));
-        displayGroup.addDisplay("glassTop", new BlockDisplayBuilder()
-                .material(Material.ORANGE_STAINED_GLASS)
-                .transformation(new TransformationMatrixBuilder()
-                        .scale(GLASS_DISPLAY_SIZE)
-                        .translate(TOP_OFFSET)
-                        .buildForBlockDisplay())
-                .build(location.toCenterLocation()));
-        displayGroup.addDisplay("glassBottom", new BlockDisplayBuilder()
-                .material(Material.ORANGE_STAINED_GLASS)
-                .transformation(new TransformationMatrixBuilder()
-                        .scale(GLASS_DISPLAY_SIZE)
-                        .translate(BOTTOM_OFFSET)
-                        .buildForBlockDisplay())
-                .build(location.toCenterLocation()));
-        displayGroup.addDisplay("item", new ItemDisplayBuilder()
-                .transformation(new TransformationMatrixBuilder()
-                        .scale(ITEM_DISPLAY_SIZE)
-                        .buildForItemDisplay())
-                .build(location.toCenterLocation()));
-        return displayGroup;
+        return new ModelBuilder()
+                .add("mainTop", new ModelCuboid()
+                        .block(Material.SMOOTH_STONE_SLAB.createBlockData("[type=top]"))
+                        .location(0, -0.35F, 0)
+                        .size(0.6F, 0.1F, 0.6F))
+                .add("mainBottom", new ModelCuboid()
+                        .block(Material.SMOOTH_STONE_SLAB.createBlockData("[type=bottom]"))
+                        .location(0, 0.35F, 0)
+                        .size(0.6F, 0.3F, 0.6F))
+                .add("glassTop", new ModelCuboid()
+                        .material(Material.ORANGE_STAINED_GLASS)
+                        .location(0, 0.3F, 0)
+                        .size(0.4F, 0.1F, 0.4F))
+                .add("glassBottom", new ModelCuboid()
+                        .material(Material.ORANGE_STAINED_GLASS)
+                        .location(0, 0.3F, 0)
+                        .size(0.4F, 0.1F, 0.4F))
+                .add("item", new ModelItem()
+                        .size(0.5F))
+                .build(location);
     }
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {

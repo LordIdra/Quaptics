@@ -10,19 +10,19 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
-import org.joml.Vector3f;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
-import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
+import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
-import org.metamechanists.quaptics.utils.builders.ItemDisplayBuilder;
+import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
-import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
+import org.metamechanists.quaptics.utils.models.ModelBuilder;
+import org.metamechanists.quaptics.utils.models.components.ModelCuboid;
 
 import java.util.List;
 
@@ -39,7 +39,6 @@ public class OscillatingConcentrator extends ConnectedBlock {
                     "&7● Toggles power on/off every tick",
                     "&7● Concentrates epic admin hax into a quaptic ray"));
 
-    private static final Vector3f MAIN_DISPLAY_SIZE = new Vector3f(0.90F);
     private final Vector outputLocation = new Vector(0.0F, 0.0F, getConnectionRadius());
 
     public OscillatingConcentrator(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
@@ -52,15 +51,20 @@ public class OscillatingConcentrator extends ConnectedBlock {
     }
     @Override
     protected DisplayGroup initModel(final @NotNull Location location, final @NotNull Player player) {
-        final DisplayGroup displayGroup = new DisplayGroup(location);
-        displayGroup.addDisplay("main", new ItemDisplayBuilder()
-                .material(Material.BLACK_STAINED_GLASS_PANE)
-                .transformation(new TransformationMatrixBuilder()
-                        .scale(MAIN_DISPLAY_SIZE)
-                        .rotate(Math.PI/2, 0.0, settings.getRotationY())
-                        .buildForItemDisplay())
-                .build(location.clone().toCenterLocation()));
-        return displayGroup;
+        return new ModelBuilder()
+                .add("center", new ModelCuboid()
+                        .material(Material.WHITE_CONCRETE)
+                        .brightness(Utils.BRIGHTNESS_OFF)
+                        .size(0.2F))
+                .add("plate", new ModelCuboid()
+                        .material(Material.GRAY_STAINED_GLASS)
+                        .rotation(Math.PI / 4)
+                        .size(0.6F, 0.1F, 0.6F))
+                .add("glass", new ModelCuboid()
+                        .material(Material.GLASS)
+                        .rotation(Math.PI / 4)
+                        .size(0.4F))
+                .build(location);
     }
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {

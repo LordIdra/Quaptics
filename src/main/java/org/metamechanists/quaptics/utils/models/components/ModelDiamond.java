@@ -5,6 +5,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.BlockDisplay;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
@@ -62,6 +63,13 @@ public class ModelDiamond implements ModelComponent {
         return this;
     }
 
+    /**
+     * Overrides material
+     */
+    public ModelDiamond block(@NotNull final BlockData block) {
+        main.blockData(block);
+        return this;
+    }
     public ModelDiamond material(@NotNull final Material material) {
         main.material(material);
         return this;

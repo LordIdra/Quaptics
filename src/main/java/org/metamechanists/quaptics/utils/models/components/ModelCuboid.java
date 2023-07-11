@@ -5,6 +5,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.BlockDisplay;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
@@ -95,6 +96,13 @@ public class ModelCuboid implements ModelComponent {
 
     public ModelCuboid material(@NotNull final Material material) {
         main.material(material);
+        return this;
+    }
+    /**
+     * Overrides material
+     */
+    public ModelCuboid block(@NotNull final BlockData block) {
+        main.blockData(block);
         return this;
     }
     public ModelCuboid brightness(final int blockBrightness) {

@@ -22,7 +22,6 @@ import java.util.Set;
 public class ModulatedTurret extends Turret {
     public static final Settings TURRET_1_HOSTILE_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
-            .displayRadius(0.55F)
             .connectionRadius(0.55F)
             .minPower(5)
             .range(5)
@@ -34,7 +33,6 @@ public class ModulatedTurret extends Turret {
             .build();
     public static final Settings TURRET_1_PASSIVE_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
-            .displayRadius(0.55F)
             .connectionRadius(0.55F)
             .minPower(5)
             .range(5)
