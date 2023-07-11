@@ -39,7 +39,7 @@ public class ModelDiamond implements ModelComponent {
         // The scale() function takes the scale as the side from one face to the next
         // But we actually want the size to be inputted as the distance from one corner to the opposite corner
         // We can accomplish this with basic pythagoras
-        this.size = new Vector3f((float) (2 * Math.sqrt(2 * Math.pow(size/2, 2))));
+        this.size = new Vector3f((float) Math.sqrt(2 * Math.pow(size/2, 2)));
         return this;
     }
 
