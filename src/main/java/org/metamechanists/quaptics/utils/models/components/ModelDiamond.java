@@ -4,6 +4,7 @@ import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.BlockDisplay;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
@@ -23,6 +24,7 @@ public class ModelDiamond implements ModelComponent {
     private final BlockDisplayBuilder main = new BlockDisplayBuilder();
 
     private Vector3f location = new Vector3f();
+    private Vector3f facing = new Vector3f(0, 0, 1);
     private Vector3f size = new Vector3f();
 
     /**
@@ -32,6 +34,23 @@ public class ModelDiamond implements ModelComponent {
         this.location = location;
         return this;
     }
+
+    /**
+     * Sets the starting orientation of the diamond (default is south AKA positive Z)
+     * This is useful eg to align a model with the direction a player is looking
+     */
+    public ModelDiamond facing(final @NotNull Vector3f facing) {
+        this.facing = facing;
+        return this;
+    }
+    /**
+     * Sets the starting orientation of the diamond (default is south AKA positive Z)
+     * This is useful eg to align a model with the direction a player is looking
+     */
+    public ModelDiamond facing(final @NotNull BlockFace face) {
+        return facing(face.getDirection().toVector3f());
+    }
+
     /**
      * @param size The size of the cuboid (ie: the distance from one side to the other) on each axis
      */
@@ -58,6 +77,7 @@ public class ModelDiamond implements ModelComponent {
 
     public Matrix4f getMatrix() {
         return new TransformationMatrixBuilder()
+                .lookAlong(facing)
                 .translate(location)
                 .rotate(ROTATION)
                 .scale(size)
