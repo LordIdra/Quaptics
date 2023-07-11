@@ -140,10 +140,10 @@ public class Combiner extends ConnectedBlock implements PowerAnimatedBlock, Powe
                 .add("concrete", new ModelDiamond()
                         .material(settings.getTier().concreteMaterial)
                         .brightness(Utils.BRIGHTNESS_OFF)
-                        .size(0.3F))
+                        .size(0.4F))
                 .add("glass", new ModelDiamond()
                         .material(Material.GRAY_STAINED_GLASS)
-                        .size(0.9F))
+                        .size(0.8F))
                 .build(location);
     }
     @Override

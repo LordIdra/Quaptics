@@ -80,7 +80,7 @@ public class Lens extends ConnectedBlock implements PowerAnimatedBlock, PowerLos
 
     @Override
     protected float getConnectionRadius() {
-        return 0.30F;
+        return 0.40F;
     }
     @Override
     protected DisplayGroup initModel(final @NotNull Location location, final @NotNull Player player) {
@@ -91,7 +91,7 @@ public class Lens extends ConnectedBlock implements PowerAnimatedBlock, PowerLos
                         .size(0.2F))
                 .add("glass", new ModelDiamond()
                         .material(Material.GLASS)
-                        .size(0.6F))
+                        .size(0.4F))
                 .build(location);
     }
     @Override

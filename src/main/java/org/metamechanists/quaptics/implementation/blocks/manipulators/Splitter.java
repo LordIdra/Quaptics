@@ -121,7 +121,6 @@ public class Splitter extends ConnectedBlock implements PowerAnimatedBlock, Powe
             Lore.create(SPLITTER_4_4_SETTINGS,
                     "&7● Splits one quaptic ray into multiple"));
 
-
     private static final double CONNECTION_ANGLE = Math.PI * 2/3;
 
     private final Vector inputLocation = new Vector(0.0F, 0.0F, -getConnectionRadius());
@@ -133,7 +132,7 @@ public class Splitter extends ConnectedBlock implements PowerAnimatedBlock, Powe
 
     @Override
     protected float getConnectionRadius() {
-        return 0.50F;
+        return 0.5F;
     }
     @Override
     protected DisplayGroup initModel(final @NotNull Location location, final @NotNull Player player) {
@@ -141,10 +140,10 @@ public class Splitter extends ConnectedBlock implements PowerAnimatedBlock, Powe
                 .add("concrete", new ModelDiamond()
                         .material(settings.getTier().concreteMaterial)
                         .brightness(Utils.BRIGHTNESS_OFF)
-                        .size(0.3F))
+                        .size(0.4F))
                 .add("glass", new ModelDiamond()
                         .material(Material.LIGHT_GRAY_STAINED_GLASS)
-                        .size(0.9F))
+                        .size(0.8F))
                 .build(location);
     }
     @Override
