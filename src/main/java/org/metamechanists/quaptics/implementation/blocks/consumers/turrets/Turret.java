@@ -99,7 +99,7 @@ public abstract class Turret extends ConnectedBlock {
                 .getMatrix();
     }
     private static void updateBarrelTransformation(final Location location, final LivingEntity target) {
-        getDisplay(location, "barrel").ifPresent(value -> value.setTransformationMatrix(getBarrelMatrix(location, target.getEyeLocation())));
+        getDisplay(location, "barrel").ifPresent(value -> value.setTransformationMatrix(getBarrelMatrix(location.toCenterLocation(), target.getEyeLocation())));
     }
 
     private static void setTarget(@NotNull final Location location, @NotNull final Entity entity) {
