@@ -18,15 +18,16 @@ public class ProjectileBeam implements Beam {
     private final int lifespanTicks;
     private int ageTicks;
 
-    public ProjectileBeam(final Material material, final Location source, final Location target, final float thickness, final float speed) {
+    public ProjectileBeam(final Material material, final Location source, final Location target, final float thickness, final float length, final float speed) {
         final Location midpoint = TransformationUtils.getMidpoint(source, target);
         this.velocity = TransformationUtils.getDisplacement(source, target).normalize().mul(speed);
         this.lifespanTicks = (int) (TransformationUtils.getDisplacement(source, target).length() / speed) + 1;
         this.displayId = new BlockDisplayId(new ModelLine()
                 .from(TransformationUtils.getDisplacement(midpoint, source))
-                .to(TransformationUtils.getDisplacement(midpoint, target))
+                .to(TransformationUtils.getDirection(midpoint, target).mul(length))
                 .thickness(thickness)
                 .brightness(Utils.BRIGHTNESS_ON)
+                .material(material)
                 .build(midpoint)
                 .getUniqueId());
     }
