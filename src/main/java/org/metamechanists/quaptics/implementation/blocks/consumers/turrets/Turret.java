@@ -94,7 +94,7 @@ public abstract class Turret extends ConnectedBlock {
         final Vector3f barrelDirection = TransformationUtils.getDirection(from.clone().add(Vector.fromJOML(barrelOffset)), to);
         return new ModelLine()
                 .from(barrelOffset)
-                .to(barrelOffset.add(barrelDirection.mul(1.6F)))
+                .to(new Vector3f(barrelOffset).add(barrelDirection.mul(1.6F)))
                 .thickness(0.2F)
                 .getMatrix();
     }
