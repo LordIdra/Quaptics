@@ -19,16 +19,14 @@ public class ProjectileBeam implements Beam {
     private int ageTicks;
 
     public ProjectileBeam(final Material material, final Location source, final Location target, final float thickness, final float length, final float speed) {
-        final Location midpoint = TransformationUtils.getMidpoint(source, target);
         this.velocity = TransformationUtils.getDisplacement(source, target).normalize().mul(speed);
         this.lifespanTicks = (int) (TransformationUtils.getDisplacement(source, target).length() / speed) + 1;
         this.displayId = new BlockDisplayId(new ModelLine()
-                .from(TransformationUtils.getDisplacement(midpoint, source))
-                .to(TransformationUtils.getDirection(midpoint, target).mul(length))
+                .to(TransformationUtils.getDirection(source, target).mul(length))
                 .thickness(thickness)
                 .brightness(Utils.BRIGHTNESS_ON)
                 .material(material)
-                .build(midpoint)
+                .build(source)
                 .getUniqueId());
     }
 
