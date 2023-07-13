@@ -46,27 +46,28 @@ public class ConfigPanelAttribute {
                         .brightness(15)
                         .background(Color.fromARGB(0, 0, 0, 0))
                         .size(size)
-                        .location(keyTextLocation))
+                        .location(keyTextLocation)
+                        .rotation(rotation))
                 .add("value", new ModelText()
                         .brightness(15)
                         .background(Color.fromARGB(0, 0, 0, 0))
                         .size(size)
-                        .rotation(rotation)
-                        .location(valueTextLocation))
+                        .location(valueTextLocation)
+                        .rotation(rotation))
                 .add("sub", new ModelText()
                         .text(ChatColors.color("&c-"))
                         .brightness(15)
                         .background(Color.fromARGB(0, 0, 0, 0))
                         .size(size)
-                        .rotation(rotation)
-                        .location(subTextLocation))
+                        .location(subTextLocation)
+                        .rotation(rotation))
                 .add("add", new ModelText()
                         .text(ChatColors.color("&a+"))
                         .brightness(15)
                         .background(Color.fromARGB(0, 0, 0, 0))
                         .size(size)
-                        .rotation(rotation)
-                        .location(addTextLocation))
+                        .location(addTextLocation)
+                        .rotation(rotation))
                 .build(location.clone().add(offset))
                 .getParentUUID());
 
@@ -183,8 +184,8 @@ public class ConfigPanelAttribute {
 
     public void remove() {
         displayGroupId.get().ifPresent(group -> {
-            group.remove();
             group.getDisplays().values().forEach(Entity::remove);
+            group.remove();
         });
     }
 }
