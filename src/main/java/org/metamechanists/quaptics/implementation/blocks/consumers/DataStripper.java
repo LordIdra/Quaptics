@@ -80,11 +80,11 @@ public class DataStripper extends ConnectedBlock implements InfoPanelBlock, Item
                 .add("glassTop", new ModelCuboid()
                         .material(Material.ORANGE_STAINED_GLASS)
                         .location(0, 0.35F, 0)
-                        .size(0.4F, 0.1F, 0.4F))
+                        .size(0.3F, 0.15F, 0.3F))
                 .add("glassBottom", new ModelCuboid()
                         .material(Material.ORANGE_STAINED_GLASS)
                         .location(0, -0.35F, 0)
-                        .size(0.4F, 0.1F, 0.4F))
+                        .size(0.3F, 0.15F, 0.3F))
                 .add("item", new ModelItem()
                         .size(0.5F))
                 .build(location);

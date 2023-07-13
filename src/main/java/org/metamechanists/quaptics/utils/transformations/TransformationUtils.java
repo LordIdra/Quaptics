@@ -63,4 +63,7 @@ public class TransformationUtils {
     public @NotNull Location getMidpoint(@NotNull final Location from, @NotNull final Location to) {
         return from.clone().add(to).multiply(0.5);
     }
+    public @NotNull Vector3f getMidpoint(@NotNull final Vector3f from, @NotNull final Vector3f to) {
+        return new Vector3f(from).add(to).mul(0.5F);
+    }
 }

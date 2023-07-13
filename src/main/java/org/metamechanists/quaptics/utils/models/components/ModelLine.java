@@ -6,11 +6,13 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.BlockDisplay;
+import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
+import org.metamechanists.quaptics.utils.transformations.TransformationUtils;
 
 
 @SuppressWarnings("unused")
@@ -91,7 +93,8 @@ public class ModelLine implements ModelComponent {
     }
     @Override
     public BlockDisplay build(@NotNull final Location origin) {
-        return main.transformation(getMatrix()).build(origin);
+        final Vector3f midpoint = TransformationUtils.getMidpoint(from, to);
+        return main.transformation(getMatrix()).build(origin.clone().add(Vector.fromJOML(midpoint)));
     }
     @Override
     public BlockDisplay build(@NotNull final Block block) {
