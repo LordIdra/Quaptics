@@ -1,11 +1,11 @@
 package org.metamechanists.quaptics.utils.id.complex;
 
 import org.bukkit.Bukkit;
-import org.bukkit.entity.TextDisplay;
 import org.metamechanists.quaptics.panels.config.ConfigPanelAttribute;
 import org.metamechanists.quaptics.storage.QuapticCache;
 import org.metamechanists.quaptics.utils.id.ComplexCustomId;
 import org.metamechanists.quaptics.utils.id.CustomId;
+import org.metamechanists.quaptics.utils.id.simple.DisplayGroupId;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -26,7 +26,7 @@ public class ConfigPanelAttributeId extends ComplexCustomId {
     }
     @Override
     public boolean isValid() {
-        return Bukkit.getEntity(getUUID()) instanceof TextDisplay;
+        return Bukkit.getEntity(getUUID()) instanceof DisplayGroupId;
     }
     @Override
     public Optional<ConfigPanelAttribute> get() {
