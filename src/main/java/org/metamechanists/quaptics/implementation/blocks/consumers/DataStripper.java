@@ -86,7 +86,7 @@ public class DataStripper extends ConnectedBlock implements InfoPanelBlock, Item
                         .location(0, -0.35F, 0)
                         .size(0.3F, 0.15F, 0.3F))
                 .add("item", new ModelItem()
-                        .size(1.0F))
+                        .size(0.5F))
                 .build(location);
     }
     @Override
