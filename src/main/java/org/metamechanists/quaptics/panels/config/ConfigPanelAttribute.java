@@ -9,7 +9,6 @@ import org.bukkit.entity.TextDisplay;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3d;
-import org.joml.Vector3f;
 import org.metamechanists.quaptics.storage.PersistentDataTraverser;
 import org.metamechanists.quaptics.utils.builders.InteractionBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConfigPanelAttributeId;
@@ -33,10 +32,6 @@ public class ConfigPanelAttribute {
 
     public ConfigPanelAttribute(final ConnectionGroupId groupId, @NotNull final String name, @NotNull final String key,
                                 final @NotNull Location location, final Vector offset, final @NotNull Vector3d rotation, final float size) {
-        final Vector3f keyTextLocation = new Vector(-0.25, 0, 0.08).add(offset).rotateAroundY(rotation.y).toVector3f();
-        final Vector3f valueTextLocation = new Vector(0.25, 0, 0.08).add(offset).rotateAroundY(rotation.y).toVector3f();
-        final Vector3f subTextLocation = new Vector(0.05, 0, 0.08).add(offset).rotateAroundY(rotation.y).toVector3f();
-        final Vector3f addTextLocation = new Vector(0.40, 0, 0.08).add(offset).rotateAroundY(rotation.y).toVector3f();
         final Vector subButtonLocation = new Vector(0.05, 0, -0.08).add(offset).add(BUTTON_ADJUSTMENT).rotateAroundY(rotation.y);
         final Vector addButtonLocation = new Vector(0.40, 0, -0.08).add(offset).add(BUTTON_ADJUSTMENT).rotateAroundY(rotation.y);
 
@@ -46,27 +41,27 @@ public class ConfigPanelAttribute {
                         .brightness(15)
                         .background(Color.fromARGB(0, 0, 0, 0))
                         .size(size)
-                        .location(keyTextLocation)
+                        .location(new Vector(-0.25, 0, -0.08).rotateAroundY(rotation.y).toVector3f())
                         .rotation(rotation))
                 .add("value", new ModelText()
                         .brightness(15)
                         .background(Color.fromARGB(0, 0, 0, 0))
                         .size(size)
-                        .location(valueTextLocation)
+                        .location(new Vector(0.25, 0, -0.08).rotateAroundY(rotation.y).toVector3f())
                         .rotation(rotation))
                 .add("sub", new ModelText()
                         .text(ChatColors.color("&c-"))
                         .brightness(15)
                         .background(Color.fromARGB(0, 0, 0, 0))
                         .size(size)
-                        .location(subTextLocation)
+                        .location(new Vector(0.05, 0, -0.08).rotateAroundY(rotation.y).toVector3f())
                         .rotation(rotation))
                 .add("add", new ModelText()
                         .text(ChatColors.color("&a+"))
                         .brightness(15)
                         .background(Color.fromARGB(0, 0, 0, 0))
                         .size(size)
-                        .location(addTextLocation)
+                        .location(new Vector(0.40, 0, -0.08).rotateAroundY(rotation.y).toVector3f())
                         .rotation(rotation))
                 .build(location.clone().add(offset))
                 .getParentUUID());
@@ -119,11 +114,11 @@ public class ConfigPanelAttribute {
         final Interaction subButton = new InteractionBuilder()
                 .width(BUTTON_SIZE)
                 .height(BUTTON_SIZE)
-                .build(location.clone().add(offset).add(subButtonLocation));
+                .build(location.clone().add(subButtonLocation));
         final Interaction addButton = new InteractionBuilder()
                 .width(BUTTON_SIZE)
                 .height(BUTTON_SIZE)
-                .build(location.clone().add(offset).add(addButtonLocation));
+                .build(location.clone().add(addButtonLocation));
 
         final PersistentDataTraverser subButtonTraverser = new PersistentDataTraverser(subButton.getUniqueId());
         subButtonTraverser.set("groupId", groupId);
