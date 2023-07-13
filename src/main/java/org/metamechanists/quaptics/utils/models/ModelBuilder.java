@@ -37,6 +37,8 @@ public class ModelBuilder {
      * @return The display group containing all the components
      */
     public DisplayGroup buildAtBlockCenter(@NotNull final Location blockLocation) {
-        return buildAtLocation(blockLocation.clone().toCenterLocation());
+        final DisplayGroup group = new DisplayGroup(blockLocation.clone(), 0, 0);
+        components.forEach((name, component) -> group.addDisplay(name, component.build(blockLocation.clone().toCenterLocation())));
+        return group;
     }
 }
