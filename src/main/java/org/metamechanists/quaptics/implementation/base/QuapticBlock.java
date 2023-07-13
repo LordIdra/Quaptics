@@ -62,7 +62,7 @@ public abstract class QuapticBlock extends SlimefunItem {
                     @Override
                     public void onPlayerPlace(@Nonnull final BlockPlaceEvent event) {
                         final Location location = event.getBlock().getLocation();
-                        final DisplayGroup displayGroup = initModel(location, event.getPlayer());
+                        final DisplayGroup displayGroup = initModel(location.toCenterLocation(), event.getPlayer());
                         setId(displayGroup, location);
                         event.getBlock().setType(getBaseMaterial());
                         initBlockStorage(location);

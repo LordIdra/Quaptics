@@ -28,7 +28,7 @@ public class ModelBuilder {
      */
     public DisplayGroup build(@NotNull final Location location) {
         final DisplayGroup group = new DisplayGroup(location.clone(), 0, 0);
-        components.forEach((name, component) -> group.addDisplay(name, component.build(location.clone().toCenterLocation())));
+        components.forEach((name, component) -> group.addDisplay(name, component.build(location.clone())));
         return group;
     }
 }
