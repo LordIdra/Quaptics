@@ -27,7 +27,7 @@ import java.util.Optional;
 
 public class ConnectionPoint {
     private static final float SIZE = 0.1F;
-    private static final Vector3f INTERACTION_OFFSET = new Vector3f(0.0F, SIZE / 2, 0.0F);
+    private static final Vector3f INTERACTION_OFFSET = new Vector3f(0.0F, -SIZE / 2, 0.0F);
     private static final Color SELECTED_COLOR = Color.fromRGB(0, 255, 0);
     private static final ModelCuboid BLOCK_DISPLAY = new ModelCuboid()
             .brightness(Utils.BRIGHTNESS_OFF)
