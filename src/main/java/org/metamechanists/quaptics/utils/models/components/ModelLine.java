@@ -6,7 +6,6 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.BlockDisplay;
-import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
@@ -86,15 +85,16 @@ public class ModelLine implements ModelComponent {
     }
 
     public Matrix4f getMatrix() {
+        final Vector3f midpoint = TransformationUtils.getMidpoint(from, to);
         return new TransformationMatrixBuilder()
+                .translate(midpoint)
                 .lookAlong(from, to)
                 .scale(new Vector3f(thickness, thickness, from.distance(to) + extraLength))
                 .buildForBlockDisplay();
     }
     @Override
     public BlockDisplay build(@NotNull final Location origin) {
-        final Vector3f midpoint = TransformationUtils.getMidpoint(from, to);
-        return main.transformation(getMatrix()).build(origin.clone().add(Vector.fromJOML(midpoint)));
+        return main.transformation(getMatrix()).build(origin);
     }
     @Override
     public BlockDisplay build(@NotNull final Block block) {
