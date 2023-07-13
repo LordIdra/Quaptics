@@ -1,5 +1,6 @@
 package org.metamechanists.quaptics.panels.config;
 
+import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import io.github.bakedlibs.dough.common.ChatColors;
 import org.bukkit.Color;
 import org.bukkit.Location;
@@ -156,14 +157,24 @@ public class ConfigPanelAttribute {
     public ConfigPanelAttributeId getId() {
         return new ConfigPanelAttributeId(displayGroupId);
     }
-
+    private Optional<DisplayGroup> getDisplayGroup() {
+        return displayGroupId.get().isPresent()
+                ? displayGroupId.get()
+                : Optional.empty();
+    }
     private Optional<TextDisplay> getValue() {
-        if (displayGroupId.get().isEmpty()) {
-            return Optional.empty();
-        }
-
-        return displayGroupId.get().get().getDisplays().get("value") instanceof final TextDisplay textDisplay
+        return getDisplayGroup().isPresent() && getDisplayGroup().get().getDisplays().get("value") instanceof final TextDisplay textDisplay
                 ? Optional.of(textDisplay)
+                : Optional.empty();
+    }
+    private Optional<Interaction> getAddButton() {
+        return addButtonId.get().isPresent()
+                ? addButtonId.get()
+                : Optional.empty();
+    }
+    private Optional<Interaction> getSubButton() {
+        return subButtonId.get().isPresent()
+                ? subButtonId.get()
                 : Optional.empty();
     }
 
@@ -182,5 +193,7 @@ public class ConfigPanelAttribute {
             group.getDisplays().values().forEach(Entity::remove);
             group.remove();
         });
+        getAddButton().ifPresent(Entity::remove);
+        getSubButton().ifPresent(Entity::remove);
     }
 }
