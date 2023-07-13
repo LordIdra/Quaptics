@@ -12,7 +12,6 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
-import org.joml.Vector3f;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
@@ -52,12 +51,6 @@ public class Charger extends ConnectedBlock implements InfoPanelBlock, ItemHolde
                     "&7● &eRight Click &7an item to insert",
                     "&7● &eRight Click &7again to retrieve"));
 
-    private static final Vector3f MAIN_DISPLAY_SIZE = new Vector3f(0.70F, 0.30F, 0.70F);
-    private static final Vector3f GLASS_DISPLAY_SIZE = new Vector3f(0.50F, 0.10F, 0.50F);
-    private static final Vector3f ITEM_DISPLAY_SIZE = new Vector3f(0.50F);
-    private static final Vector3f TOP_OFFSET = new Vector3f(0, 0.35F, 0);
-    private static final Vector3f BOTTOM_OFFSET = new Vector3f(0, -0.35F, 0);
-
     private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -getConnectionRadius());
 
     public Charger(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
@@ -74,17 +67,17 @@ public class Charger extends ConnectedBlock implements InfoPanelBlock, ItemHolde
                 .add("mainTop", new ModelCuboid()
                         .block(Material.SMOOTH_STONE_SLAB.createBlockData("[type=top]"))
                         .location(0, 0.35F, 0)
-                        .size(0.5F, 0.3F, 0.5F))
+                        .size(0.6F, 0.3F, 0.6F))
                 .add("mainBottom", new ModelCuboid()
                         .block(Material.SMOOTH_STONE_SLAB.createBlockData("[type=bottom]"))
                         .location(0, -0.35F, 0)
-                        .size(0.5F, 0.3F, 0.5F))
+                        .size(0.6F, 0.3F, 0.6F))
                 .add("glassTop", new ModelCuboid()
-                        .material(Material.ORANGE_STAINED_GLASS)
+                        .material(Material.LIGHT_BLUE_STAINED_GLASS)
                         .location(0, 0.25F, 0)
                         .size(0.3F, 0.2F, 0.3F))
                 .add("glassBottom", new ModelCuboid()
-                        .material(Material.ORANGE_STAINED_GLASS)
+                        .material(Material.LIGHT_BLUE_STAINED_GLASS)
                         .location(0, -0.25F, 0)
                         .size(0.3F, 0.2F, 0.3F))
                 .add("item", new ModelItem()

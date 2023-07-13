@@ -13,7 +13,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
-import org.joml.Vector3f;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
@@ -56,11 +55,6 @@ public class DataStripper extends ConnectedBlock implements InfoPanelBlock, Item
                     "&7● &eRight Click &7again to retrieve"));
 
     private static final double MAX_PROGRESS_DIFFERENCE = 0.00001;
-    private static final Vector3f MAIN_DISPLAY_SIZE = new Vector3f(0.50F, 0.30F, 0.50F);
-    private static final Vector3f GLASS_DISPLAY_SIZE = new Vector3f(0.40F, 0.15F, 0.40F);
-    private static final Vector3f ITEM_DISPLAY_SIZE = new Vector3f(0.50F);
-    private static final Vector3f TOP_OFFSET = new Vector3f(0, 0.35F, 0);
-    private static final Vector3f BOTTOM_OFFSET = new Vector3f(0, -0.35F, 0);
 
     private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -getConnectionRadius());
 
@@ -78,11 +72,11 @@ public class DataStripper extends ConnectedBlock implements InfoPanelBlock, Item
                 .add("mainTop", new ModelCuboid()
                         .block(Material.SMOOTH_STONE_SLAB.createBlockData("[type=top]"))
                         .location(0, 0.35F, 0)
-                        .size(0.6F, 0.3F, 0.6F))
+                        .size(0.5F, 0.3F, 0.5F))
                 .add("mainBottom", new ModelCuboid()
                         .block(Material.SMOOTH_STONE_SLAB.createBlockData("[type=bottom]"))
                         .location(0, -0.35F, 0)
-                        .size(0.6F, 0.3F, 0.6F))
+                        .size(0.5F, 0.3F, 0.5F))
                 .add("glassTop", new ModelCuboid()
                         .material(Material.ORANGE_STAINED_GLASS)
                         .location(0, 0.25F, 0)

@@ -20,11 +20,11 @@ import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
 import org.metamechanists.quaptics.connections.Link;
-import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.implementation.attachments.ConfigPanelBlock;
 import org.metamechanists.quaptics.implementation.attachments.ItemHolderBlock;
 import org.metamechanists.quaptics.implementation.attachments.PowerAnimatedBlock;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
+import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
 import org.metamechanists.quaptics.panels.config.ConfigPanel;
@@ -32,11 +32,11 @@ import org.metamechanists.quaptics.panels.config.implementation.ItemProjectorCon
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Utils;
-import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
-import org.metamechanists.quaptics.utils.builders.ItemDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConfigPanelId;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
-import org.metamechanists.quaptics.utils.models.components.ModelDiamond;
+import org.metamechanists.quaptics.utils.models.ModelBuilder;
+import org.metamechanists.quaptics.utils.models.components.ModelCuboid;
+import org.metamechanists.quaptics.utils.models.components.ModelItem;
 import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
 import org.metamechanists.quaptics.utils.transformations.TransformationUtils;
 
@@ -63,9 +63,6 @@ public class ItemProjector extends ConnectedBlock implements ItemHolderBlock, Po
     public static final int MAX_MODE = 3;
     private static final double HEIGHT_MULTIPLY = 0.1;
     private static final double SIZE_MULTIPLY = 0.1;
-    private static final Vector3f MAIN_DISPLAY_SIZE = new Vector3f(1.0F, 0.7F, 1.0F);
-    private static final Vector3f MAIN_DISPLAY_OFFSET = new Vector3f(0.0F, -0.35F, 0.0F);
-    private static final Vector3f PRISM_DISPLAY_SIZE = new Vector3f(0.4F, 0.4F, 0.4F);
     private static final Vector3f ITEM_DISPLAY_ADDITIONAL_SIZE = new Vector3f(0.1F);
     private static final Vector3f ITEM_DISPLAY_ADDITIONAL_OFFSET = new Vector3f(0, 0.6F, 0);
 
@@ -81,29 +78,23 @@ public class ItemProjector extends ConnectedBlock implements ItemHolderBlock, Po
     }
     @Override
     protected DisplayGroup initModel(final @NotNull Location location, final @NotNull Player player) {
-        final DisplayGroup displayGroup = new DisplayGroup(location);
-        displayGroup.addDisplay("main", new BlockDisplayBuilder()
-                .blockData(Material.LIGHT_GRAY_CONCRETE.createBlockData())
-                .transformation(new TransformationMatrixBuilder()
-                        .scale(MAIN_DISPLAY_SIZE)
-                        .translate(MAIN_DISPLAY_OFFSET)
-                        .buildForBlockDisplay())
-                .build(location.toCenterLocation()));
-        displayGroup.addDisplay("prism", new BlockDisplayBuilder()
-                .blockData(Material.CYAN_STAINED_GLASS.createBlockData())
-                .brightness(Utils.BRIGHTNESS_OFF)
-                .transformation(new TransformationMatrixBuilder()
-                        .scale(PRISM_DISPLAY_SIZE)
-                        .rotate(ModelDiamond.ROTATION)
-                        .buildForBlockDisplay())
-                .build(location.toCenterLocation()));
-        displayGroup.addDisplay("item", new ItemDisplayBuilder()
-                .transformation(calculateItemTransformation(0, 0))
-                .viewRange(Utils.VIEW_RANGE_OFF)
-                .billboard(Billboard.VERTICAL)
-                .brightness(Utils.BRIGHTNESS_ON)
-                .build(location.toCenterLocation()));
-        return displayGroup;
+        return new ModelBuilder()
+                .add("main", new ModelCuboid()
+                        .material(Material.LIGHT_GRAY_CONCRETE)
+                        .location(0, -0.2F, 0)
+                        .size(0.9F, 0.6F, 0.9F))
+                .add("prism", new ModelCuboid()
+                        .block(Material.LIGHT_BLUE_STAINED_GLASS.createBlockData())
+                        .brightness(Utils.BRIGHTNESS_OFF)
+                        .location(0, 0.1F, 0)
+                        .size(0.6F, 0.1F, 0.6F)
+                        .rotation(Math.PI / 4))
+                .add("item", new ModelItem()
+                        .viewRange(Utils.VIEW_RANGE_OFF)
+                        .billboard(Billboard.VERTICAL)
+                        .brightness(Utils.BRIGHTNESS_ON)
+                        .size(0.5F))
+                .build(location);
     }
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {

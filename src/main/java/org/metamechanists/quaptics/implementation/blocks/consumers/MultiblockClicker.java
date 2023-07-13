@@ -15,14 +15,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
-import org.joml.Vector3f;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
 import org.metamechanists.quaptics.connections.Link;
-import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.implementation.attachments.PowerAnimatedBlock;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
+import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
 import org.metamechanists.quaptics.storage.QuapticTicker;
@@ -31,9 +30,10 @@ import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Language;
 import org.metamechanists.quaptics.utils.SlimefunIsDumbUtils;
 import org.metamechanists.quaptics.utils.Utils;
-import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
-import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
+import org.metamechanists.quaptics.utils.models.ModelBuilder;
+import org.metamechanists.quaptics.utils.models.components.ModelCuboid;
+import org.metamechanists.quaptics.utils.models.components.ModelLine;
 
 import java.util.List;
 import java.util.Optional;
@@ -54,10 +54,6 @@ public class MultiblockClicker extends ConnectedBlock implements PowerAnimatedBl
                     "&7● Automatically clicks the attached multiblock",
                     "&7● Place facing the block you'd usually click to use the multiblock"));
 
-    private static final Vector RELATIVE_PLATE_LOCATION = new Vector(0, 0, 0.45F);
-    private static final Vector3f ATTACHMENT_DISPLAY_SIZE = new Vector3f(0.15F, 0.15F, 0.85F);
-    private static final Vector3f MAIN_DISPLAY_SIZE = new Vector3f(0.3F, 0.3F, 0.3F);
-
     private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -getConnectionRadius());
 
     public MultiblockClicker(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
@@ -70,24 +66,16 @@ public class MultiblockClicker extends ConnectedBlock implements PowerAnimatedBl
     }
     @Override
     protected DisplayGroup initModel(final @NotNull Location location, final @NotNull Player player) {
-        final DisplayGroup displayGroup = new DisplayGroup(location);
-        player.getFacing();
-        displayGroup.addDisplay("main", new BlockDisplayBuilder()
-                .blockData(Material.CYAN_CONCRETE.createBlockData())
-                .brightness(Utils.BRIGHTNESS_OFF)
-                .transformation(new TransformationMatrixBuilder()
-                        .scale(MAIN_DISPLAY_SIZE)
-                        .buildForBlockDisplay())
-                .build(location.toCenterLocation()));
-        displayGroup.addDisplay("attachment", new BlockDisplayBuilder()
-                .blockData(Material.WHITE_CONCRETE.createBlockData())
-                .transformation(new TransformationMatrixBuilder()
-                        .scale(ATTACHMENT_DISPLAY_SIZE)
-                        .lookAlong(player.getFacing())
-                        .buildForBlockDisplay())
-                .build(formatPointLocation(player, location, RELATIVE_PLATE_LOCATION)));
-        BlockStorageAPI.set(location, Keys.BS_FACING, player.getFacing());
-        return displayGroup;
+        return new ModelBuilder()
+                .add("main", new ModelCuboid()
+                        .material(Material.CYAN_CONCRETE)
+                        .brightness(Utils.BRIGHTNESS_OFF)
+                        .size(0.3F))
+                .add("attachment", new ModelLine()
+                        .material(Material.WHITE_CONCRETE)
+                        .to(player.getFacing().getDirection().multiply(0.5F).toVector3f())
+                        .thickness(0.15F))
+                .build(location);
     }
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {

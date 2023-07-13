@@ -5,6 +5,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.entity.Display.Billboard;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -93,6 +94,14 @@ public class ModelItem implements ModelComponent {
     }
     public ModelItem glow(@NotNull final Color color) {
         main.glow(color);
+        return this;
+    }
+    public ModelItem billboard(@NotNull final Billboard billboard) {
+        main.billboard(billboard);
+        return this;
+    }
+    public ModelItem viewRange(final int viewRange) {
+        main.viewRange(viewRange);
         return this;
     }
 
