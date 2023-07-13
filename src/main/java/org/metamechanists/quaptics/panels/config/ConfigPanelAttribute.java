@@ -41,7 +41,7 @@ public class ConfigPanelAttribute {
                         .brightness(15)
                         .background(Color.fromARGB(0, 0, 0, 0))
                         .size(size)
-                        .location(new Vector(-0.25, 0, 0).rotateAroundY(rotation.y).toVector3f())
+                        .location(new Vector(0, 0, 0).rotateAroundY(rotation.y).toVector3f())
                         .rotation(rotation))
                 .add("value", new ModelText()
                         .brightness(15)
