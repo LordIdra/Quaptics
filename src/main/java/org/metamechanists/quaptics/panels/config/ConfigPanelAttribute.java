@@ -42,27 +42,27 @@ public class ConfigPanelAttribute {
                         .brightness(15)
                         .background(Color.fromARGB(0, 0, 0, 0))
                         .size(size)
-                        .location(new Vector(0, 0, 0.15).rotateAroundY(rotation.y).toVector3f())
+                        .location(new Vector(-0.1, 0, 0.15).rotateAroundY(rotation.y).toVector3f())
                         .rotation(rotation))
                 .add("value", new ModelText()
                         .brightness(15)
                         .background(Color.fromARGB(0, 0, 0, 0))
                         .size(size)
-                        .location(new Vector(0.28, 0, 0.15).rotateAroundY(rotation.y).toVector3f())
+                        .location(new Vector(0.30, 0, 0.15).rotateAroundY(rotation.y).toVector3f())
                         .rotation(rotation))
                 .add("sub", new ModelText()
                         .text(ChatColors.color("&c-"))
                         .brightness(15)
                         .background(Color.fromARGB(0, 0, 0, 0))
                         .size(size)
-                        .location(new Vector(0.08, 0, 0.15).rotateAroundY(rotation.y).toVector3f())
+                        .location(new Vector(0.20, 0, 0.15).rotateAroundY(rotation.y).toVector3f())
                         .rotation(rotation))
                 .add("add", new ModelText()
                         .text(ChatColors.color("&a+"))
                         .brightness(15)
                         .background(Color.fromARGB(0, 0, 0, 0))
                         .size(size)
-                        .location(new Vector(0.48, 0, 0.15).rotateAroundY(rotation.y).toVector3f())
+                        .location(new Vector(0.55, 0, 0.15).rotateAroundY(rotation.y).toVector3f())
                         .rotation(rotation))
                 .buildAtLocation(location.clone().add(offset))
                 .getParentUUID());
@@ -179,7 +179,7 @@ public class ConfigPanelAttribute {
     }
 
     public void setValue(@NotNull final String text) {
-        getValue().ifPresent(value -> value.setText(text));
+        getValue().ifPresent(value -> value.setText(ChatColors.color(text)));
     }
 
     public void setHidden(final boolean hidden) {
