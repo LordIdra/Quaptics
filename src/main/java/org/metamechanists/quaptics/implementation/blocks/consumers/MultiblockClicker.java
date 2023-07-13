@@ -15,7 +15,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
-import org.joml.Vector3f;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
@@ -74,8 +73,7 @@ public class MultiblockClicker extends ConnectedBlock implements PowerAnimatedBl
                         .size(0.3F))
                 .add("attachment", new ModelLine()
                         .material(Material.WHITE_CONCRETE)
-                        .from(new Vector3f())
-                        .to(new Vector(0, 0, 1).toVector3f())
+                        .to(player.getFacing().getDirection().multiply(0.5F).toVector3f())
                         .thickness(0.15F))
                 .build(location);
     }
