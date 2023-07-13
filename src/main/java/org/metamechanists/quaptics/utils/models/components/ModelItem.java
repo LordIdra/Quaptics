@@ -32,6 +32,12 @@ public class ModelItem implements ModelComponent {
         this.location = location;
         return this;
     }
+    /**
+     * Sets the center of the cube containing the item
+     */
+    public ModelItem location(final float x, final float y, final float z) {
+        return location(new Vector3f(x, y, z));
+    }
 
     /**
      * Sets the starting orientation of the item (default is south AKA positive Z)
