@@ -57,7 +57,7 @@ public class OscillatingConcentrator extends ConnectedBlock {
                         .brightness(Utils.BRIGHTNESS_OFF)
                         .size(0.2F))
                 .add("plate", new ModelCuboid()
-                        .material(Material.GRAY_STAINED_GLASS)
+                        .material(Material.BLACK_STAINED_GLASS)
                         .rotation(Math.PI / 4)
                         .size(0.6F, 0.1F, 0.6F))
                 .add("glass", new ModelCuboid()
