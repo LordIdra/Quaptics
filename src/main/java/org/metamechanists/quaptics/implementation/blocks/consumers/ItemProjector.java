@@ -93,6 +93,7 @@ public class ItemProjector extends ConnectedBlock implements ItemHolderBlock, Po
                         .viewRange(Utils.VIEW_RANGE_OFF)
                         .billboard(Billboard.VERTICAL)
                         .brightness(Utils.BRIGHTNESS_ON)
+                        .location(ITEM_DISPLAY_ADDITIONAL_OFFSET)
                         .size(0.5F))
                 .build(location);
     }
