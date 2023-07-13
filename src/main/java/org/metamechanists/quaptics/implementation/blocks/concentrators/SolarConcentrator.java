@@ -76,7 +76,7 @@ public class SolarConcentrator extends ConnectedBlock implements PowerAnimatedBl
                         .material(Material.GLASS_PANE)
                         .rotation(Math.PI / 2, 0, Math.PI / 4)
                         .size(0.90F))
-                .build(location);
+                .buildAtBlockCenter(location);
     }
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {

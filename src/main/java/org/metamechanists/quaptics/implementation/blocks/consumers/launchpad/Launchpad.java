@@ -73,7 +73,7 @@ public class Launchpad extends ConnectedBlock implements ConfigPanelBlock, Power
                         .brightness(Utils.BRIGHTNESS_OFF)
                         .location(0, 0.5F, 0)
                         .size(0.8F, 0.1F, 0.8F))
-                .build(location);
+                .buildAtBlockCenter(location);
     }
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {

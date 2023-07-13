@@ -75,7 +75,7 @@ public class MultiblockClicker extends ConnectedBlock implements PowerAnimatedBl
                         .material(Material.WHITE_CONCRETE)
                         .to(player.getFacing().getDirection().toVector3f())
                         .thickness(0.15F))
-                .build(location);
+                .buildAtBlockCenter(location);
     }
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {

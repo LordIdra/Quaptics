@@ -144,7 +144,7 @@ public class Combiner extends ConnectedBlock implements PowerAnimatedBlock, Powe
                 .add("glass", new ModelDiamond()
                         .material(Material.GRAY_STAINED_GLASS)
                         .size(0.8F))
-                .build(location);
+                .buildAtBlockCenter(location);
     }
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {

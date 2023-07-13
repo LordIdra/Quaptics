@@ -5,6 +5,7 @@ import org.bukkit.entity.Display;
 import org.jetbrains.annotations.NotNull;
 
 
+@FunctionalInterface
 public interface DisplayBuilder {
     Display build(@NotNull final Location location);
 }

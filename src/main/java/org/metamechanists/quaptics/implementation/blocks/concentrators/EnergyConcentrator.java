@@ -96,7 +96,7 @@ public class EnergyConcentrator extends EnergyConnectedBlock implements PowerAni
                         .material(Material.GLASS)
                         .rotation(Math.PI / 4)
                         .size(0.4F))
-                .build(location);
+                .buildAtBlockCenter(location);
     }
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {

@@ -92,7 +92,7 @@ public class Lens extends ConnectedBlock implements PowerAnimatedBlock, PowerLos
                 .add("glass", new ModelDiamond()
                         .material(Material.GLASS)
                         .size(0.4F))
-                .build(location);
+                .buildAtBlockCenter(location);
     }
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {

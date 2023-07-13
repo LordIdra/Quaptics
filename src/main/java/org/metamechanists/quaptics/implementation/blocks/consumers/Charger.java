@@ -83,7 +83,7 @@ public class Charger extends ConnectedBlock implements InfoPanelBlock, ItemHolde
                 .add("item", new ModelItem()
                         .facing(player.getFacing())
                         .size(0.5F))
-                .build(location);
+                .buildAtBlockCenter(location);
     }
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {

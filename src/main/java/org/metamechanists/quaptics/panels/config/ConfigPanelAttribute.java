@@ -64,7 +64,7 @@ public class ConfigPanelAttribute {
                         .size(size)
                         .location(new Vector(0.48, 0, 0.15).rotateAroundY(rotation.y).toVector3f())
                         .rotation(rotation))
-                .build(location.clone().add(offset))
+                .buildAtLocation(location.clone().add(offset))
                 .getParentUUID());
 
 //        this.keyId = new TextDisplayId(new TextDisplayBuilder()

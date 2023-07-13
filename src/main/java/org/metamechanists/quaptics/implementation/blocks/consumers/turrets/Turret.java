@@ -57,7 +57,7 @@ public abstract class Turret extends ConnectedBlock {
                         .size(0.6F))
                 .add("barrel", new ModelCuboid()
                         .material(Material.GRAY_CONCRETE))
-                .build(location);
+                .buildAtBlockCenter(location);
     }
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {

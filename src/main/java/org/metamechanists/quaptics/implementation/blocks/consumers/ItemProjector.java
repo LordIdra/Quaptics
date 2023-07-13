@@ -95,7 +95,7 @@ public class ItemProjector extends ConnectedBlock implements ItemHolderBlock, Po
                         .brightness(Utils.BRIGHTNESS_ON)
                         .location(ITEM_DISPLAY_ADDITIONAL_OFFSET)
                         .size(0.5F))
-                .build(location);
+                .buildAtBlockCenter(location);
     }
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {

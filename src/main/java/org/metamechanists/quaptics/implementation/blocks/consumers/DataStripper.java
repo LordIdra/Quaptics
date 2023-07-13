@@ -89,7 +89,7 @@ public class DataStripper extends ConnectedBlock implements InfoPanelBlock, Item
                         .facing(player.getFacing())
                         .location(0, 0.125F, 0)
                         .size(0.5F))
-                .build(location);
+                .buildAtBlockCenter(location);
     }
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {

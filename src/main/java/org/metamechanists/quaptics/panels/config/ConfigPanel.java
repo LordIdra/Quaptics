@@ -34,7 +34,7 @@ public abstract class ConfigPanel {
         return groupId.get();
     }
 
-    public void setPanelHidden(final boolean hidden) {
+    private void setPanelHidden(final boolean hidden) {
         container.setHidden(hidden);
         update();
     }

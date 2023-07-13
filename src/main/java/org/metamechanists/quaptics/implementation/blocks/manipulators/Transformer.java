@@ -73,7 +73,7 @@ public class Transformer extends ConnectedBlock implements PowerAnimatedBlock, P
                         .facing(player.getFacing())
                         .location(0.0F, 0.0F, -0.25F)
                         .size(0.20F, 0.60F, 0.20F))
-                .build(location);
+                .buildAtBlockCenter(location);
     }
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {

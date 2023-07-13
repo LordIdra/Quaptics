@@ -79,7 +79,7 @@ public class Capacitor extends ConnectedBlock implements InfoPanelBlock, PowerLo
                 .add("tierGlass", new ModelDiamond()
                         .material(settings.getTier().glassMaterial)
                         .size(0.80F))
-                .build(location);
+                .buildAtBlockCenter(location);
     }
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {

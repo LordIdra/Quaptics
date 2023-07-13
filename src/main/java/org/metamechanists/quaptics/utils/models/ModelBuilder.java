@@ -23,12 +23,20 @@ public class ModelBuilder {
 
     /**
      * Creates all the components and adds them to a displaygroup
-     * @param location The center of the model
+     * @param center The center location of the model
      * @return The display group containing all the components
      */
-    public DisplayGroup build(@NotNull final Location location) {
-        final DisplayGroup group = new DisplayGroup(location.clone(), 0, 0);
-        components.forEach((name, component) -> group.addDisplay(name, component.build(location.clone())));
+    public DisplayGroup buildAtLocation(@NotNull final Location center) {
+        final DisplayGroup group = new DisplayGroup(center.clone(), 0, 0);
+        components.forEach((name, component) -> group.addDisplay(name, component.build(center.clone())));
         return group;
+    }
+    /**
+     * Creates all the components and adds them to a displaygroup
+     * @param blockLocation The block location of the model (this will be converted to the center of the block and used to build the model)
+     * @return The display group containing all the components
+     */
+    public DisplayGroup buildAtBlockCenter(@NotNull final Location blockLocation) {
+        return buildAtLocation(blockLocation.clone().toCenterLocation());
     }
 }
