@@ -22,7 +22,7 @@ import java.util.Deque;
 @SuppressWarnings("unused")
 public class TransformationMatrixBuilder {
     private static final Vector3f BLOCK_DISPLAY_ADJUSTMENT = new Vector3f(-0.5F);
-    private static final Vector3f ITEM_DISPLAY_ADJUSTMENT = new Vector3f(0, 0.5F, 0);
+    private static final Vector3f ITEM_DISPLAY_ADJUSTMENT = new Vector3f(0, 0.25F, 0);
 
     private final Deque<TransformationMatrixComponent> components = new ArrayDeque<>();
 
