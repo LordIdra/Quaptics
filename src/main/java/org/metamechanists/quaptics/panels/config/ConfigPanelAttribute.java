@@ -9,6 +9,7 @@ import org.bukkit.entity.TextDisplay;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3d;
+import org.joml.Vector3f;
 import org.metamechanists.quaptics.storage.PersistentDataTraverser;
 import org.metamechanists.quaptics.utils.builders.InteractionBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConfigPanelAttributeId;
@@ -32,8 +33,12 @@ public class ConfigPanelAttribute {
 
     public ConfigPanelAttribute(final ConnectionGroupId groupId, @NotNull final String name, @NotNull final String key,
                                 final @NotNull Location location, final Vector offset, final @NotNull Vector3d rotation, final float size) {
-        final Vector relativeSubButtonTranslation = new Vector(0.05, 0, -0.08).add(BUTTON_ADJUSTMENT).rotateAroundY(rotation.y);
-        final Vector relativeAddButtonTranslation = new Vector(0.40, 0, -0.08).add(BUTTON_ADJUSTMENT).rotateAroundY(rotation.y);
+        final Vector3f keyTextLocation = new Vector(-0.25, 0, -0.08).rotateAroundY(rotation.y).toVector3f();
+        final Vector3f valueTextLocation = new Vector(0.25, 0, -0.08).rotateAroundY(rotation.y).toVector3f();
+        final Vector3f subTextLocation = new Vector(0.05, 0, -0.08).rotateAroundY(rotation.y).toVector3f();
+        final Vector3f addTextLocation = new Vector(0.40, 0, -0.08).rotateAroundY(rotation.y).toVector3f();
+        final Vector subButtonLocation = new Vector(0.05, 0, -0.08).add(BUTTON_ADJUSTMENT).rotateAroundY(rotation.y);
+        final Vector addButtonLocation = new Vector(0.40, 0, -0.08).add(BUTTON_ADJUSTMENT).rotateAroundY(rotation.y);
 
         this.displayGroupId = new DisplayGroupId(new ModelBuilder()
                 .add("key", new ModelText()
@@ -41,29 +46,27 @@ public class ConfigPanelAttribute {
                         .brightness(15)
                         .background(Color.fromARGB(0, 0, 0, 0))
                         .size(size)
-                        .rotation(rotation)
-                        .location(-0.20F, 0, -0.5F))
+                        .location(keyTextLocation))
                 .add("value", new ModelText()
-                        .text(ChatColors.color("&c-"))
                         .brightness(15)
                         .background(Color.fromARGB(0, 0, 0, 0))
                         .size(size)
                         .rotation(rotation)
-                        .location(0.27F, 0, -0.5F))
+                        .location(valueTextLocation))
                 .add("sub", new ModelText()
                         .text(ChatColors.color("&c-"))
                         .brightness(15)
                         .background(Color.fromARGB(0, 0, 0, 0))
                         .size(size)
                         .rotation(rotation)
-                        .location(0.09F, 0, -0.5F))
+                        .location(subTextLocation))
                 .add("add", new ModelText()
                         .text(ChatColors.color("&a+"))
                         .brightness(15)
                         .background(Color.fromARGB(0, 0, 0, 0))
                         .size(size)
                         .rotation(rotation)
-                        .location(0.45F, 0, -0.5F))
+                        .location(addTextLocation))
                 .build(location.clone().add(offset))
                 .getParentUUID());
 
@@ -115,11 +118,11 @@ public class ConfigPanelAttribute {
         final Interaction subButton = new InteractionBuilder()
                 .width(BUTTON_SIZE)
                 .height(BUTTON_SIZE)
-                .build(location.clone().add(offset).add(relativeSubButtonTranslation));
+                .build(location.clone().add(offset).add(subButtonLocation));
         final Interaction addButton = new InteractionBuilder()
                 .width(BUTTON_SIZE)
                 .height(BUTTON_SIZE)
-                .build(location.clone().add(offset).add(relativeAddButtonTranslation));
+                .build(location.clone().add(offset).add(addButtonLocation));
 
         final PersistentDataTraverser subButtonTraverser = new PersistentDataTraverser(subButton.getUniqueId());
         subButtonTraverser.set("groupId", groupId);
@@ -179,6 +182,9 @@ public class ConfigPanelAttribute {
     }
 
     public void remove() {
-        displayGroupId.get().ifPresent(group -> group.getDisplays().values().forEach(Entity::remove));
+        displayGroupId.get().ifPresent(group -> {
+            group.remove();
+            group.getDisplays().values().forEach(Entity::remove);
+        });
     }
 }
