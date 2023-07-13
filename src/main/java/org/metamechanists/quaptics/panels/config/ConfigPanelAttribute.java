@@ -33,12 +33,12 @@ public class ConfigPanelAttribute {
 
     public ConfigPanelAttribute(final ConnectionGroupId groupId, @NotNull final String name, @NotNull final String key,
                                 final @NotNull Location location, final Vector offset, final @NotNull Vector3d rotation, final float size) {
-        final Vector3f keyTextLocation = new Vector(-0.25, 0, -0.08).rotateAroundY(rotation.y).toVector3f();
-        final Vector3f valueTextLocation = new Vector(0.25, 0, -0.08).rotateAroundY(rotation.y).toVector3f();
-        final Vector3f subTextLocation = new Vector(0.05, 0, -0.08).rotateAroundY(rotation.y).toVector3f();
-        final Vector3f addTextLocation = new Vector(0.40, 0, -0.08).rotateAroundY(rotation.y).toVector3f();
-        final Vector subButtonLocation = new Vector(0.05, 0, -0.08).add(BUTTON_ADJUSTMENT).rotateAroundY(rotation.y);
-        final Vector addButtonLocation = new Vector(0.40, 0, -0.08).add(BUTTON_ADJUSTMENT).rotateAroundY(rotation.y);
+        final Vector3f keyTextLocation = new Vector(-0.25, 0, 0.08).add(offset).rotateAroundY(rotation.y).toVector3f();
+        final Vector3f valueTextLocation = new Vector(0.25, 0, 0.08).add(offset).rotateAroundY(rotation.y).toVector3f();
+        final Vector3f subTextLocation = new Vector(0.05, 0, 0.08).add(offset).rotateAroundY(rotation.y).toVector3f();
+        final Vector3f addTextLocation = new Vector(0.40, 0, 0.08).add(offset).rotateAroundY(rotation.y).toVector3f();
+        final Vector subButtonLocation = new Vector(0.05, 0, -0.08).add(offset).add(BUTTON_ADJUSTMENT).rotateAroundY(rotation.y);
+        final Vector addButtonLocation = new Vector(0.40, 0, -0.08).add(offset).add(BUTTON_ADJUSTMENT).rotateAroundY(rotation.y);
 
         this.displayGroupId = new DisplayGroupId(new ModelBuilder()
                 .add("key", new ModelText()
