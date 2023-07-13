@@ -26,6 +26,8 @@ public class ConfigPanelAttribute {
     private static final Vector BUTTON_ADJUSTMENT = new Vector(BUTTON_SIZE/2, BUTTON_SIZE/2, BUTTON_SIZE/2);
     private static final float HIDDEN_VIEW_RANGE = 0;
     private static final float SHOWN_VIEW_RANGE = 1;
+    private static final double OFFSET_Y = 0.15;
+    private static final double OFFSET_Z = 0.15;
     private final Vector offset;
     private final DisplayGroupId displayGroupId;
     private final InteractionId subButtonId;
@@ -42,27 +44,27 @@ public class ConfigPanelAttribute {
                         .brightness(15)
                         .background(Color.fromARGB(0, 0, 0, 0))
                         .size(size)
-                        .location(new Vector(-0.06, 0.3, 0.15).rotateAroundY(rotation.y).toVector3f())
+                        .location(new Vector(-0.06, OFFSET_Y, OFFSET_Z).rotateAroundY(rotation.y).toVector3f())
                         .rotation(rotation))
                 .add("value", new ModelText()
                         .brightness(15)
                         .background(Color.fromARGB(0, 0, 0, 0))
                         .size(size)
-                        .location(new Vector(0.41, 0.3, 0.15).rotateAroundY(rotation.y).toVector3f())
+                        .location(new Vector(0.41, OFFSET_Y, OFFSET_Z).rotateAroundY(rotation.y).toVector3f())
                         .rotation(rotation))
                 .add("subText", new ModelText()
                         .text(ChatColors.color("&c-"))
                         .brightness(15)
                         .background(Color.fromARGB(0, 0, 0, 0))
                         .size(size)
-                        .location(new Vector(0.24, 0.3, 0.15).rotateAroundY(rotation.y).toVector3f())
+                        .location(new Vector(0.24, OFFSET_Y, OFFSET_Z).rotateAroundY(rotation.y).toVector3f())
                         .rotation(rotation))
                 .add("addText", new ModelText()
                         .text(ChatColors.color("&a+"))
                         .brightness(15)
                         .background(Color.fromARGB(0, 0, 0, 0))
                         .size(size)
-                        .location(new Vector(0.59, 0.3, 0.15).rotateAroundY(rotation.y).toVector3f())
+                        .location(new Vector(0.59, OFFSET_Y, OFFSET_Z).rotateAroundY(rotation.y).toVector3f())
                         .rotation(rotation))
                 .buildAtLocation(location.clone().add(offset))
                 .getParentUUID());
