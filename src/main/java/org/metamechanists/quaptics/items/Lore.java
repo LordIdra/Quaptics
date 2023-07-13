@@ -88,9 +88,6 @@ public class Lore {
         if (settings.getRange() != 0) {
             lore.add(range(settings.getRange()));
         }
-        if (settings.getProjectileSpeed() != 0) {
-            lore.add(projectileSpeed(settings.getProjectileSpeed()));
-        }
         if (settings.getDamage() != 0) {
             lore.add(damage(settings.getDamage()));
         }
