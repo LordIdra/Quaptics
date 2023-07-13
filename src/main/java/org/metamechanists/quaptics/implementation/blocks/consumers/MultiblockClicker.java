@@ -75,7 +75,7 @@ public class MultiblockClicker extends ConnectedBlock implements PowerAnimatedBl
                 .add("attachment", new ModelLine()
                         .material(Material.WHITE_CONCRETE)
                         .from(new Vector3f())
-                        .to(new Vector(0, 0, 1).multiply(0.5F).toVector3f())
+                        .to(new Vector(0, 0, 1).toVector3f())
                         .thickness(0.15F))
                 .build(location);
     }
