@@ -14,7 +14,6 @@ import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
 import org.metamechanists.quaptics.connections.Link;
-import org.metamechanists.quaptics.implementation.attachments.PowerAnimatedBlock;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.items.Lore;
@@ -29,7 +28,7 @@ import org.metamechanists.quaptics.utils.models.components.ModelCuboid;
 import java.util.List;
 import java.util.Optional;
 
-public class ReactorRing extends ConnectedBlock implements PowerAnimatedBlock {
+public class ReactorRing extends ConnectedBlock {
     public static final Settings REACTOR_RING_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
             .build();
@@ -70,23 +69,23 @@ public class ReactorRing extends ConnectedBlock implements PowerAnimatedBlock {
                 .add("ring1a", new ModelCuboid()
                         .material(Material.WHITE_CONCRETE)
                         .facing(controllerPosition.toVector3f())
-                        .size(0.2F, 0.475F, 0.2F)
+                        .size(0.2F, 0.477F, 0.2F)
                         .location(0, 0, 0.4F))
                 .add("ring1b", new ModelCuboid()
                         .material(Material.WHITE_CONCRETE)
                         .facing(controllerPosition.toVector3f())
-                        .size(0.2F, 0.475F, 0.2F)
+                        .size(0.2F, 0.477F, 0.2F)
                         .location(0, 0, -0.4F))
 
                 .add("ring2a", new ModelCuboid()
                         .material(Material.WHITE_CONCRETE)
                         .facing(controllerPosition.toVector3f())
-                        .size(0.2F, 0.2F, 0.475F)
+                        .size(0.2F, 0.2F, 0.477F)
                         .location(0, 0.4F, 0))
                 .add("ring2b", new ModelCuboid()
                         .material(Material.WHITE_CONCRETE)
                         .facing(controllerPosition.toVector3f())
-                        .size(0.2F, 0.2F, 0.475F)
+                        .size(0.2F, 0.2F, 0.477F)
                         .location(0, -0.4F, 0))
 
                 .add("ring3a", new ModelCuboid()
@@ -157,13 +156,7 @@ public class ReactorRing extends ConnectedBlock implements PowerAnimatedBlock {
             inputPower += link2.get().getPower();
         }
 
-        // todo animation
         BlockStorageAPI.set(location, Keys.BS_INPUT_POWER, inputPower);
-    }
-    @Override
-    public void onPoweredAnimation(final Location location, final boolean powered) {
-        // todo
-        brightnessAnimation(location, "prism", powered);
     }
 
     private @NotNull Vector findController(@NotNull final Location location) {

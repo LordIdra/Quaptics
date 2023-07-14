@@ -6,6 +6,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
@@ -26,6 +27,7 @@ import org.metamechanists.quaptics.panels.info.implementation.ReactorInfoPanel;
 import org.metamechanists.quaptics.storage.QuapticTicker;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
+import org.metamechanists.quaptics.utils.Particles;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.id.complex.InfoPanelId;
 import org.metamechanists.quaptics.utils.models.ModelBuilder;
@@ -162,7 +164,7 @@ public class ReactorController extends ConnectedBlock implements ComplexMultiblo
         secondsSinceReactorStarted += 1.0 / QuapticTicker.QUAPTIC_TICKS_PER_SECOND;
         BlockStorageAPI.set(location, Keys.BS_SECONDS_SINCE_REACTOR_STARTED, secondsSinceReactorStarted);
 
-        final double powerProportion = Math.max(secondsSinceReactorStarted, settings.getTimeToMaxEfficiency()) / settings.getTimeToMaxEfficiency();
+        final double powerProportion = Math.min(secondsSinceReactorStarted, settings.getTimeToMaxEfficiency()) / settings.getTimeToMaxEfficiency();
         final double outputPower = (powerProportion * inputPower * settings.getPowerMultiplier());
         BlockStorageAPI.set(location, Keys.BS_OUTPUT_POWER, outputPower);
 
@@ -191,7 +193,12 @@ public class ReactorController extends ConnectedBlock implements ComplexMultiblo
     }
     @Override
     public void tickAnimation(@NotNull final Location centerLocation, final double timeSeconds) {
-
+        Particles.animatedHorizontalCircle(Particle.ELECTRIC_SPARK,
+                centerLocation.clone().toCenterLocation(),
+                3,
+                5,
+                (timeSeconds % 0.5) / 0.5,
+                0);
     }
 
     private static double getRingInputPower(@NotNull final Location ringLocation) {
