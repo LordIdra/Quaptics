@@ -63,8 +63,6 @@ public class EntanglementContainer extends ConnectedBlock implements ItemHolderB
             MAGNET_1_LOCATION, MAGNET_2_LOCATION, MAGNET_3_LOCATION,
             MAGNET_4_LOCATION, MAGNET_5_LOCATION, MAGNET_6_LOCATION);
 
-    private static final int MAGNET_PARTICLE_COUNT = 5;
-    private static final double MAGNET_PARTICLE_SPEED = 0.05;
     private static final double CONTAINER_PARTICLE_RADIUS = 1.2;
     private static final int CONTAINER_PARTICLE_COUNT = 3;
     private static final double COMPLETED_PARTICLE_SPEED = 0.1;
@@ -247,11 +245,11 @@ public class EntanglementContainer extends ConnectedBlock implements ItemHolderB
 
     private void animateMagnet(@NotNull final Location center, @NotNull final Location pillarLocation, final double timeSinceCraftStarted) {
         Particles.animatedLine(Particle.BUBBLE_POP,
-                center.clone().toCenterLocation(),
                 pillarLocation.clone().toCenterLocation(),
-                MAGNET_PARTICLE_COUNT,
+                center.clone().toCenterLocation(),
+                8,
                 (10*timeSinceCraftStarted % magnetParticleAnimationLengthSeconds) / (magnetParticleAnimationLengthSeconds+0.001),
-                MAGNET_PARTICLE_SPEED);
+                0.05);
     }
     private void animateCenter(@NotNull final Location center, final double timeSinceCraftStarted) {
         Particles.animatedHorizontalCircle(Particle.ELECTRIC_SPARK,
@@ -270,8 +268,8 @@ public class EntanglementContainer extends ConnectedBlock implements ItemHolderB
     private static void animateCenterCompleted(@NotNull final Location center) {
         new ParticleBuilder(Particle.FIREWORKS_SPARK)
                 .location(center.toCenterLocation())
-                .extra(COMPLETED_PARTICLE_SPEED)
-                .count(COMPLETED_PARTICLE_COUNT)
+                .extra(0.1)
+                .count(50)
                 .spawn();
     }
 
