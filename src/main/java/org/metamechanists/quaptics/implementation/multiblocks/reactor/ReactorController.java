@@ -143,6 +143,12 @@ public class ReactorController extends ConnectedBlock implements ComplexMultiblo
     }
     @Override
     public void onQuapticTick(@NotNull final ConnectionGroup group, @NotNull final Location location) {
+        final boolean isMultiblockValid = areAllRingsInPlace(location);
+        setPanelHidden(group, isMultiblockValid);
+        if (!isMultiblockValid) {
+            return;
+        }
+
         final double inputPower = getTotalInputPower(location);
         updatePanel(group);
         if (inputPower < settings.getMinPower()) {
@@ -154,17 +160,16 @@ public class ReactorController extends ConnectedBlock implements ComplexMultiblo
         secondsSinceReactorStarted += 1.0 / QuapticTicker.QUAPTIC_TICKS_PER_SECOND;
         BlockStorageAPI.set(location, Keys.BS_SECONDS_SINCE_REACTOR_STARTED, secondsSinceReactorStarted);
 
+        final double powerProportion = Math.max(secondsSinceReactorStarted, settings.getTimeToMaxEfficiency()) / settings.getTimeToMaxEfficiency();
+        final double outputPower = (powerProportion * inputPower * settings.getPowerMultiplier());
+        BlockStorageAPI.set(location, Keys.BS_OUTPUT_POWER, outputPower);
+
         tickAnimation(location, secondsSinceReactorStarted);
 
         final List<Link> outgoingLinks = getOutgoingLinks(location);
         if (outgoingLinks.isEmpty()) {
             return;
         }
-
-        final double powerProportion = Math.max(secondsSinceReactorStarted, settings.getTimeToMaxEfficiency()) / settings.getTimeToMaxEfficiency();
-        final double outputPower = (powerProportion * inputPower * settings.getPowerMultiplier());
-
-        BlockStorageAPI.set(location, Keys.BS_OUTPUT_POWER, outputPower);
 
         outgoingLinks.forEach(link -> link.setPower(outputPower / outgoingLinks.size()));
     }
@@ -192,5 +197,11 @@ public class ReactorController extends ConnectedBlock implements ComplexMultiblo
     }
     public static double getTotalInputPower(@NotNull final Location location) {
         return RING_LOCATIONS.stream().mapToDouble(vector -> getRingInputPower(location.clone().add(vector))).sum();
+    }
+    private static boolean isRing(@NotNull final Location ringLocation) {
+        return BlockStorageAPI.check(ringLocation) instanceof  ReactorRing;
+    }
+    private static boolean areAllRingsInPlace(@NotNull final Location center) {
+        return RING_LOCATIONS.stream().allMatch(location -> isRing(center.clone().add(location)));
     }
 }
