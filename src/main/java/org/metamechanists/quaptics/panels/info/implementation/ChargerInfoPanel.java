@@ -28,8 +28,8 @@ public class ChargerInfoPanel extends BlockInfoPanel {
     @Override
     protected InfoPanelContainer buildPanelContainer(@NotNull final Location location) {
         return new InfoPanelBuilder(location.clone().toCenterLocation().add(getOffset()), SIZE)
-                .addAttribute("chargeBar", false)
                 .addAttribute("chargeText", false)
+                .addAttribute("chargeBar", false)
                 .build();
     }
 

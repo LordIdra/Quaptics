@@ -7,17 +7,20 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
+import org.metamechanists.metalib.utils.ParticleUtils;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
 import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.implementation.attachments.InfoPanelBlock;
 import org.metamechanists.quaptics.implementation.attachments.ItemHolderBlock;
+import org.metamechanists.quaptics.implementation.attachments.PowerAnimatedBlock;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.implementation.tools.QuapticChargeableItem;
@@ -28,6 +31,7 @@ import org.metamechanists.quaptics.panels.info.implementation.ChargerInfoPanel;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Language;
+import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.id.complex.InfoPanelId;
 import org.metamechanists.quaptics.utils.models.ModelBuilder;
@@ -38,7 +42,7 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.util.List;
 import java.util.Optional;
 
-public class Charger extends ConnectedBlock implements InfoPanelBlock, ItemHolderBlock {
+public class Charger extends ConnectedBlock implements InfoPanelBlock, ItemHolderBlock, PowerAnimatedBlock {
     public static final Settings CHARGER_1_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
             .build();
@@ -74,10 +78,12 @@ public class Charger extends ConnectedBlock implements InfoPanelBlock, ItemHolde
                         .size(0.6F, 0.3F, 0.6F))
                 .add("glassTop", new ModelCuboid()
                         .material(Material.LIGHT_BLUE_STAINED_GLASS)
+                        .brightness(Utils.BRIGHTNESS_OFF)
                         .location(0, 0.35F, 0)
                         .size(0.4F, 0.15F, 0.4F))
                 .add("glassBottom", new ModelCuboid()
                         .material(Material.LIGHT_BLUE_STAINED_GLASS)
+                        .brightness(Utils.BRIGHTNESS_OFF)
                         .location(0, -0.35F, 0)
                         .size(0.4F, 0.15F, 0.4F))
                 .add("item", new ModelItem()
@@ -125,6 +131,7 @@ public class Charger extends ConnectedBlock implements InfoPanelBlock, ItemHolde
             return;
         }
 
+        ParticleUtils.randomParticle(location.clone().toCenterLocation(), Particle.ELECTRIC_SPARK, 0.5, 3);
         final ItemStack newStack = QuapticChargeableItem.chargeItem(inputLink.get(), stack.get());
         ItemHolderBlock.insertItem(location, newStack);
         updatePanel(group);
@@ -132,8 +139,9 @@ public class Charger extends ConnectedBlock implements InfoPanelBlock, ItemHolde
     @Override
     public void onInputLinkUpdated(@NotNull final ConnectionGroup group, @NotNull final Location location) {
         doBurnoutCheck(group, "input");
+        final Optional<Link> inputLink = getLink(location, "input");
+        onPoweredAnimation(location, settings.isOperational(inputLink));
     }
-
     @Override
     public boolean onInsert(@NotNull final Location location, @NotNull final ItemStack stack, @NotNull final Player player) {
         if (!(SlimefunItem.getByItem(stack) instanceof QuapticChargeableItem)) {
@@ -146,6 +154,11 @@ public class Charger extends ConnectedBlock implements InfoPanelBlock, ItemHolde
     public Optional<ItemStack> onRemove(@NotNull final Location location, @NotNull final ItemStack stack) {
         QuapticChargeableItem.updateLore(stack);
         return Optional.of(stack);
+    }
+    @Override
+    public void onPoweredAnimation(final Location location, final boolean powered) {
+        brightnessAnimation(location, "glassTop", powered);
+        brightnessAnimation(location, "glassBottom", powered);
     }
 
     @Override

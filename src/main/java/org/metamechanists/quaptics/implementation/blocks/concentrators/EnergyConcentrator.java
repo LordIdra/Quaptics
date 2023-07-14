@@ -111,7 +111,7 @@ public class EnergyConcentrator extends EnergyConnectedBlock implements PowerAni
                 ? settings.getEmissionPower()
                 : 0;
         final Optional<Link> linkOptional = getLink(location, "output");
-        onPoweredAnimation(location, linkOptional.isPresent() && hasEnoughEnergy(location));
+        onPoweredAnimation(location, hasEnoughEnergy(location));
         linkOptional.ifPresent(link -> link.setPower(power));
     }
     @Override

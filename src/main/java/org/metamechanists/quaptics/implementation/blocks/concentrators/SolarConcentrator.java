@@ -91,7 +91,7 @@ public class SolarConcentrator extends ConnectedBlock implements PowerAnimatedBl
                 ? settings.getEmissionPower()
                 : 0;
         final Optional<Link> linkOptional = getLink(location, "output");
-        onPoweredAnimation(location, linkOptional.isPresent() && block.getWorld().isDayTime());
+        onPoweredAnimation(location, block.getWorld().isDayTime());
         linkOptional.ifPresent(link -> link.setPower(power));
     }
     @Override

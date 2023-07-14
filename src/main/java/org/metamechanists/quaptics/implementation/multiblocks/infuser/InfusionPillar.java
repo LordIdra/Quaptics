@@ -21,6 +21,7 @@ import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
+import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.models.ModelBuilder;
 import org.metamechanists.quaptics.utils.models.components.ModelCuboid;
@@ -60,6 +61,7 @@ public class InfusionPillar extends ConnectedBlock implements PowerAnimatedBlock
                         .location(0, -0.3F, 0))
                 .add("prism", new ModelCuboid()
                         .material(Material.LIGHT_BLUE_STAINED_GLASS)
+                        .brightness(Utils.BRIGHTNESS_OFF)
                         .facing(player.getFacing())
                         .size(0.2F))
                 .buildAtBlockCenter(location);

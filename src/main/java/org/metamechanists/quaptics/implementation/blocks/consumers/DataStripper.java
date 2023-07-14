@@ -7,18 +7,21 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
+import org.metamechanists.metalib.utils.ParticleUtils;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
 import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.implementation.attachments.InfoPanelBlock;
 import org.metamechanists.quaptics.implementation.attachments.ItemHolderBlock;
+import org.metamechanists.quaptics.implementation.attachments.PowerAnimatedBlock;
 import org.metamechanists.quaptics.implementation.attachments.ProgressBlock;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
@@ -29,6 +32,7 @@ import org.metamechanists.quaptics.panels.info.implementation.ProgressInfoPanel;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Language;
+import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.id.complex.InfoPanelId;
 import org.metamechanists.quaptics.utils.models.ModelBuilder;
@@ -39,7 +43,7 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.util.List;
 import java.util.Optional;
 
-public class DataStripper extends ConnectedBlock implements InfoPanelBlock, ItemHolderBlock, ProgressBlock {
+public class DataStripper extends ConnectedBlock implements InfoPanelBlock, ItemHolderBlock, ProgressBlock, PowerAnimatedBlock {
     public static final Settings DATA_STRIPPER_1_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
             .timePerItem(10)
@@ -79,10 +83,12 @@ public class DataStripper extends ConnectedBlock implements InfoPanelBlock, Item
                         .size(0.5F, 0.3F, 0.5F))
                 .add("glassTop", new ModelCuboid()
                         .material(Material.ORANGE_STAINED_GLASS)
+                        .brightness(Utils.BRIGHTNESS_OFF)
                         .location(0, 0.35F, 0)
                         .size(0.3F, 0.15F, 0.3F))
                 .add("glassBottom", new ModelCuboid()
                         .material(Material.ORANGE_STAINED_GLASS)
+                        .brightness(Utils.BRIGHTNESS_OFF)
                         .location(0, -0.35F, 0)
                         .size(0.3F, 0.15F, 0.3F))
                 .add("item", new ModelItem()
@@ -132,6 +138,7 @@ public class DataStripper extends ConnectedBlock implements InfoPanelBlock, Item
         }
 
         if (ItemHolderBlock.getStack(location).isPresent()) {
+            ParticleUtils.randomParticle(location.clone().toCenterLocation(), Particle.WHITE_ASH, 0.5, 1);
             ProgressBlock.updateProgress(location, settings.getTimePerItem());
         }
 
@@ -140,6 +147,8 @@ public class DataStripper extends ConnectedBlock implements InfoPanelBlock, Item
     @Override
     public void onInputLinkUpdated(@NotNull final ConnectionGroup group, @NotNull final Location location) {
         doBurnoutCheck(group, "input");
+        final Optional<Link> inputLink = getLink(location, "input");
+        onPoweredAnimation(location, settings.isOperational(inputLink));
     }
     @Override
     public boolean onInsert(@NotNull final Location location, final @NotNull ItemStack stack, @NotNull final Player player) {
@@ -158,6 +167,11 @@ public class DataStripper extends ConnectedBlock implements InfoPanelBlock, Item
                 ? Optional.of(stripData(stack))
                 : Optional.of(stack);
 
+    }
+    @Override
+    public void onPoweredAnimation(final Location location, final boolean powered) {
+        brightnessAnimation(location, "glassTop", powered);
+        brightnessAnimation(location, "glassBottom", powered);
     }
 
     @Override
