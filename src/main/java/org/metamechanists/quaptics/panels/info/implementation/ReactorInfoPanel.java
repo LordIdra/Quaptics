@@ -1,9 +1,10 @@
 package org.metamechanists.quaptics.panels.info.implementation;
 
 import org.bukkit.Location;
+import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
-import org.metamechanists.quaptics.implementation.multiblocks.entangler.EntanglementMagnet;
+import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.implementation.multiblocks.reactor.ReactorController;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.panels.info.BlockInfoPanel;
@@ -29,8 +30,8 @@ public class ReactorInfoPanel extends BlockInfoPanel {
     @Override
     protected InfoPanelContainer buildPanelContainer(@NotNull final Location location) {
         return new InfoPanelBuilder(location.clone().toCenterLocation().add(getOffset()), SIZE)
+                .addAttribute("thresholdBar", false)
                 .addAttribute("efficiencyBar", false)
-                .addAttribute("powerInputText", false)
                 .addAttribute("powerOutputText", false)
                 .build();
     }
@@ -51,14 +52,24 @@ public class ReactorInfoPanel extends BlockInfoPanel {
             return;
         }
 
+        final Settings settings = group.get().getBlock().getSettings();
+
         final double secondsSinceStarted = BlockStorageAPI.getDouble(location.get(), Keys.BS_SECONDS_SINCE_REACTOR_STARTED);
         final double maxSeconds = group.get().getBlock().getSettings().getTimeToMaxEfficiency();
 
         final double inputPower = ReactorController.getTotalInputPower(location.get());
-        final double maxInputPower = ReactorController.RING_LOCATIONS.size() * EntanglementMagnet.ENTANGLEMENT_MAGNET_SETTINGS.getTier().maxPower * 2;
+        final double minInputPower = ReactorController.RING_LOCATIONS.size() * settings.getMinPower();
 
-        container.setText("efficiencyBar", Lore.progressBar(secondsSinceStarted, maxSeconds, "&e", "&7", "&a"));
-        container.setText("powerInputText", (inputPower >= maxInputPower ? "&a" : "&e") + inputPower + "&7 / " + "&a" + maxInputPower);
-        // TODO output power
+        final double outputPower = BlockStorageAPI.getDouble(location.get(), Keys.BS_OUTPUT_POWER);
+        final double maxOutputPower = outputPower * settings.getPowerMultiplier();
+
+        container.setText("thresholdBar", "&7Threshold " + Lore.progressBar(inputPower, minInputPower, "&6", "&7", "&a"));
+        container.setText("efficiencyBar", "&7Efficiency" + Lore.progressBar(secondsSinceStarted, maxSeconds, "&6", "&7", "&a"));
+        container.setText("powerOutputText", "&7Output " + (outputPower >= maxOutputPower ? "&a" : "&6") + outputPower + "&7 / " + "&a" + maxOutputPower);
+    }
+
+    @Override
+    protected Vector getOffset() {
+        return new Vector(0.0, 0.9, 0.0);
     }
 }

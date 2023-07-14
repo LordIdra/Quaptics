@@ -47,4 +47,5 @@ public class Keys {
     public final String BS_SECONDS_SINCE_CRAFT_STARTED = "QP_TIME_SINCE_CRAFT_STARTED";
     public final String BS_SECONDS_SINCE_REACTOR_STARTED = "QP_TIME_SINCE_REACTOR_STARTED";
     public final String BS_INPUT_POWER = "QP_INPUT_POWER";
+    public final String BS_OUTPUT_POWER = "QP_OUTPUT_POWER";
 }

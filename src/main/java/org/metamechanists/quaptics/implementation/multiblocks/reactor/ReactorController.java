@@ -162,9 +162,11 @@ public class ReactorController extends ConnectedBlock implements ComplexMultiblo
         }
 
         final double powerProportion = Math.max(secondsSinceReactorStarted, settings.getTimeToMaxEfficiency()) / settings.getTimeToMaxEfficiency();
-        final double singleOutputPower = (powerProportion * inputPower * settings.getPowerMultiplier()) / outgoingLinks.size();
+        final double outputPower = (powerProportion * inputPower * settings.getPowerMultiplier());
 
-        outgoingLinks.forEach(link -> link.setPower(singleOutputPower));
+        BlockStorageAPI.set(location, Keys.BS_OUTPUT_POWER, outputPower);
+
+        outgoingLinks.forEach(link -> link.setPower(outputPower / outgoingLinks.size()));
     }
 
     @Override
