@@ -21,6 +21,7 @@ import java.util.Optional;
 public class ReactorInfoPanel extends BlockInfoPanel {
     public ReactorInfoPanel(@NotNull final Location location, final ConnectionGroupId groupId) {
         super(location, groupId);
+        setPanelHidden(false);
     }
 
     public ReactorInfoPanel(@NotNull final InfoPanelId panelId, final ConnectionGroupId groupId) {

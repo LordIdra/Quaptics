@@ -143,7 +143,6 @@ public class ReactorController extends ConnectedBlock implements ComplexMultiblo
     @Override
     public void onQuapticTick(@NotNull final ConnectionGroup group, @NotNull final Location location) {
         final double inputPower = getTotalInputPower(location);
-        setPanelHidden(group, inputPower < settings.getMinPower());
         if (inputPower < settings.getMinPower()) {
             BlockStorageAPI.set(location, Keys.BS_SECONDS_SINCE_REACTOR_STARTED, 0.0);
             return;
