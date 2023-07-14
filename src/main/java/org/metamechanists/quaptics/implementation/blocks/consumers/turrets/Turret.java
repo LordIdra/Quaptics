@@ -22,6 +22,7 @@ import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
 import org.metamechanists.quaptics.connections.Link;
+import org.metamechanists.quaptics.implementation.attachments.PowerAnimatedBlock;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
@@ -37,7 +38,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public abstract class Turret extends ConnectedBlock {
+public abstract class Turret extends ConnectedBlock implements PowerAnimatedBlock {
     private static final int ARBITRARILY_LARGE_NUMBER = 9999999;
     private final Vector inputLocation = new Vector(0.0F, 0.0F, -settings.getConnectionRadius());
 
@@ -57,6 +58,14 @@ public abstract class Turret extends ConnectedBlock {
                         .size(0.6F))
                 .add("barrel", new ModelCuboid()
                         .material(Material.GRAY_CONCRETE))
+                .add("power1", new ModelCuboid()
+                        .material(settings.getTier().concreteMaterial)
+                        .size(0.95F, 0.3F, 1.05F)
+                        .location(0, -0.25F, 0))
+                .add("power2", new ModelCuboid()
+                        .material(settings.getTier().concreteMaterial)
+                        .size(1.05F, 0.3F, 0.95F)
+                        .location(0, -0.25F, 0))
                 .buildAtBlockCenter(location);
     }
     @Override
@@ -80,13 +89,15 @@ public abstract class Turret extends ConnectedBlock {
         BlockStorageAPI.set(location, Keys.BS_POWERED, false);
 
         final Optional<Link> inputLink = getLink(location, "input");
-        if (inputLink.isEmpty()) {
-            return;
-        }
-
+        onPoweredAnimation(location, settings.isOperational(inputLink));
         if (settings.isOperational(inputLink)) {
             BlockStorageAPI.set(location, Keys.BS_POWERED, true);
         }
+    }
+    @Override
+    public void onPoweredAnimation(final Location location, final boolean powered) {
+        brightnessAnimation(location, "power1", powered);
+        brightnessAnimation(location, "power2", powered);
     }
 
     private static @NotNull Matrix4f getBarrelMatrix(@NotNull final Location from, final Location to) {
