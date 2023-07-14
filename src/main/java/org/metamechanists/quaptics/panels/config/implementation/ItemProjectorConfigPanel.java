@@ -84,8 +84,8 @@ public class ItemProjectorConfigPanel extends ConfigPanel {
         final double size = BlockStorageAPI.getDouble(location.get(), Keys.BS_SIZE);
         final int mode = BlockStorageAPI.getInt(location.get(), Keys.BS_MODE);
 
-        container.setValue("height", Lore.progressBar(height, ItemProjector.MAX_HEIGHT, "&b", "&7"));
-        container.setValue("size", Lore.progressBar(size, ItemProjector.MAX_SIZE, "&b", "&7"));
+        container.setValue("height", Lore.progressBar(height, ItemProjector.MAX_HEIGHT, "&b", "&7", "&b"));
+        container.setValue("size", Lore.progressBar(size, ItemProjector.MAX_SIZE, "&b", "&7", "&b"));
         container.setValue("mode", Objects.toString(mode));
     }
 

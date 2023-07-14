@@ -44,7 +44,7 @@ public class Settings {
 
     private double useInterval;
     private double timePerItem;
-    private double timeToMaxPower;
+    private int timeToMaxEfficiency;
     private float projectileSpeed;
     private int range;
     private double damage;

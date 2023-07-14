@@ -33,7 +33,7 @@ public class Lore {
     private final String USE_INTERVAL_SUFFIX = " &8seconds";
     public final String PHASE_SUFFIX = " &8°";
     private final String TIME_PER_ITEM_SUFFIX = " &8seconds";
-    private final String TIME_TO_MAX_POWER_SUFFIX = " &8seconds";
+    private final String TIME_TO_MAX_POWER_SUFFIX = " &8minutes";
     private final double SLIMEFUN_TICKS_PER_SECOND = 2.0;
 
     private String format(final double x) {
@@ -99,8 +99,8 @@ public class Lore {
         if (settings.getTimePerItem() != 0) {
             lore.add(timePerItem(settings.getTimePerItem()));
         }
-        if (settings.getTimeToMaxPower() != 0) {
-            lore.add(timeToMaxPower(settings.getTimeToMaxPower()));
+        if (settings.getTimeToMaxEfficiency() != 0) {
+            lore.add(timeToMaxEfficiency(settings.getTimeToMaxEfficiency() / 60.0));
         }
         if (settings.getTargetPhase() != 0) {
             lore.add(targetPhase(settings.getTargetPhase()));
@@ -131,8 +131,8 @@ public class Lore {
     public String timePerItem(final double timePerItem) {
         return ATTRIBUTE_SYMBOL + SPEED_SYMBOL + "&7Time per item &e" + format(timePerItem) + TIME_PER_ITEM_SUFFIX;
     }
-    public String timeToMaxPower(final double timeToMaxPower) {
-        return ATTRIBUTE_SYMBOL + SPEED_SYMBOL + "&7Time to max power &e" + format(timeToMaxPower) + TIME_TO_MAX_POWER_SUFFIX;
+    public String timeToMaxEfficiency(final double timeToMaxEfficiency) {
+        return ATTRIBUTE_SYMBOL + SPEED_SYMBOL + "&7Time to max efficiency &e" + format(timeToMaxEfficiency) + TIME_TO_MAX_POWER_SUFFIX;
     }
 
     public String capacity(final double capacity) {
@@ -156,10 +156,10 @@ public class Lore {
     }
 
     public String chargeBar(final int charge, final int capacity) {
-        return ATTRIBUTE_SYMBOL + CHARGE_SYMBOL + "&7Charge " + progressBar(charge, capacity, Colors.CHARGE.getFormattedColor(), "&7");
+        return ATTRIBUTE_SYMBOL + CHARGE_SYMBOL + "&7Charge " + progressBar(charge, capacity, Colors.CHARGE.getFormattedColor(), "&7", Colors.CHARGE.getFormattedColor());
     }
     public String chargeBarRaw(final int charge, final int capacity) {
-        return progressBar(charge, capacity, Colors.CHARGE.getFormattedColor(), "&7");
+        return progressBar(charge, capacity, Colors.CHARGE.getFormattedColor(), "&7", Colors.CHARGE.getFormattedColor());
     }
     public String chargeValues(final int charge, final int capacity) {
         return ATTRIBUTE_SYMBOL + CHARGE_SYMBOL + "&7" + charge + " &8/ &7" + capacity + CHARGE_SUFFIX;
@@ -193,8 +193,11 @@ public class Lore {
         return ATTRIBUTE_SYMBOL + PHASE_SYMBOL + "&7Target Phase &e" + Objects.toString(phase) + PHASE_SUFFIX;
     }
 
-    public String progressBar(final double value, final double max, final String filledColor, final String emptyColor) {
+    public String progressBar(final double value, final double max, final String filledColor, final String emptyColor, final String finishedColor) {
         final String base = "¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦";
+        if (value >= max) {
+            return finishedColor + base;
+        }
         final int divideAt = (int) (value/(max/20));
         return filledColor + base.substring(0, divideAt) + emptyColor + base.substring(divideAt);
     }

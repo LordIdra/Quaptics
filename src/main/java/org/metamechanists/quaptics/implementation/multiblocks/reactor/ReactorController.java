@@ -7,6 +7,7 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
@@ -15,30 +16,36 @@ import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
 import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.implementation.attachments.ComplexMultiblock;
+import org.metamechanists.quaptics.implementation.attachments.InfoPanelBlock;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
+import org.metamechanists.quaptics.panels.info.BlockInfoPanel;
+import org.metamechanists.quaptics.panels.info.implementation.ReactorInfoPanel;
 import org.metamechanists.quaptics.storage.QuapticTicker;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
+import org.metamechanists.quaptics.utils.id.complex.InfoPanelId;
 import org.metamechanists.quaptics.utils.models.ModelBuilder;
 import org.metamechanists.quaptics.utils.models.components.ModelCuboid;
 import org.metamechanists.quaptics.utils.models.components.ModelDiamond;
 
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.util.List;
 import java.util.Map;
 
 import static org.metamechanists.quaptics.implementation.multiblocks.reactor.ReactorRing.REACTOR_RING;
 
 
-public class ReactorController extends ConnectedBlock implements ComplexMultiblock {
+public class ReactorController extends ConnectedBlock implements ComplexMultiblock, InfoPanelBlock {
     public static final Settings REACTOR_CONTROLLER_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
             .minPower(30)
             .emissionPower(60)
-            .timeToMaxPower(600)
+            .timeToMaxEfficiency(20)
+            .powerMultiplier(1.5)
             .build();
     public static final SlimefunItemStack REACTOR_CONTROLLER = new SlimefunItemStack(
             "QP_REACTOR_CONTROLLER",
@@ -58,10 +65,9 @@ public class ReactorController extends ConnectedBlock implements ComplexMultiblo
     private static final Vector RING_6_LOCATION = new Vector(-2, 0, -2);
     private static final Vector RING_7_LOCATION = new Vector(0, 0, -3);
     private static final Vector RING_8_LOCATION = new Vector(2, 0, -2);
-    private static final List<Vector> RING_LOCATIONS = List.of(
+    public static final List<Vector> RING_LOCATIONS = List.of(
             RING_1_LOCATION, RING_2_LOCATION, RING_3_LOCATION, RING_4_LOCATION,
             RING_5_LOCATION, RING_6_LOCATION, RING_7_LOCATION, RING_8_LOCATION);
-    private static final List<String> OUTPUT_NAMES = List.of("output 1", "output 2", "output 3", "output 4");
 
     private final Vector outputPoint1Location = new Vector(getConnectionRadius(), 0, 0);
     private final Vector outputPoint2Location = new Vector(-getConnectionRadius(), 0, 0);
@@ -110,6 +116,27 @@ public class ReactorController extends ConnectedBlock implements ComplexMultiblo
     }
 
     @Override
+    public BlockInfoPanel createPanel(final Location location, final @NotNull ConnectionGroup group) {
+        return new ReactorInfoPanel(location, group.getId());
+    }
+    @Override
+    public BlockInfoPanel getPanel(final InfoPanelId panelId, final ConnectionGroupId groupId) {
+        return new ReactorInfoPanel(panelId, groupId);
+    }
+
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    protected void onPlace(@NotNull final BlockPlaceEvent event) {
+        super.onPlace(event);
+        onPlaceInfoPanelBlock(event);
+    }
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    protected void onBreak(@NotNull final Location location) {
+        super.onBreak(location);
+        onBreakInfoPanelBlock(location);
+    }
+    @Override
     protected void onRightClick(final @NotNull Location location, final @NotNull Player player) {
         multiblockInteract(location.getBlock(), player);
     }
@@ -132,10 +159,12 @@ public class ReactorController extends ConnectedBlock implements ComplexMultiblo
             return;
         }
 
-        final double powerProportion = Math.max(secondsSinceReactorStarted, settings.getTimeToMaxPower()) / settings.getTimeToMaxPower();
+        final double powerProportion = Math.max(secondsSinceReactorStarted, settings.getTimeToMaxEfficiency()) / settings.getTimeToMaxEfficiency();
         final double singleOutputPower = (powerProportion * inputPower * settings.getPowerMultiplier()) / outgoingLinks.size();
 
         outgoingLinks.forEach(link -> link.setPower(singleOutputPower));
+
+        updatePanel(group);
     }
 
     @Override
@@ -159,7 +188,7 @@ public class ReactorController extends ConnectedBlock implements ComplexMultiblo
     private static double getMagnetInputPower(@NotNull final Location magnetLocation) {
         return BlockStorageAPI.getDouble(magnetLocation, Keys.BS_INPUT_POWER);
     }
-    private static double getTotalInputPower(@NotNull final Location location) {
+    public static double getTotalInputPower(@NotNull final Location location) {
         return RING_LOCATIONS.stream().mapToDouble(vector -> getMagnetInputPower(location.clone().add(vector))).sum();
     }
 }
