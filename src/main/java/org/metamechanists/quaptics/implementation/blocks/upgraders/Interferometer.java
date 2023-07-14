@@ -55,10 +55,7 @@ public class Interferometer extends ConnectedBlock implements PowerAnimatedBlock
         return 0.0F;
     }
     @Override
-    protected Optional<Location> calculatePointLocationSphere(@NotNull final ConnectionPointId from, @NotNull final ConnectionPointId to) {
-        final Optional<ConnectionPoint> point = from.get();
-        return point.isPresent() ? point.get().getLocation() : Optional.empty();
-    }
+    public void connect(@NotNull final ConnectionPointId from, @NotNull final ConnectionPointId to) {}
     @Override
     protected DisplayGroup initModel(final @NotNull Location location, final @NotNull Player player) {
         return new ModelBuilder()

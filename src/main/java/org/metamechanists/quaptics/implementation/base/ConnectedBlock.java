@@ -152,34 +152,7 @@ public abstract class ConnectedBlock extends QuapticBlock {
         return location.isEmpty() ? Optional.empty() : getLink(location.get(), name);
     }
 
-    public void connect(@NotNull final ConnectionPointId from, @NotNull final ConnectionPointId to) {
-        calculatePointLocationSphere(from, to).ifPresent(location -> changePointLocation(from, location));
-    }
-
-    private static void changePointLocation(final @NotNull ConnectionPointId pointId, @NotNull final Location newLocation) {
-        pointId.get().ifPresent(point -> point.changeLocation(newLocation));
-    }
-    public static Optional<ConnectionGroup> getGroup(final Location location) {
-        final Optional<DisplayGroupId> displayGroupId = getDisplayGroupId(location);
-        return displayGroupId.isEmpty()
-                ? Optional.empty()
-                : new ConnectionGroupId(displayGroupId.get()).get();
-    }
-    protected static Optional<Location> getGroupLocation(final @NotNull ConnectionPointId pointId) {
-        final Optional<ConnectionPoint> point = pointId.get();
-        if (point.isEmpty()) {
-            return Optional.empty();
-        }
-
-        final Optional<ConnectionGroup> group = point.get().getGroup();
-        if (group.isEmpty()) {
-            return Optional.empty();
-        }
-
-        return group.get().getLocation();
-    }
-
-    protected Optional<Location> calculatePointLocationSphere(@NotNull final ConnectionPointId from, @NotNull final ConnectionPointId to) {
+    private Optional<Location> calculatePointLocationSphere(@NotNull final ConnectionPointId from, @NotNull final ConnectionPointId to) {
         final Optional<ConnectionPoint> fromPoint = from.get();
         final Optional<ConnectionPoint> toPoint = to.get();
         if (fromPoint.isEmpty() || toPoint.isEmpty()) {
@@ -200,5 +173,32 @@ public abstract class ConnectedBlock extends QuapticBlock {
 
         final Vector radiusDirection = Vector.fromJOML(TransformationUtils.getDirection(fromLocation.get(), toLocation.get()).mul(getConnectionRadius()));
         return Optional.of(fromLocation.get().clone().toCenterLocation().add(radiusDirection));
+    }
+
+    public void connect(@NotNull final ConnectionPointId from, @NotNull final ConnectionPointId to) {
+        calculatePointLocationSphere(from, to).ifPresent(location -> changePointLocation(from, location));
+    }
+
+    protected static void changePointLocation(final @NotNull ConnectionPointId pointId, @NotNull final Location newLocation) {
+        pointId.get().ifPresent(point -> point.changeLocation(newLocation));
+    }
+    public static Optional<ConnectionGroup> getGroup(final Location location) {
+        final Optional<DisplayGroupId> displayGroupId = getDisplayGroupId(location);
+        return displayGroupId.isEmpty()
+                ? Optional.empty()
+                : new ConnectionGroupId(displayGroupId.get()).get();
+    }
+    protected static Optional<Location> getGroupLocation(final @NotNull ConnectionPointId pointId) {
+        final Optional<ConnectionPoint> point = pointId.get();
+        if (point.isEmpty()) {
+            return Optional.empty();
+        }
+
+        final Optional<ConnectionGroup> group = point.get().getGroup();
+        if (group.isEmpty()) {
+            return Optional.empty();
+        }
+
+        return group.get().getLocation();
     }
 }

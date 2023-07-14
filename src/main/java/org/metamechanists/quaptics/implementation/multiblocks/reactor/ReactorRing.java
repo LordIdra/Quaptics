@@ -53,9 +53,6 @@ public class ReactorRing extends ConnectedBlock implements PowerAnimatedBlock {
             new Vector(2, 0, -2)
         );
 
-    private final Vector inputPoint1Location = new Vector(0.7, 0, 0);
-    private final Vector inputPoint2Location = new Vector(-0.7, 0, 0);
-
     public ReactorRing(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
     }
@@ -65,10 +62,7 @@ public class ReactorRing extends ConnectedBlock implements PowerAnimatedBlock {
         return 0;
     }
     @Override
-    protected Optional<Location> calculatePointLocationSphere(@NotNull final ConnectionPointId from, @NotNull final ConnectionPointId to) {
-        final Optional<ConnectionPoint> point = from.get();
-        return point.isPresent() ? point.get().getLocation() : Optional.empty();
-    }
+    public void connect(@NotNull final ConnectionPointId from, @NotNull final ConnectionPointId to) {}
     @Override
     protected DisplayGroup initModel(final @NotNull Location location, final @NotNull Player player) {
         final Vector controllerPosition = findController(location);
@@ -78,23 +72,31 @@ public class ReactorRing extends ConnectedBlock implements PowerAnimatedBlock {
                         .facing(controllerPosition.toVector3f())
                         .size(0.1F, 0.3F, 0.1F)
                         .location(0.3F, 0, 0))
+                .add("ring1", new ModelCuboid()
+                        .material(Material.BLACK_CONCRETE)
+                        .facing(controllerPosition.toVector3f())
+                        .size(0.1F, 0.3F, 0.1F)
+                        .location(-0.3F, 0, 0))
                 .add("connection1", new ModelCuboid()
                         .material(Material.GRAY_CONCRETE)
                         .facing(controllerPosition.toVector3f())
-                        .size(0.4F, 0.1F, 0.1F)
-                        .location(0.5F, 0, 0))
+                        .size(0.1F, 0.1F, 0.4F)
+                        .location(0, 0, 0.5F))
                 .add("connection2", new ModelCuboid()
                         .material(Material.GRAY_CONCRETE)
                         .facing(controllerPosition.toVector3f())
-                        .size(0.1F, 0.4F, 0.1F)
-                        .location(0, 0.5F, 0))
+                        .size(0.1F, 0.1F, 0.4F)
+                        .location(0, 0, 0.5F))
                 .buildAtBlockCenter(location);
     }
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
+        final Vector controllerDirection = findController(location).normalize();
         return List.of(
-                new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input 1", formatPointLocation(player, location, inputPoint1Location)),
-                new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input 2", formatPointLocation(player, location, inputPoint2Location)));
+                new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input 1",
+                        location.clone().toCenterLocation().add(controllerDirection.multiply(settings.getConnectionRadius()))),
+                new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input 2",
+                        location.clone().toCenterLocation().add(controllerDirection.multiply(-settings.getConnectionRadius()))));
     }
     @Override
     protected void initBlockStorage(final @NotNull Location location) {
