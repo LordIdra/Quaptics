@@ -13,8 +13,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
-import org.joml.Vector3d;
-import org.joml.Vector3f;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.implementation.attachments.ComplexMultiblock;
@@ -29,10 +27,9 @@ import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Language;
 import org.metamechanists.quaptics.utils.Particles;
-import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
-import org.metamechanists.quaptics.utils.builders.ItemDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
-import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
+import org.metamechanists.quaptics.utils.models.ModelBuilder;
+import org.metamechanists.quaptics.utils.models.components.ModelLine;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,37 +53,25 @@ public class EntanglementContainer extends ConnectedBlock implements ItemHolderB
                     "&7● Entangles items",
                     "&7● &eRight Click &7with an item to start the entanglement process"));
 
-    private static final Vector3f PILLAR_SCALE = new Vector3f(0.1F, 2.4F, 0.1F);
-    private static final Vector3f PILLAR_1_OFFSET = new Vector3f(0.7F, 0.0F, 0.0F);
-    private static final Vector3f PILLAR_2_OFFSET = new Vector3f(-0.7F, 0.0F, 0.0F);
-    private static final Vector3f PILLAR_3_OFFSET = new Vector3f(0.0F, 0.0F, 0.7F);
-    private static final Vector3f PILLAR_4_OFFSET = new Vector3f(0.0F, 0.0F, -0.7F);
-
-    private static final Vector3f FRAME_1_SCALE = new Vector3f(0.10F, 0.40F, 1.20F);
-    private static final Vector3f FRAME_2_SCALE = new Vector3f(1.20F, 0.40F, 0.10F);
-    private static final Vector3f FRAME_3_SCALE = new Vector3f(1.20F, 0.40F, 0.10F);
-    private static final Vector3f FRAME_4_SCALE = new Vector3f(0.10F, 0.40F, 1.20F);
-    private static final Vector3f FRAME_1_OFFSET = new Vector3f(0.35F, 0.0F, 0.35F);
-    private static final Vector3f FRAME_2_OFFSET = new Vector3f(0.35F, 0.0F, -0.35F);
-    private static final Vector3f FRAME_3_OFFSET = new Vector3f(-0.35F, 0.0F, 0.35F);
-    private static final Vector3f FRAME_4_OFFSET = new Vector3f(-0.35F, 0.0F, -0.35F);
-    private static final Vector3d FRAME_ROTATION = new Vector3d(0.0F, -Math.PI/4, 0.0F);
-
-    private static final Vector MAGNET_1_LOCATION = new Vector(0, 4, 0);
-    private static final Vector MAGNET_2_LOCATION = new Vector(0, -4, 0);
-    private static final List<Vector> MAGNET_LOCATIONS = List.of(MAGNET_1_LOCATION, MAGNET_2_LOCATION);
-
-    private static final Vector3f ITEM_DISPLAY_SIZE = new Vector3f(0.8F);
-    private static final Vector3f ITEM_DISPLAY_OFFSET = new Vector3f(0.0F, 0.0F, 0.0F);
+    private static final Vector MAGNET_1_LOCATION = new Vector(3, 0, 0);
+    private static final Vector MAGNET_2_LOCATION = new Vector(-3, 0, 0);
+    private static final Vector MAGNET_3_LOCATION = new Vector(0, 3, 0);
+    private static final Vector MAGNET_4_LOCATION = new Vector(0, -3, 0);
+    private static final Vector MAGNET_5_LOCATION = new Vector(0, 0, 3);
+    private static final Vector MAGNET_6_LOCATION = new Vector(0, 0, -3);
+    private static final List<Vector> MAGNET_LOCATIONS = List.of(
+            MAGNET_1_LOCATION, MAGNET_2_LOCATION, MAGNET_3_LOCATION,
+            MAGNET_4_LOCATION, MAGNET_5_LOCATION, MAGNET_6_LOCATION);
 
     private static final int MAGNET_PARTICLE_COUNT = 2;
-    private final double magnetParticleAnimationLengthSeconds = settings.getTimePerItem();
-    private final double centerParticleAnimationLengthSeconds = settings.getTimePerItem() / 8.0;
     private static final double MAGNET_PARTICLE_SPEED = 0.05;
     private static final double CONTAINER_PARTICLE_RADIUS = 1.2;
     private static final int CONTAINER_PARTICLE_COUNT = 3;
     private static final double COMPLETED_PARTICLE_SPEED = 0.1;
     private static final int COMPLETED_PARTICLE_COUNT = 200;
+
+    private final double magnetParticleAnimationLengthSeconds = settings.getTimePerItem();
+    private final double centerParticleAnimationLengthSeconds = settings.getTimePerItem() / 8.0;
 
     private static final Map<ItemStack, ItemStack> RECIPES = Map.of(
             new ItemStack(Material.DEAD_BUSH), Primitive.ENTANGLED_CORE
@@ -102,74 +87,70 @@ public class EntanglementContainer extends ConnectedBlock implements ItemHolderB
     }
     @Override
     protected DisplayGroup initModel(final @NotNull Location location, final @NotNull Player player) {
-        final DisplayGroup displayGroup = new DisplayGroup(location);
-        displayGroup.addDisplay("pillar1", new BlockDisplayBuilder()
-                .blockData(Material.GRAY_CONCRETE.createBlockData())
-                .transformation(new TransformationMatrixBuilder()
-                        .scale(PILLAR_SCALE)
-                        .translate(PILLAR_1_OFFSET)
-                        .buildForBlockDisplay())
-                .build(location.toCenterLocation()));
-        displayGroup.addDisplay("pillar2", new BlockDisplayBuilder()
-                .blockData(Material.GRAY_CONCRETE.createBlockData())
-                .transformation(new TransformationMatrixBuilder()
-                        .scale(PILLAR_SCALE)
-                        .translate(PILLAR_2_OFFSET)
-                        .buildForBlockDisplay())
-                .build(location.toCenterLocation()));
-        displayGroup.addDisplay("pillar3", new BlockDisplayBuilder()
-                .blockData(Material.GRAY_CONCRETE.createBlockData())
-                .transformation(new TransformationMatrixBuilder()
-                        .scale(PILLAR_SCALE)
-                        .translate(PILLAR_3_OFFSET)
-                        .buildForBlockDisplay())
-                .build(location.toCenterLocation()));
-        displayGroup.addDisplay("pillar4", new BlockDisplayBuilder()
-                .blockData(Material.GRAY_CONCRETE.createBlockData())
-                .transformation(new TransformationMatrixBuilder()
-                        .scale(PILLAR_SCALE)
-                        .translate(PILLAR_4_OFFSET)
-                        .buildForBlockDisplay())
-                .build(location.toCenterLocation()));
-        displayGroup.addDisplay("frame1", new BlockDisplayBuilder()
-                .blockData(Material.BLUE_CONCRETE.createBlockData())
-                .transformation(new TransformationMatrixBuilder()
-                        .scale(FRAME_1_SCALE)
-                        .rotate(FRAME_ROTATION)
-                        .translate(FRAME_1_OFFSET)
-                        .buildForBlockDisplay())
-                .build(location.toCenterLocation()));
-        displayGroup.addDisplay("frame2", new BlockDisplayBuilder()
-                .blockData(Material.BLUE_CONCRETE.createBlockData())
-                .transformation(new TransformationMatrixBuilder()
-                        .scale(FRAME_2_SCALE)
-                        .rotate(FRAME_ROTATION)
-                        .translate(FRAME_2_OFFSET)
-                        .buildForBlockDisplay())
-                .build(location.toCenterLocation()));
-        displayGroup.addDisplay("frame3", new BlockDisplayBuilder()
-                .blockData(Material.BLUE_CONCRETE.createBlockData())
-                .transformation(new TransformationMatrixBuilder()
-                        .scale(FRAME_3_SCALE)
-                        .rotate(FRAME_ROTATION)
-                        .translate(FRAME_3_OFFSET)
-                        .buildForBlockDisplay())
-                .build(location.toCenterLocation()));
-        displayGroup.addDisplay("frame4", new BlockDisplayBuilder()
-                .blockData(Material.BLUE_CONCRETE.createBlockData())
-                .transformation(new TransformationMatrixBuilder()
-                        .scale(FRAME_4_SCALE)
-                        .rotate(FRAME_ROTATION)
-                        .translate(FRAME_4_OFFSET)
-                        .buildForBlockDisplay())
-                .build(location.toCenterLocation()));
-        displayGroup.addDisplay("item", new ItemDisplayBuilder()
-                .transformation(new TransformationMatrixBuilder()
-                        .scale(ITEM_DISPLAY_SIZE)
-                        .translate(ITEM_DISPLAY_OFFSET)
-                        .buildForItemDisplay())
-                .build(location.toCenterLocation()));
-        return displayGroup;
+        return new ModelBuilder()
+                .add("frame1a", new ModelLine()
+                        .material(Material.BLUE_CONCRETE)
+                        .from(-0.4F, -0.4F, -0.4F)
+                        .to(0.4F, -0.4F, -0.4F)
+                        .thickness(0.1F))
+                .add("frame1b", new ModelLine()
+                        .material(Material.BLUE_CONCRETE)
+                        .from(-0.4F, 0.4F, -0.4F)
+                        .to(-0.4F, 0.4F, -0.4F)
+                        .thickness(0.1F))
+                .add("frame1c", new ModelLine()
+                        .material(Material.BLUE_CONCRETE)
+                        .from(-0.4F, -0.4F, 0.4F)
+                        .to(0.4F, -0.4F, 0.4F)
+                        .thickness(0.1F))
+                .add("frame1d", new ModelLine()
+                        .material(Material.BLUE_CONCRETE)
+                        .from(-0.4F, 0.4F, 0.4F)
+                        .to(0.4F, 0.4F, 0.4F)
+                        .thickness(0.1F))
+
+                .add("frame2a", new ModelLine()
+                        .material(Material.BLUE_CONCRETE)
+                        .from(-0.4F, -0.4F, -0.4F)
+                        .to(-0.4F, 0.4F, -0.4F)
+                        .thickness(0.1F))
+                .add("frame2b", new ModelLine()
+                        .material(Material.BLUE_CONCRETE)
+                        .from(0.4F, -0.4F, -0.4F)
+                        .to(0.4F, 0.4F, -0.4F)
+                        .thickness(0.1F))
+                .add("frame2c", new ModelLine()
+                        .material(Material.BLUE_CONCRETE)
+                        .from(-0.4F, -0.4F, 0.4F)
+                        .to(-0.4F, 0.4F, 0.4F)
+                        .thickness(0.1F))
+                .add("frame2d", new ModelLine()
+                        .material(Material.BLUE_CONCRETE)
+                        .from(0.4F, -0.4F, 0.4F)
+                        .to(0.4F, 0.4F, 0.4F)
+                        .thickness(0.1F))
+
+                .add("frame3a", new ModelLine()
+                        .material(Material.BLUE_CONCRETE)
+                        .from(-0.4F, -0.4F, -0.4F)
+                        .to(-0.4F, -0.4F, 0.4F)
+                        .thickness(0.1F))
+                .add("frame3b", new ModelLine()
+                        .material(Material.BLUE_CONCRETE)
+                        .from(0.4F, -0.4F, -0.4F)
+                        .to(0.4F, -0.4F, 0.4F)
+                        .thickness(0.1F))
+                .add("frame3c", new ModelLine()
+                        .material(Material.BLUE_CONCRETE)
+                        .from(-0.4F, 0.4F, -0.4F)
+                        .to(-0.4F, 0.4F, 0.4F)
+                        .thickness(0.1F))
+                .add("frame3d", new ModelLine()
+                        .material(Material.BLUE_CONCRETE)
+                        .from(0.4F, 0.4F, -0.4F)
+                        .to(0.4F, 0.4F, 0.4F)
+                        .thickness(0.1F))
+                .buildAtBlockCenter(location);
     }
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
@@ -246,7 +227,7 @@ public class EntanglementContainer extends ConnectedBlock implements ItemHolderB
     }
     @Override
     public void tickAnimation(@NotNull final Location centerLocation, final double timeSeconds) {
-        MAGNET_LOCATIONS.forEach(magnetLocation -> animatePillar(centerLocation, centerLocation.clone().add(magnetLocation), timeSeconds));
+        MAGNET_LOCATIONS.forEach(magnetLocation -> animateMagnet(centerLocation, centerLocation.clone().add(magnetLocation), timeSeconds));
         animateCenter(centerLocation, timeSeconds);
     }
 
@@ -257,7 +238,7 @@ public class EntanglementContainer extends ConnectedBlock implements ItemHolderB
         return MAGNET_LOCATIONS.stream().allMatch(vector -> isMagnetPowered(location.clone().add(vector)));
     }
 
-    private void animatePillar(@NotNull final Location center, @NotNull final Location pillarLocation, final double timeSinceCraftStarted) {
+    private void animateMagnet(@NotNull final Location center, @NotNull final Location pillarLocation, final double timeSinceCraftStarted) {
         Particles.animatedLine(Particle.SCULK_CHARGE_POP,
                 pillarLocation.clone().toCenterLocation(),
                 center.clone().toCenterLocation(),
