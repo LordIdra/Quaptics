@@ -115,19 +115,19 @@ public class Charger extends ConnectedBlock implements InfoPanelBlock, ItemHolde
     }
     @Override
     public void onQuapticTick(@NotNull final ConnectionGroup group, @NotNull final Location location) {
-        if (!BlockStorageAPI.getBoolean(location, Keys.BS_IS_HOLDING_ITEM)) {
-            setPanelHidden(group, true);
+        final boolean hasItem = BlockStorageAPI.getBoolean(location, Keys.BS_IS_HOLDING_ITEM);
+        setPanelHidden(group, !hasItem);
+        if (!hasItem) {
+            return;
+        }
+
+        final Optional<ItemStack> stack = ItemHolderBlock.getStack(group);
+        if (stack.isEmpty()) {
             return;
         }
 
         final Optional<Link> inputLink = getLink(group, "input");
         if (inputLink.isEmpty() || !settings.isOperational(inputLink)) {
-            return;
-        }
-
-        final Optional<ItemStack> stack = ItemHolderBlock.getStack(group);
-        setPanelHidden(group, stack.isEmpty());
-        if (stack.isEmpty()) {
             return;
         }
 
