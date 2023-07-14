@@ -139,7 +139,6 @@ public class ReactorRing extends ConnectedBlock implements PowerAnimatedBlock {
     @Override
     protected void initBlockStorage(final @NotNull Location location) {
         BlockStorageAPI.set(location, Keys.BS_INPUT_POWER, 0.0);
-        BlockStorageAPI.set(location, Keys.BS_OUTPUT_POWER, 0.0);
     }
 
     @Override

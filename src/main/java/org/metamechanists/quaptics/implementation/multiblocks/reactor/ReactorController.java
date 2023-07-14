@@ -113,6 +113,7 @@ public class ReactorController extends ConnectedBlock implements ComplexMultiblo
     @Override
     protected void initBlockStorage(final @NotNull Location location) {
         BlockStorageAPI.set(location, Keys.BS_SECONDS_SINCE_REACTOR_STARTED, 0.0);
+        BlockStorageAPI.set(location, Keys.BS_OUTPUT_POWER, 0.0);
     }
 
     @Override
