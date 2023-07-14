@@ -62,7 +62,7 @@ public class Scatterer extends ConnectedBlock implements PowerAnimatedBlock, Pow
     protected DisplayGroup initModel(final @NotNull Location location, final @NotNull Player player) {
         return new ModelBuilder()
                 .add("main", new ModelCuboid()
-                        .material(Material.RED_STAINED_GLASS)
+                        .material(Material.ORANGE_STAINED_GLASS)
                         .facing(player.getFacing())
                         .size(0.4F)
                         .rotation(Math.PI / 4))
@@ -71,7 +71,7 @@ public class Scatterer extends ConnectedBlock implements PowerAnimatedBlock, Pow
                         .facing(player.getFacing())
                         .rotation(Math.PI/4)
                         .size(0.3F, 0.1F, 0.3F))
-                .add("repeater", new ModelCuboid()
+                .add("comparator", new ModelCuboid()
                         .block(createComparatorBlockData(false))
                         .facing(player.getFacing())
                         .location(0, 0.1F, 0)

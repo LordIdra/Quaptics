@@ -10,22 +10,20 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
-import org.joml.Vector3f;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
 import org.metamechanists.quaptics.connections.Link;
-import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.implementation.attachments.PowerAnimatedBlock;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
+import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
-import org.metamechanists.quaptics.utils.Utils;
-import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
-import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
+import org.metamechanists.quaptics.utils.models.ModelBuilder;
+import org.metamechanists.quaptics.utils.models.components.ModelCuboid;
 
 import java.util.List;
 import java.util.Optional;
@@ -42,10 +40,6 @@ public class InfusionPillar extends ConnectedBlock implements PowerAnimatedBlock
             Lore.create(INFUSION_PILLAR_SETTINGS,
                     "&7● Multiblock component"));
 
-    private static final Vector3f PILLAR_SCALE = new Vector3f(0.30F, 0.40F, 0.30F);
-    private static final Vector3f PILLAR_OFFSET = new Vector3f(0.0F, -0.30F, 0.0F);
-    private static final Vector3f PRISM_SCALE = new Vector3f(0.20F);
-
     private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -getConnectionRadius());
 
     public InfusionPillar(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
@@ -58,22 +52,17 @@ public class InfusionPillar extends ConnectedBlock implements PowerAnimatedBlock
     }
     @Override
     protected DisplayGroup initModel(final @NotNull Location location, final @NotNull Player player) {
-        final DisplayGroup displayGroup = new DisplayGroup(location);
-        displayGroup.addDisplay("pillar", new BlockDisplayBuilder()
-                .blockData(Material.BLUE_CONCRETE.createBlockData())
-                .transformation(new TransformationMatrixBuilder()
-                        .scale(PILLAR_SCALE)
-                        .translate(PILLAR_OFFSET)
-                        .buildForBlockDisplay())
-                .build(location.toCenterLocation()));
-        displayGroup.addDisplay("prism", new BlockDisplayBuilder()
-                .blockData(Material.LIGHT_BLUE_STAINED_GLASS.createBlockData())
-                .brightness(Utils.BRIGHTNESS_OFF)
-                .transformation(new TransformationMatrixBuilder()
-                        .scale(PRISM_SCALE)
-                        .buildForBlockDisplay())
-                .build(location.toCenterLocation()));
-        return displayGroup;
+        return new ModelBuilder()
+                .add("pillar", new ModelCuboid()
+                        .material(Material.BLUE_CONCRETE)
+                        .facing(player.getFacing())
+                        .size(0.3F, 0.4F, 0.3F)
+                        .location(0, -0.3F, 0))
+                .add("prism", new ModelCuboid()
+                        .material(Material.LIGHT_BLUE_STAINED_GLASS)
+                        .facing(player.getFacing())
+                        .size(0.2F))
+                .buildAtBlockCenter(location);
     }
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {

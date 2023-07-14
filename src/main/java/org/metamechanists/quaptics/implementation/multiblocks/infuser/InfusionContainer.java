@@ -12,14 +12,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
-import org.joml.Vector3f;
 import org.metamechanists.metalib.utils.ParticleUtils;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
-import org.metamechanists.quaptics.implementation.blocks.Settings;
+import org.metamechanists.quaptics.implementation.attachments.ComplexMultiblock;
 import org.metamechanists.quaptics.implementation.attachments.ItemHolderBlock;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
-import org.metamechanists.quaptics.implementation.attachments.ComplexMultiblock;
+import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
 import org.metamechanists.quaptics.items.groups.Primitive;
@@ -28,10 +27,11 @@ import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Language;
 import org.metamechanists.quaptics.utils.Particles;
-import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
-import org.metamechanists.quaptics.utils.builders.ItemDisplayBuilder;
+import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
-import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
+import org.metamechanists.quaptics.utils.models.ModelBuilder;
+import org.metamechanists.quaptics.utils.models.components.ModelCuboid;
+import org.metamechanists.quaptics.utils.models.components.ModelItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,23 +55,11 @@ public class InfusionContainer extends ConnectedBlock implements ItemHolderBlock
                     "&7● Infuses items",
                     "&7● &eRight Click &7with an item to start infusing"));
 
-    private static final Vector3f BASE_SCALE = new Vector3f(0.9F, 0.6F, 0.9F);
-    private static final Vector3f BASE_OFFSET = new Vector3f(0.0F, -0.3F, 0.0F);
-    private static final Vector3f PILLAR_SCALE = new Vector3f(0.2F, 0.8F, 0.2F);
-
-    private static final Vector3f PILLAR_1_OFFSET = new Vector3f(-0.4F, -0.1F, -0.4F);
-    private static final Vector3f PILLAR_2_OFFSET = new Vector3f(-0.4F, -0.1F, 0.4F);
-    private static final Vector3f PILLAR_3_OFFSET = new Vector3f(0.4F, -0.1F, -0.4F);
-    private static final Vector3f PILLAR_4_OFFSET = new Vector3f(0.4F, -0.1F, 0.4F);
-
     private static final Vector PILLAR_1_LOCATION = new Vector(2, 0, 0);
     private static final Vector PILLAR_2_LOCATION = new Vector(-2, 0, 0);
     private static final Vector PILLAR_3_LOCATION = new Vector(0, 0, 2);
     private static final Vector PILLAR_4_LOCATION = new Vector(0, 0, -2);
     private static final List<Vector> PILLAR_LOCATIONS = List.of(PILLAR_1_LOCATION, PILLAR_2_LOCATION, PILLAR_3_LOCATION, PILLAR_4_LOCATION);
-
-    private static final Vector3f ITEM_DISPLAY_SIZE = new Vector3f(0.5F);
-    private static final Vector3f ITEM_DISPLAY_OFFSET = new Vector3f(0, 0.3F, 0);
 
     private static final int PILLAR_PARTICLE_COUNT = 3;
     private static final double PILLAR_PARTICLE_ANIMATION_LENGTH_SECONDS = 0.5;
@@ -97,49 +85,36 @@ public class InfusionContainer extends ConnectedBlock implements ItemHolderBlock
     }
     @Override
     protected DisplayGroup initModel(final @NotNull Location location, final @NotNull Player player) {
-        final DisplayGroup displayGroup = new DisplayGroup(location);
-        displayGroup.addDisplay("base", new BlockDisplayBuilder()
-                .blockData(Material.GRAY_CONCRETE.createBlockData())
-                .transformation(new TransformationMatrixBuilder()
-                        .scale(BASE_SCALE)
-                        .translate(BASE_OFFSET)
-                        .buildForBlockDisplay())
-                .build(location.toCenterLocation()));
-        displayGroup.addDisplay("pillar1", new BlockDisplayBuilder()
-                .blockData(Material.WHITE_CONCRETE.createBlockData())
-                .transformation(new TransformationMatrixBuilder()
-                        .scale(PILLAR_SCALE)
-                        .translate(PILLAR_1_OFFSET)
-                        .buildForBlockDisplay())
-                .build(location.toCenterLocation()));
-        displayGroup.addDisplay("pillar2", new BlockDisplayBuilder()
-                .blockData(Material.WHITE_CONCRETE.createBlockData())
-                .transformation(new TransformationMatrixBuilder()
-                        .scale(PILLAR_SCALE)
-                        .translate(PILLAR_2_OFFSET)
-                        .buildForBlockDisplay())
-                .build(location.toCenterLocation()));
-        displayGroup.addDisplay("pillar3", new BlockDisplayBuilder()
-                .blockData(Material.WHITE_CONCRETE.createBlockData())
-                .transformation(new TransformationMatrixBuilder()
-                        .scale(PILLAR_SCALE)
-                        .translate(PILLAR_3_OFFSET)
-                        .buildForBlockDisplay())
-                .build(location.toCenterLocation()));
-        displayGroup.addDisplay("pillar4", new BlockDisplayBuilder()
-                .blockData(Material.WHITE_CONCRETE.createBlockData())
-                .transformation(new TransformationMatrixBuilder()
-                        .scale(PILLAR_SCALE)
-                        .translate(PILLAR_4_OFFSET)
-                        .buildForBlockDisplay())
-                .build(location.toCenterLocation()));
-        displayGroup.addDisplay("item", new ItemDisplayBuilder()
-                .transformation(new TransformationMatrixBuilder()
-                        .scale(ITEM_DISPLAY_SIZE)
-                        .translate(ITEM_DISPLAY_OFFSET)
-                        .buildForItemDisplay())
-                .build(location.toCenterLocation()));
-        return displayGroup;
+        return new ModelBuilder()
+                .add("base", new ModelCuboid()
+                        .material(Material.GRAY_CONCRETE)
+                        .facing(player.getFacing())
+                        .size(0.9F, 0.6F, 0.9F))
+                .add("pillar1", new ModelCuboid()
+                        .material(Material.WHITE_CONCRETE)
+                        .facing(player.getFacing())
+                        .location(-0.4F, -0.1F, -0.4F)
+                        .size(0.2F, 0.8F, 0.2F))
+                .add("pillar2", new ModelCuboid()
+                        .material(Material.WHITE_CONCRETE)
+                        .facing(player.getFacing())
+                        .location(-0.4F, -0.1F, 0.4F)
+                        .size(0.2F, 0.8F, 0.2F))
+                .add("pillar3", new ModelCuboid()
+                        .material(Material.WHITE_CONCRETE)
+                        .facing(player.getFacing())
+                        .location(0.4F, -0.1F, -0.4F)
+                        .size(0.2F, 0.8F, 0.2F))
+                .add("pillar4", new ModelCuboid()
+                        .material(Material.WHITE_CONCRETE)
+                        .facing(player.getFacing())
+                        .location(0.4F, -0.1F, 0.4F)
+                        .size(0.2F, 0.8F, 0.2F))
+                .add("item", new ModelItem()
+                        .brightness(Utils.BRIGHTNESS_ON)
+                        .location(0, 0.3F, 0)
+                        .size(0.5F))
+                .buildAtBlockCenter(location);
     }
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
