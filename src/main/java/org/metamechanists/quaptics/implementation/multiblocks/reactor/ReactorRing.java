@@ -71,12 +71,12 @@ public class ReactorRing extends ConnectedBlock implements PowerAnimatedBlock {
                         .material(Material.BLACK_CONCRETE)
                         .facing(controllerPosition.toVector3f())
                         .size(0.1F, 0.3F, 0.1F)
-                        .location(0.3F, 0, 0))
+                        .location(0, 0, 0.3F))
                 .add("ring1", new ModelCuboid()
                         .material(Material.BLACK_CONCRETE)
                         .facing(controllerPosition.toVector3f())
                         .size(0.1F, 0.3F, 0.1F)
-                        .location(-0.3F, 0, 0))
+                        .location(0, 0, -0.3F))
                 .add("connection1", new ModelCuboid()
                         .material(Material.GRAY_CONCRETE)
                         .facing(controllerPosition.toVector3f())
@@ -86,7 +86,7 @@ public class ReactorRing extends ConnectedBlock implements PowerAnimatedBlock {
                         .material(Material.GRAY_CONCRETE)
                         .facing(controllerPosition.toVector3f())
                         .size(0.1F, 0.1F, 0.4F)
-                        .location(0, 0, 0.5F))
+                        .location(0, 0, -0.5F))
                 .buildAtBlockCenter(location);
     }
     @Override

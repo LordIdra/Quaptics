@@ -103,10 +103,10 @@ public class ReactorController extends ConnectedBlock implements ComplexMultiblo
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
         return List.of(
-                new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output 1", location.clone().add(outputPoint1Location)),
-                new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output 2", location.clone().add(outputPoint2Location)),
-                new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output 3", location.clone().add(outputPoint3Location)),
-                new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output 4", location.clone().add(outputPoint4Location)));
+                new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output 1", location.clone().toCenterLocation().add(outputPoint1Location)),
+                new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output 2", location.clone().toCenterLocation().add(outputPoint2Location)),
+                new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output 3", location.clone().toCenterLocation().add(outputPoint3Location)),
+                new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output 4", location.clone().toCenterLocation().add(outputPoint4Location)));
     }
     @Override
     protected void initBlockStorage(final @NotNull Location location) {
