@@ -29,6 +29,8 @@ import org.metamechanists.quaptics.implementation.multiblocks.entangler.Entangle
 import org.metamechanists.quaptics.implementation.multiblocks.entangler.EntanglementMagnet;
 import org.metamechanists.quaptics.implementation.multiblocks.infuser.InfusionContainer;
 import org.metamechanists.quaptics.implementation.multiblocks.infuser.InfusionPillar;
+import org.metamechanists.quaptics.implementation.multiblocks.reactor.ReactorController;
+import org.metamechanists.quaptics.implementation.multiblocks.reactor.ReactorRing;
 import org.metamechanists.quaptics.items.Groups;
 import org.metamechanists.quaptics.items.RecipeTypes;
 
@@ -70,6 +72,10 @@ import static org.metamechanists.quaptics.implementation.multiblocks.infuser.Inf
 import static org.metamechanists.quaptics.implementation.multiblocks.infuser.InfusionContainer.INFUSION_CONTAINER_SETTINGS;
 import static org.metamechanists.quaptics.implementation.multiblocks.infuser.InfusionPillar.INFUSION_PILLAR;
 import static org.metamechanists.quaptics.implementation.multiblocks.infuser.InfusionPillar.INFUSION_PILLAR_SETTINGS;
+import static org.metamechanists.quaptics.implementation.multiblocks.reactor.ReactorController.REACTOR_CONTROLLER;
+import static org.metamechanists.quaptics.implementation.multiblocks.reactor.ReactorController.REACTOR_CONTROLLER_SETTINGS;
+import static org.metamechanists.quaptics.implementation.multiblocks.reactor.ReactorRing.REACTOR_RING;
+import static org.metamechanists.quaptics.implementation.multiblocks.reactor.ReactorRing.REACTOR_RING_SETTINGS;
 
 
 @SuppressWarnings({"ZeroLengthArrayAllocation", "WeakerAccess"})
@@ -89,7 +95,6 @@ public class Primitive {
         itemStack.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         return itemStack;
     }
-
     private @NotNull ItemStack getEntangledCore() {
         final ItemStack itemStack = new ItemStack(Material.HEART_OF_THE_SEA);
         itemStack.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 1);
@@ -232,6 +237,20 @@ public class Primitive {
                 RecipeType.NULL,
                 new ItemStack[]{},
                 ENTANGLEMENT_CONTAINER_SETTINGS).register(addon);
+
+        new ReactorController(
+                Groups.PRIMITIVE,
+                REACTOR_CONTROLLER,
+                RecipeType.NULL,
+                new ItemStack[]{},
+                REACTOR_CONTROLLER_SETTINGS).register(addon);
+
+        new ReactorRing(
+                Groups.PRIMITIVE,
+                REACTOR_RING,
+                RecipeType.NULL,
+                new ItemStack[]{},
+                REACTOR_RING_SETTINGS).register(addon);
 
         new SlimefunItem(
                 Groups.PRIMITIVE,

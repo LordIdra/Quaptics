@@ -1,0 +1,137 @@
+package org.metamechanists.quaptics.implementation.multiblocks.reactor;
+
+import dev.sefiraat.sefilib.entity.display.DisplayGroup;
+import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
+import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.Vector;
+import org.jetbrains.annotations.NotNull;
+import org.metamechanists.quaptics.connections.ConnectionGroup;
+import org.metamechanists.quaptics.connections.ConnectionPoint;
+import org.metamechanists.quaptics.connections.ConnectionPointType;
+import org.metamechanists.quaptics.connections.Link;
+import org.metamechanists.quaptics.implementation.attachments.PowerAnimatedBlock;
+import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
+import org.metamechanists.quaptics.implementation.blocks.Settings;
+import org.metamechanists.quaptics.items.Lore;
+import org.metamechanists.quaptics.items.Tier;
+import org.metamechanists.quaptics.utils.BlockStorageAPI;
+import org.metamechanists.quaptics.utils.Keys;
+import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
+import org.metamechanists.quaptics.utils.id.complex.ConnectionPointId;
+import org.metamechanists.quaptics.utils.models.ModelBuilder;
+import org.metamechanists.quaptics.utils.models.components.ModelCuboid;
+
+import java.util.List;
+import java.util.Optional;
+
+public class ReactorRing extends ConnectedBlock implements PowerAnimatedBlock {
+    public static final Settings REACTOR_RING_SETTINGS = Settings.builder()
+            .tier(Tier.PRIMITIVE)
+            .build();
+    public static final SlimefunItemStack REACTOR_RING = new SlimefunItemStack(
+            "QP_REACTOR_RING",
+            Material.BLUE_CONCRETE,
+            "&6Reactor Ring",
+            Lore.create(REACTOR_RING_SETTINGS,
+                    "&7● Multiblock component",
+                    "&7● Has two inputs",
+                    "&7● The more power you put in, the more power the reactor outputs"));
+
+    private final List<Vector> possibleControllerLocations = List.of(
+            new Vector(3, 0, 0),
+            new Vector(2, 0, 2),
+            new Vector(0, 0, 3),
+            new Vector(-2, 0, 2),
+            new Vector(-3, 0, 0),
+            new Vector(-2, 0, -2),
+            new Vector(0, 0, -3),
+            new Vector(2, 0, -2)
+        );
+
+    private final Vector inputPoint1Location = new Vector(0.7, 0, 0);
+    private final Vector inputPoint2Location = new Vector(-0.7, 0, 0);
+
+    public ReactorRing(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
+        super(itemGroup, item, recipeType, recipe, settings);
+    }
+
+    @Override
+    protected float getConnectionRadius() {
+        return 0;
+    }
+    @Override
+    protected Optional<Location> calculatePointLocationSphere(@NotNull final ConnectionPointId from, @NotNull final ConnectionPointId to) {
+        final Optional<ConnectionPoint> point = from.get();
+        return point.isPresent() ? point.get().getLocation() : Optional.empty();
+    }
+    @Override
+    protected DisplayGroup initModel(final @NotNull Location location, final @NotNull Player player) {
+        final Vector controllerPosition = findController(location);
+        return new ModelBuilder()
+                .add("ring1", new ModelCuboid()
+                        .material(Material.BLACK_CONCRETE)
+                        .facing(controllerPosition.toVector3f())
+                        .size(0.1F, 0.3F, 0.1F)
+                        .location(0.3F, 0, 0))
+                .add("connection1", new ModelCuboid()
+                        .material(Material.GRAY_CONCRETE)
+                        .facing(controllerPosition.toVector3f())
+                        .size(0.4F, 0.1F, 0.1F)
+                        .location(0.5F, 0, 0))
+                .add("connection2", new ModelCuboid()
+                        .material(Material.GRAY_CONCRETE)
+                        .facing(controllerPosition.toVector3f())
+                        .size(0.1F, 0.4F, 0.1F)
+                        .location(0, 0.5F, 0))
+                .buildAtBlockCenter(location);
+    }
+    @Override
+    protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
+        return List.of(
+                new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input 1", formatPointLocation(player, location, inputPoint1Location)),
+                new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input 2", formatPointLocation(player, location, inputPoint2Location)));
+    }
+    @Override
+    protected void initBlockStorage(final @NotNull Location location) {
+        BlockStorageAPI.set(location, Keys.BS_INPUT_POWER, false);
+    }
+
+    @Override
+    public void onInputLinkUpdated(@NotNull final ConnectionGroup group, @NotNull final Location location) {
+        if (doBurnoutCheck(group, "input 1") || doBurnoutCheck(group, "input 2")) {
+            return;
+        }
+
+        int inputPower = 0;
+        final Optional<Link> link1 = getLink(location, "input 1");
+        final Optional<Link> link2 = getLink(location, "input 2");
+        if (link1.isPresent()) {
+            inputPower += link1.get().getPower();
+        }
+        if (link2.isPresent()) {
+            inputPower += link2.get().getPower();
+        }
+
+        // todo animation
+        BlockStorageAPI.set(location, Keys.BS_INPUT_POWER, inputPower);
+    }
+    @Override
+    public void onPoweredAnimation(final Location location, final boolean powered) {
+        // todo
+        brightnessAnimation(location, "prism", powered);
+    }
+
+    private Vector findController(@NotNull final Location location) {
+        for (final Vector vector : possibleControllerLocations) {
+            if (BlockStorageAPI.check(location.clone().add(vector)) instanceof ReactorController) {
+                return vector;
+            }
+        }
+        return new Vector(0, 0, 3);
+    }
+}

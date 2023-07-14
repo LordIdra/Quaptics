@@ -30,6 +30,7 @@ public class Settings {
     private double powerLoss;
     private double chargeCapacity;
     private double emissionPower;
+    private double powerMultiplier;
 
     private double minFrequency;
     private double maxFrequency;
@@ -43,6 +44,7 @@ public class Settings {
 
     private double useInterval;
     private double timePerItem;
+    private double timeToMaxPower;
     private float projectileSpeed;
     private int range;
     private double damage;

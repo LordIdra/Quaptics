@@ -133,7 +133,6 @@ public abstract class QuapticBlock extends SlimefunItem {
             displayGroup.remove();
         });
 
-        // TODO make this naturally break, not the forced shit we have going on here
         BlockStorageAPI.removeData(location);
         location.getBlock().setBlockData(Material.AIR.createBlockData());
         location.getWorld().playSound(location.toCenterLocation(), Sound.ENTITY_GENERIC_EXPLODE, BURNOUT_EXPLODE_VOLUME, BURNOUT_EXPLODE_PITCH);

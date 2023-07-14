@@ -29,11 +29,17 @@ public class ModelDiamond implements ModelComponent {
     private Vector3f size = new Vector3f();
 
     /**
-     * @param location The center of the cuboid
+     * @param location The center of the diamond
      */
     public ModelDiamond location(@NotNull final Vector3f location) {
         this.location = location;
         return this;
+    }
+    /**
+     * Sets the center of the diamond
+     */
+    public ModelDiamond location(final float x, final float y, final float z) {
+        return location(new Vector3f(x, y, z));
     }
 
     /**

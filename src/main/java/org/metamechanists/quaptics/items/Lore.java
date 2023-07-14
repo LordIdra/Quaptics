@@ -24,17 +24,16 @@ public class Lore {
     private final String POWER_SYMBOL = Colors.POWER.getFormattedColor() + "⏻ ";
     private final String FREQUENCY_SYMBOL = Colors.FREQUENCY.getFormattedColor() + "∀ ";
     private final String PHASE_SYMBOL = Colors.PHASE.getFormattedColor() + "۞ ";
-
     private final String PERCENTAGE_SUFFIX = " &8%";
     private final String CHARGE_SUFFIX = " &8QEU";
     private final String POWER_SUFFIX = " &8W";
     private final String RANGE_SUFFIX = " &8blocks";
-    private final String PROJECTILE_SPEED_SUFFIX = " &8blocks/s";
     private final String DAMAGE_SUFFIX = " &8dps";
     private final String FREQUENCY_SUFFIX = " &8Hz";
     private final String USE_INTERVAL_SUFFIX = " &8seconds";
     public final String PHASE_SUFFIX = " &8°";
     private final String TIME_PER_ITEM_SUFFIX = " &8seconds";
+    private final String TIME_TO_MAX_POWER_SUFFIX = " &8seconds";
     private final double SLIMEFUN_TICKS_PER_SECOND = 2.0;
 
     private String format(final double x) {
@@ -70,6 +69,9 @@ public class Lore {
         if (settings.getPowerLoss() != 0) {
             lore.add(powerLoss(settings.getPowerLoss()));
         }
+        if (settings.getPowerMultiplier() != 0) {
+            lore.add(powerMultiplier(settings.getPowerMultiplier()));
+        }
         if (settings.getChargeCapacity() != 0) {
             lore.add(capacity(settings.getChargeCapacity()));
         }
@@ -97,6 +99,9 @@ public class Lore {
         if (settings.getTimePerItem() != 0) {
             lore.add(timePerItem(settings.getTimePerItem()));
         }
+        if (settings.getTimeToMaxPower() != 0) {
+            lore.add(timeToMaxPower(settings.getTimeToMaxPower()));
+        }
         if (settings.getTargetPhase() != 0) {
             lore.add(targetPhase(settings.getTargetPhase()));
         }
@@ -117,9 +122,6 @@ public class Lore {
     public String range(final int range) {
         return ATTRIBUTE_SYMBOL + RANGE_SYMBOL + "&7Range &e" + Objects.toString(range) + RANGE_SUFFIX;
     }
-    public String projectileSpeed(final double speed) {
-        return ATTRIBUTE_SYMBOL + SPEED_SYMBOL + "&7Projectile Speed &e" + format(speed) + PROJECTILE_SPEED_SUFFIX;
-    }
     public String damage(final double damage) {
         return ATTRIBUTE_SYMBOL + DAMAGE_SYMBOL + "&7Damage &e" + format(damage/SLIMEFUN_TICKS_PER_SECOND) + DAMAGE_SUFFIX;
     }
@@ -128,6 +130,9 @@ public class Lore {
     }
     public String timePerItem(final double timePerItem) {
         return ATTRIBUTE_SYMBOL + SPEED_SYMBOL + "&7Time per item &e" + format(timePerItem) + TIME_PER_ITEM_SUFFIX;
+    }
+    public String timeToMaxPower(final double timeToMaxPower) {
+        return ATTRIBUTE_SYMBOL + SPEED_SYMBOL + "&7Time to max power &e" + format(timeToMaxPower) + TIME_TO_MAX_POWER_SUFFIX;
     }
 
     public String capacity(final double capacity) {
@@ -145,6 +150,9 @@ public class Lore {
     }
     public String powerLoss(final double powerLoss) {
         return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Power Loss &e" + format(powerLoss*100) + PERCENTAGE_SUFFIX;
+    }
+    public String powerMultiplier(final double powerMultiplier) {
+        return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Power Multiplier &e" + format(powerMultiplier*100) + PERCENTAGE_SUFFIX;
     }
 
     public String chargeBar(final int charge, final int capacity) {
