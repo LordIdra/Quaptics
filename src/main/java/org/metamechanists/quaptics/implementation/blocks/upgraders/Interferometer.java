@@ -20,6 +20,7 @@ import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
+import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionPointId;
 import org.metamechanists.quaptics.utils.models.ModelBuilder;
@@ -72,6 +73,7 @@ public class Interferometer extends ConnectedBlock implements PowerAnimatedBlock
                         .location(0.2F, 0, 0))
                 .add("prism", new ModelCuboid()
                         .material(settings.getTier().concreteMaterial)
+                        .brightness(Utils.BRIGHTNESS_OFF)
                         .facing(player.getFacing())
                         .rotation(Math.PI/4)
                         .size(0.4F))

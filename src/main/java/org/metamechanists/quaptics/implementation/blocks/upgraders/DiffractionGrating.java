@@ -79,7 +79,7 @@ public class DiffractionGrating extends ConnectedBlock implements PowerAnimatedB
                         .facing(player.getFacing())
                         .size(0.15F, 0.4F, 0.15F)
                         .location(0, 0.2F, 0))
-                .add("diamond", new ModelCuboid()
+                .add("prism", new ModelCuboid()
                         .material(settings.getTier().concreteMaterial)
                         .brightness(Utils.BRIGHTNESS_OFF)
                         .facing(player.getFacing())
@@ -130,7 +130,7 @@ public class DiffractionGrating extends ConnectedBlock implements PowerAnimatedB
     }
     @Override
     public void onPoweredAnimation(final Location location, final boolean powered) {
-        brightnessAnimation(location, "diamond", powered);
+        brightnessAnimation(location, "prism", powered);
     }
 
     private static double calculateFrequency(@NotNull final Settings settings, final double frequency, final int phase) {
