@@ -144,7 +144,7 @@ public class ReactorController extends ConnectedBlock implements ComplexMultiblo
     @Override
     public void onQuapticTick(@NotNull final ConnectionGroup group, @NotNull final Location location) {
         final boolean isMultiblockValid = areAllRingsInPlace(location);
-        setPanelHidden(group, isMultiblockValid);
+        setPanelHidden(group, !isMultiblockValid);
         if (!isMultiblockValid) {
             return;
         }
