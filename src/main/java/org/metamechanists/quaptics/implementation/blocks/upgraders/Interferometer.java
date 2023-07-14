@@ -41,9 +41,9 @@ public class Interferometer extends ConnectedBlock implements PowerAnimatedBlock
             Lore.create(INTERFEROMETER_1_SETTINGS,
                     "&7● Sets the Phase of the main ray to the phase of the auxiliary ray"));
 
-    private static final Vector MAIN_INPUT_LOCATION = new Vector(0.0F, 0.0F, -0.45F);
-    private static final Vector AUXILIARY_INPUT_LOCATION = new Vector(0.45F, 0.0F, 0.0F);
-    private static final Vector OUTPUT_LOCATION = new Vector(0.0F, 0.0F, 0.45);
+    private static final Vector MAIN_INPUT_LOCATION = new Vector(0, 0, -0.45);
+    private static final Vector AUXILIARY_INPUT_LOCATION = new Vector(0.4, 0, 0);
+    private static final Vector OUTPUT_LOCATION = new Vector(0, 0, 0.45);
 
     public Interferometer(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
