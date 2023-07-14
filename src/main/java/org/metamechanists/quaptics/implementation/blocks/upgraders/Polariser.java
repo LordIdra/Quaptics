@@ -92,13 +92,13 @@ public class Polariser extends ConnectedBlock implements PowerAnimatedBlock, Pow
                 .add("item", new ModelItem()
                         .brightness(Utils.BRIGHTNESS_ON)
                         .facing(player.getFacing())
-                        .location(0, 0.35F, 0)
+                        .location(0, 0.3F, 0)
                         .size(0.5F))
                 .add("item2", new ModelItem()
                         .brightness(Utils.BRIGHTNESS_ON)
                         .facing(player.getFacing())
                         .rotation(Math.PI/2)
-                        .location(0, 0.35F, 0)
+                        .location(0, 0.3F, 0)
                         .size(0.5F))
                 .buildAtBlockCenter(location);
     }

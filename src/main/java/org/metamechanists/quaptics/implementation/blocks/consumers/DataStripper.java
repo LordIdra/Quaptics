@@ -138,7 +138,7 @@ public class DataStripper extends ConnectedBlock implements InfoPanelBlock, Item
         }
 
         if (ItemHolderBlock.getStack(location).isPresent()) {
-            ParticleUtils.randomParticle(location.clone().toCenterLocation(), Particle.WHITE_ASH, 0.5, 1);
+            ParticleUtils.randomParticle(location.clone().toCenterLocation(), Particle.WAX_ON, 0.3, 1);
             ProgressBlock.updateProgress(location, settings.getTimePerItem());
         }
 

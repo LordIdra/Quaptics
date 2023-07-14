@@ -131,7 +131,7 @@ public class Charger extends ConnectedBlock implements InfoPanelBlock, ItemHolde
             return;
         }
 
-        ParticleUtils.randomParticle(location.clone().toCenterLocation(), Particle.ELECTRIC_SPARK, 0.5, 3);
+        ParticleUtils.randomParticle(location.clone().toCenterLocation(), Particle.ELECTRIC_SPARK, 0.3, 1);
         final ItemStack newStack = QuapticChargeableItem.chargeItem(inputLink.get(), stack.get());
         ItemHolderBlock.insertItem(location, newStack);
         updatePanel(group);
