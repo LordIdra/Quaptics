@@ -27,6 +27,7 @@ import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
 import org.metamechanists.quaptics.panels.info.BlockInfoPanel;
 import org.metamechanists.quaptics.panels.info.implementation.ProgressInfoPanel;
+import org.metamechanists.quaptics.storage.QuapticTicker;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Language;
@@ -121,8 +122,9 @@ public class DataStripper extends ConnectedBlock implements InfoPanelBlock, Item
     protected void onRightClick(final @NotNull Location location, final @NotNull Player player) {
         itemHolderInteract(location, player);
     }
+    @SuppressWarnings("unused")
     @Override
-    public void onQuapticTick(@NotNull final ConnectionGroup group, @NotNull final Location location) {
+    public void onTick10(@NotNull final ConnectionGroup group, @NotNull final Location location) {
         if (!BlockStorageAPI.getBoolean(location, Keys.BS_IS_HOLDING_ITEM)) {
             setPanelHidden(group, true);
             return;
@@ -136,7 +138,7 @@ public class DataStripper extends ConnectedBlock implements InfoPanelBlock, Item
         }
 
         if (ItemHolderBlock.getStack(location).isPresent()) {
-            ProgressBlock.updateProgress(location, settings.getTimePerItem());
+            ProgressBlock.updateProgress(location, QuapticTicker.INTERVAL_TICKS_10, settings.getTimePerItem());
         }
 
         updatePanel(group);

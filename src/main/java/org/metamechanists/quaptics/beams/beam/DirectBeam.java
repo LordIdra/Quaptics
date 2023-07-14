@@ -4,14 +4,11 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.BlockDisplay;
 import org.jetbrains.annotations.NotNull;
-import org.joml.Matrix4f;
-import org.joml.Vector3f;
 import org.metamechanists.quaptics.beams.DeprecatedBeamStorage;
 import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.id.complex.DirectBeamId;
 import org.metamechanists.quaptics.utils.id.simple.BlockDisplayId;
 import org.metamechanists.quaptics.utils.models.components.ModelLine;
-import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
 import org.metamechanists.quaptics.utils.transformations.TransformationUtils;
 
 import java.util.Optional;
@@ -41,14 +38,6 @@ public class DirectBeam implements Beam {
 
     private Optional<BlockDisplay> getDisplay() {
         return displayId.get();
-    }
-
-    private static @NotNull Matrix4f generateTransformation(final @NotNull Location source, final Location target, final float radius) {
-        final Vector3f scale = new Vector3f(radius, radius, (float) source.distance(target));
-        return new TransformationMatrixBuilder()
-                .lookAlong(source, target)
-                .scale(scale)
-                .buildForBlockDisplay();
     }
 
     @Override

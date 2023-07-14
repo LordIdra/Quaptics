@@ -14,6 +14,7 @@ public class Keys {
     }
 
     public final NamespacedKey RECIPE_INFUSION_CONTAINER = newKey("RECIPE_INFUSION_CONTAINER");
+    public final NamespacedKey RECIPE_ENTANGLER = newKey("RECIPE_ENTANGLER");
     public final NamespacedKey MAIN = newKey("MAIN");
     public final NamespacedKey GUIDE = newKey("GUIDE");
     public final NamespacedKey TOOLS = newKey("TOOLS");
@@ -22,7 +23,6 @@ public class Keys {
     public final NamespacedKey INTERMEDIATE = newKey("INTERMEDIATE");
     public final NamespacedKey ADVANCED = newKey("ADVANCED");
     public final NamespacedKey TESTING = newKey("TESTING");
-    public final NamespacedKey FACING = newKey("FACING");
     public final NamespacedKey SOURCE = newKey("SOURCE");
     public final NamespacedKey CHARGE = newKey("CHARGE");
 
@@ -43,6 +43,7 @@ public class Keys {
     public final String BS_HEIGHT = "QP_HEIGHT";
     public final String BS_SIZE = "QP_SIZE";
     public final String BS_MODE = "QP_MODE";
+    public final String BS_MULTIBLOCK_INTACT = "QP_MULTIBLOCK_INTACT";
     public final String BS_CRAFT_IN_PROGRESS = "QP_CRAFT_IN_PROGRESS";
     public final String BS_SECONDS_SINCE_CRAFT_STARTED = "QP_TIME_SINCE_CRAFT_STARTED";
     public final String BS_SECONDS_SINCE_REACTOR_STARTED = "QP_TIME_SINCE_REACTOR_STARTED";

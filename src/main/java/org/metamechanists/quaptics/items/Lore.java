@@ -95,7 +95,7 @@ public class Lore {
             lore.add(damage(settings.getDamage()));
         }
         if (settings.getUseInterval() != 0) {
-            lore.add(useInterval(settings.getUseInterval() / QuapticTicker.QUAPTIC_TICKS_PER_SECOND));
+            lore.add(useInterval(settings.getUseInterval() / QuapticTicker.TICKS_PER_SECOND));
         }
         if (settings.getTimePerItem() != 0) {
             lore.add(timePerItem(settings.getTimePerItem()));

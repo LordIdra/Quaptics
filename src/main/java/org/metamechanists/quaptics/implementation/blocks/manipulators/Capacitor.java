@@ -17,6 +17,7 @@ import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
 import org.metamechanists.quaptics.connections.Link;
+import org.metamechanists.quaptics.implementation.attachments.ChargeHolder;
 import org.metamechanists.quaptics.implementation.attachments.InfoPanelBlock;
 import org.metamechanists.quaptics.implementation.attachments.PowerLossBlock;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
@@ -38,7 +39,7 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.util.List;
 import java.util.Optional;
 
-public class Capacitor extends ConnectedBlock implements InfoPanelBlock, PowerLossBlock {
+public class Capacitor extends ConnectedBlock implements InfoPanelBlock, PowerLossBlock, ChargeHolder {
     public static final Settings CAPACITOR_1_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
             .connectionRadius(0.6F)
@@ -109,11 +110,17 @@ public class Capacitor extends ConnectedBlock implements InfoPanelBlock, PowerLo
         super.onBreak(location);
         onBreakInfoPanelBlock(location);
     }
+    @SuppressWarnings("unused")
     @Override
-    public void onQuapticTick(@NotNull final ConnectionGroup group, @NotNull final Location location) {
+    public void onTick5(@NotNull final ConnectionGroup group, @NotNull final Location location) {
         double charge = BlockStorageAPI.getDouble(location, Keys.BS_CHARGE);
+        final double initialCharge = charge;
         charge = doCharge(location, charge);
         charge = doDischarge(location, charge);
+
+        if (Utils.equal(initialCharge, charge)) {
+            return;
+        }
 
         BlockStorageAPI.set(location, Keys.BS_CHARGE, charge);
         doEmission(location, charge);
@@ -134,14 +141,14 @@ public class Capacitor extends ConnectedBlock implements InfoPanelBlock, PowerLo
         }
 
         final double chargeRate = settings.isOperational(inputLink)
-                ? PowerLossBlock.calculatePowerLoss(settings, inputLink.get().getPower() / QuapticTicker.QUAPTIC_TICKS_PER_SECOND)
+                ? PowerLossBlock.calculatePowerLoss(settings, inputLink.get().getPower() * ((double) QuapticTicker.INTERVAL_TICKS_5 / QuapticTicker.TICKS_PER_SECOND))
                 : 0;
         BlockStorageAPI.set(location, Keys.BS_CHARGE_RATE, chargeRate);
     }
 
     private double doCharge(final Location location, final double charge) {
         final double chargeRate = BlockStorageAPI.getDouble(location, Keys.BS_CHARGE_RATE);
-        return settings.stepCharge(charge, chargeRate);
+        return stepCharge(settings, charge, chargeRate);
     }
     private double doDischarge(final Location location, final double charge) {
         final Optional<Link> outputLink = getLink(location, "output");
@@ -149,7 +156,7 @@ public class Capacitor extends ConnectedBlock implements InfoPanelBlock, PowerLo
             return charge;
         }
 
-        final double newCharge = settings.stepDischarge(charge);
+        final double newCharge = stepDischarge(settings, charge);
         BlockStorageAPI.set(location, Keys.BS_CHARGE, charge);
         return newCharge;
     }
@@ -169,7 +176,7 @@ public class Capacitor extends ConnectedBlock implements InfoPanelBlock, PowerLo
         }
 
         outputLink.get().setPowerFrequency(
-                (charge > settings.getEmissionPower() / QuapticTicker.QUAPTIC_TICKS_PER_SECOND)
+                (charge > settings.getEmissionPower() * ((double) QuapticTicker.INTERVAL_TICKS_5 / QuapticTicker.TICKS_PER_SECOND))
                         ? settings.getEmissionPower()
                         : 0,
                 0);

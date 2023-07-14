@@ -71,8 +71,9 @@ public class OscillatingConcentrator extends ConnectedBlock {
         return List.of(new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output", formatPointLocation(player, location, outputLocation)));
     }
 
+    @SuppressWarnings("unused")
     @Override
-    public void onQuapticTick(@NotNull final ConnectionGroup group, @NotNull final Location location) {
+    public void onTick2(@NotNull final ConnectionGroup group, @NotNull final Location location) {
         final boolean enabled = isEnabled(location);
         final double power = enabled ? settings.getEmissionPower() : 0;
         getLink(location, "output").ifPresent(link -> link.setPower(power));

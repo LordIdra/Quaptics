@@ -9,19 +9,32 @@ import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import java.util.Optional;
 
 public class QuapticTicker extends BukkitRunnable {
-    @SuppressWarnings("StaticMethodOnlyUsedInOneClass")
-    public static final int INTERVAL_TICKS = 1;
-    public static final int QUAPTIC_TICKS_PER_SECOND = 20;
+    private static long time;
+
+    public static final int TICKS_PER_SECOND = 20;
+    public static final int INTERVAL_TICKS_2 = 2;
+    public static final int INTERVAL_TICKS_5 = 5;
+    public static final int INTERVAL_TICKS_10 = 10;
+    public static final int INTERVAL_TICKS_21 = 21;
 
     @Override
     public void run() {
+        time++;
         QuapticStorage.getGroupIDs().stream()
                 .map(ConnectionGroupId::get)
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .forEach(group -> {
                     try {
-                        group.tick();
+                        if (time % INTERVAL_TICKS_2 == 0) {
+                            group.tick1();
+                        }
+                        if (time % INTERVAL_TICKS_5 == 0) {
+                            group.tick5();
+                        }
+                        if (time % INTERVAL_TICKS_21 == 0) {
+                            group.tick21();
+                        }
                     } catch (final RuntimeException exception) {
                         QuapticStorage.removeGroup(group.getId());
                         exception.printStackTrace();

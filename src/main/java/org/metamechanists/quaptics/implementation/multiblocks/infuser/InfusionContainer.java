@@ -139,19 +139,24 @@ public class InfusionContainer extends ConnectedBlock implements ItemHolderBlock
         }
         itemHolderInteract(location, player);
     }
+    @SuppressWarnings("unused")
     @Override
-    public void onQuapticTick(@NotNull final ConnectionGroup group, @NotNull final Location location) {
+    public void onTick21(@NotNull final ConnectionGroup group, @NotNull final Location location) {
+        BlockStorageAPI.set(location, Keys.BS_MULTIBLOCK_INTACT, isStructureValid(location.getBlock()));
+    }
+    @SuppressWarnings("unused")
+    @Override
+    public void onTick2(@NotNull final ConnectionGroup group, @NotNull final Location location) {
         if (!BlockStorageAPI.getBoolean(location, Keys.BS_CRAFT_IN_PROGRESS)) {
             return;
         }
 
-        if (!allPillarsPowered(location)) {
+        if (!BlockStorageAPI.getBoolean(location, Keys.BS_MULTIBLOCK_INTACT) || !allPillarsPowered(location)) {
             cancelCraft(location);
-            return;
         }
 
         double secondsSinceCraftStarted = BlockStorageAPI.getDouble(location, Keys.BS_SECONDS_SINCE_CRAFT_STARTED);
-        secondsSinceCraftStarted += 1.0 / QuapticTicker.QUAPTIC_TICKS_PER_SECOND;
+        secondsSinceCraftStarted += (double) QuapticTicker.INTERVAL_TICKS_2 / QuapticTicker.TICKS_PER_SECOND;
         BlockStorageAPI.set(location, Keys.BS_SECONDS_SINCE_CRAFT_STARTED, secondsSinceCraftStarted);
 
         tickAnimation(location, secondsSinceCraftStarted);
@@ -196,7 +201,7 @@ public class InfusionContainer extends ConnectedBlock implements ItemHolderBlock
     public void tickAnimation(@NotNull final Location centerLocation, final double timeSeconds) {
         // TODO make components light up
         PILLAR_LOCATIONS.forEach(pillarLocation -> animatePillar(centerLocation, centerLocation.clone().add(pillarLocation), timeSeconds));
-        animateCenter(centerLocation, timeSeconds);
+        animateCenter(centerLocation);
     }
 
     private static boolean isPillarPowered(@NotNull final Location pillarLocation) {
@@ -213,7 +218,7 @@ public class InfusionContainer extends ConnectedBlock implements ItemHolderBlock
                 (timeSinceCraftStarted % PILLAR_PARTICLE_ANIMATION_LENGTH_SECONDS) / PILLAR_PARTICLE_ANIMATION_LENGTH_SECONDS,
                 0);
     }
-    private static void animateCenter(@NotNull final Location center, final double timeSinceCraftStarted) {
+    private static void animateCenter(@NotNull final Location center) {
         ParticleUtils.randomParticle(center.clone().toCenterLocation(), Particle.ENCHANTMENT_TABLE, CONTAINER_PARTICLE_RADIUS, CONTAINER_PARTICLE_COUNT);
     }
 

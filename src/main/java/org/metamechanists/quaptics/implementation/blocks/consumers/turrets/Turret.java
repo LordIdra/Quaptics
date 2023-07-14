@@ -2,14 +2,11 @@ package org.metamechanists.quaptics.implementation.blocks.consumers.turrets;
 
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
-import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
-import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -76,11 +73,12 @@ public abstract class Turret extends ConnectedBlock implements PowerAnimatedBloc
         return List.of(new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input", formatPointLocation(player, location, inputLocation)));
     }
 
+    @SuppressWarnings("unused")
     @Override
-    protected void onSlimefunTick(@NotNull final Block block, final SlimefunItem item, final Config data) {
-        if (BlockStorageAPI.getBoolean(block.getLocation(), Keys.BS_POWERED)) {
-            retarget(block.getLocation());
-            shoot(block.getLocation());
+    protected void onTick10(@NotNull final ConnectionGroup group, @NotNull final Location location) {
+        if (BlockStorageAPI.getBoolean(location, Keys.BS_POWERED)) {
+            retarget(location);
+            shoot(location);
         }
     }
     @Override

@@ -13,6 +13,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.metamechanists.quaptics.connections.Link;
+import org.metamechanists.quaptics.implementation.attachments.ChargeHolder;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.storage.QuapticTicker;
@@ -25,7 +26,7 @@ import java.util.function.Predicate;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-public abstract class QuapticChargeableItem extends SlimefunItem {
+public abstract class QuapticChargeableItem extends SlimefunItem implements ChargeHolder {
     @Getter
     protected final Settings settings;
 
@@ -60,7 +61,7 @@ public abstract class QuapticChargeableItem extends SlimefunItem {
         stack.setItemMeta(meta);
     }
 
-    public static @NotNull ItemStack chargeItem(final Link inputLink, @NotNull final ItemStack itemStack) {
+    public @NotNull ItemStack chargeItem(final Link inputLink, @NotNull final ItemStack itemStack, final double tickInterval) {
         if (itemStack.getItemMeta() == null) {
             return itemStack;
         }
@@ -70,7 +71,7 @@ public abstract class QuapticChargeableItem extends SlimefunItem {
             return itemStack;
         }
 
-        final double newCharge = item.get().settings.stepCharge(getCharge(itemStack), inputLink.getPower() / QuapticTicker.QUAPTIC_TICKS_PER_SECOND);
+        final double newCharge = stepCharge(item.get().settings, getCharge(itemStack), inputLink.getPower() * (tickInterval / QuapticTicker.TICKS_PER_SECOND));
         setCharge(itemStack, newCharge);
         return itemStack;
     }

@@ -2,17 +2,15 @@ package org.metamechanists.quaptics.implementation.blocks.concentrators;
 
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
-import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
-import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
+import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
 import org.metamechanists.quaptics.connections.Link;
@@ -83,15 +81,14 @@ public class SolarConcentrator extends ConnectedBlock implements PowerAnimatedBl
         return List.of(new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output", formatPointLocation(player, location, outputLocation)));
     }
 
+    @SuppressWarnings("unused")
     @Override
-    public void onSlimefunTick(@NotNull final Block block, final SlimefunItem item, final Config data) {
-        super.onSlimefunTick(block, item, data);
-        final Location location = block.getLocation();
-        final double power = block.getWorld().isDayTime()
+    public void onTick10(@NotNull final ConnectionGroup group, @NotNull final Location location) {
+        final double power = location.getWorld().isDayTime()
                 ? settings.getEmissionPower()
                 : 0;
         final Optional<Link> linkOptional = getLink(location, "output");
-        onPoweredAnimation(location, block.getWorld().isDayTime());
+        onPoweredAnimation(location, location.getWorld().isDayTime());
         linkOptional.ifPresent(link -> link.setPower(power));
     }
     @Override

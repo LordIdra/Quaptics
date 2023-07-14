@@ -72,13 +72,6 @@ public class BlockStorageAPI {
         }
         set(location, key, value.toString());
     }
-    public void set(final Location location, final String key, final @Nullable BlockFace value) {
-        if (value == null) {
-            removeData(location, key);
-            return;
-        }
-        set(location, key, value.toString());
-    }
     public void set(final Location location, final String key, final @Nullable CustomId value) {
         if (value == null) {
             removeData(location, key);

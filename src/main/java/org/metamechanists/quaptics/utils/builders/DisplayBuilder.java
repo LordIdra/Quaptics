@@ -7,5 +7,6 @@ import org.jetbrains.annotations.NotNull;
 
 @FunctionalInterface
 public interface DisplayBuilder {
+    @SuppressWarnings("unused")
     Display build(@NotNull final Location location);
 }

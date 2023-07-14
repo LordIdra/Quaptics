@@ -5,7 +5,6 @@ import lombok.Getter;
 import org.bukkit.Material;
 import org.bukkit.entity.SpawnCategory;
 import org.jetbrains.annotations.NotNull;
-import org.metamechanists.quaptics.storage.QuapticTicker;
 import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.items.Tier;
 
@@ -61,15 +60,5 @@ public class Settings {
     }
     public boolean isOperational(final @NotNull Optional<? extends Link> inputLink) {
         return inputLink.isPresent() && isOperational(inputLink.get());
-    }
-
-    public double stepCharge(final double charge, final double chargeStep) {
-        if (charge + chargeStep < 0) {
-            return 0;
-        }
-        return Math.min(charge + chargeStep, chargeCapacity);
-    }
-    public double stepDischarge(final double charge) {
-       return stepCharge(charge, -emissionPower / QuapticTicker.QUAPTIC_TICKS_PER_SECOND);
     }
 }

@@ -11,5 +11,6 @@ import org.jetbrains.annotations.NotNull;
  */
 public interface ModelComponent {
     Display build(@NotNull final Location origin);
+    @SuppressWarnings("unused")
     Display build(@NotNull final Block block);
 }

@@ -175,19 +175,24 @@ public class EntanglementContainer extends ConnectedBlock implements ItemHolderB
         }
         itemHolderInteract(location, player);
     }
+    @SuppressWarnings("unused")
     @Override
-    public void onQuapticTick(@NotNull final ConnectionGroup group, @NotNull final Location location) {
+    public void onTick21(@NotNull final ConnectionGroup group, @NotNull final Location location) {
+        BlockStorageAPI.set(location, Keys.BS_MULTIBLOCK_INTACT, isStructureValid(location.getBlock()));
+    }
+    @SuppressWarnings("unused")
+    @Override
+    public void onTick2(@NotNull final ConnectionGroup group, @NotNull final Location location) {
         if (!BlockStorageAPI.getBoolean(location, Keys.BS_CRAFT_IN_PROGRESS)) {
             return;
         }
 
-        if (!allMagnetsPowered(location)) {
+        if (!BlockStorageAPI.getBoolean(location, Keys.BS_MULTIBLOCK_INTACT) || !allMagnetsPowered(location)) {
             cancelCraft(location);
-            return;
         }
 
         double secondsSinceCraftStarted = BlockStorageAPI.getDouble(location, Keys.BS_SECONDS_SINCE_CRAFT_STARTED);
-        secondsSinceCraftStarted += 1.0 / QuapticTicker.QUAPTIC_TICKS_PER_SECOND;
+        secondsSinceCraftStarted += (double) QuapticTicker.INTERVAL_TICKS_2 / QuapticTicker.TICKS_PER_SECOND;
         BlockStorageAPI.set(location, Keys.BS_SECONDS_SINCE_CRAFT_STARTED, secondsSinceCraftStarted);
 
         tickAnimation(location, secondsSinceCraftStarted);

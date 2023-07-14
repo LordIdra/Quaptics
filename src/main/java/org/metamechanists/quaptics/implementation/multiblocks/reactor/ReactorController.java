@@ -145,22 +145,43 @@ public class ReactorController extends ConnectedBlock implements ComplexMultiblo
     protected void onRightClick(final @NotNull Location location, final @NotNull Player player) {
         multiblockInteract(location.getBlock(), player);
     }
+    @SuppressWarnings("unused")
     @Override
-    public void onQuapticTick(@NotNull final ConnectionGroup group, @NotNull final Location location) {
-        final boolean isMultiblockValid = areAllRingsInPlace(location);
-        final double inputPower = getTotalInputPower(location);
-        setPanelHidden(group, !isMultiblockValid);
+    public void onTick21(@NotNull final ConnectionGroup group, @NotNull final Location location) {
+        final boolean isStructureValid = isStructureValid(location.getBlock());
+        BlockStorageAPI.set(location, Keys.BS_MULTIBLOCK_INTACT, isStructureValid);
+        setPanelHidden(group, !isStructureValid);
         updatePanel(group);
-        if (!isMultiblockValid || inputPower < settings.getMinPower()) {
+    }
+    @SuppressWarnings("unused")
+    @Override
+    public void onTick10(@NotNull final ConnectionGroup group, @NotNull final Location location) {
+        final double inputPower = getTotalInputPower(location);
+        BlockStorageAPI.set(location, Keys.BS_INPUT_POWER, inputPower);
+
+        final boolean isStructureValid = BlockStorageAPI.getBoolean(location, Keys.BS_MULTIBLOCK_INTACT);
+        if (!isStructureValid || inputPower < settings.getMinPower()) {
             BlockStorageAPI.set(location, Keys.BS_SECONDS_SINCE_REACTOR_STARTED, 0.0);
             BlockStorageAPI.set(location, Keys.BS_OUTPUT_POWER, 0.0);
+            BlockStorageAPI.set(location, Keys.BS_POWERED, false);
+            return;
+        }
+
+        BlockStorageAPI.set(location, Keys.BS_POWERED, true);
+        updatePanel(group);
+    }
+    @SuppressWarnings("unused")
+    @Override
+    public void onTick2(@NotNull final ConnectionGroup group, @NotNull final Location location) {
+        if (!BlockStorageAPI.getBoolean(location, Keys.BS_POWERED)) {
             return;
         }
 
         double secondsSinceReactorStarted = BlockStorageAPI.getDouble(location, Keys.BS_SECONDS_SINCE_REACTOR_STARTED);
-        secondsSinceReactorStarted += 1.0 / QuapticTicker.QUAPTIC_TICKS_PER_SECOND;
+        secondsSinceReactorStarted += (double) QuapticTicker.INTERVAL_TICKS_2 / 20;
         BlockStorageAPI.set(location, Keys.BS_SECONDS_SINCE_REACTOR_STARTED, secondsSinceReactorStarted);
 
+        final double inputPower = BlockStorageAPI.getDouble(location, Keys.BS_INPUT_POWER);
         final double powerProportion = Math.min(secondsSinceReactorStarted, settings.getTimeToMaxEfficiency()) / settings.getTimeToMaxEfficiency();
         final double outputPower = (powerProportion * inputPower * settings.getPowerMultiplier());
         BlockStorageAPI.set(location, Keys.BS_OUTPUT_POWER, outputPower);
@@ -209,11 +230,5 @@ public class ReactorController extends ConnectedBlock implements ComplexMultiblo
     }
     public static double getTotalInputPower(@NotNull final Location location) {
         return RING_LOCATIONS.stream().mapToDouble(vector -> getRingInputPower(location.clone().add(vector))).sum();
-    }
-    private static boolean isRing(@NotNull final Location ringLocation) {
-        return BlockStorageAPI.check(ringLocation) instanceof  ReactorRing;
-    }
-    private static boolean areAllRingsInPlace(@NotNull final Location center) {
-        return RING_LOCATIONS.stream().allMatch(location -> isRing(center.clone().add(location)));
     }
 }

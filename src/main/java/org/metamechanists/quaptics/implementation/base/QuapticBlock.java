@@ -43,8 +43,6 @@ import static dev.sefiraat.sefilib.slimefun.blocks.DisplayGroupBlock.KEY_UUID;
 public abstract class QuapticBlock extends SlimefunItem {
     private static final int BURNOUT_EXPLODE_VOLUME = 2;
     private static final float BURNOUT_EXPLODE_PITCH = 1.2F;
-    private static final Vector CENTER_VECTOR = new Vector(0.5, 0.5, 0.5);
-    protected static final Vector INITIAL_LINE = new Vector(0, 0, 1);
     @Getter
     protected final Settings settings;
 
@@ -144,14 +142,13 @@ public abstract class QuapticBlock extends SlimefunItem {
     protected Material getBaseMaterial() {
         return Material.STRUCTURE_VOID;
     }
-    protected static @NotNull Vector rotateVectorByEyeDirection(@NotNull final Player player, @NotNull final Vector vector) {
+    private static @NotNull Vector rotateVectorByEyeDirection(@NotNull final Player player, @NotNull final Vector vector) {
         final double rotationAngle = TransformationUtils.yawToCardinalDirection(player.getEyeLocation().getYaw());
         return vector.clone().rotateAroundY(rotationAngle);
     }
     protected static @NotNull Location formatPointLocation(final Player player, @NotNull final Location location, final Vector relativeLocation) {
         final Vector newRelativeLocation = rotateVectorByEyeDirection(player, relativeLocation);
-        newRelativeLocation.add(CENTER_VECTOR);
-        return location.clone().add(newRelativeLocation);
+        return location.toCenterLocation().clone().add(newRelativeLocation);
     }
 
     protected static Optional<DisplayGroupId> getDisplayGroupId(final Location location) {
@@ -163,7 +160,7 @@ public abstract class QuapticBlock extends SlimefunItem {
     public static Optional<Display> getDisplay(final Location location, final String name) {
         return getDisplayGroup(location).map(displayGroup -> displayGroup.getDisplays().get(name));
     }
-    public static Optional<BlockDisplay> getBlockDisplay(final Location location, final String name) {
+    protected static Optional<BlockDisplay> getBlockDisplay(final Location location, final String name) {
         final Optional<Display> display = getDisplay(location, name);
         return display.isPresent() && display.get() instanceof final BlockDisplay blockDisplay
                 ? Optional.of(blockDisplay)
@@ -174,11 +171,5 @@ public abstract class QuapticBlock extends SlimefunItem {
         return display.isPresent() && display.get() instanceof final ItemDisplay itemDisplay
                 ? Optional.of(itemDisplay)
                 : Optional.empty();
-    }
-    public static void removeDisplay(final @NotNull DisplayGroup displayGroup, final String name) {
-        final Display display = displayGroup.removeDisplay(name);
-        if (display != null) {
-            display.remove();
-        }
     }
 }

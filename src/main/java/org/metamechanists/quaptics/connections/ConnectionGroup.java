@@ -32,7 +32,6 @@ public class ConnectionGroup {
         pointsIn.forEach(point -> points.put(point.getName(), point.getId()));
         saveData();
     }
-
     public ConnectionGroup(final ConnectionGroupId id) {
         final PersistentDataTraverser traverser = new PersistentDataTraverser(id);
         this.id = id;
@@ -69,9 +68,17 @@ public class ConnectionGroup {
                 .map(Optional::get).toList();
     }
 
-    public void tick() {
+    public void tick1() {
         final Optional<Location> locationOptional = getLocation();
-        locationOptional.ifPresent(location -> getBlock().onQuapticTick(this, location));
+        locationOptional.ifPresent(location -> getBlock().onTick2(this, location));
+    }
+    public void tick5() {
+        final Optional<Location> locationOptional = getLocation();
+        locationOptional.ifPresent(location -> getBlock().onTick5(this, location));
+    }
+    public void tick21() {
+        final Optional<Location> locationOptional = getLocation();
+        locationOptional.ifPresent(location -> getBlock().onTick21(this, location));
     }
 
     public void updatePanels() {

@@ -1,9 +1,12 @@
 package org.metamechanists.quaptics.implementation.base;
 
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import org.bukkit.Location;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
@@ -70,7 +73,19 @@ public abstract class ConnectedBlock extends QuapticBlock {
     }
     public void onInputLinkUpdated(@NotNull final ConnectionGroup group, @NotNull final Location location) {}
     @SuppressWarnings("unused")
-    public void onQuapticTick(@NotNull final ConnectionGroup group, @NotNull final Location location) {}
+    public void onTick2(@NotNull final ConnectionGroup group, @NotNull final Location location) {}
+    @SuppressWarnings("unused")
+    public void onTick5(@NotNull final ConnectionGroup group, @NotNull final Location location) {}
+    @SuppressWarnings("unused")
+    protected void onTick10(@NotNull final ConnectionGroup group, @NotNull final Location location) {}
+    @SuppressWarnings("unused")
+    public void onTick21(@NotNull final ConnectionGroup group, @NotNull final Location location) {}
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    protected void onSlimefunTick(@NotNull final Block block, final SlimefunItem item, final Config data) {
+        final Optional<ConnectionGroup> groupOptional = getGroup(block.getLocation());
+        groupOptional.ifPresent(connectionGroup -> onTick10(connectionGroup, block.getLocation()));
+    }
 
     @Override
     @OverridingMethodsMustInvokeSuper
@@ -179,7 +194,7 @@ public abstract class ConnectedBlock extends QuapticBlock {
         calculatePointLocationSphere(from, to).ifPresent(location -> changePointLocation(from, location));
     }
 
-    protected static void changePointLocation(final @NotNull ConnectionPointId pointId, @NotNull final Location newLocation) {
+    private static void changePointLocation(final @NotNull ConnectionPointId pointId, @NotNull final Location newLocation) {
         pointId.get().ifPresent(point -> point.changeLocation(newLocation));
     }
     public static Optional<ConnectionGroup> getGroup(final Location location) {
@@ -187,18 +202,5 @@ public abstract class ConnectedBlock extends QuapticBlock {
         return displayGroupId.isEmpty()
                 ? Optional.empty()
                 : new ConnectionGroupId(displayGroupId.get()).get();
-    }
-    protected static Optional<Location> getGroupLocation(final @NotNull ConnectionPointId pointId) {
-        final Optional<ConnectionPoint> point = pointId.get();
-        if (point.isEmpty()) {
-            return Optional.empty();
-        }
-
-        final Optional<ConnectionGroup> group = point.get().getGroup();
-        if (group.isEmpty()) {
-            return Optional.empty();
-        }
-
-        return group.get().getLocation();
     }
 }

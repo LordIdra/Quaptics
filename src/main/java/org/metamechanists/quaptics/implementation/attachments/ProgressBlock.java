@@ -17,9 +17,9 @@ public interface ProgressBlock {
         return BlockStorageAPI.getDouble(location, Keys.BS_PROGRESS);
     }
 
-    static void updateProgress(@NotNull final Location location, final double maxTime) {
+    static void updateProgress(@NotNull final Location location, final double tickInterval, final double maxTime) {
         double progress = getProgress(location);
-        progress += 1.0 / QuapticTicker.QUAPTIC_TICKS_PER_SECOND;
+        progress += tickInterval / QuapticTicker.TICKS_PER_SECOND;
         progress = Math.min(progress, maxTime);
         setProgress(location, progress);
     }

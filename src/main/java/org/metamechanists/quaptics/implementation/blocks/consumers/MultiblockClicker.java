@@ -88,8 +88,9 @@ public class MultiblockClicker extends ConnectedBlock implements PowerAnimatedBl
         BlockStorageAPI.set(location, Keys.BS_POWERED, false);
     }
 
+    @SuppressWarnings("unused")
     @Override
-    public void onQuapticTick(@NotNull final ConnectionGroup group, @NotNull final Location location) {
+    public void onTick2(@NotNull final ConnectionGroup group, @NotNull final Location location) {
         final Optional<UUID> uuid = BlockStorageAPI.getUuid(location, Keys.BS_PLAYER);
         if (uuid.isEmpty()) {
             return;
@@ -120,7 +121,7 @@ public class MultiblockClicker extends ConnectedBlock implements PowerAnimatedBl
         }
 
         int ticksSinceLastUpdate = BlockStorageAPI.getInt(location, Keys.BS_TICKS_SINCE_LAST_UPDATE);
-        ticksSinceLastUpdate += QuapticTicker.INTERVAL_TICKS;
+        ticksSinceLastUpdate += QuapticTicker.INTERVAL_TICKS_2;
         if (owner == null || ticksSinceLastUpdate < settings.getUseInterval()) {
             BlockStorageAPI.set(location, Keys.BS_TICKS_SINCE_LAST_UPDATE, ticksSinceLastUpdate);
             return;

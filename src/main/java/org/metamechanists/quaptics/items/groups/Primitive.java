@@ -302,14 +302,14 @@ public class Primitive {
                         null, null, null
                 }).register(addon);
 
-        //new SlimefunItem(
-        //        Groups.PRIMITIVE,
-        //        ENTANGLED_CORE,
-        //        RecipeTypes.RECIPE_ENTANGLEMENT,
-        //        new ItemStack[]{
-        //                null, null, null,
-        //                null, new ItemStack(Material.DEAD_BUSH), null,
-        //                null, null, null
-        //        }).register(addon);
+        new SlimefunItem(
+                Groups.PRIMITIVE,
+                ENTANGLED_CORE,
+                RecipeTypes.RECIPE_ENTANGLEMENT,
+                new ItemStack[]{
+                        null, null, null,
+                        null, new ItemStack(Material.DEAD_BUSH), null,
+                        null, null, null
+                }).register(addon);
     }
 }

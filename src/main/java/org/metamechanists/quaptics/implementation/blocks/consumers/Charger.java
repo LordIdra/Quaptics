@@ -28,6 +28,7 @@ import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
 import org.metamechanists.quaptics.panels.info.BlockInfoPanel;
 import org.metamechanists.quaptics.panels.info.implementation.ChargerInfoPanel;
+import org.metamechanists.quaptics.storage.QuapticTicker;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Language;
@@ -113,8 +114,9 @@ public class Charger extends ConnectedBlock implements InfoPanelBlock, ItemHolde
     protected void onRightClick(final @NotNull Location location, final @NotNull Player player) {
         itemHolderInteract(location, player);
     }
+    @SuppressWarnings("unused")
     @Override
-    public void onQuapticTick(@NotNull final ConnectionGroup group, @NotNull final Location location) {
+    public void onTick10(@NotNull final ConnectionGroup group, @NotNull final Location location) {
         final boolean hasItem = BlockStorageAPI.getBoolean(location, Keys.BS_IS_HOLDING_ITEM);
         setPanelHidden(group, !hasItem);
         if (!hasItem) {
@@ -126,13 +128,17 @@ public class Charger extends ConnectedBlock implements InfoPanelBlock, ItemHolde
             return;
         }
 
+        if (!(SlimefunItem.getByItem(stack.get()) instanceof final QuapticChargeableItem chargeableItem)) {
+            return;
+        }
+
         final Optional<Link> inputLink = getLink(group, "input");
         if (inputLink.isEmpty() || !settings.isOperational(inputLink)) {
             return;
         }
 
         ParticleUtils.randomParticle(location.clone().toCenterLocation(), Particle.ELECTRIC_SPARK, 0.3, 1);
-        final ItemStack newStack = QuapticChargeableItem.chargeItem(inputLink.get(), stack.get());
+        final ItemStack newStack = chargeableItem.chargeItem(inputLink.get(), stack.get(), QuapticTicker.INTERVAL_TICKS_10);
         ItemHolderBlock.insertItem(location, newStack);
         updatePanel(group);
     }

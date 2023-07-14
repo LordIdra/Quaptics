@@ -37,6 +37,7 @@ public abstract class EnergyConnectedBlock extends ConnectedBlock implements Ene
     @Override
     @OverridingMethodsMustInvokeSuper
     public void onSlimefunTick(@NotNull final Block block, final SlimefunItem item, final Config data) {
+        super.onSlimefunTick(block, item, data);
         final boolean powered = getCharge(block.getLocation(), data) >= settings.getEnergyConsumption();
         if (powered) {
             removeCharge(block.getLocation(), settings.getEnergyConsumption());
