@@ -51,8 +51,8 @@ public class DiffractionGrating extends ConnectedBlock implements PowerAnimatedB
                     "&7● The size of the increase depends on how close the",
                     "&7  auxiliary input is to the target phase"));
 
-    private final Vector mainPointLocation = new Vector(0, 0, 0.5);
-    private final Vector auxiliaryPointLocation = new Vector(0, 0, 0);
+    private final Vector mainPointLocation = new Vector(0, 0, -0.5);
+    private final Vector auxiliaryPointLocation = new Vector(0, 0.4, 0);
     private final Vector outputPointLocation = new Vector(0, 0, 0.5);
 
     public DiffractionGrating(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {

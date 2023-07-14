@@ -6,28 +6,24 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
-import org.joml.Vector3d;
-import org.joml.Vector3f;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
 import org.metamechanists.quaptics.connections.Link;
-import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.implementation.attachments.PowerAnimatedBlock;
 import org.metamechanists.quaptics.implementation.attachments.PowerLossBlock;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
+import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
-import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionPointId;
-import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
-import org.metamechanists.quaptics.utils.transformations.TransformationUtils;
+import org.metamechanists.quaptics.utils.models.ModelBuilder;
+import org.metamechanists.quaptics.utils.models.components.ModelCuboid;
 
 import java.util.List;
 import java.util.Optional;
@@ -44,12 +40,6 @@ public class Interferometer extends ConnectedBlock implements PowerAnimatedBlock
             "&cInterferometer &4I",
             Lore.create(INTERFEROMETER_1_SETTINGS,
                     "&7● Sets the Phase of the main ray to the phase of the auxiliary ray"));
-
-    private static final Vector3f MAIN_SIZE = new Vector3f(0.30F, 0.30F, 0.90F);
-    private static final Vector3f AUXILIARY_SIZE = new Vector3f(0.40F, 0.15F, 0.15F);
-    private static final Vector3f AUXILIARY_OFFSET = new Vector3f(-0.20F, 0.0F, 0.0F);
-    private static final Vector3f PRISM_SIZE = new Vector3f(0.40F);
-    private static final Vector3d PRISM_ROTATION = new Vector3d(0.0F, Math.PI/4, 0.0F);
 
     private static final Vector MAIN_INPUT_LOCATION = new Vector(0.0F, 0.0F, -0.45F);
     private static final Vector AUXILIARY_INPUT_LOCATION = new Vector(0.45F, 0.0F, 0.0F);
@@ -70,31 +60,20 @@ public class Interferometer extends ConnectedBlock implements PowerAnimatedBlock
     }
     @Override
     protected DisplayGroup initModel(final @NotNull Location location, final @NotNull Player player) {
-        final DisplayGroup displayGroup = new DisplayGroup(location);
-        final BlockFace face = TransformationUtils.yawToFace(player.getEyeLocation().getYaw());
-        displayGroup.addDisplay("main", new BlockDisplayBuilder()
-                .material(Material.YELLOW_TERRACOTTA)
-                .transformation(new TransformationMatrixBuilder()
-                        .scale(MAIN_SIZE)
-                        .lookAlong(face)
-                        .buildForBlockDisplay())
-                .build(location.toCenterLocation()));
-        displayGroup.addDisplay("auxiliary", new BlockDisplayBuilder()
-                .material(Material.GRAY_CONCRETE)
-                .transformation(new TransformationMatrixBuilder()
-                        .scale(AUXILIARY_SIZE)
-                        .translate(AUXILIARY_OFFSET)
-                        .lookAlong(face)
-                        .buildForBlockDisplay())
-                .build(location.toCenterLocation()));
-        displayGroup.addDisplay("prism", new BlockDisplayBuilder()
-                .material(settings.getTier().concreteMaterial)
-                .transformation(new TransformationMatrixBuilder()
-                        .scale(PRISM_SIZE)
-                        .rotate(PRISM_ROTATION)
-                        .buildForBlockDisplay())
-                .build(location.toCenterLocation()));
-        return displayGroup;
+        return new ModelBuilder()
+                .add("main", new ModelCuboid()
+                        .material(Material.YELLOW_TERRACOTTA)
+                        .facing(player.getFacing())
+                        .size(0.3F, 0.3F, 0.9F))
+                .add("auxiliary", new ModelCuboid()
+                        .material(Material.GRAY_CONCRETE)
+                        .size(0.4F, 0.15F, 0.15F)
+                        .location(0.2F, 0, 0))
+                .add("prism", new ModelCuboid()
+                        .material(settings.getTier().concreteMaterial)
+                        .rotation(Math.PI/4)
+                        .size(0.4F))
+                .buildAtBlockCenter(location);
     }
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
