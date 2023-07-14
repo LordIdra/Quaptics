@@ -12,7 +12,7 @@ public class QuapticTicker extends BukkitRunnable {
     private static long time;
 
     public static final int TICKS_PER_SECOND = 20;
-    public static final int INTERVAL_TICKS = 2;
+    public static final int INTERVAL_TICKS = 1;
     public static final int INTERVAL_TICKS_2 = 2;
     public static final int INTERVAL_TICKS_5 = 5;
     public static final int INTERVAL_TICKS_10 = 10;
