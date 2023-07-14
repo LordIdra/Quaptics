@@ -56,7 +56,7 @@ public class ReactorController extends ConnectedBlock implements ComplexMultiblo
             Lore.create(REACTOR_CONTROLLER_SETTINGS,
                     "&7● Multiblock structure: use the Multiblock Wand to build the structure",
                     "&7● Generates more power than you put in",
-                    "&7● Immediately shuts down if power is lost",
+                    "&7● Only starts working above a threshold input power",
                     "&7● Takes some time to reach maximum power output"));
 
     private static final Vector RING_1_LOCATION = new Vector(3, 0, 0);
@@ -70,7 +70,7 @@ public class ReactorController extends ConnectedBlock implements ComplexMultiblo
     private static final List<Vector> RING_LOCATIONS = List.of(
             RING_1_LOCATION, RING_2_LOCATION, RING_3_LOCATION, RING_4_LOCATION,
             RING_5_LOCATION, RING_6_LOCATION, RING_7_LOCATION, RING_8_LOCATION);
-    private static final double MAX_ANIMATION_STEP = 0.1F;
+    private static final double MAX_ANIMATION_STEP = 0.2F;
 
     private final Vector outputPoint1Location = new Vector(getConnectionRadius(), 0, 0);
     private final Vector outputPoint2Location = new Vector(-getConnectionRadius(), 0, 0);
@@ -148,16 +148,10 @@ public class ReactorController extends ConnectedBlock implements ComplexMultiblo
     @Override
     public void onQuapticTick(@NotNull final ConnectionGroup group, @NotNull final Location location) {
         final boolean isMultiblockValid = areAllRingsInPlace(location);
-        setPanelHidden(group, !isMultiblockValid);
-        if (!isMultiblockValid) {
-            BlockStorageAPI.set(location, Keys.BS_SECONDS_SINCE_REACTOR_STARTED, 0.0);
-            BlockStorageAPI.set(location, Keys.BS_OUTPUT_POWER, 0.0);
-            return;
-        }
-
         final double inputPower = getTotalInputPower(location);
+        setPanelHidden(group, !isMultiblockValid);
         updatePanel(group);
-        if (inputPower < settings.getMinPower()) {
+        if (!isMultiblockValid || inputPower < settings.getMinPower()) {
             BlockStorageAPI.set(location, Keys.BS_SECONDS_SINCE_REACTOR_STARTED, 0.0);
             BlockStorageAPI.set(location, Keys.BS_OUTPUT_POWER, 0.0);
             return;
