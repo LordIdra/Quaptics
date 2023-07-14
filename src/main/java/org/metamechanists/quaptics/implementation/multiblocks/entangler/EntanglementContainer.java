@@ -27,8 +27,10 @@ import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Language;
 import org.metamechanists.quaptics.utils.Particles;
+import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.models.ModelBuilder;
+import org.metamechanists.quaptics.utils.models.components.ModelItem;
 import org.metamechanists.quaptics.utils.models.components.ModelLine;
 
 import java.util.ArrayList;
@@ -64,7 +66,6 @@ public class EntanglementContainer extends ConnectedBlock implements ItemHolderB
             MAGNET_4_LOCATION, MAGNET_5_LOCATION, MAGNET_6_LOCATION);
 
     private final double magnetParticleAnimationLengthSeconds = settings.getTimePerItem();
-    private final double centerParticleAnimationLengthSeconds = settings.getTimePerItem() / 8.0;
 
     private static final Map<ItemStack, ItemStack> RECIPES = Map.of(
             new ItemStack(Material.DEAD_BUSH), Primitive.ENTANGLED_CORE
@@ -86,25 +87,25 @@ public class EntanglementContainer extends ConnectedBlock implements ItemHolderB
                         .from(-0.4F, -0.4F, -0.4F)
                         .to(0.4F, -0.4F, -0.4F)
                         .thickness(0.1F)
-                        .extraLength(1.0F))
+                        .extraLength(0.1F))
                 .add("frame1b", new ModelLine()
                         .material(Material.BLUE_CONCRETE)
                         .from(-0.4F, 0.4F, -0.4F)
                         .to(0.4F, 0.4F, -0.4F)
                         .thickness(0.1F)
-                        .extraLength(1.0F))
+                        .extraLength(0.1F))
                 .add("frame1c", new ModelLine()
                         .material(Material.BLUE_CONCRETE)
                         .from(-0.4F, -0.4F, 0.4F)
                         .to(0.4F, -0.4F, 0.4F)
                         .thickness(0.1F)
-                        .extraLength(1.0F))
+                        .extraLength(0.1F))
                 .add("frame1d", new ModelLine()
                         .material(Material.BLUE_CONCRETE)
                         .from(-0.4F, 0.4F, 0.4F)
                         .to(0.4F, 0.4F, 0.4F)
                         .thickness(0.1F)
-                        .extraLength(1.0F))
+                        .extraLength(0.1F))
 
                 .add("frame2a", new ModelLine()
                         .material(Material.BLUE_CONCRETE)
@@ -147,6 +148,9 @@ public class EntanglementContainer extends ConnectedBlock implements ItemHolderB
                         .from(0.4F, 0.4F, -0.4F)
                         .to(0.4F, 0.4F, 0.4F)
                         .thickness(0.1F))
+                .add("item", new ModelItem()
+                        .brightness(Utils.BRIGHTNESS_ON)
+                        .size(0.5F))
                 .buildAtBlockCenter(location);
     }
     @Override
@@ -228,7 +232,6 @@ public class EntanglementContainer extends ConnectedBlock implements ItemHolderB
     @Override
     public void tickAnimation(@NotNull final Location centerLocation, final double timeSeconds) {
         MAGNET_LOCATIONS.forEach(magnetLocation -> animateMagnet(centerLocation, centerLocation.clone().add(magnetLocation), timeSeconds));
-        //animateCenter(centerLocation, timeSeconds);
     }
 
     private static boolean isMagnetPowered(@NotNull final Location pillarLocation) {
@@ -246,20 +249,6 @@ public class EntanglementContainer extends ConnectedBlock implements ItemHolderB
                 (40*timeSinceCraftStarted % magnetParticleAnimationLengthSeconds) / (magnetParticleAnimationLengthSeconds+0.001),
                 0.05);
     }
-//    private void animateCenter(@NotNull final Location center, final double timeSinceCraftStarted) {
-//        Particles.animatedHorizontalCircle(Particle.ELECTRIC_SPARK,
-//                center.clone().toCenterLocation(),
-//                1.2,
-//                3,
-//                (timeSinceCraftStarted % centerParticleAnimationLengthSeconds) / centerParticleAnimationLengthSeconds,
-//                0);
-//        Particles.animatedHorizontalCircle(Particle.ELECTRIC_SPARK,
-//                center.clone().toCenterLocation(),
-//                1.2,
-//                3,
-//                1 - ((timeSinceCraftStarted % centerParticleAnimationLengthSeconds) / centerParticleAnimationLengthSeconds),
-//                0);
-//    }
     private static void animateCenterCompleted(@NotNull final Location center) {
         new ParticleBuilder(Particle.FIREWORKS_SPARK)
                 .location(center.toCenterLocation())
