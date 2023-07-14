@@ -57,7 +57,7 @@ public class ReactorInfoPanel extends BlockInfoPanel {
         final double inputPower = ReactorController.getTotalInputPower(location.get());
         final double maxInputPower = ReactorController.RING_LOCATIONS.size() * EntanglementMagnet.ENTANGLEMENT_MAGNET_SETTINGS.getTier().maxPower * 2;
 
-        container.setText("efficiency", Lore.progressBar(secondsSinceStarted, maxSeconds, "&e", "&7", "&a"));
+        container.setText("efficiencyBar", Lore.progressBar(secondsSinceStarted, maxSeconds, "&e", "&7", "&a"));
         container.setText("powerInputText", (inputPower >= maxInputPower ? "&a" : "&e") + inputPower + "&7 / " + "&a" + maxInputPower);
         // TODO output power
     }
