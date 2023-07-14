@@ -146,6 +146,8 @@ public class ReactorController extends ConnectedBlock implements ComplexMultiblo
         final boolean isMultiblockValid = areAllRingsInPlace(location);
         setPanelHidden(group, !isMultiblockValid);
         if (!isMultiblockValid) {
+            BlockStorageAPI.set(location, Keys.BS_SECONDS_SINCE_REACTOR_STARTED, 0.0);
+            BlockStorageAPI.set(location, Keys.BS_OUTPUT_POWER, 0.0);
             return;
         }
 
