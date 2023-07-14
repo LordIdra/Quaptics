@@ -74,7 +74,7 @@ public class DiffractionGrating extends ConnectedBlock implements PowerAnimatedB
                 .add("main", new ModelCuboid()
                         .material(Material.ORANGE_TERRACOTTA)
                         .facing(player.getFacing())
-                        .size(0.2F, 0.2F, 0.5F))
+                        .size(0.2F, 0.2F, 1.0F))
                 .add("auxiliary", new ModelCuboid()
                         .material(Material.GRAY_CONCRETE)
                         .size(0.15F, 0.4F, 0.15F)
@@ -82,7 +82,7 @@ public class DiffractionGrating extends ConnectedBlock implements PowerAnimatedB
                 .add("diamond", new ModelDiamond()
                         .material(settings.getTier().concreteMaterial)
                         .brightness(Utils.BRIGHTNESS_OFF)
-                        .size(0.3F))
+                        .size(0.5F))
                 .buildAtBlockCenter(location);
     }
     @Override
