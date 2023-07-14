@@ -59,7 +59,7 @@ public class ReactorRing extends ConnectedBlock implements PowerAnimatedBlock {
 
     @Override
     protected float getConnectionRadius() {
-        return 0;
+        return 0.5F;
     }
     @Override
     public void connect(@NotNull final ConnectionPointId from, @NotNull final ConnectionPointId to) {}
@@ -67,16 +67,28 @@ public class ReactorRing extends ConnectedBlock implements PowerAnimatedBlock {
     protected DisplayGroup initModel(final @NotNull Location location, final @NotNull Player player) {
         final Vector controllerPosition = findController(location);
         return new ModelBuilder()
-                .add("ring1", new ModelCuboid()
+                .add("ring1a", new ModelCuboid()
                         .material(Material.BLACK_CONCRETE)
                         .facing(controllerPosition.toVector3f())
                         .size(0.1F, 0.3F, 0.1F)
                         .location(0, 0, 0.3F))
-                .add("ring1", new ModelCuboid()
+                .add("ring1b", new ModelCuboid()
                         .material(Material.BLACK_CONCRETE)
                         .facing(controllerPosition.toVector3f())
                         .size(0.1F, 0.3F, 0.1F)
                         .location(0, 0, -0.3F))
+
+                .add("ring2a", new ModelCuboid()
+                        .material(Material.BLACK_CONCRETE)
+                        .facing(controllerPosition.toVector3f())
+                        .size(0.1F, 0.1F, 0.3F)
+                        .location(0, 0.3F, 0.3F))
+                .add("ring2b", new ModelCuboid()
+                        .material(Material.BLACK_CONCRETE)
+                        .facing(controllerPosition.toVector3f())
+                        .size(0.1F, 0.1F, 0.3F)
+                        .location(0, -0.3F, -0.3F))
+
                 .add("connection1", new ModelCuboid()
                         .material(Material.GRAY_CONCRETE)
                         .facing(controllerPosition.toVector3f())
@@ -94,9 +106,9 @@ public class ReactorRing extends ConnectedBlock implements PowerAnimatedBlock {
         final Vector controllerDirection = findController(location).normalize();
         return List.of(
                 new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input 1",
-                        location.clone().toCenterLocation().add(controllerDirection.multiply(settings.getConnectionRadius()))),
+                        location.clone().toCenterLocation().add(controllerDirection.multiply(getConnectionRadius()))),
                 new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input 2",
-                        location.clone().toCenterLocation().add(controllerDirection.multiply(-settings.getConnectionRadius()))));
+                        location.clone().toCenterLocation().add(controllerDirection.multiply(-getConnectionRadius()))));
     }
     @Override
     protected void initBlockStorage(final @NotNull Location location) {
