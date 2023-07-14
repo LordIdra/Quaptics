@@ -70,7 +70,7 @@ public class ReactorController extends ConnectedBlock implements ComplexMultiblo
     private static final List<Vector> RING_LOCATIONS = List.of(
             RING_1_LOCATION, RING_2_LOCATION, RING_3_LOCATION, RING_4_LOCATION,
             RING_5_LOCATION, RING_6_LOCATION, RING_7_LOCATION, RING_8_LOCATION);
-    private static final double LOWEST_ANIMATION_LENGTH = 0.1F;
+    private static final double LOWEST_ANIMATION_LENGTH = 0.3F;
 
     private final Vector outputPoint1Location = new Vector(getConnectionRadius(), 0, 0);
     private final Vector outputPoint2Location = new Vector(-getConnectionRadius(), 0, 0);
@@ -200,12 +200,12 @@ public class ReactorController extends ConnectedBlock implements ComplexMultiblo
                 centerLocation.clone().toCenterLocation(),
                 3,
                 3,
-                ((100*timeSeconds) % (100*animationLength)) / animationLength,
+                (timeSeconds % 100*animationLength) / animationLength,
                 0);
     }
 
     public double getMaxOutputPower() {
-        return RING_LOCATIONS.size() * ReactorRing.REACTOR_RING_SETTINGS.getTier().maxPower * 2 * settings.getPowerMultiplier();
+        return ReactorRing.REACTOR_RING_SETTINGS.getTier().maxPower * 2.0 * RING_LOCATIONS.size() * settings.getPowerMultiplier();
     }
     private static double getRingInputPower(@NotNull final Location ringLocation) {
         return BlockStorageAPI.getDouble(ringLocation, Keys.BS_INPUT_POWER);
