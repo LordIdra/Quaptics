@@ -27,6 +27,7 @@ import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
+import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.models.ModelBuilder;
 import org.metamechanists.quaptics.utils.models.components.ModelCuboid;
@@ -60,11 +61,13 @@ public abstract class Turret extends ConnectedBlock implements PowerAnimatedBloc
                         .material(Material.GRAY_CONCRETE))
                 .add("power1", new ModelCuboid()
                         .material(settings.getTier().concreteMaterial)
-                        .size(0.95F, 0.3F, 1.05F)
+                        .brightness(Utils.BRIGHTNESS_OFF)
+                        .size(0.6F, 0.2F, 1.1F)
                         .location(0, -0.25F, 0))
                 .add("power2", new ModelCuboid()
                         .material(settings.getTier().concreteMaterial)
-                        .size(1.05F, 0.3F, 0.95F)
+                        .brightness(Utils.BRIGHTNESS_OFF)
+                        .size(1.1F, 0.2F, 0.6F)
                         .location(0, -0.25F, 0))
                 .buildAtBlockCenter(location);
     }
