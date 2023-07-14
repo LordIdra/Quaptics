@@ -119,11 +119,6 @@ public class ReactorRing extends ConnectedBlock {
                         .facing(controllerPosition.toVector3f())
                         .size(0.15F, 0.15F, 0.2F)
                         .location(0, 0, 0.6F))
-                .add("connection2", new ModelCuboid()
-                        .material(Material.GRAY_CONCRETE)
-                        .facing(controllerPosition.toVector3f())
-                        .size(0.15F, 0.15F, 0.2F)
-                        .location(0, 0, -0.6F))
                 .buildAtBlockCenter(location);
     }
     @Override

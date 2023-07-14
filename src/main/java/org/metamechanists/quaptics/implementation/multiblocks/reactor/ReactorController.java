@@ -70,7 +70,7 @@ public class ReactorController extends ConnectedBlock implements ComplexMultiblo
     private static final List<Vector> RING_LOCATIONS = List.of(
             RING_1_LOCATION, RING_2_LOCATION, RING_3_LOCATION, RING_4_LOCATION,
             RING_5_LOCATION, RING_6_LOCATION, RING_7_LOCATION, RING_8_LOCATION);
-    private static final double LOWEST_ANIMATION_LENGTH = 0.3F;
+    private static final double LOWEST_ANIMATION_LENGTH = 0.1F;
 
     private final Vector outputPoint1Location = new Vector(getConnectionRadius(), 0, 0);
     private final Vector outputPoint2Location = new Vector(-getConnectionRadius(), 0, 0);
@@ -158,6 +158,7 @@ public class ReactorController extends ConnectedBlock implements ComplexMultiblo
         updatePanel(group);
         if (inputPower < settings.getMinPower()) {
             BlockStorageAPI.set(location, Keys.BS_SECONDS_SINCE_REACTOR_STARTED, 0.0);
+            BlockStorageAPI.set(location, Keys.BS_OUTPUT_POWER, 0.0);
             return;
         }
 
@@ -198,7 +199,7 @@ public class ReactorController extends ConnectedBlock implements ComplexMultiblo
         Particles.animatedHorizontalCircle(Particle.ELECTRIC_SPARK,
                 centerLocation.clone().toCenterLocation(),
                 3,
-                5,
+                3,
                 (timeSeconds % animationLength) / animationLength,
                 0);
     }
