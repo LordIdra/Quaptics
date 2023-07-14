@@ -24,9 +24,8 @@ import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionPointId;
 import org.metamechanists.quaptics.utils.models.ModelBuilder;
+import org.metamechanists.quaptics.utils.models.components.ModelCuboid;
 import org.metamechanists.quaptics.utils.models.components.ModelDiamond;
-import org.metamechanists.quaptics.utils.models.components.ModelLine;
-import org.metamechanists.quaptics.utils.transformations.TransformationUtils;
 
 import java.util.List;
 import java.util.Optional;
@@ -52,9 +51,9 @@ public class DiffractionGrating extends ConnectedBlock implements PowerAnimatedB
                     "&7● The size of the increase depends on how close the",
                     "&7  auxiliary input is to the target phase"));
 
-    private final Vector mainPointLocation = Vector.fromJOML(TransformationUtils.rotatedRadius(getConnectionRadius(), Math.PI * 2/3));
-    private final Vector auxiliaryPointLocation = new Vector(0.0F, 0.0F, -getConnectionRadius());
-    private final Vector outputPointLocation = Vector.fromJOML(TransformationUtils.rotatedRadius(getConnectionRadius(), Math.PI * -2/3));
+    private final Vector mainPointLocation = new Vector(0, 0, 0.5);
+    private final Vector auxiliaryPointLocation = new Vector(0, 0, 0);
+    private final Vector outputPointLocation = new Vector(0, 0, 0.5);
 
     public DiffractionGrating(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
@@ -62,7 +61,7 @@ public class DiffractionGrating extends ConnectedBlock implements PowerAnimatedB
 
     @Override
     protected float getConnectionRadius() {
-        return 0.40F;
+        return 0;
     }
     @Override
     protected Optional<Location> calculatePointLocationSphere(@NotNull final ConnectionPointId from, @NotNull final ConnectionPointId to) {
@@ -72,21 +71,17 @@ public class DiffractionGrating extends ConnectedBlock implements PowerAnimatedB
     @Override
     protected DisplayGroup initModel(final @NotNull Location location, final @NotNull Player player) {
         return new ModelBuilder()
-                .add("main", new ModelLine()
+                .add("main", new ModelCuboid()
                         .material(Material.ORANGE_TERRACOTTA)
-                        .to(TransformationUtils.rotatedRadius(0.5F, Math.PI * 2/3))
-                        .thickness(0.15F))
-                .add("output", new ModelLine()
-                        .material(Material.ORANGE_TERRACOTTA)
-                        .to(TransformationUtils.rotatedRadius(0.5F, Math.PI * -2/3))
-                        .thickness(0.15F))
-                .add("auxiliary", new ModelLine()
+                        .facing(player.getFacing())
+                        .size(0.2F, 0.2F, 0.5F))
+                .add("auxiliary", new ModelCuboid()
                         .material(Material.GRAY_CONCRETE)
-                        .to(0, 0, 0.5F)
-                        .thickness(0.10F))
-                .add("auxiliary", new ModelDiamond()
-                        .material(Material.GRAY_CONCRETE)
-                        .brightness(Utils.BRIGHTNESS_ON)
+                        .size(0.15F, 0.4F, 0.15F)
+                        .location(0, 0.2F, 0))
+                .add("diamond", new ModelDiamond()
+                        .material(settings.getTier().concreteMaterial)
+                        .brightness(Utils.BRIGHTNESS_OFF)
                         .size(0.3F))
                 .buildAtBlockCenter(location);
     }
@@ -133,7 +128,7 @@ public class DiffractionGrating extends ConnectedBlock implements PowerAnimatedB
     }
     @Override
     public void onPoweredAnimation(final Location location, final boolean powered) {
-        brightnessAnimation(location, "prism", powered);
+        brightnessAnimation(location, "diamond", powered);
     }
 
     private static double calculateFrequency(@NotNull final Settings settings, final double frequency, final int phase) {
