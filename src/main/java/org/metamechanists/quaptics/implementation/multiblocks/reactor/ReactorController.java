@@ -144,6 +144,7 @@ public class ReactorController extends ConnectedBlock implements ComplexMultiblo
     @Override
     public void onQuapticTick(@NotNull final ConnectionGroup group, @NotNull final Location location) {
         final double inputPower = getTotalInputPower(location);
+        updatePanel(group);
         if (inputPower < settings.getMinPower()) {
             BlockStorageAPI.set(location, Keys.BS_SECONDS_SINCE_REACTOR_STARTED, 0.0);
             return;
@@ -154,7 +155,6 @@ public class ReactorController extends ConnectedBlock implements ComplexMultiblo
         BlockStorageAPI.set(location, Keys.BS_SECONDS_SINCE_REACTOR_STARTED, secondsSinceReactorStarted);
 
         tickAnimation(location, secondsSinceReactorStarted);
-        updatePanel(group);
 
         final List<Link> outgoingLinks = getOutgoingLinks(location);
         if (outgoingLinks.isEmpty()) {
@@ -187,10 +187,10 @@ public class ReactorController extends ConnectedBlock implements ComplexMultiblo
 
     }
 
-    private static double getMagnetInputPower(@NotNull final Location magnetLocation) {
-        return BlockStorageAPI.getDouble(magnetLocation, Keys.BS_INPUT_POWER);
+    private static double getRingInputPower(@NotNull final Location ringLocation) {
+        return BlockStorageAPI.getDouble(ringLocation, Keys.BS_INPUT_POWER);
     }
     public static double getTotalInputPower(@NotNull final Location location) {
-        return RING_LOCATIONS.stream().mapToDouble(vector -> getMagnetInputPower(location.clone().add(vector))).sum();
+        return RING_LOCATIONS.stream().mapToDouble(vector -> getRingInputPower(location.clone().add(vector))).sum();
     }
 }
