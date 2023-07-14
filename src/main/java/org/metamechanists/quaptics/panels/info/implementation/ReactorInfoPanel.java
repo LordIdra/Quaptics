@@ -70,9 +70,9 @@ public class ReactorInfoPanel extends BlockInfoPanel {
         final double outputPower = BlockStorageAPI.getDouble(location.get(), Keys.BS_OUTPUT_POWER);
         final double maxOutputPower = controller.getMaxOutputPower();
 
-        container.setText("thresholdBar", "&7Threshold " + Lore.progressBar(inputPower, minInputPower, "&6", "&7", "&a"));
-        container.setText("efficiencyBar", "&7Efficiency " + Lore.progressBar(secondsSinceStarted, maxSeconds, "&6", "&7", "&a"));
-        container.setText("powerOutputText", "&7Output " + (outputPower >= maxOutputPower ? "&a" : "&6") + outputPower + "&7 / " + "&a" + maxOutputPower);
+        container.setText("thresholdBar", "&7Threshold " + Lore.thresholdBar(inputPower, minInputPower));
+        container.setText("efficiencyBar", "&7Efficiency " + Lore.efficiencyBar(secondsSinceStarted, maxSeconds));
+        container.setText("powerOutputText", "&7Output " + Lore.powerOutput(outputPower, maxOutputPower));
     }
 
     @Override

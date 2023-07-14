@@ -26,7 +26,6 @@ import org.metamechanists.quaptics.utils.models.ModelBuilder;
 import org.metamechanists.quaptics.utils.models.components.ModelCuboid;
 
 import java.util.List;
-import java.util.Optional;
 
 public class ReactorRing extends ConnectedBlock {
     public static final Settings REACTOR_RING_SETTINGS = Settings.builder()
@@ -38,7 +37,6 @@ public class ReactorRing extends ConnectedBlock {
             "&6Reactor Ring",
             Lore.create(REACTOR_RING_SETTINGS,
                     "&7● Multiblock component",
-                    "&7● Has two inputs",
                     "&7● The more power you put in, the more power the reactor outputs"));
 
     private final List<Vector> possibleControllerLocations = List.of(
@@ -114,20 +112,17 @@ public class ReactorRing extends ConnectedBlock {
                         .location(0, -0.3F, 0.3F)
                         .rotation(Math.PI/4, 0, 0))
 
-                .add("connection1", new ModelCuboid()
+                .add("connection2", new ModelCuboid()
                         .material(Material.GRAY_CONCRETE)
                         .facing(controllerPosition.toVector3f())
                         .size(0.15F, 0.15F, 0.2F)
-                        .location(0, 0, 0.6F))
+                        .location(0, 0, -0.6F))
                 .buildAtBlockCenter(location);
     }
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
         final Vector controllerDirection = findController(location).normalize();
-        return List.of(
-                new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input 1",
-                        location.clone().toCenterLocation().add(controllerDirection.clone().multiply(getConnectionRadius()))),
-                new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input 2",
+        return List.of(new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input",
                         location.clone().toCenterLocation().add(controllerDirection.clone().multiply(-getConnectionRadius()))));
     }
     @Override
@@ -137,20 +132,11 @@ public class ReactorRing extends ConnectedBlock {
 
     @Override
     public void onInputLinkUpdated(@NotNull final ConnectionGroup group, @NotNull final Location location) {
-        if (doBurnoutCheck(group, "input 1") || doBurnoutCheck(group, "input 2")) {
+        if (doBurnoutCheck(group, "input")) {
             return;
         }
 
-        int inputPower = 0;
-        final Optional<Link> link1 = getLink(location, "input 1");
-        final Optional<Link> link2 = getLink(location, "input 2");
-        if (link1.isPresent()) {
-            inputPower += link1.get().getPower();
-        }
-        if (link2.isPresent()) {
-            inputPower += link2.get().getPower();
-        }
-
+        final double inputPower = getLink(location, "input").map(Link::getPower).orElse(0.0);
         BlockStorageAPI.set(location, Keys.BS_INPUT_POWER, inputPower);
     }
 

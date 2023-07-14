@@ -200,7 +200,7 @@ public class ReactorController extends ConnectedBlock implements ComplexMultiblo
                 centerLocation.clone().toCenterLocation(),
                 3,
                 3,
-                (timeSeconds % animationLength) / animationLength,
+                ((100*timeSeconds) % (100*animationLength)) / animationLength,
                 0);
     }
 

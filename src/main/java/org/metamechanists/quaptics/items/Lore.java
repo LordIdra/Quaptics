@@ -5,6 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.storage.QuapticTicker;
 import org.metamechanists.quaptics.utils.Colors;
+import org.metamechanists.quaptics.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -133,6 +134,15 @@ public class Lore {
     }
     public String timeToMaxEfficiency(final double timeToMaxEfficiency) {
         return ATTRIBUTE_SYMBOL + SPEED_SYMBOL + "&7Time to max efficiency &e" + format(timeToMaxEfficiency) + TIME_TO_MAX_POWER_SUFFIX;
+    }
+    public String thresholdBar(final double inputPower, final double minInputPower) {
+        return progressBar(inputPower, minInputPower, "&6", "&7", "&a");
+    }
+    public String efficiencyBar(final double secondsSinceStarted, final double maxSeconds) {
+        return progressBar(secondsSinceStarted, maxSeconds, "&6", "&7", "&a");
+    }
+    public String powerOutput(final double outputPower, final double maxOutputPower) {
+        return (outputPower >= maxOutputPower ? "&a" : "&6") + Utils.roundTo2dp(outputPower) + "&7 / " + "&a" + maxOutputPower;
     }
 
     public String capacity(final double capacity) {
