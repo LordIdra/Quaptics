@@ -74,7 +74,7 @@ public class ReactorController extends ConnectedBlock implements ComplexMultiblo
 
     @Override
     protected float getConnectionRadius() {
-        return 0.9F;
+        return 0.7F;
     }
     @Override
     protected DisplayGroup initModel(final @NotNull Location location, final @NotNull Player player) {
