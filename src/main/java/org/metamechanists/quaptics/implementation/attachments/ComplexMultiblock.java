@@ -58,7 +58,9 @@ public interface ComplexMultiblock {
             GHOST_BLOCK_DISPLAY.glow(isStructureBlockValid(block, itemStack) ? RIGHT_MATERIAL_COLOR : WRONG_MATERIAL_COLOR);
         }
 
-        final BlockDisplay blockDisplay = GHOST_BLOCK_DISPLAY.build(center);
+        final BlockDisplay blockDisplay = GHOST_BLOCK_DISPLAY
+                .material(itemStack.getType())
+                .build(center);
         final Interaction interaction = new InteractionBuilder()
                 .width(DISPLAY_SIZE)
                 .height(DISPLAY_SIZE)

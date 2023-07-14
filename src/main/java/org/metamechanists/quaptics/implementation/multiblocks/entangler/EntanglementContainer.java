@@ -93,25 +93,25 @@ public class EntanglementContainer extends ConnectedBlock implements ItemHolderB
                         .from(-0.4F, -0.4F, -0.4F)
                         .to(0.4F, -0.4F, -0.4F)
                         .thickness(0.1F)
-                        .extraLength(0.05F))
+                        .extraLength(0.075F))
                 .add("frame1b", new ModelLine()
                         .material(Material.BLUE_CONCRETE)
                         .from(-0.4F, 0.4F, -0.4F)
                         .to(0.4F, 0.4F, -0.4F)
                         .thickness(0.1F)
-                        .extraLength(0.05F))
+                        .extraLength(0.075F))
                 .add("frame1c", new ModelLine()
                         .material(Material.BLUE_CONCRETE)
                         .from(-0.4F, -0.4F, 0.4F)
                         .to(0.4F, -0.4F, 0.4F)
                         .thickness(0.1F)
-                        .extraLength(0.05F))
+                        .extraLength(0.075F))
                 .add("frame1d", new ModelLine()
                         .material(Material.BLUE_CONCRETE)
                         .from(-0.4F, 0.4F, 0.4F)
                         .to(0.4F, 0.4F, 0.4F)
                         .thickness(0.1F)
-                        .extraLength(0.05F))
+                        .extraLength(0.075F))
 
                 .add("frame2a", new ModelLine()
                         .material(Material.BLUE_CONCRETE)
@@ -226,8 +226,11 @@ public class EntanglementContainer extends ConnectedBlock implements ItemHolderB
     public Map<Vector, ItemStack> getStructure() {
         return Map.of(
                 MAGNET_1_LOCATION, ENTANGLEMENT_MAGNET,
-                MAGNET_2_LOCATION, ENTANGLEMENT_MAGNET
-        );
+                MAGNET_2_LOCATION, ENTANGLEMENT_MAGNET,
+                MAGNET_3_LOCATION, ENTANGLEMENT_MAGNET,
+                MAGNET_4_LOCATION, ENTANGLEMENT_MAGNET,
+                MAGNET_5_LOCATION, ENTANGLEMENT_MAGNET,
+                MAGNET_6_LOCATION, ENTANGLEMENT_MAGNET);
     }
     @Override
     public void tickAnimation(@NotNull final Location centerLocation, final double timeSeconds) {

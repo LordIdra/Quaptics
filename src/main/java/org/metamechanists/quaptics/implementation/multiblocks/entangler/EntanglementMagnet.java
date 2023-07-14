@@ -62,15 +62,18 @@ public class EntanglementMagnet extends ConnectedBlock implements PowerAnimatedB
                 .add("panel1", new ModelCuboid()
                         .material(Material.ORANGE_CONCRETE)
                         .brightness(Utils.BRIGHTNESS_OFF)
-                        .size(0.6F, 0.3F, 0.3F))
+                        .size(0.6F, 0.3F, 0.3F)
+                        .rotation(ModelDiamond.ROTATION))
                 .add("panel2", new ModelCuboid()
                         .material(Material.ORANGE_CONCRETE)
                         .brightness(Utils.BRIGHTNESS_OFF)
-                        .size(0.3F, 0.6F, 0.3F))
+                        .size(0.3F, 0.6F, 0.3F)
+                        .rotation(ModelDiamond.ROTATION))
                 .add("panel3", new ModelCuboid()
                         .material(Material.ORANGE_CONCRETE)
                         .brightness(Utils.BRIGHTNESS_OFF)
-                        .size(0.3F, 0.3F, 0.6F))
+                        .size(0.3F, 0.3F, 0.6F)
+                        .rotation(ModelDiamond.ROTATION))
                 .buildAtBlockCenter(location);
     }
     @Override
