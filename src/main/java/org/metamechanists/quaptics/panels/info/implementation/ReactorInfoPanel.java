@@ -4,9 +4,9 @@ import org.bukkit.Location;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
+import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.implementation.multiblocks.reactor.ReactorController;
-import org.metamechanists.quaptics.implementation.multiblocks.reactor.ReactorRing;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.panels.info.BlockInfoPanel;
 import org.metamechanists.quaptics.panels.info.InfoPanelBuilder;
@@ -54,6 +54,11 @@ public class ReactorInfoPanel extends BlockInfoPanel {
             return;
         }
 
+        final ConnectedBlock block = group.get().getBlock();
+        if (!(block instanceof final ReactorController controller)) {
+            return;
+        }
+
         final Settings settings = group.get().getBlock().getSettings();
 
         final double secondsSinceStarted = BlockStorageAPI.getDouble(location.get(), Keys.BS_SECONDS_SINCE_REACTOR_STARTED);
@@ -63,7 +68,7 @@ public class ReactorInfoPanel extends BlockInfoPanel {
         final double minInputPower = settings.getMinPower();
 
         final double outputPower = BlockStorageAPI.getDouble(location.get(), Keys.BS_OUTPUT_POWER);
-        final double maxOutputPower = ReactorController.RING_LOCATIONS.size() * ReactorRing.REACTOR_RING_SETTINGS.getTier().maxPower * 2 * settings.getPowerMultiplier();
+        final double maxOutputPower = controller.getMaxOutputPower();
 
         container.setText("thresholdBar", "&7Threshold " + Lore.progressBar(inputPower, minInputPower, "&6", "&7", "&a"));
         container.setText("efficiencyBar", "&7Efficiency " + Lore.progressBar(secondsSinceStarted, maxSeconds, "&6", "&7", "&a"));
