@@ -7,14 +7,12 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
-import org.metamechanists.metalib.utils.ParticleUtils;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
@@ -138,7 +136,6 @@ public class DataStripper extends ConnectedBlock implements InfoPanelBlock, Item
         }
 
         if (ItemHolderBlock.getStack(location).isPresent()) {
-            ParticleUtils.randomParticle(location.clone().toCenterLocation(), Particle.WAX_ON, 0.3, 1);
             ProgressBlock.updateProgress(location, settings.getTimePerItem());
         }
 

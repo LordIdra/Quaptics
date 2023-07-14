@@ -120,14 +120,14 @@ public class Charger extends ConnectedBlock implements InfoPanelBlock, ItemHolde
             return;
         }
 
-        final Optional<ItemStack> stack = ItemHolderBlock.getStack(group);
-        setPanelHidden(group, stack.isEmpty());
-        if (stack.isEmpty()) {
+        final Optional<Link> inputLink = getLink(group, "input");
+        if (inputLink.isEmpty() || !settings.isOperational(inputLink)) {
             return;
         }
 
-        final Optional<Link> inputLink = getLink(group, "input");
-        if (inputLink.isEmpty() || !settings.isOperational(inputLink)) {
+        final Optional<ItemStack> stack = ItemHolderBlock.getStack(group);
+        setPanelHidden(group, stack.isEmpty());
+        if (stack.isEmpty()) {
             return;
         }
 
