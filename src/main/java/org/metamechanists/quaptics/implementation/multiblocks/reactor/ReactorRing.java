@@ -166,10 +166,10 @@ public class ReactorRing extends ConnectedBlock implements PowerAnimatedBlock {
         brightnessAnimation(location, "prism", powered);
     }
 
-    private Vector findController(@NotNull final Location location) {
+    private @NotNull Vector findController(@NotNull final Location location) {
         for (final Vector vector : possibleControllerLocations) {
             if (BlockStorageAPI.check(location.clone().add(vector)) instanceof ReactorController) {
-                return vector;
+                return vector.clone();
             }
         }
         return new Vector(0, 0, 3);
