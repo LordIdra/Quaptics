@@ -82,7 +82,7 @@ public class ItemProjector extends ConnectedBlock implements ItemHolderBlock, Po
                 .add("main", new ModelCuboid()
                         .material(Material.LIGHT_GRAY_CONCRETE)
                         .location(0, -0.2F, 0)
-                        .size(0.9F, 0.6F, 0.9F))
+                        .size(1.0F, 0.6F, 1.0F))
                 .add("prism", new ModelCuboid()
                         .block(Material.LIGHT_BLUE_STAINED_GLASS.createBlockData())
                         .brightness(Utils.BRIGHTNESS_OFF)

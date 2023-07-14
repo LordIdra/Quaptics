@@ -26,7 +26,7 @@ import org.metamechanists.quaptics.implementation.blocks.upgraders.DiffractionGr
 import org.metamechanists.quaptics.implementation.blocks.upgraders.Interferometer;
 import org.metamechanists.quaptics.implementation.blocks.upgraders.Polariser;
 import org.metamechanists.quaptics.implementation.multiblocks.entangler.EntanglementContainer;
-import org.metamechanists.quaptics.implementation.multiblocks.entangler.magnet.EntanglementMagnet;
+import org.metamechanists.quaptics.implementation.multiblocks.entangler.EntanglementMagnet;
 import org.metamechanists.quaptics.implementation.multiblocks.infuser.InfusionContainer;
 import org.metamechanists.quaptics.implementation.multiblocks.infuser.InfusionPillar;
 import org.metamechanists.quaptics.items.Groups;
@@ -64,8 +64,8 @@ import static org.metamechanists.quaptics.implementation.blocks.upgraders.Polari
 import static org.metamechanists.quaptics.implementation.blocks.upgraders.Polariser.POLARISER_1_SETTINGS;
 import static org.metamechanists.quaptics.implementation.multiblocks.entangler.EntanglementContainer.ENTANGLEMENT_CONTAINER;
 import static org.metamechanists.quaptics.implementation.multiblocks.entangler.EntanglementContainer.ENTANGLEMENT_CONTAINER_SETTINGS;
-import static org.metamechanists.quaptics.implementation.multiblocks.entangler.magnet.EntanglementMagnet.ENTANGLEMENT_MAGNET;
-import static org.metamechanists.quaptics.implementation.multiblocks.entangler.magnet.EntanglementMagnet.ENTANGLEMENT_MAGNET_SETTINGS;
+import static org.metamechanists.quaptics.implementation.multiblocks.entangler.EntanglementMagnet.ENTANGLEMENT_MAGNET;
+import static org.metamechanists.quaptics.implementation.multiblocks.entangler.EntanglementMagnet.ENTANGLEMENT_MAGNET_SETTINGS;
 import static org.metamechanists.quaptics.implementation.multiblocks.infuser.InfusionContainer.INFUSION_CONTAINER;
 import static org.metamechanists.quaptics.implementation.multiblocks.infuser.InfusionContainer.INFUSION_CONTAINER_SETTINGS;
 import static org.metamechanists.quaptics.implementation.multiblocks.infuser.InfusionPillar.INFUSION_PILLAR;

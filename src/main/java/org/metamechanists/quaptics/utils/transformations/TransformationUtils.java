@@ -42,8 +42,8 @@ public class TransformationUtils {
     /**
      * Takes an initial radius and rotates it around only the Y-axis (the most common rotation type)
      */
-    public Vector3f rotatedRadius(final float radius, final float y) {
-        return new Vector3f(0, 0, radius).rotateY(y);
+    public Vector3f rotatedRadius(final float radius, final double y) {
+        return new Vector3f(0, 0, radius).rotateY((float) y);
     }
 
     public @NotNull Vector3f getDisplacement(final Location from, @NotNull final Location to) {

@@ -6,28 +6,26 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
-import org.joml.Vector3d;
-import org.joml.Vector3f;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
 import org.metamechanists.quaptics.connections.Link;
-import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.implementation.attachments.PowerAnimatedBlock;
 import org.metamechanists.quaptics.implementation.attachments.PowerLossBlock;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
+import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
 import org.metamechanists.quaptics.utils.Utils;
-import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionPointId;
-import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
+import org.metamechanists.quaptics.utils.models.ModelBuilder;
+import org.metamechanists.quaptics.utils.models.components.ModelDiamond;
+import org.metamechanists.quaptics.utils.models.components.ModelLine;
 import org.metamechanists.quaptics.utils.transformations.TransformationUtils;
 
 import java.util.List;
@@ -54,21 +52,9 @@ public class DiffractionGrating extends ConnectedBlock implements PowerAnimatedB
                     "&7● The size of the increase depends on how close the",
                     "&7  auxiliary input is to the target phase"));
 
-    private static final Vector3d MAIN_ROTATION = new Vector3d(0.0F, Math.PI * 2/3, 0.0F);
-    private static final Vector3f MAIN_SIZE = new Vector3f(0.20F, 0.20F, 0.40F);
-    private static final Vector3f MAIN_OFFSET = new Vector3f(0.0F, 0.0F, 0.20F).rotateY((float) MAIN_ROTATION.y);
-    private static final Vector3d OUTPUT_ROTATION = new Vector3d(0.0F, -Math.PI * 2/3, 0.0F);
-    private static final Vector3f OUTPUT_SIZE = new Vector3f(0.20F, 0.20F, 0.40F);
-    private static final Vector3f OUTPUT_OFFSET = new Vector3f(0.0F, 0.0F, 0.20F).rotateY((float) OUTPUT_ROTATION.y);
-    private static final Vector3d AUXILIARY_ROTATION = new Vector3d(0.0F, 0.0F, 0.0F);
-    private static final Vector3f AUXILIARY_SIZE = new Vector3f(0.15F, 0.15F, 0.40F);
-    private static final Vector3f AUXILIARY_OFFSET = new Vector3f(0.0F, 0.0F, 0.20F).rotateY((float) AUXILIARY_ROTATION.y);
-    private static final Vector3d PRISM_ROTATION = new Vector3d(0.0F, Math.PI/4, 0.0F);
-    private static final Vector3f PRISM_SIZE = new Vector3f(0.25F);
-
-    private final Vector mainPointLocation = new Vector(0.0F, 0.0F, -getConnectionRadius()).rotateAroundY(MAIN_ROTATION.y);
-    private final Vector auxiliaryPointLocation = new Vector(0.0F, 0.0F, -getConnectionRadius()).rotateAroundY(AUXILIARY_ROTATION.y);
-    private final Vector outputPointLocation = new Vector(0.0F, 0.0F, -getConnectionRadius()).rotateAroundY(OUTPUT_ROTATION.y);
+    private final Vector mainPointLocation = Vector.fromJOML(TransformationUtils.rotatedRadius(getConnectionRadius(), Math.PI * 2/3));
+    private final Vector auxiliaryPointLocation = new Vector(0.0F, 0.0F, -getConnectionRadius());
+    private final Vector outputPointLocation = Vector.fromJOML(TransformationUtils.rotatedRadius(getConnectionRadius(), Math.PI * -2/3));
 
     public DiffractionGrating(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
@@ -85,45 +71,24 @@ public class DiffractionGrating extends ConnectedBlock implements PowerAnimatedB
     }
     @Override
     protected DisplayGroup initModel(final @NotNull Location location, final @NotNull Player player) {
-        final DisplayGroup displayGroup = new DisplayGroup(location);
-        final BlockFace face = TransformationUtils.yawToFace(player.getEyeLocation().getYaw());
-        displayGroup.addDisplay("main", new BlockDisplayBuilder()
-                .material(Material.TERRACOTTA)
-                .transformation(new TransformationMatrixBuilder()
-                        .scale(MAIN_SIZE)
-                        .rotate(MAIN_ROTATION)
-                        .translate(MAIN_OFFSET)
-                        .lookAlong(face)
-                        .buildForBlockDisplay())
-                .build(location.toCenterLocation()));
-        displayGroup.addDisplay("output", new BlockDisplayBuilder()
-                .material(Material.TERRACOTTA)
-                .transformation(new TransformationMatrixBuilder()
-                        .scale(OUTPUT_SIZE)
-                        .rotate(OUTPUT_ROTATION)
-                        .translate(OUTPUT_OFFSET)
-                        .lookAlong(face)
-                        .buildForBlockDisplay())
-                .build(location.toCenterLocation()));
-        displayGroup.addDisplay("auxiliary", new BlockDisplayBuilder()
-                .material(Material.GRAY_CONCRETE)
-                .transformation(new TransformationMatrixBuilder()
-                        .scale(AUXILIARY_SIZE)
-                        .rotate(AUXILIARY_ROTATION)
-                        .translate(AUXILIARY_OFFSET)
-                        .lookAlong(face)
-                        .buildForBlockDisplay())
-                .build(location.toCenterLocation()));
-        displayGroup.addDisplay("prism", new BlockDisplayBuilder()
-                .material(settings.getTier().concreteMaterial)
-                .brightness(Utils.BRIGHTNESS_OFF)
-                .transformation(new TransformationMatrixBuilder()
-                        .scale(PRISM_SIZE)
-                        .lookAlong(face)
-                        .rotate(PRISM_ROTATION)
-                        .buildForBlockDisplay())
-                .build(location.toCenterLocation()));
-        return displayGroup;
+        return new ModelBuilder()
+                .add("main", new ModelLine()
+                        .material(Material.ORANGE_TERRACOTTA)
+                        .to(TransformationUtils.rotatedRadius(0.5F, Math.PI * 2/3))
+                        .thickness(0.15F))
+                .add("output", new ModelLine()
+                        .material(Material.ORANGE_TERRACOTTA)
+                        .to(TransformationUtils.rotatedRadius(0.5F, Math.PI * -2/3))
+                        .thickness(0.15F))
+                .add("auxiliary", new ModelLine()
+                        .material(Material.GRAY_CONCRETE)
+                        .to(0, 0, 0.5F)
+                        .thickness(0.10F))
+                .add("auxiliary", new ModelDiamond()
+                        .material(Material.GRAY_CONCRETE)
+                        .brightness(Utils.BRIGHTNESS_ON)
+                        .size(0.3F))
+                .buildAtBlockCenter(location);
     }
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {

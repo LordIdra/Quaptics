@@ -39,7 +39,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import static org.metamechanists.quaptics.implementation.multiblocks.entangler.magnet.EntanglementMagnet.ENTANGLEMENT_MAGNET;
+import static org.metamechanists.quaptics.implementation.multiblocks.entangler.EntanglementMagnet.ENTANGLEMENT_MAGNET;
 
 
 public class EntanglementContainer extends ConnectedBlock implements ItemHolderBlock, ComplexMultiblock {

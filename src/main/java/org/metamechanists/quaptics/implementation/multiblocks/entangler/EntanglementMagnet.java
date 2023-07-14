@@ -1,4 +1,4 @@
-package org.metamechanists.quaptics.implementation.multiblocks.entangler.magnet;
+package org.metamechanists.quaptics.implementation.multiblocks.entangler;
 
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
