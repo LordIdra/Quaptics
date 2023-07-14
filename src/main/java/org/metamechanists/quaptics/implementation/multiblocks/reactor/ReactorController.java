@@ -70,7 +70,7 @@ public class ReactorController extends ConnectedBlock implements ComplexMultiblo
     private static final List<Vector> RING_LOCATIONS = List.of(
             RING_1_LOCATION, RING_2_LOCATION, RING_3_LOCATION, RING_4_LOCATION,
             RING_5_LOCATION, RING_6_LOCATION, RING_7_LOCATION, RING_8_LOCATION);
-    private static final double LOWEST_ANIMATION_LENGTH = 0.5F;
+    private static final double MAX_ANIMATION_STEP = 0.1F;
 
     private final Vector outputPoint1Location = new Vector(getConnectionRadius(), 0, 0);
     private final Vector outputPoint2Location = new Vector(-getConnectionRadius(), 0, 0);
@@ -117,6 +117,7 @@ public class ReactorController extends ConnectedBlock implements ComplexMultiblo
     protected void initBlockStorage(final @NotNull Location location) {
         BlockStorageAPI.set(location, Keys.BS_SECONDS_SINCE_REACTOR_STARTED, 0.0);
         BlockStorageAPI.set(location, Keys.BS_OUTPUT_POWER, 0.0);
+        BlockStorageAPI.set(location, Keys.BS_ANIMATION_OFFSET, 0.0);
     }
 
     @Override
@@ -196,12 +197,13 @@ public class ReactorController extends ConnectedBlock implements ComplexMultiblo
     @Override
     public void tickAnimation(@NotNull final Location centerLocation, final double timeSeconds) {
         final double outputPower = BlockStorageAPI.getDouble(centerLocation, Keys.BS_OUTPUT_POWER);
-        final double animationLength = (outputPower / getMaxOutputPower()) * LOWEST_ANIMATION_LENGTH;
+        final double animationOffset = BlockStorageAPI.getDouble(centerLocation, Keys.BS_ANIMATION_OFFSET) + (outputPower / getMaxOutputPower()) * MAX_ANIMATION_STEP;
+        BlockStorageAPI.set(centerLocation, Keys.BS_ANIMATION_OFFSET, animationOffset);
         Particles.animatedHorizontalCircle(Particle.ELECTRIC_SPARK,
                 centerLocation.clone().toCenterLocation(),
                 3,
                 5,
-                (timeSeconds % animationLength) / animationLength,
+                animationOffset,
                 0);
     }
 
