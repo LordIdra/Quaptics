@@ -60,11 +60,11 @@ public interface ComplexMultiblock {
 
         final BlockDisplay blockDisplay = GHOST_BLOCK_DISPLAY
                 .material(itemStack.getType())
-                .build(center);
+                .build(block.getLocation().toCenterLocation());
         final Interaction interaction = new InteractionBuilder()
                 .width(DISPLAY_SIZE)
                 .height(DISPLAY_SIZE)
-                .build(block.getLocation().toCenterLocation().subtract(new Vector(0, DISPLAY_SIZE/2, 0)));
+                .build(block.getLocation().toCenterLocation());
 
         final SlimefunItem slimefunItem = SlimefunItem.getByItem(itemStack);
         final String blockName = slimefunItem != null ? slimefunItem.getItemName() : ChatUtils.humanize(itemStack.getType().name());
