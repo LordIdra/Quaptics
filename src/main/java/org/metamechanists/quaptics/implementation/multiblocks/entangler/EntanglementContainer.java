@@ -63,11 +63,6 @@ public class EntanglementContainer extends ConnectedBlock implements ItemHolderB
             MAGNET_1_LOCATION, MAGNET_2_LOCATION, MAGNET_3_LOCATION,
             MAGNET_4_LOCATION, MAGNET_5_LOCATION, MAGNET_6_LOCATION);
 
-    private static final double CONTAINER_PARTICLE_RADIUS = 1.2;
-    private static final int CONTAINER_PARTICLE_COUNT = 3;
-    private static final double COMPLETED_PARTICLE_SPEED = 0.1;
-    private static final int COMPLETED_PARTICLE_COUNT = 200;
-
     private final double magnetParticleAnimationLengthSeconds = settings.getTimePerItem();
     private final double centerParticleAnimationLengthSeconds = settings.getTimePerItem() / 8.0;
 
@@ -233,7 +228,7 @@ public class EntanglementContainer extends ConnectedBlock implements ItemHolderB
     @Override
     public void tickAnimation(@NotNull final Location centerLocation, final double timeSeconds) {
         MAGNET_LOCATIONS.forEach(magnetLocation -> animateMagnet(centerLocation, centerLocation.clone().add(magnetLocation), timeSeconds));
-        animateCenter(centerLocation, timeSeconds);
+        //animateCenter(centerLocation, timeSeconds);
     }
 
     private static boolean isMagnetPowered(@NotNull final Location pillarLocation) {
@@ -248,23 +243,23 @@ public class EntanglementContainer extends ConnectedBlock implements ItemHolderB
                 pillarLocation.clone().toCenterLocation(),
                 center.clone().toCenterLocation(),
                 8,
-                (10*timeSinceCraftStarted % magnetParticleAnimationLengthSeconds) / (magnetParticleAnimationLengthSeconds+0.001),
+                (40*timeSinceCraftStarted % magnetParticleAnimationLengthSeconds) / (magnetParticleAnimationLengthSeconds+0.001),
                 0.05);
     }
-    private void animateCenter(@NotNull final Location center, final double timeSinceCraftStarted) {
-        Particles.animatedHorizontalCircle(Particle.ELECTRIC_SPARK,
-                center.clone().toCenterLocation(),
-                CONTAINER_PARTICLE_RADIUS,
-                CONTAINER_PARTICLE_COUNT,
-                (timeSinceCraftStarted % centerParticleAnimationLengthSeconds) / centerParticleAnimationLengthSeconds,
-                0);
-        Particles.animatedHorizontalCircle(Particle.ELECTRIC_SPARK,
-                center.clone().toCenterLocation(),
-                CONTAINER_PARTICLE_RADIUS,
-                CONTAINER_PARTICLE_COUNT,
-                1 - ((timeSinceCraftStarted % centerParticleAnimationLengthSeconds) / centerParticleAnimationLengthSeconds),
-                0);
-    }
+//    private void animateCenter(@NotNull final Location center, final double timeSinceCraftStarted) {
+//        Particles.animatedHorizontalCircle(Particle.ELECTRIC_SPARK,
+//                center.clone().toCenterLocation(),
+//                1.2,
+//                3,
+//                (timeSinceCraftStarted % centerParticleAnimationLengthSeconds) / centerParticleAnimationLengthSeconds,
+//                0);
+//        Particles.animatedHorizontalCircle(Particle.ELECTRIC_SPARK,
+//                center.clone().toCenterLocation(),
+//                1.2,
+//                3,
+//                1 - ((timeSinceCraftStarted % centerParticleAnimationLengthSeconds) / centerParticleAnimationLengthSeconds),
+//                0);
+//    }
     private static void animateCenterCompleted(@NotNull final Location center) {
         new ParticleBuilder(Particle.FIREWORKS_SPARK)
                 .location(center.toCenterLocation())
