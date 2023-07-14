@@ -27,7 +27,7 @@ public class DirectTurret extends Turret {
             .damage(2)
             .targets(Set.of(SpawnCategory.MONSTER))
             .projectileMaterial(Material.LIGHT_BLUE_CONCRETE)
-            .mainMaterial(Material.SMOOTH_STONE)
+            .mainMaterial(Material.DEEPSLATE_TILES)
             .build();
     public static final Settings TURRET_2_PASSIVE_SETTINGS = Settings.builder()
             .tier(Tier.BASIC)
@@ -39,7 +39,7 @@ public class DirectTurret extends Turret {
             .targets(Set.of(SpawnCategory.WATER_UNDERGROUND_CREATURE, SpawnCategory.AMBIENT, SpawnCategory.ANIMAL, SpawnCategory.AXOLOTL,
                     SpawnCategory.WATER_AMBIENT, SpawnCategory.WATER_ANIMAL))
             .projectileMaterial(Material.LIGHT_BLUE_CONCRETE)
-            .mainMaterial(Material.SMOOTH_STONE)
+            .mainMaterial(Material.DEEPSLATE_TILES)
             .build();
     public static final SlimefunItemStack TURRET_2_HOSTILE = new SlimefunItemStack(
             "QP_TURRET_2_HOSTILE",
