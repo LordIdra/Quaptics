@@ -25,7 +25,6 @@ import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionPointId;
 import org.metamechanists.quaptics.utils.models.ModelBuilder;
 import org.metamechanists.quaptics.utils.models.components.ModelCuboid;
-import org.metamechanists.quaptics.utils.models.components.ModelDiamond;
 
 import java.util.List;
 import java.util.Optional;
@@ -80,11 +79,12 @@ public class DiffractionGrating extends ConnectedBlock implements PowerAnimatedB
                         .facing(player.getFacing())
                         .size(0.15F, 0.4F, 0.15F)
                         .location(0, 0.2F, 0))
-                .add("diamond", new ModelDiamond()
+                .add("diamond", new ModelCuboid()
                         .material(settings.getTier().concreteMaterial)
                         .brightness(Utils.BRIGHTNESS_OFF)
                         .facing(player.getFacing())
-                        .size(0.4F))
+                        .size(0.4F)
+                        .rotation(Math.PI/4))
                 .buildAtBlockCenter(location);
     }
     @Override

@@ -7,14 +7,11 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.joml.Vector3d;
-import org.joml.Vector3f;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
@@ -31,12 +28,11 @@ import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Language;
 import org.metamechanists.quaptics.utils.Utils;
-import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
-import org.metamechanists.quaptics.utils.builders.ItemDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionPointId;
-import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
-import org.metamechanists.quaptics.utils.transformations.TransformationUtils;
+import org.metamechanists.quaptics.utils.models.ModelBuilder;
+import org.metamechanists.quaptics.utils.models.components.ModelCuboid;
+import org.metamechanists.quaptics.utils.models.components.ModelItem;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.util.List;
@@ -56,13 +52,6 @@ public class Polariser extends ConnectedBlock implements PowerAnimatedBlock, Pow
             "&cPolariser &4I",
             Lore.create(POLARISER_1_SETTINGS,
                     "&7● Sets the Phase of the main ray to the phase of the auxiliary ray"));
-
-    private static final Vector3f MAIN_SIZE = new Vector3f(0.30F, 0.30F, 0.90F);
-    private static final Vector3f PRISM_SIZE = new Vector3f(0.40F);
-    private static final Vector3d PRISM_ROTATION = new Vector3d(0.0F, Math.PI/4, 0.0F);
-    private static final Vector3f ITEM_SIZE = new Vector3f(0.40F);
-    private static final Vector3f ITEM_OFFSET = new Vector3f(0, 0.30F, 0);
-    private static final Vector3d ITEM_2_ROTATION = new Vector3d(0.0F, Math.PI/2, 0.0F);
 
     private static final Vector MAIN_INPUT_LOCATION = new Vector(0.0F, 0.0F, -0.45F);
     private static final Vector OUTPUT_LOCATION = new Vector(0.0F, 0.0F, 0.45);
@@ -89,38 +78,26 @@ public class Polariser extends ConnectedBlock implements PowerAnimatedBlock, Pow
     }
     @Override
     protected DisplayGroup initModel(final @NotNull Location location, final @NotNull Player player) {
-        final DisplayGroup displayGroup = new DisplayGroup(location);
-        final BlockFace face = TransformationUtils.yawToFace(player.getEyeLocation().getYaw());
-        displayGroup.addDisplay("main", new BlockDisplayBuilder()
-                .material(Material.YELLOW_TERRACOTTA)
-                .transformation(new TransformationMatrixBuilder()
-                        .scale(MAIN_SIZE)
-                        .lookAlong(face)
-                        .buildForBlockDisplay())
-                .build(location.toCenterLocation()));
-        displayGroup.addDisplay("prism", new BlockDisplayBuilder()
-                .material(settings.getTier().concreteMaterial)
-                .transformation(new TransformationMatrixBuilder()
-                        .scale(PRISM_SIZE)
-                        .rotate(PRISM_ROTATION)
-                        .buildForBlockDisplay())
-                .build(location.toCenterLocation()));
-        displayGroup.addDisplay("item", new ItemDisplayBuilder()
-                .brightness(Utils.BRIGHTNESS_ON)
-                .transformation(new TransformationMatrixBuilder()
-                        .scale(ITEM_SIZE)
-                        .translate(ITEM_OFFSET)
-                        .buildForItemDisplay())
-                .build(location.toCenterLocation()));
-        displayGroup.addDisplay("item2", new ItemDisplayBuilder()
-                .brightness(Utils.BRIGHTNESS_ON)
-                .transformation(new TransformationMatrixBuilder()
-                        .scale(ITEM_SIZE)
-                        .translate(ITEM_OFFSET)
-                        .rotate(ITEM_2_ROTATION)
-                        .buildForItemDisplay())
-                .build(location.toCenterLocation()));
-        return displayGroup;
+        return new ModelBuilder()
+                .add("main", new ModelCuboid()
+                        .material(Material.YELLOW_TERRACOTTA)
+                        .facing(player.getFacing())
+                        .size(0.3F, 0.3F, 0.9F))
+                .add("prism", new ModelCuboid()
+                        .material(settings.getTier().concreteMaterial)
+                        .facing(player.getFacing())
+                        .rotation(Math.PI/4)
+                        .size(0.4F))
+                .add("item", new ModelItem()
+                        .brightness(Utils.BRIGHTNESS_ON)
+                        .facing(player.getFacing())
+                        .size(0.4F))
+                .add("item2", new ModelItem()
+                        .brightness(Utils.BRIGHTNESS_ON)
+                        .facing(player.getFacing())
+                        .rotation(Math.PI/2)
+                        .size(0.4F))
+                .buildAtBlockCenter(location);
     }
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
