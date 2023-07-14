@@ -63,7 +63,7 @@ public class EntanglementContainer extends ConnectedBlock implements ItemHolderB
             MAGNET_1_LOCATION, MAGNET_2_LOCATION, MAGNET_3_LOCATION,
             MAGNET_4_LOCATION, MAGNET_5_LOCATION, MAGNET_6_LOCATION);
 
-    private static final int MAGNET_PARTICLE_COUNT = 2;
+    private static final int MAGNET_PARTICLE_COUNT = 8;
     private static final double MAGNET_PARTICLE_SPEED = 0.05;
     private static final double CONTAINER_PARTICLE_RADIUS = 1.2;
     private static final int CONTAINER_PARTICLE_COUNT = 3;
@@ -93,25 +93,25 @@ public class EntanglementContainer extends ConnectedBlock implements ItemHolderB
                         .from(-0.4F, -0.4F, -0.4F)
                         .to(0.4F, -0.4F, -0.4F)
                         .thickness(0.1F)
-                        .extraLength(0.075F))
+                        .extraLength(0.085F))
                 .add("frame1b", new ModelLine()
                         .material(Material.BLUE_CONCRETE)
                         .from(-0.4F, 0.4F, -0.4F)
                         .to(0.4F, 0.4F, -0.4F)
                         .thickness(0.1F)
-                        .extraLength(0.075F))
+                        .extraLength(0.085F))
                 .add("frame1c", new ModelLine()
                         .material(Material.BLUE_CONCRETE)
                         .from(-0.4F, -0.4F, 0.4F)
                         .to(0.4F, -0.4F, 0.4F)
                         .thickness(0.1F)
-                        .extraLength(0.075F))
+                        .extraLength(0.085F))
                 .add("frame1d", new ModelLine()
                         .material(Material.BLUE_CONCRETE)
                         .from(-0.4F, 0.4F, 0.4F)
                         .to(0.4F, 0.4F, 0.4F)
                         .thickness(0.1F)
-                        .extraLength(0.075F))
+                        .extraLength(0.085F))
 
                 .add("frame2a", new ModelLine()
                         .material(Material.BLUE_CONCRETE)
@@ -246,11 +246,11 @@ public class EntanglementContainer extends ConnectedBlock implements ItemHolderB
     }
 
     private void animateMagnet(@NotNull final Location center, @NotNull final Location pillarLocation, final double timeSinceCraftStarted) {
-        Particles.animatedLine(Particle.SCULK_CHARGE_POP,
-                pillarLocation.clone().toCenterLocation(),
+        Particles.animatedLine(Particle.BUBBLE_POP,
                 center.clone().toCenterLocation(),
+                pillarLocation.clone().toCenterLocation(),
                 MAGNET_PARTICLE_COUNT,
-                (timeSinceCraftStarted % magnetParticleAnimationLengthSeconds) / (magnetParticleAnimationLengthSeconds+0.001),
+                10 * (timeSinceCraftStarted % magnetParticleAnimationLengthSeconds) / (magnetParticleAnimationLengthSeconds+0.001),
                 MAGNET_PARTICLE_SPEED);
     }
     private void animateCenter(@NotNull final Location center, final double timeSinceCraftStarted) {

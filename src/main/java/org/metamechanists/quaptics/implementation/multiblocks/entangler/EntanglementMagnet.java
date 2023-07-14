@@ -51,7 +51,7 @@ public class EntanglementMagnet extends ConnectedBlock implements PowerAnimatedB
 
     @Override
     protected float getConnectionRadius() {
-        return 0.65F;
+        return 0.45F;
     }
     @Override
     protected DisplayGroup initModel(final @NotNull Location location, final @NotNull Player player) {
