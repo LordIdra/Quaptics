@@ -1,37 +1,30 @@
 package org.metamechanists.quaptics.implementation.blocks.upgraders;
 
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
-import io.github.bakedlibs.dough.data.persistent.PersistentDataAPI;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
-import org.joml.Vector3f;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
 import org.metamechanists.quaptics.connections.Link;
-import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.implementation.attachments.PowerAnimatedBlock;
 import org.metamechanists.quaptics.implementation.attachments.PowerLossBlock;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
+import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
-import org.metamechanists.quaptics.utils.Keys;
-import org.metamechanists.quaptics.utils.Utils;
-import org.metamechanists.quaptics.utils.builders.BlockDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
-import org.metamechanists.quaptics.utils.models.components.ModelDiamond;
-import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
-import org.metamechanists.quaptics.utils.transformations.TransformationUtils;
+import org.metamechanists.quaptics.utils.models.ModelBuilder;
+import org.metamechanists.quaptics.utils.models.components.ModelCuboid;
 
 import java.util.List;
 import java.util.Objects;
@@ -54,12 +47,6 @@ public class Repeater extends ConnectedBlock implements PowerAnimatedBlock, Powe
             Lore.create(REPEATER_1_SETTINGS,
                     "&7● Increases the frequency of a quaptic ray"));
 
-    private static final Vector3f GLASS_DISPLAY_SIZE = new Vector3f(0.50F);
-    private static final Vector3f REPEATER_DISPLAY_SIZE = new Vector3f(0.25F);
-    private static final Vector3f REPEATER_OFFSET = new Vector3f(0.0F, 0.10F, 0.0F);
-    private static final Vector3f CONCRETE_DISPLAY_SIZE = new Vector3f(0.26F, 0.075F, 0.26F);
-    private static final Vector3f CONCRETE_OFFSET = new Vector3f(0.0F, -0.05F, 0.0F);
-
     private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -getConnectionRadius());
     private final Vector outputPointLocation = new Vector(0.0F, 0.0F, getConnectionRadius());
 
@@ -73,34 +60,23 @@ public class Repeater extends ConnectedBlock implements PowerAnimatedBlock, Powe
     }
     @Override
     protected DisplayGroup initModel(final @NotNull Location location, final @NotNull Player player) {
-        final DisplayGroup displayGroup = new DisplayGroup(location);
-        final BlockFace face = TransformationUtils.yawToFace(player.getEyeLocation().getYaw());
-        displayGroup.addDisplay("main", new BlockDisplayBuilder()
-                .material(Material.RED_STAINED_GLASS)
-                .transformation(new TransformationMatrixBuilder()
-                        .scale(GLASS_DISPLAY_SIZE)
-                        .rotate(ModelDiamond.ROTATION)
-                        .buildForBlockDisplay())
-                .build(location.toCenterLocation()));
-        displayGroup.addDisplay("concrete", new BlockDisplayBuilder()
-                .material(settings.getTier().concreteMaterial)
-                .brightness(Utils.BRIGHTNESS_ON)
-                .transformation(new TransformationMatrixBuilder()
-                        .scale(CONCRETE_DISPLAY_SIZE)
-                        .translate(CONCRETE_OFFSET)
-                        .buildForBlockDisplay())
-                .build(location.toCenterLocation()));
-        final BlockDisplay repeater = new BlockDisplayBuilder()
-                .material(Material.REPEATER)
-                .blockData(createRepeaterBlockData(face.name().toLowerCase(), false))
-                .transformation(new TransformationMatrixBuilder()
-                        .scale(REPEATER_DISPLAY_SIZE)
-                        .translate(REPEATER_OFFSET)
-                        .buildForBlockDisplay())
-                .build(location.toCenterLocation());
-        PersistentDataAPI.setString(repeater, Keys.FACING, face.name().toLowerCase());
-        displayGroup.addDisplay("repeater", repeater);
-        return displayGroup;
+        return new ModelBuilder()
+                .add("main", new ModelCuboid()
+                        .material(Material.RED_STAINED_GLASS)
+                        .facing(player.getFacing())
+                        .size(0.6F)
+                        .rotation(Math.PI / 4))
+                .add("prism", new ModelCuboid()
+                        .material(settings.getTier().concreteMaterial)
+                        .facing(player.getFacing())
+                        .rotation(Math.PI/4)
+                        .size(0.3F, 0.1F, 0.3F))
+                .add("repeater", new ModelCuboid()
+                        .block(createRepeaterBlockData(false))
+                        .facing(player.getFacing())
+                        .location(0, 0.05F, 0)
+                        .size(0.2F, 0.1F, 0.2F))
+                .buildAtBlockCenter(location);
     }
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
@@ -135,14 +111,14 @@ public class Repeater extends ConnectedBlock implements PowerAnimatedBlock, Powe
     @Override
     public void onPoweredAnimation(final Location location, final boolean powered) {
         final Optional<BlockDisplay> blockDisplay = getBlockDisplay(location, "repeater");
-        blockDisplay.ifPresent(display -> display.setBlock(createRepeaterBlockData(PersistentDataAPI.getString(display, Keys.FACING), powered)));
+        blockDisplay.ifPresent(display -> display.setBlock(createRepeaterBlockData(powered)));
     }
 
     private static double calculateFrequency(@NotNull final Settings settings, final double frequency) {
         return frequency + settings.getFrequencyStep();
     }
 
-    private @NotNull BlockData createRepeaterBlockData(@NotNull final String facing, final boolean powered) {
-        return Material.REPEATER.createBlockData("[delay=" + settings.getRepeaterDelay() + ",facing=" + facing + ",powered=" + Objects.toString(powered) + "]");
+    private @NotNull BlockData createRepeaterBlockData(final boolean powered) {
+        return Material.REPEATER.createBlockData("[delay=" + settings.getRepeaterDelay() + ",powered=" + Objects.toString(powered) + "]");
     }
 }
