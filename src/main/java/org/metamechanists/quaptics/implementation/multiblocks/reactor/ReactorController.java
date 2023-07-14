@@ -195,17 +195,18 @@ public class ReactorController extends ConnectedBlock implements ComplexMultiblo
     }
     @Override
     public void tickAnimation(@NotNull final Location centerLocation, final double timeSeconds) {
-        final double animationLength = (BlockStorageAPI.getDouble(centerLocation, Keys.BS_OUTPUT_POWER) / getMaxOutputPower()) * LOWEST_ANIMATION_LENGTH;
+        final double outputPower = BlockStorageAPI.getDouble(centerLocation, Keys.BS_OUTPUT_POWER);
+        final double animationLength = ((outputPower - settings.getMinPower()) / getMaxOutputPower()) * LOWEST_ANIMATION_LENGTH;
         Particles.animatedHorizontalCircle(Particle.ELECTRIC_SPARK,
                 centerLocation.clone().toCenterLocation(),
                 3,
-                3,
+                5,
                 (timeSeconds % 100*animationLength) / animationLength,
                 0);
     }
 
     public double getMaxOutputPower() {
-        return ReactorRing.REACTOR_RING_SETTINGS.getTier().maxPower * 2.0 * RING_LOCATIONS.size() * settings.getPowerMultiplier();
+        return ReactorRing.REACTOR_RING_SETTINGS.getTier().maxPower * RING_LOCATIONS.size() * settings.getPowerMultiplier();
     }
     private static double getRingInputPower(@NotNull final Location ringLocation) {
         return BlockStorageAPI.getDouble(ringLocation, Keys.BS_INPUT_POWER);
