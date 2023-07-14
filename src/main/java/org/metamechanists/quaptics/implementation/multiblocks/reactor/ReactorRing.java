@@ -92,26 +92,26 @@ public class ReactorRing extends ConnectedBlock implements PowerAnimatedBlock {
                 .add("ring3a", new ModelCuboid()
                         .material(Material.WHITE_CONCRETE)
                         .facing(controllerPosition.toVector3f())
-                        .size(0.2F, 0.2F, 0.38F)
+                        .size(0.2F, 0.2F, 0.37F)
                         .location(0, 0.3F, 0.3F)
                         .rotation(Math.PI/4, 0, 0))
                 .add("ring3b", new ModelCuboid()
                         .material(Material.WHITE_CONCRETE)
                         .facing(controllerPosition.toVector3f())
-                        .size(0.2F, 0.2F, 0.38F)
+                        .size(0.2F, 0.2F, 0.37F)
                         .location(0, -0.3F, -0.3F)
                         .rotation(Math.PI/4, 0, 0))
 
                 .add("ring4a", new ModelCuboid()
                         .material(Material.WHITE_CONCRETE)
                         .facing(controllerPosition.toVector3f())
-                        .size(0.2F, 0.38F, 0.2F)
+                        .size(0.2F, 0.37F, 0.2F)
                         .location(0, 0.3F, -0.3F)
                         .rotation(Math.PI/4, 0, 0))
                 .add("ring4b", new ModelCuboid()
                         .material(Material.WHITE_CONCRETE)
                         .facing(controllerPosition.toVector3f())
-                        .size(0.2F, 0.38F, 0.2F)
+                        .size(0.2F, 0.37F, 0.2F)
                         .location(0, -0.3F, 0.3F)
                         .rotation(Math.PI/4, 0, 0))
 
@@ -138,7 +138,8 @@ public class ReactorRing extends ConnectedBlock implements PowerAnimatedBlock {
     }
     @Override
     protected void initBlockStorage(final @NotNull Location location) {
-        BlockStorageAPI.set(location, Keys.BS_INPUT_POWER, false);
+        BlockStorageAPI.set(location, Keys.BS_INPUT_POWER, 0.0);
+        BlockStorageAPI.set(location, Keys.BS_OUTPUT_POWER, 0.0);
     }
 
     @Override
