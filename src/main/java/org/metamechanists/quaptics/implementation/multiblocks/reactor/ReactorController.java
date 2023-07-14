@@ -97,10 +97,6 @@ public class ReactorController extends ConnectedBlock implements ComplexMultiblo
                 .buildAtBlockCenter(location);
     }
     @Override
-    protected @NotNull Material getBaseMaterial() {
-        return Material.BARRIER;
-    }
-    @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
         return List.of(
                 new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output 1", location.clone().toCenterLocation().add(outputPoint1Location)),

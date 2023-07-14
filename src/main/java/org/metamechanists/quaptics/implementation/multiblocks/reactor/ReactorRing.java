@@ -59,7 +59,7 @@ public class ReactorRing extends ConnectedBlock implements PowerAnimatedBlock {
 
     @Override
     protected float getConnectionRadius() {
-        return 0.5F;
+        return 0.7F;
     }
     @Override
     public void connect(@NotNull final ConnectionPointId from, @NotNull final ConnectionPointId to) {}
@@ -82,12 +82,12 @@ public class ReactorRing extends ConnectedBlock implements PowerAnimatedBlock {
                         .material(Material.BLACK_CONCRETE)
                         .facing(controllerPosition.toVector3f())
                         .size(0.1F, 0.1F, 0.3F)
-                        .location(0, 0.3F, 0.3F))
+                        .location(0, 0.3F, 0))
                 .add("ring2b", new ModelCuboid()
                         .material(Material.BLACK_CONCRETE)
                         .facing(controllerPosition.toVector3f())
                         .size(0.1F, 0.1F, 0.3F)
-                        .location(0, -0.3F, -0.3F))
+                        .location(0, -0.3F, 0))
 
                 .add("connection1", new ModelCuboid()
                         .material(Material.GRAY_CONCRETE)
@@ -106,9 +106,9 @@ public class ReactorRing extends ConnectedBlock implements PowerAnimatedBlock {
         final Vector controllerDirection = findController(location).normalize();
         return List.of(
                 new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input 1",
-                        location.clone().toCenterLocation().add(controllerDirection.multiply(getConnectionRadius()))),
+                        location.clone().toCenterLocation().add(controllerDirection.clone().multiply(getConnectionRadius()))),
                 new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input 2",
-                        location.clone().toCenterLocation().add(controllerDirection.multiply(-getConnectionRadius()))));
+                        location.clone().toCenterLocation().add(controllerDirection.clone().multiply(-getConnectionRadius()))));
     }
     @Override
     protected void initBlockStorage(final @NotNull Location location) {
