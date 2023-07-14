@@ -64,7 +64,7 @@ public class Repeater extends ConnectedBlock implements PowerAnimatedBlock, Powe
                 .add("main", new ModelCuboid()
                         .material(Material.RED_STAINED_GLASS)
                         .facing(player.getFacing())
-                        .size(0.6F)
+                        .size(0.4F)
                         .rotation(Math.PI / 4))
                 .add("prism", new ModelCuboid()
                         .material(settings.getTier().concreteMaterial)
@@ -74,7 +74,7 @@ public class Repeater extends ConnectedBlock implements PowerAnimatedBlock, Powe
                 .add("repeater", new ModelCuboid()
                         .block(createRepeaterBlockData(false))
                         .facing(player.getFacing())
-                        .location(0, 0.05F, 0)
+                        .location(0, 0.1F, 0)
                         .size(0.2F, 0.1F, 0.2F))
                 .buildAtBlockCenter(location);
     }
