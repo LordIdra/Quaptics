@@ -37,7 +37,7 @@ public final class Quaptics extends JavaPlugin implements SlimefunAddon {
     }
 
     private void initializeRunnables() {
-        new QuapticTicker().runTaskTimer(this, 0, QuapticTicker.INTERVAL_TICKS_2);
+        new QuapticTicker().runTaskTimer(this, 0, QuapticTicker.INTERVAL_TICKS);
         new SaveTask().runTaskTimer(this, SaveTask.INTERVAL_TICKS, SaveTask.INTERVAL_TICKS);
         new CacheGarbageCollector().runTaskTimer(this, CacheGarbageCollector.INTERVAL_TICKS, CacheGarbageCollector.INTERVAL_TICKS);
     }

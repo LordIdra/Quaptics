@@ -12,6 +12,7 @@ public class QuapticTicker extends BukkitRunnable {
     private static long time;
 
     public static final int TICKS_PER_SECOND = 20;
+    public static final int INTERVAL_TICKS = 2;
     public static final int INTERVAL_TICKS_2 = 2;
     public static final int INTERVAL_TICKS_5 = 5;
     public static final int INTERVAL_TICKS_10 = 10;
@@ -27,7 +28,7 @@ public class QuapticTicker extends BukkitRunnable {
                 .forEach(group -> {
                     try {
                         if (time % INTERVAL_TICKS_2 == 0) {
-                            group.tick1();
+                            group.tick2();
                         }
                         if (time % INTERVAL_TICKS_5 == 0) {
                             group.tick5();

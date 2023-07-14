@@ -178,7 +178,7 @@ public class ReactorController extends ConnectedBlock implements ComplexMultiblo
         }
 
         double secondsSinceReactorStarted = BlockStorageAPI.getDouble(location, Keys.BS_SECONDS_SINCE_REACTOR_STARTED);
-        secondsSinceReactorStarted += (double) QuapticTicker.INTERVAL_TICKS_2 / 20;
+        secondsSinceReactorStarted += (double) QuapticTicker.INTERVAL_TICKS_2 / QuapticTicker.TICKS_PER_SECOND;
         BlockStorageAPI.set(location, Keys.BS_SECONDS_SINCE_REACTOR_STARTED, secondsSinceReactorStarted);
 
         final double inputPower = BlockStorageAPI.getDouble(location, Keys.BS_INPUT_POWER);

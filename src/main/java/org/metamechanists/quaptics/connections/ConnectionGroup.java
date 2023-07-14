@@ -68,7 +68,7 @@ public class ConnectionGroup {
                 .map(Optional::get).toList();
     }
 
-    public void tick1() {
+    public void tick2() {
         final Optional<Location> locationOptional = getLocation();
         locationOptional.ifPresent(location -> getBlock().onTick2(this, location));
     }
