@@ -67,10 +67,12 @@ public class Interferometer extends ConnectedBlock implements PowerAnimatedBlock
                         .size(0.3F, 0.3F, 0.9F))
                 .add("auxiliary", new ModelCuboid()
                         .material(Material.GRAY_CONCRETE)
+                        .facing(player.getFacing())
                         .size(0.4F, 0.15F, 0.15F)
                         .location(0.2F, 0, 0))
                 .add("prism", new ModelCuboid()
                         .material(settings.getTier().concreteMaterial)
+                        .facing(player.getFacing())
                         .rotation(Math.PI/4)
                         .size(0.4F))
                 .buildAtBlockCenter(location);
