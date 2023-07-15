@@ -77,7 +77,7 @@ public abstract class BeaconController extends ConnectedBlock implements ItemHol
         final Interaction interaction = new InteractionBuilder()
                 .width(MODULE_BUTTON_SIZE)
                 .height(MODULE_BUTTON_SIZE)
-                .build(location.clone().add(Vector.fromJOML(relativeLocation)));
+                .build(location.clone().toCenterLocation().add(Vector.fromJOML(relativeLocation)));
 
         final PersistentDataTraverser traverser = new PersistentDataTraverser(interaction.getUniqueId());
         traverser.set("groupId", groupId);
