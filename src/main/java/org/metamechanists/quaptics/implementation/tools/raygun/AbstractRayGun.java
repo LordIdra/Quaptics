@@ -40,6 +40,7 @@ public abstract class AbstractRayGun extends QuapticChargeableItem {
 
         fireRayGun(player, source, target);
         setCharge(itemStack, stepCharge(settings, charge, -settings.getEmissionPower()));
+        updateLore(itemStack);
     }
 
     public abstract void fireRayGun(Player player, Location source, Location target);
