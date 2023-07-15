@@ -72,7 +72,7 @@ public class Capacitor extends ConnectedBlock implements InfoPanelBlock, PowerLo
     protected DisplayGroup initModel(final @NotNull Location location, final @NotNull Player player) {
         return new ModelBuilder()
                 .add("concrete", new ModelDiamond()
-                        .material(settings.getTier().concreteMaterial)
+                        .material(Material.LIGHT_BLUE_CONCRETE)
                         .brightness(Utils.BRIGHTNESS_ON))
                 .add("mainGlass", new ModelDiamond()
                         .material(Material.GLASS)

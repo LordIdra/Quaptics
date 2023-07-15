@@ -35,8 +35,8 @@ public class ConfigPanelAttribute {
 
     public ConfigPanelAttribute(final ConnectionGroupId groupId, @NotNull final String name, @NotNull final String key,
                                 final @NotNull Location location, final Vector offset, final @NotNull Vector3d rotation, final float size) {
-        final Vector subButtonLocation = new Vector(0.05, 0, -0.08).add(offset).add(BUTTON_ADJUSTMENT).rotateAroundY(rotation.y);
-        final Vector addButtonLocation = new Vector(0.40, 0, -0.08).add(offset).add(BUTTON_ADJUSTMENT).rotateAroundY(rotation.y);
+        final Vector subButtonLocation = new Vector(0.04, 0, -0.08).add(offset).add(BUTTON_ADJUSTMENT).rotateAroundY(rotation.y);
+        final Vector addButtonLocation = new Vector(0.41, 0, -0.08).add(offset).add(BUTTON_ADJUSTMENT).rotateAroundY(rotation.y);
 
         this.displayGroupId = new DisplayGroupId(new ModelBuilder()
                 .add("key", new ModelText()
@@ -57,7 +57,7 @@ public class ConfigPanelAttribute {
                         .brightness(15)
                         .background(Color.fromARGB(0, 0, 0, 0))
                         .size(size)
-                        .location(new Vector(0.24, OFFSET_Y, OFFSET_Z).rotateAroundY(rotation.y).toVector3f())
+                        .location(new Vector(0.22, OFFSET_Y, OFFSET_Z).rotateAroundY(rotation.y).toVector3f())
                         .rotation(rotation))
                 .add("add", new ModelText()
                         .text(ChatColors.color("&a+"))
@@ -94,7 +94,6 @@ public class ConfigPanelAttribute {
 
         saveData();
     }
-
     public ConfigPanelAttribute(final ConfigPanelAttributeId displayGroupId) {
         final PersistentDataTraverser traverser = new PersistentDataTraverser(displayGroupId);
 
