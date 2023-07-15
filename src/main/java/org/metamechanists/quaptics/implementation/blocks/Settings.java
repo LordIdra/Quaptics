@@ -30,6 +30,7 @@ public class Settings {
     private double chargeCapacity;
     private double emissionPower;
     private double powerMultiplier;
+    private double chargePerShot;
 
     private double minFrequency;
     private double maxFrequency;

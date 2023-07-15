@@ -6,6 +6,7 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import org.bukkit.FluidCollisionMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Display;
 import org.bukkit.entity.Interaction;
@@ -23,8 +24,8 @@ import org.metamechanists.quaptics.utils.transformations.TransformationUtils;
 public class DirectRayGun extends AbstractRayGun {
     public static final Settings RAY_GUN_2_SETTINGS = Settings.builder()
             .chargeCapacity(1000.0)
-            .emissionPower(5.0)
-            .damage(2)
+            .chargePerShot(5.0)
+            .damage(3)
             .projectileMaterial(Material.LIGHT_BLUE_CONCRETE)
             .build();
 
@@ -44,7 +45,10 @@ public class DirectRayGun extends AbstractRayGun {
         final RayTraceResult result = eyeLocation.getWorld().rayTrace(
                 eyeLocation.clone(), Vector.fromJOML(TransformationUtils.getDisplacement(eyeLocation, target)),
                 64, FluidCollisionMode.NEVER, true, 0.095F,
-                entity -> !entity.getUniqueId().equals(player.getUniqueId()) && !(entity instanceof Display) && !(entity instanceof Interaction));
+                entity -> !entity.getUniqueId().equals(player.getUniqueId())
+                        && !(entity instanceof Display)
+                        && !(entity instanceof Interaction)
+                        && !(entity instanceof ArmorStand));
 
         if (result == null) {
             DeprecatedBeamStorage.deprecate(new LifetimeDirectBeam(settings.getProjectileMaterial(), handLocation, target, 0.095F, 5));

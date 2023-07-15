@@ -106,6 +106,9 @@ public class Lore {
         if (settings.getTargetPhase() != 0) {
             lore.add(targetPhase(settings.getTargetPhase()));
         }
+        if (settings.getChargePerShot() != 0) {
+            lore.add(energyPerShot(settings.getChargePerShot()));
+        }
 
         return lore;
     }
@@ -141,9 +144,6 @@ public class Lore {
     public String efficiencyBar(final double secondsSinceStarted, final double maxSeconds) {
         return progressBar(secondsSinceStarted, maxSeconds, "&6", "&7", "&a");
     }
-    public String powerOutput(final double outputPower, final double maxOutputPower) {
-        return (outputPower >= maxOutputPower ? "&a" : "&6") + Utils.roundTo2dp(outputPower) + "&7 / " + "&a" + maxOutputPower;
-    }
 
     public String capacity(final double capacity) {
         return ATTRIBUTE_SYMBOL + CHARGE_SYMBOL + "&7Capacity &e" + Objects.toString(capacity) + CHARGE_SUFFIX;
@@ -163,6 +163,12 @@ public class Lore {
     }
     public String powerMultiplier(final double powerMultiplier) {
         return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Power Multiplier &e" + format(powerMultiplier*100) + PERCENTAGE_SUFFIX;
+    }
+    public String powerOutput(final double outputPower, final double maxOutputPower) {
+        return (outputPower >= maxOutputPower ? "&a" : "&6") + Utils.roundTo2dp(outputPower) + "&7 / " + "&a" + maxOutputPower;
+    }
+    public String energyPerShot(final double chargePerShot) {
+        return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Charge per shot &e" + format(chargePerShot) + CHARGE_SUFFIX;
     }
 
     public String chargeBar(final int charge, final int capacity) {

@@ -22,7 +22,7 @@ public class LuckFieldModule extends BeaconModule implements PlayerModule {
             .tier(Tier.TESTING)
             .build();
     public static final SlimefunItemStack LUCK_FIELD_MODULE = new SlimefunItemStack(
-            "QP_MODULE_TEST",
+            "QP_LUCK_FIELD_MODULE",
             Material.BLUE_BANNER,
             "&6ALuck Field Module",
             Lore.create(LUCK_FIELD_MODULE_SETTINGS,
