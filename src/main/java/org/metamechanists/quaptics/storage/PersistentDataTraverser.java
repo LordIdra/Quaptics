@@ -45,11 +45,12 @@ public class PersistentDataTraverser {
     public PersistentDataTraverser(@NotNull final CustomId id) {
         this.persistentDataHolder = Bukkit.getEntity(id.getUUID());
     }
-
     public PersistentDataTraverser(@NotNull final UUID id) {
         this.persistentDataHolder = Bukkit.getEntity(id);
     }
-
+    public PersistentDataTraverser(@NotNull final PersistentDataHolder entity) {
+        this.persistentDataHolder = entity;
+    }
     public PersistentDataTraverser(@NotNull final ItemStack stack) {
         this.persistentDataHolder = stack.getItemMeta();
     }

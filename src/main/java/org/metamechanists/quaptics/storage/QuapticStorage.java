@@ -10,13 +10,19 @@ import org.bukkit.event.world.EntitiesUnloadEvent;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class QuapticStorage implements Listener {
     @Getter
     private static final Set<ConnectionGroupId> groupIDs = new HashSet<>();
+
+    private static boolean isGroup(final Interaction interaction) {
+        return new PersistentDataTraverser(interaction).getString("blockId") != null;
+    }
 
     public static void addGroup(final ConnectionGroupId groupId) {
         groupIDs.add(groupId);
@@ -25,13 +31,18 @@ public class QuapticStorage implements Listener {
         groupIDs.remove(groupId);
     }
 
-    private static Collection<ConnectionGroupId> getConnectionGroupIds(final @NotNull Collection<Entity> entities) {
-        return entities.stream()
-                .filter(entity -> entity instanceof Interaction)
-                .map(Interaction.class::cast)
-                .map(interaction -> new ConnectionGroupId(interaction.getUniqueId()))
-                .filter(connectionGroupId -> connectionGroupId.get().isPresent())
-                .toList();
+    private static @NotNull Collection<ConnectionGroupId> getConnectionGroupIds(final @NotNull Collection<Entity> entities) {
+        List<ConnectionGroupId> list = new ArrayList<>();
+        for (Entity entity : entities) {
+            if (entity instanceof Interaction) {
+                Interaction interaction = (Interaction) entity;
+                ConnectionGroupId groupId = new ConnectionGroupId(interaction.getUniqueId());
+                if (isGroup(interaction)) {
+                    list.add(groupId);
+                }
+            }
+        }
+        return list;
     }
 
     @EventHandler
