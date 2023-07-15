@@ -38,7 +38,6 @@ public interface ComplexMultiblock {
         final Block actual = center.getRelative(offset.getBlockX(), offset.getBlockY(), offset.getBlockZ());
         return isStructureBlockValid(actual, predicted);
     }
-
     private static boolean isStructureBlockValid(final @NotNull Block actual, final ItemStack predicted) {
         final SlimefunItem predictedSlimefunItem = SlimefunItem.getByItem(predicted);
         final SlimefunItem actualSlimefunItem = BlockStorageAPI.check(actual);
@@ -48,6 +47,9 @@ public interface ComplexMultiblock {
         }
 
         return predicted.getType() == actual.getType();
+    }
+    default boolean isStructureValid(final Block center) {
+        return getStructure().entrySet().stream().allMatch(entry -> isStructureBlockValid(center, entry.getKey(), entry.getValue()));
     }
 
     private static @NotNull @Unmodifiable List<UUID> visualiseBlock(final @NotNull Block center, final @NotNull Vector offset, final @NotNull ItemStack itemStack) {
@@ -73,11 +75,6 @@ public interface ComplexMultiblock {
 
         return List.of(blockDisplay.getUniqueId(), interaction.getUniqueId());
     }
-
-    default boolean isStructureValid(final Block center) {
-        return getStructure().entrySet().stream().allMatch(entry -> isStructureBlockValid(center, entry.getKey(), entry.getValue()));
-    }
-
     default void visualiseStructure(final ItemStack wand, final Block center) {
         final List<UUID> uuids = new ArrayList<>();
         getStructure().forEach((key, value) -> uuids.addAll(visualiseBlock(center, key, value)));
@@ -95,7 +92,6 @@ public interface ComplexMultiblock {
         MultiblockWand.removeProjection(itemStack);
         visualiseStructure(itemStack, center);
     }
-
     default boolean multiblockInteract(final Block center, final @NotNull Player player) {
         final ItemStack mainHandItem = player.getInventory().getItemInMainHand();
         final ItemStack offHandItem = player.getInventory().getItemInOffHand();
@@ -113,8 +109,8 @@ public interface ComplexMultiblock {
         return false;
     }
 
-    Map<Vector, ItemStack> getStructure();
-
     @SuppressWarnings("unused")
-    void tickAnimation(@NotNull final Location centerLocation, final double timeSeconds);
+    default void tickAnimation(@NotNull final Location centerLocation, final double timeSeconds) {}
+
+    Map<Vector, ItemStack> getStructure();
 }

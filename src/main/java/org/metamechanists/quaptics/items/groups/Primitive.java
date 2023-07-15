@@ -11,6 +11,11 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.Quaptics;
+import org.metamechanists.quaptics.implementation.beacons.components.BeaconBattery;
+import org.metamechanists.quaptics.implementation.beacons.components.BeaconBeam;
+import org.metamechanists.quaptics.implementation.beacons.components.BeaconPowerSupply;
+import org.metamechanists.quaptics.implementation.beacons.components.BeaconRod;
+import org.metamechanists.quaptics.implementation.beacons.components.BeaconTransmitter;
 import org.metamechanists.quaptics.implementation.blocks.concentrators.SolarConcentrator;
 import org.metamechanists.quaptics.implementation.blocks.consumers.Charger;
 import org.metamechanists.quaptics.implementation.blocks.consumers.DataStripper;
@@ -34,6 +39,16 @@ import org.metamechanists.quaptics.implementation.multiblocks.reactor.ReactorRin
 import org.metamechanists.quaptics.items.Groups;
 import org.metamechanists.quaptics.items.RecipeTypes;
 
+import static org.metamechanists.quaptics.implementation.beacons.components.BeaconBattery.BEACON_BATTERY;
+import static org.metamechanists.quaptics.implementation.beacons.components.BeaconBattery.BEACON_BATTERY_SETTINGS;
+import static org.metamechanists.quaptics.implementation.beacons.components.BeaconBeam.BEACON_BEAM;
+import static org.metamechanists.quaptics.implementation.beacons.components.BeaconBeam.BEACON_BEAM_SETTINGS;
+import static org.metamechanists.quaptics.implementation.beacons.components.BeaconPowerSupply.BEACON_POWER_SUPPLY;
+import static org.metamechanists.quaptics.implementation.beacons.components.BeaconPowerSupply.BEACON_POWER_SUPPLY_SETTINGS;
+import static org.metamechanists.quaptics.implementation.beacons.components.BeaconRod.BEACON_ROD;
+import static org.metamechanists.quaptics.implementation.beacons.components.BeaconRod.BEACON_ROD_SETTINGS;
+import static org.metamechanists.quaptics.implementation.beacons.components.BeaconTransmitter.BEACON_TRANSMITTER;
+import static org.metamechanists.quaptics.implementation.beacons.components.BeaconTransmitter.BEACON_TRANSMITTER_SETTINGS;
 import static org.metamechanists.quaptics.implementation.blocks.concentrators.SolarConcentrator.SOLAR_CONCENTRATOR_1;
 import static org.metamechanists.quaptics.implementation.blocks.concentrators.SolarConcentrator.SOLAR_CONCENTRATOR_1_SETTINGS;
 import static org.metamechanists.quaptics.implementation.blocks.consumers.Charger.CHARGER_1;
@@ -251,6 +266,41 @@ public class Primitive {
                 RecipeType.NULL,
                 new ItemStack[]{},
                 REACTOR_RING_SETTINGS).register(addon);
+
+        new BeaconBattery(
+                Groups.PRIMITIVE,
+                BEACON_BATTERY,
+                RecipeType.NULL,
+                new ItemStack[]{},
+                BEACON_BATTERY_SETTINGS).register(addon);
+
+        new BeaconBeam(
+                Groups.PRIMITIVE,
+                BEACON_BEAM,
+                RecipeType.NULL,
+                new ItemStack[]{},
+                BEACON_BEAM_SETTINGS).register(addon);
+
+        new BeaconPowerSupply(
+                Groups.PRIMITIVE,
+                BEACON_POWER_SUPPLY,
+                RecipeType.NULL,
+                new ItemStack[]{},
+                BEACON_POWER_SUPPLY_SETTINGS).register(addon);
+
+        new BeaconRod(
+                Groups.PRIMITIVE,
+                BEACON_ROD,
+                RecipeType.NULL,
+                new ItemStack[]{},
+                BEACON_ROD_SETTINGS).register(addon);
+
+        new BeaconTransmitter(
+                Groups.PRIMITIVE,
+                BEACON_TRANSMITTER,
+                RecipeType.NULL,
+                new ItemStack[]{},
+                BEACON_TRANSMITTER_SETTINGS).register(addon);
 
         new SlimefunItem(
                 Groups.PRIMITIVE,
