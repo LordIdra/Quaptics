@@ -34,6 +34,6 @@ public class LuckFieldModule extends BeaconModule implements PlayerModule {
 
     @Override
     public void apply(final @NotNull Collection<Player> players) {
-        players.forEach(player -> player.addPotionEffect(new PotionEffect(PotionEffectType.LUCK, 2, 1)));
+        players.forEach(player -> player.addPotionEffect(new PotionEffect(PotionEffectType.LUCK, 40, 1)));
     }
 }

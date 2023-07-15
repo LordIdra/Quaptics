@@ -18,14 +18,14 @@ import java.util.Optional;
 public class ProjectileBeam implements Beam {
     private final Vector velocity;
     private final BlockDisplayId displayId;
-    private final int lifespanTicks;
-    final float thickness;
+    private final float thickness;
     private final double damage;
+    private final int lifetimeTicks;
     private int ageTicks;
 
-    public ProjectileBeam(final Material material, final Location source, final Location target, final float thickness, final float length, final float speed, final double damage) {
+    public ProjectileBeam(final Material material, final Location source, final Location target,
+                          final float thickness, final float length, final float speed, final double damage, final int lifetimeTicks) {
         this.velocity = Vector.fromJOML(TransformationUtils.getDisplacement(source, target).normalize().mul(speed));
-        this.lifespanTicks = (int) (TransformationUtils.getDisplacement(source, target).length() / speed) + 1;
         this.displayId = new BlockDisplayId(new ModelLine()
                 .to(TransformationUtils.getDirection(source, target).mul(length))
                 .thickness(thickness)
@@ -35,6 +35,7 @@ public class ProjectileBeam implements Beam {
                 .getUniqueId());
         this.thickness = thickness;
         this.damage = damage;
+        this.lifetimeTicks = lifetimeTicks;
     }
 
     private Optional<BlockDisplay> getDisplay() {
@@ -71,7 +72,7 @@ public class ProjectileBeam implements Beam {
 
     @Override
     public boolean expired() {
-        return ageTicks > lifespanTicks;
+        return ageTicks > lifetimeTicks;
     }
 }
 

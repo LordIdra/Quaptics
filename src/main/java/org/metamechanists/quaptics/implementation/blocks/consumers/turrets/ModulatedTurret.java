@@ -75,7 +75,8 @@ public class ModulatedTurret extends Turret {
                 0.095F,
                 0.2F,
                 settings.getProjectileSpeed() / QuapticTicker.TICKS_PER_SECOND,
-                settings.getDamage()));
+                settings.getDamage(),
+                (int) (20 * settings.getRange() / settings.getProjectileSpeed())));
     }
 
     @Override
