@@ -39,7 +39,8 @@ public class BeaconComputer extends QuapticBlock {
                 .add("main", new ModelCuboid()
                         .material(Material.LIGHT_BLUE_STAINED_GLASS)
                         .brightness(Utils.BRIGHTNESS_OFF)
-                        .size(0.8F, 1.0F, 0.8F))
+                        .size(0.8F, 1.0F, 0.8F)
+                        .rotation(Math.PI / 4))
                 .buildAtBlockCenter(location);
     }
 }
