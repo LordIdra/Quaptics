@@ -10,53 +10,42 @@ import org.bukkit.event.world.EntitiesUnloadEvent;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+
 
 public class QuapticStorage implements Listener {
     @Getter
-    private static final Set<ConnectionGroupId> groupIDs = new HashSet<>();
+    private static final Set<ConnectionGroupId> tickingGroupIds = new HashSet<>();
 
-    private static boolean isGroup(final Interaction interaction) {
-        return new PersistentDataTraverser(interaction).getString("blockId") != null;
+    private static boolean isTickingGroup(final Interaction interaction) {
+        return new PersistentDataTraverser(interaction).getBoolean("isTicker");
     }
 
     public static void addGroup(final ConnectionGroupId groupId) {
-        groupIDs.add(groupId);
+        tickingGroupIds.add(groupId);
     }
     public static void removeGroup(final ConnectionGroupId groupId) {
-        groupIDs.remove(groupId);
+        tickingGroupIds.remove(groupId);
     }
 
-    private static @NotNull Collection<ConnectionGroupId> getConnectionGroupIds(final @NotNull Collection<Entity> entities) {
-        List<ConnectionGroupId> list = new ArrayList<>();
-        for (Entity entity : entities) {
-            if (entity instanceof Interaction) {
-                Interaction interaction = (Interaction) entity;
-                ConnectionGroupId groupId = new ConnectionGroupId(interaction.getUniqueId());
-                if (isGroup(interaction)) {
-                    list.add(groupId);
-                }
-            }
-        }
-        return list;
+    private static @NotNull Collection<ConnectionGroupId> getTickingGroupIds(final @NotNull Collection<Entity> entities) {
+        return entities.stream()
+                .filter(entity -> entity instanceof Interaction)
+                .map(entity -> (Interaction) entity)
+                .filter(QuapticStorage::isTickingGroup)
+                .map(interaction -> new ConnectionGroupId(interaction.getUniqueId()))
+                .collect(Collectors.toList());
     }
 
     @EventHandler
     public static void onEntityLoad(final @NotNull EntitiesLoadEvent event) {
-        if (event.getEntities().isEmpty()) {
-            return;
-        }
-        groupIDs.addAll(getConnectionGroupIds(event.getEntities()));
+        tickingGroupIds.addAll(getTickingGroupIds(event.getEntities()));
     }
     @EventHandler
     public static void onEntityUnload(final @NotNull EntitiesUnloadEvent event) {
-        if (event.getEntities().isEmpty()) {
-            return;
-        }
-        groupIDs.removeAll(getConnectionGroupIds(event.getEntities()));
+        tickingGroupIds.removeAll(getTickingGroupIds(event.getEntities()));
     }
 }

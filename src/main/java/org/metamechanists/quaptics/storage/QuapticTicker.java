@@ -20,7 +20,7 @@ public class QuapticTicker extends BukkitRunnable {
     @Override
     public void run() {
         time += INTERVAL_TICKS;
-        for (final ConnectionGroupId groupId : QuapticStorage.getGroupIDs()) {
+        for (final ConnectionGroupId groupId : QuapticStorage.getTickingGroupIds()) {
             if (groupId.get().isEmpty()) {
                 continue;
             }

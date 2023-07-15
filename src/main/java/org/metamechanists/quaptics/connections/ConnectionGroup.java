@@ -24,11 +24,13 @@ public class ConnectionGroup {
     private final String blockId;
     @Getter
     private final Map<String, ConnectionPointId> points;
+    private final boolean isTicker;
 
-    public ConnectionGroup(final ConnectionGroupId id, @NotNull final ConnectedBlock block, @NotNull final Iterable<ConnectionPoint> pointsIn) {
+    public ConnectionGroup(final ConnectionGroupId id, @NotNull final ConnectedBlock block, @NotNull final Iterable<ConnectionPoint> pointsIn, final boolean isTicker) {
         this.id = id;
         this.blockId = block.getId();
         this.points = new HashMap<>();
+        this.isTicker = isTicker;
         pointsIn.forEach(point -> points.put(point.getName(), point.getId()));
         saveData();
     }
@@ -37,12 +39,14 @@ public class ConnectionGroup {
         this.id = id;
         this.blockId = traverser.getString("blockId");
         this.points = traverser.getPointIdMap("points");
+        this.isTicker = traverser.getBoolean("isTicker");
     }
 
     private void saveData() {
         final PersistentDataTraverser traverser = new PersistentDataTraverser(id);
         traverser.set("blockId", blockId);
         traverser.set("points", points);
+        traverser.set("isTicker", isTicker);
     }
 
     public Optional<ConnectionPoint> getPoint(final String name) {
