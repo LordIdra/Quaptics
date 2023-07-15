@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.metamechanists.quaptics.beams.DeprecatedBeamStorage;
 import org.metamechanists.quaptics.beams.beam.DirectBeam;
+import org.metamechanists.quaptics.beams.beam.LifetimeDirectBeam;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.items.Lore;
 
@@ -34,7 +35,8 @@ public class DirectRayGun extends AbstractRayGun {
 
     @Override
     public void fireRayGun(Player player, Location source, Location target) {
-        DeprecatedBeamStorage.deprecate(new DirectBeam(settings.getProjectileMaterial(), source, target, 0.095F));
+        DeprecatedBeamStorage.deprecate(new LifetimeDirectBeam(settings.getProjectileMaterial(), source, target, 0.095F, 5));
+
         target.getNearbyEntities(0.095F, 0.095F, 0.095F)
                 .stream()
                 .filter(Damageable.class::isInstance)
