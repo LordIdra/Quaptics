@@ -38,6 +38,7 @@ import static org.metamechanists.quaptics.implementation.beacons.components.Beac
 public class BeaconController1 extends BeaconController {
     public static final Settings BEACON_CONTROLLER_1_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
+            .minPower(20)
             .build();
     public static final SlimefunItemStack BEACON_CONTROLLER_1 = new SlimefunItemStack(
             "QP_BEACON_CONTROLLER_1",
@@ -46,13 +47,13 @@ public class BeaconController1 extends BeaconController {
             Lore.create(BEACON_CONTROLLER_1_SETTINGS,
                     "&7● Part of the Beacon multiblock"));
 
-    private static final Vector COMPUTER_LOCATION = new Vector(0, 3, 0);
-    private static final Vector POWER_SUPPLY_LOCATION = new Vector(0, 1, 0);
+    private static final Vector COMPUTER_LOCATION = new Vector(0, 2, 0);
+    private static final Vector POWER_SUPPLY_LOCATION = new Vector(0, -1, 0);
 
-    private static final Vector3f MODULE_1_LOCATION = new Vector3f(0.38F, -0.15F, 0.38F);
-    private static final Vector3f MODULE_2_LOCATION = new Vector3f(-0.38F, -0.15F, -0.38F);
-    private static final Vector3f MODULE_3_LOCATION = new Vector3f(0.38F, -0.15F, -0.38F);
-    private static final Vector3f MODULE_4_LOCATION = new Vector3f(-0.38F, -0.15F, 0.38F);
+    private static final Vector3f MODULE_1_LOCATION = new Vector3f(0, -0.15F, 0.3F);
+    private static final Vector3f MODULE_2_LOCATION = new Vector3f(0, -0.15F, -0.3F);
+    private static final Vector3f MODULE_3_LOCATION = new Vector3f(0.3F, -0.15F, 0);
+    private static final Vector3f MODULE_4_LOCATION = new Vector3f(-0.3F, -0.15F, 0);
 
     public BeaconController1(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
@@ -63,33 +64,28 @@ public class BeaconController1 extends BeaconController {
         final DisplayGroup displayGroup = new ModelBuilder()
                 .add("main", new ModelCuboid()
                         .material(Material.BLUE_CONCRETE)
-                        .size(1.1F, 1.0F, 1.1F)
-                        .rotation(Math.PI/4))
+                        .size(0.6F, 1.0F, 0.6F))
 
                 .add("module1", new ModelItem()
                         .item(getEmptyItemStack())
                         .brightness(Utils.BRIGHTNESS_ON)
                         .size(0.25F)
-                        .location(MODULE_1_LOCATION)
-                        .rotation(Math.PI * 1/4))
+                        .location(MODULE_1_LOCATION))
                 .add("module2", new ModelItem()
                         .item(getEmptyItemStack())
                         .brightness(Utils.BRIGHTNESS_ON)
                         .size(0.25F)
-                        .location(MODULE_2_LOCATION)
-                        .rotation(-Math.PI * 3/4))
+                        .location(MODULE_2_LOCATION))
                 .add("module3", new ModelItem()
                         .item(getEmptyItemStack())
                         .brightness(Utils.BRIGHTNESS_ON)
                         .size(0.25F)
-                        .location(MODULE_3_LOCATION)
-                        .rotation(Math.PI * 3/4))
+                        .location(MODULE_3_LOCATION))
                 .add("module4", new ModelItem()
                         .item(getEmptyItemStack())
                         .brightness(Utils.BRIGHTNESS_ON)
                         .size(0.25F)
-                        .location(MODULE_4_LOCATION)
-                        .rotation(-Math.PI * 1/4))
+                        .location(MODULE_4_LOCATION))
 
                 .buildAtBlockCenter(location);
 
@@ -122,19 +118,19 @@ public class BeaconController1 extends BeaconController {
         final Map<Vector, ItemStack> structure = new HashMap<>();
 
         structure.put(POWER_SUPPLY_LOCATION, BEACON_POWER_SUPPLY);
-        structure.put(new Vector(0, 2, 0), BEACON_BEAM);
+        structure.put(new Vector(0, 1, 0), BEACON_BEAM);
         structure.put(COMPUTER_LOCATION, BEACON_COMPUTER);
-        structure.put(new Vector(0, 4, 0), BEACON_BEAM);
-        structure.put(new Vector(0, 5, 0), BEACON_TRANSMITTER);
+        structure.put(new Vector(0, 3, 0), BEACON_BEAM);
+        structure.put(new Vector(0, 4, 0), BEACON_TRANSMITTER);
 
-        structure.put(new Vector(1, 2, 0), BEACON_TRANSMITTER);
-        structure.put(new Vector(1, 3, 0), BEACON_PANEL);
-        structure.put(new Vector(-1, 2, 0), BEACON_TRANSMITTER);
-        structure.put(new Vector(-1, 3, 0), BEACON_PANEL);
-        structure.put(new Vector(0, 2, 1), BEACON_TRANSMITTER);
-        structure.put(new Vector(0, 3, 1), BEACON_PANEL);
-        structure.put(new Vector(0, 2, -1), BEACON_TRANSMITTER);
-        structure.put(new Vector(0, 3, -1), BEACON_PANEL);
+        structure.put(new Vector(1, 1, 0), BEACON_TRANSMITTER);
+        structure.put(new Vector(1, 2, 0), BEACON_PANEL);
+        structure.put(new Vector(-1, 1, 0), BEACON_TRANSMITTER);
+        structure.put(new Vector(-1, 2, 0), BEACON_PANEL);
+        structure.put(new Vector(0, 1, 1), BEACON_TRANSMITTER);
+        structure.put(new Vector(0, 2, 1), BEACON_PANEL);
+        structure.put(new Vector(0, 1, -1), BEACON_TRANSMITTER);
+        structure.put(new Vector(0, 2, -1), BEACON_PANEL);
 
         return structure;
     }

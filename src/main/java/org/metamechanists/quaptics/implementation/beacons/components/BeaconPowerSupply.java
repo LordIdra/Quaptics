@@ -54,16 +54,17 @@ public class BeaconPowerSupply extends ConnectedBlock {
         return new ModelBuilder()
                 .add("main", new ModelCuboid()
                         .material(Material.BLACK_CONCRETE)
-                        .size(0.6F, 1.0F, 0.6F))
+                        .size(1.1F, 1.0F, 1.1F)
+                        .rotation(Math.PI/4))
                 .buildAtBlockCenter(location);
     }
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
         return List.of(
-                new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input 1", location.clone().toCenterLocation().add(new Vector(0.35, -0.3, 0))),
-                new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input 2", location.clone().toCenterLocation().add(new Vector(-0.35, -0.3, 0))),
-                new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input 3", location.clone().toCenterLocation().add(new Vector(0, -0.3, 0.35))),
-                new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input 4", location.clone().toCenterLocation().add(new Vector(0, -0.3, -0.35))));
+                new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input 1", location.clone().toCenterLocation().add(new Vector(0.5, -0.5, 0))),
+                new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input 2", location.clone().toCenterLocation().add(new Vector(-0.5, -0.5, 0))),
+                new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input 3", location.clone().toCenterLocation().add(new Vector(0, -0.5, 0.5))),
+                new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input 4", location.clone().toCenterLocation().add(new Vector(0, -0.5, -0.5))));
     }
     @Override
     protected void initBlockStorage(final @NotNull Location location) {
