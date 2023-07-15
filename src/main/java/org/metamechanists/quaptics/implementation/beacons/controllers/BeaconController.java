@@ -38,7 +38,7 @@ import java.util.Optional;
 
 
 public abstract class BeaconController extends ConnectedBlock implements ItemHolderBlock {
-    private static final float MODULE_BUTTON_SIZE = 0.2F;
+    private static final float MODULE_BUTTON_SIZE = 0.22F;
     private static final Vector3f MODULE_BUTTON_OFFSET = new Vector3f(0, 0.15F, 0);
 
     protected BeaconController(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
