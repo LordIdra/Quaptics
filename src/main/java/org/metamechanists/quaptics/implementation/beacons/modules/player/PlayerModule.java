@@ -1,4 +1,4 @@
-package org.metamechanists.quaptics.implementation.beacons.modules.types;
+package org.metamechanists.quaptics.implementation.beacons.modules.player;
 
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;

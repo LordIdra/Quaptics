@@ -25,7 +25,7 @@ import org.metamechanists.quaptics.implementation.attachments.ItemHolderBlock;
 import org.metamechanists.quaptics.implementation.attachments.PowerAnimatedBlock;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
 import org.metamechanists.quaptics.implementation.beacons.modules.BeaconModule;
-import org.metamechanists.quaptics.implementation.beacons.modules.types.PlayerModule;
+import org.metamechanists.quaptics.implementation.beacons.modules.player.PlayerModule;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.implementation.tools.QuapticChargeableItem;
 import org.metamechanists.quaptics.storage.PersistentDataTraverser;
