@@ -35,7 +35,7 @@ public class BeaconController1 extends BeaconController implements ComplexMultib
             .build();
     public static final SlimefunItemStack BEACON_CONTROLLER_1 = new SlimefunItemStack(
             "QP_BEACON_CONTROLLER_1",
-            Material.BLACK_CONCRETE,
+            Material.BLUE_CONCRETE,
             "&6Beacon Controller &eI",
             Lore.create(BEACON_CONTROLLER_1_SETTINGS,
                     "&7● Part of the Beacon multiblock"));
@@ -54,15 +54,10 @@ public class BeaconController1 extends BeaconController implements ComplexMultib
                         .size(1.1F, 1.0F, 1.1F)
                         .rotation(Math.PI/4))
 
-                .add("module1", new ModelCuboid()
-                        .material(Material.GRAY_CONCRETE)
-                        .size(0.2F, 0.4F, 0.2F)
-                        .location(0.4F, 0, 0.4F)
-                        .rotation(Math.PI * 1/4))
                 .add("module1", new ModelItem()
                         .material(Material.GRAY_BANNER)
-                        .size(0.2F)
-                        .location(0.4F, 0, 0.4F)
+                        .size(0.3F)
+                        .location(0.395F, -0.2F, 0.395F)
                         .rotation(Math.PI * 1/4))
 
                 .buildAtBlockCenter(location);
@@ -86,7 +81,7 @@ public class BeaconController1 extends BeaconController implements ComplexMultib
         structure.put(new Vector(0, 2, 0), BEACON_BEAM);
         structure.put(COMPUTER_LOCATION, BEACON_COMPUTER);
         structure.put(new Vector(0, 4, 0), BEACON_BEAM);
-        structure.put(new Vector(0, 4, 0), BEACON_TRANSMITTER);
+        structure.put(new Vector(0, 5, 0), BEACON_TRANSMITTER);
 
         structure.put(new Vector(1, 2, 0), BEACON_TRANSMITTER);
         structure.put(new Vector(1, 3, 0), BEACON_PANEL);
