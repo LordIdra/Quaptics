@@ -30,8 +30,10 @@ public abstract class InfoPanel {
     }
 
     public void setPanelHidden(final boolean hidden) {
-        container.setHidden(hidden);
-        update();
+        if (container.isHidden() != hidden) {
+            container.setHidden(hidden);
+            update();
+        }
     }
 
     public void togglePanelHidden() {

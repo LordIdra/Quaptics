@@ -48,7 +48,6 @@ public interface InfoPanelBlock {
         final Optional<ConnectionGroup> optionalGroup = ConnectedBlock.getGroup(location);
         optionalGroup.ifPresent(group -> setPanelId(location, createPanel(location, optionalGroup.get()).getId()));
     }
-
     default void onBreakInfoPanelBlock(@NotNull final Location location) {
         getPanelId(location)
                 .flatMap(InfoPanelId::get)
