@@ -23,7 +23,7 @@ public class BeaconComputer extends QuapticBlock {
             .tier(Tier.PRIMITIVE)
             .build();
     public static final SlimefunItemStack BEACON_COMPUTER = new SlimefunItemStack(
-            "QP_BEACON_MICROCONTROLLER",
+            "QP_BEACON_COMPUTER",
             Material.LIGHT_BLUE_STAINED_GLASS,
             "&6Beacon Computer",
             Lore.create(BEACON_COMPUTER_SETTINGS,
