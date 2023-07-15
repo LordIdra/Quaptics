@@ -7,6 +7,8 @@ import org.bukkit.FluidCollisionMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Damageable;
+import org.bukkit.entity.Display;
+import org.bukkit.entity.Interaction;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.RayTraceResult;
@@ -40,8 +42,9 @@ public class DirectRayGun extends AbstractRayGun {
     @Override
     public void fireRayGun(final Player player, final Location eyeLocation, final Location handLocation, final Location target) {
         final RayTraceResult result = eyeLocation.getWorld().rayTrace(
-                eyeLocation, Vector.fromJOML(TransformationUtils.getDisplacement(eyeLocation, target)),
-                64, FluidCollisionMode.NEVER, true, 0.095F, entity -> true);
+                eyeLocation.clone(), Vector.fromJOML(TransformationUtils.getDisplacement(eyeLocation, target)),
+                64, FluidCollisionMode.NEVER, true, 0.095F,
+                entity -> !entity.getUniqueId().equals(player.getUniqueId()) && !(entity instanceof Display) && !(entity instanceof Interaction));
 
         if (result == null) {
             DeprecatedBeamStorage.deprecate(new LifetimeDirectBeam(settings.getProjectileMaterial(), handLocation, target, 0.095F, 5));
