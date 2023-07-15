@@ -15,6 +15,7 @@ import org.metamechanists.quaptics.implementation.attachments.PowerAnimatedBlock
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
+import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.models.ModelBuilder;
 import org.metamechanists.quaptics.utils.models.components.ModelCuboid;
 import org.metamechanists.quaptics.utils.models.components.ModelItem;
@@ -55,10 +56,29 @@ public class BeaconController1 extends BeaconController implements ComplexMultib
                         .rotation(Math.PI/4))
 
                 .add("module1", new ModelItem()
-                        .material(Material.GRAY_BANNER)
+                        .material(Material.WHITE_BANNER)
+                        .brightness(Utils.BRIGHTNESS_OFF)
                         .size(0.3F)
-                        .location(0.395F, -0.2F, 0.395F)
+                        .location(0.38F, -0.15F, 0.38F)
                         .rotation(Math.PI * 1/4))
+                .add("module2", new ModelItem()
+                        .material(Material.WHITE_BANNER)
+                        .brightness(Utils.BRIGHTNESS_OFF)
+                        .size(0.3F)
+                        .location(-0.38F, -0.15F, -0.38F)
+                        .rotation(Math.PI * 1/4))
+                .add("module3", new ModelItem()
+                        .material(Material.WHITE_BANNER)
+                        .brightness(Utils.BRIGHTNESS_OFF)
+                        .size(0.3F)
+                        .location(0.38F, -0.15F, -0.38F)
+                        .rotation(-Math.PI * 1/4))
+                .add("module4", new ModelItem()
+                        .material(Material.WHITE_BANNER)
+                        .brightness(Utils.BRIGHTNESS_OFF)
+                        .size(0.3F)
+                        .location(-0.38F, -0.15F, 0.38F)
+                        .rotation(-Math.PI * 1/4))
 
                 .buildAtBlockCenter(location);
     }
