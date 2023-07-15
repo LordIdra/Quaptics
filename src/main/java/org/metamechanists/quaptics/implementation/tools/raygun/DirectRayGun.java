@@ -38,13 +38,13 @@ public class DirectRayGun extends AbstractRayGun {
     }
 
     @Override
-    public void fireRayGun(final Player player, final Location source, final Location target) {
-        final RayTraceResult result = source.getWorld().rayTrace(
-                source, Vector.fromJOML(TransformationUtils.getDisplacement(source, target)),
+    public void fireRayGun(final Player player, final Location eyeLocation, final Location handLocation, final Location target) {
+        final RayTraceResult result = eyeLocation.getWorld().rayTrace(
+                eyeLocation, Vector.fromJOML(TransformationUtils.getDisplacement(eyeLocation, target)),
                 64, FluidCollisionMode.NEVER, true, 0.095F, entity -> true);
 
         if (result == null) {
-            DeprecatedBeamStorage.deprecate(new LifetimeDirectBeam(settings.getProjectileMaterial(), source, target, 0.095F, 5));
+            DeprecatedBeamStorage.deprecate(new LifetimeDirectBeam(settings.getProjectileMaterial(), handLocation, target, 0.095F, 5));
             target.getNearbyEntities(0.095F, 0.095F, 0.095F)
                     .stream()
                     .filter(Damageable.class::isInstance)
@@ -57,8 +57,8 @@ public class DirectRayGun extends AbstractRayGun {
         final Vector position = result.getHitPosition();
         DeprecatedBeamStorage.deprecate(new LifetimeDirectBeam(
                 settings.getProjectileMaterial(),
-                source,
-                new Location(source.getWorld(), position.getX(), position.getY(), position.getZ()).toCenterLocation(),
+                handLocation,
+                new Location(handLocation.getWorld(), position.getX(), position.getY(), position.getZ()),
                 0.095F,
                 5));
 

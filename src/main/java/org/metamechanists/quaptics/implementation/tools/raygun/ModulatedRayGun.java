@@ -34,10 +34,10 @@ public class ModulatedRayGun extends AbstractRayGun {
     }
 
     @Override
-    public void fireRayGun(final Player player, final Location source, final Location target) {
+    public void fireRayGun(final Player player, final Location eyeLocation, final Location handLocation, final Location target) {
         DeprecatedBeamStorage.deprecate(new ProjectileBeam(
                 settings.getProjectileMaterial(),
-                source,
+                handLocation,
                 target,
                 0.095F,
                 0.2F,
