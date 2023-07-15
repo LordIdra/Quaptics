@@ -36,7 +36,7 @@ public abstract class AbstractRayGun extends QuapticChargeableItem {
 
         final Location eyeLocation = player.getEyeLocation();
         final Location handLocation = LocationUtils.getHandLocation(player, leftHand);
-        final Location target = eyeLocation.clone().add(eyeLocation.getDirection().multiply(56));
+        final Location target = eyeLocation.clone().add(eyeLocation.getDirection().multiply(settings.getRange()));
 
         fireRayGun(player, eyeLocation, handLocation, target);
         setCharge(itemStack, stepCharge(settings, charge, -settings.getEmissionPower()));

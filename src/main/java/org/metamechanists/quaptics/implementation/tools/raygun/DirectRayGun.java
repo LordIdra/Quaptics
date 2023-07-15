@@ -25,6 +25,7 @@ public class DirectRayGun extends AbstractRayGun {
     public static final Settings RAY_GUN_2_SETTINGS = Settings.builder()
             .chargeCapacity(1000.0)
             .emissionPower(5.0)
+            .range(56)
             .damage(3)
             .projectileMaterial(Material.LIGHT_BLUE_CONCRETE)
             .build();
@@ -44,7 +45,7 @@ public class DirectRayGun extends AbstractRayGun {
     public void fireRayGun(final Player player, final Location eyeLocation, final Location handLocation, final Location target) {
         final RayTraceResult result = eyeLocation.getWorld().rayTrace(
                 eyeLocation.clone(), Vector.fromJOML(TransformationUtils.getDisplacement(eyeLocation, target)),
-                64, FluidCollisionMode.NEVER, true, 0.095F,
+                settings.getRange(), FluidCollisionMode.NEVER, true, 0.095F,
                 entity -> !entity.getUniqueId().equals(player.getUniqueId())
                         && !(entity instanceof Display)
                         && !(entity instanceof Interaction)
