@@ -223,7 +223,7 @@ public class ReactorController extends ConnectedBlock implements ComplexMultiblo
         Particles.animatedHorizontalCircle(Particle.ELECTRIC_SPARK,
                 centerLocation.clone().toCenterLocation(),
                 3,
-                5,
+                3,
                 animationOffset,
                 0);
     }
