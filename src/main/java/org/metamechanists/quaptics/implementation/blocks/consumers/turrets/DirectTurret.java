@@ -69,7 +69,7 @@ public class DirectTurret extends Turret {
 
     @Override
     protected void createProjectile(final Location source, final Location target) {
-        DeprecatedBeamStorage.deprecate(new DirectBeam(settings.getProjectileMaterial(), source, target, BEAM_RADIUS));
+        DeprecatedBeamStorage.deprecate(new DirectBeam(settings.getProjectileMaterial(), source.toCenterLocation(), target, BEAM_RADIUS));
     }
 
     @Override
