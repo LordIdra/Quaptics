@@ -55,7 +55,7 @@ public class Capacitor extends ConnectedBlock implements InfoPanelBlock, PowerLo
                     "&7● Stores charge",
                     "&7● Outputs at a constant power"));
 
-    private static final float MAX_CONCRETE_DISPLAY_SIZE = 0.37F;
+    private static final float MAX_CONCRETE_DISPLAY_SIZE = 0.78F;
 
     private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -getConnectionRadius());
     private final Vector outputPointLocation = new Vector(0.0F, 0.0F, getConnectionRadius());
