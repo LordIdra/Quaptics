@@ -36,10 +36,16 @@ public class QuapticStorage implements Listener {
 
     @EventHandler
     public static void onEntityLoad(final @NotNull EntitiesLoadEvent event) {
+        if (event.getEntities().isEmpty()) {
+            return;
+        }
         groupIDs.addAll(getConnectionGroupIds(event.getEntities()));
     }
     @EventHandler
     public static void onEntityUnload(final @NotNull EntitiesUnloadEvent event) {
+        if (event.getEntities().isEmpty()) {
+            return;
+        }
         groupIDs.removeAll(getConnectionGroupIds(event.getEntities()));
     }
 }
