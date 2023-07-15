@@ -116,11 +116,11 @@ public class DataStripper extends ConnectedBlock implements InfoPanelBlock, Item
     protected void onBreak(@NotNull final Location location) {
         super.onBreak(location);
         onBreakInfoPanelBlock(location);
-        onBreakItemHolderBlock(location);
+        onBreakItemHolderBlock(location, "item");
     }
     @Override
     protected boolean onRightClick(final @NotNull Location location, final @NotNull Player player) {
-        itemHolderInteract(location, player);
+        itemHolderInteract(location, "item", player);
         return true;
     }
     @SuppressWarnings("unused")
@@ -131,14 +131,14 @@ public class DataStripper extends ConnectedBlock implements InfoPanelBlock, Item
             return;
         }
 
-        setPanelHidden(group, ItemHolderBlock.getStack(group).isEmpty());
+        setPanelHidden(group, ItemHolderBlock.getStack(group, "item").isEmpty());
 
         final Optional<Link> inputLink = getLink(group, "input");
         if (inputLink.isEmpty() || !settings.isOperational(inputLink)) {
             return;
         }
 
-        if (ItemHolderBlock.getStack(location).isPresent()) {
+        if (ItemHolderBlock.getStack(location, "item").isPresent()) {
             ProgressBlock.updateProgress(location, QuapticTicker.INTERVAL_TICKS_10, settings.getTimePerItem());
         }
 
@@ -151,7 +151,7 @@ public class DataStripper extends ConnectedBlock implements InfoPanelBlock, Item
         onPoweredAnimation(location, settings.isOperational(inputLink));
     }
     @Override
-    public boolean onInsert(@NotNull final Location location, final @NotNull ItemStack stack, @NotNull final Player player) {
+    public boolean onInsert(@NotNull final Location location, @NotNull final String name, @NotNull final ItemStack stack, @NotNull final Player player) {
         if (SlimefunItem.getByItem(stack) == null || stack.getType() != Material.PLAYER_HEAD) {
             Language.sendLanguageMessage(player, "data-stripper.not-slimefun-head");
             return false;
@@ -160,7 +160,7 @@ public class DataStripper extends ConnectedBlock implements InfoPanelBlock, Item
         return true;
     }
     @Override
-    public Optional<ItemStack> onRemove(@NotNull final Location location, final @NotNull ItemStack stack) {
+    public Optional<ItemStack> onRemove(@NotNull final Location location, @NotNull final String name, @NotNull final ItemStack stack) {
         final double progress = ProgressBlock.getProgress(location);
         ProgressBlock.setProgress(location, 0);
         return Math.abs(progress - settings.getTimePerItem()) < MAX_PROGRESS_DIFFERENCE

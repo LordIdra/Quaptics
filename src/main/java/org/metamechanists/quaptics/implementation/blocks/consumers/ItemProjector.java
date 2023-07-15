@@ -118,11 +118,11 @@ public class ItemProjector extends ConnectedBlock implements ItemHolderBlock, Po
     protected void onBreak(@NotNull final Location location) {
         super.onBreak(location);
         onBreakConfigPanelBlock(location);
-        onBreakItemHolderBlock(location);
+        onBreakItemHolderBlock(location, "item");
     }
     @Override
     protected boolean onRightClick(final @NotNull Location location, final @NotNull Player player) {
-        itemHolderInteract(location, player);
+        itemHolderInteract(location, "item", player);
         return true;
     }
     @Override
@@ -135,11 +135,11 @@ public class ItemProjector extends ConnectedBlock implements ItemHolderBlock, Po
         onPoweredAnimation(location, inputLink.isPresent() && settings.isOperational(inputLink));
     }
     @Override
-    public boolean onInsert(@NotNull final Location location, @NotNull final ItemStack stack, @NotNull final Player player) {
+    public boolean onInsert(@NotNull final Location location, @NotNull final String name, @NotNull final ItemStack stack, @NotNull final Player player) {
         return true;
     }
     @Override
-    public Optional<ItemStack> onRemove(@NotNull final Location location, @NotNull final ItemStack stack) {
+    public Optional<ItemStack> onRemove(@NotNull final Location location, @NotNull final String name, @NotNull final ItemStack stack) {
         return Optional.of(stack);
     }
     @Override

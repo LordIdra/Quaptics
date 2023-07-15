@@ -108,11 +108,11 @@ public class Charger extends ConnectedBlock implements InfoPanelBlock, ItemHolde
     protected void onBreak(@NotNull final Location location) {
         super.onBreak(location);
         onBreakInfoPanelBlock(location);
-        onBreakItemHolderBlock(location);
+        onBreakItemHolderBlock(location, "item");
     }
     @Override
     protected boolean onRightClick(final @NotNull Location location, final @NotNull Player player) {
-        itemHolderInteract(location, player);
+        itemHolderInteract(location, "item", player);
         return true;
     }
     @SuppressWarnings("unused")
@@ -124,7 +124,7 @@ public class Charger extends ConnectedBlock implements InfoPanelBlock, ItemHolde
             return;
         }
 
-        final Optional<ItemStack> stack = ItemHolderBlock.getStack(group);
+        final Optional<ItemStack> stack = ItemHolderBlock.getStack(group, "item");
         if (stack.isEmpty()) {
             return;
         }
@@ -140,7 +140,7 @@ public class Charger extends ConnectedBlock implements InfoPanelBlock, ItemHolde
 
         ParticleUtils.randomParticle(location.clone().toCenterLocation(), Particle.ELECTRIC_SPARK, 0.3, 1);
         final ItemStack newStack = chargeableItem.chargeItem(inputLink.get(), stack.get(), QuapticTicker.INTERVAL_TICKS_10);
-        ItemHolderBlock.insertItem(location, newStack);
+        ItemHolderBlock.insertItem(location, "item", newStack);
         updatePanel(group);
     }
     @Override
@@ -150,7 +150,7 @@ public class Charger extends ConnectedBlock implements InfoPanelBlock, ItemHolde
         onPoweredAnimation(location, settings.isOperational(inputLink));
     }
     @Override
-    public boolean onInsert(@NotNull final Location location, @NotNull final ItemStack stack, @NotNull final Player player) {
+    public boolean onInsert(@NotNull final Location location, @NotNull final String name, @NotNull final ItemStack stack, @NotNull final Player player) {
         if (!(SlimefunItem.getByItem(stack) instanceof QuapticChargeableItem)) {
             Language.sendLanguageMessage(player, "charger.not-chargeable");
             return false;
@@ -158,7 +158,7 @@ public class Charger extends ConnectedBlock implements InfoPanelBlock, ItemHolde
         return true;
     }
     @Override
-    public Optional<ItemStack> onRemove(@NotNull final Location location, @NotNull final ItemStack stack) {
+    public Optional<ItemStack> onRemove(@NotNull final Location location, @NotNull final String name, @NotNull final ItemStack stack) {
         QuapticChargeableItem.updateLore(stack);
         return Optional.of(stack);
     }

@@ -130,14 +130,14 @@ public class InfusionContainer extends ConnectedBlock implements ItemHolderBlock
     @Override
     protected void onBreak(@NotNull final Location location) {
         super.onBreak(location);
-        onBreakItemHolderBlock(location);
+        onBreakItemHolderBlock(location, "item");
     }
     @Override
     protected boolean onRightClick(final @NotNull Location location, final @NotNull Player player) {
         if (multiblockInteract(location.getBlock(), player)) {
             return true;
         }
-        itemHolderInteract(location, player);
+        itemHolderInteract(location, "item", player);
         return true;
     }
     @SuppressWarnings("unused")
@@ -167,7 +167,7 @@ public class InfusionContainer extends ConnectedBlock implements ItemHolderBlock
         }
     }
     @Override
-    public boolean onInsert(@NotNull final Location location, @NotNull final ItemStack stack, @NotNull final Player player) {
+    public boolean onInsert(@NotNull final Location location, @NotNull final String name, @NotNull final ItemStack stack, @NotNull final Player player) {
         if (RECIPES.keySet().stream().noneMatch(input -> SlimefunUtils.isItemSimilar(input, stack, false))) {
             Language.sendLanguageMessage(player, "infuser.cannot-be-infused");
             return false;
@@ -183,7 +183,7 @@ public class InfusionContainer extends ConnectedBlock implements ItemHolderBlock
         return true;
     }
     @Override
-    public Optional<ItemStack> onRemove(@NotNull final Location location, @NotNull final ItemStack stack) {
+    public Optional<ItemStack> onRemove(@NotNull final Location location, @NotNull final String name, @NotNull final ItemStack stack) {
         BlockStorageAPI.set(location, Keys.BS_SECONDS_SINCE_CRAFT_STARTED, 0);
         BlockStorageAPI.set(location, Keys.BS_CRAFT_IN_PROGRESS, false);
         return Optional.of(stack);
@@ -228,13 +228,13 @@ public class InfusionContainer extends ConnectedBlock implements ItemHolderBlock
         BlockStorageAPI.set(location, Keys.BS_CRAFT_IN_PROGRESS, false);
     }
     private static void completeCraft(@NotNull final Location location) {
-        final Optional<ItemStack> stack = ItemHolderBlock.getStack(location);
+        final Optional<ItemStack> stack = ItemHolderBlock.getStack(location, "item");
         if (stack.isEmpty()) {
             return;
         }
 
         BlockStorageAPI.set(location, Keys.BS_SECONDS_SINCE_CRAFT_STARTED, 0);
         BlockStorageAPI.set(location, Keys.BS_CRAFT_IN_PROGRESS, false);
-        ItemHolderBlock.insertItem(location, RECIPES.get(stack.get()));
+        ItemHolderBlock.insertItem(location, "item", RECIPES.get(stack.get()));
     }
 }

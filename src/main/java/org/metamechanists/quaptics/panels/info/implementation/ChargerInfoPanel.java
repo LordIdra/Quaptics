@@ -44,7 +44,7 @@ public class ChargerInfoPanel extends BlockInfoPanel {
             return;
         }
 
-        final Optional<ItemStack> stack = ItemHolderBlock.getStack(group.get());
+        final Optional<ItemStack> stack = ItemHolderBlock.getStack(group.get(), "item");
         if (stack.isEmpty()) {
             return;
         }

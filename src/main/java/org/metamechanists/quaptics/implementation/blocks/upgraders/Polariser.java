@@ -117,7 +117,7 @@ public class Polariser extends ConnectedBlock implements PowerAnimatedBlock, Pow
             return;
         }
 
-        final Optional<ItemStack> itemStack = ItemHolderBlock.getStack(location);
+        final Optional<ItemStack> itemStack = ItemHolderBlock.getStack(location, "item");
         if (itemStack.isEmpty()) {
             return;
         }
@@ -132,15 +132,15 @@ public class Polariser extends ConnectedBlock implements PowerAnimatedBlock, Pow
     @OverridingMethodsMustInvokeSuper
     protected void onBreak(@NotNull final Location location) {
         super.onBreak(location);
-        onBreakItemHolderBlock(location);
+        onBreakItemHolderBlock(location, "item");
     }
     @Override
     protected boolean onRightClick(final @NotNull Location location, final @NotNull Player player) {
-        itemHolderInteract(location, player);
+        itemHolderInteract(location, "item", player);
         return true;
     }
     @Override
-    public boolean onInsert(@NotNull final Location location, @NotNull final ItemStack stack, @NotNull final Player player) {
+    public boolean onInsert(@NotNull final Location location, @NotNull final String name, @NotNull final ItemStack stack, @NotNull final Player player) {
         final Optional<Integer> phaseChange = getPhaseChange(stack);
         if (phaseChange.isEmpty()) {
             Language.sendLanguageMessage(player, "polariser.not-phase-crystal");
@@ -151,7 +151,7 @@ public class Polariser extends ConnectedBlock implements PowerAnimatedBlock, Pow
         return true;
     }
     @Override
-    public Optional<ItemStack> onRemove(@NotNull final Location location, @NotNull final ItemStack stack) {
+    public Optional<ItemStack> onRemove(@NotNull final Location location, @NotNull final String name, @NotNull final ItemStack stack) {
         getItemDisplay(location, "item2").ifPresent(display -> display.setItemStack(new ItemStack(Material.AIR)));
         updateOutput(location, null);
         return Optional.of(stack);
