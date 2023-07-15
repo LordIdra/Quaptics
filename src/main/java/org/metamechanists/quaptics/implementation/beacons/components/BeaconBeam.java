@@ -14,7 +14,6 @@ import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
 import org.metamechanists.quaptics.utils.models.ModelBuilder;
-import org.metamechanists.quaptics.utils.models.components.ModelCuboid;
 
 
 public class BeaconBeam extends QuapticBlock {
@@ -35,12 +34,6 @@ public class BeaconBeam extends QuapticBlock {
     @Override
     protected DisplayGroup initModel(@NotNull final Location location, @NotNull final Player player) {
         return new ModelBuilder()
-                .add("coil1", new ModelCuboid()
-                        .material(Material.BLUE_CONCRETE)
-                        .size(0.1F, 0.8F, 0.6F))
-                .add("coil2", new ModelCuboid()
-                        .material(Material.BLUE_CONCRETE)
-                        .size(0.6F, 0.8F, 0.1F))
                 .buildAtBlockCenter(location);
     }
     @Override

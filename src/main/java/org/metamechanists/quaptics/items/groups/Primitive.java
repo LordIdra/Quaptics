@@ -13,6 +13,7 @@ import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.Quaptics;
 import org.metamechanists.quaptics.implementation.beacons.components.BeaconBattery;
 import org.metamechanists.quaptics.implementation.beacons.components.BeaconBeam;
+import org.metamechanists.quaptics.implementation.beacons.components.BeaconPanel;
 import org.metamechanists.quaptics.implementation.beacons.components.BeaconPowerSupply;
 import org.metamechanists.quaptics.implementation.beacons.components.BeaconRod;
 import org.metamechanists.quaptics.implementation.beacons.components.BeaconTransmitter;
@@ -304,7 +305,7 @@ public class Primitive {
                 new ItemStack[]{},
                 BEACON_TRANSMITTER_SETTINGS).register(addon);
 
-        new BeaconTransmitter(
+        new BeaconPanel(
                 Groups.PRIMITIVE,
                 BEACON_PANEL,
                 RecipeType.NULL,
