@@ -41,9 +41,9 @@ import java.util.Optional;
 
 
 public abstract class BeaconController extends ConnectedBlock implements ItemHolderBlock, ComplexMultiblock, PowerAnimatedBlock {
-    private static final float MODULE_BUTTON_WIDTH = 0.22F;
-    private static final float MODULE_BUTTON_HEIGHT = 0.44F;
-    private static final Vector3f MODULE_BUTTON_OFFSET = new Vector3f(0, 0.15F, 0);
+    private static final float MODULE_BUTTON_WIDTH = 0.20F;
+    private static final float MODULE_BUTTON_HEIGHT = 0.42F;
+    private static final Vector3f MODULE_BUTTON_OFFSET = new Vector3f(0, 0.13F, 0);
 
     protected BeaconController(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
