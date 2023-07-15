@@ -50,4 +50,5 @@ public class Keys {
     public final String BS_INPUT_POWER = "QP_INPUT_POWER";
     public final String BS_OUTPUT_POWER = "QP_OUTPUT_POWER";
     public final String BS_ANIMATION_OFFSET = "QP_ANIMATION_OFFSET";
+    public final String BS_INTERACTION_ID_LIST = "QP_INTERACTION_ID_LIST";
 }

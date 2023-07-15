@@ -125,6 +125,15 @@ public class PersistentDataTraverser {
             i++;
         }
     }
+    // 'both methods have the same erasure' I hate this language so much......
+    public void setCustomIdList(@NotNull final String key, final @NotNull List<? extends CustomId> value) {
+        set(key + "length", value.size());
+        int i = 0;
+        for (final CustomId uuid : value) {
+            set(key + i, uuid.toString());
+            i++;
+        }
+    }
 
     public int getInt(@NotNull final String key) {
         return PersistentDataAPI.getInt(persistentDataHolder, getKey(key));
@@ -243,5 +252,17 @@ public class PersistentDataTraverser {
                 .mapToObj(i -> getString(key + i))
                 .filter(Objects::nonNull)
                 .map(UUID::fromString).collect(Collectors.toList());
+    }
+    public @Nullable List<InteractionId> getCustomIdList(@NotNull final String key) {
+        final int size = getInt(key + "length");
+        if (size == 0) {
+            return null;
+        }
+        return IntStream.range(0, size)
+                .mapToObj(i -> getString(key + i))
+                .filter(Objects::nonNull)
+                .map(UUID::fromString)
+                .map(InteractionId::new)
+                .collect(Collectors.toList());
     }
 }

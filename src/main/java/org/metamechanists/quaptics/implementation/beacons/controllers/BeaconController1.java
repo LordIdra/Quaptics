@@ -16,12 +16,16 @@ import org.metamechanists.quaptics.implementation.attachments.PowerAnimatedBlock
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
+import org.metamechanists.quaptics.storage.PersistentDataTraverser;
+import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
+import org.metamechanists.quaptics.utils.id.simple.InteractionId;
 import org.metamechanists.quaptics.utils.models.ModelBuilder;
 import org.metamechanists.quaptics.utils.models.components.ModelCuboid;
 import org.metamechanists.quaptics.utils.models.components.ModelItem;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -79,22 +83,26 @@ public class BeaconController1 extends BeaconController implements ComplexMultib
                         .brightness(Utils.BRIGHTNESS_OFF)
                         .size(0.3F)
                         .location(MODULE_3_LOCATION)
-                        .rotation(-Math.PI * 1/4))
+                        .rotation(Math.PI * 3/4))
                 .add("module4", new ModelItem()
                         .material(EMPTY_MODULE_BANNER)
                         .brightness(Utils.BRIGHTNESS_OFF)
                         .size(0.3F)
                         .location(MODULE_4_LOCATION)
-                        .rotation(Math.PI * 3/4))
+                        .rotation(-Math.PI * 1/4))
 
                 .buildAtBlockCenter(location);
 
         final ConnectionGroupId groupId = new ConnectionGroupId(displayGroup.getParentUUID());
+        final List<InteractionId> interactionIds = new ArrayList<>();
 
-        createButton(groupId, location, MODULE_1_LOCATION, "module1");
-        createButton(groupId, location, MODULE_2_LOCATION, "module2");
-        createButton(groupId, location, MODULE_3_LOCATION, "module3");
-        createButton(groupId, location, MODULE_4_LOCATION, "module4");
+        interactionIds.add(createButton(groupId, location, MODULE_1_LOCATION, "module1"));
+        interactionIds.add(createButton(groupId, location, MODULE_2_LOCATION, "module2"));
+        interactionIds.add(createButton(groupId, location, MODULE_3_LOCATION, "module3"));
+        interactionIds.add(createButton(groupId, location, MODULE_4_LOCATION, "module4"));
+
+        final PersistentDataTraverser traverser = new PersistentDataTraverser(displayGroup.getParentUUID());
+        traverser.setCustomIdList(Keys.BS_INTERACTION_ID_LIST, interactionIds);
 
         return displayGroup;
     }
