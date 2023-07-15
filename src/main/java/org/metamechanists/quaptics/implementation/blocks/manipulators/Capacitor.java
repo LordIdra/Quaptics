@@ -117,7 +117,7 @@ public class Capacitor extends ConnectedBlock implements InfoPanelBlock, PowerLo
     }
     @SuppressWarnings("unused")
     @Override
-    public void onTick6(@NotNull final ConnectionGroup group, @NotNull final Location location) {
+    public void onTick10(@NotNull final ConnectionGroup group, @NotNull final Location location) {
         double charge = BlockStorageAPI.getDouble(location, Keys.BS_CHARGE);
         final double initialCharge = charge;
         charge = doCharge(location, charge);
@@ -146,7 +146,7 @@ public class Capacitor extends ConnectedBlock implements InfoPanelBlock, PowerLo
         }
 
         final double chargeRate = settings.isOperational(inputLink)
-                ? PowerLossBlock.calculatePowerLoss(settings, inputLink.get().getPower() * ((double) QuapticTicker.INTERVAL_TICKS_6 / QuapticTicker.TICKS_PER_SECOND))
+                ? PowerLossBlock.calculatePowerLoss(settings, inputLink.get().getPower() * ((double) QuapticTicker.INTERVAL_TICKS_10 / QuapticTicker.TICKS_PER_SECOND))
                 : 0;
         BlockStorageAPI.set(location, Keys.BS_CHARGE_RATE, chargeRate);
     }
@@ -181,7 +181,7 @@ public class Capacitor extends ConnectedBlock implements InfoPanelBlock, PowerLo
         }
 
         outputLink.get().setPowerFrequency(
-                (charge > settings.getEmissionPower() * ((double) QuapticTicker.INTERVAL_TICKS_6 / QuapticTicker.TICKS_PER_SECOND))
+                (charge > settings.getEmissionPower() * ((double) QuapticTicker.INTERVAL_TICKS_10 / QuapticTicker.TICKS_PER_SECOND))
                         ? settings.getEmissionPower()
                         : 0,
                 0);

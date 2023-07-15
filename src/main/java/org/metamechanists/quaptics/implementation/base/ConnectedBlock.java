@@ -85,6 +85,8 @@ public abstract class ConnectedBlock extends QuapticBlock {
     protected void onTick10(@NotNull final ConnectionGroup group, @NotNull final Location location) {}
     @SuppressWarnings("unused")
     public void onTick22(@NotNull final ConnectionGroup group, @NotNull final Location location) {}
+    @SuppressWarnings("unused")
+    public void onTick102(@NotNull final ConnectionGroup group, @NotNull final Location location) {}
     @Override
     @OverridingMethodsMustInvokeSuper
     protected void onSlimefunTick(@NotNull final Block block, final SlimefunItem item, final Config data) {

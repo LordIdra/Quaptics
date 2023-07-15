@@ -19,6 +19,8 @@ import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
+import org.metamechanists.quaptics.utils.BlockStorageAPI;
+import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.models.ModelBuilder;
@@ -81,20 +83,20 @@ public class SolarConcentrator extends ConnectedBlock implements PowerAnimatedBl
         return List.of(new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output", formatPointLocation(player, location, outputLocation)));
     }
 
-    @Override
-    protected boolean isTicker() {
-        return true;
-    }
 
     @SuppressWarnings("unused")
     @Override
-    public void onTick10(@NotNull final ConnectionGroup group, @NotNull final Location location) {
-        final double power = location.getWorld().isDayTime()
-                ? settings.getEmissionPower()
-                : 0;
+    public void onTick102(@NotNull final ConnectionGroup group, @NotNull final Location location) {
+        final boolean wasPowered = BlockStorageAPI.getBoolean(location, Keys.BS_POWERED);
+        final boolean powered = location.getWorld().isDayTime();
+        if (powered == wasPowered) {
+            return;
+        }
+
+        BlockStorageAPI.set(location, Keys.BS_POWERED, powered);
         final Optional<Link> linkOptional = getLink(location, "output");
-        onPoweredAnimation(location, location.getWorld().isDayTime());
-        linkOptional.ifPresent(link -> link.setPower(power));
+        onPoweredAnimation(location, powered);
+        linkOptional.ifPresent(link -> link.setPower(powered ? settings.getEmissionPower() : 0));
     }
     @Override
     public void onPoweredAnimation(final @NotNull Location location, final boolean powered) {

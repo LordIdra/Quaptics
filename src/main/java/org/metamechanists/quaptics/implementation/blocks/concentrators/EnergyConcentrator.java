@@ -21,6 +21,8 @@ import org.metamechanists.quaptics.implementation.base.EnergyConnectedBlock;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
+import org.metamechanists.quaptics.utils.BlockStorageAPI;
+import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.models.ModelBuilder;
@@ -107,12 +109,16 @@ public class EnergyConcentrator extends EnergyConnectedBlock implements PowerAni
     public void onSlimefunTick(@NotNull final Block block, final SlimefunItem item, final Config data) {
         super.onSlimefunTick(block, item, data);
         final Location location = block.getLocation();
-        final double power = hasEnoughEnergy(location)
-                ? settings.getEmissionPower()
-                : 0;
+        final boolean wasPowered = BlockStorageAPI.getBoolean(location, Keys.BS_POWERED);
+        final boolean powered = hasEnoughEnergy(location);
+        if (powered == wasPowered) {
+            return;
+        }
+
+        BlockStorageAPI.set(location, Keys.BS_POWERED, powered);
         final Optional<Link> linkOptional = getLink(location, "output");
         onPoweredAnimation(location, hasEnoughEnergy(location));
-        linkOptional.ifPresent(link -> link.setPower(power));
+        linkOptional.ifPresent(link -> link.setPower(powered ? settings.getEmissionPower() : 0));
     }
     @Override
     public void onPoweredAnimation(final @NotNull Location location, final boolean powered) {

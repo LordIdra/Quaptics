@@ -76,13 +76,17 @@ public class ConnectionGroup {
         final Optional<Location> locationOptional = getLocation();
         locationOptional.ifPresent(location -> getBlock().onTick2(this, location));
     }
-    public void tick5() {
+    public void tick6() {
         final Optional<Location> locationOptional = getLocation();
         locationOptional.ifPresent(location -> getBlock().onTick6(this, location));
     }
-    public void tick21() {
+    public void tick22() {
         final Optional<Location> locationOptional = getLocation();
         locationOptional.ifPresent(location -> getBlock().onTick22(this, location));
+    }
+    public void tick102() {
+        final Optional<Location> locationOptional = getLocation();
+        locationOptional.ifPresent(location -> getBlock().onTick102(this, location));
     }
 
     public void updatePanels() {

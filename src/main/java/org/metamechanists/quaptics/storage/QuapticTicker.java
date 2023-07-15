@@ -16,6 +16,7 @@ public class QuapticTicker extends BukkitRunnable {
     public static final int INTERVAL_TICKS_6 = 6;
     public static final int INTERVAL_TICKS_10 = 10;
     public static final int INTERVAL_TICKS_22 = 22;
+    public static final int INTERVAL_TICKS_102 = 102;
 
     @Override
     public void run() {
@@ -30,11 +31,15 @@ public class QuapticTicker extends BukkitRunnable {
                 group.tick2();
 
                 if (time % INTERVAL_TICKS_6 == 0) {
-                    group.tick5();
+                    group.tick6();
                 }
 
                 if (time % INTERVAL_TICKS_22 == 0) {
-                    group.tick21();
+                    group.tick22();
+                }
+
+                if (time % INTERVAL_TICKS_102 == 0) {
+                    group.tick102();
                 }
 
             } catch (final RuntimeException exception) {
