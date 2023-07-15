@@ -4,23 +4,25 @@ import io.github.thebusybiscuit.slimefun4.api.events.PlayerRightClickEvent;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
-import io.github.thebusybiscuit.slimefun4.core.handlers.ItemUseHandler;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.MainHand;
+import org.bukkit.util.Vector;
 import org.metamechanists.metalib.utils.LocationUtils;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.implementation.tools.QuapticChargeableItem;
+import org.metamechanists.quaptics.utils.transformations.TransformationUtils;
+
 
 public abstract class AbstractRayGun extends QuapticChargeableItem {
-    protected AbstractRayGun(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, Settings settings) {
+    protected AbstractRayGun(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
     }
 
     @Override
-    public void onUseItem(PlayerRightClickEvent event) {
+    public void onUseItem(final PlayerRightClickEvent event) {
         final ItemStack itemStack = event.getItem();
         final double charge = getCharge(itemStack);
 
@@ -35,10 +37,11 @@ public abstract class AbstractRayGun extends QuapticChargeableItem {
                         || (player.getMainHand() == MainHand.RIGHT && event.getHand() == EquipmentSlot.OFF_HAND);
 
         final Location eyeLocation = player.getEyeLocation();
-        final Location source = LocationUtils.getHandLocation(player, leftHand);
-        final Location target = eyeLocation.add(eyeLocation.getDirection().multiply(64));
+        final Location handLocation = LocationUtils.getHandLocation(player, leftHand);
+        final Vector handToEyeDisplacement = Vector.fromJOML(TransformationUtils.getDisplacement(handLocation, eyeLocation));
+        final Location target = eyeLocation.add(eyeLocation.getDirection().multiply(56)).add(handToEyeDisplacement);
 
-        fireRayGun(player, source, target);
+        fireRayGun(player, handLocation, target);
         setCharge(itemStack, stepCharge(settings, charge, -settings.getEmissionPower()));
         updateLore(itemStack);
     }

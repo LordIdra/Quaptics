@@ -12,10 +12,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.RayTraceResult;
 import org.bukkit.util.Vector;
 import org.metamechanists.quaptics.beams.DeprecatedBeamStorage;
-import org.metamechanists.quaptics.beams.beam.DirectBeam;
 import org.metamechanists.quaptics.beams.beam.LifetimeDirectBeam;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.items.Lore;
+import org.metamechanists.quaptics.utils.transformations.TransformationUtils;
+
 
 public class DirectRayGun extends AbstractRayGun {
     public static final Settings RAY_GUN_2_SETTINGS = Settings.builder()
@@ -32,13 +33,16 @@ public class DirectRayGun extends AbstractRayGun {
             Lore.buildChargeableLore(RAY_GUN_2_SETTINGS, 0,
                     "&7● &eRight Click &7to fire"));
 
-    public DirectRayGun(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, Settings settings) {
+    public DirectRayGun(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
     }
 
     @Override
-    public void fireRayGun(Player player, Location source, Location target) {
-        final RayTraceResult result = source.getWorld().rayTrace(source, target.clone().subtract(source.clone()).toVector(), 64, FluidCollisionMode.NEVER, true, 0.095F, entity -> true);
+    public void fireRayGun(final Player player, final Location source, final Location target) {
+        final RayTraceResult result = source.getWorld().rayTrace(
+                source, Vector.fromJOML(TransformationUtils.getDisplacement(source, target)),
+                64, FluidCollisionMode.NEVER, true, 0.095F, entity -> true);
+        
         if (result == null) {
             DeprecatedBeamStorage.deprecate(new LifetimeDirectBeam(settings.getProjectileMaterial(), source, target, 0.095F, 5));
             target.getNearbyEntities(0.095F, 0.095F, 0.095F)
@@ -51,8 +55,14 @@ public class DirectRayGun extends AbstractRayGun {
         }
 
         final Vector position = result.getHitPosition();
-        DeprecatedBeamStorage.deprecate(new LifetimeDirectBeam(settings.getProjectileMaterial(), source, new Location(source.getWorld(), position.getX(), position.getY(), position.getZ()), 0.095F, 5));
-        if (result.getHitEntity() instanceof Damageable damageable) {
+        DeprecatedBeamStorage.deprecate(new LifetimeDirectBeam(
+                settings.getProjectileMaterial(),
+                source,
+                new Location(source.getWorld(), position.getX(), position.getY(), position.getZ()),
+                0.095F,
+                5));
+
+        if (result.getHitEntity() instanceof final Damageable damageable) {
             damageable.damage(settings.getDamage());
         }
     }
