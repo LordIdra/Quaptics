@@ -23,7 +23,7 @@ public class BeaconTransmitter extends QuapticBlock {
             .build();
     public static final SlimefunItemStack BEACON_TRANSMITTER = new SlimefunItemStack(
             "QP_BEACON_TRANSMITTER",
-            Material.GRAY_CONCRETE,
+            Material.IRON_BARS,
             "&6Beacon Transmitter",
             Lore.create(BEACON_TRANSMITTER_SETTINGS,
                     "&7● Part of the Beacon multiblock"));

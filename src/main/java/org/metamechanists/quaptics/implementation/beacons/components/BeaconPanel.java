@@ -14,38 +14,31 @@ import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
 import org.metamechanists.quaptics.utils.models.ModelBuilder;
-import org.metamechanists.quaptics.utils.models.components.ModelCuboid;
 
 
-public class BeaconBeam extends QuapticBlock {
-    public static final Settings BEACON_BEAM_SETTINGS = Settings.builder()
+public class BeaconPanel extends QuapticBlock {
+    public static final Settings BEACON_PANEL_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
             .build();
-    public static final SlimefunItemStack BEACON_BEAM = new SlimefunItemStack(
-            "QP_BEACON_BEAM",
-            Material.POLISHED_DEEPSLATE_WALL,
-            "&6Beacon Beam",
-            Lore.create(BEACON_BEAM_SETTINGS,
+    public static final SlimefunItemStack BEACON_PANEL = new SlimefunItemStack(
+            "QP_BEACON_PANEL",
+            Material.BLACK_STAINED_GLASS_PANE,
+            "&6Beacon Panel",
+            Lore.create(BEACON_PANEL_SETTINGS,
                     "&7● Part of the Beacon multiblock"));
 
-    public BeaconBeam(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
+    public BeaconPanel(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
     }
 
     @Override
     protected DisplayGroup initModel(@NotNull final Location location, @NotNull final Player player) {
         return new ModelBuilder()
-                .add("coil1", new ModelCuboid()
-                        .material(Material.BLUE_CONCRETE)
-                        .size(0.1F, 0.8F, 0.6F))
-                .add("coil2", new ModelCuboid()
-                        .material(Material.BLUE_CONCRETE)
-                        .size(0.6F, 0.8F, 0.1F))
                 .buildAtBlockCenter(location);
     }
     @Override
     @NotNull
     protected Material getBaseMaterial() {
-        return Material.POLISHED_DEEPSLATE_WALL;
+        return Material.BLACK_STAINED_GLASS_PANE;
     }
 }

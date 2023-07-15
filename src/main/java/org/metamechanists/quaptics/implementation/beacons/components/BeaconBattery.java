@@ -24,7 +24,7 @@ public class BeaconBattery extends QuapticBlock {
             .build();
     public static final SlimefunItemStack BEACON_BATTERY = new SlimefunItemStack(
             "QP_BEACON_BATTERY",
-            Material.GRAY_CONCRETE,
+            Material.WHITE_CONCRETE,
             "&6Beacon Battery",
             Lore.create(BEACON_BATTERY_SETTINGS,
                     "&7● Part of the Beacon multiblock"));

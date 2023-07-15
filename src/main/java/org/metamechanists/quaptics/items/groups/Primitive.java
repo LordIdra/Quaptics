@@ -43,6 +43,8 @@ import static org.metamechanists.quaptics.implementation.beacons.components.Beac
 import static org.metamechanists.quaptics.implementation.beacons.components.BeaconBattery.BEACON_BATTERY_SETTINGS;
 import static org.metamechanists.quaptics.implementation.beacons.components.BeaconBeam.BEACON_BEAM;
 import static org.metamechanists.quaptics.implementation.beacons.components.BeaconBeam.BEACON_BEAM_SETTINGS;
+import static org.metamechanists.quaptics.implementation.beacons.components.BeaconPanel.BEACON_PANEL;
+import static org.metamechanists.quaptics.implementation.beacons.components.BeaconPanel.BEACON_PANEL_SETTINGS;
 import static org.metamechanists.quaptics.implementation.beacons.components.BeaconPowerSupply.BEACON_POWER_SUPPLY;
 import static org.metamechanists.quaptics.implementation.beacons.components.BeaconPowerSupply.BEACON_POWER_SUPPLY_SETTINGS;
 import static org.metamechanists.quaptics.implementation.beacons.components.BeaconRod.BEACON_ROD;
@@ -301,6 +303,13 @@ public class Primitive {
                 RecipeType.NULL,
                 new ItemStack[]{},
                 BEACON_TRANSMITTER_SETTINGS).register(addon);
+
+        new BeaconTransmitter(
+                Groups.PRIMITIVE,
+                BEACON_PANEL,
+                RecipeType.NULL,
+                new ItemStack[]{},
+                BEACON_PANEL_SETTINGS).register(addon);
 
         new SlimefunItem(
                 Groups.PRIMITIVE,
