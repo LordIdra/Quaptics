@@ -6,21 +6,18 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.entity.Interaction;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
-import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.implementation.attachments.ComplexMultiblock;
 import org.metamechanists.quaptics.implementation.attachments.PowerAnimatedBlock;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
-import org.metamechanists.quaptics.storage.PersistentDataTraverser;
 import org.metamechanists.quaptics.utils.Utils;
-import org.metamechanists.quaptics.utils.builders.InteractionBuilder;
+import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.models.ModelBuilder;
 import org.metamechanists.quaptics.utils.models.components.ModelCuboid;
 import org.metamechanists.quaptics.utils.models.components.ModelItem;
@@ -28,7 +25,6 @@ import org.metamechanists.quaptics.utils.models.components.ModelItem;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import static org.metamechanists.quaptics.implementation.beacons.components.BeaconBeam.BEACON_BEAM;
 import static org.metamechanists.quaptics.implementation.beacons.components.BeaconComputer.BEACON_COMPUTER;
@@ -53,8 +49,6 @@ public class BeaconController1 extends BeaconController implements ComplexMultib
     private static final Vector3f MODULE_2_LOCATION = new Vector3f(-0.38F, -0.15F, -0.38F);
     private static final Vector3f MODULE_3_LOCATION = new Vector3f(0.38F, -0.15F, -0.38F);
     private static final Vector3f MODULE_4_LOCATION = new Vector3f(-0.38F, -0.15F, 0.38F);
-    private static final float MODULE_BUTTON_SIZE = 0.2F;
-
 
     public BeaconController1(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
@@ -62,12 +56,7 @@ public class BeaconController1 extends BeaconController implements ComplexMultib
 
     @Override
     protected DisplayGroup initModel(@NotNull final Location location, @NotNull final Player player) {
-        createButton(location, MODULE_1_LOCATION, "module1");
-        createButton(location, MODULE_2_LOCATION, "module2");
-        createButton(location, MODULE_3_LOCATION, "module3");
-        createButton(location, MODULE_4_LOCATION, "module4");
-
-        return new ModelBuilder()
+        final DisplayGroup displayGroup = new ModelBuilder()
                 .add("main", new ModelCuboid()
                         .material(Material.BLUE_CONCRETE)
                         .size(1.1F, 1.0F, 1.1F)
@@ -84,7 +73,7 @@ public class BeaconController1 extends BeaconController implements ComplexMultib
                         .brightness(Utils.BRIGHTNESS_OFF)
                         .size(0.3F)
                         .location(MODULE_2_LOCATION)
-                        .rotation(Math.PI * 3/4))
+                        .rotation(-Math.PI * 3/4))
                 .add("module3", new ModelItem()
                         .material(Material.WHITE_BANNER)
                         .brightness(Utils.BRIGHTNESS_OFF)
@@ -96,9 +85,18 @@ public class BeaconController1 extends BeaconController implements ComplexMultib
                         .brightness(Utils.BRIGHTNESS_OFF)
                         .size(0.3F)
                         .location(MODULE_4_LOCATION)
-                        .rotation(-Math.PI * 3/4))
+                        .rotation(Math.PI * 3/4))
 
                 .buildAtBlockCenter(location);
+
+        final ConnectionGroupId groupId = new ConnectionGroupId(displayGroup.getParentUUID());
+
+        createButton(groupId, location, MODULE_1_LOCATION, "module1");
+        createButton(groupId, location, MODULE_2_LOCATION, "module2");
+        createButton(groupId, location, MODULE_3_LOCATION, "module3");
+        createButton(groupId, location, MODULE_4_LOCATION, "module4");
+
+        return displayGroup;
     }
 
     @Override
@@ -135,21 +133,5 @@ public class BeaconController1 extends BeaconController implements ComplexMultib
     @Override
     protected List<String> getModuleDisplayNames() {
         return List.of("module1", "module2", "module3", "module4");
-    }
-
-    private static void createButton(final Location location, final Vector3f relativeLocation, final String slot) {
-        final Optional<ConnectionGroup> group = getGroup(location);
-        if (group.isEmpty()) {
-            return;
-        }
-
-        final Interaction interaction = new InteractionBuilder()
-                .width(MODULE_BUTTON_SIZE)
-                .height(MODULE_BUTTON_SIZE)
-                .build(location.clone().add(Vector.fromJOML(relativeLocation)));
-
-        final PersistentDataTraverser traverser = new PersistentDataTraverser(interaction.getUniqueId());
-        traverser.set("groupId", group.get().getId());
-        traverser.set("slot", slot);
     }
 }
