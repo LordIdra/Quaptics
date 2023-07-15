@@ -49,7 +49,7 @@ public class Lore {
         Collections.addAll(lore, description);
         lore.add(chargeBar(charge, (int) settings.getChargeCapacity()));
         lore.add(chargeValues(charge, (int) settings.getChargeCapacity()));
-        lore.add(chargeUsage((int) settings.getEmissionPower()));
+        lore.add(chargePerUse((int) settings.getEmissionPower()));
 
         if (settings.getMinFrequency() != 0 || settings.getMaxFrequency() != 0) {
             lore.add(operatingFrequency(settings.getMinFrequency(), settings.getMaxFrequency()));
@@ -105,9 +105,6 @@ public class Lore {
         }
         if (settings.getTargetPhase() != 0) {
             lore.add(targetPhase(settings.getTargetPhase()));
-        }
-        if (settings.getChargePerShot() != 0) {
-            lore.add(energyPerShot(settings.getChargePerShot()));
         }
 
         return lore;
@@ -167,9 +164,6 @@ public class Lore {
     public String powerOutput(final double outputPower, final double maxOutputPower) {
         return (outputPower >= maxOutputPower ? "&a" : "&6") + Utils.roundTo2dp(outputPower) + "&7 / " + "&a" + maxOutputPower;
     }
-    public String energyPerShot(final double chargePerShot) {
-        return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Charge per shot &e" + format(chargePerShot) + CHARGE_SUFFIX;
-    }
 
     public String chargeBar(final int charge, final int capacity) {
         return ATTRIBUTE_SYMBOL + CHARGE_SYMBOL + "&7Charge " + progressBar(charge, capacity, Colors.CHARGE.getFormattedColor(), "&7", Colors.CHARGE.getFormattedColor());
@@ -183,8 +177,8 @@ public class Lore {
     public String chargeValuesRaw(final int charge, final int capacity) {
         return "&7" + charge + " &8/ &7" + capacity + CHARGE_SUFFIX;
     }
-    public String chargeUsage(final int usage) {
-        return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Usage &e" + usage + POWER_SUFFIX;
+    public String chargePerUse(final int usage) {
+        return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Charge per use &e" + usage + POWER_SUFFIX;
     }
 
     public String frequencyNoArrow(final double frequency) {
