@@ -25,6 +25,7 @@ import org.metamechanists.quaptics.implementation.attachments.ItemHolderBlock;
 import org.metamechanists.quaptics.implementation.attachments.PowerAnimatedBlock;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
 import org.metamechanists.quaptics.implementation.beacons.modules.BeaconModule;
+import org.metamechanists.quaptics.implementation.beacons.modules.types.PlayerModule;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.implementation.tools.QuapticChargeableItem;
 import org.metamechanists.quaptics.storage.PersistentDataTraverser;
@@ -36,8 +37,11 @@ import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.id.simple.InteractionId;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 
 public abstract class BeaconController extends ConnectedBlock implements ItemHolderBlock, ComplexMultiblock, PowerAnimatedBlock {
@@ -84,6 +88,16 @@ public abstract class BeaconController extends ConnectedBlock implements ItemHol
         onPoweredAnimation(location, inputPower >= settings.getMinPower());
     }
     @Override
+    public void onTick5(@NotNull final ConnectionGroup group, @NotNull final Location location) {
+        final double inputPower = BlockStorageAPI.getDouble(location.clone().add(getPowerSupplyLocation()), Keys.BS_INPUT_POWER);
+        if (inputPower < settings.getMinPower()) {
+            return;
+        }
+
+        final Set<BeaconModule> modules = getModules(location);
+        tickPlayerModules(location, modules);
+    }
+    @Override
     @OverridingMethodsMustInvokeSuper
     protected void onBreak(@NotNull final Location location) {
         super.onBreak(location);
@@ -103,9 +117,6 @@ public abstract class BeaconController extends ConnectedBlock implements ItemHol
         QuapticChargeableItem.updateLore(stack);
         return Optional.of(stack);
     }
-
-    protected abstract Vector getPowerSupplyLocation();
-    protected abstract List<String> getModuleDisplayNames();
 
     protected static @NotNull InteractionId createButton(final ConnectionGroupId groupId, final @NotNull Location location, final Vector3f relativeLocation, final String slot) {
         final Interaction interaction = new InteractionBuilder()
@@ -152,4 +163,29 @@ public abstract class BeaconController extends ConnectedBlock implements ItemHol
 
         itemHolderInteract(location.get(), slot, player);
     }
+
+    private Set<BeaconModule> getModules(@NotNull final Location location) {
+        return getModuleDisplayNames().stream()
+                .map(name -> ItemHolderBlock.getStack(location, name))
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .map(SlimefunItem::getByItem)
+                .filter(item -> item instanceof BeaconModule)
+                .map(item -> (BeaconModule) item)
+                .collect(Collectors.toSet());
+    }
+
+    private void tickPlayerModules(final @NotNull Location location, final @NotNull Set<BeaconModule> modules) {
+        final Set<PlayerModule> playerModules = modules.stream()
+                .filter(module -> module instanceof PlayerModule)
+                .map(PlayerModule.class::cast)
+                .collect(Collectors.toSet());
+        if (!playerModules.isEmpty()) {
+            final Collection<Player> players = location.getNearbyPlayers(settings.getRange());
+            playerModules.forEach(module -> module.apply(players));
+        }
+    }
+
+    protected abstract Vector getPowerSupplyLocation();
+    protected abstract List<String> getModuleDisplayNames();
 }
