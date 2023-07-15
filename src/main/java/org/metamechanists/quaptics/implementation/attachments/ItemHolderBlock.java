@@ -5,6 +5,7 @@ import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.metamechanists.metalib.utils.ItemUtils;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.implementation.base.QuapticBlock;
@@ -14,6 +15,10 @@ import org.metamechanists.quaptics.utils.Keys;
 import java.util.Optional;
 
 public interface ItemHolderBlock {
+    default @Nullable ItemStack getEmptyItemStack() {
+        return null;
+    }
+
     static Optional<ItemStack> getStack(@NotNull final ConnectionGroup group, @NotNull final String name) {
         final Optional<Location> location = group.getLocation();
         if (location.isEmpty()) {
@@ -40,21 +45,21 @@ public interface ItemHolderBlock {
 
         itemDisplay.get().setItemStack(itemStack);
     }
-    static Optional<ItemStack> removeItem(@NotNull final Location location, @NotNull final String name) {
+    default Optional<ItemStack> removeItem(@NotNull final Location location, @NotNull final String name) {
         final Optional<ItemDisplay> itemDisplay = QuapticBlock.getItemDisplay(location, name);
         if (itemDisplay.isEmpty()) {
             return Optional.empty();
         }
 
         final ItemStack itemStack = itemDisplay.get().getItemStack();
-        itemDisplay.get().setItemStack(null);
+        itemDisplay.get().setItemStack(getEmptyItemStack());
         return Optional.ofNullable(itemStack);
     }
 
     default void itemHolderInteract(@NotNull final Location location, @NotNull final String name, @NotNull final Player player) {
         final Optional<ItemStack> currentStack = removeItem(location, name);
         BlockStorageAPI.set(location, Keys.BS_IS_HOLDING_ITEM, false);
-        if (currentStack.isPresent() && !currentStack.get().getType().isEmpty()) {
+        if (currentStack.isPresent() && !currentStack.get().equals(getEmptyItemStack())) {
             onRemove(location, name, currentStack.get()).ifPresent(itemStack -> ItemUtils.addOrDropItemMainHand(player, itemStack));
             return;
         }

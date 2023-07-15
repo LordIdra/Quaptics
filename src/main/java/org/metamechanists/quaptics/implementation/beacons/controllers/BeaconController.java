@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
@@ -34,7 +35,7 @@ import java.util.Optional;
 
 
 public abstract class BeaconController extends ConnectedBlock implements ItemHolderBlock {
-    protected static final Material EMPTY_MODULE_BANNER = Material.WHITE_BANNER;
+    protected static final ItemStack EMPTY_MODULE_BANNER = new ItemStack(Material.WHITE_BANNER);
     private static final float MODULE_BUTTON_SIZE = 0.2F;
     private static final Vector3f MODULE_BUTTON_OFFSET = new Vector3f(0, 0.15F, 0);
 
@@ -49,6 +50,10 @@ public abstract class BeaconController extends ConnectedBlock implements ItemHol
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
         return List.of();
+    }
+    @Override
+    public @Nullable ItemStack getEmptyItemStack() {
+        return EMPTY_MODULE_BANNER;
     }
 
     @Override
@@ -92,7 +97,7 @@ public abstract class BeaconController extends ConnectedBlock implements ItemHol
 
     private void breakModuleSlot(@NotNull final Location location, final String name) {
         final Optional<ItemStack> stack = ItemHolderBlock.getStack(location, name);
-        if (stack.isEmpty() || stack.get().getType() == EMPTY_MODULE_BANNER) {
+        if (stack.isEmpty() || stack.get().equals(EMPTY_MODULE_BANNER)) {
             return;
         }
         onBreakItemHolderBlock(location, name);

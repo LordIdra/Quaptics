@@ -12,12 +12,12 @@ import org.metamechanists.quaptics.items.Tier;
 
 public class TestModule extends BeaconModule {
     public static final Settings TEST_MODULE_SETTINGS = Settings.builder()
-            .tier(Tier.PRIMITIVE)
+            .tier(Tier.TESTING)
             .build();
     public static final SlimefunItemStack TEST_MODULE = new SlimefunItemStack(
-            "QP_BEACON_MATRIX",
-            Material.LIGHT_BLUE_STAINED_GLASS,
-            "&6Beacon Matrix",
+            "QP_MODULE_TEST",
+            Material.BLUE_BANNER,
+            "&6Aaaaaaaaaaaa",
             Lore.create(TEST_MODULE_SETTINGS,
                     "&7● help"));
 
