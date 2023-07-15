@@ -153,6 +153,7 @@ public abstract class Turret extends ConnectedBlock implements PowerAnimatedBloc
         final Optional<LivingEntity> closestEntity = getClosestEntity(entities, location);
         closestEntity.ifPresent(livingEntity -> setTarget(location, livingEntity));
     }
+
     private void shoot(final Location location) {
         final Optional<LivingEntity> target = getTarget(location);
         if (target.isEmpty() || target.get().isDead() || location.toCenterLocation().distance(target.get().getLocation()) > settings.getRange()) {
@@ -162,7 +163,12 @@ public abstract class Turret extends ConnectedBlock implements PowerAnimatedBloc
 
         updateBarrelTransformation(location, target.get());
         createProjectile(location, target.get().getEyeLocation());
-        target.get().damage(settings.getDamage());
+
+        if (shouldDamage()) {
+            target.get().damage(settings.getDamage());
+        }
     }
+
+    protected abstract boolean shouldDamage();
     protected abstract void createProjectile(final Location source, final Location target);
 }

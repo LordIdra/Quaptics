@@ -55,7 +55,7 @@ public abstract class QuapticChargeableItem extends SlimefunItem implements Char
 
     }
 
-    private static void setCharge(@NotNull final ItemStack stack, final double newCharge) {
+    public static void setCharge(@NotNull final ItemStack stack, final double newCharge) {
         final ItemMeta meta = stack.getItemMeta();
         PersistentDataAPI.setDouble(meta, Keys.CHARGE, newCharge);
         stack.setItemMeta(meta);
