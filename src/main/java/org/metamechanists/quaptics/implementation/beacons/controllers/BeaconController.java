@@ -5,15 +5,18 @@ import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import org.bukkit.DyeColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.banner.Pattern;
+import org.bukkit.block.banner.PatternType;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Interaction;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.BannerMeta;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
@@ -35,7 +38,6 @@ import java.util.Optional;
 
 
 public abstract class BeaconController extends ConnectedBlock implements ItemHolderBlock {
-    protected static final ItemStack EMPTY_MODULE_BANNER = new ItemStack(Material.WHITE_BANNER);
     private static final float MODULE_BUTTON_SIZE = 0.2F;
     private static final Vector3f MODULE_BUTTON_OFFSET = new Vector3f(0, 0.15F, 0);
 
@@ -52,8 +54,13 @@ public abstract class BeaconController extends ConnectedBlock implements ItemHol
         return List.of();
     }
     @Override
-    public @Nullable ItemStack getEmptyItemStack() {
-        return EMPTY_MODULE_BANNER;
+    public @NotNull ItemStack getEmptyItemStack() {
+        final ItemStack stack = new ItemStack(Material.BLACK_BANNER);
+        final BannerMeta meta = (BannerMeta) stack.getItemMeta();
+        meta.addPattern(new Pattern(DyeColor.RED, PatternType.CROSS));
+        meta.addPattern(new Pattern(DyeColor.BLACK, PatternType.CURLY_BORDER));
+        stack.setItemMeta(meta);
+        return stack;
     }
 
     @Override
@@ -97,7 +104,7 @@ public abstract class BeaconController extends ConnectedBlock implements ItemHol
 
     private void breakModuleSlot(@NotNull final Location location, final String name) {
         final Optional<ItemStack> stack = ItemHolderBlock.getStack(location, name);
-        if (stack.isEmpty() || stack.get().equals(EMPTY_MODULE_BANNER)) {
+        if (stack.isEmpty() || stack.get().equals(getEmptyItemStack())) {
             return;
         }
         onBreakItemHolderBlock(location, name);
