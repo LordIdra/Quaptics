@@ -73,6 +73,11 @@ public abstract class Turret extends ConnectedBlock implements PowerAnimatedBloc
         return List.of(new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input", formatPointLocation(player, location, inputLocation)));
     }
 
+    @Override
+    protected boolean isTicker() {
+        return true;
+    }
+
     @SuppressWarnings("unused")
     @Override
     protected void onTick10(@NotNull final ConnectionGroup group, @NotNull final Location location) {

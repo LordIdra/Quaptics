@@ -41,6 +41,10 @@ public abstract class ConnectedBlock extends QuapticBlock {
     protected abstract float getConnectionRadius();
     protected abstract List<ConnectionPoint> initConnectionPoints(ConnectionGroupId groupId, Player player, Location location);
 
+    protected boolean isTicker() {
+        return false;
+    }
+
     @Override
     @OverridingMethodsMustInvokeSuper
     protected void onPlace(@NotNull final BlockPlaceEvent event) {
@@ -52,7 +56,7 @@ public abstract class ConnectedBlock extends QuapticBlock {
 
         final ConnectionGroupId groupId = new ConnectionGroupId(displayGroupId.get());
         final List<ConnectionPoint> points = initConnectionPoints(groupId, event.getPlayer(), location);
-        new ConnectionGroup(groupId, this, points);
+        new ConnectionGroup(groupId, this, points, isTicker());
         QuapticStorage.addGroup(groupId);
     }
     @Override

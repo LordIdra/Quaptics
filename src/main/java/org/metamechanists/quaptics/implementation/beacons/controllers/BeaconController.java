@@ -76,6 +76,11 @@ public abstract class BeaconController extends ConnectedBlock implements ItemHol
     }
 
     @Override
+    protected boolean isTicker() {
+        return true;
+    }
+
+    @Override
     public void onTick22(@NotNull final ConnectionGroup group, @NotNull final Location location) {
         final boolean isStructureValid = isStructureValid(location.getBlock());
         BlockStorageAPI.set(location, Keys.BS_MULTIBLOCK_INTACT, isStructureValid);

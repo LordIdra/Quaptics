@@ -71,6 +71,11 @@ public class OscillatingConcentrator extends ConnectedBlock {
         return List.of(new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output", formatPointLocation(player, location, outputLocation)));
     }
 
+    @Override
+    protected boolean isTicker() {
+        return true;
+    }
+
     @SuppressWarnings("unused")
     @Override
     public void onTick2(@NotNull final ConnectionGroup group, @NotNull final Location location) {

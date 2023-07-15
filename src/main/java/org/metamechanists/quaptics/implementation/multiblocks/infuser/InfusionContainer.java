@@ -128,6 +128,11 @@ public class InfusionContainer extends ConnectedBlock implements ItemHolderBlock
     }
 
     @Override
+    protected boolean isTicker() {
+        return true;
+    }
+
+    @Override
     protected void onBreak(@NotNull final Location location) {
         super.onBreak(location);
         onBreakItemHolderBlock(location, "item");

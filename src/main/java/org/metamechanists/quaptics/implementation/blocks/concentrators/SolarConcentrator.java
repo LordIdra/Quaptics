@@ -81,6 +81,11 @@ public class SolarConcentrator extends ConnectedBlock implements PowerAnimatedBl
         return List.of(new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output", formatPointLocation(player, location, outputLocation)));
     }
 
+    @Override
+    protected boolean isTicker() {
+        return true;
+    }
+
     @SuppressWarnings("unused")
     @Override
     public void onTick10(@NotNull final ConnectionGroup group, @NotNull final Location location) {

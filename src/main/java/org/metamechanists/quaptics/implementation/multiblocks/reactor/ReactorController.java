@@ -121,6 +121,11 @@ public class ReactorController extends ConnectedBlock implements ComplexMultiblo
     }
 
     @Override
+    protected boolean isTicker() {
+        return true;
+    }
+
+    @Override
     public BlockInfoPanel createPanel(final Location location, final @NotNull ConnectionGroup group) {
         return new ReactorInfoPanel(location, group.getId());
     }

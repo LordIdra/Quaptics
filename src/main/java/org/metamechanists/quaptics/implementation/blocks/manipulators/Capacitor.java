@@ -99,6 +99,11 @@ public class Capacitor extends ConnectedBlock implements InfoPanelBlock, PowerLo
     }
 
     @Override
+    protected boolean isTicker() {
+        return true;
+    }
+
+    @Override
     @OverridingMethodsMustInvokeSuper
     protected void onPlace(@NotNull final BlockPlaceEvent event) {
         super.onPlace(event);

@@ -88,6 +88,11 @@ public class MultiblockClicker extends ConnectedBlock implements PowerAnimatedBl
         BlockStorageAPI.set(location, Keys.BS_POWERED, false);
     }
 
+    @Override
+    protected boolean isTicker() {
+        return true;
+    }
+
     @SuppressWarnings("unused")
     @Override
     public void onTick2(@NotNull final ConnectionGroup group, @NotNull final Location location) {
