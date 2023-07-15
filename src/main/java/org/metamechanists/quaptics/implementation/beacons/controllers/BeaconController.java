@@ -5,6 +5,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Interaction;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -29,6 +30,7 @@ import java.util.Optional;
 
 
 public abstract class BeaconController extends ConnectedBlock implements ItemHolderBlock {
+    protected static final Material EMPTY_MODULE_BANNER = Material.WHITE_BANNER;
     private static final float MODULE_BUTTON_SIZE = 0.2F;
 
     protected BeaconController(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
@@ -44,11 +46,18 @@ public abstract class BeaconController extends ConnectedBlock implements ItemHol
         return List.of();
     }
 
+    protected void onBreak(@NotNull final Location location, final String name) {
+        final Optional<ItemStack> stack = ItemHolderBlock.getStack(location, name);
+        if (stack.isEmpty() || stack.get().getType() == EMPTY_MODULE_BANNER) {
+            return;
+        }
+        onBreakItemHolderBlock(location, name);
+    }
     @Override
     @OverridingMethodsMustInvokeSuper
     protected void onBreak(@NotNull final Location location) {
         super.onBreak(location);
-        getModuleDisplayNames().forEach(name -> onBreakItemHolderBlock(location, name));
+        getModuleDisplayNames().forEach(name -> onBreak(location, name));
     }
     @Override
     public boolean onInsert(@NotNull final Location location, @NotNull final String name, @NotNull final ItemStack stack, @NotNull final Player player) {
