@@ -13,6 +13,8 @@ import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.Quaptics;
 import org.metamechanists.quaptics.implementation.beacons.components.BeaconBattery;
 import org.metamechanists.quaptics.implementation.beacons.components.BeaconBeam;
+import org.metamechanists.quaptics.implementation.beacons.components.BeaconComputer;
+import org.metamechanists.quaptics.implementation.beacons.components.BeaconMatrix;
 import org.metamechanists.quaptics.implementation.beacons.components.BeaconPanel;
 import org.metamechanists.quaptics.implementation.beacons.components.BeaconPowerSupply;
 import org.metamechanists.quaptics.implementation.beacons.components.BeaconRod;
@@ -44,6 +46,10 @@ import static org.metamechanists.quaptics.implementation.beacons.components.Beac
 import static org.metamechanists.quaptics.implementation.beacons.components.BeaconBattery.BEACON_BATTERY_SETTINGS;
 import static org.metamechanists.quaptics.implementation.beacons.components.BeaconBeam.BEACON_BEAM;
 import static org.metamechanists.quaptics.implementation.beacons.components.BeaconBeam.BEACON_BEAM_SETTINGS;
+import static org.metamechanists.quaptics.implementation.beacons.components.BeaconComputer.BEACON_COMPUTER;
+import static org.metamechanists.quaptics.implementation.beacons.components.BeaconComputer.BEACON_COMPUTER_SETTINGS;
+import static org.metamechanists.quaptics.implementation.beacons.components.BeaconMatrix.BEACON_MATRIX;
+import static org.metamechanists.quaptics.implementation.beacons.components.BeaconMatrix.BEACON_MATRIX_SETTINGS;
 import static org.metamechanists.quaptics.implementation.beacons.components.BeaconPanel.BEACON_PANEL;
 import static org.metamechanists.quaptics.implementation.beacons.components.BeaconPanel.BEACON_PANEL_SETTINGS;
 import static org.metamechanists.quaptics.implementation.beacons.components.BeaconPowerSupply.BEACON_POWER_SUPPLY;
@@ -311,6 +317,20 @@ public class Primitive {
                 RecipeType.NULL,
                 new ItemStack[]{},
                 BEACON_PANEL_SETTINGS).register(addon);
+
+        new BeaconComputer(
+                Groups.PRIMITIVE,
+                BEACON_COMPUTER,
+                RecipeType.NULL,
+                new ItemStack[]{},
+                BEACON_COMPUTER_SETTINGS).register(addon);
+
+        new BeaconMatrix(
+                Groups.PRIMITIVE,
+                BEACON_MATRIX,
+                RecipeType.NULL,
+                new ItemStack[]{},
+                BEACON_MATRIX_SETTINGS).register(addon);
 
         new SlimefunItem(
                 Groups.PRIMITIVE,
