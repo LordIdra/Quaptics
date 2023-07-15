@@ -159,8 +159,8 @@ public class ItemProjector extends ConnectedBlock implements ItemHolderBlock, Po
 
     private static @NotNull Matrix4f calculateItemTransformation(final double size, final double offset) {
         return new TransformationMatrixBuilder()
-                .scale(new Vector3f(ITEM_DISPLAY_ADDITIONAL_SIZE).add(new Vector3f((float) size)))
                 .translate(new Vector3f(ITEM_DISPLAY_ADDITIONAL_OFFSET).add(new Vector3f(0, (float) offset, 0)))
+                .scale(new Vector3f(ITEM_DISPLAY_ADDITIONAL_SIZE).add(new Vector3f((float) size)))
                 .buildForItemDisplay();
     }
     public static void onConfigUpdated(final Location location) {
