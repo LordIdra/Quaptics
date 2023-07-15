@@ -50,10 +50,10 @@ public class BeaconController1 extends BeaconController {
     private static final Vector COMPUTER_LOCATION = new Vector(0, 2, 0);
     private static final Vector POWER_SUPPLY_LOCATION = new Vector(0, -1, 0);
 
-    private static final Vector3f MODULE_1_LOCATION = new Vector3f(0, -0.15F, 0.3F);
-    private static final Vector3f MODULE_2_LOCATION = new Vector3f(0, -0.15F, -0.3F);
-    private static final Vector3f MODULE_3_LOCATION = new Vector3f(0.3F, -0.15F, 0);
-    private static final Vector3f MODULE_4_LOCATION = new Vector3f(-0.3F, -0.15F, 0);
+    private static final Vector3f MODULE_1_LOCATION = new Vector3f(0, -0.15F, 0.28F);
+    private static final Vector3f MODULE_2_LOCATION = new Vector3f(0, -0.15F, -0.28F);
+    private static final Vector3f MODULE_3_LOCATION = new Vector3f(0.28F, -0.15F, 0);
+    private static final Vector3f MODULE_4_LOCATION = new Vector3f(-0.28F, -0.15F, 0);
 
     public BeaconController1(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
@@ -70,22 +70,26 @@ public class BeaconController1 extends BeaconController {
                         .item(getEmptyItemStack())
                         .brightness(Utils.BRIGHTNESS_ON)
                         .size(0.25F)
-                        .location(MODULE_1_LOCATION))
+                        .location(MODULE_1_LOCATION)
+                        .rotation(0))
                 .add("module2", new ModelItem()
                         .item(getEmptyItemStack())
                         .brightness(Utils.BRIGHTNESS_ON)
                         .size(0.25F)
-                        .location(MODULE_2_LOCATION))
+                        .location(MODULE_2_LOCATION)
+                        .rotation(Math.PI / 2))
                 .add("module3", new ModelItem()
                         .item(getEmptyItemStack())
                         .brightness(Utils.BRIGHTNESS_ON)
                         .size(0.25F)
-                        .location(MODULE_3_LOCATION))
+                        .location(MODULE_3_LOCATION)
+                        .rotation(Math.PI))
                 .add("module4", new ModelItem()
                         .item(getEmptyItemStack())
                         .brightness(Utils.BRIGHTNESS_ON)
                         .size(0.25F)
-                        .location(MODULE_4_LOCATION))
+                        .location(MODULE_4_LOCATION)
+                        .rotation(-Math.PI / 2))
 
                 .buildAtBlockCenter(location);
 
