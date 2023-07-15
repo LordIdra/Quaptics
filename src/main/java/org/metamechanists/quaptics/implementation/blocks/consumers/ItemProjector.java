@@ -92,9 +92,7 @@ public class ItemProjector extends ConnectedBlock implements ItemHolderBlock, Po
                 .add("item", new ModelItem()
                         .viewRange(Utils.VIEW_RANGE_OFF)
                         .billboard(Billboard.VERTICAL)
-                        .brightness(Utils.BRIGHTNESS_ON)
-                        .location(ITEM_DISPLAY_ADDITIONAL_OFFSET)
-                        .size(0.5F))
+                        .brightness(Utils.BRIGHTNESS_ON))
                 .buildAtBlockCenter(location);
     }
     @Override
@@ -106,6 +104,7 @@ public class ItemProjector extends ConnectedBlock implements ItemHolderBlock, Po
         BlockStorageAPI.set(location, Keys.BS_HEIGHT, 0);
         BlockStorageAPI.set(location, Keys.BS_SIZE, ITEM_DISPLAY_ADDITIONAL_SIZE.x);
         BlockStorageAPI.set(location, Keys.BS_MODE, 0);
+        onConfigUpdated(location);
     }
 
     @Override
