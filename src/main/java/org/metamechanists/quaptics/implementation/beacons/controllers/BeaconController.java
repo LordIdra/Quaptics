@@ -41,7 +41,8 @@ import java.util.Optional;
 
 
 public abstract class BeaconController extends ConnectedBlock implements ItemHolderBlock, ComplexMultiblock, PowerAnimatedBlock {
-    private static final float MODULE_BUTTON_SIZE = 0.22F;
+    private static final float MODULE_BUTTON_WIDTH = 0.22F;
+    private static final float MODULE_BUTTON_HEIGHT = 0.44F;
     private static final Vector3f MODULE_BUTTON_OFFSET = new Vector3f(0, 0.15F, 0);
 
     protected BeaconController(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
@@ -104,8 +105,8 @@ public abstract class BeaconController extends ConnectedBlock implements ItemHol
 
     protected static @NotNull InteractionId createButton(final ConnectionGroupId groupId, final @NotNull Location location, final Vector3f relativeLocation, final String slot) {
         final Interaction interaction = new InteractionBuilder()
-                .width(MODULE_BUTTON_SIZE)
-                .height(MODULE_BUTTON_SIZE)
+                .width(MODULE_BUTTON_WIDTH)
+                .height(MODULE_BUTTON_HEIGHT)
                 .build(location.clone()
                         .toCenterLocation()
                         .add(Vector.fromJOML(MODULE_BUTTON_OFFSET))
