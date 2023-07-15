@@ -60,10 +60,10 @@ public class BeaconPowerSupply extends ConnectedBlock {
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
         return List.of(
-                new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input 1", location.clone().toCenterLocation().add(new Vector(0.35, 0, 0))),
-                new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input 2", location.clone().toCenterLocation().add(new Vector(-0.35, 0, 0))),
-                new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input 3", location.clone().toCenterLocation().add(new Vector(0, 0, 0.35))),
-                new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input 4", location.clone().toCenterLocation().add(new Vector(0, 0, -0.35))));
+                new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input 1", location.clone().toCenterLocation().add(new Vector(0.35, -0.3, 0))),
+                new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input 2", location.clone().toCenterLocation().add(new Vector(-0.35, -0.3, 0))),
+                new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input 3", location.clone().toCenterLocation().add(new Vector(0, -0.3, 0.35))),
+                new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input 4", location.clone().toCenterLocation().add(new Vector(0, -0.3, -0.35))));
     }
     @Override
     protected void initBlockStorage(final @NotNull Location location) {
