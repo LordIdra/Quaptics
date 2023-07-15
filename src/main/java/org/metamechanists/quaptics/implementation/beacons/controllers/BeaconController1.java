@@ -40,7 +40,7 @@ public class BeaconController1 extends BeaconController implements ComplexMultib
             Lore.create(BEACON_CONTROLLER_1_SETTINGS,
                     "&7● Part of the Beacon multiblock"));
 
-    public static final Vector COMPUTER_LOCATION = new Vector(0, 3, 0);
+    private static final Vector COMPUTER_LOCATION = new Vector(0, 3, 0);
 
     public BeaconController1(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
@@ -51,7 +51,7 @@ public class BeaconController1 extends BeaconController implements ComplexMultib
         return new ModelBuilder()
                 .add("main", new ModelCuboid()
                         .material(Material.BLUE_CONCRETE)
-                        .size(0.8F, 1.0F, 0.8F)
+                        .size(1.1F, 1.0F, 1.1F)
                         .rotation(Math.PI/4))
 
                 .add("module1", new ModelCuboid()
@@ -60,7 +60,7 @@ public class BeaconController1 extends BeaconController implements ComplexMultib
                         .location(0.4F, 0, 0.4F)
                         .rotation(Math.PI * 1/4))
                 .add("module1", new ModelItem()
-                        .material(Material.BLACK_BANNER)
+                        .material(Material.GRAY_BANNER)
                         .size(0.2F)
                         .location(0.4F, 0, 0.4F)
                         .rotation(Math.PI * 1/4))
@@ -68,6 +68,11 @@ public class BeaconController1 extends BeaconController implements ComplexMultib
                 .buildAtBlockCenter(location);
     }
 
+    @Override
+    protected boolean onRightClick(final @NotNull Location location, final @NotNull Player player) {
+        multiblockInteract(location.getBlock(), player);
+        return true;
+    }
     @Override
     public void onPoweredAnimation(final Location location, final boolean powered) {
 
