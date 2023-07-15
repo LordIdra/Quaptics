@@ -35,7 +35,7 @@ public class DirectRayGun extends AbstractRayGun {
 
     @Override
     public void fireRayGun(Player player, Location source, Location target) {
-        DeprecatedBeamStorage.deprecate(new LifetimeDirectBeam(settings.getProjectileMaterial(), source, target, 0.095F, 20));
+        DeprecatedBeamStorage.deprecate(new LifetimeDirectBeam(settings.getProjectileMaterial(), source, target, 0.095F, 5));
 
         target.getNearbyEntities(0.095F, 0.095F, 0.095F)
                 .stream()

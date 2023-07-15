@@ -20,6 +20,6 @@ public class LifetimeDirectBeam extends DirectBeam {
 
     @Override
     public boolean expired() {
-        return this.lifetime > 0;
+        return this.lifetime <= 0;
     }
 }
