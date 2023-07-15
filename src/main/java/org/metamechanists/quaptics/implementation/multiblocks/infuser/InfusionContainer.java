@@ -142,7 +142,7 @@ public class InfusionContainer extends ConnectedBlock implements ItemHolderBlock
     }
     @SuppressWarnings("unused")
     @Override
-    public void onTick21(@NotNull final ConnectionGroup group, @NotNull final Location location) {
+    public void onTick22(@NotNull final ConnectionGroup group, @NotNull final Location location) {
         BlockStorageAPI.set(location, Keys.BS_MULTIBLOCK_INTACT, isStructureValid(location.getBlock()));
     }
     @SuppressWarnings("unused")

@@ -20,7 +20,7 @@ import org.metamechanists.quaptics.panels.info.implementation.PointInfoPanelList
 import org.metamechanists.quaptics.storage.CacheGarbageCollector;
 import org.metamechanists.quaptics.storage.QuapticStorage;
 import org.metamechanists.quaptics.storage.QuapticTicker;
-import org.metamechanists.quaptics.storage.SaveTask;
+
 
 public final class Quaptics extends JavaPlugin implements SlimefunAddon {
     private static final int BSTATS_ID = 18956;
@@ -36,11 +36,11 @@ public final class Quaptics extends JavaPlugin implements SlimefunAddon {
         pluginManager.registerEvents(new BurnoutManager(), this);
         pluginManager.registerEvents(new MultiblockWandListener(), this);
         pluginManager.registerEvents(new ModuleClickListener(), this);
+        pluginManager.registerEvents(new QuapticStorage(), this);
     }
 
     private void initializeRunnables() {
         new QuapticTicker().runTaskTimer(this, 0, QuapticTicker.INTERVAL_TICKS);
-        new SaveTask().runTaskTimer(this, SaveTask.INTERVAL_TICKS, SaveTask.INTERVAL_TICKS);
         new CacheGarbageCollector().runTaskTimer(this, CacheGarbageCollector.INTERVAL_TICKS, CacheGarbageCollector.INTERVAL_TICKS);
     }
 
@@ -60,13 +60,11 @@ public final class Quaptics extends JavaPlugin implements SlimefunAddon {
         initializeCommands();
 
         new Metrics(this, BSTATS_ID);
-        QuapticStorage.load();
     }
 
     @Override
     public void onDisable() {
         BurnoutManager.stopBurnouts();
-        QuapticStorage.save();
     }
 
     @NotNull

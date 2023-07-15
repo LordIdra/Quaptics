@@ -42,7 +42,7 @@ public abstract class QuapticChargeableItem extends SlimefunItem implements Char
         addItemHandler(onItemUse());
     }
 
-    public ItemUseHandler onItemUse() {
+    private @NotNull ItemUseHandler onItemUse() {
         return event -> {
             if (event.getSlimefunBlock().isPresent() && event.getSlimefunBlock().get() instanceof Charger) {
                 return;
@@ -53,9 +53,7 @@ public abstract class QuapticChargeableItem extends SlimefunItem implements Char
         };
     }
 
-    public void onUseItem(PlayerRightClickEvent event) {
-
-    }
+    protected void onUseItem(final PlayerRightClickEvent event) {}
 
     private static Optional<QuapticChargeableItem> fromStack(@Nullable final ItemStack stack) {
         if (!(SlimefunItem.getByItem(stack) instanceof final QuapticChargeableItem chargeableItem)) {
@@ -75,7 +73,7 @@ public abstract class QuapticChargeableItem extends SlimefunItem implements Char
 
     }
 
-    public static void setCharge(@NotNull final ItemStack stack, final double newCharge) {
+    protected static void setCharge(@NotNull final ItemStack stack, final double newCharge) {
         final ItemMeta meta = stack.getItemMeta();
         PersistentDataAPI.setDouble(meta, Keys.CHARGE, newCharge);
         stack.setItemMeta(meta);

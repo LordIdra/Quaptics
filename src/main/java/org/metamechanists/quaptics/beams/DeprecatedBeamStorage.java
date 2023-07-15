@@ -1,5 +1,6 @@
 package org.metamechanists.quaptics.beams;
 
+import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.beams.beam.Beam;
 
 import java.util.Collection;
@@ -19,7 +20,7 @@ public final class DeprecatedBeamStorage {
         beams.stream().filter(Beam::expired).forEach(DeprecatedBeamStorage::remove);
     }
 
-    public static void remove(Beam beam) {
+    public static void remove(final @NotNull Beam beam) {
         beam.remove();
         beams.remove(beam);
     }

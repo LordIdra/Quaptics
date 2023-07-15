@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 public class LifetimeDirectBeam extends DirectBeam {
     private int lifetime;
 
-    public LifetimeDirectBeam(Material material, @NotNull Location source, Location target, float thickness, int lifetime) {
+    public LifetimeDirectBeam(final Material material, @NotNull final Location source, final Location target, final float thickness, final int lifetime) {
         super(material, source, target, thickness);
 
         this.lifetime = lifetime;
@@ -20,6 +20,6 @@ public class LifetimeDirectBeam extends DirectBeam {
 
     @Override
     public boolean expired() {
-        return this.lifetime <= 0;
+        return lifetime <= 0;
     }
 }

@@ -43,5 +43,5 @@ public abstract class AbstractRayGun extends QuapticChargeableItem {
         updateLore(itemStack);
     }
 
-    public abstract void fireRayGun(Player player, Location eyeLocation, Location handLocation, Location target);
+    protected abstract void fireRayGun(Player player, Location eyeLocation, Location handLocation, Location target);
 }

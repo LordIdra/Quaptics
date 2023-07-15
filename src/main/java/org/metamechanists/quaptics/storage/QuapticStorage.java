@@ -1,86 +1,45 @@
 package org.metamechanists.quaptics.storage;
 
 import lombok.Getter;
-import lombok.experimental.UtilityClass;
-import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Interaction;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.world.EntitiesLoadEvent;
+import org.bukkit.event.world.EntitiesUnloadEvent;
 import org.jetbrains.annotations.NotNull;
-import org.metamechanists.quaptics.Quaptics;
-import org.metamechanists.quaptics.utils.Language;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 
-import java.io.File;
-import java.io.IOException;
+import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-@UtilityClass
-public class QuapticStorage {
+public class QuapticStorage implements Listener {
     @Getter
-    private final Set<ConnectionGroupId> groupIDs = new HashSet<>();
+    private static final Set<ConnectionGroupId> groupIDs = new HashSet<>();
 
-    private @NotNull List<String> serializeGroupIDs() {
-        return groupIDs.stream().map(id -> id.getUUID().toString()).toList();
-    }
-
-    public void addGroup(final ConnectionGroupId groupId) {
+    public static void addGroup(final ConnectionGroupId groupId) {
         groupIDs.add(groupId);
     }
-
-    public void removeGroup(final ConnectionGroupId groupId) {
+    public static void removeGroup(final ConnectionGroupId groupId) {
         groupIDs.remove(groupId);
     }
 
-    private void deserializeGroupIDs(@NotNull final List<String> stringIDs) {
-        groupIDs.addAll(stringIDs.stream().map(ConnectionGroupId::new).toList());
+    private static Collection<ConnectionGroupId> getConnectionGroupIds(final @NotNull Collection<Entity> entities) {
+        return entities.stream()
+                .filter(entity -> entity instanceof Interaction)
+                .map(Interaction.class::cast)
+                .map(interaction -> new ConnectionGroupId(interaction.getUniqueId()))
+                .filter(connectionGroupId -> connectionGroupId.get().isPresent())
+                .toList();
     }
 
-    @SuppressWarnings("ResultOfMethodCallIgnored")
-    private void createDirectoryIfNotExists(@NotNull final File file) {
-        if (!file.exists()) {
-            file.mkdir();
-        }
+    @EventHandler
+    public static void onEntityLoad(final @NotNull EntitiesLoadEvent event) {
+        groupIDs.addAll(getConnectionGroupIds(event.getEntities()));
     }
-
-    @SuppressWarnings("ResultOfMethodCallIgnored")
-    private void createFileIfNotExists(@NotNull final File file) {
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-            } catch (final IOException e) {
-                e.printStackTrace();
-                throw new RuntimeException("Failed to create ticker file");
-            }
-        }
-    }
-
-    public void save() {
-        final File directory = new File(Quaptics.getInstance().getDataFolder(), "../../data-storage/quaptics/");
-        createDirectoryIfNotExists(directory);
-
-        final File file = new File(directory, "tickers.yml");
-        createFileIfNotExists(file);
-
-        final YamlConfiguration tickers = new YamlConfiguration();
-        tickers.set("tickers", serializeGroupIDs());
-
-        try {
-            tickers.save(file);
-        } catch (final IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Failed to save ticker file");
-        }
-    }
-
-    public void load() {
-        final File file = new File(Quaptics.getInstance().getDataFolder(), "../../data-storage/quaptics/tickers.yml");
-
-        if (!file.exists()) {
-            Quaptics.getInstance().getLogger().severe(Language.getLanguageEntry("load.failed"));
-            return;
-        }
-
-        final YamlConfiguration tickers = YamlConfiguration.loadConfiguration(file);
-        deserializeGroupIDs(tickers.getStringList("tickers"));
+    @EventHandler
+    public static void onEntityUnload(final @NotNull EntitiesUnloadEvent event) {
+        groupIDs.removeAll(getConnectionGroupIds(event.getEntities()));
     }
 }

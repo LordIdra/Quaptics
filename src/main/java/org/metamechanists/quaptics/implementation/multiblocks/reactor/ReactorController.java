@@ -148,7 +148,7 @@ public class ReactorController extends ConnectedBlock implements ComplexMultiblo
     }
     @SuppressWarnings("unused")
     @Override
-    public void onTick21(@NotNull final ConnectionGroup group, @NotNull final Location location) {
+    public void onTick22(@NotNull final ConnectionGroup group, @NotNull final Location location) {
         final boolean isStructureValid = isStructureValid(location.getBlock());
         BlockStorageAPI.set(location, Keys.BS_MULTIBLOCK_INTACT, isStructureValid);
         setPanelHidden(group, !isStructureValid);
