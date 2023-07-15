@@ -7,7 +7,6 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.util.Vector;
 import org.metamechanists.quaptics.beams.DeprecatedBeamStorage;
 import org.metamechanists.quaptics.beams.beam.ProjectileBeam;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
@@ -35,7 +34,7 @@ public class ModulatedRayGun extends AbstractRayGun {
     }
 
     @Override
-    public void fireRayGun(final Player player, final Location source, final Location target, final Vector handToEyeDisplacement) {
+    public void fireRayGun(final Player player, final Location source, final Location target) {
         DeprecatedBeamStorage.deprecate(new ProjectileBeam(
                 settings.getProjectileMaterial(),
                 source,
