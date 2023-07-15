@@ -133,11 +133,12 @@ public class InfusionContainer extends ConnectedBlock implements ItemHolderBlock
         onBreakItemHolderBlock(location);
     }
     @Override
-    protected void onRightClick(final @NotNull Location location, final @NotNull Player player) {
+    protected boolean onRightClick(final @NotNull Location location, final @NotNull Player player) {
         if (multiblockInteract(location.getBlock(), player)) {
-            return;
+            return true;
         }
         itemHolderInteract(location, player);
+        return true;
     }
     @SuppressWarnings("unused")
     @Override

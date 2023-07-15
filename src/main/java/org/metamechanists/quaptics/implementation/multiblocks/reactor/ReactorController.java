@@ -142,8 +142,9 @@ public class ReactorController extends ConnectedBlock implements ComplexMultiblo
         onBreakInfoPanelBlock(location);
     }
     @Override
-    protected void onRightClick(final @NotNull Location location, final @NotNull Player player) {
+    protected boolean onRightClick(final @NotNull Location location, final @NotNull Player player) {
         multiblockInteract(location.getBlock(), player);
+        return true;
     }
     @SuppressWarnings("unused")
     @Override

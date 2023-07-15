@@ -62,14 +62,15 @@ public abstract class ConnectedBlock extends QuapticBlock {
     }
     @Override
     @OverridingMethodsMustInvokeSuper
-    protected void onShiftRightClick(@NotNull final Location location, @NotNull final Player player) {
+    protected boolean onShiftRightClick(@NotNull final Location location, @NotNull final Player player) {
         final Optional<ConnectionGroup> group = getGroup(location);
         if (group.isEmpty()) {
-            return;
+            return true;
         }
 
         final boolean isAnyPanelHidden = group.get().getPointPanels().stream().anyMatch(PointInfoPanel::isPanelHidden);
         group.get().getPointPanels().forEach(panel -> panel.setPanelHidden(!isAnyPanelHidden));
+        return true;
     }
     public void onInputLinkUpdated(@NotNull final ConnectionGroup group, @NotNull final Location location) {}
     @SuppressWarnings("unused")

@@ -135,8 +135,9 @@ public class Polariser extends ConnectedBlock implements PowerAnimatedBlock, Pow
         onBreakItemHolderBlock(location);
     }
     @Override
-    protected void onRightClick(final @NotNull Location location, final @NotNull Player player) {
+    protected boolean onRightClick(final @NotNull Location location, final @NotNull Player player) {
         itemHolderInteract(location, player);
+        return true;
     }
     @Override
     public boolean onInsert(@NotNull final Location location, @NotNull final ItemStack stack, @NotNull final Player player) {

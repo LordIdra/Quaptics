@@ -99,8 +99,12 @@ public abstract class QuapticBlock extends SlimefunItem {
 
     protected void onPlace(@NotNull final BlockPlaceEvent event) {}
     protected void onBreak(@NotNull final Location location) {}
-    protected void onRightClick(@NotNull final Location location, @NotNull final Player player) {}
-    protected void onShiftRightClick(@NotNull final Location location, @NotNull final Player player) {}
+    protected boolean onRightClick(@NotNull final Location location, @NotNull final Player player) {
+        return false;
+    }
+    protected boolean onShiftRightClick(@NotNull final Location location, @NotNull final Player player) {
+        return false;
+    }
     @NotNull
     private BlockUseHandler onRightClick() {
         return event -> {
@@ -110,12 +114,14 @@ public abstract class QuapticBlock extends SlimefunItem {
             }
 
             if (event.getPlayer().isSneaking()) {
-                onShiftRightClick(block.getLocation(), event.getPlayer());
+                if (onShiftRightClick(block.getLocation(), event.getPlayer())) {
+                    event.cancel();
+                }
             } else {
-                onRightClick(block.getLocation(), event.getPlayer());
+                if (onRightClick(block.getLocation(), event.getPlayer())) {
+                    event.cancel();
+                }
             }
-
-            event.cancel();
         };
     }
     protected void onSlimefunTick(@NotNull final Block block, final SlimefunItem item, final Config data) {}

@@ -134,29 +134,30 @@ public class MultiblockClicker extends ConnectedBlock implements PowerAnimatedBl
         BlockStorageAPI.set(location, Keys.BS_TICKS_SINCE_LAST_UPDATE, ticksSinceLastUpdate);
     }
     @Override
-    protected void onRightClick(final @NotNull Location location, final @NotNull Player player) {
+    protected boolean onRightClick(final @NotNull Location location, final @NotNull Player player) {
         final Optional<Block> multiblockBlock = getMultiblockBlock(location);
         if (multiblockBlock.isEmpty()) {
-            return;
+            return true;
         }
 
         final Optional<MultiBlockMachine> machine = SlimefunIsDumbUtils.getMultiblockMachine(multiblockBlock.get());
         if (machine.isEmpty()) {
             Language.sendLanguageMessage(player, "multiblock-clicker.not-connected-to-multiblock");
-            return;
+            return true;
         }
 
         final Optional<Link> link = getLink(location, "input");
         if (link.isEmpty() || !settings.isOperational(link)) {
             Language.sendLanguageMessage(player, "multiblock-clicker.not-powered");
             setEnabled(location, false);
-            return;
+            return true;
         }
 
         BlockStorageAPI.set(location, Keys.BS_PLAYER, player.getUniqueId());
         final boolean enabled = BlockStorageAPI.getBoolean(location, Keys.BS_ENABLED);
         onPoweredAnimation(location, !enabled);
         setEnabled(location, !enabled);
+        return true;
     }
     @Override
     public void onInputLinkUpdated(@NotNull final ConnectionGroup group, @NotNull final Location location) {
