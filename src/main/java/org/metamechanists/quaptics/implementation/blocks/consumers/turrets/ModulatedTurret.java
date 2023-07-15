@@ -62,6 +62,11 @@ public class ModulatedTurret extends Turret {
     }
 
     @Override
+    protected boolean shouldDamage() {
+        return false;
+    }
+
+    @Override
     protected void createProjectile(final Location source, final Location target) {
         DeprecatedBeamStorage.deprecate(new ProjectileBeam(
                 settings.getProjectileMaterial(),
@@ -69,7 +74,8 @@ public class ModulatedTurret extends Turret {
                 target,
                 0.095F,
                 0.2F,
-                settings.getProjectileSpeed() / QuapticTicker.TICKS_PER_SECOND));
+                settings.getProjectileSpeed() / QuapticTicker.TICKS_PER_SECOND,
+                settings.getDamage()));
     }
 
     @Override

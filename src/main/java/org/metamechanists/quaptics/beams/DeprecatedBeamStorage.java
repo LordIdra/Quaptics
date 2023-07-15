@@ -16,9 +16,11 @@ public final class DeprecatedBeamStorage {
 
     public static void tick() {
         beams.forEach(Beam::tick);
-        beams.stream().filter(Beam::expired).forEach(beam -> {
-            beam.remove();
-            beams.remove(beam);
-        });
+        beams.stream().filter(Beam::expired).forEach(DeprecatedBeamStorage::remove);
+    }
+
+    public static void remove(Beam beam) {
+        beam.remove();
+        beams.remove(beam);
     }
 }
