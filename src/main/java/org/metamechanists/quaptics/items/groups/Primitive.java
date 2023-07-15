@@ -20,6 +20,7 @@ import org.metamechanists.quaptics.implementation.beacons.components.BeaconPower
 import org.metamechanists.quaptics.implementation.beacons.components.BeaconRod;
 import org.metamechanists.quaptics.implementation.beacons.components.BeaconTransmitter;
 import org.metamechanists.quaptics.implementation.beacons.controllers.BeaconController1;
+import org.metamechanists.quaptics.implementation.beacons.modules.LuckFieldModule;
 import org.metamechanists.quaptics.implementation.beacons.modules.TestModule;
 import org.metamechanists.quaptics.implementation.blocks.concentrators.SolarConcentrator;
 import org.metamechanists.quaptics.implementation.blocks.consumers.Charger;
@@ -62,6 +63,8 @@ import static org.metamechanists.quaptics.implementation.beacons.components.Beac
 import static org.metamechanists.quaptics.implementation.beacons.components.BeaconTransmitter.BEACON_TRANSMITTER_SETTINGS;
 import static org.metamechanists.quaptics.implementation.beacons.controllers.BeaconController1.BEACON_CONTROLLER_1;
 import static org.metamechanists.quaptics.implementation.beacons.controllers.BeaconController1.BEACON_CONTROLLER_1_SETTINGS;
+import static org.metamechanists.quaptics.implementation.beacons.modules.LuckFieldModule.LUCK_FIELD_MODULE;
+import static org.metamechanists.quaptics.implementation.beacons.modules.LuckFieldModule.LUCK_FIELD_MODULE_SETTINGS;
 import static org.metamechanists.quaptics.implementation.beacons.modules.TestModule.TEST_MODULE;
 import static org.metamechanists.quaptics.implementation.beacons.modules.TestModule.TEST_MODULE_SETTINGS;
 import static org.metamechanists.quaptics.implementation.blocks.concentrators.SolarConcentrator.SOLAR_CONCENTRATOR_1;
@@ -351,6 +354,13 @@ public class Primitive {
                 RecipeType.NULL,
                 new ItemStack[]{},
                 TEST_MODULE_SETTINGS).register(addon);
+
+        new LuckFieldModule(
+                Groups.PRIMITIVE,
+                LUCK_FIELD_MODULE,
+                RecipeType.NULL,
+                new ItemStack[]{},
+                LUCK_FIELD_MODULE_SETTINGS).register(addon);
 
         new SlimefunItem(
                 Groups.PRIMITIVE,
