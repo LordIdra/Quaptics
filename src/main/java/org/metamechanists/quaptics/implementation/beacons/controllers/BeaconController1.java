@@ -11,6 +11,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
+import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
@@ -24,6 +25,7 @@ import org.metamechanists.quaptics.utils.models.components.ModelCuboid;
 import org.metamechanists.quaptics.utils.models.components.ModelItem;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -115,6 +117,11 @@ public class BeaconController1 extends BeaconController {
     @Override
     public void onPoweredAnimation(final @NotNull Location location, final boolean powered) {
         brightnessAnimation(location.clone().add(COMPUTER_LOCATION), "main", powered);
+    }
+    @Override
+    public void onTick5(@NotNull final ConnectionGroup group, @NotNull final Location location) {
+        final Collection<Player> players = location.getNearbyPlayers(settings.getRange());
+
     }
 
     @Override

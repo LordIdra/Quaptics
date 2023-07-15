@@ -18,6 +18,9 @@ public interface ItemHolderBlock {
     default @Nullable ItemStack getEmptyItemStack() {
         return null;
     }
+    default boolean isEmptyItemStack(final @NotNull ItemStack itemStack) {
+        return itemStack.getType().isEmpty();
+    }
 
     static Optional<ItemStack> getStack(@NotNull final ConnectionGroup group, @NotNull final String name) {
         final Optional<Location> location = group.getLocation();
@@ -59,7 +62,7 @@ public interface ItemHolderBlock {
     default void itemHolderInteract(@NotNull final Location location, @NotNull final String name, @NotNull final Player player) {
         final Optional<ItemStack> currentStack = removeItem(location, name);
         BlockStorageAPI.set(location, Keys.BS_IS_HOLDING_ITEM, false);
-        if (currentStack.isPresent() && !currentStack.get().equals(getEmptyItemStack())) {
+        if (currentStack.isPresent() && !isEmptyItemStack(currentStack.get())) {
             onRemove(location, name, currentStack.get()).ifPresent(itemStack -> ItemUtils.addOrDropItemMainHand(player, itemStack));
             return;
         }

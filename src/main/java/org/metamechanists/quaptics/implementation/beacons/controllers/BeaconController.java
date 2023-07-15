@@ -66,6 +66,10 @@ public abstract class BeaconController extends ConnectedBlock implements ItemHol
         stack.setItemMeta(meta);
         return stack;
     }
+    @Override
+    public boolean isEmptyItemStack(final @NotNull ItemStack itemStack) {
+        return itemStack.equals(getEmptyItemStack());
+    }
 
     @Override
     public void onTick21(@NotNull final ConnectionGroup group, @NotNull final Location location) {
