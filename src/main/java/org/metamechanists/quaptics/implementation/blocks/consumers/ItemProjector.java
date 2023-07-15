@@ -143,7 +143,7 @@ public class ItemProjector extends ConnectedBlock implements ItemHolderBlock, Po
         return Optional.of(stack);
     }
     @Override
-    public void onPoweredAnimation(final Location location, final boolean powered) {
+    public void onPoweredAnimation(final @NotNull Location location, final boolean powered) {
         brightnessAnimation(location, "prism", powered);
         visibilityAnimation(location, "item", powered);
     }

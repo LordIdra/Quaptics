@@ -96,7 +96,7 @@ public abstract class Turret extends ConnectedBlock implements PowerAnimatedBloc
         }
     }
     @Override
-    public void onPoweredAnimation(final Location location, final boolean powered) {
+    public void onPoweredAnimation(final @NotNull Location location, final boolean powered) {
         brightnessAnimation(location, "power1", powered);
         brightnessAnimation(location, "power2", powered);
     }

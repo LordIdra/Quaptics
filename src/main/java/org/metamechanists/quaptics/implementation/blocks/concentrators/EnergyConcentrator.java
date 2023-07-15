@@ -115,7 +115,7 @@ public class EnergyConcentrator extends EnergyConnectedBlock implements PowerAni
         linkOptional.ifPresent(link -> link.setPower(power));
     }
     @Override
-    public void onPoweredAnimation(final Location location, final boolean powered) {
+    public void onPoweredAnimation(final @NotNull Location location, final boolean powered) {
         brightnessAnimation(location, "center", powered);
     }
 }

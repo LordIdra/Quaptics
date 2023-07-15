@@ -109,7 +109,7 @@ public class Scatterer extends ConnectedBlock implements PowerAnimatedBlock, Pow
                 inputLink.get().getPhase());
     }
     @Override
-    public void onPoweredAnimation(final Location location, final boolean powered) {
+    public void onPoweredAnimation(final @NotNull Location location, final boolean powered) {
         final Optional<BlockDisplay> blockDisplay = getBlockDisplay(location, "comparator");
         blockDisplay.ifPresent(display -> display.setBlock(createComparatorBlockData(powered)));
     }

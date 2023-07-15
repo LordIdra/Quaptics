@@ -86,7 +86,7 @@ public class InfusionPillar extends ConnectedBlock implements PowerAnimatedBlock
         BlockStorageAPI.set(location, Keys.BS_POWERED, settings.isOperational(link));
     }
     @Override
-    public void onPoweredAnimation(final Location location, final boolean powered) {
+    public void onPoweredAnimation(final @NotNull Location location, final boolean powered) {
         brightnessAnimation(location, "prism", powered);
     }
 }

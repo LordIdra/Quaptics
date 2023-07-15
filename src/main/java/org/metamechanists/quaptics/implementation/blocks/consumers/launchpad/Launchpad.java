@@ -106,7 +106,7 @@ public class Launchpad extends ConnectedBlock implements ConfigPanelBlock, Power
         onPoweredAnimation(location, inputLink.isPresent() && settings.isOperational(inputLink));
     }
     @Override
-    public void onPoweredAnimation(final Location location, final boolean powered) {
+    public void onPoweredAnimation(final @NotNull Location location, final boolean powered) {
         brightnessAnimation(location, "plate", powered);
     }
 

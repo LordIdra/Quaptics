@@ -20,12 +20,15 @@ import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
+import org.metamechanists.quaptics.implementation.attachments.ComplexMultiblock;
 import org.metamechanists.quaptics.implementation.attachments.ItemHolderBlock;
+import org.metamechanists.quaptics.implementation.attachments.PowerAnimatedBlock;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
 import org.metamechanists.quaptics.implementation.beacons.modules.BeaconModule;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.implementation.tools.QuapticChargeableItem;
 import org.metamechanists.quaptics.storage.PersistentDataTraverser;
+import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Language;
 import org.metamechanists.quaptics.utils.builders.InteractionBuilder;
@@ -37,7 +40,7 @@ import java.util.List;
 import java.util.Optional;
 
 
-public abstract class BeaconController extends ConnectedBlock implements ItemHolderBlock {
+public abstract class BeaconController extends ConnectedBlock implements ItemHolderBlock, ComplexMultiblock, PowerAnimatedBlock {
     private static final float MODULE_BUTTON_SIZE = 0.22F;
     private static final Vector3f MODULE_BUTTON_OFFSET = new Vector3f(0, 0.15F, 0);
 
@@ -64,6 +67,18 @@ public abstract class BeaconController extends ConnectedBlock implements ItemHol
     }
 
     @Override
+    public void onTick21(@NotNull final ConnectionGroup group, @NotNull final Location location) {
+        final boolean isStructureValid = isStructureValid(location.getBlock());
+        BlockStorageAPI.set(location, Keys.BS_MULTIBLOCK_INTACT, isStructureValid);
+        if (!isStructureValid) {
+            onPoweredAnimation(location, false);
+            return;
+        }
+
+        final double inputPower = BlockStorageAPI.getDouble(location.clone().add(getPowerSupplyLocation()), Keys.BS_INPUT_POWER);
+        onPoweredAnimation(location, inputPower >= settings.getMinPower());
+    }
+    @Override
     @OverridingMethodsMustInvokeSuper
     protected void onBreak(@NotNull final Location location) {
         super.onBreak(location);
@@ -84,6 +99,7 @@ public abstract class BeaconController extends ConnectedBlock implements ItemHol
         return Optional.of(stack);
     }
 
+    protected abstract Vector getPowerSupplyLocation();
     protected abstract List<String> getModuleDisplayNames();
 
     protected static @NotNull InteractionId createButton(final ConnectionGroupId groupId, final @NotNull Location location, final Vector3f relativeLocation, final String slot) {

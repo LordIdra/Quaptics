@@ -181,7 +181,7 @@ public class Splitter extends ConnectedBlock implements PowerAnimatedBlock, Powe
         outgoingLinks.forEach(output -> output.setPowerFrequencyPhase(outputPower, outputFrequency, outputPhase));
     }
     @Override
-    public void onPoweredAnimation(final Location location, final boolean powered) {
+    public void onPoweredAnimation(final @NotNull Location location, final boolean powered) {
         visibilityAnimation(location, "concrete", powered);
     }
 

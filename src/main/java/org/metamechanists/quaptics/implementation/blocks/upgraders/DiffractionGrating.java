@@ -126,7 +126,7 @@ public class DiffractionGrating extends ConnectedBlock implements PowerAnimatedB
                 mainLink.get().getPhase());
     }
     @Override
-    public void onPoweredAnimation(final Location location, final boolean powered) {
+    public void onPoweredAnimation(final @NotNull Location location, final boolean powered) {
         brightnessAnimation(location, "prism", powered);
     }
 

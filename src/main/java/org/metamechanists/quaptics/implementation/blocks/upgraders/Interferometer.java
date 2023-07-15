@@ -110,7 +110,7 @@ public class Interferometer extends ConnectedBlock implements PowerAnimatedBlock
     }
 
     @Override
-    public void onPoweredAnimation(final Location location, final boolean powered) {
+    public void onPoweredAnimation(final @NotNull Location location, final boolean powered) {
         brightnessAnimation(location, "prism", powered);
     }
 }

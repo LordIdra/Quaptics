@@ -96,7 +96,7 @@ public class EntanglementMagnet extends ConnectedBlock implements PowerAnimatedB
         BlockStorageAPI.set(location, Keys.BS_POWERED, settings.isOperational(link));
     }
     @Override
-    public void onPoweredAnimation(final Location location, final boolean powered) {
+    public void onPoweredAnimation(final @NotNull Location location, final boolean powered) {
         brightnessAnimation(location, "panel1", powered);
         brightnessAnimation(location, "panel2", powered);
         brightnessAnimation(location, "panel3", powered);

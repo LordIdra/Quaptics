@@ -108,7 +108,7 @@ public class Transformer extends ConnectedBlock implements PowerAnimatedBlock, P
                 inputLink.get().getPhase());
     }
     @Override
-    public void onPoweredAnimation(final Location location, final boolean powered) {
+    public void onPoweredAnimation(final @NotNull Location location, final boolean powered) {
         brightnessAnimation(location, "coil1", powered);
         brightnessAnimation(location, "coil2", powered);
     }

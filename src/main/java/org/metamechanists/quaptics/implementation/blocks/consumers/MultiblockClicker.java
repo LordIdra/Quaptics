@@ -164,7 +164,7 @@ public class MultiblockClicker extends ConnectedBlock implements PowerAnimatedBl
         doBurnoutCheck(group, "input");
     }
     @Override
-    public void onPoweredAnimation(final Location location, final boolean powered) {
+    public void onPoweredAnimation(final @NotNull Location location, final boolean powered) {
         getDisplay(location, "main").ifPresent(value -> value.setBrightness(new Brightness(powered ? Utils.BRIGHTNESS_ON : Utils.BRIGHTNESS_OFF, 0)));
     }
 

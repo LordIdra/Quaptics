@@ -11,8 +11,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
-import org.metamechanists.quaptics.implementation.attachments.ComplexMultiblock;
-import org.metamechanists.quaptics.implementation.attachments.PowerAnimatedBlock;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
@@ -37,7 +35,7 @@ import static org.metamechanists.quaptics.implementation.beacons.components.Beac
 import static org.metamechanists.quaptics.implementation.beacons.components.BeaconTransmitter.BEACON_TRANSMITTER;
 
 
-public class BeaconController1 extends BeaconController implements ComplexMultiblock, PowerAnimatedBlock {
+public class BeaconController1 extends BeaconController {
     public static final Settings BEACON_CONTROLLER_1_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
             .build();
@@ -49,6 +47,8 @@ public class BeaconController1 extends BeaconController implements ComplexMultib
                     "&7● Part of the Beacon multiblock"));
 
     private static final Vector COMPUTER_LOCATION = new Vector(0, 3, 0);
+    private static final Vector POWER_SUPPLY_LOCATION = new Vector(0, 1, 0);
+
     private static final Vector3f MODULE_1_LOCATION = new Vector3f(0.38F, -0.15F, 0.38F);
     private static final Vector3f MODULE_2_LOCATION = new Vector3f(-0.38F, -0.15F, -0.38F);
     private static final Vector3f MODULE_3_LOCATION = new Vector3f(0.38F, -0.15F, -0.38F);
@@ -113,15 +113,15 @@ public class BeaconController1 extends BeaconController implements ComplexMultib
         return true;
     }
     @Override
-    public void onPoweredAnimation(final Location location, final boolean powered) {
-
+    public void onPoweredAnimation(final @NotNull Location location, final boolean powered) {
+        brightnessAnimation(location.clone().add(COMPUTER_LOCATION), "main", powered);
     }
 
     @Override
     public Map<Vector, ItemStack> getStructure() {
         final Map<Vector, ItemStack> structure = new HashMap<>();
 
-        structure.put(new Vector(0, 1, 0), BEACON_POWER_SUPPLY);
+        structure.put(POWER_SUPPLY_LOCATION, BEACON_POWER_SUPPLY);
         structure.put(new Vector(0, 2, 0), BEACON_BEAM);
         structure.put(COMPUTER_LOCATION, BEACON_COMPUTER);
         structure.put(new Vector(0, 4, 0), BEACON_BEAM);
@@ -137,6 +137,10 @@ public class BeaconController1 extends BeaconController implements ComplexMultib
         structure.put(new Vector(0, 3, -1), BEACON_PANEL);
 
         return structure;
+    }
+    @Override
+    protected Vector getPowerSupplyLocation() {
+        return POWER_SUPPLY_LOCATION;
     }
     @Override
     protected List<String> getModuleDisplayNames() {

@@ -163,7 +163,7 @@ public class Charger extends ConnectedBlock implements InfoPanelBlock, ItemHolde
         return Optional.of(stack);
     }
     @Override
-    public void onPoweredAnimation(final Location location, final boolean powered) {
+    public void onPoweredAnimation(final @NotNull Location location, final boolean powered) {
         brightnessAnimation(location, "glassTop", powered);
         brightnessAnimation(location, "glassBottom", powered);
     }

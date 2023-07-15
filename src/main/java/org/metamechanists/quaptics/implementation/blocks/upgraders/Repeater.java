@@ -109,7 +109,7 @@ public class Repeater extends ConnectedBlock implements PowerAnimatedBlock, Powe
                 inputLink.get().getPhase());
     }
     @Override
-    public void onPoweredAnimation(final Location location, final boolean powered) {
+    public void onPoweredAnimation(final @NotNull Location location, final boolean powered) {
         final Optional<BlockDisplay> blockDisplay = getBlockDisplay(location, "repeater");
         blockDisplay.ifPresent(display -> display.setBlock(createRepeaterBlockData(powered)));
     }

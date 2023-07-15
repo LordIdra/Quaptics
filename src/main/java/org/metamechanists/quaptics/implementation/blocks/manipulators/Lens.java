@@ -131,7 +131,7 @@ public class Lens extends ConnectedBlock implements PowerAnimatedBlock, PowerLos
                 inputLink.get().getPhase());
     }
     @Override
-    public void onPoweredAnimation(final Location location, final boolean powered) {
+    public void onPoweredAnimation(final @NotNull Location location, final boolean powered) {
         brightnessAnimation(location, "concrete", powered);
     }
 }

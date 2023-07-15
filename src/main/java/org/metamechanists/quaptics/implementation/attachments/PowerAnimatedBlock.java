@@ -2,6 +2,7 @@ package org.metamechanists.quaptics.implementation.attachments;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Display.Brightness;
+import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.implementation.base.QuapticBlock;
 import org.metamechanists.quaptics.utils.Utils;
 
@@ -19,5 +20,5 @@ public interface PowerAnimatedBlock {
     }
 
     @SuppressWarnings("unused")
-    void onPoweredAnimation(final Location location, final boolean powered);
+    void onPoweredAnimation(@NotNull final Location location, final boolean powered);
 }

@@ -125,7 +125,7 @@ public class Polariser extends ConnectedBlock implements PowerAnimatedBlock, Pow
         updateOutput(location, itemStack.get());
     }
     @Override
-    public void onPoweredAnimation(final Location location, final boolean powered) {
+    public void onPoweredAnimation(final @NotNull Location location, final boolean powered) {
         brightnessAnimation(location, "prism", powered);
     }
     @Override
