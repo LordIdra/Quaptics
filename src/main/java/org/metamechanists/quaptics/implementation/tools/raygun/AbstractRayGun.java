@@ -9,9 +9,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.MainHand;
+import org.bukkit.util.Vector;
 import org.metamechanists.metalib.utils.LocationUtils;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.implementation.tools.QuapticChargeableItem;
+import org.metamechanists.quaptics.utils.transformations.TransformationUtils;
 
 
 public abstract class AbstractRayGun extends QuapticChargeableItem {
@@ -36,12 +38,13 @@ public abstract class AbstractRayGun extends QuapticChargeableItem {
 
         final Location eyeLocation = player.getEyeLocation();
         final Location handLocation = LocationUtils.getHandLocation(player, leftHand);
+        final Vector handToEyeDisplacement = Vector.fromJOML(TransformationUtils.getDisplacement(handLocation, eyeLocation));
         final Location target = eyeLocation.clone().add(eyeLocation.getDirection().multiply(56));
 
-        fireRayGun(player, handLocation, target);
+        fireRayGun(player, handLocation, target, handToEyeDisplacement);
         setCharge(itemStack, stepCharge(settings, charge, -settings.getEmissionPower()));
         updateLore(itemStack);
     }
 
-    public abstract void fireRayGun(Player player, Location source, Location target);
+    public abstract void fireRayGun(Player player, Location source, Location target, Vector handToEyeDisplacement);
 }

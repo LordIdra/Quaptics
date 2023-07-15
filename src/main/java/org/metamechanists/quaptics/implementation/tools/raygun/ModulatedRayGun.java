@@ -7,6 +7,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.Vector;
 import org.metamechanists.quaptics.beams.DeprecatedBeamStorage;
 import org.metamechanists.quaptics.beams.beam.ProjectileBeam;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
@@ -29,12 +30,12 @@ public class ModulatedRayGun extends AbstractRayGun {
             Lore.buildChargeableLore(RAY_GUN_1_SETTINGS, 0,
                     "&7● &eRight Click &7to fire"));
 
-    public ModulatedRayGun(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, Settings settings) {
+    public ModulatedRayGun(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
     }
 
     @Override
-    public void fireRayGun(Player player, Location source, Location target) {
+    public void fireRayGun(final Player player, final Location source, final Location target, final Vector handToEyeDisplacement) {
         DeprecatedBeamStorage.deprecate(new ProjectileBeam(
                 settings.getProjectileMaterial(),
                 source,
