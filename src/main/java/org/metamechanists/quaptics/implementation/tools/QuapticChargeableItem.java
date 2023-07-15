@@ -2,10 +2,12 @@ package org.metamechanists.quaptics.implementation.tools;
 
 import io.github.bakedlibs.dough.common.ChatColors;
 import io.github.bakedlibs.dough.data.persistent.PersistentDataAPI;
+import io.github.thebusybiscuit.slimefun4.api.events.PlayerRightClickEvent;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import io.github.thebusybiscuit.slimefun4.core.handlers.ItemUseHandler;
 import lombok.Getter;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
@@ -15,6 +17,7 @@ import org.jetbrains.annotations.Nullable;
 import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.implementation.attachments.ChargeHolder;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
+import org.metamechanists.quaptics.implementation.blocks.consumers.Charger;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.storage.QuapticTicker;
 import org.metamechanists.quaptics.utils.Keys;
@@ -35,6 +38,23 @@ public abstract class QuapticChargeableItem extends SlimefunItem implements Char
         super(itemGroup, item, recipeType, recipe);
 
         this.settings = settings;
+
+        addItemHandler(onItemUse());
+    }
+
+    public ItemUseHandler onItemUse() {
+        return event -> {
+            if (event.getSlimefunBlock().isPresent() && event.getSlimefunBlock().get() instanceof Charger) {
+                return;
+            }
+
+            event.cancel();
+            onUseItem(event);
+        };
+    }
+
+    public void onUseItem(PlayerRightClickEvent event) {
+
     }
 
     private static Optional<QuapticChargeableItem> fromStack(@Nullable final ItemStack stack) {
