@@ -20,8 +20,8 @@ import java.util.UUID;
 public class MultiblockWand extends SlimefunItem {
     public static final SlimefunItemStack MULTIBLOCK_WAND = new SlimefunItemStack(
             "QP_MULTBLOCK_WAND",
-            Material.BLAZE_ROD,
-            "&6Multiblock Wand",
+            Material.AMETHYST_SHARD,
+            "&bMultiblock Wand",
             "&7● Shows you how to build complex multiblocks",
             "&7● &eRight Click &7a multiblock to see how to build it",
             "&7● &eRight Click &7a projected block to see what block it is");

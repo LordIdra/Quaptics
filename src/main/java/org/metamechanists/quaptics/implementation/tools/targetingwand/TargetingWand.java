@@ -25,7 +25,7 @@ public class TargetingWand extends SlimefunItem {
     public static final SlimefunItemStack TARGETING_WAND = new SlimefunItemStack(
             "QP_TARGETING_WAND",
             Material.BLAZE_ROD,
-            "&6Targeting Wand",
+            "&bTargeting Wand",
             "&7● &eRight Click &7to select a source",
             "&7● &eRight Click &7again to create a link",
             "&7● &eShift Right Click &7to remove a link");
