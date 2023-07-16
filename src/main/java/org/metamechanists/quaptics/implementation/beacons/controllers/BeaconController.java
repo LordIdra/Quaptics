@@ -26,7 +26,7 @@ import org.metamechanists.quaptics.implementation.attachments.ItemHolderBlock;
 import org.metamechanists.quaptics.implementation.attachments.PowerAnimatedBlock;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
 import org.metamechanists.quaptics.implementation.beacons.modules.BeaconModule;
-import org.metamechanists.quaptics.implementation.beacons.modules.player.PlayerModule;
+import org.metamechanists.quaptics.implementation.beacons.modules.PlayerModule;
 import org.metamechanists.quaptics.implementation.Settings;
 import org.metamechanists.quaptics.implementation.tools.QuapticChargeableItem;
 import org.metamechanists.quaptics.storage.PersistentDataTraverser;
@@ -237,16 +237,16 @@ public abstract class BeaconController extends ConnectedBlock implements ItemHol
                 .collect(Collectors.toSet());
     }
 
-    private static void tickPlayerModules(final @NotNull Location location, final @NotNull Set<BeaconModule> modules) {
+    private void tickPlayerModules(final @NotNull Location location, final @NotNull Set<BeaconModule> modules) {
         final Set<PlayerModule> playerModules = modules.stream()
                 .filter(module -> module instanceof PlayerModule)
                 .map(PlayerModule.class::cast)
                 .collect(Collectors.toSet());
         if (!playerModules.isEmpty()) {
-            playerModules.forEach(module -> module.apply(getStoredPlayers(location)));
+            playerModules.forEach(module -> module.apply(this, location, getStoredPlayers(location)));
         }
     }
 
-    protected abstract Vector getPowerSupplyLocation();
+    public abstract Vector getPowerSupplyLocation();
     protected abstract List<String> getModuleDisplayNames();
 }

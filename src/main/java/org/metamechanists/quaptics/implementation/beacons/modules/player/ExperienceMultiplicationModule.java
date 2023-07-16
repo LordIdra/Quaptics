@@ -4,6 +4,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import org.bukkit.DyeColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.banner.Pattern;
 import org.bukkit.block.banner.PatternType;
@@ -14,7 +15,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BannerMeta;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.implementation.Settings;
+import org.metamechanists.quaptics.implementation.beacons.controllers.BeaconController;
 import org.metamechanists.quaptics.implementation.beacons.modules.BeaconModule;
+import org.metamechanists.quaptics.implementation.beacons.modules.PlayerModule;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
 
@@ -48,7 +51,7 @@ public class ExperienceMultiplicationModule extends BeaconModule implements Play
     }
 
     @Override
-    public void apply(@NotNull final Collection<Player> players) {
+    public void apply(final @NotNull BeaconController controller, final @NotNull Location controllerLocation, @NotNull final Collection<Player> players) {
         players.forEach(player -> ExperienceMultiplicationModuleListener.add(player, settings.getExperienceMultiplier()));
     }
 }

@@ -114,6 +114,9 @@ public class Lore {
         if (settings.getExperienceMultiplier() != 0) {
             lore.add(experienceMultiplier(settings.getExperienceMultiplier()));
         }
+        if (settings.getPowerEfficiency() != 0) {
+            lore.add(powerEfficiency(settings.getPowerEfficiency()));
+        }
 
         return lore;
     }
@@ -158,7 +161,6 @@ public class Lore {
     public String experienceMultiplier(final double experienceMultiplier) {
         return ATTRIBUTE_SYMBOL + COUNT_SYMBOL + "&7Experience Multiplier &e" + format(experienceMultiplier) + "x";
     }
-
     public String capacity(final double capacity) {
         return ATTRIBUTE_SYMBOL + CHARGE_SYMBOL + "&7Capacity &e" + Objects.toString(capacity) + CHARGE_SUFFIX;
     }
@@ -180,6 +182,9 @@ public class Lore {
     }
     public String powerOutput(final double outputPower, final double maxOutputPower) {
         return (outputPower >= maxOutputPower ? "&a" : "&6") + Utils.roundTo2dp(outputPower) + "&7 / " + "&a" + maxOutputPower;
+    }
+    public String powerEfficiency(final double powerEfficiency) {
+        return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Power Efficiency &e" + format(powerEfficiency) + POWER_SUFFIX;
     }
 
     public String chargeBar(final int charge, final int capacity) {

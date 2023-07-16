@@ -51,6 +51,7 @@ public class Settings {
     private int luckLevel;
     private int fireResistanceLevel;
     private double experienceMultiplier;
+    private double powerEfficiency;
 
     private Set<SpawnCategory> targets;
 

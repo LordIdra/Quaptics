@@ -25,6 +25,7 @@ import org.metamechanists.quaptics.implementation.beacons.modules.player.FireRes
 import org.metamechanists.quaptics.implementation.beacons.modules.player.HungerRefillModule;
 import org.metamechanists.quaptics.implementation.beacons.modules.player.InvincibilityModule;
 import org.metamechanists.quaptics.implementation.beacons.modules.player.LuckModule;
+import org.metamechanists.quaptics.implementation.beacons.modules.player.WirelessChargerModule;
 import org.metamechanists.quaptics.implementation.blocks.concentrators.SolarConcentrator;
 import org.metamechanists.quaptics.implementation.blocks.consumers.Charger;
 import org.metamechanists.quaptics.implementation.blocks.consumers.DataStripper;
@@ -76,6 +77,8 @@ import static org.metamechanists.quaptics.implementation.beacons.modules.player.
 import static org.metamechanists.quaptics.implementation.beacons.modules.player.InvincibilityModule.INVINCIBILITY_MODULE_SETTINGS;
 import static org.metamechanists.quaptics.implementation.beacons.modules.player.LuckModule.LUCK_MODULE;
 import static org.metamechanists.quaptics.implementation.beacons.modules.player.LuckModule.LUCK_MODULE_SETTINGS;
+import static org.metamechanists.quaptics.implementation.beacons.modules.player.WirelessChargerModule.WIRELESS_CHARGER_MODULE;
+import static org.metamechanists.quaptics.implementation.beacons.modules.player.WirelessChargerModule.WIRELESS_CHARGER_MODULE_SETTINGS;
 import static org.metamechanists.quaptics.implementation.blocks.concentrators.SolarConcentrator.SOLAR_CONCENTRATOR_1;
 import static org.metamechanists.quaptics.implementation.blocks.concentrators.SolarConcentrator.SOLAR_CONCENTRATOR_1_SETTINGS;
 import static org.metamechanists.quaptics.implementation.blocks.consumers.Charger.CHARGER_1;
@@ -391,6 +394,13 @@ public class Primitive {
                 RecipeType.NULL,
                 new ItemStack[]{},
                 EXPERIENCE_MULTIPLICATION_MODULE_SETTINGS).register(addon);
+
+        new WirelessChargerModule(
+                Groups.PRIMITIVE,
+                WIRELESS_CHARGER_MODULE,
+                RecipeType.NULL,
+                new ItemStack[]{},
+                WIRELESS_CHARGER_MODULE_SETTINGS).register(addon);
 
         new SlimefunItem(
                 Groups.PRIMITIVE,

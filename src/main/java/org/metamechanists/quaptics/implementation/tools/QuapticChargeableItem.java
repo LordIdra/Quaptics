@@ -52,7 +52,6 @@ public abstract class QuapticChargeableItem extends SlimefunItem implements Char
             onUseItem(event);
         };
     }
-
     protected void onUseItem(final PlayerRightClickEvent event) {}
 
     private static Optional<QuapticChargeableItem> fromStack(@Nullable final ItemStack stack) {
@@ -63,23 +62,21 @@ public abstract class QuapticChargeableItem extends SlimefunItem implements Char
         return Optional.of(chargeableItem);
     }
 
-    public static double getCharge(@NotNull final ItemStack stack) {
-        return PersistentDataAPI.getDouble(stack.getItemMeta(), Keys.CHARGE, 0.0);
-    }
-
     public static double getCapacity(@NotNull final ItemStack itemStack) {
         final Optional<QuapticChargeableItem> item = fromStack(itemStack);
         return item.map(quapticChargeableItem -> quapticChargeableItem.settings.getChargeCapacity()).orElse(0.0);
 
     }
-
+    public static double getCharge(@NotNull final ItemStack stack) {
+        return PersistentDataAPI.getDouble(stack.getItemMeta(), Keys.CHARGE, 0.0);
+    }
     protected static void setCharge(@NotNull final ItemStack stack, final double newCharge) {
         final ItemMeta meta = stack.getItemMeta();
         PersistentDataAPI.setDouble(meta, Keys.CHARGE, newCharge);
         stack.setItemMeta(meta);
     }
 
-    public @NotNull ItemStack chargeItem(final Link inputLink, @NotNull final ItemStack itemStack, final double tickInterval) {
+    public @NotNull ItemStack chargeItem(final double chargeRate, @NotNull final ItemStack itemStack, final int tickInterval) {
         if (itemStack.getItemMeta() == null) {
             return itemStack;
         }
@@ -89,9 +86,12 @@ public abstract class QuapticChargeableItem extends SlimefunItem implements Char
             return itemStack;
         }
 
-        final double newCharge = stepCharge(item.get().settings, getCharge(itemStack), inputLink.getPower() * (tickInterval / QuapticTicker.TICKS_PER_SECOND));
+        final double newCharge = stepCharge(item.get().settings, getCharge(itemStack), chargeRate * ((double) tickInterval / QuapticTicker.TICKS_PER_SECOND));
         setCharge(itemStack, newCharge);
         return itemStack;
+    }
+    public @NotNull ItemStack chargeItem(final @NotNull Link inputLink, @NotNull final ItemStack itemStack, final int tickInterval) {
+        return chargeItem(inputLink.getPower(), itemStack, tickInterval);
     }
 
     private static int getFirstLineMatching(@NotNull final List<String> lore, final Predicate<? super String> matcher) {

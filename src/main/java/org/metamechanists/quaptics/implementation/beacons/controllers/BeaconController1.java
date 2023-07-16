@@ -140,7 +140,7 @@ public class BeaconController1 extends BeaconController {
         return structure;
     }
     @Override
-    protected Vector getPowerSupplyLocation() {
+    public Vector getPowerSupplyLocation() {
         return POWER_SUPPLY_LOCATION;
     }
     @Override
