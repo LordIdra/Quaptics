@@ -49,6 +49,6 @@ public class FireResistanceModule extends BeaconModule implements PlayerModule {
 
     @Override
     public void apply(final @NotNull Collection<Player> players) {
-        players.forEach(player -> player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, QuapticTicker.INTERVAL_TICKS_102 + 20, settings.getFireResistanceLevel()-1)));
+        players.forEach(player -> player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, QuapticTicker.INTERVAL_TICKS_22 + 20, settings.getFireResistanceLevel()-1)));
     }
 }

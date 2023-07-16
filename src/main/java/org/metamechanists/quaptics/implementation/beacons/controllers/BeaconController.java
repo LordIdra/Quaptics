@@ -90,10 +90,6 @@ public abstract class BeaconController extends ConnectedBlock implements ItemHol
 
         final double inputPower = BlockStorageAPI.getDouble(location.clone().add(getPowerSupplyLocation()), Keys.BS_INPUT_POWER);
         onPoweredAnimation(location, inputPower >= settings.getMinPower());
-    }
-    @Override
-    public void onTick102(@NotNull final ConnectionGroup group, @NotNull final Location location) {
-        final double inputPower = BlockStorageAPI.getDouble(location.clone().add(getPowerSupplyLocation()), Keys.BS_INPUT_POWER);
         if (inputPower < settings.getMinPower()) {
             return;
         }

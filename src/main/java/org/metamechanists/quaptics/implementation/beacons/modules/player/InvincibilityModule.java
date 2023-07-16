@@ -38,7 +38,7 @@ public class InvincibilityModule extends BeaconModule implements PlayerModule {
 
     private static @NotNull SlimefunItemStack getBanner(final @NotNull SlimefunItemStack stack) {
         final BannerMeta meta = (BannerMeta) stack.getItemMeta();
-        meta.addPattern(new Pattern(DyeColor.ORANGE, PatternType.CROSS));
+        meta.addPattern(new Pattern(DyeColor.ORANGE, PatternType.STRAIGHT_CROSS));
         meta.addPattern(new Pattern(DyeColor.RED, PatternType.SKULL));
         meta.addItemFlags(ItemFlag.HIDE_ITEM_SPECIFICS);
         stack.setItemMeta(meta);
@@ -47,6 +47,6 @@ public class InvincibilityModule extends BeaconModule implements PlayerModule {
 
     @Override
     public void apply(final @NotNull Collection<Player> players) {
-        players.forEach(player -> player.setNoDamageTicks(QuapticTicker.INTERVAL_TICKS_102 + 20));
+        players.forEach(player -> player.setNoDamageTicks(QuapticTicker.INTERVAL_TICKS_22 + 20));
     }
 }

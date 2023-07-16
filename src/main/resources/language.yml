@@ -19,7 +19,7 @@ entangler.cannot-be-entangled: "&cThis item cannot be entangled."
 entangler.magnets-not-powered: "&cYou must power all magnets of the entangler before infusing an item."
 
 beacon.not-module: "&cYou can only insert Beacon Modules."
-beacon.duplicate-module: "&cBeacons can only hold one module of each type."
+beacon.duplicate-module: "&cThe beacon already contains this module."
 
 charger.multiple-items: "&cYou can only insert one item at a time."
 charger.not-chargeable: "&cThis item cannot be charged."

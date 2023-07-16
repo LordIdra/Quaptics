@@ -23,25 +23,25 @@ import org.metamechanists.quaptics.storage.QuapticTicker;
 import java.util.Collection;
 
 
-public class LuckModule extends BeaconModule implements PlayerModule {
-    public static final Settings LUCK_MODULE_SETTINGS = Settings.builder()
+public class HungerRefillModule extends BeaconModule implements PlayerModule {
+    public static final Settings HUNGER_REFILL_MODULE_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
-            .luckLevel(1)
             .build();
-    public static final SlimefunItemStack LUCK_MODULE = getBanner(new SlimefunItemStack(
-            "QP_LUCK_MODULE",
+    public static final SlimefunItemStack HUNGER_REFILL_MODULE = getBanner(new SlimefunItemStack(
+            "QP_HUNGER_REFILL_MODULE",
             Material.GRAY_BANNER,
-            "&6Luck Module",
-            Lore.create(LUCK_MODULE_SETTINGS,
-                    "&7● Increases the luck of all players in range")));
+            "&6Hunger Refill Module",
+            Lore.create(HUNGER_REFILL_MODULE_SETTINGS,
+                    "&7● Refills the hunger of all players in range")));
 
-    public LuckModule(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
+    public HungerRefillModule(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
     }
 
     private static @NotNull SlimefunItemStack getBanner(final @NotNull SlimefunItemStack stack) {
         final BannerMeta meta = (BannerMeta) stack.getItemMeta();
-        meta.addPattern(new Pattern(DyeColor.LIME, PatternType.FLOWER));
+        meta.addPattern(new Pattern(DyeColor.GREEN, PatternType.STRAIGHT_CROSS));
+        meta.addPattern(new Pattern(DyeColor.GREEN, PatternType.RHOMBUS_MIDDLE));
         meta.addItemFlags(ItemFlag.HIDE_ITEM_SPECIFICS);
         stack.setItemMeta(meta);
         return stack;
@@ -49,6 +49,6 @@ public class LuckModule extends BeaconModule implements PlayerModule {
 
     @Override
     public void apply(final @NotNull Collection<Player> players) {
-        players.forEach(player -> player.addPotionEffect(new PotionEffect(PotionEffectType.LUCK, QuapticTicker.INTERVAL_TICKS_22 + 20, settings.getLuckLevel()-1)));
+        players.forEach(player -> player.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, QuapticTicker.INTERVAL_TICKS_22 + 20, 1)));
     }
 }
