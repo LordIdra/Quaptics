@@ -64,7 +64,7 @@ public class ReactorInfoPanel extends BlockInfoPanel {
         final double maxSeconds = group.get().getBlock().getSettings().getTimeToMaxEfficiency();
 
         final double inputPower = ReactorController.getTotalInputPower(location.get());
-        final double minInputPower = settings.getMinPower();
+        final double minInputPower = settings.getPowerThreshold();
 
         final double outputPower = BlockStorageAPI.getDouble(location.get(), Keys.BS_OUTPUT_POWER);
         final double maxOutputPower = controller.getMaxOutputPower();
