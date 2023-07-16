@@ -49,6 +49,6 @@ public class HungerRefillModule extends BeaconModule implements PlayerModule {
 
     @Override
     public void apply(final @NotNull Collection<Player> players) {
-        players.forEach(player -> player.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, QuapticTicker.INTERVAL_TICKS_22 + 20, 1)));
+        players.forEach(player -> player.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, QuapticTicker.INTERVAL_TICKS_22 + 20, 0)));
     }
 }
