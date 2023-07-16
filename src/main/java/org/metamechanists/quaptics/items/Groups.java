@@ -13,6 +13,7 @@ import org.metamechanists.quaptics.Quaptics;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
 import org.metamechanists.quaptics.implementation.multiblocks.beacons.controllers.BeaconController;
 import org.metamechanists.quaptics.items.groups.BeamCreation;
+import org.metamechanists.quaptics.items.groups.BeamManipulation;
 import org.metamechanists.quaptics.items.groups.CraftingComponents;
 import org.metamechanists.quaptics.items.groups.Tools;
 import org.metamechanists.quaptics.utils.Colors;
@@ -73,6 +74,7 @@ public class Groups {
         Tools.initialize();
         CraftingComponents.initialize();
         BeamCreation.initialize();
+        BeamManipulation.initialize();
 
         Slimefun.getRegistry().getAllSlimefunItems().stream()
                 .filter(ConnectedBlock.class::isInstance)
