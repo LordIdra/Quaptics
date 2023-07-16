@@ -110,10 +110,17 @@ public abstract class BeaconController extends ConnectedBlock implements ItemHol
     }
     @Override
     public boolean onInsert(@NotNull final Location location, @NotNull final String name, @NotNull final ItemStack stack, @NotNull final Player player) {
-        if (!(SlimefunItem.getByItem(stack) instanceof BeaconModule)) {
+        final SlimefunItem moduleItem = SlimefunItem.getByItem(stack);
+        if (!(moduleItem instanceof final BeaconModule beaconModule)) {
             Language.sendLanguageMessage(player, "beacon.not-module");
             return false;
         }
+
+        if (getModules(location).contains(beaconModule)) {
+            Language.sendLanguageMessage(player, "beacon.duplicate-module");
+            return false;
+        }
+
         return true;
     }
     @Override
@@ -168,14 +175,21 @@ public abstract class BeaconController extends ConnectedBlock implements ItemHol
         itemHolderInteract(location.get(), slot, player);
     }
 
+    private static Optional<BeaconModule> getModule(final ItemStack itemStack) {
+        final SlimefunItem slimefunItem = SlimefunItem.getByItem(itemStack);
+        if (slimefunItem instanceof final BeaconModule beaconModule) {
+            return Optional.of(beaconModule);
+        }
+        return Optional.empty();
+    }
     private Set<BeaconModule> getModules(@NotNull final Location location) {
         return getModuleDisplayNames().stream()
                 .map(name -> ItemHolderBlock.getStack(location, name))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
-                .map(SlimefunItem::getByItem)
-                .filter(item -> item instanceof BeaconModule)
-                .map(item -> (BeaconModule) item)
+                .map(BeaconController::getModule)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
                 .collect(Collectors.toSet());
     }
 
