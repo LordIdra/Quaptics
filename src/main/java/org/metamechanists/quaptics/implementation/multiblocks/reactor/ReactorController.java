@@ -56,9 +56,9 @@ public class ReactorController extends ConnectedBlock implements ComplexMultiblo
 
     public static final Settings REACTOR_CONTROLLER_SETTINGS = Settings.builder()
             .tier(Tier.ADVANCED)
-            .minPower(1800)
+            .powerThreshold(1800)
             .powerMultiplier(1.4)
-            .maxPowerOutput(1.4 * Tier.INTERMEDIATE.maxPower * RING_LOCATIONS.size())
+            .maxOutputPower(1.4 * Tier.INTERMEDIATE.maxPower * RING_LOCATIONS.size())
             .timeToMaxEfficiency(600)
             .build();
     public static final SlimefunItemStack REACTOR_CONTROLLER = new SlimefunItemStack(

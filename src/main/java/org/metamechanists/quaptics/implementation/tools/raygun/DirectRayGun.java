@@ -25,7 +25,7 @@ import org.metamechanists.quaptics.utils.transformations.TransformationUtils;
 public class DirectRayGun extends AbstractRayGun {
     public static final Settings RAY_GUN_2_SETTINGS = Settings.builder()
             .chargeCapacity(1000.0)
-            .powerOutput(5.0)
+            .outputPower(5.0)
             .range(56)
             .damage(3)
             .projectileMaterial(Material.LIGHT_BLUE_CONCRETE)

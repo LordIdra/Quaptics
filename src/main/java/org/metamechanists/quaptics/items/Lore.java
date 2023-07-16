@@ -49,7 +49,7 @@ public class Lore {
         Collections.addAll(lore, description);
         lore.add(chargeBar(charge, (int) settings.getChargeCapacity()));
         lore.add(chargeValues(charge, (int) settings.getChargeCapacity()));
-        lore.add(chargePerUse((int) settings.getPowerOutput()));
+        lore.add(chargePerUse((int) settings.getOutputPower()));
 
         if (settings.getMinFrequency() != 0 || settings.getMaxFrequency() != 0) {
             lore.add(operatingFrequency(settings.getMinFrequency(), settings.getMaxFrequency()));
@@ -61,14 +61,14 @@ public class Lore {
     private @NotNull List<String> fromSettings(@NotNull final Settings settings) {
         final List<String> lore = new ArrayList<>();
 
-        if (settings.getTier() != null && (settings.getPowerOutput() == 0 || settings.getChargeCapacity() != 0)) {
+        if (settings.getTier() != null && (settings.getOutputPower() == 0 || settings.getChargeCapacity() != 0)) {
             lore.add(operatingPower(settings.getMinPower(), settings.getTier().maxPower));
         }
-        if (settings.getPowerOutput() != 0) {
-            lore.add(powerOutput(settings.getPowerOutput()));
+        if (settings.getOutputPower() != 0) {
+            lore.add(powerOutput(settings.getOutputPower()));
         }
-        if (settings.getMaxPowerOutput() != 0) {
-            lore.add(maxPowerOutput(settings.getMaxPowerOutput()));
+        if (settings.getMaxOutputPower() != 0) {
+            lore.add(maxPowerOutput(settings.getMaxOutputPower()));
         }
         if (settings.getPowerLoss() != 0) {
             lore.add(powerLoss(settings.getPowerLoss()));
@@ -120,6 +120,9 @@ public class Lore {
         }
         if (settings.getPowerEfficiency() != 0) {
             lore.add(powerEfficiency(settings.getPowerEfficiency()));
+        }
+        if (settings.getPowerThreshold() != 0) {
+            lore.add(powerThreshold(settings.getPowerThreshold()));
         }
 
         return lore;
@@ -181,6 +184,9 @@ public class Lore {
     }
     public String powerOutput(final double powerOutput) {
         return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Power Output &e" + format(powerOutput) + POWER_SUFFIX;
+    }
+    public String powerThreshold(final double powerThreshold) {
+        return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Power Threshold &e" + format(powerThreshold) + POWER_SUFFIX;
     }
     public String maxPowerOutput(final double maxPowerOutput) {
         return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Max Power Output &e" + format(maxPowerOutput) + POWER_SUFFIX;

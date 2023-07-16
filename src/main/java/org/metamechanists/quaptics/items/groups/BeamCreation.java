@@ -46,12 +46,12 @@ public class BeamCreation {
 
         }, ENERGY_CONCENTRATOR_2_SETTINGS).register(addon);
 
-        new ReactorController(Groups.BEAM_CREATION, REACTOR_CONTROLLER, RecipeType.NULL, new ItemStack[]{
-
-        }, REACTOR_CONTROLLER_SETTINGS).register(addon);
-
         new ReactorRing(Groups.BEAM_CREATION, REACTOR_RING, RecipeType.NULL, new ItemStack[]{
 
         }, REACTOR_RING_SETTINGS).register(addon);
+
+        new ReactorController(Groups.BEAM_CREATION, REACTOR_CONTROLLER, RecipeType.NULL, new ItemStack[]{
+
+        }, REACTOR_CONTROLLER_SETTINGS).register(addon);
     }
 }

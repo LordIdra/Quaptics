@@ -34,11 +34,11 @@ import java.util.Optional;
 public class SolarConcentrator extends ConnectedBlock implements PowerAnimatedBlock {
     public static final Settings SOLAR_CONCENTRATOR_1_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
-            .powerOutput(2)
+            .outputPower(2)
             .build();
     public static final Settings SOLAR_CONCENTRATOR_2_SETTINGS = Settings.builder()
             .tier(Tier.BASIC)
-            .powerOutput(8)
+            .outputPower(8)
             .build();
 
     public static final SlimefunItemStack SOLAR_CONCENTRATOR_1 = new SlimefunItemStack(
@@ -91,7 +91,7 @@ public class SolarConcentrator extends ConnectedBlock implements PowerAnimatedBl
         BlockStorageAPI.set(location, Keys.BS_POWERED, powered);
 
         final Optional<Link> linkOptional = getLink(location, "output");
-        linkOptional.ifPresent(link -> link.setPower(powered ? settings.getPowerOutput() : 0));
+        linkOptional.ifPresent(link -> link.setPower(powered ? settings.getOutputPower() : 0));
     }
     @Override
     public void onPoweredAnimation(final @NotNull Location location, final boolean powered) {
