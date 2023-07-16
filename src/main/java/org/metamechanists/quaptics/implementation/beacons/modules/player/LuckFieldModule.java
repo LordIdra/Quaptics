@@ -8,6 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.block.banner.Pattern;
 import org.bukkit.block.banner.PatternType;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BannerMeta;
 import org.bukkit.potion.PotionEffect;
@@ -40,8 +41,8 @@ public class LuckFieldModule extends BeaconModule implements PlayerModule {
 
     private static @NotNull SlimefunItemStack getBanner(final @NotNull SlimefunItemStack stack) {
         final BannerMeta meta = (BannerMeta) stack.getItemMeta();
-        meta.addPattern(new Pattern(DyeColor.YELLOW, PatternType.FLOWER));
-        meta.addPattern(new Pattern(DyeColor.LIGHT_GRAY, PatternType.GRADIENT_UP));
+        meta.addPattern(new Pattern(DyeColor.LIME, PatternType.FLOWER));
+        meta.addItemFlags(ItemFlag.HIDE_ITEM_SPECIFICS);
         stack.setItemMeta(meta);
         return stack;
     }
