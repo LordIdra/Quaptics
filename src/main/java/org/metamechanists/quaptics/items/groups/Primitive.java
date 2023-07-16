@@ -20,6 +20,8 @@ import org.metamechanists.quaptics.implementation.beacons.components.BeaconPower
 import org.metamechanists.quaptics.implementation.beacons.components.BeaconRod;
 import org.metamechanists.quaptics.implementation.beacons.components.BeaconTransmitter;
 import org.metamechanists.quaptics.implementation.beacons.controllers.BeaconController1;
+import org.metamechanists.quaptics.implementation.beacons.controllers.BeaconController2;
+import org.metamechanists.quaptics.implementation.beacons.controllers.BeaconController3;
 import org.metamechanists.quaptics.implementation.beacons.modules.player.ExperienceMultiplicationModule;
 import org.metamechanists.quaptics.implementation.beacons.modules.player.FireResistanceModule;
 import org.metamechanists.quaptics.implementation.beacons.modules.player.HungerRefillModule;
@@ -67,6 +69,10 @@ import static org.metamechanists.quaptics.implementation.beacons.components.Beac
 import static org.metamechanists.quaptics.implementation.beacons.components.BeaconTransmitter.BEACON_TRANSMITTER_SETTINGS;
 import static org.metamechanists.quaptics.implementation.beacons.controllers.BeaconController1.BEACON_CONTROLLER_1;
 import static org.metamechanists.quaptics.implementation.beacons.controllers.BeaconController1.BEACON_CONTROLLER_1_SETTINGS;
+import static org.metamechanists.quaptics.implementation.beacons.controllers.BeaconController2.BEACON_CONTROLLER_2;
+import static org.metamechanists.quaptics.implementation.beacons.controllers.BeaconController2.BEACON_CONTROLLER_2_SETTINGS;
+import static org.metamechanists.quaptics.implementation.beacons.controllers.BeaconController3.BEACON_CONTROLLER_3;
+import static org.metamechanists.quaptics.implementation.beacons.controllers.BeaconController3.BEACON_CONTROLLER_3_SETTINGS;
 import static org.metamechanists.quaptics.implementation.beacons.modules.player.ExperienceMultiplicationModule.EXPERIENCE_MULTIPLICATION_MODULE;
 import static org.metamechanists.quaptics.implementation.beacons.modules.player.ExperienceMultiplicationModule.EXPERIENCE_MULTIPLICATION_MODULE_SETTINGS;
 import static org.metamechanists.quaptics.implementation.beacons.modules.player.FireResistanceModule.FIRE_RESISTANCE_MODULE;
@@ -359,6 +365,20 @@ public class Primitive {
                 RecipeType.NULL,
                 new ItemStack[]{},
                 BEACON_CONTROLLER_1_SETTINGS).register(addon);
+
+        new BeaconController2(
+                Groups.PRIMITIVE,
+                BEACON_CONTROLLER_2,
+                RecipeType.NULL,
+                new ItemStack[]{},
+                BEACON_CONTROLLER_2_SETTINGS).register(addon);
+
+        new BeaconController3(
+                Groups.PRIMITIVE,
+                BEACON_CONTROLLER_3,
+                RecipeType.NULL,
+                new ItemStack[]{},
+                BEACON_CONTROLLER_3_SETTINGS).register(addon);
 
         new LuckModule(
                 Groups.PRIMITIVE,

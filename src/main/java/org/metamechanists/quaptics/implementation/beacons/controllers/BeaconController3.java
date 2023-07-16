@@ -39,16 +39,16 @@ import static org.metamechanists.quaptics.implementation.beacons.components.Beac
 
 
 public class BeaconController3 extends BeaconController {
-    public static final Settings BEACON_CONTROLLER_2_SETTINGS = Settings.builder()
+    public static final Settings BEACON_CONTROLLER_3_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
             .minPower(20)
-            .range(40)
+            .range(60)
             .build();
-    public static final SlimefunItemStack BEACON_CONTROLLER_2 = new SlimefunItemStack(
-            "QP_BEACON_CONTROLLER_2",
+    public static final SlimefunItemStack BEACON_CONTROLLER_3 = new SlimefunItemStack(
+            "QP_BEACON_CONTROLLER_3",
             Material.BLUE_CONCRETE,
-            "&6Beacon Controller &eII",
-            Lore.create(BEACON_CONTROLLER_2_SETTINGS,
+            "&6Beacon Controller &eIII",
+            Lore.create(BEACON_CONTROLLER_3_SETTINGS,
                     "&7● Part of the Beacon multiblock"));
 
     private static final Vector MATRIX_LOCATION = new Vector(0, 2, 0);
