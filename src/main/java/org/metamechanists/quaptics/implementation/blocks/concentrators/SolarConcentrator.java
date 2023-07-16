@@ -86,7 +86,7 @@ public class SolarConcentrator extends ConnectedBlock implements PowerAnimatedBl
 
     @SuppressWarnings("unused")
     @Override
-    public void onTick102(@NotNull final ConnectionGroup group, @NotNull final Location location) {
+    public void onTick10(@NotNull final ConnectionGroup group, @NotNull final Location location) {
         final boolean powered = location.getWorld().isDayTime();
         onPoweredAnimation(location, powered);
         BlockStorageAPI.set(location, Keys.BS_POWERED, powered);

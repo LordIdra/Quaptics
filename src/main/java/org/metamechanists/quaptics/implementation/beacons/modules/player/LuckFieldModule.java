@@ -13,6 +13,7 @@ import org.metamechanists.quaptics.implementation.beacons.modules.BeaconModule;
 import org.metamechanists.quaptics.implementation.blocks.Settings;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
+import org.metamechanists.quaptics.storage.QuapticTicker;
 
 import java.util.Collection;
 
@@ -20,6 +21,7 @@ import java.util.Collection;
 public class LuckFieldModule extends BeaconModule implements PlayerModule {
     public static final Settings LUCK_FIELD_MODULE_SETTINGS = Settings.builder()
             .tier(Tier.TESTING)
+            .luckMultiplier(2)
             .build();
     public static final SlimefunItemStack LUCK_FIELD_MODULE = new SlimefunItemStack(
             "QP_LUCK_FIELD_MODULE",
@@ -34,6 +36,6 @@ public class LuckFieldModule extends BeaconModule implements PlayerModule {
 
     @Override
     public void apply(final @NotNull Collection<Player> players) {
-        players.forEach(player -> player.addPotionEffect(new PotionEffect(PotionEffectType.LUCK, 40, 1)));
+        players.forEach(player -> player.addPotionEffect(new PotionEffect(PotionEffectType.LUCK, QuapticTicker.INTERVAL_TICKS_102 + 20, settings.getLuckMultiplier()-2)));
     }
 }

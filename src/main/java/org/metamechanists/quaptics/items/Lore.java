@@ -31,10 +31,9 @@ public class Lore {
     private final String RANGE_SUFFIX = " &8blocks";
     private final String DAMAGE_SUFFIX = " &8dps";
     private final String FREQUENCY_SUFFIX = " &8Hz";
-    private final String USE_INTERVAL_SUFFIX = " &8seconds";
-    public final String PHASE_SUFFIX = " &8°";
-    private final String TIME_PER_ITEM_SUFFIX = " &8seconds";
-    private final String TIME_TO_MAX_POWER_SUFFIX = " &8minutes";
+    private final String SECONDS_SUFFIX = " &8seconds";
+    private final String MINUTES_SUFFIX = " &8minutes";
+    private final String PHASE_SUFFIX = " &8°";
     private final double SLIMEFUN_TICKS_PER_SECOND = 2.0;
 
     private String format(final double x) {
@@ -106,6 +105,9 @@ public class Lore {
         if (settings.getTargetPhase() != 0) {
             lore.add(targetPhase(settings.getTargetPhase()));
         }
+        if (settings.getLuckMultiplier() != 0) {
+            lore.add(luckMultiplier(settings.getLuckMultiplier()));
+        }
 
         return lore;
     }
@@ -127,19 +129,22 @@ public class Lore {
         return ATTRIBUTE_SYMBOL + DAMAGE_SYMBOL + "&7Damage &e" + format(damage/SLIMEFUN_TICKS_PER_SECOND) + DAMAGE_SUFFIX;
     }
     public String useInterval(final double useInterval) {
-        return ATTRIBUTE_SYMBOL + SPEED_SYMBOL + "&7Use Interval &e" + format(useInterval) + USE_INTERVAL_SUFFIX;
+        return ATTRIBUTE_SYMBOL + SPEED_SYMBOL + "&7Use Interval &e" + format(useInterval) + SECONDS_SUFFIX;
     }
     public String timePerItem(final double timePerItem) {
-        return ATTRIBUTE_SYMBOL + SPEED_SYMBOL + "&7Time per item &e" + format(timePerItem) + TIME_PER_ITEM_SUFFIX;
+        return ATTRIBUTE_SYMBOL + SPEED_SYMBOL + "&7Time per item &e" + format(timePerItem) + SECONDS_SUFFIX;
     }
     public String timeToMaxEfficiency(final double timeToMaxEfficiency) {
-        return ATTRIBUTE_SYMBOL + SPEED_SYMBOL + "&7Time to max efficiency &e" + format(timeToMaxEfficiency) + TIME_TO_MAX_POWER_SUFFIX;
+        return ATTRIBUTE_SYMBOL + SPEED_SYMBOL + "&7Time to max efficiency &e" + format(timeToMaxEfficiency) + MINUTES_SUFFIX;
     }
     public String thresholdBar(final double inputPower, final double minInputPower) {
         return progressBar(inputPower, minInputPower, "&6", "&7", "&a");
     }
     public String efficiencyBar(final double secondsSinceStarted, final double maxSeconds) {
         return progressBar(secondsSinceStarted, maxSeconds, "&6", "&7", "&a");
+    }
+    public String luckMultiplier(final int luckMultiplier) {
+        return ATTRIBUTE_SYMBOL + COUNT_SYMBOL + "&7Luck multiplier &e" + format(luckMultiplier) + "x";
     }
 
     public String capacity(final double capacity) {
