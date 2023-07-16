@@ -167,7 +167,7 @@ public class ReactorController extends ConnectedBlock implements ComplexMultiblo
         BlockStorageAPI.set(location, Keys.BS_INPUT_POWER, inputPower);
 
         final boolean isStructureValid = BlockStorageAPI.getBoolean(location, Keys.BS_MULTIBLOCK_INTACT);
-        if (!isStructureValid || inputPower < settings.getMinPower()) {
+        if (!isStructureValid || inputPower < settings.getPowerThreshold()) {
             BlockStorageAPI.set(location, Keys.BS_SECONDS_SINCE_REACTOR_STARTED, 0.0);
             BlockStorageAPI.set(location, Keys.BS_OUTPUT_POWER, 0.0);
             BlockStorageAPI.set(location, Keys.BS_POWERED, false);
