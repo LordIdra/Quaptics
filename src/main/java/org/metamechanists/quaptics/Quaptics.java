@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.metamechanists.metalib.bstats.bukkit.Metrics;
 import org.metamechanists.quaptics.implementation.beacons.controllers.ModuleClickListener;
+import org.metamechanists.quaptics.implementation.beacons.modules.player.ExperienceMultiplicationModuleListener;
 import org.metamechanists.quaptics.implementation.blocks.burnout.BurnoutManager;
 import org.metamechanists.quaptics.implementation.blocks.consumers.launchpad.LaunchpadListener;
 import org.metamechanists.quaptics.implementation.tools.multiblockwand.MultiblockWandListener;
@@ -37,13 +38,12 @@ public final class Quaptics extends JavaPlugin implements SlimefunAddon {
         pluginManager.registerEvents(new MultiblockWandListener(), this);
         pluginManager.registerEvents(new ModuleClickListener(), this);
         pluginManager.registerEvents(new QuapticStorage(), this);
+        pluginManager.registerEvents(new ExperienceMultiplicationModuleListener(), this);
     }
-
     private void initializeRunnables() {
         new QuapticTicker().runTaskTimer(this, 0, QuapticTicker.INTERVAL_TICKS);
         new CacheGarbageCollector().runTaskTimer(this, CacheGarbageCollector.INTERVAL_TICKS, CacheGarbageCollector.INTERVAL_TICKS);
     }
-
     private void initializeCommands() {
         final PaperCommandManager commandManager = new PaperCommandManager(this);
         commandManager.enableUnstableAPI("help");
@@ -61,21 +61,17 @@ public final class Quaptics extends JavaPlugin implements SlimefunAddon {
 
         new Metrics(this, BSTATS_ID);
     }
-
     @Override
     public void onDisable() {
         BurnoutManager.stopBurnouts();
     }
 
-    @NotNull
     @Override
-    public JavaPlugin getJavaPlugin() {
+    public @NotNull JavaPlugin getJavaPlugin() {
         return this;
     }
-
-    @Nullable
     @Override
-    public String getBugTrackerURL() {
+    public @Nullable String getBugTrackerURL() {
         return null;
     }
 }
