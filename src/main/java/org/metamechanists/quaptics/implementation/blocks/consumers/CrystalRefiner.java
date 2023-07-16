@@ -62,7 +62,7 @@ public class CrystalRefiner extends ConnectedBlock implements ItemHolderBlock, P
 
     @Override
     protected float getConnectionRadius() {
-        return 0.60F;
+        return 0.80F;
     }
     @Override
     protected DisplayGroup initModel(final @NotNull Location location, final @NotNull Player player) {
@@ -70,22 +70,22 @@ public class CrystalRefiner extends ConnectedBlock implements ItemHolderBlock, P
                 .add("wall1", new ModelCuboid()
                         .material(Material.WHITE_CONCRETE)
                         .location(0.3F, -0.21F, -0.3F)
-                        .size(0.2F, 0.6F, 1.0F)
+                        .size(0.2F, 0.6F, 1.1F)
                         .rotation(Math.PI / 4))
                 .add("wall2", new ModelCuboid()
                         .material(Material.WHITE_CONCRETE)
                         .location(-0.3F, -0.21F, 0.3F)
-                        .size(0.2F, 0.6F, 1.0F)
+                        .size(0.2F, 0.6F, 1.1F)
                         .rotation(Math.PI / 4))
                 .add("wall3", new ModelCuboid()
                         .material(Material.WHITE_CONCRETE)
                         .location(0.3F, -0.21F, 0.3F)
-                        .size(1.0F, 0.6F, 0.2F)
+                        .size(1.1F, 0.6F, 0.2F)
                         .rotation(Math.PI / 4))
                 .add("wall4", new ModelCuboid()
                         .material(Material.WHITE_CONCRETE)
                         .location(-0.3F, -0.21F, -0.3F)
-                        .size(1.0F, 0.6F, 0.2F)
+                        .size(1.1F, 0.6F, 0.2F)
                         .rotation(Math.PI / 4))
 
                 .add("water", new ModelCuboid()
@@ -193,6 +193,6 @@ public class CrystalRefiner extends ConnectedBlock implements ItemHolderBlock, P
     }
 
     private static void tickAnimation(@NotNull final Location location) {
-        location.getWorld().spawnParticle(Particle.BLOCK_DUST, location.toCenterLocation(), 5, 0, 0, 0, "quartz_block");
+        location.getWorld().spawnParticle(Particle.BLOCK_DUST, location.toCenterLocation(), 5, 0, 0, 0, Material.QUARTZ_BLOCK.createBlockData());
     }
 }
