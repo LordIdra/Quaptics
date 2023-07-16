@@ -50,7 +50,7 @@ public class CapacitorInfoPanel extends BlockInfoPanel {
         final double capacity = group.get().getBlock().getSettings().getChargeCapacity();
         final double charge = BlockStorageAPI.getDouble(location.get(), Keys.BS_CHARGE);
 
-        container.setText("chargeText", Lore.chargeBarRaw((int)charge, (int)capacity));
-        container.setText("chargeBar", Lore.chargeValuesRaw((int)charge, (int)capacity));
+        container.setText("chargeText", Lore.chargeBarRaw(charge, capacity));
+        container.setText("chargeBar", Lore.chargeValuesRaw(charge, capacity));
     }
 }

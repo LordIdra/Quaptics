@@ -6,7 +6,6 @@ import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.implementation.Settings;
 import org.metamechanists.quaptics.storage.QuapticTicker;
 import org.metamechanists.quaptics.utils.Colors;
-import org.metamechanists.quaptics.utils.Utils;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -38,20 +37,43 @@ public class Lore {
     private final String PHASE_SUFFIX = " &8°";
     private final String MULTIBLOCK_SYMBOL = "&3★";
     private final double SLIMEFUN_TICKS_PER_SECOND = 2.0;
-    private final DecimalFormat DECIMAL_FORMAT = getDecimalFormat();
 
-    private @NotNull DecimalFormat getDecimalFormat() {
+    private @NotNull DecimalFormat getDecimalFormat0dp() {
+        final DecimalFormat decimalFormat = new DecimalFormat("#");
+        decimalFormat.setGroupingUsed(true);
+        decimalFormat.setGroupingSize(3);
+        return decimalFormat;
+    }
+    private @NotNull DecimalFormat getDecimalFormat1dp() {
         final DecimalFormat decimalFormat = new DecimalFormat("#.0");
         decimalFormat.setGroupingUsed(true);
         decimalFormat.setGroupingSize(3);
         return decimalFormat;
     }
+    private @NotNull DecimalFormat getDecimalFormat2dp() {
+        final DecimalFormat decimalFormat = new DecimalFormat("#.00");
+        decimalFormat.setGroupingUsed(true);
+        decimalFormat.setGroupingSize(3);
+        return decimalFormat;
+    }
 
-    private String format(final double x) {
+    private String formatZeroDp(final double x) {
         if (x == 0) {
             return "0";
         }
-        return DECIMAL_FORMAT.format(x);
+        return getDecimalFormat0dp().format(x);
+    }
+    private String formatOneDp(final double x) {
+        if (x == 0) {
+            return "0";
+        }
+        return getDecimalFormat1dp().format(x);
+    }
+    private String formatTwoDp(final double x) {
+        if (x == 0) {
+            return "0";
+        }
+        return getDecimalFormat2dp().format(x);
     }
 
     public @NotNull String[] buildChargeableLore(final @NotNull Settings settings, final int charge, final String... description) {
@@ -163,16 +185,16 @@ public class Lore {
         return ATTRIBUTE_SYMBOL + RANGE_SYMBOL + "&7Range &e" + Objects.toString(range) + RANGE_SUFFIX;
     }
     public String damage(final double damage) {
-        return ATTRIBUTE_SYMBOL + DAMAGE_SYMBOL + "&7Damage &e" + format(damage/SLIMEFUN_TICKS_PER_SECOND) + DAMAGE_SUFFIX;
+        return ATTRIBUTE_SYMBOL + DAMAGE_SYMBOL + "&7Damage &e" + formatOneDp(damage/SLIMEFUN_TICKS_PER_SECOND) + DAMAGE_SUFFIX;
     }
     public String useInterval(final double useInterval) {
-        return ATTRIBUTE_SYMBOL + SPEED_SYMBOL + "&7Use Interval &e" + format(useInterval) + SECONDS_SUFFIX;
+        return ATTRIBUTE_SYMBOL + SPEED_SYMBOL + "&7Use Interval &e" + formatOneDp(useInterval) + SECONDS_SUFFIX;
     }
     public String timePerItem(final double timePerItem) {
-        return ATTRIBUTE_SYMBOL + SPEED_SYMBOL + "&7Time per item &e" + format(timePerItem) + SECONDS_SUFFIX;
+        return ATTRIBUTE_SYMBOL + SPEED_SYMBOL + "&7Time per item &e" + formatOneDp(timePerItem) + SECONDS_SUFFIX;
     }
     public String timeToMaxEfficiency(final double timeToMaxEfficiency) {
-        return ATTRIBUTE_SYMBOL + SPEED_SYMBOL + "&7Time to max efficiency &e" + format(timeToMaxEfficiency) + MINUTES_SUFFIX;
+        return ATTRIBUTE_SYMBOL + SPEED_SYMBOL + "&7Time to max efficiency &e" + formatOneDp(timeToMaxEfficiency) + MINUTES_SUFFIX;
     }
     public String thresholdBar(final double inputPower, final double minInputPower) {
         return progressBar(inputPower, minInputPower, "&6", "&7", "&a");
@@ -181,75 +203,75 @@ public class Lore {
         return progressBar(secondsSinceStarted, maxSeconds, "&6", "&7", "&a");
     }
     public String luckLevel(final int luckLevel) {
-        return ATTRIBUTE_SYMBOL + COUNT_SYMBOL + "&7Luck Level &e" + format(luckLevel);
+        return ATTRIBUTE_SYMBOL + COUNT_SYMBOL + "&7Luck Level &e" + formatOneDp(luckLevel);
     }
     public String fireResistanceLevel(final int fireResistanceLevel) {
-        return ATTRIBUTE_SYMBOL + COUNT_SYMBOL + "&7Fire Resistance Level &e" + format(fireResistanceLevel);
+        return ATTRIBUTE_SYMBOL + COUNT_SYMBOL + "&7Fire Resistance Level &e" + formatOneDp(fireResistanceLevel);
     }
     public String experienceMultiplier(final double experienceMultiplier) {
-        return ATTRIBUTE_SYMBOL + COUNT_SYMBOL + "&7Experience Multiplier &e" + format(experienceMultiplier) + "x";
+        return ATTRIBUTE_SYMBOL + COUNT_SYMBOL + "&7Experience Multiplier &e" + formatOneDp(experienceMultiplier) + "x";
     }
     public String capacity(final double capacity) {
         return ATTRIBUTE_SYMBOL + CHARGE_SYMBOL + "&7Capacity &e" + Objects.toString(capacity) + CHARGE_SUFFIX;
     }
 
     public String powerNoArrow(final double power) {
-        return POWER_SYMBOL + "&7Power &e" + Objects.toString(power) + POWER_SUFFIX;
+        return POWER_SYMBOL + "&7Power &e" + formatTwoDp(power) + POWER_SUFFIX;
     }
     public String powerOutput(final double powerOutput) {
-        return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Power Output &e" + format(powerOutput) + POWER_SUFFIX;
+        return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Power Output &e" + formatOneDp(powerOutput) + POWER_SUFFIX;
     }
     public String powerThreshold(final double powerThreshold) {
-        return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Power Threshold &e" + format(powerThreshold) + POWER_SUFFIX;
+        return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Power Threshold &e" + formatOneDp(powerThreshold) + POWER_SUFFIX;
     }
     public String maxPowerOutput(final double maxPowerOutput) {
-        return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Max Power Output &e" + format(maxPowerOutput) + POWER_SUFFIX;
+        return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Max Power Output &e" + formatOneDp(maxPowerOutput) + POWER_SUFFIX;
     }
     public String operatingPower(final double minPower, final double maxPower) {
-        return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Operating Power &e" + format(minPower) + " &7- &e" + format(maxPower) + POWER_SUFFIX;
+        return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Operating Power &e" + formatOneDp(minPower) + " &7- &e" + formatOneDp(maxPower) + POWER_SUFFIX;
     }
     public String powerLoss(final double powerLoss) {
-        return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Power Loss &e" + format(powerLoss*100) + PERCENTAGE_SUFFIX;
+        return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Power Loss &e" + formatOneDp(powerLoss*100) + PERCENTAGE_SUFFIX;
     }
     public String powerMultiplier(final double powerMultiplier) {
-        return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Power Multiplier &e" + format(powerMultiplier*100) + PERCENTAGE_SUFFIX;
+        return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Power Multiplier &e" + formatOneDp(powerMultiplier*100) + PERCENTAGE_SUFFIX;
     }
     public String powerOutput(final double outputPower, final double maxOutputPower) {
-        return (outputPower >= maxOutputPower ? "&a" : "&6") + Utils.roundTo2dp(outputPower) + "&7 / " + "&a" + maxOutputPower;
+        return (outputPower >= maxOutputPower ? "&a" : "&6") + formatTwoDp(outputPower) + "&7 / " + "&a" + formatZeroDp(maxOutputPower);
     }
     public String powerEfficiency(final double powerEfficiency) {
-        return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Power Efficiency &e" + format(powerEfficiency) + POWER_SUFFIX;
+        return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Power Efficiency &e" + formatOneDp(powerEfficiency) + POWER_SUFFIX;
     }
 
-    public String chargeBar(final int charge, final int capacity) {
+    public String chargeBar(final double charge, final double capacity) {
         return ATTRIBUTE_SYMBOL + CHARGE_SYMBOL + "&7Charge " + progressBar(charge, capacity, Colors.CHARGE.getFormattedColor(), "&7", Colors.CHARGE.getFormattedColor());
     }
-    public String chargeBarRaw(final int charge, final int capacity) {
+    public String chargeBarRaw(final double charge, final double capacity) {
         return progressBar(charge, capacity, Colors.CHARGE.getFormattedColor(), "&7", Colors.CHARGE.getFormattedColor());
     }
-    public String chargeValues(final int charge, final int capacity) {
-        return ATTRIBUTE_SYMBOL + CHARGE_SYMBOL + "&7" + charge + " &8/ &7" + capacity + CHARGE_SUFFIX;
+    public String chargeValues(final double charge, final double capacity) {
+        return ATTRIBUTE_SYMBOL + CHARGE_SYMBOL + "&7" + formatZeroDp(charge) + " &8/ &7" + formatZeroDp(capacity) + CHARGE_SUFFIX;
     }
-    public String chargeValuesRaw(final int charge, final int capacity) {
-        return "&7" + charge + " &8/ &7" + capacity + CHARGE_SUFFIX;
+    public String chargeValuesRaw(final double charge, final double capacity) {
+        return "&7" + formatZeroDp(charge) + " &8/ &7" + formatZeroDp(capacity) + CHARGE_SUFFIX;
     }
-    public String chargePerUse(final int usage) {
-        return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Charge per use &e" + usage + POWER_SUFFIX;
+    public String chargePerUse(final double usage) {
+        return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Charge per use &e" + formatZeroDp(usage) + POWER_SUFFIX;
     }
 
     public String frequencyNoArrow(final double frequency) {
-        return FREQUENCY_SYMBOL + "&7Frequency &e" + Objects.toString(frequency) + FREQUENCY_SUFFIX;
+        return FREQUENCY_SYMBOL + "&7Frequency &e" + formatTwoDp(frequency) + FREQUENCY_SUFFIX;
     }
     public String operatingFrequency(final double minFrequency, final double maxFrequency) {
-        return ATTRIBUTE_SYMBOL + FREQUENCY_SYMBOL + "&7Operating Frequency &e" + format(minFrequency)
-                + (maxFrequency == 0 ? "+" : " &7- &e" + format(maxFrequency))
+        return ATTRIBUTE_SYMBOL + FREQUENCY_SYMBOL + "&7Operating Frequency &e" + formatOneDp(minFrequency)
+                + (maxFrequency == 0 ? "+" : " &7- &e" + formatOneDp(maxFrequency))
                 + FREQUENCY_SUFFIX;
     }
     public String frequencyStep(final double frequencyStep) {
-        return ATTRIBUTE_SYMBOL + FREQUENCY_SYMBOL + "&7Frequency &e+" + format(frequencyStep) + FREQUENCY_SUFFIX;
+        return ATTRIBUTE_SYMBOL + FREQUENCY_SYMBOL + "&7Frequency &e+" + formatOneDp(frequencyStep) + FREQUENCY_SUFFIX;
     }
     public String frequencyMultiplier(final double frequencyMultiplier) {
-        return ATTRIBUTE_SYMBOL + FREQUENCY_SYMBOL + "&7Frequency &ex" + format(frequencyMultiplier);
+        return ATTRIBUTE_SYMBOL + FREQUENCY_SYMBOL + "&7Frequency &ex" + formatOneDp(frequencyMultiplier);
     }
 
     public String phaseNoArrow(final int phase) {
