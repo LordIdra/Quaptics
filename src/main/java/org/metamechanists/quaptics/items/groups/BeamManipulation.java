@@ -5,7 +5,11 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import lombok.experimental.UtilityClass;
 import org.bukkit.inventory.ItemStack;
 import org.metamechanists.quaptics.Quaptics;
+import org.metamechanists.quaptics.implementation.blocks.manipulators.Capacitor;
+import org.metamechanists.quaptics.implementation.blocks.manipulators.Combiner;
 import org.metamechanists.quaptics.implementation.blocks.manipulators.Lens;
+import org.metamechanists.quaptics.implementation.blocks.manipulators.Splitter;
+import org.metamechanists.quaptics.implementation.blocks.manipulators.Transformer;
 import org.metamechanists.quaptics.items.Groups;
 
 import static org.metamechanists.quaptics.implementation.blocks.manipulators.Capacitor.CAPACITOR_1;
@@ -71,69 +75,69 @@ public class BeamManipulation {
 
 
 
-        new Lens(Groups.BEAM_MANIPULATION, SPLITTER_1, RecipeType.NULL, new ItemStack[]{
+        new Splitter(Groups.BEAM_MANIPULATION, SPLITTER_1, RecipeType.NULL, new ItemStack[]{
 
         }, SPLITTER_1_SETTINGS).register(addon);
 
-        new Lens(Groups.BEAM_MANIPULATION, SPLITTER_2, RecipeType.NULL, new ItemStack[]{
+        new Splitter(Groups.BEAM_MANIPULATION, SPLITTER_2, RecipeType.NULL, new ItemStack[]{
 
         }, SPLITTER_2_SETTINGS).register(addon);
 
-        new Lens(Groups.BEAM_MANIPULATION, SPLITTER_3, RecipeType.NULL, new ItemStack[]{
+        new Splitter(Groups.BEAM_MANIPULATION, SPLITTER_3, RecipeType.NULL, new ItemStack[]{
 
         }, SPLITTER_3_SETTINGS).register(addon);
 
-        new Lens(Groups.BEAM_MANIPULATION, SPLITTER_4, RecipeType.NULL, new ItemStack[]{
+        new Splitter(Groups.BEAM_MANIPULATION, SPLITTER_4, RecipeType.NULL, new ItemStack[]{
 
         }, SPLITTER_4_SETTINGS).register(addon);
 
 
 
-        new Lens(Groups.BEAM_MANIPULATION, COMBINER_1, RecipeType.NULL, new ItemStack[]{
+        new Combiner(Groups.BEAM_MANIPULATION, COMBINER_1, RecipeType.NULL, new ItemStack[]{
 
         }, COMBINER_1_SETTINGS).register(addon);
 
-        new Lens(Groups.BEAM_MANIPULATION, COMBINER_2, RecipeType.NULL, new ItemStack[]{
+        new Combiner(Groups.BEAM_MANIPULATION, COMBINER_2, RecipeType.NULL, new ItemStack[]{
 
         }, COMBINER_2_SETTINGS).register(addon);
 
-        new Lens(Groups.BEAM_MANIPULATION, COMBINER_3, RecipeType.NULL, new ItemStack[]{
+        new Combiner(Groups.BEAM_MANIPULATION, COMBINER_3, RecipeType.NULL, new ItemStack[]{
 
         }, COMBINER_3_SETTINGS).register(addon);
 
-        new Lens(Groups.BEAM_MANIPULATION, COMBINER_4, RecipeType.NULL, new ItemStack[]{
+        new Combiner(Groups.BEAM_MANIPULATION, COMBINER_4, RecipeType.NULL, new ItemStack[]{
 
         }, COMBINER_4_SETTINGS).register(addon);
 
 
 
-        new Lens(Groups.BEAM_MANIPULATION, CAPACITOR_1, RecipeType.NULL, new ItemStack[]{
+        new Capacitor(Groups.BEAM_MANIPULATION, CAPACITOR_1, RecipeType.NULL, new ItemStack[]{
 
         }, CAPACITOR_1_SETTINGS).register(addon);
 
-        new Lens(Groups.BEAM_MANIPULATION, CAPACITOR_2, RecipeType.NULL, new ItemStack[]{
+        new Capacitor(Groups.BEAM_MANIPULATION, CAPACITOR_2, RecipeType.NULL, new ItemStack[]{
 
         }, CAPACITOR_2_SETTINGS).register(addon);
 
-        new Lens(Groups.BEAM_MANIPULATION, CAPACITOR_3, RecipeType.NULL, new ItemStack[]{
+        new Capacitor(Groups.BEAM_MANIPULATION, CAPACITOR_3, RecipeType.NULL, new ItemStack[]{
 
         }, CAPACITOR_3_SETTINGS).register(addon);
 
-        new Lens(Groups.BEAM_MANIPULATION, CAPACITOR_4, RecipeType.NULL, new ItemStack[]{
+        new Capacitor(Groups.BEAM_MANIPULATION, CAPACITOR_4, RecipeType.NULL, new ItemStack[]{
 
         }, CAPACITOR_4_SETTINGS).register(addon);
 
 
 
-        new Lens(Groups.BEAM_MANIPULATION, TRANSFORMER_1, RecipeType.NULL, new ItemStack[]{
+        new Transformer(Groups.BEAM_MANIPULATION, TRANSFORMER_1, RecipeType.NULL, new ItemStack[]{
 
         }, TRANSFORMER_1_SETTINGS).register(addon);
 
-        new Lens(Groups.BEAM_MANIPULATION, TRANSFORMER_2, RecipeType.NULL, new ItemStack[]{
+        new Transformer(Groups.BEAM_MANIPULATION, TRANSFORMER_2, RecipeType.NULL, new ItemStack[]{
 
         }, TRANSFORMER_2_SETTINGS).register(addon);
 
-        new Lens(Groups.BEAM_MANIPULATION, TRANSFORMER_3, RecipeType.NULL, new ItemStack[]{
+        new Transformer(Groups.BEAM_MANIPULATION, TRANSFORMER_3, RecipeType.NULL, new ItemStack[]{
 
         }, TRANSFORMER_3_SETTINGS).register(addon);
     }
