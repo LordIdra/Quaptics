@@ -12,7 +12,6 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
-import org.metamechanists.metalib.utils.RandomUtils;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
@@ -29,7 +28,7 @@ import org.metamechanists.quaptics.storage.QuapticTicker;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Language;
-import org.metamechanists.quaptics.utils.Particles;
+import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.models.ModelBuilder;
 import org.metamechanists.quaptics.utils.models.components.ModelCuboid;
@@ -71,22 +70,22 @@ public class CrystalRefiner extends ConnectedBlock implements ItemHolderBlock, P
                 .add("wall1", new ModelCuboid()
                         .material(Material.WHITE_CONCRETE)
                         .location(0.3F, -0.21F, -0.3F)
-                        .size(0.2F, 0.6F, 0.8F)
+                        .size(0.2F, 0.6F, 1.0F)
                         .rotation(Math.PI / 4))
                 .add("wall2", new ModelCuboid()
                         .material(Material.WHITE_CONCRETE)
                         .location(-0.3F, -0.21F, 0.3F)
-                        .size(0.2F, 0.6F, 0.8F)
+                        .size(0.2F, 0.6F, 1.0F)
                         .rotation(Math.PI / 4))
                 .add("wall3", new ModelCuboid()
                         .material(Material.WHITE_CONCRETE)
                         .location(0.3F, -0.21F, 0.3F)
-                        .size(0.8F, 0.6F, 0.2F)
+                        .size(1.0F, 0.6F, 0.2F)
                         .rotation(Math.PI / 4))
                 .add("wall4", new ModelCuboid()
                         .material(Material.WHITE_CONCRETE)
                         .location(-0.3F, -0.21F, -0.3F)
-                        .size(0.8F, 0.6F, 0.2F)
+                        .size(1.0F, 0.6F, 0.2F)
                         .rotation(Math.PI / 4))
 
                 .add("water", new ModelCuboid()
@@ -96,13 +95,16 @@ public class CrystalRefiner extends ConnectedBlock implements ItemHolderBlock, P
                         .rotation(Math.PI / 4))
                 .add("concrete", new ModelCuboid()
                         .material(settings.getTier().concreteMaterial)
+                        .brightness(Utils.BRIGHTNESS_OFF)
                         .location(0, -0.2F, 0)
-                        .size(0.4F)
+                        .size(0.3F)
                         .rotation(Math.PI / 4))
 
                 .add("item", new ModelItem()
                         .facing(player.getFacing())
-                        .size(0.5F))
+                        .size(0.5F)
+                        .location(0, 0.1F, 0))
+
                 .buildAtBlockCenter(location);
     }
     @Override
@@ -191,13 +193,6 @@ public class CrystalRefiner extends ConnectedBlock implements ItemHolderBlock, P
     }
 
     private static void tickAnimation(@NotNull final Location location) {
-        final Vector direction = new Vector(
-                RandomUtils.randomDouble(0, 1),
-                RandomUtils.randomDouble(0, 1),
-                RandomUtils.randomDouble(0, 1))
-                .normalize()
-                .multiply(0.7F);
-        final Location origin = location.clone().add(direction);
-        Particles.animatedLine(Particle.END_ROD, origin, location, RandomUtils.randomInteger(1, 5), RandomUtils.randomDouble(0, 1), 0);
+        location.getWorld().spawnParticle(Particle.BLOCK_DUST, location.toCenterLocation(), 5, 0, 0, 0, "quartz_block");
     }
 }
