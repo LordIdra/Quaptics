@@ -33,6 +33,7 @@ import org.metamechanists.quaptics.utils.Language;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.models.ModelBuilder;
 import org.metamechanists.quaptics.utils.models.components.ModelCuboid;
+import org.metamechanists.quaptics.utils.models.components.ModelDiamond;
 import org.metamechanists.quaptics.utils.models.components.ModelItem;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
@@ -68,37 +69,35 @@ public class CrystalRefiner extends ConnectedBlock implements ItemHolderBlock, P
     protected DisplayGroup initModel(final @NotNull Location location, final @NotNull Player player) {
         return new ModelBuilder()
                 .add("wall1", new ModelCuboid()
-                        .material(Material.QUARTZ_BLOCK)
+                        .material(Material.WHITE_CONCRETE)
                         .location(0.3F, -0.1F, 0.3F)
-                        .size(0.3F, 0.8F, 0.8F))
+                        .size(0.3F, 0.8F, 0.8F)
+                        .rotation(Math.PI / 4))
                 .add("wall2", new ModelCuboid()
-                        .material(Material.QUARTZ_BLOCK)
+                        .material(Material.WHITE_CONCRETE)
                         .location(-0.3F, -0.1F, -0.3F)
-                        .size(0.3F, 0.8F, 0.8F))
+                        .size(0.3F, 0.8F, 0.8F)
+                        .rotation(Math.PI / 4))
                 .add("wall3", new ModelCuboid()
-                        .material(Material.QUARTZ_BLOCK)
+                        .material(Material.WHITE_CONCRETE)
                         .location(0.3F, -0.1F, -0.3F)
-                        .size(0.8F, 0.8F, 0.3F))
+                        .size(0.8F, 0.8F, 0.3F)
+                        .rotation(Math.PI / 4))
                 .add("wall4", new ModelCuboid()
-                        .material(Material.QUARTZ_BLOCK)
+                        .material(Material.WHITE_CONCRETE)
                         .location(-0.3F, -0.1F, 0.3F)
-                        .size(0.8F, 0.8F, 0.3F))
+                        .size(0.8F, 0.8F, 0.3F)
+                        .rotation(Math.PI / 4))
 
-                .add("water1", new ModelCuboid()
+                .add("water", new ModelCuboid()
                         .material(Material.BLUE_CONCRETE)
                         .location(0, -0.3F, 0)
                         .size(1.0F, 0.4F, 1.0F)
                         .rotation(Math.PI / 4))
-                .add("water2", new ModelCuboid()
-                        .material(Material.BLUE_STAINED_GLASS)
-                        .location(0, -0.1F, 0)
-                        .size(1.0F, 0.2F, 1.0F)
-                        .rotation(Math.PI / 4))
-                .add("concrete", new ModelCuboid()
-                        .material(settings.getTier().concreteMaterial)
+                .add("concrete", new ModelDiamond()
+                        .material(settings.getTier().glassMaterial)
                         .location(0, -0.2F, 0)
-                        .size(0.3F, 0.2F, 0.3F)
-                        .rotation(Math.PI / 4))
+                        .size(0.3F))
 
                 .add("item", new ModelItem()
                         .facing(player.getFacing())
@@ -164,10 +163,13 @@ public class CrystalRefiner extends ConnectedBlock implements ItemHolderBlock, P
             Language.sendLanguageMessage(player, "crystal-refiner.invalid-item");
             return false;
         }
+
+        startProcessing(location);
         return true;
     }
     @Override
     public Optional<ItemStack> onRemove(@NotNull final Location location, @NotNull final String name, @NotNull final ItemStack stack) {
+        cancelProcessing(location);
         return Optional.of(stack);
     }
     @Override
