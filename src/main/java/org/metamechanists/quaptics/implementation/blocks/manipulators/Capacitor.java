@@ -42,18 +42,53 @@ import java.util.Optional;
 public class Capacitor extends ConnectedBlock implements InfoPanelBlock, PowerLossBlock, ChargeHolder {
     public static final Settings CAPACITOR_1_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
-            .connectionRadius(0.6F)
-            .chargeCapacity(200)
+            .chargeCapacity(800)
             .outputPower(3)
             .powerLoss(0.25)
             .build();
+    public static final Settings CAPACITOR_2_SETTINGS = Settings.builder()
+            .tier(Tier.BASIC)
+            .chargeCapacity(1200)
+            .outputPower(35)
+            .powerLoss(0.16)
+            .build();
+    public static final Settings CAPACITOR_3_SETTINGS = Settings.builder()
+            .tier(Tier.INTERMEDIATE)
+            .chargeCapacity(16000)
+            .outputPower(400)
+            .powerLoss(0.08)
+            .build();
+    public static final Settings CAPACITOR_4_SETTINGS = Settings.builder()
+            .tier(Tier.ADVANCED)
+            .chargeCapacity(200000)
+            .outputPower(4500)
+            .powerLoss(0.04)
+            .build();
+
     public static final SlimefunItemStack CAPACITOR_1 = new SlimefunItemStack(
             "QP_CAPACITOR_1",
             Material.LIGHT_BLUE_CONCRETE,
-            "&3Capacitor &bI",
+            "&9Capacitor &8I",
             Lore.create(CAPACITOR_1_SETTINGS,
-                    "&7● Stores charge",
-                    "&7● Outputs at a constant power"));
+                    "&7● Stores charge"));
+    public static final SlimefunItemStack CAPACITOR_2 = new SlimefunItemStack(
+            "QP_CAPACITOR_2",
+            Material.LIGHT_BLUE_CONCRETE,
+            "&9Capacitor &8II",
+            Lore.create(CAPACITOR_2_SETTINGS,
+                    "&7● Stores charge"));
+    public static final SlimefunItemStack CAPACITOR_3 = new SlimefunItemStack(
+            "QP_CAPACITOR_3",
+            Material.LIGHT_BLUE_CONCRETE,
+            "&9Capacitor &8III",
+            Lore.create(CAPACITOR_3_SETTINGS,
+                    "&7● Stores charge"));
+    public static final SlimefunItemStack CAPACITOR_4 = new SlimefunItemStack(
+            "QP_CAPACITOR_4",
+            Material.LIGHT_BLUE_CONCRETE,
+            "&9Capacitor &8IV",
+            Lore.create(CAPACITOR_4_SETTINGS,
+                    "&7● Stores charge"));
 
     private static final float MAX_CONCRETE_DISPLAY_SIZE = 0.78F;
 

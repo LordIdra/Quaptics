@@ -35,11 +35,36 @@ public class Transformer extends ConnectedBlock implements PowerAnimatedBlock, P
             .outputPower(10)
             .minPower(10)
             .build();
+    public static final Settings TRANSFORMER_2_SETTINGS = Settings.builder()
+            .tier(Tier.INTERMEDIATE)
+            .outputPower(100)
+            .minPower(100)
+            .build();
+    public static final Settings TRANSFORMER_3_SETTINGS = Settings.builder()
+            .tier(Tier.ADVANCED)
+            .outputPower(1000)
+            .minPower(1000)
+            .build();
+
     public static final SlimefunItemStack TRANSFORMER_1 = new SlimefunItemStack(
             "QP_TRANSFORMER_1",
             Material.BLACK_TERRACOTTA,
-            "&9Transformer &bI",
+            "&9Transformer &8I",
             Lore.create(TRANSFORMER_1_SETTINGS,
+                    "&7● Drops the power of a quaptic ray",
+                    "&7● Excess input power is wasted"));
+    public static final SlimefunItemStack TRANSFORMER_2 = new SlimefunItemStack(
+            "QP_TRANSFORMER_2",
+            Material.BLACK_TERRACOTTA,
+            "&9Transformer &8II",
+            Lore.create(TRANSFORMER_2_SETTINGS,
+                    "&7● Drops the power of a quaptic ray",
+                    "&7● Excess input power is wasted"));
+    public static final SlimefunItemStack TRANSFORMER_3 = new SlimefunItemStack(
+            "QP_TRANSFORMER_3",
+            Material.BLACK_TERRACOTTA,
+            "&9Transformer &8III",
+            Lore.create(TRANSFORMER_3_SETTINGS,
                     "&7● Drops the power of a quaptic ray",
                     "&7● Excess input power is wasted"));
 

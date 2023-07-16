@@ -49,27 +49,27 @@ public class Lens extends ConnectedBlock implements PowerAnimatedBlock, PowerLos
     public static final SlimefunItemStack LENS_1 = new SlimefunItemStack(
             "QP_LENS_1",
             Material.GLASS,
-            "&9Lens &bI",
+            "&9Lens &8I",
             Lore.create(LENS_1_SETTINGS,
-                    "&7● Redirects a quaptic ray"));
+                    "&7● Redirects quaptic rays"));
     public static final SlimefunItemStack LENS_2 = new SlimefunItemStack(
             "QP_LENS_2",
             Material.GLASS,
-            "&9Lens &bII",
+            "&9Lens &8II",
             Lore.create(LENS_2_SETTINGS,
-                    "&7● &bRedirects &7a quaptic ray"));
+                    "&7● Redirects quaptic rays"));
     public static final SlimefunItemStack LENS_3 = new SlimefunItemStack(
             "QP_LENS_3",
             Material.GLASS,
-            "&9Lens &bIII",
+            "&9Lens &8III",
             Lore.create(LENS_3_SETTINGS,
-                    "&7● Redirects a quaptic ray"));
+                    "&7● Redirects quaptic rays"));
     public static final SlimefunItemStack LENS_4 = new SlimefunItemStack(
             "QP_LENS_4",
             Material.GLASS,
-            "&9Lens &bIV",
+            "&9Lens &8IV",
             Lore.create(LENS_4_SETTINGS,
-                    "&7● Redirects a quaptic ray"));
+                    "&7● Redirects quaptic rays"));
 
     private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -getConnectionRadius());
     private final Vector outputPointLocation = new Vector(0.0F, 0.0F, getConnectionRadius());

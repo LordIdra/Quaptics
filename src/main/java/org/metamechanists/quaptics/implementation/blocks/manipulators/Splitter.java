@@ -32,93 +32,50 @@ import java.util.Optional;
 import java.util.stream.IntStream;
 
 public class Splitter extends ConnectedBlock implements PowerAnimatedBlock, PowerLossBlock {
-    public static final Settings SPLITTER_1_2_SETTINGS = Settings.builder()
+    public static final Settings SPLITTER_1_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
             .powerLoss(0.2)
             .connections(2)
             .build();
-    public static final Settings SPLITTER_2_2_SETTINGS = Settings.builder()
-            .tier(Tier.BASIC)
-            .powerLoss(0.14)
-            .connections(2)
-            .build();
-    public static final Settings SPLITTER_2_3_SETTINGS = Settings.builder()
+    public static final Settings SPLITTER_2_SETTINGS = Settings.builder()
             .tier(Tier.BASIC)
             .powerLoss(0.14)
             .connections(3)
             .build();
-    public static final Settings SPLITTER_3_2_SETTINGS = Settings.builder()
+    public static final Settings SPLITTER_3_SETTINGS = Settings.builder()
             .tier(Tier.INTERMEDIATE)
             .powerLoss(0.08)
-            .connections(2)
-            .build();
-    public static final Settings SPLITTER_3_3_SETTINGS = Settings.builder()
-            .tier(Tier.INTERMEDIATE)
-            .powerLoss(0.08)
-            .connections(3)
-            .build();
-    public static final Settings SPLITTER_4_2_SETTINGS = Settings.builder()
-            .tier(Tier.ADVANCED)
-            .powerLoss(0.05)
-            .connections(2)
-            .build();
-    public static final Settings SPLITTER_4_3_SETTINGS = Settings.builder()
-            .tier(Tier.ADVANCED)
-            .powerLoss(0.05)
-            .connections(3)
-            .build();
-    public static final Settings SPLITTER_4_4_SETTINGS = Settings.builder()
-            .tier(Tier.ADVANCED)
-            .powerLoss(0.05)
             .connections(4)
             .build();
-    public static final SlimefunItemStack SPLITTER_1_2 = new SlimefunItemStack(
-            "QP_SPLITTER_1_2",
+    public static final Settings SPLITTER_4_SETTINGS = Settings.builder()
+            .tier(Tier.ADVANCED)
+            .powerLoss(0.05)
+            .connections(5)
+            .build();
+
+    public static final SlimefunItemStack SPLITTER_1 = new SlimefunItemStack(
+            "QP_SPLITTER_1",
             Material.LIGHT_GRAY_STAINED_GLASS,
-            "&9Splitter &eI &8(2 connections)",
-            Lore.create(SPLITTER_1_2_SETTINGS,
+            "&9Splitter &8I",
+            Lore.create(SPLITTER_1_SETTINGS,
                     "&7● Splits one quaptic ray into multiple"));
-    public static final SlimefunItemStack SPLITTER_2_2 = new SlimefunItemStack(
-            "QP_SPLITTER_2_2",
+    public static final SlimefunItemStack SPLITTER_2 = new SlimefunItemStack(
+            "QP_SPLITTER_2",
             Material.LIGHT_GRAY_STAINED_GLASS,
-            "&9Splitter &eII &8(2 connections)",
-            Lore.create(SPLITTER_2_2_SETTINGS,
+            "&9Splitter &8II",
+            Lore.create(SPLITTER_2_SETTINGS,
                     "&7● Splits one quaptic ray into multiple"));
-    public static final SlimefunItemStack SPLITTER_2_3 = new SlimefunItemStack(
-            "QP_SPLITTER_2_3",
+    public static final SlimefunItemStack SPLITTER_3 = new SlimefunItemStack(
+            "QP_SPLITTER_3",
             Material.LIGHT_GRAY_STAINED_GLASS,
-            "&9Splitter &eII &8(3 connections)",
-            Lore.create(SPLITTER_2_3_SETTINGS,
+            "&9Splitter &8III",
+            Lore.create(SPLITTER_3_SETTINGS,
                     "&7● Splits one quaptic ray into multiple"));
-    public static final SlimefunItemStack SPLITTER_3_2 = new SlimefunItemStack(
-            "QP_SPLITTER_3_2",
+    public static final SlimefunItemStack SPLITTER_4 = new SlimefunItemStack(
+            "QP_SPLITTER_4",
             Material.LIGHT_GRAY_STAINED_GLASS,
-            "&9Splitter &eIII &8(2 connections)",
-            Lore.create(SPLITTER_3_2_SETTINGS,
-                    "&7● Splits one quaptic ray into multiple"));
-    public static final SlimefunItemStack SPLITTER_3_3 = new SlimefunItemStack(
-            "QP_SPLITTER_3_3",
-            Material.LIGHT_GRAY_STAINED_GLASS,
-            "&9Splitter &eIII &8(3 connections)",
-            Lore.create(SPLITTER_3_3_SETTINGS,
-                    "&7● Splits one quaptic ray into multiple"));
-    public static final SlimefunItemStack SPLITTER_4_2 = new SlimefunItemStack(
-            "QP_SPLITTER_4_2",
-            Material.LIGHT_GRAY_STAINED_GLASS,
-            "&9Splitter &eIV &8(2 connections)",
-            Lore.create(SPLITTER_4_2_SETTINGS,
-                    "&7● Splits one quaptic ray into multiple"));
-    public static final SlimefunItemStack SPLITTER_4_3 = new SlimefunItemStack(
-            "QP_SPLITTER_4_3",
-            Material.LIGHT_GRAY_STAINED_GLASS,
-            "&9Splitter &eIV &8(3 connections)",
-            Lore.create(SPLITTER_4_3_SETTINGS,
-                    "&7● Splits one quaptic ray into multiple"));
-    public static final SlimefunItemStack SPLITTER_4_4 = new SlimefunItemStack(
-            "QP_SPLITTER_4_4",
-            Material.LIGHT_GRAY_STAINED_GLASS,
-            "&9Splitter &eIV &8(4 connections)",
-            Lore.create(SPLITTER_4_4_SETTINGS,
+            "&9Splitter &8IV",
+            Lore.create(SPLITTER_4_SETTINGS,
                     "&7● Splits one quaptic ray into multiple"));
 
     private static final double CONNECTION_ANGLE = Math.PI * 2/3;

@@ -33,6 +33,8 @@ public class Tools {
 
         }).register(addon);
 
+
+
         new ModulatedRayGun(Groups.TOOLS, RAY_GUN_1, RecipeType.NULL, new ItemStack[]{
 
         }, RAY_GUN_1_SETTINGS).register(addon);
@@ -40,6 +42,7 @@ public class Tools {
         new DirectRayGun(Groups.TOOLS, RAY_GUN_2, RecipeType.NULL, new ItemStack[]{
 
         }, RAY_GUN_2_SETTINGS).register(addon);
+
 
 
         new Charger(Groups.TOOLS, CHARGER_1, RecipeType.NULL, new ItemStack[]{

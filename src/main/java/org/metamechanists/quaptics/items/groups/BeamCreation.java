@@ -38,6 +38,8 @@ public class BeamCreation {
 
         }, SOLAR_CONCENTRATOR_2_SETTINGS).register(addon);
 
+
+
         new EnergyConcentrator(Groups.BEAM_CREATION, ENERGY_CONCENTRATOR_1, RecipeType.NULL, new ItemStack[]{
 
         }, ENERGY_CONCENTRATOR_1_SETTINGS).register(addon);
@@ -45,6 +47,8 @@ public class BeamCreation {
         new EnergyConcentrator(Groups.BEAM_CREATION, ENERGY_CONCENTRATOR_2, RecipeType.NULL, new ItemStack[]{
 
         }, ENERGY_CONCENTRATOR_2_SETTINGS).register(addon);
+
+
 
         new ReactorRing(Groups.BEAM_CREATION, REACTOR_RING, RecipeType.NULL, new ItemStack[]{
 
