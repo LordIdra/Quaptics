@@ -1,6 +1,6 @@
 package org.metamechanists.quaptics.implementation.attachments;
 
-import org.metamechanists.quaptics.implementation.blocks.Settings;
+import org.metamechanists.quaptics.implementation.Settings;
 import org.metamechanists.quaptics.storage.QuapticTicker;
 
 

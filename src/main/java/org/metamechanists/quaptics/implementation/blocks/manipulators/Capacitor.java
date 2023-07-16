@@ -21,7 +21,7 @@ import org.metamechanists.quaptics.implementation.attachments.ChargeHolder;
 import org.metamechanists.quaptics.implementation.attachments.InfoPanelBlock;
 import org.metamechanists.quaptics.implementation.attachments.PowerLossBlock;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
-import org.metamechanists.quaptics.implementation.blocks.Settings;
+import org.metamechanists.quaptics.implementation.Settings;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
 import org.metamechanists.quaptics.panels.info.BlockInfoPanel;

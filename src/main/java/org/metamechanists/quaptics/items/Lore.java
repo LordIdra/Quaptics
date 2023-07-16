@@ -2,7 +2,7 @@ package org.metamechanists.quaptics.items;
 
 import lombok.experimental.UtilityClass;
 import org.jetbrains.annotations.NotNull;
-import org.metamechanists.quaptics.implementation.blocks.Settings;
+import org.metamechanists.quaptics.implementation.Settings;
 import org.metamechanists.quaptics.storage.QuapticTicker;
 import org.metamechanists.quaptics.utils.Colors;
 import org.metamechanists.quaptics.utils.Utils;
@@ -111,6 +111,9 @@ public class Lore {
         if (settings.getFireResistanceLevel() != 0) {
             lore.add(fireResistanceLevel(settings.getFireResistanceLevel()));
         }
+        if (settings.getExperienceMultiplier() != 0) {
+            lore.add(experienceMultiplier(settings.getExperienceMultiplier()));
+        }
 
         return lore;
     }
@@ -151,6 +154,9 @@ public class Lore {
     }
     public String fireResistanceLevel(final int fireResistanceLevel) {
         return ATTRIBUTE_SYMBOL + COUNT_SYMBOL + "&7Fire Resistance Level &e" + format(fireResistanceLevel);
+    }
+    public String experienceMultiplier(final int experienceMultiplier) {
+        return ATTRIBUTE_SYMBOL + COUNT_SYMBOL + "&7Experience Multiplier &e" + format(experienceMultiplier);
     }
 
     public String capacity(final double capacity) {

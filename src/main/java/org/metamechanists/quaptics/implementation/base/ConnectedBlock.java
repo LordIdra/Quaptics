@@ -16,7 +16,7 @@ import org.jetbrains.annotations.Unmodifiable;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.Link;
-import org.metamechanists.quaptics.implementation.blocks.Settings;
+import org.metamechanists.quaptics.implementation.Settings;
 import org.metamechanists.quaptics.implementation.blocks.burnout.BurnoutManager;
 import org.metamechanists.quaptics.implementation.blocks.burnout.BurnoutRunnable;
 import org.metamechanists.quaptics.panels.info.implementation.PointInfoPanel;

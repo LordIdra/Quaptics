@@ -20,6 +20,7 @@ import org.metamechanists.quaptics.implementation.beacons.components.BeaconPower
 import org.metamechanists.quaptics.implementation.beacons.components.BeaconRod;
 import org.metamechanists.quaptics.implementation.beacons.components.BeaconTransmitter;
 import org.metamechanists.quaptics.implementation.beacons.controllers.BeaconController1;
+import org.metamechanists.quaptics.implementation.beacons.modules.player.ExperienceMultiplicationModule;
 import org.metamechanists.quaptics.implementation.beacons.modules.player.FireResistanceModule;
 import org.metamechanists.quaptics.implementation.beacons.modules.player.HungerRefillModule;
 import org.metamechanists.quaptics.implementation.beacons.modules.player.InvincibilityModule;
@@ -65,6 +66,8 @@ import static org.metamechanists.quaptics.implementation.beacons.components.Beac
 import static org.metamechanists.quaptics.implementation.beacons.components.BeaconTransmitter.BEACON_TRANSMITTER_SETTINGS;
 import static org.metamechanists.quaptics.implementation.beacons.controllers.BeaconController1.BEACON_CONTROLLER_1;
 import static org.metamechanists.quaptics.implementation.beacons.controllers.BeaconController1.BEACON_CONTROLLER_1_SETTINGS;
+import static org.metamechanists.quaptics.implementation.beacons.modules.player.ExperienceMultiplicationModule.EXPERIENCE_MULTIPLICATION_MODULE;
+import static org.metamechanists.quaptics.implementation.beacons.modules.player.ExperienceMultiplicationModule.EXPERIENCE_MULTIPLICATION_MODULE_SETTINGS;
 import static org.metamechanists.quaptics.implementation.beacons.modules.player.FireResistanceModule.FIRE_RESISTANCE_MODULE;
 import static org.metamechanists.quaptics.implementation.beacons.modules.player.FireResistanceModule.FIRE_RESISTANCE_MODULE_SETTINGS;
 import static org.metamechanists.quaptics.implementation.beacons.modules.player.HungerRefillModule.HUNGER_REFILL_MODULE;
@@ -381,6 +384,13 @@ public class Primitive {
                 RecipeType.NULL,
                 new ItemStack[]{},
                 HUNGER_REFILL_MODULE_SETTINGS).register(addon);
+
+        new ExperienceMultiplicationModule(
+                Groups.PRIMITIVE,
+                EXPERIENCE_MULTIPLICATION_MODULE,
+                RecipeType.NULL,
+                new ItemStack[]{},
+                EXPERIENCE_MULTIPLICATION_MODULE_SETTINGS).register(addon);
 
         new SlimefunItem(
                 Groups.PRIMITIVE,

@@ -5,7 +5,7 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
-import org.metamechanists.quaptics.implementation.blocks.Settings;
+import org.metamechanists.quaptics.implementation.Settings;
 import org.metamechanists.quaptics.implementation.multiblocks.reactor.ReactorController;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.panels.info.BlockInfoPanel;

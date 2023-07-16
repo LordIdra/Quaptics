@@ -1,4 +1,4 @@
-package org.metamechanists.quaptics.implementation.blocks;
+package org.metamechanists.quaptics.implementation;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -50,6 +50,7 @@ public class Settings {
     private double damage;
     private int luckLevel;
     private int fireResistanceLevel;
+    private double experienceMultiplier;
 
     private Set<SpawnCategory> targets;
 
