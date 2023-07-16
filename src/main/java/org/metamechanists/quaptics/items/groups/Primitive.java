@@ -21,6 +21,7 @@ import org.metamechanists.quaptics.implementation.beacons.components.BeaconRod;
 import org.metamechanists.quaptics.implementation.beacons.components.BeaconTransmitter;
 import org.metamechanists.quaptics.implementation.beacons.controllers.BeaconController1;
 import org.metamechanists.quaptics.implementation.beacons.modules.player.FireResistanceModule;
+import org.metamechanists.quaptics.implementation.beacons.modules.player.HungerRefillModule;
 import org.metamechanists.quaptics.implementation.beacons.modules.player.InvincibilityModule;
 import org.metamechanists.quaptics.implementation.beacons.modules.player.LuckModule;
 import org.metamechanists.quaptics.implementation.blocks.concentrators.SolarConcentrator;
@@ -66,6 +67,8 @@ import static org.metamechanists.quaptics.implementation.beacons.controllers.Bea
 import static org.metamechanists.quaptics.implementation.beacons.controllers.BeaconController1.BEACON_CONTROLLER_1_SETTINGS;
 import static org.metamechanists.quaptics.implementation.beacons.modules.player.FireResistanceModule.FIRE_RESISTANCE_MODULE;
 import static org.metamechanists.quaptics.implementation.beacons.modules.player.FireResistanceModule.FIRE_RESISTANCE_MODULE_SETTINGS;
+import static org.metamechanists.quaptics.implementation.beacons.modules.player.HungerRefillModule.HUNGER_REFILL_MODULE;
+import static org.metamechanists.quaptics.implementation.beacons.modules.player.HungerRefillModule.HUNGER_REFILL_MODULE_SETTINGS;
 import static org.metamechanists.quaptics.implementation.beacons.modules.player.InvincibilityModule.INVINCIBILITY_MODULE;
 import static org.metamechanists.quaptics.implementation.beacons.modules.player.InvincibilityModule.INVINCIBILITY_MODULE_SETTINGS;
 import static org.metamechanists.quaptics.implementation.beacons.modules.player.LuckModule.LUCK_MODULE;
@@ -371,6 +374,13 @@ public class Primitive {
                 RecipeType.NULL,
                 new ItemStack[]{},
                 INVINCIBILITY_MODULE_SETTINGS).register(addon);
+
+        new HungerRefillModule(
+                Groups.PRIMITIVE,
+                HUNGER_REFILL_MODULE,
+                RecipeType.NULL,
+                new ItemStack[]{},
+                HUNGER_REFILL_MODULE_SETTINGS).register(addon);
 
         new SlimefunItem(
                 Groups.PRIMITIVE,
