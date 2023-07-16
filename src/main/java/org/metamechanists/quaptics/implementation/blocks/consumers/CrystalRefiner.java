@@ -33,7 +33,6 @@ import org.metamechanists.quaptics.utils.Particles;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.models.ModelBuilder;
 import org.metamechanists.quaptics.utils.models.components.ModelCuboid;
-import org.metamechanists.quaptics.utils.models.components.ModelDiamond;
 import org.metamechanists.quaptics.utils.models.components.ModelItem;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
@@ -71,23 +70,23 @@ public class CrystalRefiner extends ConnectedBlock implements ItemHolderBlock, P
         return new ModelBuilder()
                 .add("wall1", new ModelCuboid()
                         .material(Material.WHITE_CONCRETE)
-                        .location(0.3F, -0.1F, -0.3F)
-                        .size(0.3F, 0.8F, 0.8F)
+                        .location(0.3F, -0.21F, -0.3F)
+                        .size(0.2F, 0.6F, 0.8F)
                         .rotation(Math.PI / 4))
                 .add("wall2", new ModelCuboid()
                         .material(Material.WHITE_CONCRETE)
-                        .location(-0.3F, -0.1F, 0.3F)
-                        .size(0.3F, 0.8F, 0.8F)
+                        .location(-0.3F, -0.21F, 0.3F)
+                        .size(0.2F, 0.6F, 0.8F)
                         .rotation(Math.PI / 4))
                 .add("wall3", new ModelCuboid()
                         .material(Material.WHITE_CONCRETE)
-                        .location(0.3F, -0.1F, 0.3F)
-                        .size(0.8F, 0.8F, 0.3F)
+                        .location(0.3F, -0.21F, 0.3F)
+                        .size(0.8F, 0.6F, 0.2F)
                         .rotation(Math.PI / 4))
                 .add("wall4", new ModelCuboid()
                         .material(Material.WHITE_CONCRETE)
-                        .location(-0.3F, -0.1F, -0.3F)
-                        .size(0.8F, 0.8F, 0.3F)
+                        .location(-0.3F, -0.21F, -0.3F)
+                        .size(0.8F, 0.6F, 0.2F)
                         .rotation(Math.PI / 4))
 
                 .add("water", new ModelCuboid()
@@ -95,10 +94,11 @@ public class CrystalRefiner extends ConnectedBlock implements ItemHolderBlock, P
                         .location(0, -0.3F, 0)
                         .size(1.0F, 0.4F, 1.0F)
                         .rotation(Math.PI / 4))
-                .add("concrete", new ModelDiamond()
-                        .material(settings.getTier().glassMaterial)
+                .add("concrete", new ModelCuboid()
+                        .material(settings.getTier().concreteMaterial)
                         .location(0, -0.2F, 0)
-                        .size(0.3F))
+                        .size(0.4F)
+                        .rotation(Math.PI / 4))
 
                 .add("item", new ModelItem()
                         .facing(player.getFacing())
