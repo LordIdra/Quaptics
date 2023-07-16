@@ -58,21 +58,12 @@ public class Lore {
     }
 
     private String formatZeroDp(final double x) {
-        if (x == 0) {
-            return "0";
-        }
         return getDecimalFormat0dp().format(x);
     }
     private String formatOneDp(final double x) {
-        if (x == 0) {
-            return "0";
-        }
         return getDecimalFormat1dp().format(x);
     }
     private String formatTwoDp(final double x) {
-        if (x == 0) {
-            return "0";
-        }
         return getDecimalFormat2dp().format(x);
     }
 
@@ -171,6 +162,7 @@ public class Lore {
         return lore.toArray(new String[0]);
     }
 
+    // Multiblocks
     public String multiblock() {
         return MULTIBLOCK_SYMBOL + Colors.MULTIBLOCKS.getFormattedColor() + " Multiblock &8(right click with the Multiblock Wand)";
     }
@@ -178,6 +170,7 @@ public class Lore {
         return MULTIBLOCK_SYMBOL + Colors.MULTIBLOCKS.getFormattedColor() + " Multiblock Component";
     }
 
+    // Misc
     public String maxConnections(final int maxConnections) {
         return ATTRIBUTE_SYMBOL + COUNT_SYMBOL + "&7Max connections: &e" + Objects.toString(maxConnections);
     }
@@ -194,61 +187,48 @@ public class Lore {
         return ATTRIBUTE_SYMBOL + SPEED_SYMBOL + "&7Time per item &e" + formatOneDp(timePerItem) + SECONDS_SUFFIX;
     }
     public String timeToMaxEfficiency(final double timeToMaxEfficiency) {
-        return ATTRIBUTE_SYMBOL + SPEED_SYMBOL + "&7Time to max efficiency &e" + formatOneDp(timeToMaxEfficiency) + MINUTES_SUFFIX;
-    }
-    public String thresholdBar(final double inputPower, final double minInputPower) {
-        return progressBar(inputPower, minInputPower, "&6", "&7", "&a");
-    }
-    public String efficiencyBar(final double secondsSinceStarted, final double maxSeconds) {
-        return progressBar(secondsSinceStarted, maxSeconds, "&6", "&7", "&a");
+        return ATTRIBUTE_SYMBOL + SPEED_SYMBOL + "&7Time to max efficiency &e" + formatZeroDp(timeToMaxEfficiency) + MINUTES_SUFFIX;
     }
     public String luckLevel(final int luckLevel) {
-        return ATTRIBUTE_SYMBOL + COUNT_SYMBOL + "&7Luck Level &e" + formatOneDp(luckLevel);
+        return ATTRIBUTE_SYMBOL + COUNT_SYMBOL + "&7Luck Level &e" + formatZeroDp(luckLevel);
     }
     public String fireResistanceLevel(final int fireResistanceLevel) {
-        return ATTRIBUTE_SYMBOL + COUNT_SYMBOL + "&7Fire Resistance Level &e" + formatOneDp(fireResistanceLevel);
+        return ATTRIBUTE_SYMBOL + COUNT_SYMBOL + "&7Fire Resistance Level &e" + formatZeroDp(fireResistanceLevel);
     }
     public String experienceMultiplier(final double experienceMultiplier) {
-        return ATTRIBUTE_SYMBOL + COUNT_SYMBOL + "&7Experience Multiplier &e" + formatOneDp(experienceMultiplier) + "x";
-    }
-    public String capacity(final double capacity) {
-        return ATTRIBUTE_SYMBOL + CHARGE_SYMBOL + "&7Capacity &e" + Objects.toString(capacity) + CHARGE_SUFFIX;
+        return ATTRIBUTE_SYMBOL + COUNT_SYMBOL + "&7Experience Multiplier &e" + formatZeroDp(experienceMultiplier) + "x";
     }
 
-    public String powerNoArrow(final double power) {
+    // Power
+    public String powerInfoPanel(final double power) {
         return POWER_SYMBOL + "&7Power &e" + formatTwoDp(power) + POWER_SUFFIX;
     }
     public String powerOutput(final double powerOutput) {
-        return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Power Output &e" + formatOneDp(powerOutput) + POWER_SUFFIX;
+        return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Power Output &e" + formatZeroDp(powerOutput) + POWER_SUFFIX;
     }
     public String powerThreshold(final double powerThreshold) {
-        return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Power Threshold &e" + formatOneDp(powerThreshold) + POWER_SUFFIX;
+        return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Power Threshold &e" + formatZeroDp(powerThreshold) + POWER_SUFFIX;
     }
     public String maxPowerOutput(final double maxPowerOutput) {
-        return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Max Power Output &e" + formatOneDp(maxPowerOutput) + POWER_SUFFIX;
+        return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Max Power Output &e" + formatZeroDp(maxPowerOutput) + POWER_SUFFIX;
     }
     public String operatingPower(final double minPower, final double maxPower) {
-        return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Operating Power &e" + formatOneDp(minPower) + " &7- &e" + formatOneDp(maxPower) + POWER_SUFFIX;
+        return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Operating Power &e" + formatZeroDp(minPower) + " &7- &e" + formatZeroDp(maxPower) + POWER_SUFFIX;
     }
     public String powerLoss(final double powerLoss) {
-        return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Power Loss &e" + formatOneDp(powerLoss*100) + PERCENTAGE_SUFFIX;
+        return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Power Loss &e" + formatZeroDp(powerLoss*100) + PERCENTAGE_SUFFIX;
     }
     public String powerMultiplier(final double powerMultiplier) {
-        return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Power Multiplier &e" + formatOneDp(powerMultiplier*100) + PERCENTAGE_SUFFIX;
+        return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Power Multiplier &e" + formatZeroDp(powerMultiplier*100) + PERCENTAGE_SUFFIX;
     }
     public String powerOutput(final double outputPower, final double maxOutputPower) {
-        return (outputPower >= maxOutputPower ? "&a" : "&6") + formatTwoDp(outputPower) + "&7 / " + "&a" + formatZeroDp(maxOutputPower);
+        return (outputPower >= maxOutputPower ? "&a" : "&6") + formatZeroDp(outputPower) + "&7 / " + "&a" + formatZeroDp(maxOutputPower);
     }
     public String powerEfficiency(final double powerEfficiency) {
-        return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Power Efficiency &e" + formatOneDp(powerEfficiency) + POWER_SUFFIX;
+        return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Power Efficiency &e" + formatZeroDp(powerEfficiency) + POWER_SUFFIX;
     }
 
-    public String chargeBar(final double charge, final double capacity) {
-        return ATTRIBUTE_SYMBOL + CHARGE_SYMBOL + "&7Charge " + progressBar(charge, capacity, Colors.CHARGE.getFormattedColor(), "&7", Colors.CHARGE.getFormattedColor());
-    }
-    public String chargeBarRaw(final double charge, final double capacity) {
-        return progressBar(charge, capacity, Colors.CHARGE.getFormattedColor(), "&7", Colors.CHARGE.getFormattedColor());
-    }
+    // Charge
     public String chargeValues(final double charge, final double capacity) {
         return ATTRIBUTE_SYMBOL + CHARGE_SYMBOL + "&7" + formatZeroDp(charge) + " &8/ &7" + formatZeroDp(capacity) + CHARGE_SUFFIX;
     }
@@ -258,23 +238,28 @@ public class Lore {
     public String chargePerUse(final double usage) {
         return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Charge per use &e" + formatZeroDp(usage) + POWER_SUFFIX;
     }
+    public String capacity(final double capacity) {
+        return ATTRIBUTE_SYMBOL + CHARGE_SYMBOL + "&7Capacity &e" + formatZeroDp(capacity) + CHARGE_SUFFIX;
+    }
 
-    public String frequencyNoArrow(final double frequency) {
+    // Frequency
+    public String frequencyInfoPanel(final double frequency) {
         return FREQUENCY_SYMBOL + "&7Frequency &e" + formatTwoDp(frequency) + FREQUENCY_SUFFIX;
     }
     public String operatingFrequency(final double minFrequency, final double maxFrequency) {
-        return ATTRIBUTE_SYMBOL + FREQUENCY_SYMBOL + "&7Operating Frequency &e" + formatOneDp(minFrequency)
-                + (maxFrequency == 0 ? "+" : " &7- &e" + formatOneDp(maxFrequency))
+        return ATTRIBUTE_SYMBOL + FREQUENCY_SYMBOL + "&7Operating Frequency &e" + formatZeroDp(minFrequency)
+                + (maxFrequency == 0 ? "+" : " &7- &e" + formatZeroDp(maxFrequency))
                 + FREQUENCY_SUFFIX;
     }
     public String frequencyStep(final double frequencyStep) {
-        return ATTRIBUTE_SYMBOL + FREQUENCY_SYMBOL + "&7Frequency &e+" + formatOneDp(frequencyStep) + FREQUENCY_SUFFIX;
+        return ATTRIBUTE_SYMBOL + FREQUENCY_SYMBOL + "&7Frequency &e+" + formatZeroDp(frequencyStep) + FREQUENCY_SUFFIX;
     }
     public String frequencyMultiplier(final double frequencyMultiplier) {
-        return ATTRIBUTE_SYMBOL + FREQUENCY_SYMBOL + "&7Frequency &ex" + formatOneDp(frequencyMultiplier);
+        return ATTRIBUTE_SYMBOL + FREQUENCY_SYMBOL + "&7Frequency &ex" + formatZeroDp(frequencyMultiplier);
     }
 
-    public String phaseNoArrow(final int phase) {
+    // Phase
+    public String phaseInfoPanel(final int phase) {
         return PHASE_SYMBOL + "&7Phase &e" + Objects.toString(phase) + PHASE_SUFFIX;
     }
     public String targetPhase(final int targetPhase) {
@@ -284,6 +269,7 @@ public class Lore {
         return ATTRIBUTE_SYMBOL + PHASE_SYMBOL + "&7Phase Change &e" + Objects.toString(phaseChange) + PHASE_SUFFIX;
     }
 
+    // Bar
     public String progressBar(final double value, final double max, final String filledColor, final String emptyColor, final String finishedColor) {
         final String base = "¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦";
         if (value >= max) {
@@ -305,5 +291,17 @@ public class Lore {
         }
 
         return emptyColor + firstHalf + emptyColor + secondHalf;
+    }
+    public String thresholdBar(final double inputPower, final double minInputPower) {
+        return progressBar(inputPower, minInputPower, "&6", "&7", "&a");
+    }
+    public String efficiencyBar(final double secondsSinceStarted, final double maxSeconds) {
+        return progressBar(secondsSinceStarted, maxSeconds, "&6", "&7", "&a");
+    }
+    public String chargeBar(final double charge, final double capacity) {
+        return ATTRIBUTE_SYMBOL + CHARGE_SYMBOL + "&7Charge " + progressBar(charge, capacity, Colors.CHARGE.getFormattedColor(), "&7", Colors.CHARGE.getFormattedColor());
+    }
+    public String chargeBarRaw(final double charge, final double capacity) {
+        return progressBar(charge, capacity, Colors.CHARGE.getFormattedColor(), "&7", Colors.CHARGE.getFormattedColor());
     }
 }

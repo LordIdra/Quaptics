@@ -9,7 +9,6 @@ import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.panels.info.InfoPanelBuilder;
 import org.metamechanists.quaptics.panels.info.InfoPanelContainer;
 import org.metamechanists.quaptics.panels.info.InfoPanel;
-import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionPointId;
 import org.metamechanists.quaptics.utils.id.complex.InfoPanelId;
 
@@ -77,8 +76,8 @@ public class PointInfoPanel extends InfoPanel {
         container.setAttributeHidden("frequency", link.getFrequency() == 0);
         container.setAttributeHidden("phase", link.getPhase() == 0);
 
-        container.setText("power", Lore.powerNoArrow(link.getPower()));
-        container.setText("frequency", Lore.frequencyNoArrow(link.getFrequency()));
-        container.setText("phase", Lore.phaseNoArrow(link.getPhase()));
+        container.setText("power", Lore.powerInfoPanel(link.getPower()));
+        container.setText("frequency", Lore.frequencyInfoPanel(link.getFrequency()));
+        container.setText("phase", Lore.phaseInfoPanel(link.getPhase()));
     }
 }
