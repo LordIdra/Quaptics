@@ -10,7 +10,7 @@ import org.bukkit.entity.SpawnCategory;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.beams.DeprecatedBeamStorage;
-import org.metamechanists.quaptics.beams.beam.DirectBeam;
+import org.metamechanists.quaptics.beams.beam.LifetimeDirectBeam;
 import org.metamechanists.quaptics.implementation.Settings;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
@@ -58,6 +58,7 @@ public class DirectTurret extends Turret {
                     "&7● Shoots at nearby entities"));
 
     private static final float BEAM_RADIUS = 0.095F;
+    private static final int BEAM_LIFETIME_TICKS = 3;
 
     public DirectTurret(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
@@ -70,7 +71,7 @@ public class DirectTurret extends Turret {
 
     @Override
     protected void createProjectile(@NotNull final Player player, @NotNull final Location source, final Location target) {
-        DeprecatedBeamStorage.deprecate(new DirectBeam(settings.getProjectileMaterial(), source.toCenterLocation(), target, BEAM_RADIUS));
+        DeprecatedBeamStorage.deprecate(new LifetimeDirectBeam(settings.getProjectileMaterial(), source.toCenterLocation(), target, BEAM_RADIUS, BEAM_LIFETIME_TICKS));
     }
 
     @Override
