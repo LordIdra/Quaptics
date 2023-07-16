@@ -1,7 +1,6 @@
 package org.metamechanists.quaptics.implementation.blocks.consumers;
 
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
-import dev.sefiraat.sefilib.misc.ParticleUtils;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
@@ -30,6 +29,7 @@ import org.metamechanists.quaptics.storage.QuapticTicker;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Language;
+import org.metamechanists.quaptics.utils.Particles;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.models.ModelBuilder;
 import org.metamechanists.quaptics.utils.models.components.ModelCuboid;
@@ -70,22 +70,22 @@ public class CrystalRefiner extends ConnectedBlock implements ItemHolderBlock, P
         return new ModelBuilder()
                 .add("wall1", new ModelCuboid()
                         .material(Material.WHITE_CONCRETE)
-                        .location(0.3F, -0.1F, 0.3F)
+                        .location(0.3F, -0.1F, -0.3F)
                         .size(0.3F, 0.8F, 0.8F)
                         .rotation(Math.PI / 4))
                 .add("wall2", new ModelCuboid()
                         .material(Material.WHITE_CONCRETE)
-                        .location(-0.3F, -0.1F, -0.3F)
+                        .location(-0.3F, -0.1F, 0.3F)
                         .size(0.3F, 0.8F, 0.8F)
                         .rotation(Math.PI / 4))
                 .add("wall3", new ModelCuboid()
                         .material(Material.WHITE_CONCRETE)
-                        .location(0.3F, -0.1F, -0.3F)
+                        .location(0.3F, -0.1F, 0.3F)
                         .size(0.8F, 0.8F, 0.3F)
                         .rotation(Math.PI / 4))
                 .add("wall4", new ModelCuboid()
                         .material(Material.WHITE_CONCRETE)
-                        .location(-0.3F, -0.1F, 0.3F)
+                        .location(-0.3F, -0.1F, -0.3F)
                         .size(0.8F, 0.8F, 0.3F)
                         .rotation(Math.PI / 4))
 
@@ -194,8 +194,9 @@ public class CrystalRefiner extends ConnectedBlock implements ItemHolderBlock, P
                 RandomUtils.randomDouble(0, 1),
                 RandomUtils.randomDouble(0, 1),
                 RandomUtils.randomDouble(0, 1))
-                .normalize();
+                .normalize()
+                .multiply(0.7F);
         final Location origin = location.clone().add(direction);
-        ParticleUtils.drawLine(Particle.END_ROD, origin, location, 0.15F);
+        Particles.animatedLine(Particle.END_ROD, origin, location, RandomUtils.randomInteger(1, 5), RandomUtils.randomDouble(0, 1), 0);
     }
 }
