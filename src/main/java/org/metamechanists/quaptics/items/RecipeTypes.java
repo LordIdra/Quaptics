@@ -6,6 +6,7 @@ import lombok.experimental.UtilityClass;
 import org.metamechanists.quaptics.utils.Colors;
 import org.metamechanists.quaptics.utils.Keys;
 
+import static org.metamechanists.quaptics.implementation.blocks.consumers.CrystalRefiner.CRYSTAL_REFINER;
 import static org.metamechanists.quaptics.implementation.multiblocks.entangler.EntanglementContainer.ENTANGLEMENT_CONTAINER;
 import static org.metamechanists.quaptics.implementation.multiblocks.infuser.InfusionContainer.INFUSION_CONTAINER;
 
@@ -13,6 +14,7 @@ import static org.metamechanists.quaptics.implementation.multiblocks.infuser.Inf
 public class RecipeTypes {
     public final RecipeInfusion RECIPE_INFUSION = new RecipeInfusion();
     public final RecipeInfusion RECIPE_ENTANGLEMENT = new RecipeInfusion();
+    public final RecipeRefining RECIPE_REFINING = new RecipeRefining();
 
     private final class RecipeInfusion extends RecipeType {
         private RecipeInfusion() {
@@ -34,6 +36,18 @@ public class RecipeTypes {
                             ENTANGLEMENT_CONTAINER.clone(),
                             Colors.QUAPTICS + "Entanglement",
                             "&7Made in the Entangler multiblock")
+            );
+        }
+    }
+
+    private final class RecipeRefining extends RecipeType {
+        private RecipeRefining() {
+            super(
+                    Keys.RECIPE_CRYSTAL_REFINER,
+                    new CustomItemStack(
+                            CRYSTAL_REFINER.clone(),
+                            Colors.QUAPTICS + "Crystal Refining",
+                            "&7Made in the Crystal Refiner")
             );
         }
     }

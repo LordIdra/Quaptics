@@ -15,6 +15,7 @@ public class Keys {
 
     public final NamespacedKey RECIPE_INFUSION_CONTAINER = newKey("RECIPE_INFUSION_CONTAINER");
     public final NamespacedKey RECIPE_ENTANGLER = newKey("RECIPE_ENTANGLER");
+    public final NamespacedKey RECIPE_CRYSTAL_REFINER = newKey("RECIPE_CRYSTAL_REFINER");
     public final NamespacedKey MAIN = newKey("MAIN");
     public final NamespacedKey GUIDE = newKey("GUIDE");
     public final NamespacedKey TOOLS = newKey("TOOLS");
