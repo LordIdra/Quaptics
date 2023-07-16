@@ -65,8 +65,7 @@ public abstract class BeaconController extends ConnectedBlock implements ItemHol
     public @NotNull ItemStack getEmptyItemStack() {
         final ItemStack stack = new ItemStack(Material.BLACK_BANNER);
         final BannerMeta meta = (BannerMeta) stack.getItemMeta();
-        meta.addPattern(new Pattern(DyeColor.RED, PatternType.CROSS));
-        meta.addPattern(new Pattern(DyeColor.BLACK, PatternType.CURLY_BORDER));
+        meta.addPattern(new Pattern(DyeColor.RED, PatternType.CIRCLE_MIDDLE));
         stack.setItemMeta(meta);
         return stack;
     }
