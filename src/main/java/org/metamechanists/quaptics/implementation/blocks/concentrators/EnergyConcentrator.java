@@ -109,19 +109,18 @@ public class EnergyConcentrator extends EnergyConnectedBlock implements PowerAni
     public void onSlimefunTick(@NotNull final Block block, final SlimefunItem item, final Config data) {
         super.onSlimefunTick(block, item, data);
         final Location location = block.getLocation();
-        final boolean wasPowered = BlockStorageAPI.getBoolean(location, Keys.BS_POWERED);
-        final boolean powered = hasEnoughEnergy(location);
-        if (powered == wasPowered) {
-            return;
-        }
 
+        final boolean powered = hasEnoughEnergy(location);
         BlockStorageAPI.set(location, Keys.BS_POWERED, powered);
+
         final Optional<Link> linkOptional = getLink(location, "output");
         onPoweredAnimation(location, hasEnoughEnergy(location));
         linkOptional.ifPresent(link -> link.setPower(powered ? settings.getEmissionPower() : 0));
     }
     @Override
     public void onPoweredAnimation(final @NotNull Location location, final boolean powered) {
-        brightnessAnimation(location, "center", powered);
+        if (powered != BlockStorageAPI.getBoolean(location, Keys.BS_POWERED)) {
+            brightnessAnimation(location, "center", powered);
+        }
     }
 }
