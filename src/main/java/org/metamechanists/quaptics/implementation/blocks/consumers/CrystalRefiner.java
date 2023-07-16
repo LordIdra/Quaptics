@@ -62,7 +62,7 @@ public class CrystalRefiner extends ConnectedBlock implements ItemHolderBlock, P
 
     @Override
     protected float getConnectionRadius() {
-        return 0.80F;
+        return 0.90F;
     }
     @Override
     protected DisplayGroup initModel(final @NotNull Location location, final @NotNull Player player) {
@@ -193,6 +193,6 @@ public class CrystalRefiner extends ConnectedBlock implements ItemHolderBlock, P
     }
 
     private static void tickAnimation(@NotNull final Location location) {
-        location.getWorld().spawnParticle(Particle.BLOCK_DUST, location.toCenterLocation(), 5, 0, 0, 0, Material.QUARTZ_BLOCK.createBlockData());
+        location.getWorld().spawnParticle(Particle.BLOCK_DUST, location.toCenterLocation(), 4, 0, 0, 0, Material.QUARTZ_BLOCK.createBlockData());
     }
 }
