@@ -49,7 +49,7 @@ public class Lore {
         Collections.addAll(lore, description);
         lore.add(chargeBar(charge, (int) settings.getChargeCapacity()));
         lore.add(chargeValues(charge, (int) settings.getChargeCapacity()));
-        lore.add(chargePerUse((int) settings.getEmissionPower()));
+        lore.add(chargePerUse((int) settings.getPowerOutput()));
 
         if (settings.getMinFrequency() != 0 || settings.getMaxFrequency() != 0) {
             lore.add(operatingFrequency(settings.getMinFrequency(), settings.getMaxFrequency()));
@@ -61,11 +61,14 @@ public class Lore {
     private @NotNull List<String> fromSettings(@NotNull final Settings settings) {
         final List<String> lore = new ArrayList<>();
 
-        if (settings.getTier() != null && (settings.getEmissionPower() == 0 || settings.getChargeCapacity() != 0)) {
+        if (settings.getTier() != null && (settings.getPowerOutput() == 0 || settings.getChargeCapacity() != 0)) {
             lore.add(operatingPower(settings.getMinPower(), settings.getTier().maxPower));
         }
-        if (settings.getEmissionPower() != 0) {
-            lore.add(emissionPower(settings.getEmissionPower()));
+        if (settings.getPowerOutput() != 0) {
+            lore.add(powerOutput(settings.getPowerOutput()));
+        }
+        if (settings.getMaxPowerOutput() != 0) {
+            lore.add(maxPowerOutput(settings.getMaxPowerOutput()));
         }
         if (settings.getPowerLoss() != 0) {
             lore.add(powerLoss(settings.getPowerLoss()));
@@ -176,8 +179,11 @@ public class Lore {
     public String powerNoArrow(final double power) {
         return POWER_SYMBOL + "&7Power &e" + Objects.toString(power) + POWER_SUFFIX;
     }
-    public String emissionPower(final double emissionPower) {
-        return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Emission Power &e" + format(emissionPower) + POWER_SUFFIX;
+    public String powerOutput(final double powerOutput) {
+        return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Power Output &e" + format(powerOutput) + POWER_SUFFIX;
+    }
+    public String maxPowerOutput(final double maxPowerOutput) {
+        return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Max Power Output &e" + format(maxPowerOutput) + POWER_SUFFIX;
     }
     public String operatingPower(final double minPower, final double maxPower) {
         return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Operating Power &e" + format(minPower) + " &7- &e" + format(maxPower) + POWER_SUFFIX;

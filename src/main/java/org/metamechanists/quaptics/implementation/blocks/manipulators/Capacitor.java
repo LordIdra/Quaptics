@@ -44,7 +44,7 @@ public class Capacitor extends ConnectedBlock implements InfoPanelBlock, PowerLo
             .tier(Tier.PRIMITIVE)
             .connectionRadius(0.6F)
             .chargeCapacity(200)
-            .emissionPower(3)
+            .powerOutput(3)
             .powerLoss(0.25)
             .build();
     public static final SlimefunItemStack CAPACITOR_1 = new SlimefunItemStack(
@@ -174,15 +174,15 @@ public class Capacitor extends ConnectedBlock implements InfoPanelBlock, PowerLo
         final Optional<Link> inputLink = getLink(location, "input");
         if (inputLink.isPresent() && charge == 0) {
             final double outputPower = PowerLossBlock.calculatePowerLoss(settings, inputLink.get().getPower());
-            if (outputPower < getSettings().getEmissionPower()) {
+            if (outputPower < getSettings().getPowerOutput()) {
                 outputLink.get().setPower(outputPower);
                 return;
             }
         }
 
         outputLink.get().setPowerFrequency(
-                (charge > settings.getEmissionPower() * ((double) QuapticTicker.INTERVAL_TICKS_10 / QuapticTicker.TICKS_PER_SECOND))
-                        ? settings.getEmissionPower()
+                (charge > settings.getPowerOutput() * ((double) QuapticTicker.INTERVAL_TICKS_10 / QuapticTicker.TICKS_PER_SECOND))
+                        ? settings.getPowerOutput()
                         : 0,
                 0);
     }

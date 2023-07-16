@@ -42,23 +42,6 @@ import static org.metamechanists.quaptics.implementation.multiblocks.reactor.Rea
 
 
 public class ReactorController extends ConnectedBlock implements ComplexMultiblock, InfoPanelBlock {
-    public static final Settings REACTOR_CONTROLLER_SETTINGS = Settings.builder()
-            .tier(Tier.ADVANCED)
-            .minPower(30)
-            .emissionPower(60)
-            .timeToMaxEfficiency(20)
-            .powerMultiplier(1.5)
-            .build();
-    public static final SlimefunItemStack REACTOR_CONTROLLER = new SlimefunItemStack(
-            "QP_REACTOR_CONTROLLER",
-            Material.CYAN_CONCRETE,
-            "&6Reactor Controller",
-            Lore.create(REACTOR_CONTROLLER_SETTINGS,
-                    Lore.multiblock(),
-                    "&7● Generates more power than you put in",
-                    "&7● Only starts working above a certain input power",
-                    "&7● Takes some time to reach maximum efficiency"));
-
     private static final Vector RING_1_LOCATION = new Vector(3, 0, 0);
     private static final Vector RING_2_LOCATION = new Vector(2, 0, 2);
     private static final Vector RING_3_LOCATION = new Vector(0, 0, 3);
@@ -70,6 +53,23 @@ public class ReactorController extends ConnectedBlock implements ComplexMultiblo
     private static final List<Vector> RING_LOCATIONS = List.of(
             RING_1_LOCATION, RING_2_LOCATION, RING_3_LOCATION, RING_4_LOCATION,
             RING_5_LOCATION, RING_6_LOCATION, RING_7_LOCATION, RING_8_LOCATION);
+
+    public static final Settings REACTOR_CONTROLLER_SETTINGS = Settings.builder()
+            .tier(Tier.ADVANCED)
+            .minPower(1800)
+            .powerMultiplier(1.4)
+            .maxPowerOutput(1.4 * Tier.INTERMEDIATE.maxPower * RING_LOCATIONS.size())
+            .timeToMaxEfficiency(600)
+            .build();
+    public static final SlimefunItemStack REACTOR_CONTROLLER = new SlimefunItemStack(
+            "QP_REACTOR_CONTROLLER",
+            Material.CYAN_CONCRETE,
+            "&6Reactor Controller",
+            Lore.create(REACTOR_CONTROLLER_SETTINGS,
+                    Lore.multiblock(),
+                    "&7● Generates more power than you put in",
+                    "&7● Takes some time to reach maximum efficiency"));
+
     private static final double MAX_ANIMATION_STEP = 0.2F;
 
     private final Vector outputPoint1Location = new Vector(getConnectionRadius(), 0, 0);

@@ -29,7 +29,7 @@ import java.util.List;
 
 public class ReactorRing extends ConnectedBlock {
     public static final Settings REACTOR_RING_SETTINGS = Settings.builder()
-            .tier(Tier.PRIMITIVE)
+            .tier(Tier.INTERMEDIATE)
             .build();
     public static final SlimefunItemStack REACTOR_RING = new SlimefunItemStack(
             "QP_REACTOR_RING",

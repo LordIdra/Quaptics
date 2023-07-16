@@ -16,7 +16,7 @@ import org.metamechanists.quaptics.storage.QuapticTicker;
 public class ModulatedRayGun extends AbstractRayGun {
     public static final Settings RAY_GUN_1_SETTINGS = Settings.builder()
             .chargeCapacity(1000.0)
-            .emissionPower(5.0)
+            .powerOutput(5.0)
             .range(56)
             .damage(1.5)
             .projectileSpeed(15)

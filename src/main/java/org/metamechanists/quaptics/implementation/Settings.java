@@ -28,7 +28,8 @@ public class Settings {
     private double minPower;
     private double powerLoss;
     private double chargeCapacity;
-    private double emissionPower;
+    private double powerOutput;
+    private double maxPowerOutput;
     private double powerMultiplier;
     private double chargePerShot;
 

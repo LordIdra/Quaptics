@@ -13,6 +13,6 @@ public interface ChargeHolder {
     }
 
     default double stepDischarge(final Settings settings, final double charge) {
-        return stepCharge(settings, charge, -settings.getEmissionPower() * ((double) QuapticTicker.INTERVAL_TICKS_6 / QuapticTicker.TICKS_PER_SECOND));
+        return stepCharge(settings, charge, -settings.getPowerOutput() * ((double) QuapticTicker.INTERVAL_TICKS_6 / QuapticTicker.TICKS_PER_SECOND));
     }
 }

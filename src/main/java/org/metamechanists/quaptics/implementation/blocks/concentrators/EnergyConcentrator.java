@@ -35,13 +35,13 @@ import java.util.Optional;
 public class EnergyConcentrator extends EnergyConnectedBlock implements PowerAnimatedBlock {
     public static final Settings ENERGY_CONCENTRATOR_1_SETTINGS = Settings.builder()
             .tier(Tier.BASIC)
-            .emissionPower(30)
+            .powerOutput(30)
             .energyConsumption(120)
             .energyCapacity(240)
             .build();
     public static final Settings ENERGY_CONCENTRATOR_2_SETTINGS = Settings.builder()
             .tier(Tier.INTERMEDIATE)
-            .emissionPower(400)
+            .powerOutput(400)
             .energyConsumption(580)
             .energyCapacity(1160)
             .build();
@@ -100,7 +100,7 @@ public class EnergyConcentrator extends EnergyConnectedBlock implements PowerAni
         BlockStorageAPI.set(location, Keys.BS_POWERED, powered);
 
         final Optional<Link> linkOptional = getLink(location, "output");
-        linkOptional.ifPresent(link -> link.setPower(powered ? settings.getEmissionPower() : 0));
+        linkOptional.ifPresent(link -> link.setPower(powered ? settings.getPowerOutput() : 0));
     }
     @Override
     public void onPoweredAnimation(final @NotNull Location location, final boolean powered) {

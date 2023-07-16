@@ -32,7 +32,7 @@ import java.util.Optional;
 public class Transformer extends ConnectedBlock implements PowerAnimatedBlock, PowerLossBlock {
     public static final Settings TRANSFORMER_1_SETTINGS = Settings.builder()
             .tier(Tier.BASIC)
-            .emissionPower(10)
+            .powerOutput(10)
             .minPower(10)
             .build();
     public static final SlimefunItemStack TRANSFORMER_1 = new SlimefunItemStack(
@@ -103,7 +103,7 @@ public class Transformer extends ConnectedBlock implements PowerAnimatedBlock, P
         }
 
         outputLink.get().setPowerFrequencyPhase(
-                settings.getEmissionPower(),
+                settings.getPowerOutput(),
                 inputLink.get().getFrequency(),
                 inputLink.get().getPhase());
     }

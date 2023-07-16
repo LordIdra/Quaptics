@@ -29,7 +29,7 @@ import java.util.List;
 public class OscillatingConcentrator extends ConnectedBlock {
     public static final Settings OSCILLATING_CONCENTRATOR_SETTINGS = Settings.builder()
             .tier(Tier.TESTING)
-            .emissionPower(1)
+            .powerOutput(1)
             .build();
     public static final SlimefunItemStack OSCILLATING_CONCENTRATOR = new SlimefunItemStack(
             "QP_TESTING_OSCILLATING_CONCENTRATOR",
@@ -80,7 +80,7 @@ public class OscillatingConcentrator extends ConnectedBlock {
     @Override
     public void onTick2(@NotNull final ConnectionGroup group, @NotNull final Location location) {
         final boolean enabled = isEnabled(location);
-        final double power = enabled ? settings.getEmissionPower() : 0;
+        final double power = enabled ? settings.getPowerOutput() : 0;
         getLink(location, "output").ifPresent(link -> link.setPower(power));
         setEnabled(location, !enabled);
     }

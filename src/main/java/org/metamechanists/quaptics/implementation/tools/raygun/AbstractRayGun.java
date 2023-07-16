@@ -25,7 +25,7 @@ public abstract class AbstractRayGun extends QuapticChargeableItem {
         final double charge = getCharge(itemStack);
 
         // Don't have enough charge to use
-        if (charge < settings.getEmissionPower()) {
+        if (charge < settings.getPowerOutput()) {
             return;
         }
 
@@ -39,7 +39,7 @@ public abstract class AbstractRayGun extends QuapticChargeableItem {
         final Location target = eyeLocation.clone().add(eyeLocation.getDirection().multiply(settings.getRange()));
 
         fireRayGun(player, eyeLocation, handLocation, target);
-        setCharge(itemStack, stepCharge(settings, charge, -settings.getEmissionPower()));
+        setCharge(itemStack, stepCharge(settings, charge, -settings.getPowerOutput()));
         updateLore(itemStack);
     }
 
