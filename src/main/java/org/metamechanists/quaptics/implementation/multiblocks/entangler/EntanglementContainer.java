@@ -21,7 +21,6 @@ import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
 import org.metamechanists.quaptics.implementation.Settings;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
-import org.metamechanists.quaptics.items.oldgroups.Primitive;
 import org.metamechanists.quaptics.storage.QuapticTicker;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
@@ -67,9 +66,7 @@ public class EntanglementContainer extends ConnectedBlock implements ItemHolderB
 
     private final double magnetParticleAnimationLengthSeconds = settings.getTimePerItem();
 
-    private static final Map<ItemStack, ItemStack> RECIPES = Map.of(
-            new ItemStack(Material.DEAD_BUSH), Primitive.ENTANGLED_CORE
-    );
+    private static final Map<ItemStack, ItemStack> RECIPES = Map.of();
 
     public EntanglementContainer(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);

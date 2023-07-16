@@ -23,7 +23,7 @@ import org.metamechanists.quaptics.implementation.attachments.PowerAnimatedBlock
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
-import org.metamechanists.quaptics.items.oldgroups.Primitive;
+import org.metamechanists.quaptics.items.groups.CraftingComponents;
 import org.metamechanists.quaptics.storage.QuapticTicker;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
@@ -183,12 +183,12 @@ public class CrystalRefiner extends ConnectedBlock implements ItemHolderBlock, P
     @Override
     public Map<ItemStack, ItemStack> getRecipes() {
         return Map.of(
-                new ItemStack(Material.QUARTZ), Primitive.PHASE_CRYSTAL_1,
-                Primitive.PHASE_CRYSTAL_1, Primitive.PHASE_CRYSTAL_5,
-                Primitive.PHASE_CRYSTAL_5, Primitive.PHASE_CRYSTAL_15,
-                Primitive.PHASE_CRYSTAL_15, Primitive.PHASE_CRYSTAL_45,
-                Primitive.PHASE_CRYSTAL_45, Primitive.PHASE_CRYSTAL_90,
-                Primitive.PHASE_CRYSTAL_90, Primitive.PHASE_CRYSTAL_180
+                new ItemStack(Material.QUARTZ), CraftingComponents.PHASE_CRYSTAL_1,
+                CraftingComponents.PHASE_CRYSTAL_1, CraftingComponents.PHASE_CRYSTAL_5,
+                CraftingComponents.PHASE_CRYSTAL_5, CraftingComponents.PHASE_CRYSTAL_15,
+                CraftingComponents.PHASE_CRYSTAL_15, CraftingComponents.PHASE_CRYSTAL_45,
+                CraftingComponents.PHASE_CRYSTAL_45, CraftingComponents.PHASE_CRYSTAL_90,
+                CraftingComponents.PHASE_CRYSTAL_90, CraftingComponents.PHASE_CRYSTAL_180
         );
     }
 

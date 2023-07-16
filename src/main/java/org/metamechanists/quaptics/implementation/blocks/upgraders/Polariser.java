@@ -16,14 +16,14 @@ import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
 import org.metamechanists.quaptics.connections.Link;
+import org.metamechanists.quaptics.implementation.Settings;
 import org.metamechanists.quaptics.implementation.attachments.ItemHolderBlock;
 import org.metamechanists.quaptics.implementation.attachments.PowerAnimatedBlock;
 import org.metamechanists.quaptics.implementation.attachments.PowerLossBlock;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
-import org.metamechanists.quaptics.implementation.Settings;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
-import org.metamechanists.quaptics.items.oldgroups.Primitive;
+import org.metamechanists.quaptics.items.groups.CraftingComponents;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Language;
@@ -57,11 +57,11 @@ public class Polariser extends ConnectedBlock implements PowerAnimatedBlock, Pow
     private static final Vector OUTPUT_LOCATION = new Vector(0.0F, 0.0F, 0.45);
 
     private static final Map<ItemStack, Integer> PHASE_CHANGES = Map.of(
-            Primitive.PHASE_CRYSTAL_1, 1,
-            Primitive.PHASE_CRYSTAL_5, 5,
-            Primitive.PHASE_CRYSTAL_15, 15,
-            Primitive.PHASE_CRYSTAL_45, 45,
-            Primitive.PHASE_CRYSTAL_90, 90);
+            CraftingComponents.PHASE_CRYSTAL_1, 1,
+            CraftingComponents.PHASE_CRYSTAL_5, 5,
+            CraftingComponents.PHASE_CRYSTAL_15, 15,
+            CraftingComponents.PHASE_CRYSTAL_45, 45,
+            CraftingComponents.PHASE_CRYSTAL_90, 90);
 
     public Polariser(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
