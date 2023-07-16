@@ -221,8 +221,11 @@ public class Lore {
     public String phaseNoArrow(final int phase) {
         return PHASE_SYMBOL + "&7Phase &e" + Objects.toString(phase) + PHASE_SUFFIX;
     }
-    public String targetPhase(final int phase) {
-        return ATTRIBUTE_SYMBOL + PHASE_SYMBOL + "&7Target Phase &e" + Objects.toString(phase) + PHASE_SUFFIX;
+    public String targetPhase(final int targetPhase) {
+        return ATTRIBUTE_SYMBOL + PHASE_SYMBOL + "&7Target Phase &e" + Objects.toString(targetPhase) + PHASE_SUFFIX;
+    }
+    public String phaseChange(final int phaseChange) {
+        return ATTRIBUTE_SYMBOL + PHASE_SYMBOL + "&7Phase Change &e" + Objects.toString(phaseChange) + PHASE_SUFFIX;
     }
 
     public String progressBar(final double value, final double max, final String filledColor, final String emptyColor, final String finishedColor) {

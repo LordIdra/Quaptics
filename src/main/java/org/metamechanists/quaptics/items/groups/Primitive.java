@@ -49,6 +49,7 @@ import org.metamechanists.quaptics.implementation.multiblocks.infuser.InfusionPi
 import org.metamechanists.quaptics.implementation.multiblocks.reactor.ReactorController;
 import org.metamechanists.quaptics.implementation.multiblocks.reactor.ReactorRing;
 import org.metamechanists.quaptics.items.Groups;
+import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.RecipeTypes;
 
 import static org.metamechanists.quaptics.implementation.beacons.components.BeaconBattery.BEACON_BATTERY;
@@ -132,12 +133,12 @@ import static org.metamechanists.quaptics.implementation.multiblocks.reactor.Rea
 @SuppressWarnings({"ZeroLengthArrayAllocation", "WeakerAccess"})
 @UtilityClass
 public class Primitive {
-    public final SlimefunItemStack PHASE_CRYSTAL_1 = new SlimefunItemStack("QP_PHASE_CRYSTAL_1", getPhaseCrystal(), "&7Phase Crystal (&e1°&7)");
-    public final SlimefunItemStack PHASE_CRYSTAL_5 = new SlimefunItemStack("QP_PHASE_CRYSTAL_5", getPhaseCrystal(), "&7Phase Crystal (&e5°&7)");
-    public final SlimefunItemStack PHASE_CRYSTAL_15 = new SlimefunItemStack("QP_PHASE_CRYSTAL_15", getPhaseCrystal(), "&7Phase Crystal (&e15°&7)");
-    public final SlimefunItemStack PHASE_CRYSTAL_45 = new SlimefunItemStack("QP_PHASE_CRYSTAL_45", getPhaseCrystal(), "&7Phase Crystal (&e45°&7)");
-    public final SlimefunItemStack PHASE_CRYSTAL_90 = new SlimefunItemStack("QP_PHASE_CRYSTAL_90", getPhaseCrystal(), "&7Phase Crystal (&e90°&7)");
-    public final SlimefunItemStack PHASE_CRYSTAL_180 = new SlimefunItemStack("QP_PHASE_CRYSTAL_180", getPhaseCrystal(), "&7Phase Crystal (&e180°&7)");
+    public final SlimefunItemStack PHASE_CRYSTAL_1 = new SlimefunItemStack("QP_PHASE_CRYSTAL_1", getPhaseCrystal(), "&7Phase Crystal", Lore.phaseChange(1));
+    public final SlimefunItemStack PHASE_CRYSTAL_5 = new SlimefunItemStack("QP_PHASE_CRYSTAL_5", getPhaseCrystal(), "&7Phase Crystal", Lore.phaseChange(5));
+    public final SlimefunItemStack PHASE_CRYSTAL_15 = new SlimefunItemStack("QP_PHASE_CRYSTAL_15", getPhaseCrystal(), "&7Phase Crystal", Lore.phaseChange(15));
+    public final SlimefunItemStack PHASE_CRYSTAL_45 = new SlimefunItemStack("QP_PHASE_CRYSTAL_45", getPhaseCrystal(), "&7Phase Crystal", Lore.phaseChange(45));
+    public final SlimefunItemStack PHASE_CRYSTAL_90 = new SlimefunItemStack("QP_PHASE_CRYSTAL_90", getPhaseCrystal(), "&7Phase Crystal", Lore.phaseChange(90));
+    public final SlimefunItemStack PHASE_CRYSTAL_180 = new SlimefunItemStack("QP_PHASE_CRYSTAL_180", getPhaseCrystal(), "&7Phase Crystal", Lore.phaseChange(180));
     public final SlimefunItemStack ENTANGLED_CORE = new SlimefunItemStack("QP_ENTANGLED_CORE", getEntangledCore(), "&dEntangled Core");
 
     private @NotNull ItemStack getPhaseCrystal() {
