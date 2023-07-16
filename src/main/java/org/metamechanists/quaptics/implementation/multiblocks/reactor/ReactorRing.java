@@ -33,10 +33,10 @@ public class ReactorRing extends ConnectedBlock {
             .build();
     public static final SlimefunItemStack REACTOR_RING = new SlimefunItemStack(
             "QP_REACTOR_RING",
-            Material.BLUE_CONCRETE,
+            Material.WHITE_CONCRETE,
             "&6Reactor Ring",
             Lore.create(REACTOR_RING_SETTINGS,
-                    "&7● Multiblock component"));
+                    Lore.multiblockComponent()));
 
     private final List<Vector> possibleControllerLocations = List.of(
             new Vector(3, 0, 0),

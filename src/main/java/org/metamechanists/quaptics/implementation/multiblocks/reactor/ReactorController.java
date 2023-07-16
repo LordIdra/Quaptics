@@ -43,7 +43,7 @@ import static org.metamechanists.quaptics.implementation.multiblocks.reactor.Rea
 
 public class ReactorController extends ConnectedBlock implements ComplexMultiblock, InfoPanelBlock {
     public static final Settings REACTOR_CONTROLLER_SETTINGS = Settings.builder()
-            .tier(Tier.PRIMITIVE)
+            .tier(Tier.ADVANCED)
             .minPower(30)
             .emissionPower(60)
             .timeToMaxEfficiency(20)
@@ -96,11 +96,11 @@ public class ReactorController extends ConnectedBlock implements ComplexMultiblo
                         .size(0.8F, 0.6F, 0.6F)
                         .rotation(ModelDiamond.ROTATION))
                 .add("panel2", new ModelCuboid()
-                        .material(Material.BLUE_CONCRETE)
+                        .material(Material.CYAN_CONCRETE)
                         .size(0.6F, 0.8F, 0.6F)
                         .rotation(ModelDiamond.ROTATION))
                 .add("panel3", new ModelCuboid()
-                        .material(Material.LIGHT_BLUE_CONCRETE)
+                        .material(Material.CYAN_CONCRETE)
                         .size(0.6F, 0.6F, 0.8F)
                         .rotation(ModelDiamond.ROTATION))
                 .buildAtBlockCenter(location);

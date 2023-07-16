@@ -130,7 +130,10 @@ public class Lore {
     }
 
     public String multiblock() {
-        return MULTIBLOCK_SYMBOL + Colors.MULTIBLOCKS.getFormattedColor() + "Multiblock &8(right click with the Multiblock Wand)";
+        return MULTIBLOCK_SYMBOL + Colors.MULTIBLOCKS.getFormattedColor() + " Multiblock &8(right click with the Multiblock Wand)";
+    }
+    public String multiblockComponent() {
+        return MULTIBLOCK_SYMBOL + Colors.MULTIBLOCKS.getFormattedColor() + " Multiblock Component";
     }
 
     public String maxConnections(final int maxConnections) {
