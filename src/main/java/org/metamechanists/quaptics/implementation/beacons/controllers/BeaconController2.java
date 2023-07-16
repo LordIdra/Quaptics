@@ -52,10 +52,10 @@ public class BeaconController2 extends BeaconController {
     private static final Vector MATRIX_LOCATION = new Vector(0, 3, 0);
     private static final Vector POWER_SUPPLY_LOCATION = new Vector(0, -1, 0);
 
-    private static final Vector3f MODULE_1_LOCATION = new Vector3f(0, -0.15F, 0.38F);
-    private static final Vector3f MODULE_2_LOCATION = new Vector3f(0, -0.15F, -0.38F);
-    private static final Vector3f MODULE_3_LOCATION = new Vector3f(0.38F, -0.15F, 0);
-    private static final Vector3f MODULE_4_LOCATION = new Vector3f(-0.38F, -0.15F, 0);
+    private static final Vector3f MODULE_1_LOCATION = new Vector3f(0, -0.15F, 0.28F);
+    private static final Vector3f MODULE_2_LOCATION = new Vector3f(0, -0.15F, -0.28F);
+    private static final Vector3f MODULE_3_LOCATION = new Vector3f(0.28F, -0.15F, 0);
+    private static final Vector3f MODULE_4_LOCATION = new Vector3f(-0.28F, -0.15F, 0);
 
     public BeaconController2(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
@@ -66,7 +66,7 @@ public class BeaconController2 extends BeaconController {
         final DisplayGroup displayGroup = new ModelBuilder()
                 .add("main", new ModelCuboid()
                         .material(Material.BLUE_CONCRETE)
-                        .size(0.8F, 1.0F, 0.8F))
+                        .size(0.6F, 1.0F, 0.6F))
 
                 .add("module1", new ModelItem()
                         .item(getEmptyItemStack())

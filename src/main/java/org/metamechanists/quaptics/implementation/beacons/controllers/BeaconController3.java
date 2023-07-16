@@ -58,14 +58,14 @@ public class BeaconController3 extends BeaconController {
     private static final Vector COMPUTER_4_LOCATION = new Vector(0, 2, -1);
     private static final Vector POWER_SUPPLY_LOCATION = new Vector(0, -1, 0);
 
-    private static final Vector3f MODULE_1_LOCATION = new Vector3f(0.2F, -0.15F, 0.58F);
-    private static final Vector3f MODULE_2_LOCATION = new Vector3f(-0.2F, -0.15F, 0.58F);
-    private static final Vector3f MODULE_3_LOCATION = new Vector3f(0.2F, -0.15F, -0.58F);
-    private static final Vector3f MODULE_4_LOCATION = new Vector3f(-0.2F, -0.15F, -0.58F);
-    private static final Vector3f MODULE_5_LOCATION = new Vector3f(0.58F, -0.15F, 0.2F);
-    private static final Vector3f MODULE_6_LOCATION = new Vector3f(0.58F, -0.15F, -0.2F);
-    private static final Vector3f MODULE_7_LOCATION = new Vector3f(-0.58F, -0.15F, 0.2F);
-    private static final Vector3f MODULE_8_LOCATION = new Vector3f(-0.58F, -0.15F, -0.2F);
+    private static final Vector3f MODULE_1_LOCATION = new Vector3f(0.15F, -0.15F, 0.38F);
+    private static final Vector3f MODULE_2_LOCATION = new Vector3f(-0.15F, -0.15F, 0.38F);
+    private static final Vector3f MODULE_3_LOCATION = new Vector3f(0.15F, -0.15F, -0.38F);
+    private static final Vector3f MODULE_4_LOCATION = new Vector3f(-0.15F, -0.15F, -0.38F);
+    private static final Vector3f MODULE_5_LOCATION = new Vector3f(0.38F, -0.15F, 0.15F);
+    private static final Vector3f MODULE_6_LOCATION = new Vector3f(0.38F, -0.15F, -0.15F);
+    private static final Vector3f MODULE_7_LOCATION = new Vector3f(-0.38F, -0.15F, 0.15F);
+    private static final Vector3f MODULE_8_LOCATION = new Vector3f(-0.38F, -0.15F, -0.15F);
 
     public BeaconController3(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
@@ -76,7 +76,7 @@ public class BeaconController3 extends BeaconController {
         final DisplayGroup displayGroup = new ModelBuilder()
                 .add("main", new ModelCuboid()
                         .material(Material.BLUE_CONCRETE)
-                        .size(1.2F, 1.0F, 1.2F))
+                        .size(0.8F, 1.0F, 0.8F))
 
                 .add("module1", new ModelItem()
                         .item(getEmptyItemStack())

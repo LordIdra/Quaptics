@@ -9,11 +9,10 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-import org.metamechanists.quaptics.implementation.base.QuapticBlock;
 import org.metamechanists.quaptics.implementation.Settings;
+import org.metamechanists.quaptics.implementation.base.QuapticBlock;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
-import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.models.ModelBuilder;
 import org.metamechanists.quaptics.utils.models.components.ModelCuboid;
 
@@ -38,22 +37,18 @@ public class BeaconBattery extends QuapticBlock {
         return new ModelBuilder()
                 .add("coil1", new ModelCuboid()
                         .material(Material.ORANGE_CONCRETE)
-                        .brightness(Utils.BRIGHTNESS_ON)
                         .size(0.1F, 0.8F, 1.1F)
                         .location(0.3F, 0, 0))
                 .add("coil2", new ModelCuboid()
-                        .material(settings.getTier().concreteMaterial)
-                        .brightness(Utils.BRIGHTNESS_ON)
+                        .material(Material.ORANGE_CONCRETE)
                         .size(0.1F, 0.8F, 1.1F)
                         .location(-0.3F, 0, 0))
                 .add("coil3", new ModelCuboid()
-                        .material(settings.getTier().concreteMaterial)
-                        .brightness(Utils.BRIGHTNESS_ON)
+                        .material(Material.ORANGE_CONCRETE)
                         .size(1.1F, 0.8F, 0.1F)
                         .location(0, 0, 0.3F))
                 .add("coil4", new ModelCuboid()
-                        .material(settings.getTier().concreteMaterial)
-                        .brightness(Utils.BRIGHTNESS_ON)
+                        .material(Material.ORANGE_CONCRETE)
                         .size(1.1F, 0.8F, 0.1F)
                         .location(0, 0, -0.3F))
                 .buildAtBlockCenter(location);
