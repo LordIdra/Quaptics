@@ -8,6 +8,7 @@ import org.metamechanists.quaptics.storage.QuapticTicker;
 import org.metamechanists.quaptics.utils.Colors;
 import org.metamechanists.quaptics.utils.Utils;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -37,11 +38,17 @@ public class Lore {
     private final String PHASE_SUFFIX = " &8°";
     private final String MULTIBLOCK_SYMBOL = "&3★";
     private final double SLIMEFUN_TICKS_PER_SECOND = 2.0;
+    private final DecimalFormat DECIMAL_FORMAT = getDecimalFormat();
+
+    private @NotNull DecimalFormat getDecimalFormat() {
+        final DecimalFormat decimalFormat = new DecimalFormat("#.0");
+        decimalFormat.setGroupingUsed(true);
+        decimalFormat.setGroupingSize(3);
+        return decimalFormat;
+    }
 
     private String format(final double x) {
-        return Objects.toString(Math.abs((int)(x) - x) < ROUND_TO_INT_THRESHOLD
-                ? (int) x
-                : x);
+        return DECIMAL_FORMAT.format(x);
     }
 
     public @NotNull String[] buildChargeableLore(final @NotNull Settings settings, final int charge, final String... description) {

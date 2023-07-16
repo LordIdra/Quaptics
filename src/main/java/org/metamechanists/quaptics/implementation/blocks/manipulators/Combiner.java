@@ -50,7 +50,7 @@ public class Combiner extends ConnectedBlock implements PowerAnimatedBlock, Powe
     public static final Settings COMBINER_4_SETTINGS = Settings.builder()
             .tier(Tier.ADVANCED)
             .powerLoss(0.05)
-            .connections(4)
+            .connections(5)
             .build();
 
     public static final SlimefunItemStack COMBINER_1 = new SlimefunItemStack(
@@ -75,7 +75,7 @@ public class Combiner extends ConnectedBlock implements PowerAnimatedBlock, Powe
             "QP_COMBINER_4",
             Material.GRAY_STAINED_GLASS,
             "&9Combiner &8IV",
-            Lore.create(COMBINER_1_SETTINGS,
+            Lore.create(COMBINER_4_SETTINGS,
                     "&7● Combines multiple quaptic rays into one"));
 
     private static final double CONNECTION_ANGLE = Math.PI * 2/3;
