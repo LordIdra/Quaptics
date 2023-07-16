@@ -22,6 +22,7 @@ public class ModelLine implements ModelComponent {
     private Vector3f to = new Vector3f();
     private float thickness;
     private float extraLength;
+    private double roll;
 
     /**
      * @param from The start point of the line
@@ -65,6 +66,14 @@ public class ModelLine implements ModelComponent {
     }
 
     /**
+     * @param roll The angle by which the line should be rotated about its length
+     */
+    public ModelLine roll(final double roll) {
+        this.roll = extraLength;
+        return this;
+    }
+
+    /**
      * Overrides material
      */
     public ModelLine block(@NotNull final BlockData block) {
@@ -89,6 +98,7 @@ public class ModelLine implements ModelComponent {
         return new TransformationMatrixBuilder()
                 .translate(midpoint)
                 .lookAlong(from, to)
+                .rotate(0, 0, roll)
                 .scale(new Vector3f(thickness, thickness, from.distance(to) + extraLength))
                 .buildForBlockDisplay();
     }

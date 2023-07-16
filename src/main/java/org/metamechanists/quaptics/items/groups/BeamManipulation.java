@@ -140,5 +140,11 @@ public class BeamManipulation {
         new Transformer(Groups.BEAM_MANIPULATION, TRANSFORMER_3, RecipeType.NULL, new ItemStack[]{
 
         }, TRANSFORMER_3_SETTINGS).register(addon);
+
+
+
+        new Transformer(Groups.BEAM_MANIPULATION, TRANSFORMER_3, RecipeType.NULL, new ItemStack[]{
+
+        }, TRANSFORMER_3_SETTINGS).register(addon);
     }
 }

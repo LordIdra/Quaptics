@@ -128,7 +128,8 @@ public class Link {
                 FrequencyColor.getMaterial(frequency),
                 outputLocation,
                 inputLocation,
-                calculateRadius())
+                calculateRadius(),
+                calculateRoll())
                 .getId();
     }
 
@@ -139,7 +140,7 @@ public class Link {
         }
 
         beam.get().setMaterial(FrequencyColor.getMaterial(frequency));
-        beam.get().setRadius(outputLocation, inputLocation, calculateRadius());
+        beam.get().setThicknessAndRoll(outputLocation, inputLocation, calculateRadius(), calculateRoll());
     }
 
     private void updatePanels() {
@@ -160,6 +161,10 @@ public class Link {
             return 0;
         }
         return Utils.clampToRange((float) (power / maxPower) * MAX_BEAM_SIZE, MIN_BEAM_SIZE, MAX_BEAM_SIZE);
+    }
+
+    private double calculateRoll() {
+        return phase != 0 ? Math.PI / 2 : 0;
     }
 
     private static double calculateChange(final double initialValue, final double newValue) {
