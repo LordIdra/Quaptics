@@ -1,5 +1,6 @@
 package org.metamechanists.quaptics.items;
 
+import io.github.thebusybiscuit.slimefun4.utils.LoreBuilder;
 import lombok.experimental.UtilityClass;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.implementation.Settings;
@@ -64,6 +65,9 @@ public class Lore {
         if (settings.getTier() != null && !settings.isOperatingPowerHidden()) {
             lore.add(operatingPower(settings.getMinPower(), settings.getTier().maxPower));
         }
+        if (settings.getPowerThreshold() != 0) {
+            lore.add(powerThreshold(settings.getPowerThreshold()));
+        }
         if (settings.getOutputPower() != 0) {
             lore.add(powerOutput(settings.getOutputPower()));
         }
@@ -121,8 +125,8 @@ public class Lore {
         if (settings.getPowerEfficiency() != 0) {
             lore.add(powerEfficiency(settings.getPowerEfficiency()));
         }
-        if (settings.getPowerThreshold() != 0) {
-            lore.add(powerThreshold(settings.getPowerThreshold()));
+        if (settings.getEnergyConsumption() != 0) {
+            lore.add(LoreBuilder.powerPerSecond(settings.getEnergyConsumption()));
         }
 
         return lore;
