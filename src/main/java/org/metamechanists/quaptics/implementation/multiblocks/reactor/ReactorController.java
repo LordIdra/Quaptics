@@ -51,13 +51,13 @@ public class ReactorController extends ConnectedBlock implements ComplexMultiblo
             .build();
     public static final SlimefunItemStack REACTOR_CONTROLLER = new SlimefunItemStack(
             "QP_REACTOR_CONTROLLER",
-            Material.GRAY_CONCRETE,
+            Material.CYAN_CONCRETE,
             "&6Reactor Controller",
             Lore.create(REACTOR_CONTROLLER_SETTINGS,
-                    "&7● Multiblock structure: use the Multiblock Wand to build the structure",
+                    Lore.multiblock(),
                     "&7● Generates more power than you put in",
-                    "&7● Only starts working above a threshold input power",
-                    "&7● Takes some time to reach maximum power output"));
+                    "&7● Only starts working above a certain input power",
+                    "&7● Takes some time to reach maximum efficiency"));
 
     private static final Vector RING_1_LOCATION = new Vector(3, 0, 0);
     private static final Vector RING_2_LOCATION = new Vector(2, 0, 2);

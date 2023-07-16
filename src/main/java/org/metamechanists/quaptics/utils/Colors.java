@@ -17,7 +17,8 @@ public enum Colors {
     CHARGE("87FFFD"),
 
     QUAPTIC_COMPONENTS("D65CAD"),
-    BEACONS("993366");
+    BEACONS("993366"),
+    MULTIBLOCKS("666699");
 
     @Getter
     private final String formattedColor;

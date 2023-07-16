@@ -36,8 +36,7 @@ public class ReactorRing extends ConnectedBlock {
             Material.BLUE_CONCRETE,
             "&6Reactor Ring",
             Lore.create(REACTOR_RING_SETTINGS,
-                    "&7● Multiblock component",
-                    "&7● The more power you put in, the more power the reactor outputs"));
+                    "&7● Multiblock component"));
 
     private final List<Vector> possibleControllerLocations = List.of(
             new Vector(3, 0, 0),

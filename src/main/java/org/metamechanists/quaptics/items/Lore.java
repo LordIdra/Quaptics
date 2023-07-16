@@ -34,6 +34,7 @@ public class Lore {
     private final String SECONDS_SUFFIX = " &8seconds";
     private final String MINUTES_SUFFIX = " &8minutes";
     private final String PHASE_SUFFIX = " &8°";
+    private final String MULTIBLOCK_SYMBOL = "&3★";
     private final double SLIMEFUN_TICKS_PER_SECOND = 2.0;
 
     private String format(final double x) {
@@ -126,6 +127,10 @@ public class Lore {
         Collections.addAll(lore, description);
         lore.addAll(fromSettings(settings));
         return lore.toArray(new String[0]);
+    }
+
+    public String multiblock() {
+        return MULTIBLOCK_SYMBOL + Colors.MULTIBLOCKS.getFormattedColor() + "Multiblock &8(right click with the Multiblock Wand)";
     }
 
     public String maxConnections(final int maxConnections) {
