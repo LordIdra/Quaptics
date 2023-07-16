@@ -155,8 +155,8 @@ public class Lore {
     public String fireResistanceLevel(final int fireResistanceLevel) {
         return ATTRIBUTE_SYMBOL + COUNT_SYMBOL + "&7Fire Resistance Level &e" + format(fireResistanceLevel);
     }
-    public String experienceMultiplier(final int experienceMultiplier) {
-        return ATTRIBUTE_SYMBOL + COUNT_SYMBOL + "&7Experience Multiplier &e" + format(experienceMultiplier);
+    public String experienceMultiplier(final double experienceMultiplier) {
+        return ATTRIBUTE_SYMBOL + COUNT_SYMBOL + "&7Experience Multiplier &e" + format(experienceMultiplier) + "x";
     }
 
     public String capacity(final double capacity) {
