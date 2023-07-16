@@ -127,26 +127,27 @@ public class BeaconController2 extends BeaconController {
 
         structure.put(new Vector(0, -1, 0), BEACON_POWER_SUPPLY);
 
-        structure.put(new Vector(0, 2, 0), BEACON_BATTERY);
-        structure.put(new Vector(1, 2, 0), BEACON_TRANSMITTER);
-        structure.put(new Vector(-1, 2, 0), BEACON_TRANSMITTER);
-        structure.put(new Vector(0, 2, 1), BEACON_TRANSMITTER);
-        structure.put(new Vector(0, 2, -1), BEACON_TRANSMITTER);
+        structure.put(new Vector(0, 1, 0), BEACON_BATTERY);
+        structure.put(new Vector(1, 1, 0), BEACON_TRANSMITTER);
+        structure.put(new Vector(-1, 1, 0), BEACON_TRANSMITTER);
+        structure.put(new Vector(0, 1, 1), BEACON_TRANSMITTER);
+        structure.put(new Vector(0, 1, -1), BEACON_TRANSMITTER);
 
-        structure.put(new Vector(0, 3, 0), BEACON_BEAM);
+        structure.put(new Vector(0, 2, 0), BEACON_BEAM);
+
         structure.put(new Vector(0, 3, 0), BEACON_MATRIX);
+        structure.put(new Vector(1, 3, 0), BEACON_ROD);
+        structure.put(new Vector(-1, 3, 0), BEACON_ROD);
+        structure.put(new Vector(0, 3, 1), BEACON_ROD);
+        structure.put(new Vector(0, 3, -1), BEACON_ROD);
 
         structure.put(new Vector(0, 4, 0), BEACON_BEAM);
-        structure.put(new Vector(1, 4, 0), BEACON_ROD);
-        structure.put(new Vector(-1, 4, 0), BEACON_ROD);
-        structure.put(new Vector(0, 4, 1), BEACON_ROD);
-        structure.put(new Vector(0, 4, -1), BEACON_ROD);
+        structure.put(new Vector(1, 4, 0), BEACON_TRANSMITTER);
+        structure.put(new Vector(-1, 4, 0), BEACON_TRANSMITTER);
+        structure.put(new Vector(0, 4, 1), BEACON_TRANSMITTER);
+        structure.put(new Vector(0, 4, -1), BEACON_TRANSMITTER);
 
         structure.put(new Vector(0, 5, 0), BEACON_BEAM);
-        structure.put(new Vector(1, 5, 0), BEACON_TRANSMITTER);
-        structure.put(new Vector(-1, 5, 0), BEACON_TRANSMITTER);
-        structure.put(new Vector(0, 5, 1), BEACON_TRANSMITTER);
-        structure.put(new Vector(0, 5, -1), BEACON_TRANSMITTER);
 
         structure.put(new Vector(0, 6, 0), BEACON_ROD);
 
