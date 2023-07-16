@@ -4,8 +4,6 @@ import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
-import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
-import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -162,8 +160,7 @@ public class TargetingWand extends SlimefunItem {
 
         if (!BlockStorageAPI.hasData(location.get())
                 || !(BlockStorageAPI.check(location.get()) instanceof ConnectedBlock)
-                || !canUse(player, false)
-                || !Slimefun.getProtectionManager().hasPermission(player, player.getLocation(), Interaction.INTERACT_BLOCK)) {
+                || !canUse(player, false)) {
             return;
         }
 

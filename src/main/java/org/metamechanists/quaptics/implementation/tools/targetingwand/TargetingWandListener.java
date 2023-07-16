@@ -1,6 +1,7 @@
 package org.metamechanists.quaptics.implementation.tools.targetingwand;
 
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
+import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Interaction;
 import org.bukkit.entity.Player;
@@ -26,6 +27,10 @@ public class TargetingWandListener implements Listener {
     public static void interactEvent(@NotNull final PlayerInteractEntityEvent event) {
         final Entity clickedEntity = event.getRightClicked();
         if (!(clickedEntity instanceof Interaction)) {
+            return;
+        }
+
+        if (!Slimefun.getProtectionManager().hasPermission(event.getPlayer(), clickedEntity.getLocation(), io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction.INTERACT_ENTITY)) {
             return;
         }
 
