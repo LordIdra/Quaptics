@@ -61,7 +61,7 @@ public class Lore {
     private @NotNull List<String> fromSettings(@NotNull final Settings settings) {
         final List<String> lore = new ArrayList<>();
 
-        if (settings.getTier() != null && (settings.getOutputPower() == 0 || settings.getChargeCapacity() != 0)) {
+        if (settings.getTier() != null && !settings.isOperatingPowerHidden()) {
             lore.add(operatingPower(settings.getMinPower(), settings.getTier().maxPower));
         }
         if (settings.getOutputPower() != 0) {

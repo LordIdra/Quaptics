@@ -34,6 +34,7 @@ import java.util.Optional;
 public class SolarConcentrator extends ConnectedBlock implements PowerAnimatedBlock {
     public static final Settings SOLAR_CONCENTRATOR_1_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
+            .operatingPowerHidden(true)
             .outputPower(2)
             .build();
     public static final Settings SOLAR_CONCENTRATOR_2_SETTINGS = Settings.builder()

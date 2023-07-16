@@ -14,7 +14,8 @@ import java.util.Set;
 @Getter
 @Builder
 public class Settings {
-    Tier tier;
+    private Tier tier;
+    private boolean operatingPowerHidden;
 
     private float displayRadius;
     private float connectionRadius;

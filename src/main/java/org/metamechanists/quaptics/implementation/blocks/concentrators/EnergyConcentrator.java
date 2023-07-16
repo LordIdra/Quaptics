@@ -35,6 +35,7 @@ import java.util.Optional;
 public class EnergyConcentrator extends EnergyConnectedBlock implements PowerAnimatedBlock {
     public static final Settings ENERGY_CONCENTRATOR_1_SETTINGS = Settings.builder()
             .tier(Tier.BASIC)
+            .operatingPowerHidden(true)
             .outputPower(30)
             .energyConsumption(120)
             .energyCapacity(240)
