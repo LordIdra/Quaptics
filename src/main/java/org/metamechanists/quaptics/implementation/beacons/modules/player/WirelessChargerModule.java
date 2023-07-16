@@ -63,8 +63,9 @@ public class WirelessChargerModule extends BeaconModule implements PlayerModule 
 
             if (SlimefunItem.getByItem(mainHandItem) instanceof final QuapticChargeableItem chargeableItem) {
                 chargeableItem.chargeItem(chargeRate, mainHandItem, QuapticTicker.INTERVAL_TICKS_22);
+            }
 
-            } else if (SlimefunItem.getByItem(offHandItem) instanceof final QuapticChargeableItem chargeableItem) {
+            if (SlimefunItem.getByItem(offHandItem) instanceof final QuapticChargeableItem chargeableItem) {
                 chargeableItem.chargeItem(chargeRate, offHandItem, QuapticTicker.INTERVAL_TICKS_22);
             }
         });
