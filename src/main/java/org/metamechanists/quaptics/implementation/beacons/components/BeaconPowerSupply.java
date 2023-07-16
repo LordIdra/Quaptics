@@ -53,6 +53,14 @@ public class BeaconPowerSupply extends ConnectedBlock {
                         .material(Material.GRAY_CONCRETE)
                         .size(1.1F, 1.0F, 1.1F)
                         .rotation(Math.PI/4))
+                .add("panel1", new ModelCuboid()
+                        .material(settings.getTier().concreteMaterial)
+                        .size(0.8F, 0.7F, 1.2F)
+                        .rotation(Math.PI/4))
+                .add("panel2", new ModelCuboid()
+                        .material(settings.getTier().concreteMaterial)
+                        .size(0.8F, 0.7F, 1.2F)
+                        .rotation(Math.PI/4))
                 .buildAtBlockCenter(location);
     }
     @Override
