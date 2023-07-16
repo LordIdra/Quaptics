@@ -20,7 +20,8 @@ import org.metamechanists.quaptics.implementation.beacons.components.BeaconPower
 import org.metamechanists.quaptics.implementation.beacons.components.BeaconRod;
 import org.metamechanists.quaptics.implementation.beacons.components.BeaconTransmitter;
 import org.metamechanists.quaptics.implementation.beacons.controllers.BeaconController1;
-import org.metamechanists.quaptics.implementation.beacons.modules.player.LuckFieldModule;
+import org.metamechanists.quaptics.implementation.beacons.modules.player.FireResistanceModule;
+import org.metamechanists.quaptics.implementation.beacons.modules.player.LuckModule;
 import org.metamechanists.quaptics.implementation.blocks.concentrators.SolarConcentrator;
 import org.metamechanists.quaptics.implementation.blocks.consumers.Charger;
 import org.metamechanists.quaptics.implementation.blocks.consumers.DataStripper;
@@ -62,8 +63,10 @@ import static org.metamechanists.quaptics.implementation.beacons.components.Beac
 import static org.metamechanists.quaptics.implementation.beacons.components.BeaconTransmitter.BEACON_TRANSMITTER_SETTINGS;
 import static org.metamechanists.quaptics.implementation.beacons.controllers.BeaconController1.BEACON_CONTROLLER_1;
 import static org.metamechanists.quaptics.implementation.beacons.controllers.BeaconController1.BEACON_CONTROLLER_1_SETTINGS;
-import static org.metamechanists.quaptics.implementation.beacons.modules.player.LuckFieldModule.LUCK_FIELD_MODULE;
-import static org.metamechanists.quaptics.implementation.beacons.modules.player.LuckFieldModule.LUCK_FIELD_MODULE_SETTINGS;
+import static org.metamechanists.quaptics.implementation.beacons.modules.player.FireResistanceModule.FIRE_RESISTANCE_MODULE;
+import static org.metamechanists.quaptics.implementation.beacons.modules.player.FireResistanceModule.FIRE_RESISTANCE_MODULE_SETTINGS;
+import static org.metamechanists.quaptics.implementation.beacons.modules.player.LuckModule.LUCK_MODULE;
+import static org.metamechanists.quaptics.implementation.beacons.modules.player.LuckModule.LUCK_MODULE_SETTINGS;
 import static org.metamechanists.quaptics.implementation.blocks.concentrators.SolarConcentrator.SOLAR_CONCENTRATOR_1;
 import static org.metamechanists.quaptics.implementation.blocks.concentrators.SolarConcentrator.SOLAR_CONCENTRATOR_1_SETTINGS;
 import static org.metamechanists.quaptics.implementation.blocks.consumers.Charger.CHARGER_1;
@@ -345,12 +348,19 @@ public class Primitive {
                 new ItemStack[]{},
                 BEACON_CONTROLLER_1_SETTINGS).register(addon);
 
-        new LuckFieldModule(
+        new LuckModule(
                 Groups.PRIMITIVE,
-                LUCK_FIELD_MODULE,
+                LUCK_MODULE,
                 RecipeType.NULL,
                 new ItemStack[]{},
-                LUCK_FIELD_MODULE_SETTINGS).register(addon);
+                LUCK_MODULE_SETTINGS).register(addon);
+
+        new FireResistanceModule(
+                Groups.PRIMITIVE,
+                FIRE_RESISTANCE_MODULE,
+                RecipeType.NULL,
+                new ItemStack[]{},
+                FIRE_RESISTANCE_MODULE_SETTINGS).register(addon);
 
         new SlimefunItem(
                 Groups.PRIMITIVE,

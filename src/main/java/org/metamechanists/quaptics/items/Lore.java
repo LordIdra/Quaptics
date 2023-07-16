@@ -105,8 +105,11 @@ public class Lore {
         if (settings.getTargetPhase() != 0) {
             lore.add(targetPhase(settings.getTargetPhase()));
         }
-        if (settings.getLuckMultiplier() != 0) {
-            lore.add(luckMultiplier(settings.getLuckMultiplier()));
+        if (settings.getLuckLevel() != 0) {
+            lore.add(luckLevel(settings.getLuckLevel()));
+        }
+        if (settings.getFireResistanceLevel() != 0) {
+            lore.add(fireResistanceLevel(settings.getFireResistanceLevel()));
         }
 
         return lore;
@@ -143,8 +146,11 @@ public class Lore {
     public String efficiencyBar(final double secondsSinceStarted, final double maxSeconds) {
         return progressBar(secondsSinceStarted, maxSeconds, "&6", "&7", "&a");
     }
-    public String luckMultiplier(final int luckMultiplier) {
-        return ATTRIBUTE_SYMBOL + COUNT_SYMBOL + "&7Luck multiplier &e" + format(luckMultiplier) + "x";
+    public String luckLevel(final int luckLevel) {
+        return ATTRIBUTE_SYMBOL + COUNT_SYMBOL + "&7Luck Level &e" + format(luckLevel);
+    }
+    public String fireResistanceLevel(final int fireResistanceLevel) {
+        return ATTRIBUTE_SYMBOL + COUNT_SYMBOL + "&7Fire Resistance Level &e" + format(fireResistanceLevel);
     }
 
     public String capacity(final double capacity) {

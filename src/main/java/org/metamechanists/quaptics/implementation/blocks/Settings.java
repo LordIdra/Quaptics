@@ -48,7 +48,8 @@ public class Settings {
     private float projectileSpeed;
     private int range;
     private double damage;
-    private int luckMultiplier;
+    private int luckLevel;
+    private int fireResistanceLevel;
 
     private Set<SpawnCategory> targets;
 
