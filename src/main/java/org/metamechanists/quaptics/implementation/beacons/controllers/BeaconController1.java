@@ -100,6 +100,8 @@ public class BeaconController1 extends BeaconController {
     @Override
     public void onPoweredAnimation(final @NotNull Location location, final boolean powered) {
         brightnessAnimation(location.clone().add(COMPUTER_LOCATION), "main", powered);
+        brightnessAnimation(location.clone().add(POWER_SUPPLY_LOCATION), "panel1", powered);
+        brightnessAnimation(location.clone().add(POWER_SUPPLY_LOCATION), "panel2", powered);
     }
 
     @Override

@@ -162,6 +162,8 @@ public class BeaconController3 extends BeaconController {
         brightnessAnimation(location.clone().add(COMPUTER_2_LOCATION), "main", powered);
         brightnessAnimation(location.clone().add(COMPUTER_3_LOCATION), "main", powered);
         brightnessAnimation(location.clone().add(COMPUTER_4_LOCATION), "main", powered);
+        brightnessAnimation(location.clone().add(POWER_SUPPLY_LOCATION), "panel1", powered);
+        brightnessAnimation(location.clone().add(POWER_SUPPLY_LOCATION), "panel2", powered);
 
     }
 
