@@ -3,6 +3,7 @@ package org.metamechanists.quaptics.implementation.tools.raygun;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import org.bukkit.FluidCollisionMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -70,7 +71,8 @@ public class DirectRayGun extends AbstractRayGun {
                 0.095F,
                 5));
 
-        if (result.getHitEntity() instanceof final Damageable damageable) {
+        if (result.getHitEntity() instanceof final Damageable damageable
+                && Slimefun.getProtectionManager().hasPermission(player, damageable.getLocation(), io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction.ATTACK_ENTITY)) {
             damageable.damage(settings.getDamage());
         }
     }

@@ -4,6 +4,8 @@ import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -50,6 +52,7 @@ public abstract class Turret extends ConnectedBlock implements PowerAnimatedBloc
     }
     @Override
     protected DisplayGroup initModel(final @NotNull Location location, final @NotNull Player player) {
+        BlockStorageAPI.set(location, Keys.BS_PLAYER, player.getUniqueId());
         return new ModelBuilder()
                 .add("plate", new ModelCuboid()
                         .material(settings.getMainMaterial())
@@ -166,8 +169,22 @@ public abstract class Turret extends ConnectedBlock implements PowerAnimatedBloc
             return;
         }
 
+        final Optional<UUID> uuid = BlockStorageAPI.getUuid(location, Keys.BS_PLAYER);
+        if (uuid.isEmpty()) {
+            return;
+        }
+
+        final Player player = Bukkit.getPlayer(uuid.get());
+        if (player == null) {
+            return;
+        }
+
+        if (!Slimefun.getProtectionManager().hasPermission(player, target.get().getLocation(), Interaction.ATTACK_ENTITY)) {
+            return;
+        }
+
         updateBarrelTransformation(location, target.get());
-        createProjectile(location, target.get().getEyeLocation());
+        createProjectile(player, location, target.get().getEyeLocation());
 
         if (shouldDamage()) {
             target.get().damage(settings.getDamage());
@@ -175,5 +192,5 @@ public abstract class Turret extends ConnectedBlock implements PowerAnimatedBloc
     }
 
     protected abstract boolean shouldDamage();
-    protected abstract void createProjectile(final Location source, final Location target);
+    protected abstract void createProjectile(@NotNull final Player player, @NotNull final Location source, final Location target);
 }

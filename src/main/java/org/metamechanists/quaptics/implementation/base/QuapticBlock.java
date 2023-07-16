@@ -9,6 +9,8 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockUseHandler;
+import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 import lombok.Getter;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
@@ -110,6 +112,10 @@ public abstract class QuapticBlock extends SlimefunItem {
         return event -> {
             final Block block = event.getClickedBlock().orElse(null);
             if (block == null) {
+                return;
+            }
+
+            if (!Slimefun.getProtectionManager().hasPermission(event.getPlayer(), block.getLocation(), Interaction.INTERACT_BLOCK)) {
                 return;
             }
 

@@ -1,4 +1,4 @@
-package org.metamechanists.quaptics.implementation.blocks.burnout;
+package org.metamechanists.quaptics.implementation.burnout;
 
 import com.destroystokyo.paper.ParticleBuilder;
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;

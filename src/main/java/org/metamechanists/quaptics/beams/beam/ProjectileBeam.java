@@ -1,10 +1,13 @@
 package org.metamechanists.quaptics.beams.beam;
 
+import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 import org.metamechanists.quaptics.beams.DeprecatedBeamStorage;
 import org.metamechanists.quaptics.utils.Utils;
@@ -16,6 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class ProjectileBeam implements Beam {
+    private final Player player;
     private final Vector velocity;
     private final BlockDisplayId displayId;
     private final float thickness;
@@ -23,8 +27,9 @@ public class ProjectileBeam implements Beam {
     private final int lifetimeTicks;
     private int ageTicks;
 
-    public ProjectileBeam(final Material material, final Location source, final Location target,
+    public ProjectileBeam(final Player player, final Material material, final Location source, final Location target,
                           final float thickness, final float length, final float speed, final double damage, final int lifetimeTicks) {
+        this.player = player;
         this.velocity = Vector.fromJOML(TransformationUtils.getDisplacement(source, target).normalize().mul(speed));
         this.displayId = new BlockDisplayId(new ModelLine()
                 .to(TransformationUtils.getDirection(source, target).mul(length))
@@ -58,7 +63,9 @@ public class ProjectileBeam implements Beam {
                     .findFirst();
 
             hitEntity.ifPresent(entity -> {
-                entity.damage(damage);
+                if (Slimefun.getProtectionManager().hasPermission(player, entity.getLocation(), Interaction.ATTACK_ENTITY)) {
+                    entity.damage(damage);
+                }
                 DeprecatedBeamStorage.remove(this);
             });
         });

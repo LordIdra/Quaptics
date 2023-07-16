@@ -1,5 +1,7 @@
 package org.metamechanists.quaptics.implementation.blocks.consumers.launchpad;
 
+import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -24,6 +26,10 @@ public class LaunchpadListener implements Listener {
         }
 
         if (!(BlockStorageAPI.check(block) instanceof final Launchpad launchpad)) {
+            return;
+        }
+
+        if (!Slimefun.getProtectionManager().hasPermission(event.getPlayer(), event.getPlayer().getLocation(), Interaction.INTERACT_BLOCK)) {
             return;
         }
 

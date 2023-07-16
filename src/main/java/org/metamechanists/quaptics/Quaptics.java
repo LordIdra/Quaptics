@@ -10,7 +10,7 @@ import org.jetbrains.annotations.Nullable;
 import org.metamechanists.metalib.bstats.bukkit.Metrics;
 import org.metamechanists.quaptics.implementation.beacons.controllers.ModuleClickListener;
 import org.metamechanists.quaptics.implementation.beacons.modules.player.ExperienceMultiplicationModuleListener;
-import org.metamechanists.quaptics.implementation.blocks.burnout.BurnoutManager;
+import org.metamechanists.quaptics.implementation.burnout.BurnoutManager;
 import org.metamechanists.quaptics.implementation.blocks.consumers.launchpad.LaunchpadListener;
 import org.metamechanists.quaptics.implementation.tools.multiblockwand.MultiblockWandListener;
 import org.metamechanists.quaptics.implementation.tools.targetingwand.TargetingWandListener;

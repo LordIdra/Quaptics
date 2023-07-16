@@ -5,6 +5,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.entity.SpawnCategory;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -68,7 +69,7 @@ public class DirectTurret extends Turret {
     }
 
     @Override
-    protected void createProjectile(final Location source, final Location target) {
+    protected void createProjectile(@NotNull final Player player, @NotNull final Location source, final Location target) {
         DeprecatedBeamStorage.deprecate(new DirectBeam(settings.getProjectileMaterial(), source.toCenterLocation(), target, BEAM_RADIUS));
     }
 
