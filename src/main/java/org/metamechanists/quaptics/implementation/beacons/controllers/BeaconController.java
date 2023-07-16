@@ -5,6 +5,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -35,12 +36,14 @@ import org.metamechanists.quaptics.utils.Language;
 import org.metamechanists.quaptics.utils.builders.InteractionBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.id.simple.InteractionId;
+import org.metamechanists.quaptics.utils.models.ModelBuilder;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 
@@ -58,6 +61,13 @@ public abstract class BeaconController extends ConnectedBlock implements ItemHol
         return 0;
     }
     @Override
+    protected DisplayGroup initModel(@NotNull final Location location, @NotNull final Player player) {
+        final DisplayGroup displayGroup = new ModelBuilder().buildAtBlockCenter(location);
+        final PersistentDataTraverser traverser = new PersistentDataTraverser(displayGroup.getParentUUID());
+        traverser.set(Keys.BS_PLAYER_RECEIVERS, new ArrayList<>());
+        return displayGroup;
+    }
+    @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
         return List.of();
     }
@@ -73,7 +83,6 @@ public abstract class BeaconController extends ConnectedBlock implements ItemHol
     public boolean isEmptyItemStack(final @NotNull ItemStack itemStack) {
         return itemStack.equals(getEmptyItemStack());
     }
-
     @Override
     protected boolean isTicker() {
         return true;
@@ -96,6 +105,27 @@ public abstract class BeaconController extends ConnectedBlock implements ItemHol
 
         final Set<BeaconModule> modules = getModules(location);
         tickPlayerModules(location, modules);
+    }
+    @Override
+    public void onTick102(@NotNull final ConnectionGroup group, @NotNull final Location location) {
+        final Optional<DisplayGroup> displayGroup = getDisplayGroup(location);
+        if (displayGroup.isEmpty()) {
+            return;
+        }
+
+        final PersistentDataTraverser traverser = new PersistentDataTraverser(displayGroup.get().getParentUUID());
+        traverser.set(Keys.BS_PLAYER_RECEIVERS, new ArrayList<>());
+
+        if (!BlockStorageAPI.getBoolean(location, Keys.BS_MULTIBLOCK_INTACT)) {
+            return;
+        }
+
+        final double inputPower = BlockStorageAPI.getDouble(location.clone().add(getPowerSupplyLocation()), Keys.BS_INPUT_POWER);
+        if (inputPower < settings.getMinPower()) {
+            return;
+        }
+
+        traverser.set(Keys.BS_PLAYER_RECEIVERS, getNearbyPlayerUuids(location));
     }
     @Override
     @OverridingMethodsMustInvokeSuper
@@ -123,6 +153,24 @@ public abstract class BeaconController extends ConnectedBlock implements ItemHol
     public Optional<ItemStack> onRemove(@NotNull final Location location, @NotNull final String name, @NotNull final ItemStack stack) {
         QuapticChargeableItem.updateLore(stack);
         return Optional.of(stack);
+    }
+
+    private List<UUID> getNearbyPlayerUuids(final @NotNull Location location) {
+        return location.getNearbyPlayers(settings.getRange()).stream().map(Entity::getUniqueId).toList();
+    }
+    private static @NotNull List<Player> getStoredPlayers(final @NotNull Location location) {
+        final Optional<DisplayGroup> displayGroup = getDisplayGroup(location);
+        if (displayGroup.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        final PersistentDataTraverser traverser = new PersistentDataTraverser(displayGroup.get().getParentUUID());
+        final List<UUID> uuids = traverser.getUuidList(Keys.BS_PLAYER_RECEIVERS);
+        if (uuids == null) {
+            return new ArrayList<>();
+        }
+
+        return uuids.stream().map(Bukkit::getPlayer).toList();
     }
 
     protected static @NotNull InteractionId createButton(final ConnectionGroupId groupId, final @NotNull Location location, final Vector3f relativeLocation, final String slot) {
@@ -189,14 +237,13 @@ public abstract class BeaconController extends ConnectedBlock implements ItemHol
                 .collect(Collectors.toSet());
     }
 
-    private void tickPlayerModules(final @NotNull Location location, final @NotNull Set<BeaconModule> modules) {
+    private static void tickPlayerModules(final @NotNull Location location, final @NotNull Set<BeaconModule> modules) {
         final Set<PlayerModule> playerModules = modules.stream()
                 .filter(module -> module instanceof PlayerModule)
                 .map(PlayerModule.class::cast)
                 .collect(Collectors.toSet());
         if (!playerModules.isEmpty()) {
-            final Collection<Player> players = location.getNearbyPlayers(settings.getRange());
-            playerModules.forEach(module -> module.apply(players));
+            playerModules.forEach(module -> module.apply(getStoredPlayers(location)));
         }
     }
 
