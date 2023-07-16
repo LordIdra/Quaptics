@@ -5,9 +5,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.jetbrains.annotations.NotNull;
+import org.metamechanists.quaptics.items.Groups;
 import org.metamechanists.quaptics.panels.info.implementation.PointInfoPanel;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
-import org.metamechanists.quaptics.items.Items;
 import org.metamechanists.quaptics.storage.PersistentDataTraverser;
 import org.metamechanists.quaptics.storage.QuapticStorage;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
@@ -53,7 +53,7 @@ public class ConnectionGroup {
         return points.get(name).get();
     }
     public ConnectedBlock getBlock() {
-        return Items.getBlocks().get(blockId);
+        return Groups.getBlocks().get(blockId);
     }
     public Optional<Location> getLocation() {
         // The ConnectionGroupId shares the UUID of the main interaction entity

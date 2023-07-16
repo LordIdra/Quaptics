@@ -15,7 +15,6 @@ import org.metamechanists.quaptics.implementation.multiblocks.beacons.modules.pl
 import org.metamechanists.quaptics.implementation.tools.multiblockwand.MultiblockWandListener;
 import org.metamechanists.quaptics.implementation.tools.targetingwand.TargetingWandListener;
 import org.metamechanists.quaptics.items.Groups;
-import org.metamechanists.quaptics.items.Items;
 import org.metamechanists.quaptics.panels.config.ConfigPanelListener;
 import org.metamechanists.quaptics.panels.info.implementation.PointInfoPanelListener;
 import org.metamechanists.quaptics.storage.CacheGarbageCollector;
@@ -53,7 +52,6 @@ public final class Quaptics extends JavaPlugin implements SlimefunAddon {
     public void onEnable() {
         instance = this;
         Groups.initialize();
-        Items.initialize();
 
         initializeListeners();
         initializeRunnables();

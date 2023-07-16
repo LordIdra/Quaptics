@@ -35,42 +35,27 @@ import java.util.Optional;
 public class EnergyConcentrator extends EnergyConnectedBlock implements PowerAnimatedBlock {
     public static final Settings ENERGY_CONCENTRATOR_1_SETTINGS = Settings.builder()
             .tier(Tier.BASIC)
-            .emissionPower(15)
-            .energyConsumption(30)
-            .energyCapacity(60)
+            .emissionPower(30)
+            .energyConsumption(120)
+            .energyCapacity(240)
             .build();
     public static final Settings ENERGY_CONCENTRATOR_2_SETTINGS = Settings.builder()
             .tier(Tier.INTERMEDIATE)
-            .emissionPower(100)
-            .energyConsumption(160)
-            .energyCapacity(320)
-            .build();
-    public static final Settings ENERGY_CONCENTRATOR_3_SETTINGS = Settings.builder()
-            .tier(Tier.ADVANCED)
-            .emissionPower(1250)
-            .energyConsumption(680)
-            .energyCapacity(1360)
+            .emissionPower(400)
+            .energyConsumption(580)
+            .energyCapacity(1160)
             .build();
     public static final SlimefunItemStack ENERGY_CONCENTRATOR_1 = new SlimefunItemStack(
             "QP_ENERGY_CONCENTRATOR_1",
             Tier.BASIC.concreteMaterial,
-            "&eEnergy Concentrator &bI",
+            "&eEnergy Concentrator &6I",
             Lore.create(ENERGY_CONCENTRATOR_1_SETTINGS,
-                    "&7● Consumes energy",
                     "&7● Concentrates energy into a quaptic ray"));
     public static final SlimefunItemStack ENERGY_CONCENTRATOR_2 = new SlimefunItemStack(
             "QP_ENERGY_CONCENTRATOR_2",
             Tier.INTERMEDIATE.concreteMaterial,
-            "&eEnergy Concentrator &bII",
+            "&eEnergy Concentrator &6II",
             Lore.create(ENERGY_CONCENTRATOR_2_SETTINGS,
-                    "&7● Consumes energy",
-                    "&7● Concentrates energy into a quaptic ray"));
-    public static final SlimefunItemStack ENERGY_CONCENTRATOR_3 = new SlimefunItemStack(
-            "QP_ENERGY_CONCENTRATOR_3",
-            Tier.ADVANCED.concreteMaterial,
-            "&eEnergy Concentrator &bIII",
-            Lore.create(ENERGY_CONCENTRATOR_3_SETTINGS,
-                    "&7● Consumes energy",
                     "&7● Concentrates energy into a quaptic ray"));
 
     private final Vector outputLocation = new Vector(0.0F, 0.0F,getConnectionRadius());

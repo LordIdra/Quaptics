@@ -16,8 +16,8 @@ public enum Colors {
     PHASE("FFCC00"),
     CHARGE("87FFFD"),
 
-    QUAPTIC_COMPONENTS("993366"),
-    BEACONS("B82E8A");
+    QUAPTIC_COMPONENTS("D65CAD"),
+    BEACONS("993366");
 
     @Getter
     private final String formattedColor;

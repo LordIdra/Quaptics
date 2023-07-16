@@ -5,15 +5,27 @@ import dev.sefiraat.sefilib.slimefun.itemgroup.SimpleFlexGroup;
 import io.github.bakedlibs.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
+import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
+import lombok.Getter;
 import lombok.experimental.UtilityClass;
 import org.bukkit.Material;
 import org.metamechanists.quaptics.Quaptics;
+import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
+import org.metamechanists.quaptics.implementation.multiblocks.beacons.controllers.BeaconController;
+import org.metamechanists.quaptics.items.groups.BeamCreation;
+import org.metamechanists.quaptics.items.groups.Tools;
 import org.metamechanists.quaptics.utils.Colors;
 import org.metamechanists.quaptics.utils.Keys;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 
 @UtilityClass
 public class Groups {
+    @Getter
+    private final Map<String, ConnectedBlock> blocks = new LinkedHashMap<>();
+
     public final SimpleFlexGroup MAIN = new SimpleFlexGroup(
             Quaptics.getInstance(),
             Colors.QUAPTICS.getFormattedColor() + "Quaptics",
@@ -32,14 +44,14 @@ public class Groups {
     public final ItemGroup BEAM_CREATION = new DummyItemGroup(Keys.PRIMITIVE,
             new CustomItemStack(Material.GLASS_PANE, Colors.QUAPTIC_COMPONENTS.getFormattedColor() + "Beam Creation"));
     public final ItemGroup BEAM_MANIPULATION = new DummyItemGroup(Keys.PRIMITIVE,
-            new CustomItemStack(Material.GLASS_PANE, Colors.QUAPTIC_COMPONENTS.getFormattedColor() + "Beam Manipulation"));
+            new CustomItemStack(Material.WHITE_STAINED_GLASS, Colors.QUAPTIC_COMPONENTS.getFormattedColor() + "Beam Manipulation"));
     public final ItemGroup MACHINES = new DummyItemGroup(Keys.PRIMITIVE,
             new CustomItemStack(Material.LIGHT_BLUE_CONCRETE, Colors.QUAPTIC_COMPONENTS.getFormattedColor() + "Machines"));
 
     public final ItemGroup BEACON_COMPONENTS = new DummyItemGroup(Keys.PRIMITIVE,
             new CustomItemStack(Material.DEEPSLATE_BRICK_WALL, Colors.BEACONS.getFormattedColor() + "Beacon Components"));
     public final ItemGroup BEACON_MODULES = new DummyItemGroup(Keys.PRIMITIVE,
-            new CustomItemStack(Material.DEEPSLATE_BRICK_WALL, Colors.BEACONS.getFormattedColor() + "Beacon Modules"));
+            new CustomItemStack(BeaconController.emptyItemStack(), Colors.BEACONS.getFormattedColor() + "Beacon Modules"));
 
     public final ItemGroup TESTING = new DummyItemGroup(Keys.TESTING,
             new CustomItemStack(Material.GRAY_CONCRETE, "&8Testing"));
@@ -55,5 +67,13 @@ public class Groups {
         MAIN.addItemGroup(BEACON_COMPONENTS);
         MAIN.addItemGroup(BEACON_MODULES);
         MAIN.register(addon);
+
+        Tools.initialize();
+        BeamCreation.initialize();
+
+        Slimefun.getRegistry().getAllSlimefunItems().stream()
+                .filter(ConnectedBlock.class::isInstance)
+                .map(ConnectedBlock.class::cast)
+                .forEach(connectedBlock -> blocks.put(connectedBlock.getId(), connectedBlock));
     }
 }

@@ -71,13 +71,16 @@ public abstract class BeaconController extends ConnectedBlock implements ItemHol
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
         return List.of();
     }
-    @Override
-    public @NotNull ItemStack getEmptyItemStack() {
+    public static @NotNull ItemStack emptyItemStack() {
         final ItemStack stack = new ItemStack(Material.BLACK_BANNER);
         final BannerMeta meta = (BannerMeta) stack.getItemMeta();
         meta.addPattern(new Pattern(DyeColor.RED, PatternType.CIRCLE_MIDDLE));
         stack.setItemMeta(meta);
         return stack;
+    }
+    @Override
+    public @NotNull ItemStack getEmptyItemStack() {
+        return emptyItemStack();
     }
     @Override
     public boolean isEmptyItemStack(final @NotNull ItemStack itemStack) {

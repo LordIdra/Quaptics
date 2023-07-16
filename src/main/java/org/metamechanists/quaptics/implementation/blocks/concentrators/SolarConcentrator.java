@@ -34,7 +34,7 @@ import java.util.Optional;
 public class SolarConcentrator extends ConnectedBlock implements PowerAnimatedBlock {
     public static final Settings SOLAR_CONCENTRATOR_1_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
-            .emissionPower(1)
+            .emissionPower(2)
             .build();
     public static final Settings SOLAR_CONCENTRATOR_2_SETTINGS = Settings.builder()
             .tier(Tier.BASIC)
@@ -44,14 +44,14 @@ public class SolarConcentrator extends ConnectedBlock implements PowerAnimatedBl
     public static final SlimefunItemStack SOLAR_CONCENTRATOR_1 = new SlimefunItemStack(
             "QP_SOLAR_CONCENTRATOR_1",
             Material.GLASS_PANE,
-            "&eSolar Concentrator &bI",
+            "&eSolar Concentrator &6I",
             Lore.create(SOLAR_CONCENTRATOR_1_SETTINGS,
                     "&7● Only works during the day",
                     "&7● Concentrates sunlight into a quaptic ray"));
     public static final SlimefunItemStack SOLAR_CONCENTRATOR_2 = new SlimefunItemStack(
             "QP_SOLAR_CONCENTRATOR_2",
             Material.GLASS_PANE,
-            "&eSolar Concentrator &bII",
+            "&eSolar Concentrator &6II",
             Lore.create(SOLAR_CONCENTRATOR_2_SETTINGS,
                     "&7● Only works during the day",
                     "&7● Concentrates sunlight into a quaptic ray"));

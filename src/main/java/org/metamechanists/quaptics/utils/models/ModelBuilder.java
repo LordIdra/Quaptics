@@ -11,7 +11,6 @@ import java.util.Map;
 
 /**
  * Builder class that allows you to construct a model using components
- * TODO add link to examples
  */
 public class ModelBuilder {
     private final Map<String, ModelComponent> components = new HashMap<>();
