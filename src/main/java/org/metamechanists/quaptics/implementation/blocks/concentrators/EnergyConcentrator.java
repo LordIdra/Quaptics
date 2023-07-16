@@ -111,10 +111,10 @@ public class EnergyConcentrator extends EnergyConnectedBlock implements PowerAni
         final Location location = block.getLocation();
 
         final boolean powered = hasEnoughEnergy(location);
+        onPoweredAnimation(location, powered);
         BlockStorageAPI.set(location, Keys.BS_POWERED, powered);
 
         final Optional<Link> linkOptional = getLink(location, "output");
-        onPoweredAnimation(location, hasEnoughEnergy(location));
         linkOptional.ifPresent(link -> link.setPower(powered ? settings.getEmissionPower() : 0));
     }
     @Override
