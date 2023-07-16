@@ -1,4 +1,4 @@
-package org.metamechanists.quaptics.items.groups;
+package org.metamechanists.quaptics.items.oldgroups;
 
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
@@ -9,7 +9,7 @@ import org.metamechanists.quaptics.implementation.blocks.concentrators.EnergyCon
 import org.metamechanists.quaptics.implementation.blocks.manipulators.Combiner;
 import org.metamechanists.quaptics.implementation.blocks.manipulators.Lens;
 import org.metamechanists.quaptics.implementation.blocks.manipulators.Splitter;
-import org.metamechanists.quaptics.items.Groups;
+import org.metamechanists.quaptics.items.OldGroups;
 
 import static org.metamechanists.quaptics.implementation.blocks.concentrators.EnergyConcentrator.ENERGY_CONCENTRATOR_2;
 import static org.metamechanists.quaptics.implementation.blocks.concentrators.EnergyConcentrator.ENERGY_CONCENTRATOR_2_SETTINGS;
@@ -32,42 +32,42 @@ public class Intermediate {
         final SlimefunAddon addon = Quaptics.getInstance();
 
         new EnergyConcentrator(
-                Groups.INTERMEDIATE,
+                OldGroups.INTERMEDIATE,
                 ENERGY_CONCENTRATOR_2,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 ENERGY_CONCENTRATOR_2_SETTINGS).register(addon);
 
         new Lens(
-                Groups.INTERMEDIATE,
+                OldGroups.INTERMEDIATE,
                 LENS_3,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 LENS_3_SETTINGS).register(addon);
 
         new Combiner(
-                Groups.INTERMEDIATE,
+                OldGroups.INTERMEDIATE,
                 COMBINER_3_2,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 COMBINER_3_2_SETTINGS).register(addon);
 
         new Combiner(
-                Groups.INTERMEDIATE,
+                OldGroups.INTERMEDIATE,
                 COMBINER_3_3,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 COMBINER_3_3_SETTINGS).register(addon);
 
         new Splitter(
-                Groups.INTERMEDIATE,
+                OldGroups.INTERMEDIATE,
                 SPLITTER_3_2,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 SPLITTER_3_2_SETTINGS).register(addon);
 
         new Splitter(
-                Groups.INTERMEDIATE,
+                OldGroups.INTERMEDIATE,
                 SPLITTER_3_3,
                 RecipeType.NULL,
                 new ItemStack[]{},

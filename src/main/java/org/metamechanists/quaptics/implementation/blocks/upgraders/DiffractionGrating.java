@@ -43,7 +43,7 @@ public class DiffractionGrating extends ConnectedBlock implements PowerAnimatedB
             .build();
     public static final SlimefunItemStack DIFFRACTION_GRATING_1 = new SlimefunItemStack(
             "QP_DIFFRACTION_GRATING_1",
-            Material.ORANGE_STAINED_GLASS,
+            Material.ORANGE_TERRACOTTA,
             "&cDiffraction Grating &4I",
             Lore.create(DIFFRACTION_GRATING_1_SETTINGS,
                     "&7● Increases the frequency of a quaptic ray",

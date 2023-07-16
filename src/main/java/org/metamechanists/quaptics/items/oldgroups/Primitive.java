@@ -1,4 +1,4 @@
-package org.metamechanists.quaptics.items.groups;
+package org.metamechanists.quaptics.items.oldgroups;
 
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
@@ -49,7 +49,7 @@ import org.metamechanists.quaptics.implementation.multiblocks.infuser.InfusionCo
 import org.metamechanists.quaptics.implementation.multiblocks.infuser.InfusionPillar;
 import org.metamechanists.quaptics.implementation.multiblocks.reactor.ReactorController;
 import org.metamechanists.quaptics.implementation.multiblocks.reactor.ReactorRing;
-import org.metamechanists.quaptics.items.Groups;
+import org.metamechanists.quaptics.items.OldGroups;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.RecipeTypes;
 
@@ -161,280 +161,280 @@ public class Primitive {
         final SlimefunAddon addon = Quaptics.getInstance();
 
         new SolarConcentrator(
-                Groups.PRIMITIVE,
+                OldGroups.PRIMITIVE,
                 SOLAR_CONCENTRATOR_1,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 SOLAR_CONCENTRATOR_1_SETTINGS).register(addon);
 
         new Lens(
-                Groups.PRIMITIVE,
+                OldGroups.PRIMITIVE,
                 LENS_1,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 LENS_1_SETTINGS).register(addon);
 
         new Combiner(
-                Groups.PRIMITIVE,
+                OldGroups.PRIMITIVE,
                 COMBINER_1_2,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 COMBINER_1_2_SETTINGS).register(addon);
 
         new Splitter(
-                Groups.PRIMITIVE,
+                OldGroups.PRIMITIVE,
                 SPLITTER_1_2,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 SPLITTER_1_2_SETTINGS).register(addon);
 
         new Charger(
-                Groups.PRIMITIVE,
+                OldGroups.PRIMITIVE,
                 CHARGER_1,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 CHARGER_1_SETTINGS).register(addon);
 
         new Capacitor(
-                Groups.PRIMITIVE,
+                OldGroups.PRIMITIVE,
                 CAPACITOR_1,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 CAPACITOR_1_SETTINGS).register(addon);
 
         new ModulatedTurret(
-                Groups.PRIMITIVE,
+                OldGroups.PRIMITIVE,
                 TURRET_1_HOSTILE,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 TURRET_1_HOSTILE_SETTINGS).register(addon);
 
         new ModulatedTurret(
-                Groups.PRIMITIVE,
+                OldGroups.PRIMITIVE,
                 TURRET_1_PASSIVE,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 TURRET_1_PASSIVE_SETTINGS).register(addon);
 
         new MultiblockClicker(
-                Groups.PRIMITIVE,
+                OldGroups.PRIMITIVE,
                 MULTIBLOCK_CLICKER_1,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 MULTIBLOCK_CLICKER_1_SETTINGS).register(addon);
 
         new DataStripper(
-                Groups.PRIMITIVE,
+                OldGroups.PRIMITIVE,
                 DATA_STRIPPER_1,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 DATA_STRIPPER_1_SETTINGS).register(addon);
 
         new Launchpad(
-                Groups.PRIMITIVE,
+                OldGroups.PRIMITIVE,
                 LAUNCHPAD,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 LAUNCHPAD_SETTINGS).register(addon);
 
         new ItemProjector(
-                Groups.PRIMITIVE,
+                OldGroups.PRIMITIVE,
                 ITEM_PROJECTOR,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 ITEM_PROJECTOR_SETTINGS).register(addon);
 
         new InfusionContainer(
-                Groups.PRIMITIVE,
+                OldGroups.PRIMITIVE,
                 INFUSION_CONTAINER,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 INFUSION_CONTAINER_SETTINGS).register(addon);
 
         new InfusionPillar(
-                Groups.PRIMITIVE,
+                OldGroups.PRIMITIVE,
                 INFUSION_PILLAR,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 INFUSION_PILLAR_SETTINGS).register(addon);
 
         new Polariser(
-                Groups.PRIMITIVE,
+                OldGroups.PRIMITIVE,
                 POLARISER_1,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 POLARISER_1_SETTINGS).register(addon);
 
         new Interferometer(
-                Groups.PRIMITIVE,
+                OldGroups.PRIMITIVE,
                 INTERFEROMETER_1,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 INTERFEROMETER_1_SETTINGS).register(addon);
 
         new DiffractionGrating(
-                Groups.PRIMITIVE,
+                OldGroups.PRIMITIVE,
                 DIFFRACTION_GRATING_1,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 DIFFRACTION_GRATING_1_SETTINGS).register(addon);
 
         new EntanglementMagnet(
-                Groups.PRIMITIVE,
+                OldGroups.PRIMITIVE,
                 ENTANGLEMENT_MAGNET,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 ENTANGLEMENT_MAGNET_SETTINGS).register(addon);
 
         new EntanglementContainer(
-                Groups.PRIMITIVE,
+                OldGroups.PRIMITIVE,
                 ENTANGLEMENT_CONTAINER,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 ENTANGLEMENT_CONTAINER_SETTINGS).register(addon);
 
         new ReactorController(
-                Groups.PRIMITIVE,
+                OldGroups.PRIMITIVE,
                 REACTOR_CONTROLLER,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 REACTOR_CONTROLLER_SETTINGS).register(addon);
 
         new ReactorRing(
-                Groups.PRIMITIVE,
+                OldGroups.PRIMITIVE,
                 REACTOR_RING,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 REACTOR_RING_SETTINGS).register(addon);
 
         new BeaconBattery(
-                Groups.PRIMITIVE,
+                OldGroups.PRIMITIVE,
                 BEACON_BATTERY,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 BEACON_BATTERY_SETTINGS).register(addon);
 
         new BeaconBeam(
-                Groups.PRIMITIVE,
+                OldGroups.PRIMITIVE,
                 BEACON_BEAM,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 BEACON_BEAM_SETTINGS).register(addon);
 
         new BeaconPowerSupply(
-                Groups.PRIMITIVE,
+                OldGroups.PRIMITIVE,
                 BEACON_POWER_SUPPLY,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 BEACON_POWER_SUPPLY_SETTINGS).register(addon);
 
         new BeaconRod(
-                Groups.PRIMITIVE,
+                OldGroups.PRIMITIVE,
                 BEACON_ROD,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 BEACON_ROD_SETTINGS).register(addon);
 
         new BeaconTransmitter(
-                Groups.PRIMITIVE,
+                OldGroups.PRIMITIVE,
                 BEACON_TRANSMITTER,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 BEACON_TRANSMITTER_SETTINGS).register(addon);
 
         new BeaconPanel(
-                Groups.PRIMITIVE,
+                OldGroups.PRIMITIVE,
                 BEACON_PANEL,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 BEACON_PANEL_SETTINGS).register(addon);
 
         new BeaconComputer(
-                Groups.PRIMITIVE,
+                OldGroups.PRIMITIVE,
                 BEACON_COMPUTER,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 BEACON_COMPUTER_SETTINGS).register(addon);
 
         new BeaconMatrix(
-                Groups.PRIMITIVE,
+                OldGroups.PRIMITIVE,
                 BEACON_MATRIX,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 BEACON_MATRIX_SETTINGS).register(addon);
 
         new BeaconController1(
-                Groups.PRIMITIVE,
+                OldGroups.PRIMITIVE,
                 BEACON_CONTROLLER_1,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 BEACON_CONTROLLER_1_SETTINGS).register(addon);
 
         new BeaconController2(
-                Groups.PRIMITIVE,
+                OldGroups.PRIMITIVE,
                 BEACON_CONTROLLER_2,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 BEACON_CONTROLLER_2_SETTINGS).register(addon);
 
         new BeaconController3(
-                Groups.PRIMITIVE,
+                OldGroups.PRIMITIVE,
                 BEACON_CONTROLLER_3,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 BEACON_CONTROLLER_3_SETTINGS).register(addon);
 
         new LuckModule(
-                Groups.PRIMITIVE,
+                OldGroups.PRIMITIVE,
                 LUCK_MODULE,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 LUCK_MODULE_SETTINGS).register(addon);
 
         new FireResistanceModule(
-                Groups.PRIMITIVE,
+                OldGroups.PRIMITIVE,
                 FIRE_RESISTANCE_MODULE,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 FIRE_RESISTANCE_MODULE_SETTINGS).register(addon);
 
         new InvincibilityModule(
-                Groups.PRIMITIVE,
+                OldGroups.PRIMITIVE,
                 INVINCIBILITY_MODULE,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 INVINCIBILITY_MODULE_SETTINGS).register(addon);
 
         new HungerRefillModule(
-                Groups.PRIMITIVE,
+                OldGroups.PRIMITIVE,
                 HUNGER_REFILL_MODULE,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 HUNGER_REFILL_MODULE_SETTINGS).register(addon);
 
         new ExperienceMultiplicationModule(
-                Groups.PRIMITIVE,
+                OldGroups.PRIMITIVE,
                 EXPERIENCE_MULTIPLICATION_MODULE,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 EXPERIENCE_MULTIPLICATION_MODULE_SETTINGS).register(addon);
 
         new WirelessChargerModule(
-                Groups.PRIMITIVE,
+                OldGroups.PRIMITIVE,
                 WIRELESS_CHARGER_MODULE,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 WIRELESS_CHARGER_MODULE_SETTINGS).register(addon);
 
         new CrystalRefiner(
-                Groups.PRIMITIVE,
+                OldGroups.PRIMITIVE,
                 CRYSTAL_REFINER,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 CRYSTAL_REFINER_SETTINGS).register(addon);
 
         new SlimefunItem(
-                Groups.PRIMITIVE,
+                OldGroups.PRIMITIVE,
                 PHASE_CRYSTAL_1,
                 RecipeTypes.RECIPE_INFUSION,
                 new ItemStack[]{
@@ -444,7 +444,7 @@ public class Primitive {
                 }).register(addon);
 
         new SlimefunItem(
-                Groups.PRIMITIVE,
+                OldGroups.PRIMITIVE,
                 PHASE_CRYSTAL_5,
                 RecipeTypes.RECIPE_INFUSION,
                 new ItemStack[]{
@@ -454,7 +454,7 @@ public class Primitive {
                 }).register(addon);
 
         new SlimefunItem(
-                Groups.PRIMITIVE,
+                OldGroups.PRIMITIVE,
                 PHASE_CRYSTAL_15,
                 RecipeTypes.RECIPE_INFUSION,
                 new ItemStack[]{
@@ -464,7 +464,7 @@ public class Primitive {
                 }).register(addon);
 
         new SlimefunItem(
-                Groups.PRIMITIVE,
+                OldGroups.PRIMITIVE,
                 PHASE_CRYSTAL_45,
                 RecipeTypes.RECIPE_INFUSION,
                 new ItemStack[]{
@@ -474,7 +474,7 @@ public class Primitive {
                 }).register(addon);
 
         new SlimefunItem(
-                Groups.PRIMITIVE,
+                OldGroups.PRIMITIVE,
                 PHASE_CRYSTAL_90,
                 RecipeTypes.RECIPE_INFUSION,
                 new ItemStack[]{
@@ -484,7 +484,7 @@ public class Primitive {
                 }).register(addon);
 
         new SlimefunItem(
-                Groups.PRIMITIVE,
+                OldGroups.PRIMITIVE,
                 ENTANGLED_CORE,
                 RecipeTypes.RECIPE_ENTANGLEMENT,
                 new ItemStack[]{

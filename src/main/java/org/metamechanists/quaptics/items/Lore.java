@@ -17,10 +17,10 @@ import java.util.Objects;
 public class Lore {
     private final double ROUND_TO_INT_THRESHOLD = 0.0001;
     private final String ATTRIBUTE_SYMBOL = "&8⇨ ";
-    private final String COUNT_SYMBOL = Colors.COMPONENTS_MISC.getFormattedColor() + "◎ ";
-    private final String RANGE_SYMBOL = Colors.COMPONENTS_MISC.getFormattedColor() + "↔ ";
-    private final String SPEED_SYMBOL = Colors.COMPONENTS_MISC.getFormattedColor() + "→ ";
-    private final String DAMAGE_SYMBOL = Colors.COMPONENTS_MISC.getFormattedColor() + "🗡 ";
+    private final String COUNT_SYMBOL = Colors.QUAPTIC_COMPONENTS.getFormattedColor() + "◎ ";
+    private final String RANGE_SYMBOL = Colors.QUAPTIC_COMPONENTS.getFormattedColor() + "↔ ";
+    private final String SPEED_SYMBOL = Colors.QUAPTIC_COMPONENTS.getFormattedColor() + "→ ";
+    private final String DAMAGE_SYMBOL = Colors.QUAPTIC_COMPONENTS.getFormattedColor() + "🗡 ";
     private final String CHARGE_SYMBOL = Colors.CHARGE.getFormattedColor() + "◆ ";
     private final String POWER_SYMBOL = Colors.POWER.getFormattedColor() + "⏻ ";
     private final String FREQUENCY_SYMBOL = Colors.FREQUENCY.getFormattedColor() + "∀ ";

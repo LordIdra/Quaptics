@@ -1,4 +1,4 @@
-package org.metamechanists.quaptics.items.groups;
+package org.metamechanists.quaptics.items.oldgroups;
 
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
@@ -9,7 +9,7 @@ import org.metamechanists.quaptics.implementation.blocks.concentrators.EnergyCon
 import org.metamechanists.quaptics.implementation.blocks.manipulators.Combiner;
 import org.metamechanists.quaptics.implementation.blocks.manipulators.Lens;
 import org.metamechanists.quaptics.implementation.blocks.manipulators.Splitter;
-import org.metamechanists.quaptics.items.Groups;
+import org.metamechanists.quaptics.items.OldGroups;
 
 import static org.metamechanists.quaptics.implementation.blocks.concentrators.EnergyConcentrator.ENERGY_CONCENTRATOR_3;
 import static org.metamechanists.quaptics.implementation.blocks.concentrators.EnergyConcentrator.ENERGY_CONCENTRATOR_3_SETTINGS;
@@ -36,56 +36,56 @@ public class Advanced {
         final SlimefunAddon addon = Quaptics.getInstance();
 
         new EnergyConcentrator(
-                Groups.ADVANCED,
+                OldGroups.ADVANCED,
                 ENERGY_CONCENTRATOR_3,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 ENERGY_CONCENTRATOR_3_SETTINGS).register(addon);
 
         new Lens(
-                Groups.ADVANCED,
+                OldGroups.ADVANCED,
                 LENS_4,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 LENS_4_SETTINGS).register(addon);
 
         new Combiner(
-                Groups.ADVANCED,
+                OldGroups.ADVANCED,
                 COMBINER_4_2,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 COMBINER_4_2_SETTINGS).register(addon);
 
         new Combiner(
-                Groups.ADVANCED,
+                OldGroups.ADVANCED,
                 COMBINER_4_3,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 COMBINER_4_3_SETTINGS).register(addon);
 
         new Combiner(
-                Groups.ADVANCED,
+                OldGroups.ADVANCED,
                 COMBINER_4_4,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 COMBINER_4_4_SETTINGS).register(addon);
 
         new Splitter(
-                Groups.ADVANCED,
+                OldGroups.ADVANCED,
                 SPLITTER_4_2,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 SPLITTER_4_2_SETTINGS).register(addon);
 
         new Splitter(
-                Groups.ADVANCED,
+                OldGroups.ADVANCED,
                 SPLITTER_4_3,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 SPLITTER_4_3_SETTINGS).register(addon);
 
         new Splitter(
-                Groups.ADVANCED,
+                OldGroups.ADVANCED,
                 SPLITTER_4_4,
                 RecipeType.NULL,
                 new ItemStack[]{},

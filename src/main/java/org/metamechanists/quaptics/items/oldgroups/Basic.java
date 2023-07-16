@@ -1,4 +1,4 @@
-package org.metamechanists.quaptics.items.groups;
+package org.metamechanists.quaptics.items.oldgroups;
 
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
@@ -14,7 +14,7 @@ import org.metamechanists.quaptics.implementation.blocks.manipulators.Splitter;
 import org.metamechanists.quaptics.implementation.blocks.manipulators.Transformer;
 import org.metamechanists.quaptics.implementation.blocks.upgraders.Repeater;
 import org.metamechanists.quaptics.implementation.blocks.upgraders.Scatterer;
-import org.metamechanists.quaptics.items.Groups;
+import org.metamechanists.quaptics.items.OldGroups;
 
 import static org.metamechanists.quaptics.implementation.blocks.concentrators.EnergyConcentrator.ENERGY_CONCENTRATOR_1;
 import static org.metamechanists.quaptics.implementation.blocks.concentrators.EnergyConcentrator.ENERGY_CONCENTRATOR_1_SETTINGS;
@@ -48,82 +48,82 @@ public class Basic {
     public void initialize() {
         final SlimefunAddon addon = Quaptics.getInstance();
 
-        new SolarConcentrator(Groups.BASIC, SOLAR_CONCENTRATOR_2, RecipeType.NULL, new ItemStack[] {
+        new SolarConcentrator(OldGroups.BASIC, SOLAR_CONCENTRATOR_2, RecipeType.NULL, new ItemStack[] {
 
                 }, SOLAR_CONCENTRATOR_2_SETTINGS).register(addon);
 
         new EnergyConcentrator(
-                Groups.BASIC,
+                OldGroups.BASIC,
                 ENERGY_CONCENTRATOR_1,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 ENERGY_CONCENTRATOR_1_SETTINGS).register(addon);
 
         new Lens(
-                Groups.BASIC,
+                OldGroups.BASIC,
                 LENS_2,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 LENS_2_SETTINGS).register(addon);
 
         new Combiner(
-                Groups.BASIC,
+                OldGroups.BASIC,
                 COMBINER_2_2,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 COMBINER_2_2_SETTINGS).register(addon);
 
         new Combiner(
-                Groups.BASIC,
+                OldGroups.BASIC,
                 COMBINER_2_3,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 COMBINER_2_3_SETTINGS).register(addon);
 
         new Splitter(
-                Groups.BASIC,
+                OldGroups.BASIC,
                 SPLITTER_2_2,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 SPLITTER_2_2_SETTINGS).register(addon);
 
         new Splitter(
-                Groups.BASIC,
+                OldGroups.BASIC,
                 SPLITTER_2_3,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 SPLITTER_2_3_SETTINGS).register(addon);
 
         new Repeater(
-                Groups.BASIC,
+                OldGroups.BASIC,
                 REPEATER_1,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 REPEATER_1_SETTINGS).register(addon);
 
         new Scatterer(
-                Groups.BASIC,
+                OldGroups.BASIC,
                 SCATTERER_1,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 SCATTERER_1_SETTINGS).register(addon);
 
         new DirectTurret(
-                Groups.BASIC,
+                OldGroups.BASIC,
                 TURRET_2_HOSTILE,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 TURRET_2_HOSTILE_SETTINGS).register(addon);
 
         new DirectTurret(
-                Groups.BASIC,
+                OldGroups.BASIC,
                 TURRET_2_PASSIVE,
                 RecipeType.NULL,
                 new ItemStack[]{},
                 TURRET_2_PASSIVE_SETTINGS).register(addon);
 
         new Transformer(
-                Groups.BASIC,
+                OldGroups.BASIC,
                 TRANSFORMER_1,
                 RecipeType.NULL,
                 new ItemStack[]{},

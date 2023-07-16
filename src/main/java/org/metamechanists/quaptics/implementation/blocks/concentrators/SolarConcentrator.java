@@ -38,8 +38,9 @@ public class SolarConcentrator extends ConnectedBlock implements PowerAnimatedBl
             .build();
     public static final Settings SOLAR_CONCENTRATOR_2_SETTINGS = Settings.builder()
             .tier(Tier.BASIC)
-            .emissionPower(10)
+            .emissionPower(8)
             .build();
+
     public static final SlimefunItemStack SOLAR_CONCENTRATOR_1 = new SlimefunItemStack(
             "QP_SOLAR_CONCENTRATOR_1",
             Material.GLASS_PANE,

@@ -42,7 +42,7 @@ public class Scatterer extends ConnectedBlock implements PowerAnimatedBlock, Pow
             .build();
     public static final SlimefunItemStack SCATTERER_1 = new SlimefunItemStack(
             "QP_SCATTERER_1",
-            Material.ORANGE_STAINED_GLASS,
+            Material.PINK_STAINED_GLASS,
             "&cScatterer &4I",
             Lore.create(SCATTERER_1_SETTINGS,
                     "&7● Increases the frequency of a quaptic ray"));
@@ -62,7 +62,7 @@ public class Scatterer extends ConnectedBlock implements PowerAnimatedBlock, Pow
     protected DisplayGroup initModel(final @NotNull Location location, final @NotNull Player player) {
         return new ModelBuilder()
                 .add("main", new ModelCuboid()
-                        .material(Material.ORANGE_STAINED_GLASS)
+                        .material(Material.PINK_STAINED_GLASS)
                         .facing(player.getFacing())
                         .size(0.4F)
                         .rotation(Math.PI / 4))

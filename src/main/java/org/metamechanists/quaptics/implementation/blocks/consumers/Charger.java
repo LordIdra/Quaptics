@@ -47,7 +47,7 @@ public class Charger extends ConnectedBlock implements InfoPanelBlock, ItemHolde
             .build();
     public static final SlimefunItemStack CHARGER_1 = new SlimefunItemStack(
             "QP_CHARGER_1",
-            Material.LIGHT_BLUE_STAINED_GLASS,
+            Material.POLISHED_DEEPSLATE_SLAB,
             "&bCharger &3I",
             Lore.create(CHARGER_1_SETTINGS,
                     "&7● Charges item with Quaptic Energy Units",
@@ -68,20 +68,20 @@ public class Charger extends ConnectedBlock implements InfoPanelBlock, ItemHolde
     protected DisplayGroup initModel(final @NotNull Location location, final @NotNull Player player) {
         return new ModelBuilder()
                 .add("mainTop", new ModelCuboid()
-                        .block(Material.SMOOTH_STONE_SLAB.createBlockData("[type=top]"))
+                        .block(Material.POLISHED_DEEPSLATE_SLAB.createBlockData("[type=top]"))
                         .location(0, 0.35F, 0)
                         .size(0.6F, 0.3F, 0.6F))
                 .add("mainBottom", new ModelCuboid()
-                        .block(Material.SMOOTH_STONE_SLAB.createBlockData("[type=bottom]"))
+                        .block(Material.POLISHED_DEEPSLATE_SLAB.createBlockData("[type=bottom]"))
                         .location(0, -0.35F, 0)
                         .size(0.6F, 0.3F, 0.6F))
                 .add("glassTop", new ModelCuboid()
-                        .material(Material.LIGHT_BLUE_STAINED_GLASS)
+                        .material(settings.getTier().concreteMaterial)
                         .brightness(Utils.BRIGHTNESS_OFF)
                         .location(0, 0.35F, 0)
                         .size(0.4F, 0.15F, 0.4F))
                 .add("glassBottom", new ModelCuboid()
-                        .material(Material.LIGHT_BLUE_STAINED_GLASS)
+                        .material(settings.getTier().concreteMaterial)
                         .brightness(Utils.BRIGHTNESS_OFF)
                         .location(0, -0.35F, 0)
                         .size(0.4F, 0.15F, 0.4F))

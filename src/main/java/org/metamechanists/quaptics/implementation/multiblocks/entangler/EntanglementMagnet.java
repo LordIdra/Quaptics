@@ -38,7 +38,7 @@ public class EntanglementMagnet extends ConnectedBlock implements PowerAnimatedB
             .build();
     public static final SlimefunItemStack ENTANGLEMENT_MAGNET = new SlimefunItemStack(
             "QP_ENTANGLEMENT_MAGNET",
-            Material.ORANGE_CONCRETE,
+            Material.MAGENTA_CONCRETE,
             "&6Entanglement Magnet",
             Lore.create(ENTANGLEMENT_MAGNET_SETTINGS,
                     "&7● Multiblock component"));
@@ -60,17 +60,17 @@ public class EntanglementMagnet extends ConnectedBlock implements PowerAnimatedB
                         .material(Material.GRAY_CONCRETE)
                         .size(0.5F))
                 .add("panel1", new ModelCuboid()
-                        .material(Material.ORANGE_CONCRETE)
+                        .material(Material.MAGENTA_CONCRETE)
                         .brightness(Utils.BRIGHTNESS_OFF)
                         .size(0.4F, 0.2F, 0.2F)
                         .rotation(ModelDiamond.ROTATION))
                 .add("panel2", new ModelCuboid()
-                        .material(Material.ORANGE_CONCRETE)
+                        .material(Material.MAGENTA_CONCRETE)
                         .brightness(Utils.BRIGHTNESS_OFF)
                         .size(0.2F, 0.4F, 0.2F)
                         .rotation(ModelDiamond.ROTATION))
                 .add("panel3", new ModelCuboid()
-                        .material(Material.ORANGE_CONCRETE)
+                        .material(Material.MAGENTA_CONCRETE)
                         .brightness(Utils.BRIGHTNESS_OFF)
                         .size(0.2F, 0.2F, 0.4F)
                         .rotation(ModelDiamond.ROTATION))

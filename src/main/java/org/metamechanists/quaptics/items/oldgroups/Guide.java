@@ -1,4 +1,4 @@
-package org.metamechanists.quaptics.items.groups;
+package org.metamechanists.quaptics.items.oldgroups;
 
 import lombok.experimental.UtilityClass;
 

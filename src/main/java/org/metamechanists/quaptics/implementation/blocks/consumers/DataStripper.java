@@ -50,7 +50,7 @@ public class DataStripper extends ConnectedBlock implements InfoPanelBlock, Item
             .build();
     public static final SlimefunItemStack DATA_STRIPPER_1 = new SlimefunItemStack(
             "QP_DATA_STRIPPER_1",
-            Material.ORANGE_STAINED_GLASS,
+            Material.DEEPSLATE_BRICK_SLAB,
             "&6Data Stripper &eI",
             Lore.create(DATA_STRIPPER_1_SETTINGS,
                     "&7● Converts Slimefun heads into placeable vanilla heads",
@@ -73,20 +73,20 @@ public class DataStripper extends ConnectedBlock implements InfoPanelBlock, Item
     protected DisplayGroup initModel(final @NotNull Location location, final @NotNull Player player) {
         return new ModelBuilder()
                 .add("mainTop", new ModelCuboid()
-                        .block(Material.SMOOTH_STONE_SLAB.createBlockData("[type=top]"))
+                        .block(Material.DEEPSLATE_BRICK_SLAB.createBlockData("[type=top]"))
                         .location(0, 0.35F, 0)
                         .size(0.5F, 0.3F, 0.5F))
                 .add("mainBottom", new ModelCuboid()
-                        .block(Material.SMOOTH_STONE_SLAB.createBlockData("[type=bottom]"))
+                        .block(Material.DEEPSLATE_BRICK_SLAB.createBlockData("[type=bottom]"))
                         .location(0, -0.35F, 0)
                         .size(0.5F, 0.3F, 0.5F))
                 .add("glassTop", new ModelCuboid()
-                        .material(Material.ORANGE_STAINED_GLASS)
+                        .material(settings.getTier().concreteMaterial)
                         .brightness(Utils.BRIGHTNESS_OFF)
                         .location(0, 0.35F, 0)
                         .size(0.3F, 0.15F, 0.3F))
                 .add("glassBottom", new ModelCuboid()
-                        .material(Material.ORANGE_STAINED_GLASS)
+                        .material(settings.getTier().concreteMaterial)
                         .brightness(Utils.BRIGHTNESS_OFF)
                         .location(0, -0.35F, 0)
                         .size(0.3F, 0.15F, 0.3F))
