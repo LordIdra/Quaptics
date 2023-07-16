@@ -48,6 +48,9 @@ public class Lore {
     }
 
     private String format(final double x) {
+        if (x == 0) {
+            return "0";
+        }
         return DECIMAL_FORMAT.format(x);
     }
 
