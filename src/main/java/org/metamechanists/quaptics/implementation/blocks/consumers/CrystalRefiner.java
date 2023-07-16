@@ -45,6 +45,7 @@ import java.util.Optional;
 public class CrystalRefiner extends ConnectedBlock implements ItemHolderBlock, PowerAnimatedBlock, ItemProcessor {
     public static final Settings CRYSTAL_REFINER_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
+            .timePerItem(4)
             .build();
     public static final SlimefunItemStack CRYSTAL_REFINER = new SlimefunItemStack(
             "QP_CRYSTAL_REFINER",
