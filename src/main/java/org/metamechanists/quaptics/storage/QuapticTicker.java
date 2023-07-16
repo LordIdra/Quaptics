@@ -3,7 +3,7 @@ package org.metamechanists.quaptics.storage;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.metamechanists.quaptics.beams.DeprecatedBeamStorage;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
-import org.metamechanists.quaptics.implementation.beacons.modules.player.ExperienceMultiplicationModuleListener;
+import org.metamechanists.quaptics.implementation.multiblocks.beacons.modules.player.ExperienceMultiplicationModuleListener;
 import org.metamechanists.quaptics.schedulers.BlockUpdateScheduler;
 import org.metamechanists.quaptics.schedulers.PointPanelUpdateScheduler;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;

@@ -1,4 +1,4 @@
-package org.metamechanists.quaptics.implementation.beacons.components;
+package org.metamechanists.quaptics.implementation.multiblocks.beacons.components;
 
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
@@ -13,32 +13,34 @@ import org.metamechanists.quaptics.implementation.base.QuapticBlock;
 import org.metamechanists.quaptics.implementation.Settings;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
+import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.models.ModelBuilder;
+import org.metamechanists.quaptics.utils.models.components.ModelCuboid;
 
 
-public class BeaconBeam extends QuapticBlock {
-    public static final Settings BEACON_BEAM_SETTINGS = Settings.builder()
+public class BeaconComputer extends QuapticBlock {
+    public static final Settings BEACON_COMPUTER_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
             .build();
-    public static final SlimefunItemStack BEACON_BEAM = new SlimefunItemStack(
-            "QP_BEACON_BEAM",
-            Material.POLISHED_DEEPSLATE_WALL,
-            "&6Beacon Beam",
-            Lore.create(BEACON_BEAM_SETTINGS,
+    public static final SlimefunItemStack BEACON_COMPUTER = new SlimefunItemStack(
+            "QP_BEACON_COMPUTER",
+            Material.LIGHT_BLUE_STAINED_GLASS,
+            "&6Beacon Computer",
+            Lore.create(BEACON_COMPUTER_SETTINGS,
                     "&7● Part of the Beacon multiblock"));
 
-    public BeaconBeam(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
+    public BeaconComputer(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
     }
 
     @Override
     protected DisplayGroup initModel(@NotNull final Location location, @NotNull final Player player) {
         return new ModelBuilder()
+                .add("main", new ModelCuboid()
+                        .material(Material.LIGHT_BLUE_STAINED_GLASS)
+                        .brightness(Utils.BRIGHTNESS_OFF)
+                        .size(0.8F, 1.0F, 0.8F)
+                        .rotation(Math.PI / 4))
                 .buildAtBlockCenter(location);
-    }
-    @Override
-    @NotNull
-    protected Material getBaseMaterial() {
-        return Material.POLISHED_DEEPSLATE_WALL;
     }
 }

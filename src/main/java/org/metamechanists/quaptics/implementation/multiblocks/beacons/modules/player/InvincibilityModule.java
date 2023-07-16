@@ -1,4 +1,4 @@
-package org.metamechanists.quaptics.implementation.beacons.modules.player;
+package org.metamechanists.quaptics.implementation.multiblocks.beacons.modules.player;
 
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
@@ -13,10 +13,10 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BannerMeta;
 import org.jetbrains.annotations.NotNull;
-import org.metamechanists.quaptics.implementation.beacons.controllers.BeaconController;
-import org.metamechanists.quaptics.implementation.beacons.modules.BeaconModule;
+import org.metamechanists.quaptics.implementation.multiblocks.beacons.controllers.BeaconController;
+import org.metamechanists.quaptics.implementation.multiblocks.beacons.modules.BeaconModule;
 import org.metamechanists.quaptics.implementation.Settings;
-import org.metamechanists.quaptics.implementation.beacons.modules.PlayerModule;
+import org.metamechanists.quaptics.implementation.multiblocks.beacons.modules.PlayerModule;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
 import org.metamechanists.quaptics.storage.QuapticTicker;

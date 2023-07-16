@@ -1,4 +1,4 @@
-package org.metamechanists.quaptics.implementation.beacons.modules.player;
+package org.metamechanists.quaptics.implementation.multiblocks.beacons.modules.player;
 
 import com.destroystokyo.paper.event.player.PlayerPickupExperienceEvent;
 import org.bukkit.entity.ExperienceOrb;

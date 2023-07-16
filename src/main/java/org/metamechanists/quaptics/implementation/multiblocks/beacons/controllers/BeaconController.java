@@ -1,4 +1,4 @@
-package org.metamechanists.quaptics.implementation.beacons.controllers;
+package org.metamechanists.quaptics.implementation.multiblocks.beacons.controllers;
 
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
@@ -25,8 +25,8 @@ import org.metamechanists.quaptics.implementation.attachments.ComplexMultiblock;
 import org.metamechanists.quaptics.implementation.attachments.ItemHolderBlock;
 import org.metamechanists.quaptics.implementation.attachments.PowerAnimatedBlock;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
-import org.metamechanists.quaptics.implementation.beacons.modules.BeaconModule;
-import org.metamechanists.quaptics.implementation.beacons.modules.PlayerModule;
+import org.metamechanists.quaptics.implementation.multiblocks.beacons.modules.BeaconModule;
+import org.metamechanists.quaptics.implementation.multiblocks.beacons.modules.PlayerModule;
 import org.metamechanists.quaptics.implementation.Settings;
 import org.metamechanists.quaptics.implementation.tools.QuapticChargeableItem;
 import org.metamechanists.quaptics.storage.PersistentDataTraverser;

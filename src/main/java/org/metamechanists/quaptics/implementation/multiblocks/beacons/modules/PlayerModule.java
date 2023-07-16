@@ -1,9 +1,9 @@
-package org.metamechanists.quaptics.implementation.beacons.modules;
+package org.metamechanists.quaptics.implementation.multiblocks.beacons.modules;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-import org.metamechanists.quaptics.implementation.beacons.controllers.BeaconController;
+import org.metamechanists.quaptics.implementation.multiblocks.beacons.controllers.BeaconController;
 
 import java.util.Collection;
 

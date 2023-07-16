@@ -4,7 +4,6 @@ import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
-import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -15,13 +14,13 @@ import org.jetbrains.annotations.NotNull;
 import org.metamechanists.metalib.utils.ParticleUtils;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
+import org.metamechanists.quaptics.implementation.Settings;
 import org.metamechanists.quaptics.implementation.attachments.ComplexMultiblock;
 import org.metamechanists.quaptics.implementation.attachments.ItemHolderBlock;
+import org.metamechanists.quaptics.implementation.attachments.ItemProcessor;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
-import org.metamechanists.quaptics.implementation.Settings;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
-import org.metamechanists.quaptics.items.groups.Primitive;
 import org.metamechanists.quaptics.storage.QuapticTicker;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
@@ -41,7 +40,7 @@ import java.util.Optional;
 import static org.metamechanists.quaptics.implementation.multiblocks.infuser.InfusionPillar.INFUSION_PILLAR;
 
 
-public class InfusionContainer extends ConnectedBlock implements ItemHolderBlock, ComplexMultiblock {
+public class InfusionContainer extends ConnectedBlock implements ItemHolderBlock, ComplexMultiblock, ItemProcessor {
     public static final Settings INFUSION_CONTAINER_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
             .timePerItem(5)
@@ -65,15 +64,6 @@ public class InfusionContainer extends ConnectedBlock implements ItemHolderBlock
     private static final double PILLAR_PARTICLE_ANIMATION_LENGTH_SECONDS = 0.5;
     private static final double CONTAINER_PARTICLE_RADIUS = 0.5;
     private static final int CONTAINER_PARTICLE_COUNT = 3;
-
-    private static final Map<ItemStack, ItemStack> RECIPES = Map.of(
-            new ItemStack(Material.QUARTZ), Primitive.PHASE_CRYSTAL_1,
-            Primitive.PHASE_CRYSTAL_1, Primitive.PHASE_CRYSTAL_5,
-            Primitive.PHASE_CRYSTAL_5, Primitive.PHASE_CRYSTAL_15,
-            Primitive.PHASE_CRYSTAL_15, Primitive.PHASE_CRYSTAL_45,
-            Primitive.PHASE_CRYSTAL_45, Primitive.PHASE_CRYSTAL_90,
-            Primitive.PHASE_CRYSTAL_90, Primitive.PHASE_CRYSTAL_180
-    );
 
     public InfusionContainer(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
@@ -153,27 +143,26 @@ public class InfusionContainer extends ConnectedBlock implements ItemHolderBlock
     @SuppressWarnings("unused")
     @Override
     public void onTick2(@NotNull final ConnectionGroup group, @NotNull final Location location) {
-        if (!BlockStorageAPI.getBoolean(location, Keys.BS_CRAFT_IN_PROGRESS)) {
+        if (!isProcessing(location)) {
             return;
         }
 
         if (!BlockStorageAPI.getBoolean(location, Keys.BS_MULTIBLOCK_INTACT) || !allPillarsPowered(location)) {
-            cancelCraft(location);
+            cancelProcessing(location);
         }
 
-        double secondsSinceCraftStarted = BlockStorageAPI.getDouble(location, Keys.BS_SECONDS_SINCE_CRAFT_STARTED);
-        secondsSinceCraftStarted += (double) QuapticTicker.INTERVAL_TICKS_2 / QuapticTicker.TICKS_PER_SECOND;
-        BlockStorageAPI.set(location, Keys.BS_SECONDS_SINCE_CRAFT_STARTED, secondsSinceCraftStarted);
+        final double secondsSinceCraftStarted = BlockStorageAPI.getDouble(location, Keys.BS_SECONDS_SINCE_CRAFT_STARTED);
 
+        tickProcessing(location, QuapticTicker.INTERVAL_TICKS_2);
         tickAnimation(location, secondsSinceCraftStarted);
 
         if (secondsSinceCraftStarted >= settings.getTimePerItem()) {
-            completeCraft(location);
+            completeProcessing(location);
         }
     }
     @Override
     public boolean onInsert(@NotNull final Location location, @NotNull final String name, @NotNull final ItemStack stack, @NotNull final Player player) {
-        if (RECIPES.keySet().stream().noneMatch(input -> SlimefunUtils.isItemSimilar(input, stack, false))) {
+        if (!isValidRecipe(stack)) {
             Language.sendLanguageMessage(player, "infuser.cannot-be-infused");
             return false;
         }
@@ -183,17 +172,19 @@ public class InfusionContainer extends ConnectedBlock implements ItemHolderBlock
             return false;
         }
 
-        BlockStorageAPI.set(location, Keys.BS_SECONDS_SINCE_CRAFT_STARTED, 0);
-        BlockStorageAPI.set(location, Keys.BS_CRAFT_IN_PROGRESS, true);
+        startProcessing(location);
         return true;
     }
     @Override
     public Optional<ItemStack> onRemove(@NotNull final Location location, @NotNull final String name, @NotNull final ItemStack stack) {
-        BlockStorageAPI.set(location, Keys.BS_SECONDS_SINCE_CRAFT_STARTED, 0);
-        BlockStorageAPI.set(location, Keys.BS_CRAFT_IN_PROGRESS, false);
+        cancelProcessing(location);
         return Optional.of(stack);
     }
 
+    @Override
+    public Map<ItemStack, ItemStack> getRecipes() {
+        return Map.of();
+    }
     @Override
     public Map<Vector, ItemStack> getStructure() {
         return Map.of(
@@ -226,20 +217,5 @@ public class InfusionContainer extends ConnectedBlock implements ItemHolderBlock
     }
     private static void animateCenter(@NotNull final Location center) {
         ParticleUtils.randomParticle(center.clone().toCenterLocation(), Particle.ENCHANTMENT_TABLE, CONTAINER_PARTICLE_RADIUS, CONTAINER_PARTICLE_COUNT);
-    }
-
-    private static void cancelCraft(@NotNull final Location location) {
-        BlockStorageAPI.set(location, Keys.BS_SECONDS_SINCE_CRAFT_STARTED, 0);
-        BlockStorageAPI.set(location, Keys.BS_CRAFT_IN_PROGRESS, false);
-    }
-    private static void completeCraft(@NotNull final Location location) {
-        final Optional<ItemStack> stack = ItemHolderBlock.getStack(location, "item");
-        if (stack.isEmpty()) {
-            return;
-        }
-
-        BlockStorageAPI.set(location, Keys.BS_SECONDS_SINCE_CRAFT_STARTED, 0);
-        BlockStorageAPI.set(location, Keys.BS_CRAFT_IN_PROGRESS, false);
-        ItemHolderBlock.insertItem(location, "item", RECIPES.get(stack.get()));
     }
 }

@@ -11,25 +11,26 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.Quaptics;
-import org.metamechanists.quaptics.implementation.beacons.components.BeaconBattery;
-import org.metamechanists.quaptics.implementation.beacons.components.BeaconBeam;
-import org.metamechanists.quaptics.implementation.beacons.components.BeaconComputer;
-import org.metamechanists.quaptics.implementation.beacons.components.BeaconMatrix;
-import org.metamechanists.quaptics.implementation.beacons.components.BeaconPanel;
-import org.metamechanists.quaptics.implementation.beacons.components.BeaconPowerSupply;
-import org.metamechanists.quaptics.implementation.beacons.components.BeaconRod;
-import org.metamechanists.quaptics.implementation.beacons.components.BeaconTransmitter;
-import org.metamechanists.quaptics.implementation.beacons.controllers.BeaconController1;
-import org.metamechanists.quaptics.implementation.beacons.controllers.BeaconController2;
-import org.metamechanists.quaptics.implementation.beacons.controllers.BeaconController3;
-import org.metamechanists.quaptics.implementation.beacons.modules.player.ExperienceMultiplicationModule;
-import org.metamechanists.quaptics.implementation.beacons.modules.player.FireResistanceModule;
-import org.metamechanists.quaptics.implementation.beacons.modules.player.HungerRefillModule;
-import org.metamechanists.quaptics.implementation.beacons.modules.player.InvincibilityModule;
-import org.metamechanists.quaptics.implementation.beacons.modules.player.LuckModule;
-import org.metamechanists.quaptics.implementation.beacons.modules.player.WirelessChargerModule;
+import org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconBattery;
+import org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconBeam;
+import org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconComputer;
+import org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconMatrix;
+import org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconPanel;
+import org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconPowerSupply;
+import org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconRod;
+import org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconTransmitter;
+import org.metamechanists.quaptics.implementation.multiblocks.beacons.controllers.BeaconController1;
+import org.metamechanists.quaptics.implementation.multiblocks.beacons.controllers.BeaconController2;
+import org.metamechanists.quaptics.implementation.multiblocks.beacons.controllers.BeaconController3;
+import org.metamechanists.quaptics.implementation.multiblocks.beacons.modules.player.ExperienceMultiplicationModule;
+import org.metamechanists.quaptics.implementation.multiblocks.beacons.modules.player.FireResistanceModule;
+import org.metamechanists.quaptics.implementation.multiblocks.beacons.modules.player.HungerRefillModule;
+import org.metamechanists.quaptics.implementation.multiblocks.beacons.modules.player.InvincibilityModule;
+import org.metamechanists.quaptics.implementation.multiblocks.beacons.modules.player.LuckModule;
+import org.metamechanists.quaptics.implementation.multiblocks.beacons.modules.player.WirelessChargerModule;
 import org.metamechanists.quaptics.implementation.blocks.concentrators.SolarConcentrator;
 import org.metamechanists.quaptics.implementation.blocks.consumers.Charger;
+import org.metamechanists.quaptics.implementation.blocks.consumers.CrystalRefiner;
 import org.metamechanists.quaptics.implementation.blocks.consumers.DataStripper;
 import org.metamechanists.quaptics.implementation.blocks.consumers.ItemProjector;
 import org.metamechanists.quaptics.implementation.blocks.consumers.MultiblockClicker;
@@ -52,44 +53,46 @@ import org.metamechanists.quaptics.items.Groups;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.RecipeTypes;
 
-import static org.metamechanists.quaptics.implementation.beacons.components.BeaconBattery.BEACON_BATTERY;
-import static org.metamechanists.quaptics.implementation.beacons.components.BeaconBattery.BEACON_BATTERY_SETTINGS;
-import static org.metamechanists.quaptics.implementation.beacons.components.BeaconBeam.BEACON_BEAM;
-import static org.metamechanists.quaptics.implementation.beacons.components.BeaconBeam.BEACON_BEAM_SETTINGS;
-import static org.metamechanists.quaptics.implementation.beacons.components.BeaconComputer.BEACON_COMPUTER;
-import static org.metamechanists.quaptics.implementation.beacons.components.BeaconComputer.BEACON_COMPUTER_SETTINGS;
-import static org.metamechanists.quaptics.implementation.beacons.components.BeaconMatrix.BEACON_MATRIX;
-import static org.metamechanists.quaptics.implementation.beacons.components.BeaconMatrix.BEACON_MATRIX_SETTINGS;
-import static org.metamechanists.quaptics.implementation.beacons.components.BeaconPanel.BEACON_PANEL;
-import static org.metamechanists.quaptics.implementation.beacons.components.BeaconPanel.BEACON_PANEL_SETTINGS;
-import static org.metamechanists.quaptics.implementation.beacons.components.BeaconPowerSupply.BEACON_POWER_SUPPLY;
-import static org.metamechanists.quaptics.implementation.beacons.components.BeaconPowerSupply.BEACON_POWER_SUPPLY_SETTINGS;
-import static org.metamechanists.quaptics.implementation.beacons.components.BeaconRod.BEACON_ROD;
-import static org.metamechanists.quaptics.implementation.beacons.components.BeaconRod.BEACON_ROD_SETTINGS;
-import static org.metamechanists.quaptics.implementation.beacons.components.BeaconTransmitter.BEACON_TRANSMITTER;
-import static org.metamechanists.quaptics.implementation.beacons.components.BeaconTransmitter.BEACON_TRANSMITTER_SETTINGS;
-import static org.metamechanists.quaptics.implementation.beacons.controllers.BeaconController1.BEACON_CONTROLLER_1;
-import static org.metamechanists.quaptics.implementation.beacons.controllers.BeaconController1.BEACON_CONTROLLER_1_SETTINGS;
-import static org.metamechanists.quaptics.implementation.beacons.controllers.BeaconController2.BEACON_CONTROLLER_2;
-import static org.metamechanists.quaptics.implementation.beacons.controllers.BeaconController2.BEACON_CONTROLLER_2_SETTINGS;
-import static org.metamechanists.quaptics.implementation.beacons.controllers.BeaconController3.BEACON_CONTROLLER_3;
-import static org.metamechanists.quaptics.implementation.beacons.controllers.BeaconController3.BEACON_CONTROLLER_3_SETTINGS;
-import static org.metamechanists.quaptics.implementation.beacons.modules.player.ExperienceMultiplicationModule.EXPERIENCE_MULTIPLICATION_MODULE;
-import static org.metamechanists.quaptics.implementation.beacons.modules.player.ExperienceMultiplicationModule.EXPERIENCE_MULTIPLICATION_MODULE_SETTINGS;
-import static org.metamechanists.quaptics.implementation.beacons.modules.player.FireResistanceModule.FIRE_RESISTANCE_MODULE;
-import static org.metamechanists.quaptics.implementation.beacons.modules.player.FireResistanceModule.FIRE_RESISTANCE_MODULE_SETTINGS;
-import static org.metamechanists.quaptics.implementation.beacons.modules.player.HungerRefillModule.HUNGER_REFILL_MODULE;
-import static org.metamechanists.quaptics.implementation.beacons.modules.player.HungerRefillModule.HUNGER_REFILL_MODULE_SETTINGS;
-import static org.metamechanists.quaptics.implementation.beacons.modules.player.InvincibilityModule.INVINCIBILITY_MODULE;
-import static org.metamechanists.quaptics.implementation.beacons.modules.player.InvincibilityModule.INVINCIBILITY_MODULE_SETTINGS;
-import static org.metamechanists.quaptics.implementation.beacons.modules.player.LuckModule.LUCK_MODULE;
-import static org.metamechanists.quaptics.implementation.beacons.modules.player.LuckModule.LUCK_MODULE_SETTINGS;
-import static org.metamechanists.quaptics.implementation.beacons.modules.player.WirelessChargerModule.WIRELESS_CHARGER_MODULE;
-import static org.metamechanists.quaptics.implementation.beacons.modules.player.WirelessChargerModule.WIRELESS_CHARGER_MODULE_SETTINGS;
+import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconBattery.BEACON_BATTERY;
+import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconBattery.BEACON_BATTERY_SETTINGS;
+import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconBeam.BEACON_BEAM;
+import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconBeam.BEACON_BEAM_SETTINGS;
+import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconComputer.BEACON_COMPUTER;
+import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconComputer.BEACON_COMPUTER_SETTINGS;
+import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconMatrix.BEACON_MATRIX;
+import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconMatrix.BEACON_MATRIX_SETTINGS;
+import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconPanel.BEACON_PANEL;
+import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconPanel.BEACON_PANEL_SETTINGS;
+import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconPowerSupply.BEACON_POWER_SUPPLY;
+import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconPowerSupply.BEACON_POWER_SUPPLY_SETTINGS;
+import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconRod.BEACON_ROD;
+import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconRod.BEACON_ROD_SETTINGS;
+import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconTransmitter.BEACON_TRANSMITTER;
+import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconTransmitter.BEACON_TRANSMITTER_SETTINGS;
+import static org.metamechanists.quaptics.implementation.multiblocks.beacons.controllers.BeaconController1.BEACON_CONTROLLER_1;
+import static org.metamechanists.quaptics.implementation.multiblocks.beacons.controllers.BeaconController1.BEACON_CONTROLLER_1_SETTINGS;
+import static org.metamechanists.quaptics.implementation.multiblocks.beacons.controllers.BeaconController2.BEACON_CONTROLLER_2;
+import static org.metamechanists.quaptics.implementation.multiblocks.beacons.controllers.BeaconController2.BEACON_CONTROLLER_2_SETTINGS;
+import static org.metamechanists.quaptics.implementation.multiblocks.beacons.controllers.BeaconController3.BEACON_CONTROLLER_3;
+import static org.metamechanists.quaptics.implementation.multiblocks.beacons.controllers.BeaconController3.BEACON_CONTROLLER_3_SETTINGS;
+import static org.metamechanists.quaptics.implementation.multiblocks.beacons.modules.player.ExperienceMultiplicationModule.EXPERIENCE_MULTIPLICATION_MODULE;
+import static org.metamechanists.quaptics.implementation.multiblocks.beacons.modules.player.ExperienceMultiplicationModule.EXPERIENCE_MULTIPLICATION_MODULE_SETTINGS;
+import static org.metamechanists.quaptics.implementation.multiblocks.beacons.modules.player.FireResistanceModule.FIRE_RESISTANCE_MODULE;
+import static org.metamechanists.quaptics.implementation.multiblocks.beacons.modules.player.FireResistanceModule.FIRE_RESISTANCE_MODULE_SETTINGS;
+import static org.metamechanists.quaptics.implementation.multiblocks.beacons.modules.player.HungerRefillModule.HUNGER_REFILL_MODULE;
+import static org.metamechanists.quaptics.implementation.multiblocks.beacons.modules.player.HungerRefillModule.HUNGER_REFILL_MODULE_SETTINGS;
+import static org.metamechanists.quaptics.implementation.multiblocks.beacons.modules.player.InvincibilityModule.INVINCIBILITY_MODULE;
+import static org.metamechanists.quaptics.implementation.multiblocks.beacons.modules.player.InvincibilityModule.INVINCIBILITY_MODULE_SETTINGS;
+import static org.metamechanists.quaptics.implementation.multiblocks.beacons.modules.player.LuckModule.LUCK_MODULE;
+import static org.metamechanists.quaptics.implementation.multiblocks.beacons.modules.player.LuckModule.LUCK_MODULE_SETTINGS;
+import static org.metamechanists.quaptics.implementation.multiblocks.beacons.modules.player.WirelessChargerModule.WIRELESS_CHARGER_MODULE;
+import static org.metamechanists.quaptics.implementation.multiblocks.beacons.modules.player.WirelessChargerModule.WIRELESS_CHARGER_MODULE_SETTINGS;
 import static org.metamechanists.quaptics.implementation.blocks.concentrators.SolarConcentrator.SOLAR_CONCENTRATOR_1;
 import static org.metamechanists.quaptics.implementation.blocks.concentrators.SolarConcentrator.SOLAR_CONCENTRATOR_1_SETTINGS;
 import static org.metamechanists.quaptics.implementation.blocks.consumers.Charger.CHARGER_1;
 import static org.metamechanists.quaptics.implementation.blocks.consumers.Charger.CHARGER_1_SETTINGS;
+import static org.metamechanists.quaptics.implementation.blocks.consumers.CrystalRefiner.CRYSTAL_REFINER;
+import static org.metamechanists.quaptics.implementation.blocks.consumers.CrystalRefiner.CRYSTAL_REFINER_SETTINGS;
 import static org.metamechanists.quaptics.implementation.blocks.consumers.DataStripper.DATA_STRIPPER_1;
 import static org.metamechanists.quaptics.implementation.blocks.consumers.DataStripper.DATA_STRIPPER_1_SETTINGS;
 import static org.metamechanists.quaptics.implementation.blocks.consumers.ItemProjector.ITEM_PROJECTOR;
@@ -422,6 +425,13 @@ public class Primitive {
                 RecipeType.NULL,
                 new ItemStack[]{},
                 WIRELESS_CHARGER_MODULE_SETTINGS).register(addon);
+
+        new CrystalRefiner(
+                Groups.PRIMITIVE,
+                CRYSTAL_REFINER,
+                RecipeType.NULL,
+                new ItemStack[]{},
+                CRYSTAL_REFINER_SETTINGS).register(addon);
 
         new SlimefunItem(
                 Groups.PRIMITIVE,

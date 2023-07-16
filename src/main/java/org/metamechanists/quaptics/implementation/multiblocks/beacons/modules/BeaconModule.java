@@ -1,4 +1,4 @@
-package org.metamechanists.quaptics.implementation.beacons.modules;
+package org.metamechanists.quaptics.implementation.multiblocks.beacons.modules;
 
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;

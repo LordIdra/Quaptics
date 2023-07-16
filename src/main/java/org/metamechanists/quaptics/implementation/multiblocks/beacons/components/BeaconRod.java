@@ -1,4 +1,4 @@
-package org.metamechanists.quaptics.implementation.beacons.components;
+package org.metamechanists.quaptics.implementation.multiblocks.beacons.components;
 
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
@@ -13,23 +13,22 @@ import org.metamechanists.quaptics.implementation.base.QuapticBlock;
 import org.metamechanists.quaptics.implementation.Settings;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
-import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.models.ModelBuilder;
 import org.metamechanists.quaptics.utils.models.components.ModelCuboid;
 
 
-public class BeaconComputer extends QuapticBlock {
-    public static final Settings BEACON_COMPUTER_SETTINGS = Settings.builder()
+public class BeaconRod extends QuapticBlock {
+    public static final Settings BEACON_ROD_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
             .build();
-    public static final SlimefunItemStack BEACON_COMPUTER = new SlimefunItemStack(
-            "QP_BEACON_COMPUTER",
-            Material.LIGHT_BLUE_STAINED_GLASS,
-            "&6Beacon Computer",
-            Lore.create(BEACON_COMPUTER_SETTINGS,
+    public static final SlimefunItemStack BEACON_ROD = new SlimefunItemStack(
+            "QP_BEACON_ROD",
+            Material.GRAY_CONCRETE,
+            "&6Beacon Rod",
+            Lore.create(BEACON_ROD_SETTINGS,
                     "&7● Part of the Beacon multiblock"));
 
-    public BeaconComputer(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
+    public BeaconRod(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
     }
 
@@ -37,10 +36,13 @@ public class BeaconComputer extends QuapticBlock {
     protected DisplayGroup initModel(@NotNull final Location location, @NotNull final Player player) {
         return new ModelBuilder()
                 .add("main", new ModelCuboid()
-                        .material(Material.LIGHT_BLUE_STAINED_GLASS)
-                        .brightness(Utils.BRIGHTNESS_OFF)
-                        .size(0.8F, 1.0F, 0.8F)
-                        .rotation(Math.PI / 4))
+                        .material(Material.GRAY_CONCRETE)
+                        .size(0.4F, 1.01F, 0.4F))
                 .buildAtBlockCenter(location);
+    }
+    @Override
+    @NotNull
+    protected Material getBaseMaterial() {
+        return Material.NETHER_BRICK_FENCE;
     }
 }

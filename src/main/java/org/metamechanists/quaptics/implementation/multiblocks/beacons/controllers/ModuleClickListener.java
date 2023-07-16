@@ -1,4 +1,4 @@
-package org.metamechanists.quaptics.implementation.beacons.controllers;
+package org.metamechanists.quaptics.implementation.multiblocks.beacons.controllers;
 
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Interaction;

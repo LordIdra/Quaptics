@@ -1,4 +1,4 @@
-package org.metamechanists.quaptics.implementation.beacons.controllers;
+package org.metamechanists.quaptics.implementation.multiblocks.beacons.controllers;
 
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
@@ -28,14 +28,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.metamechanists.quaptics.implementation.beacons.components.BeaconBattery.BEACON_BATTERY;
-import static org.metamechanists.quaptics.implementation.beacons.components.BeaconBeam.BEACON_BEAM;
-import static org.metamechanists.quaptics.implementation.beacons.components.BeaconComputer.BEACON_COMPUTER;
-import static org.metamechanists.quaptics.implementation.beacons.components.BeaconMatrix.BEACON_MATRIX;
-import static org.metamechanists.quaptics.implementation.beacons.components.BeaconPanel.BEACON_PANEL;
-import static org.metamechanists.quaptics.implementation.beacons.components.BeaconPowerSupply.BEACON_POWER_SUPPLY;
-import static org.metamechanists.quaptics.implementation.beacons.components.BeaconRod.BEACON_ROD;
-import static org.metamechanists.quaptics.implementation.beacons.components.BeaconTransmitter.BEACON_TRANSMITTER;
+import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconBattery.BEACON_BATTERY;
+import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconBeam.BEACON_BEAM;
+import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconComputer.BEACON_COMPUTER;
+import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconMatrix.BEACON_MATRIX;
+import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconPanel.BEACON_PANEL;
+import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconPowerSupply.BEACON_POWER_SUPPLY;
+import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconRod.BEACON_ROD;
+import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconTransmitter.BEACON_TRANSMITTER;
 
 
 public class BeaconController3 extends BeaconController {

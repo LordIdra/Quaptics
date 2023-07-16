@@ -1,4 +1,4 @@
-package org.metamechanists.quaptics.implementation.beacons.components;
+package org.metamechanists.quaptics.implementation.multiblocks.beacons.components;
 
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
