@@ -33,19 +33,54 @@ import java.util.Optional;
 public class Scatterer extends ConnectedBlock implements PowerAnimatedBlock, PowerLossBlock {
     public static final Settings SCATTERER_1_SETTINGS = Settings.builder()
             .tier(Tier.BASIC)
+            .maxPowerHidden(true)
             .minPower(40)
-            .powerLoss(0.05)
-            .minFrequency(0.2)
+            .powerLoss(0.06)
+            .minFrequency(0.5)
             .maxFrequency(1.0)
-            .frequencyMultiplier(2.0)
+            .frequencyMultiplier(1.2)
             .comparatorVisual("compare")
             .build();
+    public static final Settings SCATTERER_2_SETTINGS = Settings.builder()
+            .tier(Tier.INTERMEDIATE)
+            .maxPowerHidden(true)
+            .minPower(360)
+            .powerLoss(0.03)
+            .minFrequency(4)
+            .maxFrequency(20)
+            .frequencyMultiplier(1.5)
+            .comparatorVisual("compare")
+            .build();
+    public static final Settings SCATTERER_3_SETTINGS = Settings.builder()
+            .tier(Tier.ADVANCED)
+            .maxPowerHidden(true)
+            .minPower(5000)
+            .powerLoss(0.03)
+            .minFrequency(4)
+            .maxFrequency(20)
+            .frequencyMultiplier(1.5)
+            .comparatorVisual("compare")
+            .build();
+
     public static final SlimefunItemStack SCATTERER_1 = new SlimefunItemStack(
             "QP_SCATTERER_1",
             Material.PINK_STAINED_GLASS,
             "&cScatterer &4I",
             Lore.create(SCATTERER_1_SETTINGS,
                     "&7● Increases the frequency of a quaptic ray"));
+    public static final SlimefunItemStack SCATTERER_2 = new SlimefunItemStack(
+            "QP_SCATTERER_2",
+            Material.PINK_STAINED_GLASS,
+            "&cScatterer &4II",
+            Lore.create(SCATTERER_2_SETTINGS,
+                    "&7● Increases the frequency of a quaptic ray"));
+    public static final SlimefunItemStack SCATTERER_3 = new SlimefunItemStack(
+            "QP_SCATTERER_3",
+            Material.PINK_STAINED_GLASS,
+            "&cScatterer &4III",
+            Lore.create(SCATTERER_3_SETTINGS,
+                    "&7● Increases the frequency of a quaptic ray"));
+
 
     private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -getConnectionRadius());
     private final Vector outputPointLocation = new Vector(0.0F, 0.0F, getConnectionRadius());
@@ -87,10 +122,6 @@ public class Scatterer extends ConnectedBlock implements PowerAnimatedBlock, Pow
 
     @Override
     public void onInputLinkUpdated(@NotNull final ConnectionGroup group, @NotNull final Location location) {
-        if (doBurnoutCheck(group, "input")) {
-            return;
-        }
-
         final Optional<Link> inputLink = getLink(location, "input");
         final Optional<Link> outputLink = getLink(location, "output");
         onPoweredAnimation(location, settings.isOperational(inputLink));

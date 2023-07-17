@@ -16,6 +16,7 @@ import java.util.Set;
 public class Settings {
     private Tier tier;
     private boolean operatingPowerHidden;
+    private boolean maxPowerHidden;
 
     private float displayRadius;
     private float connectionRadius;

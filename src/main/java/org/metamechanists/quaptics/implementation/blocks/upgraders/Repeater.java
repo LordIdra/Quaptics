@@ -33,18 +33,71 @@ import java.util.Optional;
 public class Repeater extends ConnectedBlock implements PowerAnimatedBlock, PowerLossBlock {
     public static final Settings REPEATER_1_SETTINGS = Settings.builder()
             .tier(Tier.BASIC)
-            .minPower(15)
-            .powerLoss(0.05)
+            .maxPowerHidden(true)
+            .minPower(20)
+            .powerLoss(0.08)
             .minFrequency(0.0)
-            .maxFrequency(0.3)
+            .maxFrequency(0.5)
             .frequencyStep(0.1)
             .repeaterDelay(1)
             .build();
+
+    public static final Settings REPEATER_2_SETTINGS = Settings.builder()
+            .tier(Tier.INTERMEDIATE)
+            .maxPowerHidden(true)
+            .minPower(190)
+            .powerLoss(0.06)
+            .minFrequency(1)
+            .maxFrequency(4)
+            .frequencyStep(0.8)
+            .repeaterDelay(1)
+            .build();
+
+    public static final Settings REPEATER_3_SETTINGS = Settings.builder()
+            .tier(Tier.INTERMEDIATE)
+            .maxPowerHidden(true)
+            .minPower(600)
+            .powerLoss(0.04)
+            .minFrequency(20)
+            .maxFrequency(100)
+            .frequencyStep(25)
+            .repeaterDelay(2)
+            .build();
+
+    public static final Settings REPEATER_4_SETTINGS = Settings.builder()
+            .tier(Tier.ADVANCED)
+            .maxPowerHidden(true)
+            .minPower(1100)
+            .powerLoss(0.02)
+            .minFrequency(100)
+            .maxFrequency(400)
+            .frequencyStep(90)
+            .repeaterDelay(1)
+            .build();
+
     public static final SlimefunItemStack REPEATER_1 = new SlimefunItemStack(
             "QP_REPEATER_1",
             Material.RED_STAINED_GLASS,
             "&cRepeater &4I",
             Lore.create(REPEATER_1_SETTINGS,
+                    "&7● Increases the frequency of a quaptic ray"));
+    public static final SlimefunItemStack REPEATER_2 = new SlimefunItemStack(
+            "QP_REPEATER_2",
+            Material.RED_STAINED_GLASS,
+            "&cRepeater &4II",
+            Lore.create(REPEATER_2_SETTINGS,
+                    "&7● Increases the frequency of a quaptic ray"));
+    public static final SlimefunItemStack REPEATER_3 = new SlimefunItemStack(
+            "QP_REPEATER_2",
+            Material.RED_STAINED_GLASS,
+            "&cRepeater &4II",
+            Lore.create(REPEATER_3_SETTINGS,
+                    "&7● Increases the frequency of a quaptic ray"));
+    public static final SlimefunItemStack REPEATER_4 = new SlimefunItemStack(
+            "QP_REPEATER_2",
+            Material.RED_STAINED_GLASS,
+            "&cRepeater &4II",
+            Lore.create(REPEATER_4_SETTINGS,
                     "&7● Increases the frequency of a quaptic ray"));
 
     private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -getConnectionRadius());
@@ -87,10 +140,6 @@ public class Repeater extends ConnectedBlock implements PowerAnimatedBlock, Powe
 
     @Override
     public void onInputLinkUpdated(@NotNull final ConnectionGroup group, @NotNull final Location location) {
-        if (doBurnoutCheck(group, "input")) {
-            return;
-        }
-
         final Optional<Link> inputLink = getLink(location, "input");
         final Optional<Link> outputLink = getLink(location, "output");
         onPoweredAnimation(location, settings.isOperational(inputLink));

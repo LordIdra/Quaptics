@@ -9,7 +9,16 @@ public final class FrequencyColor {
     private static final FrequencyColor errorColor = new FrequencyColor(0, Material.WOODEN_PICKAXE);
     private static final List<FrequencyColor> COLORS = List.of(
             new FrequencyColor(0, Material.RED_CONCRETE),
-            new FrequencyColor(0.2, Material.RED_TERRACOTTA)
+            new FrequencyColor(0.5, Material.ORANGE_CONCRETE),
+            new FrequencyColor(1, Material.YELLOW_CONCRETE),
+            new FrequencyColor(4, Material.LIME_CONCRETE),
+            new FrequencyColor(20, Material.GREEN_CONCRETE),
+            new FrequencyColor(100, Material.CYAN_CONCRETE),
+            new FrequencyColor(600, Material.LIGHT_BLUE_CONCRETE),
+            new FrequencyColor(4000, Material.BLUE_CONCRETE),
+            new FrequencyColor(8000, Material.PURPLE_CONCRETE)
+            //Material.RED_CONCRETE,
+            //Material.RED_TERRACOTTA,
             //Material.TERRACOTTA,
             //Material.ORANGE_TERRACOTTA,
             //Material.ORANGE_CONCRETE,
@@ -30,7 +39,7 @@ public final class FrequencyColor {
             //Material.MAGENTA_TERRACOTTA,
             //Material.MAGENTA_CONCRETE,
             //Material.PINK_TERRACOTTA,
-            //Material.PINK_CONCRETE
+            //Material.PINK_CONCRETE,
     );
 
     private final double frequencyThreshold;

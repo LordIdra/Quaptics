@@ -31,22 +31,23 @@ import java.util.Optional;
 
 
 public class DiffractionGrating extends ConnectedBlock implements PowerAnimatedBlock, PowerLossBlock {
-    public static final Settings DIFFRACTION_GRATING_1_SETTINGS = Settings.builder()
-            .tier(Tier.BASIC)
-            .minPower(40)
+    public static final Settings DIFFRACTION_GRATING_SETTINGS = Settings.builder()
+            .tier(Tier.ADVANCED)
+            .maxPowerHidden(true)
+            .minPower(2600)
             .powerLoss(0.05)
-            .minFrequency(1.0)
-            .maxFrequency(3.0)
-            .frequencyMultiplier(2.0)
-            .targetPhase(48)
-            .targetPhaseSpread(10)
+            .minFrequency(600)
+            .maxFrequency(4000)
+            .frequencyMultiplier(1.8)
+            .targetPhase(168)
+            .targetPhaseSpread(20)
             .build();
-    public static final SlimefunItemStack DIFFRACTION_GRATING_1 = new SlimefunItemStack(
-            "QP_DIFFRACTION_GRATING_1",
-            Material.ORANGE_TERRACOTTA,
-            "&cDiffraction Grating &4I",
-            Lore.create(DIFFRACTION_GRATING_1_SETTINGS,
-                    "&7● Increases the frequency of a quaptic ray",
+    public static final SlimefunItemStack DIFFRACTION_GRATING = new SlimefunItemStack(
+            "QP_DIFFRACTION_GRATING",
+            Material.YELLOW_TERRACOTTA,
+            "&cDiffraction Grating",
+            Lore.create(DIFFRACTION_GRATING_SETTINGS,
+                    "&7● Increases the frequency of quaptic rays",
                     "&7● The size of the increase depends on how close the",
                     "&7  auxiliary input is to the target phase"));
 
@@ -68,7 +69,7 @@ public class DiffractionGrating extends ConnectedBlock implements PowerAnimatedB
     protected DisplayGroup initModel(final @NotNull Location location, final @NotNull Player player) {
         return new ModelBuilder()
                 .add("main", new ModelCuboid()
-                        .material(Material.ORANGE_TERRACOTTA)
+                        .material(Material.YELLOW_TERRACOTTA)
                         .facing(player.getFacing())
                         .size(0.2F, 0.2F, 1.0F))
                 .add("auxiliary", new ModelCuboid()
@@ -94,10 +95,6 @@ public class DiffractionGrating extends ConnectedBlock implements PowerAnimatedB
 
     @Override
     public void onInputLinkUpdated(@NotNull final ConnectionGroup group, @NotNull final Location location) {
-        if (doBurnoutCheck(group, "main") || doBurnoutCheck(group, "auxiliary")) {
-            return;
-        }
-
         final Optional<Link> mainLink = getLink(location, "main");
         final Optional<Link> auxiliaryLink = getLink(location, "auxiliary");
         final Optional<Link> outputLink = getLink(location, "output");

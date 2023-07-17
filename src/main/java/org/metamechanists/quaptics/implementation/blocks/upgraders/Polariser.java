@@ -42,16 +42,21 @@ import java.util.Optional;
 
 
 public class Polariser extends ConnectedBlock implements PowerAnimatedBlock, PowerLossBlock, ItemHolderBlock {
-    public static final Settings POLARISER_1_SETTINGS = Settings.builder()
-            .tier(Tier.BASIC)
-            .powerLoss(0.07)
+    public static final Settings POLARISER_SETTINGS = Settings.builder()
+            .tier(Tier.ADVANCED)
+            .maxPowerHidden(true)
+            .powerLoss(0.12)
             .build();
-    public static final SlimefunItemStack POLARISER_1 = new SlimefunItemStack(
-            "QP_POLARISER_1",
+    public static final SlimefunItemStack POLARISER = new SlimefunItemStack(
+            "QP_POLARISER",
             Material.YELLOW_TERRACOTTA,
-            "&cPolariser &4I",
-            Lore.create(POLARISER_1_SETTINGS,
-                    "&7● Sets the Phase of the main ray to the phase of the auxiliary ray"));
+            "&cPolariser",
+            Lore.create(POLARISER_SETTINGS,
+                    "&7● Increases the phase of quaptic rays",
+                    "&7● The increase in phase depends on the phase crystal",
+                    "  that the polariser is holding",
+                    "&7● &eRight Click &7an item to insert",
+                    "&7● &eRight Click &7again to retrieve"));
 
     private static final Vector MAIN_INPUT_LOCATION = new Vector(0.0F, 0.0F, -0.45F);
     private static final Vector OUTPUT_LOCATION = new Vector(0.0F, 0.0F, 0.45);
@@ -108,10 +113,6 @@ public class Polariser extends ConnectedBlock implements PowerAnimatedBlock, Pow
 
     @Override
     public void onInputLinkUpdated(@NotNull final ConnectionGroup group, @NotNull final Location location) {
-        if (doBurnoutCheck(group, "input")) {
-            return;
-        }
-
         if (!BlockStorageAPI.getBoolean(location, Keys.BS_IS_HOLDING_ITEM)) {
             onPoweredAnimation(location, false);
             return;

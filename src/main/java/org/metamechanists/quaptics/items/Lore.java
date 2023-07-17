@@ -86,7 +86,11 @@ public class Lore {
         final List<String> lore = new ArrayList<>();
 
         if (settings.getTier() != null && !settings.isOperatingPowerHidden()) {
-            lore.add(operatingPower(settings.getMinPower(), settings.getTier().maxPower));
+            if (settings.isMaxPowerHidden()) {
+                lore.add(minPower(settings.getMinPower()));
+            } else {
+                lore.add(operatingPower(settings.getMinPower(), settings.getTier().maxPower));
+            }
         }
         if (settings.getPowerThreshold() != 0) {
             lore.add(powerThreshold(settings.getPowerThreshold()));
@@ -202,6 +206,9 @@ public class Lore {
     // Power
     public String powerInfoPanel(final double power) {
         return POWER_SYMBOL + "&7Power &e" + formatTwoDp(power) + POWER_SUFFIX;
+    }
+    public String minPower(final double minPower) {
+        return POWER_SYMBOL + "&7Operating Power &e" + formatTwoDp(minPower) + "+ " + POWER_SUFFIX;
     }
     public String powerOutput(final double powerOutput) {
         return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Power Output &e" + formatZeroDp(powerOutput) + POWER_SUFFIX;

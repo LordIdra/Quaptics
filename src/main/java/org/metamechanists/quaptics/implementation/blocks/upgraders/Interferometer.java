@@ -31,16 +31,17 @@ import java.util.Optional;
 
 
 public class Interferometer extends ConnectedBlock implements PowerAnimatedBlock, PowerLossBlock {
-    public static final Settings INTERFEROMETER_1_SETTINGS = Settings.builder()
-            .tier(Tier.BASIC)
-            .powerLoss(0.07)
+    public static final Settings INTERFEROMETER_SETTINGS = Settings.builder()
+            .tier(Tier.ADVANCED)
+            .maxPowerHidden(true)
+            .powerLoss(0.08)
             .build();
-    public static final SlimefunItemStack INTERFEROMETER_1 = new SlimefunItemStack(
-            "QP_INTERFEROMETER_1",
+    public static final SlimefunItemStack INTERFEROMETER = new SlimefunItemStack(
+            "QP_INTERFEROMETER",
             Material.YELLOW_TERRACOTTA,
-            "&cInterferometer &4I",
-            Lore.create(INTERFEROMETER_1_SETTINGS,
-                    "&7● Sets the Phase of the main ray to the phase of the auxiliary ray"));
+            "&cInterferometer",
+            Lore.create(INTERFEROMETER_SETTINGS,
+                    "&7● Sets the phase of the main ray to the phase of the auxiliary ray"));
 
     private static final Vector MAIN_INPUT_LOCATION = new Vector(0, 0, -0.45);
     private static final Vector AUXILIARY_INPUT_LOCATION = new Vector(0.4, 0, 0);
@@ -86,10 +87,6 @@ public class Interferometer extends ConnectedBlock implements PowerAnimatedBlock
 
     @Override
     public void onInputLinkUpdated(@NotNull final ConnectionGroup group, @NotNull final Location location) {
-        if (doBurnoutCheck(group, "main") || doBurnoutCheck(group, "auxiliary")) {
-            return;
-        }
-
         final Optional<Link> mainLink = getLink(location, "main");
         final Optional<Link> auxiliaryLink = getLink(location, "auxiliary");
         final Optional<Link> outputLink = getLink(location, "output");
