@@ -18,8 +18,6 @@ public class Settings {
     private boolean operatingPowerHidden;
     private boolean maxPowerHidden;
 
-    private float displayRadius;
-    private float connectionRadius;
     private float rotationY;
     private String comparatorVisual;
     private int repeaterDelay;

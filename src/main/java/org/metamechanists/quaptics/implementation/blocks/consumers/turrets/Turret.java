@@ -40,7 +40,7 @@ import java.util.UUID;
 
 public abstract class Turret extends ConnectedBlock implements PowerAnimatedBlock {
     private static final int ARBITRARILY_LARGE_NUMBER = 9999999;
-    private final Vector inputLocation = new Vector(0.0F, 0.0F, -settings.getConnectionRadius());
+    private final Vector inputLocation = new Vector(0.0F, 0.0F, -getConnectionRadius());
 
     protected Turret(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
