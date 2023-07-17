@@ -33,7 +33,7 @@ import java.util.Optional;
 public class Interferometer extends ConnectedBlock implements PowerAnimatedBlock, PowerLossBlock {
     public static final Settings INTERFEROMETER_SETTINGS = Settings.builder()
             .tier(Tier.ADVANCED)
-            .maxPowerHidden(true)
+            .minPower(900)
             .powerLoss(0.08)
             .build();
     public static final SlimefunItemStack INTERFEROMETER = new SlimefunItemStack(

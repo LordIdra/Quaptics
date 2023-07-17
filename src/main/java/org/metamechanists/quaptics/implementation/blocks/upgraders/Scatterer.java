@@ -54,7 +54,7 @@ public class Scatterer extends ConnectedBlock implements PowerAnimatedBlock, Pow
     public static final Settings SCATTERER_3_SETTINGS = Settings.builder()
             .tier(Tier.ADVANCED)
             .maxPowerHidden(true)
-            .minPower(5000)
+            .minPower(1800)
             .powerLoss(0.03)
             .minFrequency(40000)
             .maxFrequency(160000)

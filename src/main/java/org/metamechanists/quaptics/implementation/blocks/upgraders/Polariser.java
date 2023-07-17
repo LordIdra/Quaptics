@@ -45,6 +45,7 @@ public class Polariser extends ConnectedBlock implements PowerAnimatedBlock, Pow
     public static final Settings POLARISER_SETTINGS = Settings.builder()
             .tier(Tier.ADVANCED)
             .maxPowerHidden(true)
+            .minPower(200)
             .powerLoss(0.12)
             .build();
     public static final SlimefunItemStack POLARISER = new SlimefunItemStack(

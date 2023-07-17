@@ -34,7 +34,7 @@ public class DiffractionGrating extends ConnectedBlock implements PowerAnimatedB
     public static final Settings DIFFRACTION_GRATING_SETTINGS = Settings.builder()
             .tier(Tier.ADVANCED)
             .maxPowerHidden(true)
-            .minPower(2600)
+            .minPower(1600)
             .powerLoss(0.05)
             .minFrequency(6000)
             .maxFrequency(40000)
