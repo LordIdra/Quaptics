@@ -39,51 +39,51 @@ public class FrequencyAndPhase {
     public void initialize() {
         final SlimefunAddon addon = Quaptics.getInstance();
 
-        new Repeater(Groups.BEAM_CREATION, REPEATER_1, RecipeType.NULL, new ItemStack[]{
+        new Repeater(Groups.FREQUENCY_AND_PHASE, REPEATER_1, RecipeType.NULL, new ItemStack[]{
 
         }, REPEATER_1_SETTINGS).register(addon);
 
-        new Repeater(Groups.BEAM_CREATION, REPEATER_2, RecipeType.NULL, new ItemStack[]{
+        new Repeater(Groups.FREQUENCY_AND_PHASE, REPEATER_2, RecipeType.NULL, new ItemStack[]{
 
         }, REPEATER_2_SETTINGS).register(addon);
 
-        new Repeater(Groups.BEAM_CREATION, REPEATER_3, RecipeType.NULL, new ItemStack[]{
+        new Repeater(Groups.FREQUENCY_AND_PHASE, REPEATER_3, RecipeType.NULL, new ItemStack[]{
 
         }, REPEATER_3_SETTINGS).register(addon);
 
-        new Repeater(Groups.BEAM_CREATION, REPEATER_4, RecipeType.NULL, new ItemStack[]{
+        new Repeater(Groups.FREQUENCY_AND_PHASE, REPEATER_4, RecipeType.NULL, new ItemStack[]{
 
         }, REPEATER_4_SETTINGS).register(addon);
 
 
 
-        new Scatterer(Groups.BEAM_CREATION, SCATTERER_1, RecipeType.NULL, new ItemStack[]{
+        new Scatterer(Groups.FREQUENCY_AND_PHASE, SCATTERER_1, RecipeType.NULL, new ItemStack[]{
 
         }, SCATTERER_1_SETTINGS).register(addon);
 
-        new Scatterer(Groups.BEAM_CREATION, SCATTERER_2, RecipeType.NULL, new ItemStack[]{
+        new Scatterer(Groups.FREQUENCY_AND_PHASE, SCATTERER_2, RecipeType.NULL, new ItemStack[]{
 
         }, SCATTERER_2_SETTINGS).register(addon);
 
-        new Scatterer(Groups.BEAM_CREATION, SCATTERER_3, RecipeType.NULL, new ItemStack[]{
+        new Scatterer(Groups.FREQUENCY_AND_PHASE, SCATTERER_3, RecipeType.NULL, new ItemStack[]{
 
         }, SCATTERER_3_SETTINGS).register(addon);
 
 
 
-        new Polariser(Groups.BEAM_CREATION, POLARISER, RecipeType.NULL, new ItemStack[]{
+        new Polariser(Groups.FREQUENCY_AND_PHASE, POLARISER, RecipeType.NULL, new ItemStack[]{
 
         }, POLARISER_SETTINGS).register(addon);
 
 
 
-        new Interferometer(Groups.BEAM_CREATION, INTERFEROMETER, RecipeType.NULL, new ItemStack[]{
+        new Interferometer(Groups.FREQUENCY_AND_PHASE, INTERFEROMETER, RecipeType.NULL, new ItemStack[]{
 
         }, INTERFEROMETER_SETTINGS).register(addon);
 
 
 
-        new DiffractionGrating(Groups.BEAM_CREATION, DIFFRACTION_GRATING, RecipeType.NULL, new ItemStack[]{
+        new DiffractionGrating(Groups.FREQUENCY_AND_PHASE, DIFFRACTION_GRATING, RecipeType.NULL, new ItemStack[]{
 
         }, DIFFRACTION_GRATING_SETTINGS).register(addon);
     }

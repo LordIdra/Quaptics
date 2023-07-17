@@ -19,10 +19,12 @@ public class Keys {
     public final NamespacedKey MAIN = newKey("MAIN");
     public final NamespacedKey GUIDE = newKey("GUIDE");
     public final NamespacedKey TOOLS = newKey("TOOLS");
-    public final NamespacedKey PRIMITIVE = newKey("PRIMITIVE");
-    public final NamespacedKey BASIC = newKey("BASIC");
-    public final NamespacedKey INTERMEDIATE = newKey("INTERMEDIATE");
-    public final NamespacedKey ADVANCED = newKey("ADVANCED");
+    public final NamespacedKey BEAM_CREATION = newKey("BEAM_CREATION");
+    public final NamespacedKey BEAM_MANIPULATION = newKey("BEAM_MANIPULATION");
+    public final NamespacedKey FREQUENCY_AND_PHASE = newKey("FREQUENCY_AND_PHASE");
+    public final NamespacedKey BEACON_COMPONENTS = newKey("BEACON_COMPONENTS");
+    public final NamespacedKey BEACON_MODULES = newKey("BEACON_MODULES");
+    public final NamespacedKey MACHINES = newKey("MACHINES");
     public final NamespacedKey TESTING = newKey("TESTING");
     public final NamespacedKey SOURCE = newKey("SOURCE");
     public final NamespacedKey CHARGE = newKey("CHARGE");
