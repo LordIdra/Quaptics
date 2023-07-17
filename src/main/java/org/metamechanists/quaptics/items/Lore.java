@@ -254,8 +254,8 @@ public class Lore {
         return FREQUENCY_SYMBOL + "&7Frequency &e" + formatTwoDp(frequency) + FREQUENCY_SUFFIX;
     }
     public String operatingFrequency(final double minFrequency, final double maxFrequency) {
-        return ATTRIBUTE_SYMBOL + FREQUENCY_SYMBOL + "&7Operating Frequency &e" + formatOneDp(minFrequency)
-                + (maxFrequency == 0 ? "+" : " &7- &e" + formatOneDp(maxFrequency))
+        return ATTRIBUTE_SYMBOL + FREQUENCY_SYMBOL + "&7Operating Frequency &e" + formatZeroDp(minFrequency)
+                + (maxFrequency == 0 ? "+" : " &7- &e" + formatZeroDp(maxFrequency))
                 + FREQUENCY_SUFFIX;
     }
     public String frequencyStep(final double frequencyStep) {

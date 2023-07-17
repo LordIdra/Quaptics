@@ -36,9 +36,9 @@ public class Repeater extends ConnectedBlock implements PowerAnimatedBlock, Powe
             .maxPowerHidden(true)
             .minPower(20)
             .powerLoss(0.08)
-            .minFrequency(0.0)
-            .maxFrequency(0.5)
-            .frequencyStep(0.1)
+            .minFrequency(0)
+            .maxFrequency(5)
+            .frequencyStep(1)
             .repeaterDelay(1)
             .build();
 
@@ -47,9 +47,9 @@ public class Repeater extends ConnectedBlock implements PowerAnimatedBlock, Powe
             .maxPowerHidden(true)
             .minPower(190)
             .powerLoss(0.06)
-            .minFrequency(1)
-            .maxFrequency(4)
-            .frequencyStep(0.8)
+            .minFrequency(10)
+            .maxFrequency(40)
+            .frequencyStep(8)
             .repeaterDelay(1)
             .build();
 
@@ -58,9 +58,9 @@ public class Repeater extends ConnectedBlock implements PowerAnimatedBlock, Powe
             .maxPowerHidden(true)
             .minPower(600)
             .powerLoss(0.04)
-            .minFrequency(20)
-            .maxFrequency(100)
-            .frequencyStep(25)
+            .minFrequency(200)
+            .maxFrequency(1000)
+            .frequencyStep(250)
             .repeaterDelay(2)
             .build();
 
@@ -69,9 +69,9 @@ public class Repeater extends ConnectedBlock implements PowerAnimatedBlock, Powe
             .maxPowerHidden(true)
             .minPower(1100)
             .powerLoss(0.02)
-            .minFrequency(100)
-            .maxFrequency(400)
-            .frequencyStep(90)
+            .minFrequency(1000)
+            .maxFrequency(6000)
+            .frequencyStep(900)
             .repeaterDelay(1)
             .build();
 

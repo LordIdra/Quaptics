@@ -36,8 +36,8 @@ public class Scatterer extends ConnectedBlock implements PowerAnimatedBlock, Pow
             .maxPowerHidden(true)
             .minPower(40)
             .powerLoss(0.06)
-            .minFrequency(0.5)
-            .maxFrequency(1.0)
+            .minFrequency(5)
+            .maxFrequency(10)
             .frequencyMultiplier(1.2)
             .comparatorVisual("compare")
             .build();
@@ -46,8 +46,8 @@ public class Scatterer extends ConnectedBlock implements PowerAnimatedBlock, Pow
             .maxPowerHidden(true)
             .minPower(360)
             .powerLoss(0.03)
-            .minFrequency(4)
-            .maxFrequency(20)
+            .minFrequency(40)
+            .maxFrequency(200)
             .frequencyMultiplier(1.5)
             .comparatorVisual("compare")
             .build();
@@ -56,8 +56,8 @@ public class Scatterer extends ConnectedBlock implements PowerAnimatedBlock, Pow
             .maxPowerHidden(true)
             .minPower(5000)
             .powerLoss(0.03)
-            .minFrequency(4)
-            .maxFrequency(20)
+            .minFrequency(40000)
+            .maxFrequency(160000)
             .frequencyMultiplier(1.5)
             .comparatorVisual("compare")
             .build();

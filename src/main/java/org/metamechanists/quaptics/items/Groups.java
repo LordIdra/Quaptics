@@ -49,7 +49,7 @@ public class Groups {
     public final ItemGroup BEAM_MANIPULATION = new DummyItemGroup(Keys.BEAM_MANIPULATION,
             new CustomItemStack(Material.WHITE_STAINED_GLASS, Colors.QUAPTIC_COMPONENTS.getFormattedColor() + "Beam Manipulation"));
     public final ItemGroup FREQUENCY_AND_PHASE = new DummyItemGroup(Keys.FREQUENCY_AND_PHASE,
-            new CustomItemStack(Material.WHITE_STAINED_GLASS, Colors.QUAPTIC_COMPONENTS.getFormattedColor() + "Frequency & Phase"));
+            new CustomItemStack(Material.RED_STAINED_GLASS, Colors.QUAPTIC_COMPONENTS.getFormattedColor() + "Frequency & Phase"));
     public final ItemGroup MACHINES = new DummyItemGroup(Keys.MACHINES,
             new CustomItemStack(Material.LIGHT_BLUE_CONCRETE, Colors.QUAPTIC_COMPONENTS.getFormattedColor() + "Machines"));
 
