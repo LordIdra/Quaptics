@@ -8,6 +8,7 @@ import org.jetbrains.annotations.NotNull;
 public class Utils {
     public final int BRIGHTNESS_ON = 15;
     public final int BRIGHTNESS_OFF = 3;
+    public final int BRIGHTNESS_PANEL = 10;
     public final int VIEW_RANGE_ON = 1;
     public final int VIEW_RANGE_OFF = 0;
     private final double FLOATING_POINT_THRESHOLD = 0.00001;

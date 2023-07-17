@@ -10,6 +10,7 @@ import org.bukkit.entity.TextDisplay;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.storage.PersistentDataTraverser;
+import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.builders.TextDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.InfoPanelAttributeId;
 import org.metamechanists.quaptics.utils.id.simple.TextDisplayId;
@@ -29,7 +30,7 @@ public class InfoPanelAttribute {
                 .transformation(new TransformationMatrixBuilder()
                         .scale(displaySize)
                         .buildForTextDisplay())
-                .brightness(15)
+                .brightness(Utils.BRIGHTNESS_PANEL)
                 .viewRange(0)
                 .billboard(Billboard.VERTICAL)
                 .backgroundColor(Color.fromARGB(0, 0, 0, 0))
@@ -37,7 +38,6 @@ public class InfoPanelAttribute {
         this.hidden = false;
         saveData();
     }
-
     public InfoPanelAttribute(final InfoPanelAttributeId id) {
         final PersistentDataTraverser traverser = new PersistentDataTraverser(id);
         this.id = new TextDisplayId(id);

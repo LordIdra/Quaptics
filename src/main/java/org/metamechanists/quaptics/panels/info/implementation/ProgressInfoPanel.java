@@ -17,7 +17,6 @@ public class ProgressInfoPanel extends BlockInfoPanel {
     public ProgressInfoPanel(@NotNull final Location location, final ConnectionGroupId groupId) {
         super(location, groupId);
     }
-
     public ProgressInfoPanel(@NotNull final InfoPanelId panelId, final ConnectionGroupId groupId) {
         super(panelId, groupId);
     }
