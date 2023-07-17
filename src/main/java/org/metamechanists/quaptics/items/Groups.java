@@ -15,6 +15,7 @@ import org.metamechanists.quaptics.implementation.multiblocks.beacons.controller
 import org.metamechanists.quaptics.items.groups.BeamCreation;
 import org.metamechanists.quaptics.items.groups.BeamManipulation;
 import org.metamechanists.quaptics.items.groups.CraftingComponents;
+import org.metamechanists.quaptics.items.groups.FrequencyAndPhase;
 import org.metamechanists.quaptics.items.groups.Tools;
 import org.metamechanists.quaptics.utils.Colors;
 import org.metamechanists.quaptics.utils.Keys;
@@ -75,6 +76,7 @@ public class Groups {
         CraftingComponents.initialize();
         BeamCreation.initialize();
         BeamManipulation.initialize();
+        FrequencyAndPhase.initialize();
 
         Slimefun.getRegistry().getAllSlimefunItems().stream()
                 .filter(ConnectedBlock.class::isInstance)
