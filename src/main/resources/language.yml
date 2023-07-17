@@ -20,6 +20,7 @@ entangler.magnets-not-powered: "&cYou must power all magnets of the entangler be
 
 beacon.not-module: "&cYou can only insert Beacon Modules."
 beacon.duplicate-module: "&cThe beacon already contains this module."
+beacon.incorrect-tier: "&cThis beacon only accepts {1} &cmodules."
 
 charger.multiple-items: "&cYou can only insert one item at a time."
 charger.not-chargeable: "&cThis item cannot be charged."

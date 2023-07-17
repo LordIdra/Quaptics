@@ -42,17 +42,45 @@ import java.util.UUID;
 public class MultiblockClicker extends ConnectedBlock implements PowerAnimatedBlock {
     public static final Settings MULTIBLOCK_CLICKER_1_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
-            .useInterval(10)
-            .minPower(7)
+            .useInterval(20)
+            .minPower(3)
             .build();
+    public static final Settings MULTIBLOCK_CLICKER_2_SETTINGS = Settings.builder()
+            .tier(Tier.PRIMITIVE)
+            .useInterval(10)
+            .minPower(5)
+            .build();
+    public static final Settings MULTIBLOCK_CLICKER_3_SETTINGS = Settings.builder()
+            .tier(Tier.BASIC)
+            .useInterval(4)
+            .minPower(20)
+            .minFrequency(2)
+            .build();
+
     public static final SlimefunItemStack MULTIBLOCK_CLICKER_1 = new SlimefunItemStack(
             "QP_MULTIBLOCK_CLICKER_1",
             Material.DISPENSER,
-            "&6Multiblock Clicker &eI",
+            "&7Multiblock Clicker &fI",
             Lore.create(MULTIBLOCK_CLICKER_1_SETTINGS,
-                    "&7● &eRight Click &7to enable/disable",
                     "&7● Automatically clicks the attached multiblock",
-                    "&7● Place facing the block you'd usually click to use the multiblock"));
+                    "&7● Place facing the block you'd usually click to use the multiblock",
+                    "&7● &eRight Click &7to enable/disable"));
+    public static final SlimefunItemStack MULTIBLOCK_CLICKER_2 = new SlimefunItemStack(
+            "QP_MULTIBLOCK_CLICKER_2",
+            Material.DISPENSER,
+            "&7Multiblock Clicker &fII",
+            Lore.create(MULTIBLOCK_CLICKER_2_SETTINGS,
+                    "&7● Automatically clicks the attached multiblock",
+                    "&7● Place facing the block you'd usually click to use the multiblock",
+                    "&7● &eRight Click &7to enable/disable"));
+    public static final SlimefunItemStack MULTIBLOCK_CLICKER_3 = new SlimefunItemStack(
+            "QP_MULTIBLOCK_CLICKER_3",
+            Material.DISPENSER,
+            "&7Multiblock Clicker &fIII",
+            Lore.create(MULTIBLOCK_CLICKER_3_SETTINGS,
+                    "&7● Automatically clicks the attached multiblock",
+                    "&7● Place facing the block you'd usually click to use the multiblock",
+                    "&7● &eRight Click &7to enable/disable"));
 
     private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -getConnectionRadius());
 

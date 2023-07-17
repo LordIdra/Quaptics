@@ -23,7 +23,7 @@ import java.util.Set;
 public class ModulatedTurret extends Turret {
     public static final Settings TURRET_1_HOSTILE_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
-            .minPower(3)
+            .minPower(4)
             .range(6)
             .damage(1.5)
             .projectileSpeed(5)
@@ -32,7 +32,7 @@ public class ModulatedTurret extends Turret {
             .build();
     public static final Settings TURRET_1_PASSIVE_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
-            .minPower(3)
+            .minPower(4)
             .range(6)
             .damage(1.5)
             .projectileSpeed(5)
