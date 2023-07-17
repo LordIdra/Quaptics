@@ -54,7 +54,7 @@ public class Polariser extends ConnectedBlock implements PowerAnimatedBlock, Pow
             Lore.create(POLARISER_SETTINGS,
                     "&7● Increases the phase of quaptic rays",
                     "&7● The increase in phase depends on the phase crystal",
-                    "  that the polariser is holding",
+                    "&7  that the polariser is holding",
                     "&7● &eRight Click &7an item to insert",
                     "&7● &eRight Click &7again to retrieve"));
 

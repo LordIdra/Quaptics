@@ -88,15 +88,15 @@ public class Repeater extends ConnectedBlock implements PowerAnimatedBlock, Powe
             Lore.create(REPEATER_2_SETTINGS,
                     "&7● Increases the frequency of a quaptic ray"));
     public static final SlimefunItemStack REPEATER_3 = new SlimefunItemStack(
-            "QP_REPEATER_2",
+            "QP_REPEATER_3",
             Material.RED_STAINED_GLASS,
-            "&cRepeater &4II",
+            "&cRepeater &4III",
             Lore.create(REPEATER_3_SETTINGS,
                     "&7● Increases the frequency of a quaptic ray"));
     public static final SlimefunItemStack REPEATER_4 = new SlimefunItemStack(
-            "QP_REPEATER_2",
+            "QP_REPEATER_4",
             Material.RED_STAINED_GLASS,
-            "&cRepeater &4II",
+            "&cRepeater &4IV",
             Lore.create(REPEATER_4_SETTINGS,
                     "&7● Increases the frequency of a quaptic ray"));
 

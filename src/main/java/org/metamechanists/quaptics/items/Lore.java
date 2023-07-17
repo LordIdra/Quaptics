@@ -208,7 +208,7 @@ public class Lore {
         return POWER_SYMBOL + "&7Power &e" + formatTwoDp(power) + POWER_SUFFIX;
     }
     public String minPower(final double minPower) {
-        return POWER_SYMBOL + "&7Operating Power &e" + formatTwoDp(minPower) + "+ " + POWER_SUFFIX;
+        return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Operating Power &e" + formatZeroDp(minPower) + "+" + POWER_SUFFIX;
     }
     public String powerOutput(final double powerOutput) {
         return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Power Output &e" + formatZeroDp(powerOutput) + POWER_SUFFIX;
@@ -254,8 +254,8 @@ public class Lore {
         return FREQUENCY_SYMBOL + "&7Frequency &e" + formatTwoDp(frequency) + FREQUENCY_SUFFIX;
     }
     public String operatingFrequency(final double minFrequency, final double maxFrequency) {
-        return ATTRIBUTE_SYMBOL + FREQUENCY_SYMBOL + "&7Operating Frequency &e" + formatZeroDp(minFrequency)
-                + (maxFrequency == 0 ? "+" : " &7- &e" + formatZeroDp(maxFrequency))
+        return ATTRIBUTE_SYMBOL + FREQUENCY_SYMBOL + "&7Operating Frequency &e" + formatOneDp(minFrequency)
+                + (maxFrequency == 0 ? "+" : " &7- &e" + formatOneDp(maxFrequency))
                 + FREQUENCY_SUFFIX;
     }
     public String frequencyStep(final double frequencyStep) {
