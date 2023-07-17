@@ -17,7 +17,7 @@ public final class FrequencyColor {
             new FrequencyColor(1000, Material.CYAN_CONCRETE),
             new FrequencyColor(6000, Material.LIGHT_BLUE_CONCRETE),
             new FrequencyColor(40000, Material.BLUE_CONCRETE),
-            new FrequencyColor(80000, Material.PURPLE_CONCRETE)
+            new FrequencyColor(160000, Material.PURPLE_CONCRETE)
             //Material.RED_CONCRETE,
             //Material.RED_TERRACOTTA,
             //Material.TERRACOTTA,

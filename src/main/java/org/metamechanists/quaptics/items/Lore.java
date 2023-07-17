@@ -259,10 +259,10 @@ public class Lore {
                 + FREQUENCY_SUFFIX;
     }
     public String frequencyStep(final double frequencyStep) {
-        return ATTRIBUTE_SYMBOL + FREQUENCY_SYMBOL + "&7Frequency &e+" + formatZeroDp(frequencyStep) + FREQUENCY_SUFFIX;
+        return ATTRIBUTE_SYMBOL + FREQUENCY_SYMBOL + "&7Frequency &e+" + formatOneDp(frequencyStep) + FREQUENCY_SUFFIX;
     }
     public String frequencyMultiplier(final double frequencyMultiplier) {
-        return ATTRIBUTE_SYMBOL + FREQUENCY_SYMBOL + "&7Frequency &ex" + formatZeroDp(frequencyMultiplier);
+        return ATTRIBUTE_SYMBOL + FREQUENCY_SYMBOL + "&7Frequency &ex" + formatOneDp(frequencyMultiplier);
     }
 
     // Phase

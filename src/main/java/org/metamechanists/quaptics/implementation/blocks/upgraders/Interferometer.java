@@ -87,6 +87,10 @@ public class Interferometer extends ConnectedBlock implements PowerAnimatedBlock
 
     @Override
     public void onInputLinkUpdated(@NotNull final ConnectionGroup group, @NotNull final Location location) {
+        if (doBurnoutCheck(group, "main")) {
+            return;
+        }
+
         final Optional<Link> mainLink = getLink(location, "main");
         final Optional<Link> auxiliaryLink = getLink(location, "auxiliary");
         final Optional<Link> outputLink = getLink(location, "output");
