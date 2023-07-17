@@ -40,7 +40,7 @@ public class DiffractionGrating extends ConnectedBlock implements PowerAnimatedB
             .maxFrequency(40000)
             .frequencyMultiplier(1.8)
             .targetPhase(168)
-            .targetPhaseSpread(20)
+            .targetPhaseSpread(60)
             .build();
     public static final SlimefunItemStack DIFFRACTION_GRATING = new SlimefunItemStack(
             "QP_DIFFRACTION_GRATING",
@@ -48,8 +48,8 @@ public class DiffractionGrating extends ConnectedBlock implements PowerAnimatedB
             "&cDiffraction Grating",
             Lore.create(DIFFRACTION_GRATING_SETTINGS,
                     "&7● Increases the frequency of quaptic rays",
-                    "&7● The size of the increase depends on how close the",
-                    "&7  auxiliary input is to the target phase"));
+                    "&7● The closer the auxiliary input to the target phase, the",
+                    "&7  greater the increase in phase"));
 
     private final Vector mainPointLocation = new Vector(0, 0, -0.5);
     private final Vector auxiliaryPointLocation = new Vector(0, 0.4, 0);
