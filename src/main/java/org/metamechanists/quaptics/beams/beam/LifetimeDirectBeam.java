@@ -7,9 +7,8 @@ import org.jetbrains.annotations.NotNull;
 public class LifetimeDirectBeam extends DirectBeam {
     private int lifetime;
 
-    public LifetimeDirectBeam(final Material material, @NotNull final Location source, final Location target, final float thickness, final int lifetime) {
-        super(material, source, target, thickness);
-
+    public LifetimeDirectBeam(final Material material, @NotNull final Location source, final Location target, final float thickness, final float roll, final int lifetime) {
+        super(material, source, target, thickness, roll);
         this.lifetime = lifetime;
     }
 

@@ -53,7 +53,7 @@ public class DirectRayGun extends AbstractRayGun {
                         && !(entity instanceof ArmorStand));
 
         if (result == null) {
-            DeprecatedBeamStorage.deprecate(new LifetimeDirectBeam(settings.getProjectileMaterial(), handLocation, target, 0.095F, 5));
+            DeprecatedBeamStorage.deprecate(new LifetimeDirectBeam(settings.getProjectileMaterial(), handLocation, target, 0.095F, 0, 5));
             target.getNearbyEntities(0.095F, 0.095F, 0.095F)
                     .stream()
                     .filter(Damageable.class::isInstance)
@@ -69,6 +69,7 @@ public class DirectRayGun extends AbstractRayGun {
                 handLocation,
                 new Location(handLocation.getWorld(), position.getX(), position.getY(), position.getZ()),
                 0.095F,
+                0,
                 5));
 
         if (result.getHitEntity() instanceof final Damageable damageable
