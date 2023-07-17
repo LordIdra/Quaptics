@@ -300,15 +300,15 @@ public class Lore {
         return emptyColor + firstHalf + emptyColor + secondHalf;
     }
     public String thresholdBar(final double inputPower, final double minInputPower) {
-        return progressBar(inputPower, minInputPower, "&6", "&7", "&a");
+        return progressBar(inputPower, minInputPower, "&6", "&8", "&a");
     }
     public String efficiencyBar(final double secondsSinceStarted, final double maxSeconds) {
-        return progressBar(secondsSinceStarted, maxSeconds, "&6", "&7", "&a");
+        return progressBar(secondsSinceStarted, maxSeconds, "&6", "&8", "&a");
     }
     public String chargeBar(final double charge, final double capacity) {
-        return ATTRIBUTE_SYMBOL + CHARGE_SYMBOL + "&7Charge " + progressBar(charge, capacity, Colors.CHARGE.getFormattedColor(), "&7", Colors.CHARGE.getFormattedColor());
+        return ATTRIBUTE_SYMBOL + CHARGE_SYMBOL + "&7Charge " + progressBar(charge, capacity, Colors.CHARGE.getFormattedColor(), "&8", Colors.CHARGE.getFormattedColor());
     }
     public String chargeBarRaw(final double charge, final double capacity) {
-        return progressBar(charge, capacity, Colors.CHARGE.getFormattedColor(), "&7", Colors.CHARGE.getFormattedColor());
+        return progressBar(charge, capacity, Colors.CHARGE.getFormattedColor(), "&8", Colors.CHARGE.getFormattedColor());
     }
 }
