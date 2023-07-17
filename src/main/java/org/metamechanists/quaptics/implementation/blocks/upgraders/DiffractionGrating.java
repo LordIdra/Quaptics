@@ -31,25 +31,46 @@ import java.util.Optional;
 
 
 public class DiffractionGrating extends ConnectedBlock implements PowerAnimatedBlock, PowerLossBlock {
-    public static final Settings DIFFRACTION_GRATING_SETTINGS = Settings.builder()
-            .tier(Tier.ADVANCED)
+    public static final Settings DIFFRACTION_GRATING_1_SETTINGS = Settings.builder()
+            .tier(Tier.INTERMEDIATE)
             .maxPowerHidden(true)
-            .minPower(1600)
+            .minPower(360)
             .powerLoss(0.05)
-            .minFrequency(6000)
-            .maxFrequency(40000)
-            .frequencyMultiplier(1.8)
+            .minFrequency(200)
+            .maxFrequency(1000)
+            .frequencyMultiplier(1.6)
             .targetPhase(168)
             .targetPhaseSpread(60)
             .build();
-    public static final SlimefunItemStack DIFFRACTION_GRATING = new SlimefunItemStack(
-            "QP_DIFFRACTION_GRATING",
+    public static final Settings DIFFRACTION_GRATING_2_SETTINGS = Settings.builder()
+            .tier(Tier.INTERMEDIATE)
+            .maxPowerHidden(true)
+            .minPower(1600)
+            .powerLoss(0.01)
+            .minFrequency(6000)
+            .maxFrequency(40000)
+            .frequencyMultiplier(1.8)
+            .targetPhase(267)
+            .targetPhaseSpread(60)
+            .build();
+
+    public static final SlimefunItemStack DIFFRACTION_GRATING_1 = new SlimefunItemStack(
+            "QP_DIFFRACTION_GRATING_1",
             Material.YELLOW_TERRACOTTA,
-            "&cDiffraction Grating",
-            Lore.create(DIFFRACTION_GRATING_SETTINGS,
+            "&cDiffraction Grating &4I",
+            Lore.create(DIFFRACTION_GRATING_1_SETTINGS,
                     "&7● Increases the frequency of quaptic rays",
                     "&7● The closer the auxiliary input to the target phase, the",
-                    "&7  greater the increase in phase"));
+                    "&7  greater the increase in frequency"));
+
+    public static final SlimefunItemStack DIFFRACTION_GRATING_2 = new SlimefunItemStack(
+            "QP_DIFFRACTION_GRATING_2",
+            Material.YELLOW_TERRACOTTA,
+            "&cDiffraction Grating &4II",
+            Lore.create(DIFFRACTION_GRATING_2_SETTINGS,
+                    "&7● Increases the frequency of quaptic rays",
+                    "&7● The closer the auxiliary input to the target phase, the",
+                    "&7  greater the increase in frequency"));
 
     private final Vector mainPointLocation = new Vector(0, 0, -0.5);
     private final Vector auxiliaryPointLocation = new Vector(0, 0.4, 0);

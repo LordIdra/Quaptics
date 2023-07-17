@@ -12,8 +12,10 @@ import org.metamechanists.quaptics.implementation.blocks.upgraders.Repeater;
 import org.metamechanists.quaptics.implementation.blocks.upgraders.Scatterer;
 import org.metamechanists.quaptics.items.Groups;
 
-import static org.metamechanists.quaptics.implementation.blocks.upgraders.DiffractionGrating.DIFFRACTION_GRATING;
-import static org.metamechanists.quaptics.implementation.blocks.upgraders.DiffractionGrating.DIFFRACTION_GRATING_SETTINGS;
+import static org.metamechanists.quaptics.implementation.blocks.upgraders.DiffractionGrating.DIFFRACTION_GRATING_1;
+import static org.metamechanists.quaptics.implementation.blocks.upgraders.DiffractionGrating.DIFFRACTION_GRATING_1_SETTINGS;
+import static org.metamechanists.quaptics.implementation.blocks.upgraders.DiffractionGrating.DIFFRACTION_GRATING_2;
+import static org.metamechanists.quaptics.implementation.blocks.upgraders.DiffractionGrating.DIFFRACTION_GRATING_2_SETTINGS;
 import static org.metamechanists.quaptics.implementation.blocks.upgraders.Interferometer.INTERFEROMETER;
 import static org.metamechanists.quaptics.implementation.blocks.upgraders.Interferometer.INTERFEROMETER_SETTINGS;
 import static org.metamechanists.quaptics.implementation.blocks.upgraders.Polariser.POLARISER;
@@ -83,8 +85,12 @@ public class FrequencyAndPhase {
 
 
 
-        new DiffractionGrating(Groups.FREQUENCY_AND_PHASE, DIFFRACTION_GRATING, RecipeType.NULL, new ItemStack[]{
+        new DiffractionGrating(Groups.FREQUENCY_AND_PHASE, DIFFRACTION_GRATING_1, RecipeType.NULL, new ItemStack[]{
 
-        }, DIFFRACTION_GRATING_SETTINGS).register(addon);
+        }, DIFFRACTION_GRATING_1_SETTINGS).register(addon);
+
+        new DiffractionGrating(Groups.FREQUENCY_AND_PHASE, DIFFRACTION_GRATING_2, RecipeType.NULL, new ItemStack[]{
+
+        }, DIFFRACTION_GRATING_2_SETTINGS).register(addon);
     }
 }

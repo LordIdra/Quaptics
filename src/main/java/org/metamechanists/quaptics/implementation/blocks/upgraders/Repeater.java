@@ -49,30 +49,30 @@ public class Repeater extends ConnectedBlock implements PowerAnimatedBlock, Powe
             .powerLoss(0.06)
             .minFrequency(10)
             .maxFrequency(40)
-            .frequencyStep(8)
+            .frequencyStep(12)
             .repeaterDelay(1)
             .build();
 
     public static final Settings REPEATER_3_SETTINGS = Settings.builder()
-            .tier(Tier.INTERMEDIATE)
+            .tier(Tier.ADVANCED)
             .maxPowerHidden(true)
-            .minPower(600)
+            .minPower(1100)
             .powerLoss(0.04)
-            .minFrequency(200)
-            .maxFrequency(1000)
-            .frequencyStep(250)
-            .repeaterDelay(2)
+            .minFrequency(1000)
+            .maxFrequency(6000)
+            .frequencyStep(1400)
+            .repeaterDelay(1)
             .build();
 
     public static final Settings REPEATER_4_SETTINGS = Settings.builder()
             .tier(Tier.ADVANCED)
             .maxPowerHidden(true)
-            .minPower(1100)
+            .minPower(1600)
             .powerLoss(0.02)
-            .minFrequency(1000)
-            .maxFrequency(6000)
-            .frequencyStep(900)
-            .repeaterDelay(1)
+            .minFrequency(6000)
+            .maxFrequency(40000)
+            .frequencyStep(8000)
+            .repeaterDelay(2)
             .build();
 
     public static final SlimefunItemStack REPEATER_1 = new SlimefunItemStack(
