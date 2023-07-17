@@ -54,7 +54,7 @@ public class MultiblockClicker extends ConnectedBlock implements PowerAnimatedBl
             .tier(Tier.BASIC)
             .useInterval(4)
             .minPower(20)
-            .minFrequency(2)
+            .minFrequency(4)
             .build();
 
     public static final SlimefunItemStack MULTIBLOCK_CLICKER_1 = new SlimefunItemStack(

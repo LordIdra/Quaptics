@@ -38,13 +38,14 @@ import java.util.Optional;
 
 public class Launchpad extends ConnectedBlock implements ConfigPanelBlock, PowerAnimatedBlock {
     public static final Settings LAUNCHPAD_SETTINGS = Settings.builder()
-            .tier(Tier.PRIMITIVE)
-            .minPower(3)
+            .tier(Tier.BASIC)
+            .minPower(30)
+            .minFrequency(2)
             .build();
     public static final SlimefunItemStack LAUNCHPAD = new SlimefunItemStack(
             "QP_LAUNCHPAD",
             Material.LIGHT_GRAY_CONCRETE,
-            "&6Launchpad",
+            "&7Launchpad",
             Lore.create(LAUNCHPAD_SETTINGS,
                     "&7● Launches players",
                     "&7● Launch velocity can be configured",

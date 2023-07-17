@@ -52,7 +52,7 @@ public class Groups {
     public final ItemGroup FREQUENCY_AND_PHASE = new DummyItemGroup(Keys.FREQUENCY_AND_PHASE,
             new CustomItemStack(Material.RED_STAINED_GLASS, Colors.QUAPTIC_COMPONENTS.getFormattedColor() + "Frequency & Phase"));
     public final ItemGroup MACHINES = new DummyItemGroup(Keys.MACHINES,
-            new CustomItemStack(Material.LIGHT_BLUE_CONCRETE, Colors.QUAPTIC_COMPONENTS.getFormattedColor() + "Machines"));
+            new CustomItemStack(Material.DISPENSER, Colors.QUAPTIC_COMPONENTS.getFormattedColor() + "Machines"));
 
     public final ItemGroup BEACON_COMPONENTS = new DummyItemGroup(Keys.BEACON_COMPONENTS,
             new CustomItemStack(Material.DEEPSLATE_BRICK_WALL, Colors.BEACONS.getFormattedColor() + "Beacon Components"));

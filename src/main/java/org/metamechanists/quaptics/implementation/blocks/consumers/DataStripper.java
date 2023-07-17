@@ -44,16 +44,32 @@ import java.util.Optional;
 
 public class DataStripper extends ConnectedBlock implements InfoPanelBlock, ItemHolderBlock, ProgressBlock, PowerAnimatedBlock {
     public static final Settings DATA_STRIPPER_1_SETTINGS = Settings.builder()
-            .tier(Tier.PRIMITIVE)
-            .timePerItem(10)
-            .minPower(6)
+            .tier(Tier.BASIC)
+            .timePerItem(30)
+            .minPower(15)
+            .minFrequency(8)
             .build();
+    public static final Settings DATA_STRIPPER_2_SETTINGS = Settings.builder()
+            .tier(Tier.INTERMEDIATE)
+            .timePerItem(8)
+            .minPower(180)
+            .minFrequency(100)
+            .build();
+
     public static final SlimefunItemStack DATA_STRIPPER_1 = new SlimefunItemStack(
             "QP_DATA_STRIPPER_1",
             Material.DEEPSLATE_BRICK_SLAB,
-            "&6Data Stripper &eI",
+            "&7Data Stripper &fI",
             Lore.create(DATA_STRIPPER_1_SETTINGS,
-                    "&7● Converts Slimefun heads into placeable vanilla heads",
+                    "&7● Converts Slimefun heads into regular placeable heads",
+                    "&7● &eRight Click &7with an item to insert",
+                    "&7● &eRight Click &7again to retrieve"));
+    public static final SlimefunItemStack DATA_STRIPPER_2 = new SlimefunItemStack(
+            "QP_DATA_STRIPPER_2",
+            Material.DEEPSLATE_BRICK_SLAB,
+            "&7Data Stripper &fII",
+            Lore.create(DATA_STRIPPER_2_SETTINGS,
+                    "&7● Converts Slimefun heads into regular placeable heads",
                     "&7● &eRight Click &7with an item to insert",
                     "&7● &eRight Click &7again to retrieve"));
 

@@ -70,6 +70,7 @@ public class Link {
         this.directBeamId = traverser.getBeamId("beamId");
         this.power = traverser.getDouble("power");
         this.frequency = traverser.getDouble("frequency");
+        this.phase = traverser.getInt("phase");
         this.maxPower = traverser.getDouble("maxPower");
         this.inputLocation = getInput().get().getLocation().get();
         this.outputLocation = getOutput().get().getLocation().get();
@@ -82,6 +83,7 @@ public class Link {
         traverser.set("beamId", directBeamId);
         traverser.set("power", power);
         traverser.set("frequency", frequency);
+        traverser.set("phase", phase);
         traverser.set("maxPower", maxPower);
     }
 
@@ -90,19 +92,10 @@ public class Link {
                 ? Optional.empty()
                 : Optional.of(outputId.get().get());
     }
-
     public Optional<ConnectionPoint> getInput() {
         return inputId.get().isEmpty() || !inputId.get().get().isInput()
                 ? Optional.empty()
                 : Optional.of(inputId.get().get());
-    }
-
-    private boolean hasBeam() {
-        return directBeamId != null;
-    }
-
-    private Optional<DirectBeam> getBeam() {
-        return Optional.ofNullable(directBeamId).map(DirectBeam::new);
     }
 
     public void remove() {
@@ -122,6 +115,12 @@ public class Link {
         });
     }
 
+    private boolean hasBeam() {
+        return directBeamId != null;
+    }
+    private Optional<DirectBeam> getBeam() {
+        return Optional.ofNullable(directBeamId).map(DirectBeam::new);
+    }
     private void regenerateBeam() {
         getBeam().ifPresent(DirectBeam::deprecate);
         this.directBeamId = new DirectBeam(
@@ -142,18 +141,12 @@ public class Link {
         beam.get().setMaterial(FrequencyColor.getMaterial(frequency));
         beam.get().setThicknessAndRoll(outputLocation, inputLocation, calculateRadius(), calculateRoll());
     }
-
     private void updatePanels() {
         getOutput().flatMap(ConnectionPoint::getGroup).ifPresent(ConnectionGroup::updatePanels);
         getInput().flatMap(ConnectionPoint::getGroup).ifPresent(ConnectionGroup::updatePanels);
     }
-
     private static void updateGroup(final @NotNull ConnectionPoint point) {
         point.getGroup().ifPresent(group -> BlockUpdateScheduler.scheduleUpdate(group.getId()));
-    }
-
-    public boolean isEnabled() {
-        return power != 0;
     }
 
     private float calculateRadius() {
@@ -162,11 +155,9 @@ public class Link {
         }
         return Utils.clampToRange((float) (power / maxPower) * MAX_BEAM_SIZE, MIN_BEAM_SIZE, MAX_BEAM_SIZE);
     }
-
     private double calculateRoll() {
         return phase != 0 ? Math.PI / 2 : 0;
     }
-
     private static double calculateChange(final double initialValue, final double newValue) {
         if (initialValue == 0) {
             return newValue == 0 ? 0 : ARBITRARILY_LARGE_NUMBER;
@@ -225,6 +216,9 @@ public class Link {
         setPhase(phase);
     }
 
+    public boolean isEnabled() {
+        return power != 0;
+    }
     public void disable() {
         setPowerFrequencyPhase(0, 0, 0);
     }
