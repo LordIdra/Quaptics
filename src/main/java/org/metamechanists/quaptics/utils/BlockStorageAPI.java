@@ -54,6 +54,9 @@ public class BlockStorageAPI {
     public void set(final Location location, final String key, final double value) {
         set(location, key, Objects.toString(value));
     }
+    public void set(final Location location, final String key, final BlockFace face) {
+        set(location, key, Objects.toString(face));
+    }
     public void set(final Location location, final String key, final @Nullable Vector value) {
         if (value == null) {
             removeData(location, key + "x");

@@ -94,6 +94,7 @@ public class MultiblockClicker extends ConnectedBlock implements PowerAnimatedBl
     }
     @Override
     protected DisplayGroup initModel(final @NotNull Location location, final @NotNull Player player) {
+        BlockStorageAPI.set(location, Keys.BS_FACING, player.getFacing());
         return new ModelBuilder()
                 .add("main", new ModelCuboid()
                         .material(Material.CYAN_CONCRETE)
