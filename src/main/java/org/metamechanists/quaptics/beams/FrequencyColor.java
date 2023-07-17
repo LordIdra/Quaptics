@@ -8,7 +8,8 @@ public final class FrequencyColor {
 
     private static final FrequencyColor errorColor = new FrequencyColor(0, Material.WOODEN_PICKAXE);
     private static final List<FrequencyColor> COLORS = List.of(
-            new FrequencyColor(0, Material.RED_CONCRETE),
+            new FrequencyColor(0, Material.WHITE_CONCRETE),
+            new FrequencyColor(0.01, Material.RED_CONCRETE),
             new FrequencyColor(5, Material.ORANGE_CONCRETE),
             new FrequencyColor(10, Material.YELLOW_CONCRETE),
             new FrequencyColor(40, Material.LIME_CONCRETE),
