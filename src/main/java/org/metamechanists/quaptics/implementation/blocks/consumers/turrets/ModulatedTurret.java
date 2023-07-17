@@ -10,6 +10,7 @@ import org.bukkit.entity.SpawnCategory;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.beams.DeprecatedBeamStorage;
+import org.metamechanists.quaptics.beams.FrequencyColor;
 import org.metamechanists.quaptics.beams.beam.ProjectileBeam;
 import org.metamechanists.quaptics.implementation.Settings;
 import org.metamechanists.quaptics.items.Lore;
@@ -22,40 +23,68 @@ import java.util.Set;
 public class ModulatedTurret extends Turret {
     public static final Settings TURRET_1_HOSTILE_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
-            .connectionRadius(0.55F)
-            .minPower(5)
-            .range(8)
+            .minPower(3)
+            .range(6)
             .damage(1.5)
-            .projectileSpeed(6)
+            .projectileSpeed(5)
             .targets(Set.of(SpawnCategory.MONSTER))
-            .projectileMaterial(Material.LIGHT_BLUE_CONCRETE)
-            .mainMaterial(Material.POLISHED_ANDESITE)
+            .projectileMaterial(FrequencyColor.getMaterial(0))
             .build();
     public static final Settings TURRET_1_PASSIVE_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
-            .connectionRadius(0.55F)
-            .minPower(5)
-            .range(5)
-            .damage(1)
-            .projectileSpeed(3)
+            .minPower(3)
+            .range(6)
+            .damage(1.5)
+            .projectileSpeed(5)
             .targets(Set.of(SpawnCategory.WATER_UNDERGROUND_CREATURE, SpawnCategory.AMBIENT, SpawnCategory.ANIMAL, SpawnCategory.AXOLOTL,
                     SpawnCategory.WATER_AMBIENT, SpawnCategory.WATER_ANIMAL))
-            .projectileMaterial(Material.LIGHT_BLUE_CONCRETE)
-            .mainMaterial(Material.POLISHED_ANDESITE)
+            .projectileMaterial(FrequencyColor.getMaterial(0))
             .build();
+    public static final Settings TURRET_2_HOSTILE_SETTINGS = Settings.builder()
+            .tier(Tier.BASIC)
+            .minPower(25)
+            .minFrequency(4)
+            .projectileMaterial(FrequencyColor.getMaterial(4))
+            .range(8)
+            .damage(2.5)
+            .projectileSpeed(8)
+            .targets(Set.of(SpawnCategory.MONSTER))
+            .build();
+    public static final Settings TURRET_2_PASSIVE_SETTINGS = Settings.builder()
+            .tier(Tier.BASIC)
+            .minPower(25)
+            .minFrequency(4)
+            .projectileMaterial(FrequencyColor.getMaterial(4))
+            .range(8)
+            .damage(2.5)
+            .projectileSpeed(8)
+            .targets(Set.of(SpawnCategory.WATER_UNDERGROUND_CREATURE, SpawnCategory.AMBIENT, SpawnCategory.ANIMAL, SpawnCategory.AXOLOTL,
+                    SpawnCategory.WATER_AMBIENT, SpawnCategory.WATER_ANIMAL))
+            .build();
+
     public static final SlimefunItemStack TURRET_1_HOSTILE = new SlimefunItemStack(
             "QP_TURRET_1_HOSTILE",
             Material.SMOOTH_STONE_SLAB,
-            "&6Turret &eI &8(targets hostiles)",
+            "&7Turret &fI &8(targets hostiles)",
             Lore.create(TURRET_1_HOSTILE_SETTINGS,
-                    "&7● Modulated projectiles",
                     "&7● Shoots at nearby entities"));
     public static final SlimefunItemStack TURRET_1_PASSIVE = new SlimefunItemStack(
             "QP_TURRET_1_PASSIVE",
             Material.SMOOTH_STONE_SLAB,
-            "&6Turret &eII &8(targets passives)",
+            "&7Turret &fI &8(targets passives)",
             Lore.create(TURRET_1_PASSIVE_SETTINGS,
-                    "&7● Modulated projectiles",
+                    "&7● Shoots at nearby entities"));
+    public static final SlimefunItemStack TURRET_2_HOSTILE = new SlimefunItemStack(
+            "QP_TURRET_2_HOSTILE",
+            Material.SMOOTH_STONE_SLAB,
+            "&7Turret &fII &8(targets hostiles)",
+            Lore.create(TURRET_2_HOSTILE_SETTINGS,
+                    "&7● Shoots at nearby entities"));
+    public static final SlimefunItemStack TURRET_2_PASSIVE = new SlimefunItemStack(
+            "QP_TURRET_2_PASSIVE",
+            Material.SMOOTH_STONE_SLAB,
+            "&7Turret &fII &8(targets passives)",
+            Lore.create(TURRET_2_PASSIVE_SETTINGS,
                     "&7● Shoots at nearby entities"));
 
     public ModulatedTurret(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {

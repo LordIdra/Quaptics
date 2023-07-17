@@ -48,14 +48,14 @@ public abstract class Turret extends ConnectedBlock implements PowerAnimatedBloc
 
     @Override
     protected float getConnectionRadius() {
-        return settings.getConnectionRadius();
+        return 0.55F;
     }
     @Override
     protected DisplayGroup initModel(final @NotNull Location location, final @NotNull Player player) {
         BlockStorageAPI.set(location, Keys.BS_PLAYER, player.getUniqueId());
         return new ModelBuilder()
                 .add("plate", new ModelCuboid()
-                        .material(settings.getMainMaterial())
+                        .material(Material.POLISHED_ANDESITE)
                         .size(0.6F))
                 .add("barrel", new ModelCuboid()
                         .material(Material.GRAY_CONCRETE))
