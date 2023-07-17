@@ -46,12 +46,14 @@ import java.util.Optional;
 
 public class ItemProjector extends ConnectedBlock implements ItemHolderBlock, PowerAnimatedBlock, ConfigPanelBlock {
     public static final Settings ITEM_PROJECTOR_SETTINGS = Settings.builder()
-            .tier(Tier.PRIMITIVE)
+            .tier(Tier.INTERMEDIATE)
+            .minPower(260)
+            .minFrequency(350)
             .build();
     public static final SlimefunItemStack ITEM_PROJECTOR = new SlimefunItemStack(
             "QP_ITEM_PROJECTOR",
             Material.LIGHT_BLUE_STAINED_GLASS,
-            "&6Item Projector",
+            "&7Item Projector",
             Lore.create(ITEM_PROJECTOR_SETTINGS,
                     "&7● Displays a hologram of an inserted item",
                     "&7● &eRight Click &7an item to insert",
