@@ -137,7 +137,7 @@ public class Combiner extends ConnectedBlock implements PowerAnimatedBlock, Powe
     }
     @Override
     public void onPoweredAnimation(final @NotNull Location location, final boolean powered) {
-        visibilityAnimation(location, "concrete", powered);
+        brightnessAnimation(location, "concrete", powered);
     }
 
     private @NotNull Vector getRelativeInputLocation(final int i) {
