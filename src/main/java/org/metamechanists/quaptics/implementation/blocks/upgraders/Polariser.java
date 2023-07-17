@@ -185,7 +185,7 @@ public class Polariser extends ConnectedBlock implements PowerAnimatedBlock, Pow
     }
     private static Optional<Integer> getPhaseChange(final @NotNull ItemStack itemStack) {
         for (final Entry<ItemStack, Integer> entry : PHASE_CHANGES.entrySet()) {
-            if (SlimefunUtils.isItemSimilar(entry.getKey(), itemStack, false)) {
+            if (SlimefunUtils.isItemSimilar(entry.getKey(), itemStack, true)) {
                 return Optional.ofNullable(entry.getValue());
             }
         }
