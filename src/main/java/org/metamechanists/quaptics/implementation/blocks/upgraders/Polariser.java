@@ -87,7 +87,7 @@ public class Polariser extends ConnectedBlock implements PowerAnimatedBlock, Pow
                         .facing(player.getFacing())
                         .size(0.3F, 0.3F, 0.9F))
                 .add("prism", new ModelCuboid()
-                        .material(settings.getTier().concreteMaterial)
+                        .material(Material.GRAY_CONCRETE)
                         .brightness(Utils.BRIGHTNESS_OFF)
                         .facing(player.getFacing())
                         .rotation(Math.PI/4)
