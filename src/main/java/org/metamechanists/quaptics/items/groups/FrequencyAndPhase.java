@@ -26,8 +26,6 @@ import static org.metamechanists.quaptics.implementation.blocks.upgraders.Repeat
 import static org.metamechanists.quaptics.implementation.blocks.upgraders.Repeater.REPEATER_2_SETTINGS;
 import static org.metamechanists.quaptics.implementation.blocks.upgraders.Repeater.REPEATER_3;
 import static org.metamechanists.quaptics.implementation.blocks.upgraders.Repeater.REPEATER_3_SETTINGS;
-import static org.metamechanists.quaptics.implementation.blocks.upgraders.Repeater.REPEATER_4;
-import static org.metamechanists.quaptics.implementation.blocks.upgraders.Repeater.REPEATER_4_SETTINGS;
 import static org.metamechanists.quaptics.implementation.blocks.upgraders.Scatterer.SCATTERER_1;
 import static org.metamechanists.quaptics.implementation.blocks.upgraders.Scatterer.SCATTERER_1_SETTINGS;
 import static org.metamechanists.quaptics.implementation.blocks.upgraders.Scatterer.SCATTERER_2;
@@ -52,10 +50,6 @@ public class FrequencyAndPhase {
         new Repeater(Groups.FREQUENCY_AND_PHASE, REPEATER_3, RecipeType.NULL, new ItemStack[]{
 
         }, REPEATER_3_SETTINGS).register(addon);
-
-        new Repeater(Groups.FREQUENCY_AND_PHASE, REPEATER_4, RecipeType.NULL, new ItemStack[]{
-
-        }, REPEATER_4_SETTINGS).register(addon);
 
 
 
