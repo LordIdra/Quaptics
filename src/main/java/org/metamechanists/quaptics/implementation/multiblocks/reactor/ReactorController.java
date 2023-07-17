@@ -180,7 +180,9 @@ public class ReactorController extends ConnectedBlock implements ComplexMultiblo
     @SuppressWarnings("unused")
     @Override
     public void onTick2(@NotNull final ConnectionGroup group, @NotNull final Location location) {
+        final List<Link> outgoingLinks = getOutgoingLinks(location);
         if (!BlockStorageAPI.getBoolean(location, Keys.BS_POWERED)) {
+            outgoingLinks.forEach(link -> link.setPower(0));
             return;
         }
 
@@ -194,11 +196,6 @@ public class ReactorController extends ConnectedBlock implements ComplexMultiblo
         BlockStorageAPI.set(location, Keys.BS_OUTPUT_POWER, outputPower);
 
         tickAnimation(location, secondsSinceReactorStarted);
-
-        final List<Link> outgoingLinks = getOutgoingLinks(location);
-        if (outgoingLinks.isEmpty()) {
-            return;
-        }
 
         outgoingLinks.forEach(link -> link.setPower(outputPower / outgoingLinks.size()));
     }
