@@ -6,7 +6,7 @@ targeting-wand.no-source-selected: "&cNo source selected."
 targeting-wand.source-must-be-output: "&cThe source must be an output point."
 targeting-wand.target-must-be-input: "&cYou can only link to an output point."
 
-multiblock-clicker.not-connected-to-multiblock: "&cNot connected to a multiblock."
+multiblock-clicker.not-connected-to-multiblock: "&cNot connected to a multiblock. Make sure the multiblock clicker is facing the block you'd usually click to use the multiblock."
 multiblock-clicker.not-powered: "&cYou must power the multiblock clicker before you can enable it."
 
 multiblock.block-name: "&7Block: &3{1}"

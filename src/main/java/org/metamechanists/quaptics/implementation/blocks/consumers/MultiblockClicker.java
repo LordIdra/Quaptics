@@ -171,6 +171,7 @@ public class MultiblockClicker extends ConnectedBlock implements PowerAnimatedBl
     protected boolean onRightClick(final @NotNull Location location, final @NotNull Player player) {
         final Optional<Block> multiblockBlock = getMultiblockBlock(location);
         if (multiblockBlock.isEmpty()) {
+            Language.sendLanguageMessage(player, "multiblock-clicker.not-connected-to-multiblock");
             return true;
         }
 
