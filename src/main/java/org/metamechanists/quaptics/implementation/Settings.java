@@ -65,7 +65,6 @@ public class Settings {
     public boolean isOperational(final @NotNull Link inputLink) {
         return inputLink.isEnabled()
                 && inputLink.getPower() >= minPower
-                && inputLink.getPower() <= tier.maxPower
                 && inputLink.getFrequency() >= minFrequency
                 && ((maxFrequency == 0) || (inputLink.getFrequency() <= maxFrequency));
     }
