@@ -5,6 +5,7 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import lombok.experimental.UtilityClass;
 import org.bukkit.inventory.ItemStack;
 import org.metamechanists.quaptics.Quaptics;
+import org.metamechanists.quaptics.implementation.blocks.consumers.turrets.DirectTurret;
 import org.metamechanists.quaptics.implementation.blocks.consumers.turrets.ModulatedTurret;
 import org.metamechanists.quaptics.items.Groups;
 
@@ -47,19 +48,19 @@ public class Machines {
 
         }, TURRET_2_PASSIVE_SETTINGS).register(addon);
 
-        new ModulatedTurret(Groups.MACHINES, TURRET_3_HOSTILE, RecipeType.NULL, new ItemStack[]{
+        new DirectTurret(Groups.MACHINES, TURRET_3_HOSTILE, RecipeType.NULL, new ItemStack[]{
 
         }, TURRET_3_HOSTILE_SETTINGS).register(addon);
 
-        new ModulatedTurret(Groups.MACHINES, TURRET_3_PASSIVE, RecipeType.NULL, new ItemStack[]{
+        new DirectTurret(Groups.MACHINES, TURRET_3_PASSIVE, RecipeType.NULL, new ItemStack[]{
 
         }, TURRET_3_PASSIVE_SETTINGS).register(addon);
 
-        new ModulatedTurret(Groups.MACHINES, TURRET_4_HOSTILE, RecipeType.NULL, new ItemStack[]{
+        new DirectTurret(Groups.MACHINES, TURRET_4_HOSTILE, RecipeType.NULL, new ItemStack[]{
 
         }, TURRET_4_HOSTILE_SETTINGS).register(addon);
 
-        new ModulatedTurret(Groups.MACHINES, TURRET_4_PASSIVE, RecipeType.NULL, new ItemStack[]{
+        new DirectTurret(Groups.MACHINES, TURRET_4_PASSIVE, RecipeType.NULL, new ItemStack[]{
 
         }, TURRET_4_PASSIVE_SETTINGS).register(addon);
     }
