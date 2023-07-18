@@ -35,38 +35,38 @@ public class CraftingComponents {
             "QP_PHASE_CRYSTAL_180", getPhaseCrystal(), "&7Phase Crystal", Lore.phaseChange(180));
 
     public final SlimefunItemStack TRANSMITTER_1 = new SlimefunItemStack(
-            "QP_TRANSMITTER_1", Material.RED_STAINED_GLASS_PANE, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Transmitter &fI");
+            "QP_TRANSMITTER_1", Material.RED_STAINED_GLASS_PANE, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Transmitter &7I");
     public final SlimefunItemStack TRANSMITTER_2 = new SlimefunItemStack(
-            "QP_TRANSMITTER_1", Material.RED_STAINED_GLASS, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Transmitter &fII");
+            "QP_TRANSMITTER_2", Material.RED_STAINED_GLASS, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Transmitter &7II");
     public final SlimefunItemStack TRANSMITTER_3 = new SlimefunItemStack(
-            "QP_TRANSMITTER_1", Material.RED_CONCRETE_POWDER, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Transmitter &fIII");
+            "QP_TRANSMITTER_3", Material.RED_CONCRETE_POWDER, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Transmitter &7III");
     public final SlimefunItemStack TRANSMITTER_4 = new SlimefunItemStack(
-            "QP_TRANSMITTER_1", Material.RED_CONCRETE, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Transmitter &fIV");
+            "QP_TRANSMITTER_4", Material.RED_CONCRETE, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Transmitter &7IV");
 
     public final SlimefunItemStack RECEIVER_1 = new SlimefunItemStack(
-            "QP_RECEIVER_1", Material.LIME_STAINED_GLASS_PANE, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Receiver &fI");
+            "QP_RECEIVER_1", Material.LIME_STAINED_GLASS_PANE, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Receiver &7I");
     public final SlimefunItemStack RECEIVER_2 = new SlimefunItemStack(
-            "QP_RECEIVER_2", Material.LIME_STAINED_GLASS, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Receiver &fII");
+            "QP_RECEIVER_2", Material.LIME_STAINED_GLASS, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Receiver &7II");
     public final SlimefunItemStack RECEIVER_3 = new SlimefunItemStack(
-            "QP_RECEIVER_3", Material.LIME_CONCRETE_POWDER, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Receiver &fIII");
+            "QP_RECEIVER_3", Material.LIME_CONCRETE_POWDER, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Receiver &7III");
     public final SlimefunItemStack RECEIVER_4 = new SlimefunItemStack(
-            "QP_RECEIVER_4", Material.LIME_CONCRETE, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Receiver &fIV");
+            "QP_RECEIVER_4", Material.LIME_CONCRETE, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Receiver &7IV");
 
     public final SlimefunItemStack TRANSCEIVER_1 = new SlimefunItemStack(
-            "QP_TRANSCEIVER_1", Material.WHITE_STAINED_GLASS_PANE, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Transceiver &fI");
+            "QP_TRANSCEIVER_1", Material.WHITE_STAINED_GLASS_PANE, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Transceiver &7I");
     public final SlimefunItemStack TRANSCEIVER_2 = new SlimefunItemStack(
-            "QP_TRANSCEIVER_2", Material.WHITE_STAINED_GLASS, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Transceiver &fII");
+            "QP_TRANSCEIVER_2", Material.WHITE_STAINED_GLASS, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Transceiver &7II");
     public final SlimefunItemStack TRANSCEIVER_3 = new SlimefunItemStack(
-            "QP_TRANSCEIVER_3", Material.WHITE_CONCRETE_POWDER, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Transceiver &fIII");
+            "QP_TRANSCEIVER_3", Material.WHITE_CONCRETE_POWDER, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Transceiver &7III");
     public final SlimefunItemStack TRANSCEIVER_4 = new SlimefunItemStack(
-            "QP_TRANSCEIVER_4", Material.WHITE_CONCRETE, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Transceiver &fIV");
+            "QP_TRANSCEIVER_4", Material.WHITE_CONCRETE, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Transceiver &7IV");
 
     public final SlimefunItemStack ENERGY_CONCENTRATION_ELEMENT_1 = new SlimefunItemStack(
-            "QP_ENERGY_CONCENTRATION_ELEMENT_1", Material.PEARLESCENT_FROGLIGHT, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Energy Concentration Element &fI");
+            "QP_ENERGY_CONCENTRATION_ELEMENT_1", Material.PEARLESCENT_FROGLIGHT, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Energy Concentration Element &7I");
     public final SlimefunItemStack ENERGY_CONCENTRATION_ELEMENT_2 = new SlimefunItemStack(
-            "QP_ENERGY_CONCENTRATION_ELEMENT_2", Material.OCHRE_FROGLIGHT, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Energy Concentration Element &fII");
+            "QP_ENERGY_CONCENTRATION_ELEMENT_2", Material.OCHRE_FROGLIGHT, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Energy Concentration Element &7II");
     public final SlimefunItemStack ENERGY_CONCENTRATION_ELEMENT_3 = new SlimefunItemStack(
-            "QP_ENERGY_CONCENTRATION_ELEMENT_3", Material.VERDANT_FROGLIGHT, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Energy Concentration Element &fIII");
+            "QP_ENERGY_CONCENTRATION_ELEMENT_3", Material.VERDANT_FROGLIGHT, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Energy Concentration Element &7III");
 
     private @NotNull ItemStack getPhaseCrystal() {
         final ItemStack itemStack = new ItemStack(Material.QUARTZ);
