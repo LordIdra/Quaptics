@@ -58,7 +58,7 @@ public class ReactorController extends ConnectedBlock implements ComplexMultiblo
             .tier(Tier.ADVANCED)
             .operatingPowerHidden(true)
             .powerThreshold(1800)
-            .powerMultiplier(1.4)
+            .powerMultiplier(1.75)
             .maxOutputPower(1.4 * Tier.INTERMEDIATE.maxPower * RING_LOCATIONS.size())
             .timeToMaxEfficiency(600)
             .build();
