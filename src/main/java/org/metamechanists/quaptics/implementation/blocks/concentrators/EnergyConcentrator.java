@@ -83,8 +83,8 @@ public class EnergyConcentrator extends EnergyConnectedBlock implements PowerAni
     public static final SlimefunItemStack ENERGY_CONCENTRATOR_4 = new SlimefunItemStack(
             "QP_ENERGY_CONCENTRATOR_4",
             Tier.INTERMEDIATE.concreteMaterial,
-            "&eEnergy Concentrator &6III",
-            Lore.create(ENERGY_CONCENTRATOR_3_SETTINGS,
+            "&eEnergy Concentrator &6IV",
+            Lore.create(ENERGY_CONCENTRATOR_4_SETTINGS,
                     "&7● Concentrates energy into a quaptic ray"));
 
     private final Vector outputLocation = new Vector(0.0F, 0.0F,getConnectionRadius());

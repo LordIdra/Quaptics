@@ -154,8 +154,8 @@ public abstract class BeaconController extends ConnectedBlock implements ItemHol
             return false;
         }
 
-        if (Tier.greaterOrEqual(beaconModule.getSettings().getTier(), settings.getTier())) {
-            Language.sendLanguageMessage(player, "beacon.incorrect-tier", settings.getTier());
+        if (!Tier.greaterOrEqual(beaconModule.getSettings().getTier(), settings.getTier())) {
+            Language.sendLanguageMessage(player, "beacon.incorrect-tier", settings.getTier().name);
             return false;
         }
 
