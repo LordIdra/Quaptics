@@ -38,7 +38,7 @@ public class SolarConcentrator extends ConnectedBlock implements PowerAnimatedBl
             .outputPower(2)
             .build();
     public static final Settings SOLAR_CONCENTRATOR_2_SETTINGS = Settings.builder()
-            .tier(Tier.BASIC)
+            .tier(Tier.PRIMITIVE)
             .operatingPowerHidden(true)
             .outputPower(8)
             .build();

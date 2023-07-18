@@ -50,6 +50,18 @@ import static org.metamechanists.quaptics.implementation.blocks.manipulators.Tra
 import static org.metamechanists.quaptics.implementation.blocks.manipulators.Transformer.TRANSFORMER_2_SETTINGS;
 import static org.metamechanists.quaptics.implementation.blocks.manipulators.Transformer.TRANSFORMER_3;
 import static org.metamechanists.quaptics.implementation.blocks.manipulators.Transformer.TRANSFORMER_3_SETTINGS;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.RECEIVER_1;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.RECEIVER_2;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.RECEIVER_3;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.RECEIVER_4;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.TRANSCEIVER_1;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.TRANSCEIVER_2;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.TRANSCEIVER_3;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.TRANSCEIVER_4;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.TRANSMITTER_1;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.TRANSMITTER_2;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.TRANSMITTER_3;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.TRANSMITTER_4;
 
 
 @UtilityClass
@@ -57,56 +69,80 @@ public class BeamManipulation {
     public void initialize() {
         final SlimefunAddon addon = Quaptics.getInstance();
 
-        new Lens(Groups.BEAM_MANIPULATION, LENS_1, RecipeType.NULL, new ItemStack[]{
-
+        new Lens(Groups.BEAM_MANIPULATION, LENS_1, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
+                null, null, null,
+                RECEIVER_1, TRANSCEIVER_1, TRANSMITTER_1,
+                null, null, null
         }, LENS_1_SETTINGS).register(addon);
 
-        new Lens(Groups.BEAM_MANIPULATION, LENS_2, RecipeType.NULL, new ItemStack[]{
-
+        new Lens(Groups.BEAM_MANIPULATION, LENS_2, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
+                null, null, null,
+                RECEIVER_2, TRANSCEIVER_2, TRANSMITTER_2,
+                null, null, null
         }, LENS_2_SETTINGS).register(addon);
 
-        new Lens(Groups.BEAM_MANIPULATION, LENS_3, RecipeType.NULL, new ItemStack[]{
-
+        new Lens(Groups.BEAM_MANIPULATION, LENS_3, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
+                null, null, null,
+                RECEIVER_3, TRANSCEIVER_3, TRANSMITTER_3,
+                null, null, null
         }, LENS_3_SETTINGS).register(addon);
 
-        new Lens(Groups.BEAM_MANIPULATION, LENS_4, RecipeType.NULL, new ItemStack[]{
-
+        new Lens(Groups.BEAM_MANIPULATION, LENS_4, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
+                null, null, null,
+                RECEIVER_4, TRANSCEIVER_4, TRANSMITTER_4,
+                null, null, null
         }, LENS_4_SETTINGS).register(addon);
 
 
 
-        new Splitter(Groups.BEAM_MANIPULATION, SPLITTER_1, RecipeType.NULL, new ItemStack[]{
-
+        new Splitter(Groups.BEAM_MANIPULATION, SPLITTER_1, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
+                null, null, TRANSMITTER_1,
+                RECEIVER_1, TRANSCEIVER_1, null,
+                null, null, TRANSMITTER_1
         }, SPLITTER_1_SETTINGS).register(addon);
 
-        new Splitter(Groups.BEAM_MANIPULATION, SPLITTER_2, RecipeType.NULL, new ItemStack[]{
-
+        new Splitter(Groups.BEAM_MANIPULATION, SPLITTER_2, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
+                null, null, TRANSMITTER_2,
+                RECEIVER_2, TRANSCEIVER_2, TRANSMITTER_2,
+                null, null, TRANSMITTER_2
         }, SPLITTER_2_SETTINGS).register(addon);
 
-        new Splitter(Groups.BEAM_MANIPULATION, SPLITTER_3, RecipeType.NULL, new ItemStack[]{
-
+        new Splitter(Groups.BEAM_MANIPULATION, SPLITTER_3, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
+                null, TRANSMITTER_3, TRANSMITTER_3,
+                RECEIVER_3, TRANSCEIVER_3, null,
+                null, TRANSMITTER_3, TRANSMITTER_3
         }, SPLITTER_3_SETTINGS).register(addon);
 
-        new Splitter(Groups.BEAM_MANIPULATION, SPLITTER_4, RecipeType.NULL, new ItemStack[]{
-
+        new Splitter(Groups.BEAM_MANIPULATION, SPLITTER_4, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
+                null, TRANSMITTER_4, TRANSMITTER_4,
+                RECEIVER_4, TRANSCEIVER_4, TRANSMITTER_4,
+                null, TRANSMITTER_4, TRANSMITTER_4
         }, SPLITTER_4_SETTINGS).register(addon);
 
 
 
-        new Combiner(Groups.BEAM_MANIPULATION, COMBINER_1, RecipeType.NULL, new ItemStack[]{
-
+        new Combiner(Groups.BEAM_MANIPULATION, COMBINER_1, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
+                RECEIVER_1, null, null,
+                null, TRANSCEIVER_1, TRANSMITTER_1,
+                RECEIVER_1, null, null
         }, COMBINER_1_SETTINGS).register(addon);
 
-        new Combiner(Groups.BEAM_MANIPULATION, COMBINER_2, RecipeType.NULL, new ItemStack[]{
-
+        new Combiner(Groups.BEAM_MANIPULATION, COMBINER_2, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
+                RECEIVER_2, null, null,
+                RECEIVER_2, TRANSCEIVER_2, TRANSMITTER_2,
+                RECEIVER_2, null, null
         }, COMBINER_2_SETTINGS).register(addon);
 
-        new Combiner(Groups.BEAM_MANIPULATION, COMBINER_3, RecipeType.NULL, new ItemStack[]{
-
+        new Combiner(Groups.BEAM_MANIPULATION, COMBINER_3, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
+                RECEIVER_3, RECEIVER_3, null,
+                null, TRANSCEIVER_3, TRANSMITTER_3,
+                RECEIVER_3, RECEIVER_3, null
         }, COMBINER_3_SETTINGS).register(addon);
 
-        new Combiner(Groups.BEAM_MANIPULATION, COMBINER_4, RecipeType.NULL, new ItemStack[]{
-
+        new Combiner(Groups.BEAM_MANIPULATION, COMBINER_4, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
+                RECEIVER_4, RECEIVER_4, null,
+                RECEIVER_4, TRANSCEIVER_4, TRANSMITTER_4,
+                RECEIVER_4, RECEIVER_4, null
         }, COMBINER_4_SETTINGS).register(addon);
 
 

@@ -64,25 +64,25 @@ public class EnergyConcentrator extends EnergyConnectedBlock implements PowerAni
 
     public static final SlimefunItemStack ENERGY_CONCENTRATOR_1 = new SlimefunItemStack(
             "QP_ENERGY_CONCENTRATOR_1",
-            Tier.BASIC.concreteMaterial,
+            Material.GRAY_CONCRETE,
             "&eEnergy Concentrator &6I",
             Lore.create(ENERGY_CONCENTRATOR_1_SETTINGS,
                     "&7● Concentrates energy into a quaptic ray"));
     public static final SlimefunItemStack ENERGY_CONCENTRATOR_2 = new SlimefunItemStack(
             "QP_ENERGY_CONCENTRATOR_2",
-            Tier.INTERMEDIATE.concreteMaterial,
+            Material.GRAY_CONCRETE,
             "&eEnergy Concentrator &6II",
             Lore.create(ENERGY_CONCENTRATOR_2_SETTINGS,
                     "&7● Concentrates energy into a quaptic ray"));
     public static final SlimefunItemStack ENERGY_CONCENTRATOR_3 = new SlimefunItemStack(
             "QP_ENERGY_CONCENTRATOR_3",
-            Tier.INTERMEDIATE.concreteMaterial,
+            Material.GRAY_CONCRETE,
             "&eEnergy Concentrator &6III",
             Lore.create(ENERGY_CONCENTRATOR_3_SETTINGS,
                     "&7● Concentrates energy into a quaptic ray"));
     public static final SlimefunItemStack ENERGY_CONCENTRATOR_4 = new SlimefunItemStack(
             "QP_ENERGY_CONCENTRATOR_4",
-            Tier.INTERMEDIATE.concreteMaterial,
+            Material.GRAY_CONCRETE,
             "&eEnergy Concentrator &6IV",
             Lore.create(ENERGY_CONCENTRATOR_4_SETTINGS,
                     "&7● Concentrates energy into a quaptic ray"));

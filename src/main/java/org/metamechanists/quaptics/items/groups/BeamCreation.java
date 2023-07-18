@@ -3,6 +3,7 @@ package org.metamechanists.quaptics.items.groups;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import lombok.experimental.UtilityClass;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.metamechanists.quaptics.Quaptics;
 import org.metamechanists.quaptics.implementation.blocks.concentrators.EnergyConcentrator;
@@ -27,6 +28,7 @@ import static org.metamechanists.quaptics.implementation.multiblocks.reactor.Rea
 import static org.metamechanists.quaptics.implementation.multiblocks.reactor.ReactorController.REACTOR_CONTROLLER_SETTINGS;
 import static org.metamechanists.quaptics.implementation.multiblocks.reactor.ReactorRing.REACTOR_RING;
 import static org.metamechanists.quaptics.implementation.multiblocks.reactor.ReactorRing.REACTOR_RING_SETTINGS;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.*;
 
 
 @UtilityClass
@@ -34,30 +36,42 @@ public class BeamCreation {
     public void initialize() {
         final SlimefunAddon addon = Quaptics.getInstance();
 
-        new SolarConcentrator(Groups.BEAM_CREATION, SOLAR_CONCENTRATOR_1, RecipeType.NULL, new ItemStack[]{
-
+        new SolarConcentrator(Groups.BEAM_CREATION, SOLAR_CONCENTRATOR_1, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
+                new ItemStack(Material.GLASS), new ItemStack(Material.GLASS), new ItemStack(Material.GLASS),
+                new ItemStack(Material.GLASS), ENERGY_CONCENTRATION_ELEMENT_1, TRANSMITTER_1,
+                new ItemStack(Material.GLASS), new ItemStack(Material.GLASS), new ItemStack(Material.GLASS)
         }, SOLAR_CONCENTRATOR_1_SETTINGS).register(addon);
 
-        new SolarConcentrator(Groups.BEAM_CREATION, SOLAR_CONCENTRATOR_2, RecipeType.NULL, new ItemStack[]{
-
+        new SolarConcentrator(Groups.BEAM_CREATION, SOLAR_CONCENTRATOR_2, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
+                new ItemStack(Material.GLASS), new ItemStack(Material.GLASS), new ItemStack(Material.GLASS),
+                ENERGY_CONCENTRATION_ELEMENT_1, SOLAR_CONCENTRATOR_1, TRANSMITTER_1,
+                new ItemStack(Material.GLASS), new ItemStack(Material.GLASS), new ItemStack(Material.GLASS)
         }, SOLAR_CONCENTRATOR_2_SETTINGS).register(addon);
 
 
 
-        new EnergyConcentrator(Groups.BEAM_CREATION, ENERGY_CONCENTRATOR_1, RecipeType.NULL, new ItemStack[]{
-
+        new EnergyConcentrator(Groups.BEAM_CREATION, ENERGY_CONCENTRATOR_1, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
+                new ItemStack(Material.GLASS), ENERGY_CONCENTRATION_ELEMENT_2, new ItemStack(Material.GLASS),
+                new ItemStack(Material.GLASS), SOLAR_CONCENTRATOR_2, TRANSMITTER_2,
+                new ItemStack(Material.GLASS), ENERGY_CONCENTRATION_ELEMENT_2, new ItemStack(Material.GLASS)
         }, ENERGY_CONCENTRATOR_1_SETTINGS).register(addon);
 
-        new EnergyConcentrator(Groups.BEAM_CREATION, ENERGY_CONCENTRATOR_2, RecipeType.NULL, new ItemStack[]{
-
+        new EnergyConcentrator(Groups.BEAM_CREATION, ENERGY_CONCENTRATOR_2, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
+                new ItemStack(Material.GLASS), ENERGY_CONCENTRATION_ELEMENT_2, new ItemStack(Material.GLASS),
+                ENERGY_CONCENTRATION_ELEMENT_2, ENERGY_CONCENTRATOR_1, TRANSMITTER_2,
+                new ItemStack(Material.GLASS), ENERGY_CONCENTRATION_ELEMENT_2, new ItemStack(Material.GLASS)
         }, ENERGY_CONCENTRATOR_2_SETTINGS).register(addon);
 
-        new EnergyConcentrator(Groups.BEAM_CREATION, ENERGY_CONCENTRATOR_3, RecipeType.NULL, new ItemStack[]{
-
+        new EnergyConcentrator(Groups.BEAM_CREATION, ENERGY_CONCENTRATOR_3, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
+                new ItemStack(Material.GLASS), ENERGY_CONCENTRATION_ELEMENT_3, new ItemStack(Material.GLASS),
+                new ItemStack(Material.GLASS), ENERGY_CONCENTRATOR_2, TRANSMITTER_3,
+                new ItemStack(Material.GLASS), ENERGY_CONCENTRATION_ELEMENT_3, new ItemStack(Material.GLASS)
         }, ENERGY_CONCENTRATOR_3_SETTINGS).register(addon);
 
-        new EnergyConcentrator(Groups.BEAM_CREATION, ENERGY_CONCENTRATOR_4, RecipeType.NULL, new ItemStack[]{
-
+        new EnergyConcentrator(Groups.BEAM_CREATION, ENERGY_CONCENTRATOR_4, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
+                new ItemStack(Material.GLASS), ENERGY_CONCENTRATION_ELEMENT_3, new ItemStack(Material.GLASS),
+                ENERGY_CONCENTRATION_ELEMENT_3, ENERGY_CONCENTRATOR_3, TRANSMITTER_3,
+                new ItemStack(Material.GLASS), ENERGY_CONCENTRATION_ELEMENT_3, new ItemStack(Material.GLASS)
         }, ENERGY_CONCENTRATOR_4_SETTINGS).register(addon);
 
 
