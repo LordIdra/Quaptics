@@ -50,18 +50,7 @@ import static org.metamechanists.quaptics.implementation.blocks.manipulators.Tra
 import static org.metamechanists.quaptics.implementation.blocks.manipulators.Transformer.TRANSFORMER_2_SETTINGS;
 import static org.metamechanists.quaptics.implementation.blocks.manipulators.Transformer.TRANSFORMER_3;
 import static org.metamechanists.quaptics.implementation.blocks.manipulators.Transformer.TRANSFORMER_3_SETTINGS;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.RECEIVER_1;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.RECEIVER_2;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.RECEIVER_3;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.RECEIVER_4;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.TRANSCEIVER_1;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.TRANSCEIVER_2;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.TRANSCEIVER_3;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.TRANSCEIVER_4;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.TRANSMITTER_1;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.TRANSMITTER_2;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.TRANSMITTER_3;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.TRANSMITTER_4;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.*;
 
 
 @UtilityClass
