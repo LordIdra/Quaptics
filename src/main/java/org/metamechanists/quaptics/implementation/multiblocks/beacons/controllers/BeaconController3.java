@@ -28,12 +28,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconBattery.BEACON_BATTERY;
+import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconBattery.BEACON_BATTERY_2;
 import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconBeam.BEACON_BEAM;
 import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconComputer.BEACON_COMPUTER;
 import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconMatrix.BEACON_MATRIX;
 import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconPanel.BEACON_PANEL;
-import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconPowerSupply.BEACON_POWER_SUPPLY;
+import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconPowerSupply.BEACON_POWER_SUPPLY_2;
 import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconRod.BEACON_ROD;
 import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconTransmitter.BEACON_TRANSMITTER;
 
@@ -41,15 +41,18 @@ import static org.metamechanists.quaptics.implementation.multiblocks.beacons.com
 public class BeaconController3 extends BeaconController {
     public static final Settings BEACON_CONTROLLER_3_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
-            .minPower(20)
+            .minPower(2200)
+            .minFrequency(40000)
             .range(60)
             .build();
     public static final SlimefunItemStack BEACON_CONTROLLER_3 = new SlimefunItemStack(
             "QP_BEACON_CONTROLLER_3",
             Material.BLUE_CONCRETE,
-            "&6Beacon Controller &eIII",
+            "&dBeacon Controller &5III",
             Lore.create(BEACON_CONTROLLER_3_SETTINGS,
-                    "&7● Part of the Beacon multiblock"));
+                    Lore.multiblock(),
+                    "&7● Applies module effects in a range around it",
+                    "&7● &eRight Click &7a module slot with a module to insert"));
 
     private static final Vector MATRIX_LOCATION = new Vector(0, 2, 0);
     private static final Vector COMPUTER_1_LOCATION = new Vector(1, 2, 0);
@@ -171,13 +174,13 @@ public class BeaconController3 extends BeaconController {
     public Map<Vector, ItemStack> getStructure() {
         final Map<Vector, ItemStack> structure = new HashMap<>();
 
-        structure.put(new Vector(0, -2, 0), BEACON_BATTERY);
+        structure.put(new Vector(0, -2, 0), BEACON_BATTERY_2);
         structure.put(new Vector(1, -2, 0), BEACON_BEAM);
         structure.put(new Vector(-1, -2, 0), BEACON_BEAM);
         structure.put(new Vector(0, -2, 1), BEACON_BEAM);
         structure.put(new Vector(0, -2, -1), BEACON_BEAM);
 
-        structure.put(new Vector(0, -1, 0), BEACON_POWER_SUPPLY);
+        structure.put(new Vector(0, -1, 0), BEACON_POWER_SUPPLY_2);
 
         structure.put(new Vector(0, 1, 0), BEACON_BEAM);
         structure.put(new Vector(1, 1, 0), BEACON_BEAM);
@@ -197,13 +200,13 @@ public class BeaconController3 extends BeaconController {
         structure.put(new Vector(0, 3, 1), BEACON_ROD);
         structure.put(new Vector(0, 3, -1), BEACON_ROD);
 
-        structure.put(new Vector(0, 4, 0), BEACON_BATTERY);
+        structure.put(new Vector(0, 4, 0), BEACON_BATTERY_2);
         structure.put(new Vector(1, 4, 0), BEACON_TRANSMITTER);
         structure.put(new Vector(-1, 4, 0), BEACON_TRANSMITTER);
         structure.put(new Vector(0, 4, 1), BEACON_TRANSMITTER);
         structure.put(new Vector(0, 4, -1), BEACON_TRANSMITTER);
 
-        structure.put(new Vector(0, 5, 0), BEACON_BATTERY);
+        structure.put(new Vector(0, 5, 0), BEACON_BATTERY_2);
 
         structure.put(new Vector(0, 6, 0), BEACON_BEAM);
 

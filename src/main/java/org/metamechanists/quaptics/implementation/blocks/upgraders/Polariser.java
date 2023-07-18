@@ -56,8 +56,7 @@ public class Polariser extends ConnectedBlock implements PowerAnimatedBlock, Pow
                     "&7● Increases the phase of quaptic rays",
                     "&7● The increase in phase depends on the phase crystal",
                     "&7  that the polariser is holding",
-                    "&7● &eRight Click &7an item to insert",
-                    "&7● &eRight Click &7again to retrieve"));
+                    "&7● &eRight Click &7with a crystal to insert"));
 
     private static final Vector MAIN_INPUT_LOCATION = new Vector(0.0F, 0.0F, -0.45F);
     private static final Vector OUTPUT_LOCATION = new Vector(0.0F, 0.0F, 0.45);

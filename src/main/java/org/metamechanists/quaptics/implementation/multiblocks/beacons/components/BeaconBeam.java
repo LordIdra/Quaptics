@@ -19,13 +19,15 @@ import org.metamechanists.quaptics.utils.models.ModelBuilder;
 public class BeaconBeam extends QuapticBlock {
     public static final Settings BEACON_BEAM_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
+            .maxPowerHidden(true)
             .build();
+
     public static final SlimefunItemStack BEACON_BEAM = new SlimefunItemStack(
             "QP_BEACON_BEAM",
             Material.POLISHED_DEEPSLATE_WALL,
-            "&6Beacon Beam",
+            "&dBeacon Beam",
             Lore.create(BEACON_BEAM_SETTINGS,
-                    "&7● Part of the Beacon multiblock"));
+                    Lore.multiblockComponent()));
 
     public BeaconBeam(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);

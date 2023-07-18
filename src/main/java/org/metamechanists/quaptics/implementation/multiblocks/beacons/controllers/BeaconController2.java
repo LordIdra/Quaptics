@@ -28,26 +28,29 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconBattery.BEACON_BATTERY;
+import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconBattery.BEACON_BATTERY_2;
 import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconBeam.BEACON_BEAM;
 import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconMatrix.BEACON_MATRIX;
-import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconPowerSupply.BEACON_POWER_SUPPLY;
+import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconPowerSupply.BEACON_POWER_SUPPLY_2;
 import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconRod.BEACON_ROD;
 import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconTransmitter.BEACON_TRANSMITTER;
 
 
 public class BeaconController2 extends BeaconController {
     public static final Settings BEACON_CONTROLLER_2_SETTINGS = Settings.builder()
-            .tier(Tier.PRIMITIVE)
-            .minPower(20)
+            .tier(Tier.ADVANCED)
+            .minPower(1800)
+            .minFrequency(6500)
             .range(40)
             .build();
     public static final SlimefunItemStack BEACON_CONTROLLER_2 = new SlimefunItemStack(
             "QP_BEACON_CONTROLLER_2",
             Material.BLUE_CONCRETE,
-            "&6Beacon Controller &eII",
+            "&dBeacon Controller &5II",
             Lore.create(BEACON_CONTROLLER_2_SETTINGS,
-                    "&7● Part of the Beacon multiblock"));
+                    Lore.multiblock(),
+                    "&7● Applies module effects in a range around it",
+                    "&7● &eRight Click &7a module slot with a module to insert"));
 
     private static final Vector MATRIX_LOCATION = new Vector(0, 3, 0);
     private static final Vector POWER_SUPPLY_LOCATION = new Vector(0, -1, 0);
@@ -125,9 +128,9 @@ public class BeaconController2 extends BeaconController {
     public Map<Vector, ItemStack> getStructure() {
         final Map<Vector, ItemStack> structure = new HashMap<>();
 
-        structure.put(new Vector(0, -1, 0), BEACON_POWER_SUPPLY);
+        structure.put(new Vector(0, -1, 0), BEACON_POWER_SUPPLY_2);
 
-        structure.put(new Vector(0, 1, 0), BEACON_BATTERY);
+        structure.put(new Vector(0, 1, 0), BEACON_BATTERY_2);
         structure.put(new Vector(1, 1, 0), BEACON_TRANSMITTER);
         structure.put(new Vector(-1, 1, 0), BEACON_TRANSMITTER);
         structure.put(new Vector(0, 1, 1), BEACON_TRANSMITTER);

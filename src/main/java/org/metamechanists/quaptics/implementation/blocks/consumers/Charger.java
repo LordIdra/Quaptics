@@ -64,32 +64,28 @@ public class Charger extends ConnectedBlock implements InfoPanelBlock, ItemHolde
             "&7Charger &fI",
             Lore.create(CHARGER_1_SETTINGS,
                     "&7● Charges Quaptic items",
-                    "&7● &eRight Click &7an item to insert",
-                    "&7● &eRight Click &7again to retrieve"));
+                    "&7● &eRight Click &7with a chargeable item to insert"));
     public static final SlimefunItemStack CHARGER_2 = new SlimefunItemStack(
             "QP_CHARGER_2",
             Material.POLISHED_DEEPSLATE_SLAB,
             "&7Charger &fII",
             Lore.create(CHARGER_2_SETTINGS,
                     "&7● Charges Quaptic items",
-                    "&7● &eRight Click &7an item to insert",
-                    "&7● &eRight Click &7again to retrieve"));
+                    "&7● &eRight Click &7with a chargeable item to insert"));
     public static final SlimefunItemStack CHARGER_3 = new SlimefunItemStack(
             "QP_CHARGER_3",
             Material.POLISHED_DEEPSLATE_SLAB,
             "&7Charger &fIII",
             Lore.create(CHARGER_3_SETTINGS,
                     "&7● Charges Quaptic items",
-                    "&7● &eRight Click &7an item to insert",
-                    "&7● &eRight Click &7again to retrieve"));
+                    "&7● &eRight Click &7with a chargeable item to insert"));
     public static final SlimefunItemStack CHARGER_4 = new SlimefunItemStack(
             "QP_CHARGER_4",
             Material.POLISHED_DEEPSLATE_SLAB,
             "&7Charger &fIV",
             Lore.create(CHARGER_4_SETTINGS,
                     "&7● Charges Quaptic items",
-                    "&7● &eRight Click &7an item to insert",
-                    "&7● &eRight Click &7again to retrieve"));
+                    "&7● &eRight Click &7with a chargeable item to insert"));
 
     private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -getConnectionRadius());
 

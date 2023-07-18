@@ -25,18 +25,31 @@ import org.metamechanists.quaptics.utils.models.ModelBuilder;
 import org.metamechanists.quaptics.utils.models.components.ModelCuboid;
 
 import java.util.List;
+import java.util.Optional;
 
 
 public class BeaconPowerSupply extends ConnectedBlock {
-    public static final Settings BEACON_POWER_SUPPLY_SETTINGS = Settings.builder()
-            .tier(Tier.PRIMITIVE)
+    public static final Settings BEACON_POWER_SUPPLY_1_SETTINGS = Settings.builder()
+            .tier(Tier.INTERMEDIATE)
+            .maxPowerHidden(true)
             .build();
-    public static final SlimefunItemStack BEACON_POWER_SUPPLY = new SlimefunItemStack(
-            "QP_BEACON_POWER_SUPPLY",
+    public static final Settings BEACON_POWER_SUPPLY_2_SETTINGS = Settings.builder()
+            .tier(Tier.ADVANCED)
+            .maxPowerHidden(true)
+            .build();
+
+    public static final SlimefunItemStack BEACON_POWER_SUPPLY_1 = new SlimefunItemStack(
+            "QP_BEACON_POWER_SUPPLY_1",
             Material.GRAY_CONCRETE,
-            "&6Beacon Power Supply",
-            Lore.create(BEACON_POWER_SUPPLY_SETTINGS,
-                    "&7● Part of the Beacon multiblock"));
+            "&dBeacon Power Supply &5I",
+            Lore.create(BEACON_POWER_SUPPLY_1_SETTINGS,
+                    Lore.multiblockComponent()));
+    public static final SlimefunItemStack BEACON_POWER_SUPPLY_2 = new SlimefunItemStack(
+            "QP_BEACON_POWER_SUPPLY_2",
+            Material.GRAY_CONCRETE,
+            "&dBeacon Power Supply &5II",
+            Lore.create(BEACON_POWER_SUPPLY_2_SETTINGS,
+                    Lore.multiblockComponent()));
 
     public BeaconPowerSupply(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
@@ -66,10 +79,7 @@ public class BeaconPowerSupply extends ConnectedBlock {
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
         return List.of(
-                new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input 1", location.clone().toCenterLocation().add(new Vector(0, 0, getConnectionRadius()))),
-                new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input 2", location.clone().toCenterLocation().add(new Vector(0, 0, -getConnectionRadius()))),
-                new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input 3", location.clone().toCenterLocation().add(new Vector(getConnectionRadius(), 0, 0))),
-                new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input 4", location.clone().toCenterLocation().add(new Vector(-getConnectionRadius(), 0, 0))));
+                new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input", location.clone().toCenterLocation().add(new Vector(0, 0, -getConnectionRadius()))));
     }
     @Override
     protected void initBlockStorage(final @NotNull Location location) {
@@ -78,12 +88,19 @@ public class BeaconPowerSupply extends ConnectedBlock {
 
     @Override
     public void onInputLinkUpdated(@NotNull final ConnectionGroup group, @NotNull final Location location) {
-        final List<ConnectionPoint> enabledInputs = getEnabledInputs(location);
-        if (doBurnoutCheck(group, enabledInputs)) {
+        if (doBurnoutCheck(group, "input")) {
             return;
         }
 
-        final double inputPower = getIncomingLinks(location).stream().mapToDouble(Link::getPower).sum();
-        BlockStorageAPI.set(location, Keys.BS_INPUT_POWER, inputPower);
+        final Optional<Link> link = getLink(location, "input");
+        if (link.isEmpty()) {
+            return;
+        }
+
+        final double power = link.get().getPower();
+        final double frequency = link.get().getFrequency();
+
+        BlockStorageAPI.set(location, Keys.BS_POWER, power);
+        BlockStorageAPI.set(location, Keys.BS_FREQUENCY, frequency);
     }
 }

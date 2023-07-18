@@ -18,15 +18,27 @@ import org.metamechanists.quaptics.utils.models.components.ModelCuboid;
 
 
 public class BeaconBattery extends QuapticBlock {
-    public static final Settings BEACON_BATTERY_SETTINGS = Settings.builder()
-            .tier(Tier.PRIMITIVE)
+    public static final Settings BEACON_BATTERY_1_SETTINGS = Settings.builder()
+            .tier(Tier.ADVANCED)
+            .maxPowerHidden(true)
             .build();
-    public static final SlimefunItemStack BEACON_BATTERY = new SlimefunItemStack(
-            "QP_BEACON_BATTERY",
+    public static final Settings BEACON_BATTERY_2_SETTINGS = Settings.builder()
+            .tier(Tier.ADVANCED)
+            .maxPowerHidden(true)
+            .build();
+
+    public static final SlimefunItemStack BEACON_BATTERY_1 = new SlimefunItemStack(
+            "QP_BEACON_BATTERY_1",
             Material.WHITE_CONCRETE,
-            "&6Beacon Battery",
-            Lore.create(BEACON_BATTERY_SETTINGS,
-                    "&7● Part of the Beacon multiblock"));
+            "&dBeacon Battery &5I",
+            Lore.create(BEACON_BATTERY_1_SETTINGS,
+                    Lore.multiblockComponent()));
+    public static final SlimefunItemStack BEACON_BATTERY_2 = new SlimefunItemStack(
+            "QP_BEACON_BATTERY_2",
+            Material.WHITE_CONCRETE,
+            "&dBeacon Battery &5II",
+            Lore.create(BEACON_BATTERY_2_SETTINGS,
+                    Lore.multiblockComponent()));
 
     public BeaconBattery(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);

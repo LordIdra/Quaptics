@@ -56,8 +56,7 @@ public class ItemProjector extends ConnectedBlock implements ItemHolderBlock, Po
             "&7Item Projector",
             Lore.create(ITEM_PROJECTOR_SETTINGS,
                     "&7● Displays a hologram of an inserted item",
-                    "&7● &eRight Click &7an item to insert",
-                    "&7● &eRight Click &7again to retrieve"));
+                    "&7● &eRight Click &7with an item to insert"));
 
     private static final Vector RELATIVE_PANEL_LOCATION = new Vector(0, 0, -0.51);
     public static final double MAX_SIZE = 20;

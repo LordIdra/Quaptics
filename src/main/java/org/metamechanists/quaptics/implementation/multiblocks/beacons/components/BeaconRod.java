@@ -20,11 +20,13 @@ import org.metamechanists.quaptics.utils.models.components.ModelCuboid;
 public class BeaconRod extends QuapticBlock {
     public static final Settings BEACON_ROD_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
+            .maxPowerHidden(true)
             .build();
+
     public static final SlimefunItemStack BEACON_ROD = new SlimefunItemStack(
             "QP_BEACON_ROD",
             Material.GRAY_CONCRETE,
-            "&6Beacon Rod",
+            "&dBeacon Rod",
             Lore.create(BEACON_ROD_SETTINGS,
                     "&7● Part of the Beacon multiblock"));
 

@@ -31,22 +31,25 @@ import java.util.Map;
 import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconBeam.BEACON_BEAM;
 import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconComputer.BEACON_COMPUTER;
 import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconPanel.BEACON_PANEL;
-import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconPowerSupply.BEACON_POWER_SUPPLY;
+import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconPowerSupply.BEACON_POWER_SUPPLY_1;
 import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconTransmitter.BEACON_TRANSMITTER;
 
 
 public class BeaconController1 extends BeaconController {
     public static final Settings BEACON_CONTROLLER_1_SETTINGS = Settings.builder()
-            .tier(Tier.PRIMITIVE)
-            .minPower(20)
+            .tier(Tier.INTERMEDIATE)
+            .minPower(1400)
+            .minFrequency(900)
             .range(15)
             .build();
     public static final SlimefunItemStack BEACON_CONTROLLER_1 = new SlimefunItemStack(
             "QP_BEACON_CONTROLLER_1",
             Material.BLUE_CONCRETE,
-            "&6Beacon Controller &eI",
+            "&dBeacon Controller &5I",
             Lore.create(BEACON_CONTROLLER_1_SETTINGS,
-                    "&7● Part of the Beacon multiblock"));
+                    Lore.multiblock(),
+                    "&7● Applies module effects in a range around it",
+                    "&7● &eRight Click &7a module slot with a module to insert"));
 
     private static final Vector COMPUTER_LOCATION = new Vector(0, 2, 0);
     private static final Vector POWER_SUPPLY_LOCATION = new Vector(0, -1, 0);
@@ -108,7 +111,7 @@ public class BeaconController1 extends BeaconController {
     public Map<Vector, ItemStack> getStructure() {
         final Map<Vector, ItemStack> structure = new HashMap<>();
 
-        structure.put(new Vector(0, -1, 0), BEACON_POWER_SUPPLY);
+        structure.put(new Vector(0, -1, 0), BEACON_POWER_SUPPLY_1);
 
         structure.put(new Vector(0, 1, 0), BEACON_BEAM);
         structure.put(new Vector(1, 1, 0), BEACON_TRANSMITTER);

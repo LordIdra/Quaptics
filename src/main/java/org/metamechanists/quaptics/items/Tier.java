@@ -1,6 +1,7 @@
 package org.metamechanists.quaptics.items;
 
 import org.bukkit.Material;
+import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.utils.Colors;
 
 public enum Tier {
@@ -20,5 +21,30 @@ public enum Tier {
         this.concreteMaterial = concreteMaterial;
         this.glassMaterial = glassMaterial;
         this.maxPower = maxPower;
+    }
+
+    /**
+     * @return t1 >= t2
+     */
+    public static boolean greaterOrEqual(final @NotNull Tier t1, final Tier t2) {
+        // lol
+        switch (t1) {
+            case PRIMITIVE -> {
+                return true;
+            }
+            case BASIC -> {
+                return t2 == BASIC || t2 == INTERMEDIATE || t2 == ADVANCED;
+            }
+            case INTERMEDIATE -> {
+                return t2 == INTERMEDIATE || t2 == ADVANCED;
+            }
+            case ADVANCED -> {
+                return t2 == ADVANCED;
+            }
+            case TESTING -> {
+                return false;
+            }
+        }
+        return false;
     }
 }

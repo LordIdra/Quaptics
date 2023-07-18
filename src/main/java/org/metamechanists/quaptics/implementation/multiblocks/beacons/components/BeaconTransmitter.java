@@ -20,13 +20,15 @@ import org.metamechanists.quaptics.utils.models.components.ModelCuboid;
 public class BeaconTransmitter extends QuapticBlock {
     public static final Settings BEACON_TRANSMITTER_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
+            .maxPowerHidden(true)
             .build();
+
     public static final SlimefunItemStack BEACON_TRANSMITTER = new SlimefunItemStack(
             "QP_BEACON_TRANSMITTER",
             Material.IRON_BARS,
-            "&6Beacon Transmitter",
+            "&dBeacon Transmitter",
             Lore.create(BEACON_TRANSMITTER_SETTINGS,
-                    "&7● Part of the Beacon multiblock"));
+                    Lore.multiblockComponent()));
 
     public BeaconTransmitter(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);

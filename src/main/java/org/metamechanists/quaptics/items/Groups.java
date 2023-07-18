@@ -12,6 +12,8 @@ import org.bukkit.Material;
 import org.metamechanists.quaptics.Quaptics;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
 import org.metamechanists.quaptics.implementation.multiblocks.beacons.controllers.BeaconController;
+import org.metamechanists.quaptics.items.groups.BeaconComponents;
+import org.metamechanists.quaptics.items.groups.BeaconModules;
 import org.metamechanists.quaptics.items.groups.BeamCreation;
 import org.metamechanists.quaptics.items.groups.BeamManipulation;
 import org.metamechanists.quaptics.items.groups.CraftingComponents;
@@ -82,6 +84,8 @@ public class Groups {
         BeamManipulation.initialize();
         FrequencyAndPhase.initialize();
         Machines.initialize();
+        BeaconComponents.initialize();
+        BeaconModules.initialize();
 
         Slimefun.getRegistry().getAllSlimefunItems().stream()
                 .filter(ConnectedBlock.class::isInstance)

@@ -21,13 +21,15 @@ import org.metamechanists.quaptics.utils.models.components.ModelCuboid;
 public class BeaconComputer extends QuapticBlock {
     public static final Settings BEACON_COMPUTER_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
+            .maxPowerHidden(true)
             .build();
+
     public static final SlimefunItemStack BEACON_COMPUTER = new SlimefunItemStack(
             "QP_BEACON_COMPUTER",
             Material.LIGHT_BLUE_STAINED_GLASS,
-            "&6Beacon Computer",
+            "&dBeacon Computer",
             Lore.create(BEACON_COMPUTER_SETTINGS,
-                    "&7● Part of the Beacon multiblock"));
+                    Lore.multiblockComponent()));
 
     public BeaconComputer(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);

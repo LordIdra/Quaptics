@@ -48,6 +48,8 @@ public class Keys {
     public final String BS_CRAFT_IN_PROGRESS = "QP_CRAFT_IN_PROGRESS";
     public final String BS_SECONDS_SINCE_CRAFT_STARTED = "QP_TIME_SINCE_CRAFT_STARTED";
     public final String BS_SECONDS_SINCE_REACTOR_STARTED = "QP_TIME_SINCE_REACTOR_STARTED";
+    public final String BS_POWER = "QP_POWER";
+    public final String BS_FREQUENCY = "QP_FREQUENCY";
     public final String BS_INPUT_POWER = "QP_INPUT_POWER";
     public final String BS_OUTPUT_POWER = "QP_OUTPUT_POWER";
     public final String BS_ANIMATION_OFFSET = "QP_ANIMATION_OFFSET";

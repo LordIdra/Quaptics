@@ -29,6 +29,7 @@ import org.metamechanists.quaptics.implementation.multiblocks.beacons.modules.Be
 import org.metamechanists.quaptics.implementation.multiblocks.beacons.modules.PlayerModule;
 import org.metamechanists.quaptics.implementation.Settings;
 import org.metamechanists.quaptics.implementation.tools.QuapticChargeableItem;
+import org.metamechanists.quaptics.items.Tier;
 import org.metamechanists.quaptics.storage.PersistentDataTraverser;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
@@ -100,9 +101,12 @@ public abstract class BeaconController extends ConnectedBlock implements ItemHol
             return;
         }
 
-        final double inputPower = BlockStorageAPI.getDouble(location.clone().add(getPowerSupplyLocation()), Keys.BS_INPUT_POWER);
-        onPoweredAnimation(location, inputPower >= settings.getMinPower());
-        if (inputPower < settings.getMinPower()) {
+        final Location powerSupplyLocation = location.clone().add(getPowerSupplyLocation());
+        final double power = BlockStorageAPI.getDouble(powerSupplyLocation, Keys.BS_POWER);
+        final double frequency = BlockStorageAPI.getDouble(powerSupplyLocation, Keys.BS_FREQUENCY);
+        final boolean powered = power >= settings.getMinPower() && frequency > settings.getMinFrequency();
+        onPoweredAnimation(location, powered);
+        if (!powered) {
             return;
         }
 
@@ -147,6 +151,11 @@ public abstract class BeaconController extends ConnectedBlock implements ItemHol
 
         if (getModules(location).contains(beaconModule)) {
             Language.sendLanguageMessage(player, "beacon.duplicate-module");
+            return false;
+        }
+
+        if (Tier.greaterOrEqual(beaconModule.getSettings().getTier(), settings.getTier())) {
+            Language.sendLanguageMessage(player, "beacon.incorrect-tier", settings.getTier());
             return false;
         }
 
