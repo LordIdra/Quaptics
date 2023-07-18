@@ -170,13 +170,13 @@ public class BeamManipulation {
 
         new Transformer(Groups.BEAM_MANIPULATION, TRANSFORMER_2, RecipeType.NULL, new ItemStack[]{
                 TRANSFORMER_COIL_2, null, TRANSFORMER_COIL_2,
-                RECEIVER_1, TRANSCEIVER_2, TRANSMITTER_1,
+                RECEIVER_2, TRANSCEIVER_2, TRANSMITTER_2,
                 TRANSFORMER_COIL_2, null, TRANSFORMER_COIL_2
         }, TRANSFORMER_2_SETTINGS).register(addon);
 
         new Transformer(Groups.BEAM_MANIPULATION, TRANSFORMER_3, RecipeType.NULL, new ItemStack[]{
                 TRANSFORMER_COIL_3, null, TRANSFORMER_COIL_3,
-                RECEIVER_1, TRANSCEIVER_3, TRANSMITTER_1,
+                RECEIVER_3, TRANSCEIVER_3, TRANSMITTER_3,
                 TRANSFORMER_COIL_3, null, TRANSFORMER_COIL_3
         }, TRANSFORMER_3_SETTINGS).register(addon);
     }

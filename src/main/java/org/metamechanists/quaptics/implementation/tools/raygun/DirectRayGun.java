@@ -70,12 +70,6 @@ public class DirectRayGun extends AbstractRayGun {
 
         if (result == null) {
             DeprecatedBeamStorage.deprecate(new LifetimeDirectBeam(settings.getProjectileMaterial(), handLocation, target, 0.095F, 0, 5));
-            target.getNearbyEntities(0.095F, 0.095F, 0.095F)
-                    .stream()
-                    .filter(Damageable.class::isInstance)
-                    .map(Damageable.class::cast)
-                    .findFirst()
-                    .ifPresent(entity -> entity.damage(settings.getDamage()));
             return;
         }
 

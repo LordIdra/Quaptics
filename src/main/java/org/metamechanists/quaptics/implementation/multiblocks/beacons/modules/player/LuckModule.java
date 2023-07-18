@@ -46,7 +46,7 @@ public class LuckModule extends BeaconModule implements PlayerModule {
             Lore.create(LUCK_MODULE_1_SETTINGS)));
     public static final SlimefunItemStack LUCK_MODULE_2 = getBanner(new SlimefunItemStack(
             "QP_LUCK_MODULE_2",
-            Material.YELLOW_BANNER,
+            Material.ORANGE_BANNER,
             Colors.BEACONS.getFormattedColor() + "Luck Module &dII",
             Lore.create(LUCK_MODULE_2_SETTINGS)));
 
