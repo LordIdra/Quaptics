@@ -38,7 +38,7 @@ public class Scatterer extends ConnectedBlock implements PowerAnimatedBlock, Pow
             .powerLoss(0.06)
             .minFrequency(5)
             .maxFrequency(10)
-            .frequencyMultiplier(1.2)
+            .frequencyMultiplier(1.4)
             .comparatorVisual("compare")
             .build();
     public static final Settings SCATTERER_2_SETTINGS = Settings.builder()
@@ -48,7 +48,7 @@ public class Scatterer extends ConnectedBlock implements PowerAnimatedBlock, Pow
             .powerLoss(0.03)
             .minFrequency(40)
             .maxFrequency(200)
-            .frequencyMultiplier(1.5)
+            .frequencyMultiplier(1.8)
             .comparatorVisual("compare")
             .build();
     public static final Settings SCATTERER_3_SETTINGS = Settings.builder()

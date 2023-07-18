@@ -38,7 +38,7 @@ public class DiffractionGrating extends ConnectedBlock implements PowerAnimatedB
             .powerLoss(0.05)
             .minFrequency(200)
             .maxFrequency(1000)
-            .frequencyMultiplier(1.6)
+            .frequencyMultiplier(1.8)
             .targetPhase(168)
             .targetPhaseSpread(60)
             .build();
@@ -49,7 +49,7 @@ public class DiffractionGrating extends ConnectedBlock implements PowerAnimatedB
             .powerLoss(0.01)
             .minFrequency(6000)
             .maxFrequency(40000)
-            .frequencyMultiplier(1.8)
+            .frequencyMultiplier(2.0)
             .targetPhase(267)
             .targetPhaseSpread(60)
             .build();

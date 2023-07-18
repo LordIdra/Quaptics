@@ -38,7 +38,7 @@ public class Repeater extends ConnectedBlock implements PowerAnimatedBlock, Powe
             .powerLoss(0.08)
             .minFrequency(0)
             .maxFrequency(5)
-            .frequencyStep(1)
+            .frequencyStep(2)
             .repeaterDelay(1)
             .build();
 
@@ -60,7 +60,7 @@ public class Repeater extends ConnectedBlock implements PowerAnimatedBlock, Powe
             .powerLoss(0.04)
             .minFrequency(1000)
             .maxFrequency(6000)
-            .frequencyStep(1400)
+            .frequencyStep(2400)
             .repeaterDelay(1)
             .build();
 

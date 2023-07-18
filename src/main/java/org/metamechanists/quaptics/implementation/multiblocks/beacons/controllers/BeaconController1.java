@@ -42,6 +42,7 @@ public class BeaconController1 extends BeaconController {
             .minFrequency(900)
             .range(15)
             .build();
+
     public static final SlimefunItemStack BEACON_CONTROLLER_1 = new SlimefunItemStack(
             "QP_BEACON_CONTROLLER_1",
             Material.BLUE_CONCRETE,
