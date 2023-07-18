@@ -62,13 +62,13 @@ public class Tools {
 
         new DirectRayGun(Groups.TOOLS, RAY_GUN_3, RecipeType.NULL, new ItemStack[]{
                 null, null, null,
-                ENERGY_CONCENTRATION_ELEMENT_3, RAY_GUN_3, TRANSCEIVER_3,
+                ENERGY_CONCENTRATION_ELEMENT_3, RAY_GUN_2, TRANSCEIVER_3,
                 DIELECTRIC_2, HARDENED_METAL_INGOT, null
         }, RAY_GUN_3_SETTINGS).register(addon);
 
         new DirectRayGun(Groups.TOOLS, RAY_GUN_4, RecipeType.NULL, new ItemStack[]{
                 null, null, null,
-                ENERGY_CONCENTRATION_ELEMENT_3, RAY_GUN_4, TRANSCEIVER_4,
+                ENERGY_CONCENTRATION_ELEMENT_3, RAY_GUN_3, TRANSCEIVER_4,
                 DIELECTRIC_4, POWER_CRYSTAL, null
         }, RAY_GUN_4_SETTINGS).register(addon);
     }

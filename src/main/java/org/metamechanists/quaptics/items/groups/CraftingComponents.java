@@ -265,7 +265,7 @@ public class CraftingComponents {
         new UnplaceableBlock(Groups.CRAFTING_COMPONENTS, TURRET_TARGETING_MECHANISM, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 null, null, null,
                 new ItemStack(Material.GLASS), TRANSCEIVER_1, new ItemStack(Material.GLASS),
-                SYNTHETIC_SAPPHIRE, POWER_CRYSTAL, SYNTHETIC_SAPPHIRE,
+                SYNTHETIC_SAPPHIRE, BASIC_CIRCUIT_BOARD, SYNTHETIC_SAPPHIRE,
         }).register(addon);
 
 
