@@ -21,18 +21,18 @@ import static io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems.*;
 
 @UtilityClass
 public class CraftingComponents {
-    public final SlimefunItemStack PHASE_CRYSTAL_1 = new SlimefunItemStack(
-            "QP_PHASE_CRYSTAL_1", getPhaseCrystal(), "&7Phase Crystal", Lore.phaseChange(1));
-    public final SlimefunItemStack PHASE_CRYSTAL_5 = new SlimefunItemStack(
-            "QP_PHASE_CRYSTAL_5", getPhaseCrystal(), "&7Phase Crystal", Lore.phaseChange(5));
-    public final SlimefunItemStack PHASE_CRYSTAL_15 = new SlimefunItemStack(
-            "QP_PHASE_CRYSTAL_15", getPhaseCrystal(), "&7Phase Crystal", Lore.phaseChange(15));
-    public final SlimefunItemStack PHASE_CRYSTAL_45 = new SlimefunItemStack(
-            "QP_PHASE_CRYSTAL_45", getPhaseCrystal(), "&7Phase Crystal", Lore.phaseChange(45));
-    public final SlimefunItemStack PHASE_CRYSTAL_90 = new SlimefunItemStack(
-            "QP_PHASE_CRYSTAL_90", getPhaseCrystal(), "&7Phase Crystal", Lore.phaseChange(90));
-    public final SlimefunItemStack PHASE_CRYSTAL_180 = new SlimefunItemStack(
-            "QP_PHASE_CRYSTAL_180", getPhaseCrystal(), "&7Phase Crystal", Lore.phaseChange(180));
+    public final SlimefunItemStack PHASE_CRYSTAL_1 = enchant(new SlimefunItemStack(
+            "QP_PHASE_CRYSTAL_1", Material.QUARTZ, "&7Phase Crystal", Lore.phaseChange(1)));
+    public final SlimefunItemStack PHASE_CRYSTAL_5 = enchant(new SlimefunItemStack(
+            "QP_PHASE_CRYSTAL_5", Material.QUARTZ, "&7Phase Crystal", Lore.phaseChange(5)));
+    public final SlimefunItemStack PHASE_CRYSTAL_15 = enchant(new SlimefunItemStack(
+            "QP_PHASE_CRYSTAL_15", Material.QUARTZ, "&7Phase Crystal", Lore.phaseChange(15)));
+    public final SlimefunItemStack PHASE_CRYSTAL_45 = enchant(new SlimefunItemStack(
+            "QP_PHASE_CRYSTAL_45", Material.QUARTZ, "&7Phase Crystal", Lore.phaseChange(45)));
+    public final SlimefunItemStack PHASE_CRYSTAL_90 = enchant(new SlimefunItemStack(
+            "QP_PHASE_CRYSTAL_90", Material.QUARTZ, "&7Phase Crystal", Lore.phaseChange(90)));
+    public final SlimefunItemStack PHASE_CRYSTAL_180 = enchant(new SlimefunItemStack(
+            "QP_PHASE_CRYSTAL_180", Material.QUARTZ, "&7Phase Crystal", Lore.phaseChange(180)));
 
     public final SlimefunItemStack TRANSMITTER_1 = new SlimefunItemStack(
             "QP_TRANSMITTER_1", Material.RED_STAINED_GLASS_PANE, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Transmitter &7I");
@@ -84,8 +84,12 @@ public class CraftingComponents {
     public final SlimefunItemStack ENERGY_CONCENTRATION_ELEMENT_3 = new SlimefunItemStack(
             "QP_ENERGY_CONCENTRATION_ELEMENT_3", Material.VERDANT_FROGLIGHT, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Energy Concentration Element &7III");
 
-    private @NotNull ItemStack getPhaseCrystal() {
-        final ItemStack itemStack = new ItemStack(Material.QUARTZ);
+    public final SlimefunItemStack INFUSED_FREQUENCY_CRYSTAL = new SlimefunItemStack(
+            "QP_INFUSED_FREQUENCY_CRYSTAL", Material.PRISMARINE_CRYSTALS, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Infused Frequency Crystal");
+    public final SlimefunItemStack ENTANGLED_FREQUENCY_CRYSTAL = enchant(new SlimefunItemStack(
+            "QP_ENTANGLED_FREQUENCY_CRYSTAL", Material.PRISMARINE_CRYSTALS, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Entangled Frequency Crystal"));
+
+    private @NotNull SlimefunItemStack enchant(final @NotNull SlimefunItemStack itemStack) {
         itemStack.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 1);
         itemStack.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         return itemStack;
@@ -238,34 +242,48 @@ public class CraftingComponents {
 
 
 
+        new SlimefunItem(Groups.CRAFTING_COMPONENTS, INFUSED_FREQUENCY_CRYSTAL, RecipeTypes.RECIPE_INFUSION, new ItemStack[]{
+                null, null, null,
+                null, new ItemStack(Material.QUARTZ), null,
+                null, null, null
+        }).register(addon);
+
+        new SlimefunItem(Groups.CRAFTING_COMPONENTS, ENTANGLED_FREQUENCY_CRYSTAL, RecipeTypes.RECIPE_ENTANGLEMENT, new ItemStack[]{
+                null, null, null,
+                null, INFUSED_FREQUENCY_CRYSTAL, null,
+                null, null, null
+        }).register(addon);
+
+
+
         new SlimefunItem(Groups.CRAFTING_COMPONENTS, PHASE_CRYSTAL_1, RecipeTypes.RECIPE_REFINING, new ItemStack[]{
-                        null, null, null,
-                        null, new ItemStack(Material.QUARTZ), null,
-                        null, null, null
-                }).register(addon);
+                null, null, null,
+                null, new ItemStack(Material.QUARTZ), null,
+                null, null, null
+        }).register(addon);
 
         new SlimefunItem(Groups.CRAFTING_COMPONENTS, PHASE_CRYSTAL_5, RecipeTypes.RECIPE_INFUSION, new ItemStack[]{
-                        null, null, null,
-                        null, PHASE_CRYSTAL_1, null,
-                        null, null, null
-                }).register(addon);
+                null, null, null,
+                null, PHASE_CRYSTAL_1, null,
+                null, null, null
+        }).register(addon);
 
         new SlimefunItem(Groups.CRAFTING_COMPONENTS, PHASE_CRYSTAL_15, RecipeTypes.RECIPE_INFUSION, new ItemStack[]{
-                        null, null, null,
-                        null, PHASE_CRYSTAL_5, null,
-                        null, null, null
-                }).register(addon);
+                null, null, null,
+                null, PHASE_CRYSTAL_5, null,
+                null, null, null
+        }).register(addon);
 
         new SlimefunItem(Groups.CRAFTING_COMPONENTS, PHASE_CRYSTAL_45, RecipeTypes.RECIPE_INFUSION, new ItemStack[]{
-                        null, null, null,
-                        null, PHASE_CRYSTAL_15, null,
-                        null, null, null
-                }).register(addon);
+                null, null, null,
+                null, PHASE_CRYSTAL_15, null,
+                null, null, null
+        }).register(addon);
 
         new SlimefunItem(Groups.CRAFTING_COMPONENTS, PHASE_CRYSTAL_90, RecipeTypes.RECIPE_INFUSION, new ItemStack[]{
-                        null, null, null,
-                        null, PHASE_CRYSTAL_45, null,
-                        null, null, null
-                }).register(addon);
+                null, null, null,
+                null, PHASE_CRYSTAL_45, null,
+                null, null, null
+        }).register(addon);
     }
 }
