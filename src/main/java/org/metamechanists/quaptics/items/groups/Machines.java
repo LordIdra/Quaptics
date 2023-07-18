@@ -19,12 +19,26 @@ import static io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems.BI
 import static io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems.CARBONADO_EDGED_CAPACITOR;
 import static io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems.DURALUMIN_INGOT;
 import static io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems.ELECTRIC_MOTOR;
+import static io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems.ELECTRO_MAGNET;
+import static io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems.FERROSILICON;
 import static io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems.HARDENED_METAL_INGOT;
+import static io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems.HOLOGRAM_PROJECTOR;
+import static io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems.POWER_CRYSTAL;
 import static io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems.REDSTONE_ALLOY;
 import static io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems.REINFORCED_ALLOY_INGOT;
 import static io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems.SMALL_CAPACITOR;
-import static org.metamechanists.quaptics.implementation.blocks.consumers.Charger.*;
-import static org.metamechanists.quaptics.implementation.blocks.consumers.DataStripper.*;
+import static org.metamechanists.quaptics.implementation.blocks.consumers.Charger.CHARGER_1;
+import static org.metamechanists.quaptics.implementation.blocks.consumers.Charger.CHARGER_1_SETTINGS;
+import static org.metamechanists.quaptics.implementation.blocks.consumers.Charger.CHARGER_2;
+import static org.metamechanists.quaptics.implementation.blocks.consumers.Charger.CHARGER_2_SETTINGS;
+import static org.metamechanists.quaptics.implementation.blocks.consumers.Charger.CHARGER_3;
+import static org.metamechanists.quaptics.implementation.blocks.consumers.Charger.CHARGER_3_SETTINGS;
+import static org.metamechanists.quaptics.implementation.blocks.consumers.Charger.CHARGER_4;
+import static org.metamechanists.quaptics.implementation.blocks.consumers.Charger.CHARGER_4_SETTINGS;
+import static org.metamechanists.quaptics.implementation.blocks.consumers.DataStripper.DATA_STRIPPER_1;
+import static org.metamechanists.quaptics.implementation.blocks.consumers.DataStripper.DATA_STRIPPER_1_SETTINGS;
+import static org.metamechanists.quaptics.implementation.blocks.consumers.DataStripper.DATA_STRIPPER_2;
+import static org.metamechanists.quaptics.implementation.blocks.consumers.DataStripper.DATA_STRIPPER_2_SETTINGS;
 import static org.metamechanists.quaptics.implementation.blocks.consumers.ItemProjector.ITEM_PROJECTOR;
 import static org.metamechanists.quaptics.implementation.blocks.consumers.ItemProjector.ITEM_PROJECTOR_SETTINGS;
 import static org.metamechanists.quaptics.implementation.blocks.consumers.MultiblockClicker.MULTIBLOCK_CLICKER_1;
@@ -35,13 +49,40 @@ import static org.metamechanists.quaptics.implementation.blocks.consumers.Multib
 import static org.metamechanists.quaptics.implementation.blocks.consumers.MultiblockClicker.MULTIBLOCK_CLICKER_3_SETTINGS;
 import static org.metamechanists.quaptics.implementation.blocks.consumers.launchpad.Launchpad.LAUNCHPAD;
 import static org.metamechanists.quaptics.implementation.blocks.consumers.launchpad.Launchpad.LAUNCHPAD_SETTINGS;
-import static org.metamechanists.quaptics.implementation.blocks.consumers.turrets.DirectTurret.*;
-import static org.metamechanists.quaptics.implementation.blocks.consumers.turrets.ModulatedTurret.*;
+import static org.metamechanists.quaptics.implementation.blocks.consumers.turrets.DirectTurret.TURRET_3_HOSTILE;
+import static org.metamechanists.quaptics.implementation.blocks.consumers.turrets.DirectTurret.TURRET_3_HOSTILE_SETTINGS;
+import static org.metamechanists.quaptics.implementation.blocks.consumers.turrets.DirectTurret.TURRET_3_PASSIVE;
+import static org.metamechanists.quaptics.implementation.blocks.consumers.turrets.DirectTurret.TURRET_3_PASSIVE_SETTINGS;
+import static org.metamechanists.quaptics.implementation.blocks.consumers.turrets.DirectTurret.TURRET_4_HOSTILE;
+import static org.metamechanists.quaptics.implementation.blocks.consumers.turrets.DirectTurret.TURRET_4_HOSTILE_SETTINGS;
+import static org.metamechanists.quaptics.implementation.blocks.consumers.turrets.DirectTurret.TURRET_4_PASSIVE;
+import static org.metamechanists.quaptics.implementation.blocks.consumers.turrets.DirectTurret.TURRET_4_PASSIVE_SETTINGS;
+import static org.metamechanists.quaptics.implementation.blocks.consumers.turrets.ModulatedTurret.TURRET_1_HOSTILE;
+import static org.metamechanists.quaptics.implementation.blocks.consumers.turrets.ModulatedTurret.TURRET_1_HOSTILE_SETTINGS;
+import static org.metamechanists.quaptics.implementation.blocks.consumers.turrets.ModulatedTurret.TURRET_1_PASSIVE;
+import static org.metamechanists.quaptics.implementation.blocks.consumers.turrets.ModulatedTurret.TURRET_1_PASSIVE_SETTINGS;
+import static org.metamechanists.quaptics.implementation.blocks.consumers.turrets.ModulatedTurret.TURRET_2_HOSTILE;
+import static org.metamechanists.quaptics.implementation.blocks.consumers.turrets.ModulatedTurret.TURRET_2_HOSTILE_SETTINGS;
+import static org.metamechanists.quaptics.implementation.blocks.consumers.turrets.ModulatedTurret.TURRET_2_PASSIVE;
+import static org.metamechanists.quaptics.implementation.blocks.consumers.turrets.ModulatedTurret.TURRET_2_PASSIVE_SETTINGS;
 import static org.metamechanists.quaptics.implementation.tools.raygun.DirectRayGun.RAY_GUN_3;
 import static org.metamechanists.quaptics.implementation.tools.raygun.DirectRayGun.RAY_GUN_4;
 import static org.metamechanists.quaptics.implementation.tools.raygun.ModulatedRayGun.RAY_GUN_1;
 import static org.metamechanists.quaptics.implementation.tools.raygun.ModulatedRayGun.RAY_GUN_2;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.*;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.DIELECTRIC_1;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.DIELECTRIC_3;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.RECEIVER_1;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.RECEIVER_2;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.RECEIVER_3;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.RECEIVER_4;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.TRANSCEIVER_1;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.TRANSCEIVER_2;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.TRANSCEIVER_3;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.TRANSCEIVER_4;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.TRANSFORMER_COIL_1;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.TURRET_BARREL;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.TURRET_BASE;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.TURRET_TARGETING_MECHANISM;
 
 
 @UtilityClass
@@ -133,37 +174,45 @@ public class Machines {
         }, MULTIBLOCK_CLICKER_1_SETTINGS).register(addon);
 
         new MultiblockClicker(Groups.MACHINES, MULTIBLOCK_CLICKER_2, RecipeType.NULL, new ItemStack[]{
-                new ItemStack(Material.COPPER_BLOCK), ELECTRIC_MOTOR, new ItemStack(Material.COPPER_BLOCK),
-                RECEIVER_2, MULTIBLOCK_CLICKER_1, new ItemStack(Material.DISPENSER),
-                new ItemStack(Material.COPPER_BLOCK), ELECTRIC_MOTOR, new ItemStack(Material.COPPER_BLOCK)
+                new ItemStack(Material.COPPER_BLOCK), new ItemStack(Material.COPPER_BLOCK), new ItemStack(Material.COPPER_BLOCK),
+                RECEIVER_2, ELECTRIC_MOTOR, MULTIBLOCK_CLICKER_1,
+                new ItemStack(Material.COPPER_BLOCK), new ItemStack(Material.COPPER_BLOCK), new ItemStack(Material.COPPER_BLOCK)
         }, MULTIBLOCK_CLICKER_2_SETTINGS).register(addon);
 
         new MultiblockClicker(Groups.MACHINES, MULTIBLOCK_CLICKER_3, RecipeType.NULL, new ItemStack[]{
-                HARDENED_METAL_INGOT, ELECTRIC_MOTOR, HARDENED_METAL_INGOT,
-                RECEIVER_3, MULTIBLOCK_CLICKER_2, new ItemStack(Material.DISPENSER),
-                HARDENED_METAL_INGOT, ELECTRIC_MOTOR, HARDENED_METAL_INGOT
+                HARDENED_METAL_INGOT, new ItemStack(Material.COPPER_BLOCK), HARDENED_METAL_INGOT,
+                RECEIVER_3, ELECTRIC_MOTOR, MULTIBLOCK_CLICKER_2,
+                HARDENED_METAL_INGOT, new ItemStack(Material.COPPER_BLOCK), HARDENED_METAL_INGOT
         }, MULTIBLOCK_CLICKER_3_SETTINGS).register(addon);
 
 
 
         new DataStripper(Groups.MACHINES, DATA_STRIPPER_1, RecipeType.NULL, new ItemStack[]{
-
+                new ItemStack(Material.IRON_BLOCK), ELECTRIC_MOTOR, new ItemStack(Material.IRON_BLOCK),
+                RECEIVER_2, null, new ItemStack(Material.IRON_BLOCK),
+                new ItemStack(Material.IRON_BLOCK), ELECTRIC_MOTOR, new ItemStack(Material.IRON_BLOCK)
         }, DATA_STRIPPER_1_SETTINGS).register(addon);
 
         new DataStripper(Groups.MACHINES, DATA_STRIPPER_2, RecipeType.NULL, new ItemStack[]{
-
+                new ItemStack(Material.IRON_BLOCK), ELECTRIC_MOTOR, new ItemStack(Material.IRON_BLOCK),
+                RECEIVER_3, DATA_STRIPPER_1, DIELECTRIC_3,
+                new ItemStack(Material.IRON_BLOCK), ELECTRIC_MOTOR, new ItemStack(Material.IRON_BLOCK)
         }, DATA_STRIPPER_2_SETTINGS).register(addon);
 
 
 
-        new ItemProjector(Groups.MACHINES, ITEM_PROJECTOR, RecipeType.NULL, new ItemStack[]{
-
-        }, ITEM_PROJECTOR_SETTINGS).register(addon);
-
-
-
         new Launchpad(Groups.MACHINES, LAUNCHPAD, RecipeType.NULL, new ItemStack[]{
-
+                ELECTRO_MAGNET, ELECTRO_MAGNET, ELECTRO_MAGNET,
+                RECEIVER_2, new ItemStack(Material.HEAVY_WEIGHTED_PRESSURE_PLATE), TRANSFORMER_COIL_1,
+                new ItemStack(Material.IRON_INGOT), new ItemStack(Material.IRON_INGOT), new ItemStack(Material.IRON_INGOT)
         }, LAUNCHPAD_SETTINGS).register(addon);
+
+
+
+        new ItemProjector(Groups.MACHINES, ITEM_PROJECTOR, RecipeType.NULL, new ItemStack[]{
+                null, HOLOGRAM_PROJECTOR, null,
+                RECEIVER_3, POWER_CRYSTAL, TRANSCEIVER_3,
+                FERROSILICON, FERROSILICON, FERROSILICON
+        }, ITEM_PROJECTOR_SETTINGS).register(addon);
     }
 }
