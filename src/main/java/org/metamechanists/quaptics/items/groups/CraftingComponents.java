@@ -61,6 +61,22 @@ public class CraftingComponents {
     public final SlimefunItemStack TRANSCEIVER_4 = new SlimefunItemStack(
             "QP_TRANSCEIVER_4", Material.WHITE_CONCRETE, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Transceiver &7IV");
 
+    public final SlimefunItemStack DIELECTRIC_1 = new SlimefunItemStack(
+            "QP_DIELECTRIC_1", Material.LIGHT_BLUE_STAINED_GLASS_PANE, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Dielectric &7I");
+    public final SlimefunItemStack DIELECTRIC_2 = new SlimefunItemStack(
+            "QP_DIELECTRIC_2", Material.LIGHT_BLUE_STAINED_GLASS, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Dielectric &7II");
+    public final SlimefunItemStack DIELECTRIC_3 = new SlimefunItemStack(
+            "QP_DIELECTRIC_3", Material.LIGHT_BLUE_CONCRETE_POWDER, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Dielectric &7III");
+    public final SlimefunItemStack DIELECTRIC_4 = new SlimefunItemStack(
+            "QP_DIELECTRIC_4", Material.LIGHT_BLUE_CONCRETE, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Dielectric &7IV");
+
+    public final SlimefunItemStack TRANSFORMER_COIL_1 = new SlimefunItemStack(
+            "QP_TRANSFORMER_COIL_1", Material.GREEN_GLAZED_TERRACOTTA, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Transformer Coil &7I");
+    public final SlimefunItemStack TRANSFORMER_COIL_2 = new SlimefunItemStack(
+            "QP_TRANSFORMER_COIL_2", Material.YELLOW_GLAZED_TERRACOTTA, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Transformer Coil &7II");
+    public final SlimefunItemStack TRANSFORMER_COIL_3 = new SlimefunItemStack(
+            "QP_TRANSFORMER_COIL_3", Material.RED_GLAZED_TERRACOTTA, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Transformer Coil &7III");
+
     public final SlimefunItemStack ENERGY_CONCENTRATION_ELEMENT_1 = new SlimefunItemStack(
             "QP_ENERGY_CONCENTRATION_ELEMENT_1", Material.PEARLESCENT_FROGLIGHT, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Energy Concentration Element &7I");
     public final SlimefunItemStack ENERGY_CONCENTRATION_ELEMENT_2 = new SlimefunItemStack(
@@ -130,6 +146,78 @@ public class CraftingComponents {
 
 
 
+        new SlimefunItem(Groups.CRAFTING_COMPONENTS, TRANSCEIVER_1, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
+                null, new ItemStack(Material.COPPER_INGOT), null,
+                new ItemStack(Material.GLASS_PANE), new ItemStack(Material.GLASS_PANE), new ItemStack(Material.GLASS_PANE),
+                null, new ItemStack(Material.COPPER_INGOT), null
+        }).register(addon);
+
+        new SlimefunItem(Groups.CRAFTING_COMPONENTS, TRANSCEIVER_2, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
+                null, new ItemStack(Material.IRON_INGOT), null,
+                new ItemStack(Material.GLASS_PANE), new ItemStack(Material.GLASS_PANE), new ItemStack(Material.GLASS_PANE),
+                null, new ItemStack(Material.IRON_INGOT), null
+        }).register(addon);
+
+        new SlimefunItem(Groups.CRAFTING_COMPONENTS, TRANSCEIVER_3, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
+                null, DAMASCUS_STEEL_INGOT, null,
+                new ItemStack(Material.GLASS_PANE), new ItemStack(Material.GLASS_PANE), new ItemStack(Material.GLASS_PANE),
+                null, DAMASCUS_STEEL_INGOT, null
+        }).register(addon);
+
+        new SlimefunItem(Groups.CRAFTING_COMPONENTS, TRANSCEIVER_4, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
+                null, REINFORCED_ALLOY_INGOT, null,
+                new ItemStack(Material.GLASS_PANE), new ItemStack(Material.GLASS_PANE), new ItemStack(Material.GLASS_PANE),
+                null, REINFORCED_ALLOY_INGOT, null
+        }).register(addon);
+
+
+
+        new SlimefunItem(Groups.CRAFTING_COMPONENTS, DIELECTRIC_1, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
+                null, ZINC_DUST, null,
+                ZINC_DUST, new ItemStack(Material.QUARTZ_BLOCK), ZINC_DUST,
+                null, ZINC_DUST, null
+        }).register(addon);
+
+        new SlimefunItem(Groups.CRAFTING_COMPONENTS, DIELECTRIC_2, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
+                null, SYNTHETIC_EMERALD, null,
+                SYNTHETIC_EMERALD, DIELECTRIC_1, SYNTHETIC_EMERALD,
+                null, SYNTHETIC_EMERALD, null
+        }).register(addon);
+
+        new SlimefunItem(Groups.CRAFTING_COMPONENTS, DIELECTRIC_3, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
+                null, URANIUM, null,
+                URANIUM, DIELECTRIC_2, URANIUM,
+                null, URANIUM, null
+        }).register(addon);
+
+        new SlimefunItem(Groups.CRAFTING_COMPONENTS, DIELECTRIC_4, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
+                null, BLISTERING_INGOT_3, null,
+                BLISTERING_INGOT_3, DIELECTRIC_3, BLISTERING_INGOT_3,
+                null, BLISTERING_INGOT_3, null
+        }).register(addon);
+
+
+
+        new SlimefunItem(Groups.CRAFTING_COMPONENTS, TRANSFORMER_COIL_1, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
+                new ItemStack(Material.TERRACOTTA), new ItemStack(Material.TERRACOTTA), new ItemStack(Material.TERRACOTTA),
+                new ItemStack(Material.TERRACOTTA), GOLD_24K, new ItemStack(Material.TERRACOTTA),
+                new ItemStack(Material.TERRACOTTA), new ItemStack(Material.TERRACOTTA), new ItemStack(Material.TERRACOTTA)
+        }).register(addon);
+
+        new SlimefunItem(Groups.CRAFTING_COMPONENTS, TRANSFORMER_COIL_2, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
+                new ItemStack(Material.TERRACOTTA), TRANSFORMER_COIL_1, new ItemStack(Material.TERRACOTTA),
+                new ItemStack(Material.TERRACOTTA), GOLD_24K_BLOCK, new ItemStack(Material.TERRACOTTA),
+                new ItemStack(Material.TERRACOTTA), TRANSFORMER_COIL_1, new ItemStack(Material.TERRACOTTA)
+        }).register(addon);
+
+        new SlimefunItem(Groups.CRAFTING_COMPONENTS, TRANSFORMER_COIL_3, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
+                new ItemStack(Material.TERRACOTTA), TRANSFORMER_COIL_2, new ItemStack(Material.TERRACOTTA),
+                new ItemStack(Material.TERRACOTTA), CARBONADO, new ItemStack(Material.TERRACOTTA),
+                new ItemStack(Material.TERRACOTTA), TRANSFORMER_COIL_2, new ItemStack(Material.TERRACOTTA)
+        }).register(addon);
+
+
+
         new SlimefunItem(Groups.CRAFTING_COMPONENTS, ENERGY_CONCENTRATION_ELEMENT_1, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 new ItemStack(Material.GLASS_PANE), new ItemStack(Material.GLASS_PANE), new ItemStack(Material.GLASS_PANE),
                 new ItemStack(Material.GLASS_PANE), new ItemStack(Material.COAL_BLOCK), new ItemStack(Material.GLASS_PANE),
@@ -147,6 +235,8 @@ public class CraftingComponents {
                 ENERGY_CONCENTRATION_ELEMENT_2, POWER_CRYSTAL, ENERGY_CONCENTRATION_ELEMENT_2,
                 HARDENED_METAL_INGOT, HARDENED_METAL_INGOT, HARDENED_METAL_INGOT
         }).register(addon);
+
+
 
         new SlimefunItem(Groups.CRAFTING_COMPONENTS, PHASE_CRYSTAL_1, RecipeTypes.RECIPE_REFINING, new ItemStack[]{
                         null, null, null,

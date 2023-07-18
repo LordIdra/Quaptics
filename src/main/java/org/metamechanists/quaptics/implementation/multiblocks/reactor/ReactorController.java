@@ -59,7 +59,7 @@ public class ReactorController extends ConnectedBlock implements ComplexMultiblo
             .operatingPowerHidden(true)
             .powerThreshold(1800)
             .powerMultiplier(1.75)
-            .maxOutputPower(1.4 * Tier.INTERMEDIATE.maxPower * RING_LOCATIONS.size())
+            .maxOutputPower(1.75 * Tier.INTERMEDIATE.maxPower * RING_LOCATIONS.size())
             .timeToMaxEfficiency(600)
             .build();
     public static final SlimefunItemStack REACTOR_CONTROLLER = new SlimefunItemStack(

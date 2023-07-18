@@ -137,33 +137,47 @@ public class BeamManipulation {
 
 
         new Capacitor(Groups.BEAM_MANIPULATION, CAPACITOR_1, RecipeType.NULL, new ItemStack[]{
-
+                null, DIELECTRIC_1, null,
+                RECEIVER_1, TRANSCEIVER_1, TRANSMITTER_1,
+                null, DIELECTRIC_1, null
         }, CAPACITOR_1_SETTINGS).register(addon);
 
         new Capacitor(Groups.BEAM_MANIPULATION, CAPACITOR_2, RecipeType.NULL, new ItemStack[]{
-
+                null, DIELECTRIC_2, null,
+                RECEIVER_2, TRANSCEIVER_2, TRANSMITTER_2,
+                null, DIELECTRIC_2, null
         }, CAPACITOR_2_SETTINGS).register(addon);
 
         new Capacitor(Groups.BEAM_MANIPULATION, CAPACITOR_3, RecipeType.NULL, new ItemStack[]{
-
+                null, DIELECTRIC_3, null,
+                RECEIVER_3, TRANSCEIVER_3, TRANSMITTER_3,
+                null, DIELECTRIC_3, null
         }, CAPACITOR_3_SETTINGS).register(addon);
 
         new Capacitor(Groups.BEAM_MANIPULATION, CAPACITOR_4, RecipeType.NULL, new ItemStack[]{
-
+                null, DIELECTRIC_4, null,
+                RECEIVER_4, TRANSCEIVER_4, TRANSMITTER_4,
+                null, DIELECTRIC_4, null
         }, CAPACITOR_4_SETTINGS).register(addon);
 
 
 
         new Transformer(Groups.BEAM_MANIPULATION, TRANSFORMER_1, RecipeType.NULL, new ItemStack[]{
-
+                TRANSFORMER_COIL_1, null, TRANSFORMER_COIL_1,
+                RECEIVER_1, TRANSCEIVER_2, TRANSMITTER_1,
+                TRANSFORMER_COIL_1, null, TRANSFORMER_COIL_1
         }, TRANSFORMER_1_SETTINGS).register(addon);
 
         new Transformer(Groups.BEAM_MANIPULATION, TRANSFORMER_2, RecipeType.NULL, new ItemStack[]{
-
+                TRANSFORMER_COIL_2, null, TRANSFORMER_COIL_2,
+                RECEIVER_1, TRANSCEIVER_2, TRANSMITTER_1,
+                TRANSFORMER_COIL_2, null, TRANSFORMER_COIL_2
         }, TRANSFORMER_2_SETTINGS).register(addon);
 
         new Transformer(Groups.BEAM_MANIPULATION, TRANSFORMER_3, RecipeType.NULL, new ItemStack[]{
-
+                TRANSFORMER_COIL_3, null, TRANSFORMER_COIL_3,
+                RECEIVER_1, TRANSCEIVER_3, TRANSMITTER_1,
+                TRANSFORMER_COIL_3, null, TRANSFORMER_COIL_3
         }, TRANSFORMER_3_SETTINGS).register(addon);
     }
 }
