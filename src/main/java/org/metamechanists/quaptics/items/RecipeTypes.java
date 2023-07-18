@@ -13,7 +13,7 @@ import static org.metamechanists.quaptics.implementation.multiblocks.infuser.Inf
 @UtilityClass
 public class RecipeTypes {
     public final RecipeInfusion RECIPE_INFUSION = new RecipeInfusion();
-    public final RecipeInfusion RECIPE_ENTANGLEMENT = new RecipeInfusion();
+    public final RecipeEntanglement RECIPE_ENTANGLEMENT = new RecipeEntanglement();
     public final RecipeRefining RECIPE_REFINING = new RecipeRefining();
 
     private final class RecipeInfusion extends RecipeType {
@@ -22,7 +22,7 @@ public class RecipeTypes {
                     Keys.RECIPE_INFUSION_CONTAINER,
                     new CustomItemStack(
                             INFUSION_CONTAINER.clone(),
-                            Colors.QUAPTICS + "Infusion",
+                            Colors.QUAPTICS.getFormattedColor() + "Infusion",
                             "&7Made in the Infuser multiblock")
             );
         }
@@ -34,7 +34,7 @@ public class RecipeTypes {
                     Keys.RECIPE_ENTANGLER,
                     new CustomItemStack(
                             ENTANGLEMENT_CONTAINER.clone(),
-                            Colors.QUAPTICS + "Entanglement",
+                            Colors.QUAPTICS.getFormattedColor() + "Entanglement",
                             "&7Made in the Entangler multiblock")
             );
         }
@@ -46,7 +46,7 @@ public class RecipeTypes {
                     Keys.RECIPE_CRYSTAL_REFINER,
                     new CustomItemStack(
                             CRYSTAL_REFINER.clone(),
-                            Colors.QUAPTICS + "Crystal Refining",
+                            Colors.QUAPTICS.getFormattedColor() + "Crystal Refining",
                             "&7Made in the Crystal Refiner")
             );
         }
