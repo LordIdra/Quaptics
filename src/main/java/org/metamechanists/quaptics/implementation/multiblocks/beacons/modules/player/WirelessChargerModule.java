@@ -33,6 +33,7 @@ import java.util.Collection;
 public class WirelessChargerModule extends BeaconModule implements PlayerModule {
     public static final Settings WIRELESS_CHARGER_MODULE_SETTINGS = Settings.builder()
             .tier(Tier.ADVANCED)
+            .operatingPowerHidden(true)
             .powerEfficiency(0.1)
             .build();
 

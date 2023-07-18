@@ -28,10 +28,12 @@ import java.util.Collection;
 public class ExperienceModule extends BeaconModule implements PlayerModule, Listener {
     public static final Settings EXPERIENCE_MODULE_1_SETTINGS = Settings.builder()
             .tier(Tier.INTERMEDIATE)
+            .operatingPowerHidden(true)
             .experienceMultiplier(1.4)
             .build();
     public static final Settings EXPERIENCE_MODULE_2_SETTINGS = Settings.builder()
             .tier(Tier.ADVANCED)
+            .operatingPowerHidden(true)
             .experienceMultiplier(1.8)
             .build();
 

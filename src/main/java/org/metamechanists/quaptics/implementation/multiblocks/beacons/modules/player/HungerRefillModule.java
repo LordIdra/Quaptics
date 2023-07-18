@@ -30,6 +30,7 @@ import java.util.Collection;
 public class HungerRefillModule extends BeaconModule implements PlayerModule {
     public static final Settings HUNGER_REFILL_MODULE_SETTINGS = Settings.builder()
             .tier(Tier.INTERMEDIATE)
+            .operatingPowerHidden(true)
             .build();
 
     public static final SlimefunItemStack HUNGER_REFILL_MODULE = getBanner(new SlimefunItemStack(

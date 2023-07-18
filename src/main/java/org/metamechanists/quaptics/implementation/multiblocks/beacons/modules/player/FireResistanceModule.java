@@ -30,10 +30,12 @@ import java.util.Collection;
 public class FireResistanceModule extends BeaconModule implements PlayerModule {
     public static final Settings FIRE_RESISTANCE_MODULE_1_SETTINGS = Settings.builder()
             .tier(Tier.INTERMEDIATE)
+            .operatingPowerHidden(true)
             .fireResistanceLevel(2)
             .build();
     public static final Settings FIRE_RESISTANCE_MODULE_2_SETTINGS = Settings.builder()
             .tier(Tier.ADVANCED)
+            .operatingPowerHidden(true)
             .fireResistanceLevel(4)
             .build();
 

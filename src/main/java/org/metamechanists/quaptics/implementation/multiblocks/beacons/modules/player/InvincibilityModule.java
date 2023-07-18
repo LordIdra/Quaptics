@@ -28,6 +28,7 @@ import java.util.Collection;
 public class InvincibilityModule extends BeaconModule implements PlayerModule {
     public static final Settings INVINCIBILITY_MODULE_SETTINGS = Settings.builder()
             .tier(Tier.ADVANCED)
+            .operatingPowerHidden(true)
             .build();
 
     public static final SlimefunItemStack INVINCIBILITY_MODULE = getBanner(new SlimefunItemStack(

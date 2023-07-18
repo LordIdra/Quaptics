@@ -30,10 +30,12 @@ import java.util.Collection;
 public class LuckModule extends BeaconModule implements PlayerModule {
     public static final Settings LUCK_MODULE_1_SETTINGS = Settings.builder()
             .tier(Tier.INTERMEDIATE)
+            .operatingPowerHidden(true)
             .luckLevel(2)
             .build();
     public static final Settings LUCK_MODULE_2_SETTINGS = Settings.builder()
             .tier(Tier.ADVANCED)
+            .operatingPowerHidden(true)
             .luckLevel(4)
             .build();
 
