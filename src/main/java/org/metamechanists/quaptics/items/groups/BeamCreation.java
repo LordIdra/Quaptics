@@ -15,6 +15,10 @@ import static org.metamechanists.quaptics.implementation.blocks.concentrators.En
 import static org.metamechanists.quaptics.implementation.blocks.concentrators.EnergyConcentrator.ENERGY_CONCENTRATOR_1_SETTINGS;
 import static org.metamechanists.quaptics.implementation.blocks.concentrators.EnergyConcentrator.ENERGY_CONCENTRATOR_2;
 import static org.metamechanists.quaptics.implementation.blocks.concentrators.EnergyConcentrator.ENERGY_CONCENTRATOR_2_SETTINGS;
+import static org.metamechanists.quaptics.implementation.blocks.concentrators.EnergyConcentrator.ENERGY_CONCENTRATOR_3;
+import static org.metamechanists.quaptics.implementation.blocks.concentrators.EnergyConcentrator.ENERGY_CONCENTRATOR_3_SETTINGS;
+import static org.metamechanists.quaptics.implementation.blocks.concentrators.EnergyConcentrator.ENERGY_CONCENTRATOR_4;
+import static org.metamechanists.quaptics.implementation.blocks.concentrators.EnergyConcentrator.ENERGY_CONCENTRATOR_4_SETTINGS;
 import static org.metamechanists.quaptics.implementation.blocks.concentrators.SolarConcentrator.SOLAR_CONCENTRATOR_1;
 import static org.metamechanists.quaptics.implementation.blocks.concentrators.SolarConcentrator.SOLAR_CONCENTRATOR_1_SETTINGS;
 import static org.metamechanists.quaptics.implementation.blocks.concentrators.SolarConcentrator.SOLAR_CONCENTRATOR_2;
@@ -47,6 +51,14 @@ public class BeamCreation {
         new EnergyConcentrator(Groups.BEAM_CREATION, ENERGY_CONCENTRATOR_2, RecipeType.NULL, new ItemStack[]{
 
         }, ENERGY_CONCENTRATOR_2_SETTINGS).register(addon);
+
+        new EnergyConcentrator(Groups.BEAM_CREATION, ENERGY_CONCENTRATOR_3, RecipeType.NULL, new ItemStack[]{
+
+        }, ENERGY_CONCENTRATOR_3_SETTINGS).register(addon);
+
+        new EnergyConcentrator(Groups.BEAM_CREATION, ENERGY_CONCENTRATOR_4, RecipeType.NULL, new ItemStack[]{
+
+        }, ENERGY_CONCENTRATOR_4_SETTINGS).register(addon);
 
 
 
