@@ -105,6 +105,7 @@ public abstract class BeaconController extends ConnectedBlock implements ItemHol
         final double power = BlockStorageAPI.getDouble(powerSupplyLocation, Keys.BS_POWER);
         final double frequency = BlockStorageAPI.getDouble(powerSupplyLocation, Keys.BS_FREQUENCY);
         final boolean powered = power >= settings.getMinPower() && frequency > settings.getMinFrequency();
+        BlockStorageAPI.set(location, Keys.BS_POWERED, powered);
         onPoweredAnimation(location, powered);
         if (!powered) {
             return;
@@ -123,12 +124,7 @@ public abstract class BeaconController extends ConnectedBlock implements ItemHol
         final PersistentDataTraverser traverser = new PersistentDataTraverser(displayGroup.get().getParentUUID());
         traverser.set(Keys.BS_PLAYER_RECEIVERS, new ArrayList<>());
 
-        if (!BlockStorageAPI.getBoolean(location, Keys.BS_MULTIBLOCK_INTACT)) {
-            return;
-        }
-
-        final double inputPower = BlockStorageAPI.getDouble(location.clone().add(getPowerSupplyLocation()), Keys.BS_INPUT_POWER);
-        if (inputPower < settings.getMinPower()) {
+        if (!BlockStorageAPI.getBoolean(location, Keys.BS_MULTIBLOCK_INTACT) || !BlockStorageAPI.getBoolean(location, Keys.BS_POWERED)) {
             return;
         }
 
