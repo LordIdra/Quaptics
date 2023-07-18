@@ -55,7 +55,7 @@ public class Charger extends ConnectedBlock implements InfoPanelBlock, ItemHolde
             .build();
     public static final Settings CHARGER_4_SETTINGS = Settings.builder()
             .tier(Tier.ADVANCED)
-            .minFrequency(1200)
+            .minFrequency(3000)
             .build();
 
     public static final SlimefunItemStack CHARGER_1 = new SlimefunItemStack(

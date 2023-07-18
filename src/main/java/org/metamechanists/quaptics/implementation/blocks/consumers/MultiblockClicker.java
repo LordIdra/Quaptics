@@ -53,7 +53,7 @@ public class MultiblockClicker extends ConnectedBlock implements PowerAnimatedBl
             .minFrequency(6)
             .build();
     public static final Settings MULTIBLOCK_CLICKER_3_SETTINGS = Settings.builder()
-            .tier(Tier.BASIC)
+            .tier(Tier.INTERMEDIATE)
             .useInterval(4)
             .minPower(200)
             .minFrequency(50)

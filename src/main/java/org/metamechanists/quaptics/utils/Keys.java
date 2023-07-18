@@ -2,13 +2,11 @@ package org.metamechanists.quaptics.utils;
 
 import lombok.experimental.UtilityClass;
 import org.bukkit.NamespacedKey;
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.Quaptics;
 
 @UtilityClass
 public class Keys {
-    @Contract("_ -> new")
     private @NotNull NamespacedKey newKey(final String key) {
         return new NamespacedKey(Quaptics.getInstance(), key);
     }
