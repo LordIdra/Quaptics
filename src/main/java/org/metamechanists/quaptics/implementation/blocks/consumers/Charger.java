@@ -45,12 +45,48 @@ public class Charger extends ConnectedBlock implements InfoPanelBlock, ItemHolde
     public static final Settings CHARGER_1_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
             .build();
+    public static final Settings CHARGER_2_SETTINGS = Settings.builder()
+            .tier(Tier.BASIC)
+            .minFrequency(2)
+            .build();
+    public static final Settings CHARGER_3_SETTINGS = Settings.builder()
+            .tier(Tier.INTERMEDIATE)
+            .minFrequency(100)
+            .build();
+    public static final Settings CHARGER_4_SETTINGS = Settings.builder()
+            .tier(Tier.ADVANCED)
+            .minFrequency(1200)
+            .build();
 
     public static final SlimefunItemStack CHARGER_1 = new SlimefunItemStack(
             "QP_CHARGER_1",
             Material.POLISHED_DEEPSLATE_SLAB,
-            "&bCharger &3I",
+            "&7Charger &fI",
             Lore.create(CHARGER_1_SETTINGS,
+                    "&7● Charges Quaptic items",
+                    "&7● &eRight Click &7an item to insert",
+                    "&7● &eRight Click &7again to retrieve"));
+    public static final SlimefunItemStack CHARGER_2 = new SlimefunItemStack(
+            "QP_CHARGER_2",
+            Material.POLISHED_DEEPSLATE_SLAB,
+            "&7Charger &8II",
+            Lore.create(CHARGER_2_SETTINGS,
+                    "&7● Charges Quaptic items",
+                    "&7● &eRight Click &7an item to insert",
+                    "&7● &eRight Click &7again to retrieve"));
+    public static final SlimefunItemStack CHARGER_3 = new SlimefunItemStack(
+            "QP_CHARGER_3",
+            Material.POLISHED_DEEPSLATE_SLAB,
+            "&7Charger &8III",
+            Lore.create(CHARGER_3_SETTINGS,
+                    "&7● Charges Quaptic items",
+                    "&7● &eRight Click &7an item to insert",
+                    "&7● &eRight Click &7again to retrieve"));
+    public static final SlimefunItemStack CHARGER_4 = new SlimefunItemStack(
+            "QP_CHARGER_4",
+            Material.POLISHED_DEEPSLATE_SLAB,
+            "&7Charger &8IV",
+            Lore.create(CHARGER_4_SETTINGS,
                     "&7● Charges Quaptic items",
                     "&7● &eRight Click &7an item to insert",
                     "&7● &eRight Click &7again to retrieve"));

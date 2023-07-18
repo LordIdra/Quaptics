@@ -5,6 +5,7 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import lombok.experimental.UtilityClass;
 import org.bukkit.inventory.ItemStack;
 import org.metamechanists.quaptics.Quaptics;
+import org.metamechanists.quaptics.implementation.blocks.consumers.Charger;
 import org.metamechanists.quaptics.implementation.blocks.consumers.DataStripper;
 import org.metamechanists.quaptics.implementation.blocks.consumers.ItemProjector;
 import org.metamechanists.quaptics.implementation.blocks.consumers.MultiblockClicker;
@@ -13,6 +14,14 @@ import org.metamechanists.quaptics.implementation.blocks.consumers.turrets.Direc
 import org.metamechanists.quaptics.implementation.blocks.consumers.turrets.ModulatedTurret;
 import org.metamechanists.quaptics.items.Groups;
 
+import static org.metamechanists.quaptics.implementation.blocks.consumers.Charger.CHARGER_1;
+import static org.metamechanists.quaptics.implementation.blocks.consumers.Charger.CHARGER_1_SETTINGS;
+import static org.metamechanists.quaptics.implementation.blocks.consumers.Charger.CHARGER_2;
+import static org.metamechanists.quaptics.implementation.blocks.consumers.Charger.CHARGER_2_SETTINGS;
+import static org.metamechanists.quaptics.implementation.blocks.consumers.Charger.CHARGER_3;
+import static org.metamechanists.quaptics.implementation.blocks.consumers.Charger.CHARGER_3_SETTINGS;
+import static org.metamechanists.quaptics.implementation.blocks.consumers.Charger.CHARGER_4;
+import static org.metamechanists.quaptics.implementation.blocks.consumers.Charger.CHARGER_4_SETTINGS;
 import static org.metamechanists.quaptics.implementation.blocks.consumers.DataStripper.DATA_STRIPPER_1;
 import static org.metamechanists.quaptics.implementation.blocks.consumers.DataStripper.DATA_STRIPPER_1_SETTINGS;
 import static org.metamechanists.quaptics.implementation.blocks.consumers.DataStripper.DATA_STRIPPER_2;
@@ -98,9 +107,21 @@ public class Machines {
 
 
 
-        new Launchpad(Groups.MACHINES, LAUNCHPAD, RecipeType.NULL, new ItemStack[]{
+        new Charger(Groups.MACHINES, CHARGER_1, RecipeType.NULL, new ItemStack[]{
 
-        }, LAUNCHPAD_SETTINGS).register(addon);
+        }, CHARGER_1_SETTINGS).register(addon);
+
+        new Charger(Groups.MACHINES, CHARGER_2, RecipeType.NULL, new ItemStack[]{
+
+        }, CHARGER_2_SETTINGS).register(addon);
+
+        new Charger(Groups.MACHINES, CHARGER_3, RecipeType.NULL, new ItemStack[]{
+
+        }, CHARGER_3_SETTINGS).register(addon);
+
+        new Charger(Groups.MACHINES, CHARGER_4, RecipeType.NULL, new ItemStack[]{
+
+        }, CHARGER_4_SETTINGS).register(addon);
 
 
 
@@ -117,5 +138,11 @@ public class Machines {
         new ItemProjector(Groups.MACHINES, ITEM_PROJECTOR, RecipeType.NULL, new ItemStack[]{
 
         }, ITEM_PROJECTOR_SETTINGS).register(addon);
+
+
+
+        new Launchpad(Groups.MACHINES, LAUNCHPAD, RecipeType.NULL, new ItemStack[]{
+
+        }, LAUNCHPAD_SETTINGS).register(addon);
     }
 }

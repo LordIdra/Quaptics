@@ -19,23 +19,39 @@ import org.metamechanists.quaptics.beams.DeprecatedBeamStorage;
 import org.metamechanists.quaptics.beams.beam.LifetimeDirectBeam;
 import org.metamechanists.quaptics.implementation.Settings;
 import org.metamechanists.quaptics.items.Lore;
+import org.metamechanists.quaptics.items.Tier;
 import org.metamechanists.quaptics.utils.transformations.TransformationUtils;
 
 
 public class DirectRayGun extends AbstractRayGun {
-    public static final Settings RAY_GUN_2_SETTINGS = Settings.builder()
-            .chargeCapacity(1000.0)
-            .outputPower(5.0)
+    public static final Settings RAY_GUN_3_SETTINGS = Settings.builder()
+            .tier(Tier.INTERMEDIATE)
+            .chargeCapacity(100000.0)
+            .outputPower(300.0)
             .range(56)
-            .damage(3)
-            .projectileMaterial(Material.LIGHT_BLUE_CONCRETE)
+            .damage(6)
+            .projectileMaterial(Material.LIME_CONCRETE)
+            .build();
+    public static final Settings RAY_GUN_4_SETTINGS = Settings.builder()
+            .tier(Tier.INTERMEDIATE)
+            .chargeCapacity(1000000.0)
+            .outputPower(2000.0)
+            .range(56)
+            .damage(12)
+            .projectileMaterial(Material.LIME_CONCRETE)
             .build();
 
-    public static final SlimefunItemStack RAY_GUN_2 = new SlimefunItemStack(
-            "QP_RAY_GUN_2",
+    public static final SlimefunItemStack RAY_GUN_3 = new SlimefunItemStack(
+            "QP_RAY_GUN_3",
+            Material.GOLDEN_HORSE_ARMOR,
+            "&bRay Gun &3III",
+            Lore.buildChargeableLore(RAY_GUN_3_SETTINGS, 0,
+                    "&7● &eRight Click &7to fire"));
+    public static final SlimefunItemStack RAY_GUN_4 = new SlimefunItemStack(
+            "QP_RAY_GUN_4",
             Material.DIAMOND_HORSE_ARMOR,
-            "&bRay Gun &3II",
-            Lore.buildChargeableLore(RAY_GUN_2_SETTINGS, 0,
+            "&bRay Gun &3IV",
+            Lore.buildChargeableLore(RAY_GUN_4_SETTINGS, 0,
                     "&7● &eRight Click &7to fire"));
 
     public DirectRayGun(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {

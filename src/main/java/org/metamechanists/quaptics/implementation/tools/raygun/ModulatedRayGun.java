@@ -11,10 +11,12 @@ import org.metamechanists.quaptics.beams.DeprecatedBeamStorage;
 import org.metamechanists.quaptics.beams.beam.ProjectileBeam;
 import org.metamechanists.quaptics.implementation.Settings;
 import org.metamechanists.quaptics.items.Lore;
+import org.metamechanists.quaptics.items.Tier;
 import org.metamechanists.quaptics.storage.QuapticTicker;
 
 public class ModulatedRayGun extends AbstractRayGun {
     public static final Settings RAY_GUN_1_SETTINGS = Settings.builder()
+            .tier(Tier.PRIMITIVE)
             .chargeCapacity(1000.0)
             .outputPower(5.0)
             .range(56)
@@ -22,12 +24,27 @@ public class ModulatedRayGun extends AbstractRayGun {
             .projectileSpeed(15)
             .projectileMaterial(Material.LIGHT_BLUE_CONCRETE)
             .build();
+    public static final Settings RAY_GUN_2_SETTINGS = Settings.builder()
+            .tier(Tier.BASIC)
+            .chargeCapacity(10000.0)
+            .outputPower(40.0)
+            .range(56)
+            .damage(3)
+            .projectileSpeed(30)
+            .projectileMaterial(Material.LIGHT_BLUE_CONCRETE)
+            .build();
 
     public static final SlimefunItemStack RAY_GUN_1 = new SlimefunItemStack(
             "QP_RAY_GUN_1",
-            Material.DIAMOND_HORSE_ARMOR,
+            Material.LEATHER_HORSE_ARMOR,
             "&bRay Gun &3I",
             Lore.buildChargeableLore(RAY_GUN_1_SETTINGS, 0,
+                    "&7● &eRight Click &7to fire"));
+    public static final SlimefunItemStack RAY_GUN_2 = new SlimefunItemStack(
+            "QP_RAY_GUN_2",
+            Material.IRON_HORSE_ARMOR,
+            "&bRay Gun &3II",
+            Lore.buildChargeableLore(RAY_GUN_2_SETTINGS, 0,
                     "&7● &eRight Click &7to fire"));
 
     public ModulatedRayGun(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {

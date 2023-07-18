@@ -5,20 +5,21 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import lombok.experimental.UtilityClass;
 import org.bukkit.inventory.ItemStack;
 import org.metamechanists.quaptics.Quaptics;
-import org.metamechanists.quaptics.implementation.blocks.consumers.Charger;
 import org.metamechanists.quaptics.implementation.tools.multiblockwand.MultiblockWand;
 import org.metamechanists.quaptics.implementation.tools.raygun.DirectRayGun;
 import org.metamechanists.quaptics.implementation.tools.raygun.ModulatedRayGun;
 import org.metamechanists.quaptics.implementation.tools.targetingwand.TargetingWand;
 import org.metamechanists.quaptics.items.Groups;
 
-import static org.metamechanists.quaptics.implementation.blocks.consumers.Charger.CHARGER_1;
-import static org.metamechanists.quaptics.implementation.blocks.consumers.Charger.CHARGER_1_SETTINGS;
 import static org.metamechanists.quaptics.implementation.tools.multiblockwand.MultiblockWand.MULTIBLOCK_WAND;
-import static org.metamechanists.quaptics.implementation.tools.raygun.DirectRayGun.RAY_GUN_2;
-import static org.metamechanists.quaptics.implementation.tools.raygun.DirectRayGun.RAY_GUN_2_SETTINGS;
+import static org.metamechanists.quaptics.implementation.tools.raygun.DirectRayGun.RAY_GUN_3;
+import static org.metamechanists.quaptics.implementation.tools.raygun.DirectRayGun.RAY_GUN_3_SETTINGS;
+import static org.metamechanists.quaptics.implementation.tools.raygun.DirectRayGun.RAY_GUN_4;
+import static org.metamechanists.quaptics.implementation.tools.raygun.DirectRayGun.RAY_GUN_4_SETTINGS;
 import static org.metamechanists.quaptics.implementation.tools.raygun.ModulatedRayGun.RAY_GUN_1;
 import static org.metamechanists.quaptics.implementation.tools.raygun.ModulatedRayGun.RAY_GUN_1_SETTINGS;
+import static org.metamechanists.quaptics.implementation.tools.raygun.ModulatedRayGun.RAY_GUN_2;
+import static org.metamechanists.quaptics.implementation.tools.raygun.ModulatedRayGun.RAY_GUN_2_SETTINGS;
 import static org.metamechanists.quaptics.implementation.tools.targetingwand.TargetingWand.TARGETING_WAND;
 
 @UtilityClass
@@ -39,17 +40,16 @@ public class Tools {
 
         }, RAY_GUN_1_SETTINGS).register(addon);
 
-        new DirectRayGun(Groups.TOOLS, RAY_GUN_2, RecipeType.NULL, new ItemStack[]{
+        new ModulatedRayGun(Groups.TOOLS, RAY_GUN_2, RecipeType.NULL, new ItemStack[]{
 
         }, RAY_GUN_2_SETTINGS).register(addon);
 
+        new DirectRayGun(Groups.TOOLS, RAY_GUN_3, RecipeType.NULL, new ItemStack[]{
 
+        }, RAY_GUN_3_SETTINGS).register(addon);
 
-        new Charger(Groups.TOOLS, CHARGER_1, RecipeType.NULL, new ItemStack[]{
+        new DirectRayGun(Groups.TOOLS, RAY_GUN_4, RecipeType.NULL, new ItemStack[]{
 
-        }, CHARGER_1_SETTINGS).register(addon);
-
-
-        // TODO ray gun 3/4
+        }, RAY_GUN_4_SETTINGS).register(addon);
     }
 }
