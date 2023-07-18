@@ -76,7 +76,7 @@ public class ItemProjector extends ConnectedBlock implements ItemHolderBlock, Po
 
     @Override
     protected float getConnectionRadius() {
-        return 0.6F;
+        return 0.7F;
     }
     @Override
     protected DisplayGroup initModel(final @NotNull Location location, final @NotNull Player player) {

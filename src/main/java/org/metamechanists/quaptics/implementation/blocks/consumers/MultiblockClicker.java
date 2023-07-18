@@ -41,20 +41,22 @@ import java.util.UUID;
 
 public class MultiblockClicker extends ConnectedBlock implements PowerAnimatedBlock {
     public static final Settings MULTIBLOCK_CLICKER_1_SETTINGS = Settings.builder()
-            .tier(Tier.PRIMITIVE)
+            .tier(Tier.BASIC)
             .useInterval(20)
-            .minPower(3)
+            .minPower(20)
+            .minFrequency(2)
             .build();
     public static final Settings MULTIBLOCK_CLICKER_2_SETTINGS = Settings.builder()
-            .tier(Tier.PRIMITIVE)
+            .tier(Tier.BASIC)
             .useInterval(10)
-            .minPower(5)
+            .minPower(80)
+            .minFrequency(6)
             .build();
     public static final Settings MULTIBLOCK_CLICKER_3_SETTINGS = Settings.builder()
             .tier(Tier.BASIC)
             .useInterval(4)
-            .minPower(20)
-            .minFrequency(4)
+            .minPower(200)
+            .minFrequency(50)
             .build();
 
     public static final SlimefunItemStack MULTIBLOCK_CLICKER_1 = new SlimefunItemStack(

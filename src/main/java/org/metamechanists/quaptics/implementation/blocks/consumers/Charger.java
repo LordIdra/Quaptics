@@ -45,12 +45,13 @@ public class Charger extends ConnectedBlock implements InfoPanelBlock, ItemHolde
     public static final Settings CHARGER_1_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
             .build();
+
     public static final SlimefunItemStack CHARGER_1 = new SlimefunItemStack(
             "QP_CHARGER_1",
             Material.POLISHED_DEEPSLATE_SLAB,
             "&bCharger &3I",
             Lore.create(CHARGER_1_SETTINGS,
-                    "&7● Charges item with Quaptic Energy Units",
+                    "&7● Charges Quaptic items",
                     "&7● &eRight Click &7an item to insert",
                     "&7● &eRight Click &7again to retrieve"));
 
