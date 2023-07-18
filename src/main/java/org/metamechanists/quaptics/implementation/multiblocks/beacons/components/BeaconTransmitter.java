@@ -20,7 +20,7 @@ import org.metamechanists.quaptics.utils.models.components.ModelCuboid;
 public class BeaconTransmitter extends QuapticBlock {
     public static final Settings BEACON_TRANSMITTER_SETTINGS = Settings.builder()
             .tier(Tier.INTERMEDIATE)
-            .maxPowerHidden(true)
+            .operatingPowerHidden(true)
             .build();
 
     public static final SlimefunItemStack BEACON_TRANSMITTER = new SlimefunItemStack(

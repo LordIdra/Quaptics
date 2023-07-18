@@ -21,6 +21,8 @@ import static org.metamechanists.quaptics.implementation.multiblocks.beacons.com
 import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconBattery.BEACON_BATTERY_1_SETTINGS;
 import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconBattery.BEACON_BATTERY_2;
 import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconBattery.BEACON_BATTERY_2_SETTINGS;
+import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconBeam.BEACON_BEAM;
+import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconBeam.BEACON_BEAM_SETTINGS;
 import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconComputer.BEACON_COMPUTER;
 import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconComputer.BEACON_COMPUTER_SETTINGS;
 import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconMatrix.BEACON_MATRIX;
@@ -91,6 +93,12 @@ public class BeaconComponents {
         new BeaconMatrix(Groups.BEACON_COMPONENTS, BEACON_MATRIX, RecipeType.NULL, new ItemStack[]{
 
         }, BEACON_MATRIX_SETTINGS).register(addon);
+
+
+
+        new BeaconRod(Groups.BEACON_COMPONENTS, BEACON_BEAM, RecipeType.NULL, new ItemStack[]{
+
+        }, BEACON_BEAM_SETTINGS).register(addon);
 
 
 
