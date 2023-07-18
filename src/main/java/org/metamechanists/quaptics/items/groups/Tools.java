@@ -26,16 +26,7 @@ import static org.metamechanists.quaptics.implementation.tools.raygun.ModulatedR
 import static org.metamechanists.quaptics.implementation.tools.raygun.ModulatedRayGun.RAY_GUN_2;
 import static org.metamechanists.quaptics.implementation.tools.raygun.ModulatedRayGun.RAY_GUN_2_SETTINGS;
 import static org.metamechanists.quaptics.implementation.tools.targetingwand.TargetingWand.TARGETING_WAND;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.DIELECTRIC_1;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.DIELECTRIC_2;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.DIELECTRIC_4;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.ENERGY_CONCENTRATION_ELEMENT_1;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.ENERGY_CONCENTRATION_ELEMENT_2;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.ENERGY_CONCENTRATION_ELEMENT_3;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.TRANSCEIVER_1;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.TRANSCEIVER_2;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.TRANSCEIVER_3;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.TRANSCEIVER_4;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.*;
 
 
 @UtilityClass
