@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.UUID;
 
 
-public class ExperienceMultiplicationModuleListener implements Listener {
+public class ExperienceModuleListener implements Listener {
     private static final Map<UUID, Double> affectedPlayers = new HashMap<>();
 
     @EventHandler

@@ -11,7 +11,7 @@ import org.metamechanists.metalib.bstats.bukkit.Metrics;
 import org.metamechanists.quaptics.implementation.blocks.consumers.launchpad.LaunchpadListener;
 import org.metamechanists.quaptics.implementation.burnout.BurnoutManager;
 import org.metamechanists.quaptics.implementation.multiblocks.beacons.controllers.ModuleClickListener;
-import org.metamechanists.quaptics.implementation.multiblocks.beacons.modules.player.ExperienceMultiplicationModuleListener;
+import org.metamechanists.quaptics.implementation.multiblocks.beacons.modules.player.ExperienceModuleListener;
 import org.metamechanists.quaptics.implementation.tools.multiblockwand.MultiblockWandListener;
 import org.metamechanists.quaptics.implementation.tools.targetingwand.TargetingWandListener;
 import org.metamechanists.quaptics.items.Groups;
@@ -37,7 +37,7 @@ public final class Quaptics extends JavaPlugin implements SlimefunAddon {
         pluginManager.registerEvents(new MultiblockWandListener(), this);
         pluginManager.registerEvents(new ModuleClickListener(), this);
         pluginManager.registerEvents(new QuapticStorage(), this);
-        pluginManager.registerEvents(new ExperienceMultiplicationModuleListener(), this);
+        pluginManager.registerEvents(new ExperienceModuleListener(), this);
     }
     private void initializeRunnables() {
         new QuapticTicker().runTaskTimer(this, 0, QuapticTicker.INTERVAL_TICKS);

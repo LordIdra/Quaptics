@@ -22,21 +22,31 @@ import org.metamechanists.quaptics.implementation.multiblocks.beacons.modules.Pl
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
 import org.metamechanists.quaptics.storage.QuapticTicker;
+import org.metamechanists.quaptics.utils.Colors;
 
 import java.util.Collection;
 
 
 public class LuckModule extends BeaconModule implements PlayerModule {
-    public static final Settings LUCK_MODULE_SETTINGS = Settings.builder()
-            .tier(Tier.PRIMITIVE)
-            .luckLevel(1)
+    public static final Settings LUCK_MODULE_1_SETTINGS = Settings.builder()
+            .tier(Tier.INTERMEDIATE)
+            .luckLevel(2)
             .build();
-    public static final SlimefunItemStack LUCK_MODULE = getBanner(new SlimefunItemStack(
-            "QP_LUCK_MODULE",
-            Material.GRAY_BANNER,
-            "&6Luck Module",
-            Lore.create(LUCK_MODULE_SETTINGS,
-                    "&7● Increases the luck of all players in range")));
+    public static final Settings LUCK_MODULE_2_SETTINGS = Settings.builder()
+            .tier(Tier.ADVANCED)
+            .luckLevel(4)
+            .build();
+
+    public static final SlimefunItemStack LUCK_MODULE_1 = getBanner(new SlimefunItemStack(
+            "QP_LUCK_MODULE_1",
+            Material.YELLOW_BANNER,
+            Colors.BEACONS.getFormattedColor() + "Luck Module &dI",
+            Lore.create(LUCK_MODULE_1_SETTINGS)));
+    public static final SlimefunItemStack LUCK_MODULE_2 = getBanner(new SlimefunItemStack(
+            "QP_LUCK_MODULE_2",
+            Material.YELLOW_BANNER,
+            Colors.BEACONS.getFormattedColor() + "Luck Module &dII",
+            Lore.create(LUCK_MODULE_2_SETTINGS)));
 
     public LuckModule(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);

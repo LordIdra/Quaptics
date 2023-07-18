@@ -97,7 +97,7 @@ public class Scatterer extends ConnectedBlock implements PowerAnimatedBlock, Pow
     protected DisplayGroup initModel(final @NotNull Location location, final @NotNull Player player) {
         return new ModelBuilder()
                 .add("main", new ModelCuboid()
-                        .material(Material.PINK_STAINED_GLASS)
+                        .material(Material.CYAN_STAINED_GLASS)
                         .facing(player.getFacing())
                         .size(0.4F)
                         .rotation(Math.PI / 4))

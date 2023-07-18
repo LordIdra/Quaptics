@@ -20,31 +20,41 @@ import org.metamechanists.quaptics.implementation.multiblocks.beacons.modules.Be
 import org.metamechanists.quaptics.implementation.multiblocks.beacons.modules.PlayerModule;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
+import org.metamechanists.quaptics.utils.Colors;
 
 import java.util.Collection;
 
 
-public class ExperienceMultiplicationModule extends BeaconModule implements PlayerModule, Listener {
-    public static final Settings EXPERIENCE_MULTIPLICATION_MODULE_SETTINGS = Settings.builder()
-            .tier(Tier.PRIMITIVE)
-            .experienceMultiplier(1.5)
+public class ExperienceModule extends BeaconModule implements PlayerModule, Listener {
+    public static final Settings EXPERIENCE_MODULE_1_SETTINGS = Settings.builder()
+            .tier(Tier.INTERMEDIATE)
+            .experienceMultiplier(1.4)
             .build();
-    public static final SlimefunItemStack EXPERIENCE_MULTIPLICATION_MODULE = getBanner(new SlimefunItemStack(
-            "QP_EXPERIENCE_MULTIPLICATION_MODULE",
-            Material.GRAY_BANNER,
-            "&6Experience Multiplication Module",
-            Lore.create(EXPERIENCE_MULTIPLICATION_MODULE_SETTINGS,
-                    "&7● Increases XP gain of all players in range")));
+    public static final Settings EXPERIENCE_MODULE_2_SETTINGS = Settings.builder()
+            .tier(Tier.ADVANCED)
+            .experienceMultiplier(1.8)
+            .build();
+
+    public static final SlimefunItemStack EXPERIENCE_MODULE_1 = getBanner(new SlimefunItemStack(
+            "QP_EXPERIENCE_MODULE_1",
+            Material.YELLOW_BANNER,
+            Colors.BEACONS.getFormattedColor() + "Experience Module &dI",
+            Lore.create(EXPERIENCE_MODULE_1_SETTINGS)));
+    public static final SlimefunItemStack EXPERIENCE_MODULE_2 = getBanner(new SlimefunItemStack(
+            "QP_EXPERIENCE_MODULE_2",
+            Material.ORANGE_BANNER,
+            Colors.BEACONS.getFormattedColor() + "Experience Module &dII",
+            Lore.create(EXPERIENCE_MODULE_2_SETTINGS)));
 
 
-    public ExperienceMultiplicationModule(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
+    public ExperienceModule(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
     }
 
     private static @NotNull SlimefunItemStack getBanner(final @NotNull SlimefunItemStack stack) {
         final BannerMeta meta = (BannerMeta) stack.getItemMeta();
-        meta.addPattern(new Pattern(DyeColor.GREEN, PatternType.CROSS));
-        meta.addPattern(new Pattern(DyeColor.LIME, PatternType.RHOMBUS_MIDDLE));
+        meta.addPattern(new Pattern(DyeColor.GREEN, PatternType.RHOMBUS_MIDDLE));
+        meta.addPattern(new Pattern(DyeColor.LIME, PatternType.CIRCLE_MIDDLE));
         meta.addItemFlags(ItemFlag.HIDE_ITEM_SPECIFICS);
         stack.setItemMeta(meta);
         return stack;
@@ -52,6 +62,6 @@ public class ExperienceMultiplicationModule extends BeaconModule implements Play
 
     @Override
     public void apply(final @NotNull BeaconController controller, final @NotNull Location controllerLocation, @NotNull final Collection<Player> players) {
-        players.forEach(player -> ExperienceMultiplicationModuleListener.add(player, settings.getExperienceMultiplier()));
+        players.forEach(player -> ExperienceModuleListener.add(player, settings.getExperienceMultiplier()));
     }
 }

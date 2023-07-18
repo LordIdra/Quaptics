@@ -8,7 +8,7 @@ public enum Tier {
     PRIMITIVE(Colors.PRIMITIVE.getFormattedColor() + "Primitive", Material.BROWN_CONCRETE, Material.BROWN_STAINED_GLASS, 10),
     BASIC(Colors.BASIC.getFormattedColor() + "Basic", Material.GREEN_CONCRETE, Material.GREEN_STAINED_GLASS, 100),
     INTERMEDIATE(Colors.INTERMEDIATE.getFormattedColor() + "Intermediate", Material.YELLOW_CONCRETE, Material.YELLOW_STAINED_GLASS, 1000),
-    ADVANCED(Colors.ADVANCED.getFormattedColor() + "Advanced", Material.RED_CONCRETE, Material.RED_STAINED_GLASS, 10000),
+    ADVANCED(Colors.ADVANCED.getFormattedColor() + "Advanced", Material.ORANGE_CONCRETE, Material.ORANGE_STAINED_GLASS, 10000),
     TESTING("&8Testing", Material.RED_CONCRETE, Material.RED_STAINED_GLASS, 10);
 
     public final String name;

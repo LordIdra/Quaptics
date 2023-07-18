@@ -20,18 +20,20 @@ import org.metamechanists.quaptics.implementation.multiblocks.beacons.modules.Pl
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
 import org.metamechanists.quaptics.storage.QuapticTicker;
+import org.metamechanists.quaptics.utils.Colors;
 
 import java.util.Collection;
 
 
 public class InvincibilityModule extends BeaconModule implements PlayerModule {
     public static final Settings INVINCIBILITY_MODULE_SETTINGS = Settings.builder()
-            .tier(Tier.PRIMITIVE)
+            .tier(Tier.ADVANCED)
             .build();
+
     public static final SlimefunItemStack INVINCIBILITY_MODULE = getBanner(new SlimefunItemStack(
             "QP_INVINCIBILITY_MODULE",
-            Material.GRAY_BANNER,
-            "&6Invincibility Module",
+            Material.ORANGE_BANNER,
+            Colors.BEACONS.getFormattedColor() + "Invincibility Module",
             Lore.create(INVINCIBILITY_MODULE_SETTINGS,
                     "&7● Makes all players in range invincible")));
 
@@ -41,8 +43,8 @@ public class InvincibilityModule extends BeaconModule implements PlayerModule {
 
     private static @NotNull SlimefunItemStack getBanner(final @NotNull SlimefunItemStack stack) {
         final BannerMeta meta = (BannerMeta) stack.getItemMeta();
-        meta.addPattern(new Pattern(DyeColor.ORANGE, PatternType.STRAIGHT_CROSS));
-        meta.addPattern(new Pattern(DyeColor.RED, PatternType.SKULL));
+        meta.addPattern(new Pattern(DyeColor.GRAY, PatternType.RHOMBUS_MIDDLE));
+        meta.addPattern(new Pattern(DyeColor.WHITE, PatternType.SKULL));
         meta.addItemFlags(ItemFlag.HIDE_ITEM_SPECIFICS);
         stack.setItemMeta(meta);
         return stack;

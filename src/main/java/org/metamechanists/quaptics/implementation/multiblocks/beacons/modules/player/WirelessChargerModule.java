@@ -24,6 +24,7 @@ import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
 import org.metamechanists.quaptics.storage.QuapticTicker;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
+import org.metamechanists.quaptics.utils.Colors;
 import org.metamechanists.quaptics.utils.Keys;
 
 import java.util.Collection;
@@ -31,16 +32,17 @@ import java.util.Collection;
 
 public class WirelessChargerModule extends BeaconModule implements PlayerModule {
     public static final Settings WIRELESS_CHARGER_MODULE_SETTINGS = Settings.builder()
-            .tier(Tier.PRIMITIVE)
+            .tier(Tier.ADVANCED)
             .powerEfficiency(0.1)
             .build();
+
     public static final SlimefunItemStack WIRELESS_CHARGER_MODULE = getBanner(new SlimefunItemStack(
             "QP_WIRELESS_CHARGER_MODULE",
-            Material.GRAY_BANNER,
-            "&6Wireless Charger Module",
+            Material.ORANGE_BANNER,
+            Colors.BEACONS.getFormattedColor() + "Wireless Charger Module",
             Lore.create(WIRELESS_CHARGER_MODULE_SETTINGS,
                     "&7● Wirelessly charges held items",
-                    "&7● The more power you put in, the higher the charge rate")));
+                    "&7● The more power the beacon has, the higher the charge rate")));
 
     public WirelessChargerModule(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
@@ -48,7 +50,8 @@ public class WirelessChargerModule extends BeaconModule implements PlayerModule 
 
     private static @NotNull SlimefunItemStack getBanner(final @NotNull SlimefunItemStack stack) {
         final BannerMeta meta = (BannerMeta) stack.getItemMeta();
-        meta.addPattern(new Pattern(DyeColor.ORANGE, PatternType.FLOWER));
+        meta.addPattern(new Pattern(DyeColor.LIGHT_BLUE, PatternType.CIRCLE_MIDDLE));
+        meta.addPattern(new Pattern(DyeColor.CYAN, PatternType.FLOWER));
         meta.addItemFlags(ItemFlag.HIDE_ITEM_SPECIFICS);
         stack.setItemMeta(meta);
         return stack;

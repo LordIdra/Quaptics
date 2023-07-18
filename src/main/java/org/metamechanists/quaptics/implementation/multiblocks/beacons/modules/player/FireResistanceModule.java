@@ -22,21 +22,31 @@ import org.metamechanists.quaptics.implementation.multiblocks.beacons.modules.Pl
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
 import org.metamechanists.quaptics.storage.QuapticTicker;
+import org.metamechanists.quaptics.utils.Colors;
 
 import java.util.Collection;
 
 
 public class FireResistanceModule extends BeaconModule implements PlayerModule {
-    public static final Settings FIRE_RESISTANCE_MODULE_SETTINGS = Settings.builder()
-            .tier(Tier.PRIMITIVE)
-            .fireResistanceLevel(1)
+    public static final Settings FIRE_RESISTANCE_MODULE_1_SETTINGS = Settings.builder()
+            .tier(Tier.INTERMEDIATE)
+            .fireResistanceLevel(2)
             .build();
-    public static final SlimefunItemStack FIRE_RESISTANCE_MODULE = getBanner(new SlimefunItemStack(
-            "QP_FIRE_RESISTANCE_MODULE",
-            Material.GRAY_BANNER,
-            "&6Fire Resistance Module",
-            Lore.create(FIRE_RESISTANCE_MODULE_SETTINGS,
-                    "&7● Gives fire resistance to all players in range")));
+    public static final Settings FIRE_RESISTANCE_MODULE_2_SETTINGS = Settings.builder()
+            .tier(Tier.ADVANCED)
+            .fireResistanceLevel(4)
+            .build();
+
+    public static final SlimefunItemStack FIRE_RESISTANCE_MODULE_1 = getBanner(new SlimefunItemStack(
+            "QP_FIRE_RESISTANCE_MODULE_1",
+            Material.YELLOW_BANNER,
+            Colors.BEACONS.getFormattedColor() + "Fire Resistance Module &dI",
+            Lore.create(FIRE_RESISTANCE_MODULE_1_SETTINGS)));
+    public static final SlimefunItemStack FIRE_RESISTANCE_MODULE_2 = getBanner(new SlimefunItemStack(
+            "QP_FIRE_RESISTANCE_MODULE_2",
+            Material.ORANGE_BANNER,
+            Colors.BEACONS.getFormattedColor() + "Fire Resistance Module &dII",
+            Lore.create(FIRE_RESISTANCE_MODULE_2_SETTINGS)));
 
     public FireResistanceModule(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
@@ -44,7 +54,8 @@ public class FireResistanceModule extends BeaconModule implements PlayerModule {
 
     private static @NotNull SlimefunItemStack getBanner(final @NotNull SlimefunItemStack stack) {
         final BannerMeta meta = (BannerMeta) stack.getItemMeta();
-        meta.addPattern(new Pattern(DyeColor.ORANGE, PatternType.FLOWER));
+        meta.addPattern(new Pattern(DyeColor.GRAY, PatternType.STRAIGHT_CROSS));
+        meta.addPattern(new Pattern(DyeColor.RED, PatternType.CIRCLE_MIDDLE));
         meta.addItemFlags(ItemFlag.HIDE_ITEM_SPECIFICS);
         stack.setItemMeta(meta);
         return stack;
