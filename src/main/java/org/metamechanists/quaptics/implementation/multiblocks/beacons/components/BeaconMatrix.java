@@ -20,13 +20,13 @@ import org.metamechanists.quaptics.utils.models.components.ModelCuboid;
 
 public class BeaconMatrix extends QuapticBlock {
     public static final Settings BEACON_MATRIX_SETTINGS = Settings.builder()
-            .tier(Tier.PRIMITIVE)
-            .maxPowerHidden(true)
+            .tier(Tier.ADVANCED)
+            .operatingPowerHidden(true)
             .build();
 
     public static final SlimefunItemStack BEACON_MATRIX = new SlimefunItemStack(
             "QP_BEACON_MATRIX",
-            Material.LIGHT_BLUE_STAINED_GLASS,
+            Material.LIGHT_BLUE_CONCRETE,
             "&dBeacon Matrix",
             Lore.create(BEACON_MATRIX_SETTINGS,
                     Lore.multiblockComponent()));

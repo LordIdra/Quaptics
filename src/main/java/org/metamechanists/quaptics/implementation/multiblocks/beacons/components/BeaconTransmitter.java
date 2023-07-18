@@ -19,7 +19,7 @@ import org.metamechanists.quaptics.utils.models.components.ModelCuboid;
 
 public class BeaconTransmitter extends QuapticBlock {
     public static final Settings BEACON_TRANSMITTER_SETTINGS = Settings.builder()
-            .tier(Tier.PRIMITIVE)
+            .tier(Tier.INTERMEDIATE)
             .maxPowerHidden(true)
             .build();
 

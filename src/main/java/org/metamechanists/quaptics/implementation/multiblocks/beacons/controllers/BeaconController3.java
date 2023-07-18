@@ -40,7 +40,7 @@ import static org.metamechanists.quaptics.implementation.multiblocks.beacons.com
 
 public class BeaconController3 extends BeaconController {
     public static final Settings BEACON_CONTROLLER_3_SETTINGS = Settings.builder()
-            .tier(Tier.PRIMITIVE)
+            .tier(Tier.ADVANCED)
             .minPower(2200)
             .minFrequency(40000)
             .range(60)

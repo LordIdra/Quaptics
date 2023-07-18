@@ -19,8 +19,8 @@ import org.metamechanists.quaptics.utils.models.components.ModelCuboid;
 
 public class BeaconRod extends QuapticBlock {
     public static final Settings BEACON_ROD_SETTINGS = Settings.builder()
-            .tier(Tier.PRIMITIVE)
-            .maxPowerHidden(true)
+            .tier(Tier.INTERMEDIATE)
+            .operatingPowerHidden(true)
             .build();
 
     public static final SlimefunItemStack BEACON_ROD = new SlimefunItemStack(
@@ -28,7 +28,7 @@ public class BeaconRod extends QuapticBlock {
             Material.GRAY_CONCRETE,
             "&dBeacon Rod",
             Lore.create(BEACON_ROD_SETTINGS,
-                    "&7● Part of the Beacon multiblock"));
+                    Lore.multiblockComponent()));
 
     public BeaconRod(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);

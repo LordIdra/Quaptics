@@ -20,8 +20,8 @@ import org.metamechanists.quaptics.utils.models.components.ModelCuboid;
 
 public class BeaconComputer extends QuapticBlock {
     public static final Settings BEACON_COMPUTER_SETTINGS = Settings.builder()
-            .tier(Tier.PRIMITIVE)
-            .maxPowerHidden(true)
+            .tier(Tier.INTERMEDIATE)
+            .operatingPowerHidden(true)
             .build();
 
     public static final SlimefunItemStack BEACON_COMPUTER = new SlimefunItemStack(

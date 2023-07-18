@@ -18,8 +18,8 @@ import org.metamechanists.quaptics.utils.models.ModelBuilder;
 
 public class BeaconBeam extends QuapticBlock {
     public static final Settings BEACON_BEAM_SETTINGS = Settings.builder()
-            .tier(Tier.PRIMITIVE)
-            .maxPowerHidden(true)
+            .tier(Tier.INTERMEDIATE)
+            .operatingPowerHidden(true)
             .build();
 
     public static final SlimefunItemStack BEACON_BEAM = new SlimefunItemStack(

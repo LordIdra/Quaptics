@@ -18,9 +18,10 @@ import org.metamechanists.quaptics.utils.models.ModelBuilder;
 
 public class BeaconPanel extends QuapticBlock {
     public static final Settings BEACON_PANEL_SETTINGS = Settings.builder()
-            .tier(Tier.PRIMITIVE)
-            .maxPowerHidden(true)
+            .tier(Tier.INTERMEDIATE)
+            .operatingPowerHidden(true)
             .build();
+
     public static final SlimefunItemStack BEACON_PANEL = new SlimefunItemStack(
             "QP_BEACON_PANEL",
             Material.BLACK_STAINED_GLASS_PANE,

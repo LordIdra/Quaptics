@@ -20,11 +20,11 @@ import org.metamechanists.quaptics.utils.models.components.ModelCuboid;
 public class BeaconBattery extends QuapticBlock {
     public static final Settings BEACON_BATTERY_1_SETTINGS = Settings.builder()
             .tier(Tier.ADVANCED)
-            .maxPowerHidden(true)
+            .operatingPowerHidden(true)
             .build();
     public static final Settings BEACON_BATTERY_2_SETTINGS = Settings.builder()
             .tier(Tier.ADVANCED)
-            .maxPowerHidden(true)
+            .operatingPowerHidden(true)
             .build();
 
     public static final SlimefunItemStack BEACON_BATTERY_1 = new SlimefunItemStack(

@@ -31,11 +31,11 @@ import java.util.Optional;
 public class BeaconPowerSupply extends ConnectedBlock {
     public static final Settings BEACON_POWER_SUPPLY_1_SETTINGS = Settings.builder()
             .tier(Tier.INTERMEDIATE)
-            .maxPowerHidden(true)
+            .operatingPowerHidden(true)
             .build();
     public static final Settings BEACON_POWER_SUPPLY_2_SETTINGS = Settings.builder()
             .tier(Tier.ADVANCED)
-            .maxPowerHidden(true)
+            .operatingPowerHidden(true)
             .build();
 
     public static final SlimefunItemStack BEACON_POWER_SUPPLY_1 = new SlimefunItemStack(
