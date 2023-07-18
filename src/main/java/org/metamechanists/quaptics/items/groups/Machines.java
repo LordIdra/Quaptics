@@ -15,14 +15,7 @@ import org.metamechanists.quaptics.implementation.blocks.consumers.turrets.Direc
 import org.metamechanists.quaptics.implementation.blocks.consumers.turrets.ModulatedTurret;
 import org.metamechanists.quaptics.items.Groups;
 
-import static org.metamechanists.quaptics.implementation.blocks.consumers.Charger.CHARGER_1;
-import static org.metamechanists.quaptics.implementation.blocks.consumers.Charger.CHARGER_1_SETTINGS;
-import static org.metamechanists.quaptics.implementation.blocks.consumers.Charger.CHARGER_2;
-import static org.metamechanists.quaptics.implementation.blocks.consumers.Charger.CHARGER_2_SETTINGS;
-import static org.metamechanists.quaptics.implementation.blocks.consumers.Charger.CHARGER_3;
-import static org.metamechanists.quaptics.implementation.blocks.consumers.Charger.CHARGER_3_SETTINGS;
-import static org.metamechanists.quaptics.implementation.blocks.consumers.Charger.CHARGER_4;
-import static org.metamechanists.quaptics.implementation.blocks.consumers.Charger.CHARGER_4_SETTINGS;
+import static org.metamechanists.quaptics.implementation.blocks.consumers.Charger.*;
 import static org.metamechanists.quaptics.implementation.blocks.consumers.DataStripper.DATA_STRIPPER_1;
 import static org.metamechanists.quaptics.implementation.blocks.consumers.DataStripper.DATA_STRIPPER_1_SETTINGS;
 import static org.metamechanists.quaptics.implementation.blocks.consumers.DataStripper.DATA_STRIPPER_2;
@@ -57,9 +50,7 @@ import static org.metamechanists.quaptics.implementation.tools.raygun.DirectRayG
 import static org.metamechanists.quaptics.implementation.tools.raygun.DirectRayGun.RAY_GUN_4;
 import static org.metamechanists.quaptics.implementation.tools.raygun.ModulatedRayGun.RAY_GUN_1;
 import static org.metamechanists.quaptics.implementation.tools.raygun.ModulatedRayGun.RAY_GUN_2;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.TURRET_BARREL;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.TURRET_BASE;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.TURRET_TARGETING_MECHANISM;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.*;
 
 
 @UtilityClass
