@@ -3,6 +3,7 @@ package org.metamechanists.quaptics.items.groups;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import lombok.experimental.UtilityClass;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.metamechanists.quaptics.Quaptics;
 import org.metamechanists.quaptics.implementation.blocks.consumers.Charger;
@@ -52,6 +53,13 @@ import static org.metamechanists.quaptics.implementation.blocks.consumers.turret
 import static org.metamechanists.quaptics.implementation.blocks.consumers.turrets.ModulatedTurret.TURRET_2_HOSTILE_SETTINGS;
 import static org.metamechanists.quaptics.implementation.blocks.consumers.turrets.ModulatedTurret.TURRET_2_PASSIVE;
 import static org.metamechanists.quaptics.implementation.blocks.consumers.turrets.ModulatedTurret.TURRET_2_PASSIVE_SETTINGS;
+import static org.metamechanists.quaptics.implementation.tools.raygun.DirectRayGun.RAY_GUN_3;
+import static org.metamechanists.quaptics.implementation.tools.raygun.DirectRayGun.RAY_GUN_4;
+import static org.metamechanists.quaptics.implementation.tools.raygun.ModulatedRayGun.RAY_GUN_1;
+import static org.metamechanists.quaptics.implementation.tools.raygun.ModulatedRayGun.RAY_GUN_2;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.TURRET_BARREL;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.TURRET_BASE;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.TURRET_TARGETING_MECHANISM;
 
 
 @UtilityClass
@@ -60,35 +68,51 @@ public class Machines {
         final SlimefunAddon addon = Quaptics.getInstance();
 
         new ModulatedTurret(Groups.MACHINES, TURRET_1_HOSTILE, RecipeType.NULL, new ItemStack[]{
-
+                null, new ItemStack(Material.GUNPOWDER), null,
+                TURRET_TARGETING_MECHANISM, RAY_GUN_1, TURRET_BARREL,
+                TURRET_BASE, TURRET_BASE, TURRET_BASE
         }, TURRET_1_HOSTILE_SETTINGS).register(addon);
 
         new ModulatedTurret(Groups.MACHINES, TURRET_1_PASSIVE, RecipeType.NULL, new ItemStack[]{
-
+                null, new ItemStack(Material.WHEAT), null,
+                TURRET_TARGETING_MECHANISM, RAY_GUN_1, TURRET_BARREL,
+                TURRET_BASE, TURRET_BASE, TURRET_BASE
         }, TURRET_1_PASSIVE_SETTINGS).register(addon);
 
         new ModulatedTurret(Groups.MACHINES, TURRET_2_HOSTILE, RecipeType.NULL, new ItemStack[]{
-
+                null, new ItemStack(Material.GUNPOWDER), null,
+                TURRET_TARGETING_MECHANISM, RAY_GUN_2, TURRET_BARREL,
+                TURRET_BASE, TURRET_BASE, TURRET_BASE
         }, TURRET_2_HOSTILE_SETTINGS).register(addon);
 
         new ModulatedTurret(Groups.MACHINES, TURRET_2_PASSIVE, RecipeType.NULL, new ItemStack[]{
-
+                null, new ItemStack(Material.WHEAT), null,
+                TURRET_TARGETING_MECHANISM, RAY_GUN_2, TURRET_BARREL,
+                TURRET_BASE, TURRET_BASE, TURRET_BASE
         }, TURRET_2_PASSIVE_SETTINGS).register(addon);
 
         new DirectTurret(Groups.MACHINES, TURRET_3_HOSTILE, RecipeType.NULL, new ItemStack[]{
-
+                null, new ItemStack(Material.GUNPOWDER), null,
+                TURRET_TARGETING_MECHANISM, RAY_GUN_3, TURRET_BARREL,
+                TURRET_BASE, TURRET_BASE, TURRET_BASE
         }, TURRET_3_HOSTILE_SETTINGS).register(addon);
 
         new DirectTurret(Groups.MACHINES, TURRET_3_PASSIVE, RecipeType.NULL, new ItemStack[]{
-
+                null, new ItemStack(Material.WHEAT), null,
+                TURRET_TARGETING_MECHANISM, RAY_GUN_3, TURRET_BARREL,
+                TURRET_BASE, TURRET_BASE, TURRET_BASE
         }, TURRET_3_PASSIVE_SETTINGS).register(addon);
 
         new DirectTurret(Groups.MACHINES, TURRET_4_HOSTILE, RecipeType.NULL, new ItemStack[]{
-
+                null, new ItemStack(Material.GUNPOWDER), null,
+                TURRET_TARGETING_MECHANISM, RAY_GUN_4, TURRET_BARREL,
+                TURRET_BASE, TURRET_BASE, TURRET_BASE
         }, TURRET_4_HOSTILE_SETTINGS).register(addon);
 
         new DirectTurret(Groups.MACHINES, TURRET_4_PASSIVE, RecipeType.NULL, new ItemStack[]{
-
+                null, new ItemStack(Material.WHEAT), null,
+                TURRET_TARGETING_MECHANISM, RAY_GUN_4, TURRET_BARREL,
+                TURRET_BASE, TURRET_BASE, TURRET_BASE
         }, TURRET_4_PASSIVE_SETTINGS).register(addon);
 
 

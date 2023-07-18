@@ -79,7 +79,7 @@ public class FrequencyAndPhase {
 
         new Scatterer(Groups.FREQUENCY_AND_PHASE, SCATTERER_3, RecipeType.NULL, new ItemStack[]{
                 new ItemStack(Material.GLASS), new ItemStack(Material.GLASS), new ItemStack(Material.GLASS),
-                RECEIVER_4, REPEATER_2, TRANSMITTER_4,
+                RECEIVER_4, SCATTERER_2, TRANSMITTER_4,
                 URANIUM, ENTANGLED_FREQUENCY_CRYSTAL, URANIUM
         }, SCATTERER_3_SETTINGS).register(addon);
 
