@@ -21,7 +21,7 @@ public class ModulatedRayGun extends AbstractRayGun {
             .outputPower(5.0)
             .range(56)
             .damage(1.5)
-            .projectileSpeed(15)
+            .projectileSpeed(12)
             .projectileMaterial(Material.LIGHT_BLUE_CONCRETE)
             .build();
     public static final Settings RAY_GUN_2_SETTINGS = Settings.builder()

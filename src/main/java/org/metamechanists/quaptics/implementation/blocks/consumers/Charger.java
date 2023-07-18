@@ -69,7 +69,7 @@ public class Charger extends ConnectedBlock implements InfoPanelBlock, ItemHolde
     public static final SlimefunItemStack CHARGER_2 = new SlimefunItemStack(
             "QP_CHARGER_2",
             Material.POLISHED_DEEPSLATE_SLAB,
-            "&7Charger &8II",
+            "&7Charger &fII",
             Lore.create(CHARGER_2_SETTINGS,
                     "&7● Charges Quaptic items",
                     "&7● &eRight Click &7an item to insert",
@@ -77,7 +77,7 @@ public class Charger extends ConnectedBlock implements InfoPanelBlock, ItemHolde
     public static final SlimefunItemStack CHARGER_3 = new SlimefunItemStack(
             "QP_CHARGER_3",
             Material.POLISHED_DEEPSLATE_SLAB,
-            "&7Charger &8III",
+            "&7Charger &fIII",
             Lore.create(CHARGER_3_SETTINGS,
                     "&7● Charges Quaptic items",
                     "&7● &eRight Click &7an item to insert",
@@ -85,7 +85,7 @@ public class Charger extends ConnectedBlock implements InfoPanelBlock, ItemHolde
     public static final SlimefunItemStack CHARGER_4 = new SlimefunItemStack(
             "QP_CHARGER_4",
             Material.POLISHED_DEEPSLATE_SLAB,
-            "&7Charger &8IV",
+            "&7Charger &fIV",
             Lore.create(CHARGER_4_SETTINGS,
                     "&7● Charges Quaptic items",
                     "&7● &eRight Click &7an item to insert",
@@ -184,7 +184,10 @@ public class Charger extends ConnectedBlock implements InfoPanelBlock, ItemHolde
     }
     @Override
     public void onInputLinkUpdated(@NotNull final ConnectionGroup group, @NotNull final Location location) {
-        doBurnoutCheck(group, "input");
+        if (doBurnoutCheck(group, "input")) {
+            return;
+        }
+
         final Optional<Link> inputLink = getLink(location, "input");
         onPoweredAnimation(location, settings.isOperational(inputLink));
     }

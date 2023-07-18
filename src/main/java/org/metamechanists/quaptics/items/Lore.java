@@ -243,7 +243,7 @@ public class Lore {
         return "&7" + formatZeroDp(charge) + " &8/ &7" + formatZeroDp(capacity) + CHARGE_SUFFIX;
     }
     public String chargePerUse(final double usage) {
-        return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Charge per use &e" + formatZeroDp(usage) + POWER_SUFFIX;
+        return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Charge per use &e" + formatZeroDp(usage) + CHARGE_SUFFIX;
     }
     public String capacity(final double capacity) {
         return ATTRIBUTE_SYMBOL + CHARGE_SYMBOL + "&7Capacity &e" + formatZeroDp(capacity) + CHARGE_SUFFIX;
