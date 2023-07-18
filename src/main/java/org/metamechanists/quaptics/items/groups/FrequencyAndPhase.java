@@ -37,18 +37,7 @@ import static org.metamechanists.quaptics.implementation.blocks.upgraders.Scatte
 import static org.metamechanists.quaptics.implementation.blocks.upgraders.Scatterer.SCATTERER_2_SETTINGS;
 import static org.metamechanists.quaptics.implementation.blocks.upgraders.Scatterer.SCATTERER_3;
 import static org.metamechanists.quaptics.implementation.blocks.upgraders.Scatterer.SCATTERER_3_SETTINGS;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.DIELECTRIC_3;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.DIELECTRIC_4;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.ENTANGLED_FREQUENCY_CRYSTAL;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.INFUSED_FREQUENCY_CRYSTAL;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.PHASE_CRYSTAL_180;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.RECEIVER_2;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.RECEIVER_3;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.RECEIVER_4;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.TRANSCEIVER_3;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.TRANSMITTER_2;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.TRANSMITTER_3;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.TRANSMITTER_4;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.*;
 
 
 @UtilityClass
