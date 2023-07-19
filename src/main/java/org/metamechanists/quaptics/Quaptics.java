@@ -6,7 +6,6 @@ import lombok.Getter;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.metamechanists.metalib.bstats.bukkit.Metrics;
 import org.metamechanists.quaptics.implementation.blocks.consumers.launchpad.LaunchpadListener;
 import org.metamechanists.quaptics.implementation.burnout.BurnoutManager;
@@ -69,7 +68,7 @@ public final class Quaptics extends JavaPlugin implements SlimefunAddon {
         return this;
     }
     @Override
-    public @Nullable String getBugTrackerURL() {
-        return null;
+    public @NotNull String getBugTrackerURL() {
+        return "https://github.com/metamechanists/Quaptics/issues";
     }
 }
