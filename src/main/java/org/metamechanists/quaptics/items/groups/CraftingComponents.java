@@ -79,8 +79,8 @@ public class CraftingComponents {
     public final SlimefunItemStack TURRET_TARGETING_MECHANISM = new SlimefunItemStack(
             "QP_TURRET_TARGETING_MECHANISM", Material.TRIPWIRE_HOOK, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Turret Targeting Mechanism");
 
-    public final SlimefunItemStack CARBON_STRUCTURE = enchant(new SlimefunItemStack(
-            "QP_CARBON_STRUCTURE", Material.COAL_BLOCK, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Carbon Structure"));
+    public final SlimefunItemStack CARBON_STRUCTURE = new SlimefunItemStack(
+            "QP_CARBON_STRUCTURE", Material.COAL_BLOCK, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Carbon Structure");
 
     public final SlimefunItemStack BLANK_MODULE_CARD = new SlimefunItemStack(
             "QP_BLANK_MODULE_CARD", Material.BLACK_BANNER, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Blank Module Card");
@@ -281,9 +281,9 @@ public class CraftingComponents {
 
 
         new UnplaceableBlock(Groups.CRAFTING_COMPONENTS, CARBON_STRUCTURE, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
-                new ItemStack(Material.COAL_BLOCK), new ItemStack(Material.COAL_BLOCK), new ItemStack(Material.COAL_BLOCK),
-                new ItemStack(Material.COAL_BLOCK), REDSTONE_ALLOY, new ItemStack(Material.COAL_BLOCK),
-                new ItemStack(Material.COAL_BLOCK), new ItemStack(Material.COAL_BLOCK), new ItemStack(Material.COAL_BLOCK),
+                null, CARBON, null,
+                CARBON, REDSTONE_ALLOY, CARBON,
+                null, CARBON, null
         }).register(addon);
 
 

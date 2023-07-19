@@ -32,8 +32,9 @@ import java.util.Optional;
 
 public class Interferometer extends ConnectedBlock implements PowerAnimatedBlock, PowerLossBlock {
     public static final Settings INTERFEROMETER_SETTINGS = Settings.builder()
-            .tier(Tier.ADVANCED)
-            .minPower(900)
+            .tier(Tier.INTERMEDIATE)
+            .maxPowerHidden(true)
+            .minPower(650)
             .powerLoss(0.08)
             .build();
     public static final SlimefunItemStack INTERFEROMETER = new SlimefunItemStack(
@@ -87,10 +88,6 @@ public class Interferometer extends ConnectedBlock implements PowerAnimatedBlock
 
     @Override
     public void onInputLinkUpdated(@NotNull final ConnectionGroup group, @NotNull final Location location) {
-        if (doBurnoutCheck(group, "main")) {
-            return;
-        }
-
         final Optional<Link> mainLink = getLink(location, "main");
         final Optional<Link> auxiliaryLink = getLink(location, "auxiliary");
         final Optional<Link> outputLink = getLink(location, "output");

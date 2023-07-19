@@ -43,7 +43,7 @@ import java.util.Optional;
 
 public class Polariser extends ConnectedBlock implements PowerAnimatedBlock, PowerLossBlock, ItemHolderBlock {
     public static final Settings POLARISER_SETTINGS = Settings.builder()
-            .tier(Tier.ADVANCED)
+            .tier(Tier.INTERMEDIATE)
             .maxPowerHidden(true)
             .minPower(200)
             .powerLoss(0.12)

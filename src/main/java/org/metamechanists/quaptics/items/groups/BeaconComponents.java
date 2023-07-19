@@ -48,15 +48,21 @@ public class BeaconComponents {
         final SlimefunAddon addon = Quaptics.getInstance();
 
         new BeaconController1(Groups.BEACON_COMPONENTS, BEACON_CONTROLLER_1, RecipeType.NULL, new ItemStack[]{
-
+                HARDENED_METAL_INGOT, BLANK_MODULE_CARD, HARDENED_METAL_INGOT,
+                HARDENED_METAL_INGOT, BEACON_COMPUTER, HARDENED_METAL_INGOT,
+                HARDENED_METAL_INGOT, BLANK_MODULE_CARD, HARDENED_METAL_INGOT
         }, BEACON_CONTROLLER_1_SETTINGS).register(addon);
 
         new BeaconController2(Groups.BEACON_COMPONENTS, BEACON_CONTROLLER_2, RecipeType.NULL, new ItemStack[]{
-
+                CARBONADO, BLANK_MODULE_CARD, CARBONADO,
+                INFUSED_FREQUENCY_CRYSTAL, BEACON_CONTROLLER_1, INFUSED_FREQUENCY_CRYSTAL,
+                CARBONADO, BLANK_MODULE_CARD, CARBONADO
         }, BEACON_CONTROLLER_2_SETTINGS).register(addon);
 
         new BeaconController3(Groups.BEACON_COMPONENTS, BEACON_CONTROLLER_3, RecipeType.NULL, new ItemStack[]{
-
+                BLISTERING_INGOT_3, BLANK_MODULE_CARD, BLISTERING_INGOT_3,
+                ENTANGLED_FREQUENCY_CRYSTAL, BEACON_CONTROLLER_2, ENTANGLED_FREQUENCY_CRYSTAL,
+                BLISTERING_INGOT_3, BLANK_MODULE_CARD, BLISTERING_INGOT_3
         }, BEACON_CONTROLLER_3_SETTINGS).register(addon);
 
 
