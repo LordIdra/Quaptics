@@ -34,7 +34,7 @@ import java.util.Optional;
 public class EntanglementMagnet extends ConnectedBlock implements PowerAnimatedBlock {
     public static final Settings ENTANGLEMENT_MAGNET_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
-            .minPower(7)
+            .minPower(180)
             .minFrequency(200)
             .build();
     public static final SlimefunItemStack ENTANGLEMENT_MAGNET = new SlimefunItemStack(

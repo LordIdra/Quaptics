@@ -32,7 +32,8 @@ import java.util.Optional;
 public class InfusionPillar extends ConnectedBlock implements PowerAnimatedBlock {
     public static final Settings INFUSION_PILLAR_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
-            .minPower(7)
+            .minPower(15)
+            .minFrequency(10)
             .build();
     public static final SlimefunItemStack INFUSION_PILLAR = new SlimefunItemStack(
             "QP_INFUSION_PILLAR",

@@ -13,6 +13,10 @@ import org.metamechanists.quaptics.implementation.blocks.consumers.MultiblockCli
 import org.metamechanists.quaptics.implementation.blocks.consumers.launchpad.Launchpad;
 import org.metamechanists.quaptics.implementation.blocks.consumers.turrets.DirectTurret;
 import org.metamechanists.quaptics.implementation.blocks.consumers.turrets.ModulatedTurret;
+import org.metamechanists.quaptics.implementation.multiblocks.entangler.EntanglementContainer;
+import org.metamechanists.quaptics.implementation.multiblocks.entangler.EntanglementMagnet;
+import org.metamechanists.quaptics.implementation.multiblocks.infuser.InfusionContainer;
+import org.metamechanists.quaptics.implementation.multiblocks.infuser.InfusionPillar;
 import org.metamechanists.quaptics.items.Groups;
 
 import static io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems.BIG_CAPACITOR;
@@ -51,6 +55,14 @@ import static org.metamechanists.quaptics.implementation.blocks.consumers.launch
 import static org.metamechanists.quaptics.implementation.blocks.consumers.launchpad.Launchpad.LAUNCHPAD_SETTINGS;
 import static org.metamechanists.quaptics.implementation.blocks.consumers.turrets.DirectTurret.*;
 import static org.metamechanists.quaptics.implementation.blocks.consumers.turrets.ModulatedTurret.*;
+import static org.metamechanists.quaptics.implementation.multiblocks.entangler.EntanglementContainer.ENTANGLEMENT_CONTAINER;
+import static org.metamechanists.quaptics.implementation.multiblocks.entangler.EntanglementContainer.ENTANGLEMENT_CONTAINER_SETTINGS;
+import static org.metamechanists.quaptics.implementation.multiblocks.entangler.EntanglementMagnet.ENTANGLEMENT_MAGNET;
+import static org.metamechanists.quaptics.implementation.multiblocks.entangler.EntanglementMagnet.ENTANGLEMENT_MAGNET_SETTINGS;
+import static org.metamechanists.quaptics.implementation.multiblocks.infuser.InfusionContainer.INFUSION_CONTAINER;
+import static org.metamechanists.quaptics.implementation.multiblocks.infuser.InfusionContainer.INFUSION_CONTAINER_SETTINGS;
+import static org.metamechanists.quaptics.implementation.multiblocks.infuser.InfusionPillar.INFUSION_PILLAR;
+import static org.metamechanists.quaptics.implementation.multiblocks.infuser.InfusionPillar.INFUSION_PILLAR_SETTINGS;
 import static org.metamechanists.quaptics.implementation.tools.raygun.DirectRayGun.RAY_GUN_3;
 import static org.metamechanists.quaptics.implementation.tools.raygun.DirectRayGun.RAY_GUN_4;
 import static org.metamechanists.quaptics.implementation.tools.raygun.ModulatedRayGun.RAY_GUN_1;
@@ -187,5 +199,33 @@ public class Machines {
                 RECEIVER_3, POWER_CRYSTAL, TRANSCEIVER_3,
                 FERROSILICON, FERROSILICON, FERROSILICON
         }, ITEM_PROJECTOR_SETTINGS).register(addon);
+
+
+
+        new InfusionContainer(Groups.MACHINES, INFUSION_CONTAINER, RecipeType.NULL, new ItemStack[]{
+                null, null, null,
+                CARBON_STRUCTURE, null, CARBON_STRUCTURE,
+                CARBON_STRUCTURE, POWER_CRYSTAL, CARBON_STRUCTURE
+        }, INFUSION_CONTAINER_SETTINGS).register(addon);
+
+        new InfusionPillar(Groups.MACHINES, INFUSION_PILLAR, RecipeType.NULL, new ItemStack[]{
+                null, TRANSCEIVER_2, null,
+                RECEIVER_2, ELECTRIC_MOTOR, null,
+                null, CARBON_STRUCTURE, null
+        }, INFUSION_PILLAR_SETTINGS).register(addon);
+
+
+
+        new EntanglementContainer(Groups.MACHINES, ENTANGLEMENT_CONTAINER, RecipeType.NULL, new ItemStack[]{
+                CARBON_STRUCTURE, DIELECTRIC_3, CARBON_STRUCTURE,
+                DIELECTRIC_3, INFUSED_FREQUENCY_CRYSTAL, DIELECTRIC_3,
+                CARBON_STRUCTURE, DIELECTRIC_3, CARBON_STRUCTURE
+        }, ENTANGLEMENT_CONTAINER_SETTINGS).register(addon);
+
+        new EntanglementMagnet(Groups.MACHINES, ENTANGLEMENT_MAGNET, RecipeType.NULL, new ItemStack[]{
+                null, ELECTRO_MAGNET, null,
+                RECEIVER_3, CARBON_STRUCTURE, null,
+                null, ELECTRO_MAGNET, null
+        }, ENTANGLEMENT_MAGNET_SETTINGS).register(addon);
     }
 }
