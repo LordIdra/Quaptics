@@ -78,13 +78,13 @@ public class BeamCreation {
 
 
 
-        new ReactorRing(Groups.BEAM_CREATION, REACTOR_RING, RecipeType.NULL, new ItemStack[]{
+        new ReactorRing(Groups.BEAM_CREATION, REACTOR_RING, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 ELECTRO_MAGNET, DIELECTRIC_4, ELECTRO_MAGNET,
                 ELECTRO_MAGNET, TRANSFORMER_COIL_3, ELECTRO_MAGNET,
                 ELECTRO_MAGNET, DIELECTRIC_4, ELECTRO_MAGNET
         }, REACTOR_RING_SETTINGS).register(addon);
 
-        new ReactorController(Groups.BEAM_CREATION, REACTOR_CONTROLLER, RecipeType.NULL, new ItemStack[]{
+        new ReactorController(Groups.BEAM_CREATION, REACTOR_CONTROLLER, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 null, BEACON_MATRIX, null,
                 BEACON_MATRIX, NETHER_STAR_REACTOR, BEACON_MATRIX,
                 null, BEACON_MATRIX, null

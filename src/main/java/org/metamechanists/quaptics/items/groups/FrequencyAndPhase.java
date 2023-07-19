@@ -45,19 +45,19 @@ public class FrequencyAndPhase {
     public void initialize() {
         final SlimefunAddon addon = Quaptics.getInstance();
 
-        new Repeater(Groups.FREQUENCY_AND_PHASE, REPEATER_1, RecipeType.NULL, new ItemStack[]{
+        new Repeater(Groups.FREQUENCY_AND_PHASE, REPEATER_1, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 new ItemStack(Material.GLASS), new ItemStack(Material.GLASS), new ItemStack(Material.GLASS),
                 RECEIVER_2, new ItemStack(Material.REPEATER), TRANSMITTER_2,
                 FERROSILICON, new ItemStack(Material.REDSTONE_BLOCK), FERROSILICON
         }, REPEATER_1_SETTINGS).register(addon);
 
-        new Repeater(Groups.FREQUENCY_AND_PHASE, REPEATER_2, RecipeType.NULL, new ItemStack[]{
+        new Repeater(Groups.FREQUENCY_AND_PHASE, REPEATER_2, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 new ItemStack(Material.GLASS), new ItemStack(Material.GLASS), new ItemStack(Material.GLASS),
                 RECEIVER_3, REPEATER_1, TRANSMITTER_3,
                 HARDENED_METAL_INGOT, INFUSED_FREQUENCY_CRYSTAL, HARDENED_METAL_INGOT
         }, REPEATER_2_SETTINGS).register(addon);
 
-        new Repeater(Groups.FREQUENCY_AND_PHASE, REPEATER_3, RecipeType.NULL, new ItemStack[]{
+        new Repeater(Groups.FREQUENCY_AND_PHASE, REPEATER_3, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 new ItemStack(Material.GLASS), new ItemStack(Material.GLASS), new ItemStack(Material.GLASS),
                 RECEIVER_4, REPEATER_2, TRANSMITTER_4,
                 URANIUM, ENTANGLED_FREQUENCY_CRYSTAL, URANIUM
@@ -65,19 +65,19 @@ public class FrequencyAndPhase {
 
 
 
-        new Scatterer(Groups.FREQUENCY_AND_PHASE, SCATTERER_1, RecipeType.NULL, new ItemStack[]{
+        new Scatterer(Groups.FREQUENCY_AND_PHASE, SCATTERER_1, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 new ItemStack(Material.GLASS), new ItemStack(Material.GLASS), new ItemStack(Material.GLASS),
                 RECEIVER_2, new ItemStack(Material.COMPARATOR), TRANSMITTER_2,
                 FERROSILICON, new ItemStack(Material.REDSTONE_BLOCK), FERROSILICON
         }, SCATTERER_1_SETTINGS).register(addon);
 
-        new Scatterer(Groups.FREQUENCY_AND_PHASE, SCATTERER_2, RecipeType.NULL, new ItemStack[]{
+        new Scatterer(Groups.FREQUENCY_AND_PHASE, SCATTERER_2, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 new ItemStack(Material.GLASS), new ItemStack(Material.GLASS), new ItemStack(Material.GLASS),
                 RECEIVER_3, SCATTERER_1, TRANSMITTER_3,
                 HARDENED_METAL_INGOT, INFUSED_FREQUENCY_CRYSTAL, HARDENED_METAL_INGOT
         }, SCATTERER_2_SETTINGS).register(addon);
 
-        new Scatterer(Groups.FREQUENCY_AND_PHASE, SCATTERER_3, RecipeType.NULL, new ItemStack[]{
+        new Scatterer(Groups.FREQUENCY_AND_PHASE, SCATTERER_3, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 new ItemStack(Material.GLASS), new ItemStack(Material.GLASS), new ItemStack(Material.GLASS),
                 RECEIVER_4, SCATTERER_2, TRANSMITTER_4,
                 URANIUM, ENTANGLED_FREQUENCY_CRYSTAL, URANIUM
@@ -85,7 +85,7 @@ public class FrequencyAndPhase {
 
 
 
-        new Polariser(Groups.FREQUENCY_AND_PHASE, POLARISER, RecipeType.NULL, new ItemStack[]{
+        new Polariser(Groups.FREQUENCY_AND_PHASE, POLARISER, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 REINFORCED_ALLOY_INGOT, TRANSCEIVER_3, REINFORCED_ALLOY_INGOT,
                 RECEIVER_3, null, TRANSMITTER_3,
                 REINFORCED_ALLOY_INGOT, TRANSCEIVER_3, REINFORCED_ALLOY_INGOT
@@ -93,7 +93,7 @@ public class FrequencyAndPhase {
 
 
 
-        new Interferometer(Groups.FREQUENCY_AND_PHASE, INTERFEROMETER, RecipeType.NULL, new ItemStack[]{
+        new Interferometer(Groups.FREQUENCY_AND_PHASE, INTERFEROMETER, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 REINFORCED_ALLOY_INGOT, POLARISER, REINFORCED_ALLOY_INGOT,
                 RECEIVER_3, POLARISER, TRANSMITTER_3,
                 REINFORCED_ALLOY_INGOT, POLARISER, REINFORCED_ALLOY_INGOT
@@ -101,13 +101,13 @@ public class FrequencyAndPhase {
 
 
 
-        new DiffractionGrating(Groups.FREQUENCY_AND_PHASE, DIFFRACTION_GRATING_1, RecipeType.NULL, new ItemStack[]{
+        new DiffractionGrating(Groups.FREQUENCY_AND_PHASE, DIFFRACTION_GRATING_1, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 DIELECTRIC_3, PHASE_CRYSTAL_180, DIELECTRIC_3,
                 RECEIVER_3, POLARISER, TRANSMITTER_3,
                 DIELECTRIC_3, ENTANGLED_FREQUENCY_CRYSTAL, DIELECTRIC_3
         }, DIFFRACTION_GRATING_1_SETTINGS).register(addon);
 
-        new DiffractionGrating(Groups.FREQUENCY_AND_PHASE, DIFFRACTION_GRATING_2, RecipeType.NULL, new ItemStack[]{
+        new DiffractionGrating(Groups.FREQUENCY_AND_PHASE, DIFFRACTION_GRATING_2, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 DIELECTRIC_4, PHASE_CRYSTAL_180, DIELECTRIC_4,
                 RECEIVER_4, DIFFRACTION_GRATING_1, TRANSMITTER_4,
                 DIELECTRIC_4, ENTANGLED_FREQUENCY_CRYSTAL, DIELECTRIC_4

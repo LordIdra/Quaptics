@@ -92,49 +92,49 @@ public class Machines {
     public void initialize() {
         final SlimefunAddon addon = Quaptics.getInstance();
 
-        new ModulatedTurret(Groups.MACHINES, TURRET_1_HOSTILE, RecipeType.NULL, new ItemStack[]{
+        new ModulatedTurret(Groups.MACHINES, TURRET_1_HOSTILE, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 null, new ItemStack(Material.GUNPOWDER), null,
                 RECEIVER_1, RAY_GUN_1, TURRET_BARREL,
                 TURRET_BASE, TURRET_TARGETING_MECHANISM, TURRET_BASE
         }, TURRET_1_HOSTILE_SETTINGS).register(addon);
 
-        new ModulatedTurret(Groups.MACHINES, TURRET_1_PASSIVE, RecipeType.NULL, new ItemStack[]{
+        new ModulatedTurret(Groups.MACHINES, TURRET_1_PASSIVE, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 null, new ItemStack(Material.WHEAT), null,
                 RECEIVER_1, RAY_GUN_1, TURRET_BARREL,
                 TURRET_BASE, TURRET_TARGETING_MECHANISM, TURRET_BASE
         }, TURRET_1_PASSIVE_SETTINGS).register(addon);
 
-        new ModulatedTurret(Groups.MACHINES, TURRET_2_HOSTILE, RecipeType.NULL, new ItemStack[]{
+        new ModulatedTurret(Groups.MACHINES, TURRET_2_HOSTILE, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 null, new ItemStack(Material.GUNPOWDER), null,
                 RECEIVER_2, RAY_GUN_2, TURRET_BARREL,
                 TURRET_BASE, TURRET_TARGETING_MECHANISM, TURRET_BASE
         }, TURRET_2_HOSTILE_SETTINGS).register(addon);
 
-        new ModulatedTurret(Groups.MACHINES, TURRET_2_PASSIVE, RecipeType.NULL, new ItemStack[]{
+        new ModulatedTurret(Groups.MACHINES, TURRET_2_PASSIVE, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 null, new ItemStack(Material.WHEAT), null,
                 RECEIVER_2, RAY_GUN_2, TURRET_BARREL,
                 TURRET_BASE, TURRET_TARGETING_MECHANISM, TURRET_BASE
         }, TURRET_2_PASSIVE_SETTINGS).register(addon);
 
-        new DirectTurret(Groups.MACHINES, TURRET_3_HOSTILE, RecipeType.NULL, new ItemStack[]{
+        new DirectTurret(Groups.MACHINES, TURRET_3_HOSTILE, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 null, new ItemStack(Material.GUNPOWDER), null,
                 RECEIVER_3, RAY_GUN_3, TURRET_BARREL,
                 TURRET_BASE, TURRET_TARGETING_MECHANISM, TURRET_BASE
         }, TURRET_3_HOSTILE_SETTINGS).register(addon);
 
-        new DirectTurret(Groups.MACHINES, TURRET_3_PASSIVE, RecipeType.NULL, new ItemStack[]{
+        new DirectTurret(Groups.MACHINES, TURRET_3_PASSIVE, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 null, new ItemStack(Material.WHEAT), null,
                 RECEIVER_3, RAY_GUN_3, TURRET_BARREL,
                 TURRET_BASE, TURRET_TARGETING_MECHANISM, TURRET_BASE
         }, TURRET_3_PASSIVE_SETTINGS).register(addon);
 
-        new DirectTurret(Groups.MACHINES, TURRET_4_HOSTILE, RecipeType.NULL, new ItemStack[]{
+        new DirectTurret(Groups.MACHINES, TURRET_4_HOSTILE, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 null, new ItemStack(Material.GUNPOWDER), null,
                 RECEIVER_4, RAY_GUN_4, TURRET_BARREL,
                 TURRET_BASE, TURRET_TARGETING_MECHANISM, TURRET_BASE
         }, TURRET_4_HOSTILE_SETTINGS).register(addon);
 
-        new DirectTurret(Groups.MACHINES, TURRET_4_PASSIVE, RecipeType.NULL, new ItemStack[]{
+        new DirectTurret(Groups.MACHINES, TURRET_4_PASSIVE, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 null, new ItemStack(Material.WHEAT), null,
                 RECEIVER_4, RAY_GUN_4, TURRET_BARREL,
                 TURRET_BASE, TURRET_TARGETING_MECHANISM, TURRET_BASE
@@ -142,26 +142,26 @@ public class Machines {
 
 
 
-        new Charger(Groups.MACHINES, CHARGER_1, RecipeType.NULL, new ItemStack[]{
+        new Charger(Groups.MACHINES, CHARGER_1, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 new ItemStack(Material.IRON_INGOT), TRANSCEIVER_1, new ItemStack(Material.IRON_INGOT),
                 RECEIVER_1, null, DIELECTRIC_1,
                 new ItemStack(Material.IRON_INGOT), TRANSCEIVER_1, new ItemStack(Material.IRON_INGOT)
 
         }, CHARGER_1_SETTINGS).register(addon);
 
-        new Charger(Groups.MACHINES, CHARGER_2, RecipeType.NULL, new ItemStack[]{
+        new Charger(Groups.MACHINES, CHARGER_2, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 DURALUMIN_INGOT, TRANSCEIVER_2, DURALUMIN_INGOT,
                 RECEIVER_2, null, SMALL_CAPACITOR,
                 DURALUMIN_INGOT, TRANSCEIVER_2, DURALUMIN_INGOT
         }, CHARGER_2_SETTINGS).register(addon);
 
-        new Charger(Groups.MACHINES, CHARGER_3, RecipeType.NULL, new ItemStack[]{
+        new Charger(Groups.MACHINES, CHARGER_3, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 REDSTONE_ALLOY, TRANSCEIVER_3, REDSTONE_ALLOY,
                 RECEIVER_3, null, BIG_CAPACITOR,
                 REDSTONE_ALLOY, TRANSCEIVER_3, REDSTONE_ALLOY
         }, CHARGER_3_SETTINGS).register(addon);
 
-        new Charger(Groups.MACHINES, CHARGER_4, RecipeType.NULL, new ItemStack[]{
+        new Charger(Groups.MACHINES, CHARGER_4, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 REINFORCED_ALLOY_INGOT, TRANSCEIVER_4, REINFORCED_ALLOY_INGOT,
                 RECEIVER_4, null, CARBONADO_EDGED_CAPACITOR,
                 REINFORCED_ALLOY_INGOT, TRANSCEIVER_4, REINFORCED_ALLOY_INGOT
@@ -169,19 +169,19 @@ public class Machines {
 
 
 
-        new MultiblockClicker(Groups.MACHINES, MULTIBLOCK_CLICKER_1, RecipeType.NULL, new ItemStack[]{
+        new MultiblockClicker(Groups.MACHINES, MULTIBLOCK_CLICKER_1, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 new ItemStack(Material.COPPER_BLOCK), new ItemStack(Material.COPPER_BLOCK), new ItemStack(Material.COPPER_BLOCK),
                 RECEIVER_2, ELECTRIC_MOTOR, new ItemStack(Material.DISPENSER),
                 new ItemStack(Material.COPPER_BLOCK), new ItemStack(Material.COPPER_BLOCK), new ItemStack(Material.COPPER_BLOCK)
         }, MULTIBLOCK_CLICKER_1_SETTINGS).register(addon);
 
-        new MultiblockClicker(Groups.MACHINES, MULTIBLOCK_CLICKER_2, RecipeType.NULL, new ItemStack[]{
+        new MultiblockClicker(Groups.MACHINES, MULTIBLOCK_CLICKER_2, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 new ItemStack(Material.COPPER_BLOCK), new ItemStack(Material.COPPER_BLOCK), new ItemStack(Material.COPPER_BLOCK),
                 RECEIVER_2, ELECTRIC_MOTOR, MULTIBLOCK_CLICKER_1,
                 new ItemStack(Material.COPPER_BLOCK), new ItemStack(Material.COPPER_BLOCK), new ItemStack(Material.COPPER_BLOCK)
         }, MULTIBLOCK_CLICKER_2_SETTINGS).register(addon);
 
-        new MultiblockClicker(Groups.MACHINES, MULTIBLOCK_CLICKER_3, RecipeType.NULL, new ItemStack[]{
+        new MultiblockClicker(Groups.MACHINES, MULTIBLOCK_CLICKER_3, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 HARDENED_METAL_INGOT, new ItemStack(Material.COPPER_BLOCK), HARDENED_METAL_INGOT,
                 RECEIVER_3, ELECTRIC_MOTOR, MULTIBLOCK_CLICKER_2,
                 HARDENED_METAL_INGOT, new ItemStack(Material.COPPER_BLOCK), HARDENED_METAL_INGOT
@@ -189,13 +189,13 @@ public class Machines {
 
 
 
-        new DataStripper(Groups.MACHINES, DATA_STRIPPER_1, RecipeType.NULL, new ItemStack[]{
+        new DataStripper(Groups.MACHINES, DATA_STRIPPER_1, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 new ItemStack(Material.IRON_BLOCK), ELECTRIC_MOTOR, new ItemStack(Material.IRON_BLOCK),
                 RECEIVER_2, null, new ItemStack(Material.IRON_BLOCK),
                 new ItemStack(Material.IRON_BLOCK), ELECTRIC_MOTOR, new ItemStack(Material.IRON_BLOCK)
         }, DATA_STRIPPER_1_SETTINGS).register(addon);
 
-        new DataStripper(Groups.MACHINES, DATA_STRIPPER_2, RecipeType.NULL, new ItemStack[]{
+        new DataStripper(Groups.MACHINES, DATA_STRIPPER_2, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 new ItemStack(Material.IRON_BLOCK), ELECTRIC_MOTOR, new ItemStack(Material.IRON_BLOCK),
                 RECEIVER_3, DATA_STRIPPER_1, DIELECTRIC_3,
                 new ItemStack(Material.IRON_BLOCK), ELECTRIC_MOTOR, new ItemStack(Material.IRON_BLOCK)
@@ -203,7 +203,7 @@ public class Machines {
 
 
 
-        new Launchpad(Groups.MACHINES, LAUNCHPAD, RecipeType.NULL, new ItemStack[]{
+        new Launchpad(Groups.MACHINES, LAUNCHPAD, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 ELECTRO_MAGNET, ELECTRO_MAGNET, ELECTRO_MAGNET,
                 RECEIVER_2, new ItemStack(Material.HEAVY_WEIGHTED_PRESSURE_PLATE), TRANSFORMER_COIL_1,
                 new ItemStack(Material.IRON_INGOT), new ItemStack(Material.IRON_INGOT), new ItemStack(Material.IRON_INGOT)
@@ -211,7 +211,7 @@ public class Machines {
 
 
 
-        new ItemProjector(Groups.MACHINES, ITEM_PROJECTOR, RecipeType.NULL, new ItemStack[]{
+        new ItemProjector(Groups.MACHINES, ITEM_PROJECTOR, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 null, HOLOGRAM_PROJECTOR, null,
                 RECEIVER_3, POWER_CRYSTAL, TRANSCEIVER_3,
                 FERROSILICON, FERROSILICON, FERROSILICON
@@ -219,7 +219,7 @@ public class Machines {
 
 
 
-        new CrystalRefiner(Groups.MACHINES, CRYSTAL_REFINER, RecipeType.NULL, new ItemStack[]{
+        new CrystalRefiner(Groups.MACHINES, CRYSTAL_REFINER, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 null, ELECTRO_MAGNET, null,
                 RECEIVER_2, new ItemStack(Material.WATER_BUCKET), TRANSCEIVER_2,
                 REINFORCED_ALLOY_INGOT, new ItemStack(Material.CAULDRON), REINFORCED_ALLOY_INGOT
@@ -227,13 +227,13 @@ public class Machines {
 
 
 
-        new InfusionContainer(Groups.MACHINES, INFUSION_CONTAINER, RecipeType.NULL, new ItemStack[]{
+        new InfusionContainer(Groups.MACHINES, INFUSION_CONTAINER, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 null, null, null,
                 CARBON_STRUCTURE, null, CARBON_STRUCTURE,
                 CARBON_STRUCTURE, POWER_CRYSTAL, CARBON_STRUCTURE
         }, INFUSION_CONTAINER_SETTINGS).register(addon);
 
-        new InfusionPillar(Groups.MACHINES, INFUSION_PILLAR, RecipeType.NULL, new ItemStack[]{
+        new InfusionPillar(Groups.MACHINES, INFUSION_PILLAR, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 null, TRANSCEIVER_2, null,
                 RECEIVER_2, ELECTRIC_MOTOR, null,
                 null, CARBON_STRUCTURE, null
@@ -241,13 +241,13 @@ public class Machines {
 
 
 
-        new EntanglementContainer(Groups.MACHINES, ENTANGLEMENT_CONTAINER, RecipeType.NULL, new ItemStack[]{
+        new EntanglementContainer(Groups.MACHINES, ENTANGLEMENT_CONTAINER, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 CARBON_STRUCTURE, DIELECTRIC_3, CARBON_STRUCTURE,
                 DIELECTRIC_3, INFUSED_FREQUENCY_CRYSTAL, DIELECTRIC_3,
                 CARBON_STRUCTURE, DIELECTRIC_3, CARBON_STRUCTURE
         }, ENTANGLEMENT_CONTAINER_SETTINGS).register(addon);
 
-        new EntanglementMagnet(Groups.MACHINES, ENTANGLEMENT_MAGNET, RecipeType.NULL, new ItemStack[]{
+        new EntanglementMagnet(Groups.MACHINES, ENTANGLEMENT_MAGNET, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 null, ELECTRO_MAGNET, null,
                 RECEIVER_3, CARBON_STRUCTURE, null,
                 null, ELECTRO_MAGNET, null
