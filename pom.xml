@@ -37,6 +37,10 @@
                             <pattern>dev.sefiraat.sefilib</pattern>
                             <shadedPattern>org.metamechanists.quaptics.sefilib</shadedPattern>
                         </relocation>
+                        <relocation>
+                            <pattern>org.metamechanists.metalib</pattern>
+                            <shadedPattern>org.metamechanists.quaptics.metalib</shadedPattern>
+                        </relocation>
                     </relocations>
                     <filters>
                         <filter>
