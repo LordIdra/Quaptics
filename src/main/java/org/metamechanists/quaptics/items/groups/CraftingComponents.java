@@ -22,19 +22,6 @@ import static io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems.*;
 
 @UtilityClass
 public class CraftingComponents {
-    public final SlimefunItemStack PHASE_CRYSTAL_1 = enchant(new SlimefunItemStack(
-            "QP_PHASE_CRYSTAL_1", Material.QUARTZ, "&7Phase Crystal", Lore.phaseChange(1)));
-    public final SlimefunItemStack PHASE_CRYSTAL_5 = enchant(new SlimefunItemStack(
-            "QP_PHASE_CRYSTAL_5", Material.QUARTZ, "&7Phase Crystal", Lore.phaseChange(5)));
-    public final SlimefunItemStack PHASE_CRYSTAL_15 = enchant(new SlimefunItemStack(
-            "QP_PHASE_CRYSTAL_15", Material.QUARTZ, "&7Phase Crystal", Lore.phaseChange(15)));
-    public final SlimefunItemStack PHASE_CRYSTAL_45 = enchant(new SlimefunItemStack(
-            "QP_PHASE_CRYSTAL_45", Material.QUARTZ, "&7Phase Crystal", Lore.phaseChange(45)));
-    public final SlimefunItemStack PHASE_CRYSTAL_90 = enchant(new SlimefunItemStack(
-            "QP_PHASE_CRYSTAL_90", Material.QUARTZ, "&7Phase Crystal", Lore.phaseChange(90)));
-    public final SlimefunItemStack PHASE_CRYSTAL_180 = enchant(new SlimefunItemStack(
-            "QP_PHASE_CRYSTAL_180", Material.QUARTZ, "&7Phase Crystal", Lore.phaseChange(180)));
-
     public final SlimefunItemStack TRANSMITTER_1 = new SlimefunItemStack(
             "QP_TRANSMITTER_1", Material.LIME_STAINED_GLASS_PANE, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Transmitter &7I");
     public final SlimefunItemStack TRANSMITTER_2 = new SlimefunItemStack(
@@ -85,17 +72,40 @@ public class CraftingComponents {
     public final SlimefunItemStack ENERGY_CONCENTRATION_ELEMENT_3 = new SlimefunItemStack(
             "QP_ENERGY_CONCENTRATION_ELEMENT_3", Material.VERDANT_FROGLIGHT, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Energy Concentration Element &7III");
 
-    public final SlimefunItemStack INFUSED_FREQUENCY_CRYSTAL = new SlimefunItemStack(
-            "QP_INFUSED_FREQUENCY_CRYSTAL", Material.PRISMARINE_CRYSTALS, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Infused Frequency Crystal");
-    public final SlimefunItemStack ENTANGLED_FREQUENCY_CRYSTAL = enchant(new SlimefunItemStack(
-            "QP_ENTANGLED_FREQUENCY_CRYSTAL", Material.PRISMARINE_CRYSTALS, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Entangled Frequency Crystal"));
-
     public final SlimefunItemStack TURRET_BASE = new SlimefunItemStack(
             "QP_TURRET_BASE", Material.SMOOTH_STONE_SLAB, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Turret Base");
     public final SlimefunItemStack TURRET_BARREL = new SlimefunItemStack(
             "QP_TURRET_BARREL", Material.GRAY_CONCRETE, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Turret Barrel");
     public final SlimefunItemStack TURRET_TARGETING_MECHANISM = new SlimefunItemStack(
             "QP_TURRET_TARGETING_MECHANISM", Material.TRIPWIRE_HOOK, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Turret Targeting Mechanism");
+
+    public final SlimefunItemStack CARBON_STRUCTURE = enchant(new SlimefunItemStack(
+            "QP_CARBON_STRUCTURE", Material.COAL_BLOCK, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Carbon Structure"));
+
+    public final SlimefunItemStack BLANK_MODULE_CARD = new SlimefunItemStack(
+            "QP_BLANK_MODULE_CARD", Material.BLACK_BANNER, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Blank Module Card");
+    public final SlimefunItemStack INFUSED_MODULE_CARD = new SlimefunItemStack(
+            "QP_INFUSED_MODULE_CARD", Material.GRAY_BANNER, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Infused Module Card");
+    public final SlimefunItemStack ENTANGLED_MODULE_CARD = enchant(new SlimefunItemStack(
+            "QP_ENTANGLED_MODULE_CARD", Material.GRAY_BANNER, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Entangled Module Card"));
+
+    public final SlimefunItemStack INFUSED_FREQUENCY_CRYSTAL = new SlimefunItemStack(
+            "QP_INFUSED_FREQUENCY_CRYSTAL", Material.PRISMARINE_CRYSTALS, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Infused Frequency Crystal");
+    public final SlimefunItemStack ENTANGLED_FREQUENCY_CRYSTAL = enchant(new SlimefunItemStack(
+            "QP_ENTANGLED_FREQUENCY_CRYSTAL", Material.PRISMARINE_CRYSTALS, Colors.CRAFTING_COMPONENTS.getFormattedColor() + "Entangled Frequency Crystal"));
+
+    public final SlimefunItemStack PHASE_CRYSTAL_1 = enchant(new SlimefunItemStack(
+            "QP_PHASE_CRYSTAL_1", Material.QUARTZ, "&7Phase Crystal", Lore.phaseChange(1)));
+    public final SlimefunItemStack PHASE_CRYSTAL_5 = enchant(new SlimefunItemStack(
+            "QP_PHASE_CRYSTAL_5", Material.QUARTZ, "&7Phase Crystal", Lore.phaseChange(5)));
+    public final SlimefunItemStack PHASE_CRYSTAL_15 = enchant(new SlimefunItemStack(
+            "QP_PHASE_CRYSTAL_15", Material.QUARTZ, "&7Phase Crystal", Lore.phaseChange(15)));
+    public final SlimefunItemStack PHASE_CRYSTAL_45 = enchant(new SlimefunItemStack(
+            "QP_PHASE_CRYSTAL_45", Material.QUARTZ, "&7Phase Crystal", Lore.phaseChange(45)));
+    public final SlimefunItemStack PHASE_CRYSTAL_90 = enchant(new SlimefunItemStack(
+            "QP_PHASE_CRYSTAL_90", Material.QUARTZ, "&7Phase Crystal", Lore.phaseChange(90)));
+    public final SlimefunItemStack PHASE_CRYSTAL_180 = enchant(new SlimefunItemStack(
+            "QP_PHASE_CRYSTAL_180", Material.QUARTZ, "&7Phase Crystal", Lore.phaseChange(180)));
 
     private @NotNull SlimefunItemStack enchant(final @NotNull SlimefunItemStack itemStack) {
         itemStack.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 1);
@@ -191,21 +201,21 @@ public class CraftingComponents {
         }).register(addon);
 
         new UnplaceableBlock(Groups.CRAFTING_COMPONENTS, DIELECTRIC_2, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
-                null, SYNTHETIC_EMERALD, null,
-                SYNTHETIC_EMERALD, DIELECTRIC_1, SYNTHETIC_EMERALD,
-                null, SYNTHETIC_EMERALD, null
+                null, null, null,
+                DIELECTRIC_1, SYNTHETIC_EMERALD, DIELECTRIC_1,
+                null, null, null
         }).register(addon);
 
         new UnplaceableBlock(Groups.CRAFTING_COMPONENTS, DIELECTRIC_3, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
-                null, URANIUM, null,
-                URANIUM, DIELECTRIC_2, URANIUM,
-                null, URANIUM, null
+                null, null, null,
+                DIELECTRIC_2, URANIUM, DIELECTRIC_2,
+                null, null, null
         }).register(addon);
 
         new UnplaceableBlock(Groups.CRAFTING_COMPONENTS, DIELECTRIC_4, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
-                null, BLISTERING_INGOT_3, null,
-                BLISTERING_INGOT_3, DIELECTRIC_3, BLISTERING_INGOT_3,
-                null, BLISTERING_INGOT_3, null
+                null, null, null,
+                DIELECTRIC_3, BLISTERING_INGOT_3, DIELECTRIC_3,
+                null, null, null
         }).register(addon);
 
 
@@ -270,6 +280,34 @@ public class CraftingComponents {
 
 
 
+        new UnplaceableBlock(Groups.CRAFTING_COMPONENTS, CARBON_STRUCTURE, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
+                new ItemStack(Material.COAL_BLOCK), new ItemStack(Material.COAL_BLOCK), new ItemStack(Material.COAL_BLOCK),
+                new ItemStack(Material.COAL_BLOCK), REDSTONE_ALLOY, new ItemStack(Material.COAL_BLOCK),
+                new ItemStack(Material.COAL_BLOCK), new ItemStack(Material.COAL_BLOCK), new ItemStack(Material.COAL_BLOCK),
+        }).register(addon);
+
+
+
+        new SlimefunItem(Groups.CRAFTING_COMPONENTS, BLANK_MODULE_CARD, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
+                new ItemStack(Material.COPPER_BLOCK), TRANSCEIVER_3, new ItemStack(Material.COPPER_BLOCK),
+                TRANSCEIVER_3, ENERGY_CONCENTRATION_ELEMENT_3, TRANSCEIVER_3,
+                new ItemStack(Material.COPPER_BLOCK), TRANSCEIVER_3, new ItemStack(Material.COPPER_BLOCK)
+        }).register(addon);
+
+        new SlimefunItem(Groups.CRAFTING_COMPONENTS, INFUSED_MODULE_CARD, RecipeTypes.RECIPE_INFUSION, new ItemStack[]{
+                null, null, null,
+                null, BLANK_MODULE_CARD, null,
+                null, null, null
+        }).register(addon);
+
+        new SlimefunItem(Groups.CRAFTING_COMPONENTS, ENTANGLED_MODULE_CARD, RecipeTypes.RECIPE_INFUSION, new ItemStack[]{
+                null, null, null,
+                null, INFUSED_MODULE_CARD, null,
+                null, null, null
+        }).register(addon);
+
+
+
         new SlimefunItem(Groups.CRAFTING_COMPONENTS, INFUSED_FREQUENCY_CRYSTAL, RecipeTypes.RECIPE_INFUSION, new ItemStack[]{
                 null, null, null,
                 null, new ItemStack(Material.QUARTZ), null,
@@ -290,27 +328,33 @@ public class CraftingComponents {
                 null, null, null
         }).register(addon);
 
-        new SlimefunItem(Groups.CRAFTING_COMPONENTS, PHASE_CRYSTAL_5, RecipeTypes.RECIPE_INFUSION, new ItemStack[]{
+        new SlimefunItem(Groups.CRAFTING_COMPONENTS, PHASE_CRYSTAL_5, RecipeTypes.RECIPE_REFINING, new ItemStack[]{
                 null, null, null,
                 null, PHASE_CRYSTAL_1, null,
                 null, null, null
         }).register(addon);
 
-        new SlimefunItem(Groups.CRAFTING_COMPONENTS, PHASE_CRYSTAL_15, RecipeTypes.RECIPE_INFUSION, new ItemStack[]{
+        new SlimefunItem(Groups.CRAFTING_COMPONENTS, PHASE_CRYSTAL_15, RecipeTypes.RECIPE_REFINING, new ItemStack[]{
                 null, null, null,
                 null, PHASE_CRYSTAL_5, null,
                 null, null, null
         }).register(addon);
 
-        new SlimefunItem(Groups.CRAFTING_COMPONENTS, PHASE_CRYSTAL_45, RecipeTypes.RECIPE_INFUSION, new ItemStack[]{
+        new SlimefunItem(Groups.CRAFTING_COMPONENTS, PHASE_CRYSTAL_45, RecipeTypes.RECIPE_REFINING, new ItemStack[]{
                 null, null, null,
                 null, PHASE_CRYSTAL_15, null,
                 null, null, null
         }).register(addon);
 
-        new SlimefunItem(Groups.CRAFTING_COMPONENTS, PHASE_CRYSTAL_90, RecipeTypes.RECIPE_INFUSION, new ItemStack[]{
+        new SlimefunItem(Groups.CRAFTING_COMPONENTS, PHASE_CRYSTAL_90, RecipeTypes.RECIPE_REFINING, new ItemStack[]{
                 null, null, null,
                 null, PHASE_CRYSTAL_45, null,
+                null, null, null
+        }).register(addon);
+
+        new SlimefunItem(Groups.CRAFTING_COMPONENTS, PHASE_CRYSTAL_180, RecipeTypes.RECIPE_REFINING, new ItemStack[]{
+                null, null, null,
+                null, PHASE_CRYSTAL_90, null,
                 null, null, null
         }).register(addon);
     }

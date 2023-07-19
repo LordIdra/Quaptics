@@ -64,19 +64,19 @@ public class Scatterer extends ConnectedBlock implements PowerAnimatedBlock, Pow
 
     public static final SlimefunItemStack SCATTERER_1 = new SlimefunItemStack(
             "QP_SCATTERER_1",
-            Material.PINK_STAINED_GLASS,
+            Material.CYAN_STAINED_GLASS,
             "&cScatterer &4I",
             Lore.create(SCATTERER_1_SETTINGS,
                     "&7● Increases the frequency of a quaptic ray"));
     public static final SlimefunItemStack SCATTERER_2 = new SlimefunItemStack(
             "QP_SCATTERER_2",
-            Material.PINK_STAINED_GLASS,
+            Material.CYAN_STAINED_GLASS,
             "&cScatterer &4II",
             Lore.create(SCATTERER_2_SETTINGS,
                     "&7● Increases the frequency of a quaptic ray"));
     public static final SlimefunItemStack SCATTERER_3 = new SlimefunItemStack(
             "QP_SCATTERER_3",
-            Material.PINK_STAINED_GLASS,
+            Material.CYAN_STAINED_GLASS,
             "&cScatterer &4III",
             Lore.create(SCATTERER_3_SETTINGS,
                     "&7● Increases the frequency of a quaptic ray"));
