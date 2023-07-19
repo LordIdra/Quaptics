@@ -38,9 +38,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import static org.metamechanists.quaptics.implementation.multiblocks.infuser.InfusionPillar.INFUSION_PILLAR;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.BLANK_MODULE_CARD;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.INFUSED_FREQUENCY_CRYSTAL;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.INFUSED_MODULE_CARD;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.*;
 
 
 public class InfusionContainer extends ConnectedBlock implements ItemHolderBlock, ComplexMultiblock, ItemProcessor {

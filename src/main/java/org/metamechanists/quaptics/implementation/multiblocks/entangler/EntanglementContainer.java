@@ -38,10 +38,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import static org.metamechanists.quaptics.implementation.multiblocks.entangler.EntanglementMagnet.ENTANGLEMENT_MAGNET;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.ENTANGLED_FREQUENCY_CRYSTAL;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.ENTANGLED_MODULE_CARD;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.INFUSED_FREQUENCY_CRYSTAL;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.INFUSED_MODULE_CARD;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.*;
 
 
 public class EntanglementContainer extends ConnectedBlock implements ItemHolderBlock, ComplexMultiblock, ItemProcessor {
