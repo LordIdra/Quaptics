@@ -221,21 +221,21 @@ public class CraftingComponents {
 
 
         new UnplaceableBlock(Groups.CRAFTING_COMPONENTS, TRANSFORMER_COIL_1, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
-                new ItemStack(Material.TERRACOTTA), new ItemStack(Material.TERRACOTTA), new ItemStack(Material.TERRACOTTA),
                 new ItemStack(Material.TERRACOTTA), GOLD_24K, new ItemStack(Material.TERRACOTTA),
+                new ItemStack(Material.TERRACOTTA), null, new ItemStack(Material.TERRACOTTA),
                 new ItemStack(Material.TERRACOTTA), new ItemStack(Material.TERRACOTTA), new ItemStack(Material.TERRACOTTA)
         }).register(addon);
 
         new UnplaceableBlock(Groups.CRAFTING_COMPONENTS, TRANSFORMER_COIL_2, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
-                new ItemStack(Material.TERRACOTTA), TRANSFORMER_COIL_1, new ItemStack(Material.TERRACOTTA),
                 new ItemStack(Material.TERRACOTTA), GOLD_24K_BLOCK, new ItemStack(Material.TERRACOTTA),
-                new ItemStack(Material.TERRACOTTA), TRANSFORMER_COIL_1, new ItemStack(Material.TERRACOTTA)
+                new ItemStack(Material.TERRACOTTA), TRANSFORMER_COIL_1, GOLD_24K_BLOCK, new ItemStack(Material.TERRACOTTA),
+                new ItemStack(Material.TERRACOTTA), new ItemStack(Material.TERRACOTTA), new ItemStack(Material.TERRACOTTA)
         }).register(addon);
 
         new UnplaceableBlock(Groups.CRAFTING_COMPONENTS, TRANSFORMER_COIL_3, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
-                new ItemStack(Material.TERRACOTTA), TRANSFORMER_COIL_2, new ItemStack(Material.TERRACOTTA),
                 new ItemStack(Material.TERRACOTTA), CARBONADO, new ItemStack(Material.TERRACOTTA),
-                new ItemStack(Material.TERRACOTTA), TRANSFORMER_COIL_2, new ItemStack(Material.TERRACOTTA)
+                new ItemStack(Material.TERRACOTTA), TRANSFORMER_COIL_2, new ItemStack(Material.TERRACOTTA),
+                new ItemStack(Material.TERRACOTTA), new ItemStack(Material.TERRACOTTA), new ItemStack(Material.TERRACOTTA)
         }).register(addon);
 
 
