@@ -18,14 +18,8 @@ import org.metamechanists.quaptics.implementation.multiblocks.beacons.controller
 import org.metamechanists.quaptics.implementation.multiblocks.beacons.controllers.BeaconController3;
 import org.metamechanists.quaptics.items.Groups;
 
-import static io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems.ADVANCED_CIRCUIT_BOARD;
-import static io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems.FERROSILICON;
-import static io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems.HARDENED_METAL_INGOT;
-import static io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems.POWER_CRYSTAL;
-import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconBattery.BEACON_BATTERY_1;
-import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconBattery.BEACON_BATTERY_1_SETTINGS;
-import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconBattery.BEACON_BATTERY_2;
-import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconBattery.BEACON_BATTERY_2_SETTINGS;
+import static io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems.*;
+import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconBattery.*;
 import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconBeam.BEACON_BEAM;
 import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconBeam.BEACON_BEAM_SETTINGS;
 import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconComputer.BEACON_COMPUTER;
@@ -34,10 +28,7 @@ import static org.metamechanists.quaptics.implementation.multiblocks.beacons.com
 import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconMatrix.BEACON_MATRIX_SETTINGS;
 import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconPanel.BEACON_PANEL;
 import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconPanel.BEACON_PANEL_SETTINGS;
-import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconPowerSupply.BEACON_POWER_SUPPLY_1;
-import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconPowerSupply.BEACON_POWER_SUPPLY_1_SETTINGS;
-import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconPowerSupply.BEACON_POWER_SUPPLY_2;
-import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconPowerSupply.BEACON_POWER_SUPPLY_2_SETTINGS;
+import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconPowerSupply.*;
 import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconRod.BEACON_ROD;
 import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconRod.BEACON_ROD_SETTINGS;
 import static org.metamechanists.quaptics.implementation.multiblocks.beacons.components.BeaconTransmitter.BEACON_TRANSMITTER;
@@ -48,14 +39,7 @@ import static org.metamechanists.quaptics.implementation.multiblocks.beacons.con
 import static org.metamechanists.quaptics.implementation.multiblocks.beacons.controllers.BeaconController2.BEACON_CONTROLLER_2_SETTINGS;
 import static org.metamechanists.quaptics.implementation.multiblocks.beacons.controllers.BeaconController3.BEACON_CONTROLLER_3;
 import static org.metamechanists.quaptics.implementation.multiblocks.beacons.controllers.BeaconController3.BEACON_CONTROLLER_3_SETTINGS;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.CARBON_STRUCTURE;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.ENTANGLED_FREQUENCY_CRYSTAL;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.INFUSED_FREQUENCY_CRYSTAL;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.RECEIVER_3;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.RECEIVER_4;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.TRANSCEIVER_3;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.TRANSFORMER_COIL_2;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.TRANSFORMER_COIL_3;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.*;
 
 
 @UtilityClass
