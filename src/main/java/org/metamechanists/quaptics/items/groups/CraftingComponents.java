@@ -227,9 +227,9 @@ public class CraftingComponents {
         }).register(addon);
 
         new UnplaceableBlock(Groups.CRAFTING_COMPONENTS, TRANSFORMER_COIL_2, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
-                new ItemStack(Material.TERRACOTTA), GOLD_24K_BLOCK, new ItemStack(Material.TERRACOTTA),
-                new ItemStack(Material.TERRACOTTA), TRANSFORMER_COIL_1, GOLD_24K_BLOCK, new ItemStack(Material.TERRACOTTA),
-                new ItemStack(Material.TERRACOTTA), new ItemStack(Material.TERRACOTTA), new ItemStack(Material.TERRACOTTA)
+                new ItemStack(Material.TERRACOTTA), SYNTHETIC_EMERALD, new ItemStack(Material.TERRACOTTA),
+                new ItemStack(Material.TERRACOTTA), TRANSFORMER_COIL_1, new ItemStack(Material.TERRACOTTA),
+                new ItemStack(Material.TERRACOTTA), SYNTHETIC_EMERALD, new ItemStack(Material.TERRACOTTA)
         }).register(addon);
 
         new UnplaceableBlock(Groups.CRAFTING_COMPONENTS, TRANSFORMER_COIL_3, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
