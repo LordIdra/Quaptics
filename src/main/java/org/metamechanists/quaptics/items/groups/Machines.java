@@ -84,22 +84,7 @@ import static org.metamechanists.quaptics.implementation.tools.raygun.DirectRayG
 import static org.metamechanists.quaptics.implementation.tools.raygun.DirectRayGun.RAY_GUN_4;
 import static org.metamechanists.quaptics.implementation.tools.raygun.ModulatedRayGun.RAY_GUN_1;
 import static org.metamechanists.quaptics.implementation.tools.raygun.ModulatedRayGun.RAY_GUN_2;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.CARBON_STRUCTURE;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.DIELECTRIC_1;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.DIELECTRIC_3;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.INFUSED_FREQUENCY_CRYSTAL;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.RECEIVER_1;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.RECEIVER_2;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.RECEIVER_3;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.RECEIVER_4;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.TRANSCEIVER_1;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.TRANSCEIVER_2;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.TRANSCEIVER_3;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.TRANSCEIVER_4;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.TRANSFORMER_COIL_1;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.TURRET_BARREL;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.TURRET_BASE;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.TURRET_TARGETING_MECHANISM;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.*;
 
 
 @UtilityClass
