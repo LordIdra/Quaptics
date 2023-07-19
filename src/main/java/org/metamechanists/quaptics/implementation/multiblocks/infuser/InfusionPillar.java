@@ -31,7 +31,7 @@ import java.util.Optional;
 
 public class InfusionPillar extends ConnectedBlock implements PowerAnimatedBlock {
     public static final Settings INFUSION_PILLAR_SETTINGS = Settings.builder()
-            .tier(Tier.PRIMITIVE)
+            .tier(Tier.BASIC)
             .minPower(15)
             .minFrequency(10)
             .build();

@@ -43,7 +43,7 @@ import static org.metamechanists.quaptics.items.groups.CraftingComponents.*;
 
 public class EntanglementContainer extends ConnectedBlock implements ItemHolderBlock, ComplexMultiblock, ItemProcessor {
     public static final Settings ENTANGLEMENT_CONTAINER_SETTINGS = Settings.builder()
-            .tier(Tier.PRIMITIVE)
+            .tier(Tier.INTERMEDIATE)
             .timePerItem(5)
             .build();
     public static final SlimefunItemStack ENTANGLEMENT_CONTAINER = new SlimefunItemStack(

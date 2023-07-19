@@ -33,7 +33,7 @@ import java.util.Optional;
 
 public class EntanglementMagnet extends ConnectedBlock implements PowerAnimatedBlock {
     public static final Settings ENTANGLEMENT_MAGNET_SETTINGS = Settings.builder()
-            .tier(Tier.PRIMITIVE)
+            .tier(Tier.INTERMEDIATE)
             .minPower(180)
             .minFrequency(200)
             .build();

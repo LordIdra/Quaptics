@@ -43,7 +43,7 @@ import static org.metamechanists.quaptics.items.groups.CraftingComponents.*;
 
 public class InfusionContainer extends ConnectedBlock implements ItemHolderBlock, ComplexMultiblock, ItemProcessor {
     public static final Settings INFUSION_CONTAINER_SETTINGS = Settings.builder()
-            .tier(Tier.PRIMITIVE)
+            .tier(Tier.BASIC)
             .timePerItem(5)
             .build();
     public static final SlimefunItemStack INFUSION_CONTAINER = new SlimefunItemStack(
