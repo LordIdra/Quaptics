@@ -18,7 +18,7 @@ import org.metamechanists.quaptics.implementation.tools.QuapticChargeableItem;
 import org.metamechanists.quaptics.utils.Language;
 
 
-@CommandAlias("charge")
+@CommandAlias("qp|quaptics")
 @SuppressWarnings("unused")
 public class QuapticsCommand extends BaseCommand {
     @HelpCommand
@@ -49,5 +49,6 @@ public class QuapticsCommand extends BaseCommand {
         }
 
         chargeableItem.chargeItem(Integer.valueOf(args[0]).doubleValue(), itemStack, 1);
+        QuapticChargeableItem.updateLore(itemStack);
     }
 }
