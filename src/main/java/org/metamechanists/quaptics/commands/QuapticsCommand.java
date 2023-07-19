@@ -15,6 +15,7 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.implementation.tools.QuapticChargeableItem;
+import org.metamechanists.quaptics.storage.QuapticTicker;
 import org.metamechanists.quaptics.utils.Language;
 
 
@@ -48,7 +49,7 @@ public class QuapticsCommand extends BaseCommand {
             return;
         }
 
-        chargeableItem.chargeItem(Integer.valueOf(args[0]).doubleValue(), itemStack, 1);
+        chargeableItem.chargeItem(Integer.valueOf(args[0]).doubleValue(), itemStack, QuapticTicker.TICKS_PER_SECOND);
         QuapticChargeableItem.updateLore(itemStack);
     }
 }
