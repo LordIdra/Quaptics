@@ -37,9 +37,7 @@ import static org.metamechanists.quaptics.implementation.multiblocks.beacons.mod
 import static org.metamechanists.quaptics.implementation.multiblocks.beacons.modules.player.WirelessChargerModule.WIRELESS_CHARGER_MODULE;
 import static org.metamechanists.quaptics.implementation.multiblocks.beacons.modules.player.WirelessChargerModule.WIRELESS_CHARGER_MODULE_SETTINGS;
 import static org.metamechanists.quaptics.implementation.multiblocks.reactor.ReactorController.REACTOR_CONTROLLER;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.ENTANGLED_MODULE_CARD;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.INFUSED_MODULE_CARD;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.TRANSFORMER_COIL_3;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.*;
 
 
 @UtilityClass
