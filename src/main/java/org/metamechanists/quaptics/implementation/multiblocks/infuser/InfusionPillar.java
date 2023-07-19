@@ -40,7 +40,7 @@ public class InfusionPillar extends ConnectedBlock implements PowerAnimatedBlock
             Material.BLUE_CONCRETE,
             "&6Infusion Pillar",
             Lore.create(INFUSION_PILLAR_SETTINGS,
-                    "&7● Multiblock component"));
+                    Lore.multiblockComponent()));
 
     private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -getConnectionRadius());
 

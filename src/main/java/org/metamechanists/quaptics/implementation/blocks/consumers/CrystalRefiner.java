@@ -53,7 +53,7 @@ public class CrystalRefiner extends ConnectedBlock implements ItemHolderBlock, P
             "&bCrystal Refiner &3I",
             Lore.create(CRYSTAL_REFINER_SETTINGS,
                     "&7● Refines Phase Crystals",
-                    "&7● &eRight Click &7with an item to insert"));
+                    "&7● &eRight Click &7with an item to start refining"));
 
     private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -getConnectionRadius());
 

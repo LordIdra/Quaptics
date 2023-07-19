@@ -56,8 +56,22 @@ import static org.metamechanists.quaptics.implementation.blocks.consumers.Multib
 import static org.metamechanists.quaptics.implementation.blocks.consumers.MultiblockClicker.MULTIBLOCK_CLICKER_3_SETTINGS;
 import static org.metamechanists.quaptics.implementation.blocks.consumers.launchpad.Launchpad.LAUNCHPAD;
 import static org.metamechanists.quaptics.implementation.blocks.consumers.launchpad.Launchpad.LAUNCHPAD_SETTINGS;
-import static org.metamechanists.quaptics.implementation.blocks.consumers.turrets.DirectTurret.*;
-import static org.metamechanists.quaptics.implementation.blocks.consumers.turrets.ModulatedTurret.*;
+import static org.metamechanists.quaptics.implementation.blocks.consumers.turrets.DirectTurret.TURRET_3_HOSTILE;
+import static org.metamechanists.quaptics.implementation.blocks.consumers.turrets.DirectTurret.TURRET_3_HOSTILE_SETTINGS;
+import static org.metamechanists.quaptics.implementation.blocks.consumers.turrets.DirectTurret.TURRET_3_PASSIVE;
+import static org.metamechanists.quaptics.implementation.blocks.consumers.turrets.DirectTurret.TURRET_3_PASSIVE_SETTINGS;
+import static org.metamechanists.quaptics.implementation.blocks.consumers.turrets.DirectTurret.TURRET_4_HOSTILE;
+import static org.metamechanists.quaptics.implementation.blocks.consumers.turrets.DirectTurret.TURRET_4_HOSTILE_SETTINGS;
+import static org.metamechanists.quaptics.implementation.blocks.consumers.turrets.DirectTurret.TURRET_4_PASSIVE;
+import static org.metamechanists.quaptics.implementation.blocks.consumers.turrets.DirectTurret.TURRET_4_PASSIVE_SETTINGS;
+import static org.metamechanists.quaptics.implementation.blocks.consumers.turrets.ModulatedTurret.TURRET_1_HOSTILE;
+import static org.metamechanists.quaptics.implementation.blocks.consumers.turrets.ModulatedTurret.TURRET_1_HOSTILE_SETTINGS;
+import static org.metamechanists.quaptics.implementation.blocks.consumers.turrets.ModulatedTurret.TURRET_1_PASSIVE;
+import static org.metamechanists.quaptics.implementation.blocks.consumers.turrets.ModulatedTurret.TURRET_1_PASSIVE_SETTINGS;
+import static org.metamechanists.quaptics.implementation.blocks.consumers.turrets.ModulatedTurret.TURRET_2_HOSTILE;
+import static org.metamechanists.quaptics.implementation.blocks.consumers.turrets.ModulatedTurret.TURRET_2_HOSTILE_SETTINGS;
+import static org.metamechanists.quaptics.implementation.blocks.consumers.turrets.ModulatedTurret.TURRET_2_PASSIVE;
+import static org.metamechanists.quaptics.implementation.blocks.consumers.turrets.ModulatedTurret.TURRET_2_PASSIVE_SETTINGS;
 import static org.metamechanists.quaptics.implementation.multiblocks.entangler.EntanglementContainer.ENTANGLEMENT_CONTAINER;
 import static org.metamechanists.quaptics.implementation.multiblocks.entangler.EntanglementContainer.ENTANGLEMENT_CONTAINER_SETTINGS;
 import static org.metamechanists.quaptics.implementation.multiblocks.entangler.EntanglementMagnet.ENTANGLEMENT_MAGNET;
@@ -70,7 +84,22 @@ import static org.metamechanists.quaptics.implementation.tools.raygun.DirectRayG
 import static org.metamechanists.quaptics.implementation.tools.raygun.DirectRayGun.RAY_GUN_4;
 import static org.metamechanists.quaptics.implementation.tools.raygun.ModulatedRayGun.RAY_GUN_1;
 import static org.metamechanists.quaptics.implementation.tools.raygun.ModulatedRayGun.RAY_GUN_2;
-import static org.metamechanists.quaptics.items.groups.CraftingComponents.*;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.CARBON_STRUCTURE;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.DIELECTRIC_1;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.DIELECTRIC_3;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.INFUSED_FREQUENCY_CRYSTAL;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.RECEIVER_1;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.RECEIVER_2;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.RECEIVER_3;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.RECEIVER_4;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.TRANSCEIVER_1;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.TRANSCEIVER_2;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.TRANSCEIVER_3;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.TRANSCEIVER_4;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.TRANSFORMER_COIL_1;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.TURRET_BARREL;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.TURRET_BASE;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.TURRET_TARGETING_MECHANISM;
 
 
 @UtilityClass
@@ -205,6 +234,14 @@ public class Machines {
 
 
 
+        new CrystalRefiner(Groups.MACHINES, CRYSTAL_REFINER, RecipeType.NULL, new ItemStack[]{
+                null, ELECTRO_MAGNET, null,
+                RECEIVER_2, new ItemStack(Material.WATER_BUCKET), TRANSCEIVER_2,
+                REINFORCED_ALLOY_INGOT, new ItemStack(Material.CAULDRON), REINFORCED_ALLOY_INGOT
+        }, CRYSTAL_REFINER_SETTINGS).register(addon);
+
+
+
         new InfusionContainer(Groups.MACHINES, INFUSION_CONTAINER, RecipeType.NULL, new ItemStack[]{
                 null, null, null,
                 CARBON_STRUCTURE, null, CARBON_STRUCTURE,
@@ -216,14 +253,6 @@ public class Machines {
                 RECEIVER_2, ELECTRIC_MOTOR, null,
                 null, CARBON_STRUCTURE, null
         }, INFUSION_PILLAR_SETTINGS).register(addon);
-
-
-
-        new CrystalRefiner(Groups.MACHINES, CRYSTAL_REFINER, RecipeType.NULL, new ItemStack[]{
-                null, ELECTRO_MAGNET, null,
-                RECEIVER_2, new ItemStack(Material.WATER_BUCKET), TRANSCEIVER_2,
-                REINFORCED_ALLOY_INGOT, new ItemStack(Material.CAULDRON), REINFORCED_ALLOY_INGOT
-        }, CRYSTAL_REFINER_SETTINGS).register(addon);
 
 
 

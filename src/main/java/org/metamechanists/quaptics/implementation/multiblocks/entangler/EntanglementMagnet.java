@@ -42,7 +42,7 @@ public class EntanglementMagnet extends ConnectedBlock implements PowerAnimatedB
             Material.MAGENTA_CONCRETE,
             "&6Entanglement Magnet",
             Lore.create(ENTANGLEMENT_MAGNET_SETTINGS,
-                    "&7● Multiblock component"));
+                    Lore.multiblockComponent()));
 
     private final Vector inputPointLocation = new Vector(0.0F, 0.0F, -getConnectionRadius());
 
