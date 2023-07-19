@@ -166,6 +166,11 @@ public class Lore {
         return lore.toArray(new String[0]);
     }
 
+    // Guide
+    public String clickToOpen() {
+        return ATTRIBUTE_SYMBOL + "&7Click to open";
+    }
+
     // Multiblocks
     public String multiblock() {
         return MULTIBLOCK_SYMBOL + Colors.MULTIBLOCKS.getFormattedColor() + " Multiblock &8(right click with the Multiblock Wand)";

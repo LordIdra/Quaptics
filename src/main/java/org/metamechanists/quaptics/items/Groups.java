@@ -18,6 +18,7 @@ import org.metamechanists.quaptics.items.groups.BeamCreation;
 import org.metamechanists.quaptics.items.groups.BeamManipulation;
 import org.metamechanists.quaptics.items.groups.CraftingComponents;
 import org.metamechanists.quaptics.items.groups.FrequencyAndPhase;
+import org.metamechanists.quaptics.items.groups.Guide;
 import org.metamechanists.quaptics.items.groups.Machines;
 import org.metamechanists.quaptics.items.groups.Tools;
 import org.metamechanists.quaptics.utils.Colors;
@@ -78,6 +79,7 @@ public class Groups {
         MAIN.addItemGroup(BEACON_MODULES);
         MAIN.register(addon);
 
+        Guide.initialize();
         Tools.initialize();
         CraftingComponents.initialize();
         BeamCreation.initialize();
