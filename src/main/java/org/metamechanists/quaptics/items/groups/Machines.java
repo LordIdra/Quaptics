@@ -7,6 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.metamechanists.quaptics.Quaptics;
 import org.metamechanists.quaptics.implementation.blocks.consumers.Charger;
+import org.metamechanists.quaptics.implementation.blocks.consumers.CrystalRefiner;
 import org.metamechanists.quaptics.implementation.blocks.consumers.DataStripper;
 import org.metamechanists.quaptics.implementation.blocks.consumers.ItemProjector;
 import org.metamechanists.quaptics.implementation.blocks.consumers.MultiblockClicker;
@@ -39,6 +40,8 @@ import static org.metamechanists.quaptics.implementation.blocks.consumers.Charge
 import static org.metamechanists.quaptics.implementation.blocks.consumers.Charger.CHARGER_3_SETTINGS;
 import static org.metamechanists.quaptics.implementation.blocks.consumers.Charger.CHARGER_4;
 import static org.metamechanists.quaptics.implementation.blocks.consumers.Charger.CHARGER_4_SETTINGS;
+import static org.metamechanists.quaptics.implementation.blocks.consumers.CrystalRefiner.CRYSTAL_REFINER;
+import static org.metamechanists.quaptics.implementation.blocks.consumers.CrystalRefiner.CRYSTAL_REFINER_SETTINGS;
 import static org.metamechanists.quaptics.implementation.blocks.consumers.DataStripper.DATA_STRIPPER_1;
 import static org.metamechanists.quaptics.implementation.blocks.consumers.DataStripper.DATA_STRIPPER_1_SETTINGS;
 import static org.metamechanists.quaptics.implementation.blocks.consumers.DataStripper.DATA_STRIPPER_2;
@@ -213,6 +216,14 @@ public class Machines {
                 RECEIVER_2, ELECTRIC_MOTOR, null,
                 null, CARBON_STRUCTURE, null
         }, INFUSION_PILLAR_SETTINGS).register(addon);
+
+
+
+        new CrystalRefiner(Groups.MACHINES, CRYSTAL_REFINER, RecipeType.NULL, new ItemStack[]{
+                null, ELECTRO_MAGNET, null,
+                RECEIVER_2, new ItemStack(Material.WATER_BUCKET), TRANSCEIVER_2,
+                REINFORCED_ALLOY_INGOT, new ItemStack(Material.CAULDRON), REINFORCED_ALLOY_INGOT
+        }, CRYSTAL_REFINER_SETTINGS).register(addon);
 
 
 
