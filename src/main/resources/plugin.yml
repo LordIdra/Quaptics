@@ -5,5 +5,4 @@ main: org.metamechanists.quaptics.Quaptics
 api-version: 1.19
 
 depend:
-  - MetaLib
   - Slimefun
