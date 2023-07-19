@@ -300,7 +300,7 @@ public class CraftingComponents {
                 null, null, null
         }).register(addon);
 
-        new SlimefunItem(Groups.CRAFTING_COMPONENTS, ENTANGLED_MODULE_CARD, RecipeTypes.RECIPE_INFUSION, new ItemStack[]{
+        new SlimefunItem(Groups.CRAFTING_COMPONENTS, ENTANGLED_MODULE_CARD, RecipeTypes.RECIPE_ENTANGLEMENT, new ItemStack[]{
                 null, null, null,
                 null, INFUSED_MODULE_CARD, null,
                 null, null, null

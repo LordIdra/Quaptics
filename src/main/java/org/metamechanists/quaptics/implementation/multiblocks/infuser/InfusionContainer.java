@@ -38,6 +38,9 @@ import java.util.Map;
 import java.util.Optional;
 
 import static org.metamechanists.quaptics.implementation.multiblocks.infuser.InfusionPillar.INFUSION_PILLAR;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.BLANK_MODULE_CARD;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.INFUSED_FREQUENCY_CRYSTAL;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.INFUSED_MODULE_CARD;
 
 
 public class InfusionContainer extends ConnectedBlock implements ItemHolderBlock, ComplexMultiblock, ItemProcessor {
@@ -183,7 +186,9 @@ public class InfusionContainer extends ConnectedBlock implements ItemHolderBlock
 
     @Override
     public Map<ItemStack, ItemStack> getRecipes() {
-        return Map.of();
+        return Map.of(
+                BLANK_MODULE_CARD, INFUSED_MODULE_CARD,
+                new ItemStack(Material.QUARTZ), INFUSED_FREQUENCY_CRYSTAL);
     }
     @Override
     public Map<Vector, ItemStack> getStructure() {

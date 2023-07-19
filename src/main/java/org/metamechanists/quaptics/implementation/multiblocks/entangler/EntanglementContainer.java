@@ -5,7 +5,6 @@ import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
-import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -15,10 +14,11 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
+import org.metamechanists.quaptics.implementation.Settings;
 import org.metamechanists.quaptics.implementation.attachments.ComplexMultiblock;
 import org.metamechanists.quaptics.implementation.attachments.ItemHolderBlock;
+import org.metamechanists.quaptics.implementation.attachments.ItemProcessor;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
-import org.metamechanists.quaptics.implementation.Settings;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
 import org.metamechanists.quaptics.storage.QuapticTicker;
@@ -38,12 +38,16 @@ import java.util.Map;
 import java.util.Optional;
 
 import static org.metamechanists.quaptics.implementation.multiblocks.entangler.EntanglementMagnet.ENTANGLEMENT_MAGNET;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.ENTANGLED_FREQUENCY_CRYSTAL;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.ENTANGLED_MODULE_CARD;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.INFUSED_FREQUENCY_CRYSTAL;
+import static org.metamechanists.quaptics.items.groups.CraftingComponents.INFUSED_MODULE_CARD;
 
 
-public class EntanglementContainer extends ConnectedBlock implements ItemHolderBlock, ComplexMultiblock {
+public class EntanglementContainer extends ConnectedBlock implements ItemHolderBlock, ComplexMultiblock, ItemProcessor {
     public static final Settings ENTANGLEMENT_CONTAINER_SETTINGS = Settings.builder()
             .tier(Tier.PRIMITIVE)
-            .timePerItem(10)
+            .timePerItem(5)
             .build();
     public static final SlimefunItemStack ENTANGLEMENT_CONTAINER = new SlimefunItemStack(
             "QP_ENTANGLEMENT_CONTAINER",
@@ -65,8 +69,6 @@ public class EntanglementContainer extends ConnectedBlock implements ItemHolderB
             MAGNET_4_LOCATION, MAGNET_5_LOCATION, MAGNET_6_LOCATION);
 
     private final double magnetParticleAnimationLengthSeconds = settings.getTimePerItem();
-
-    private static final Map<ItemStack, ItemStack> RECIPES = Map.of();
 
     public EntanglementContainer(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
@@ -186,27 +188,27 @@ public class EntanglementContainer extends ConnectedBlock implements ItemHolderB
     @SuppressWarnings("unused")
     @Override
     public void onTick2(@NotNull final ConnectionGroup group, @NotNull final Location location) {
-        if (!BlockStorageAPI.getBoolean(location, Keys.BS_CRAFT_IN_PROGRESS)) {
+        if (!isProcessing(location)) {
             return;
         }
 
         if (!BlockStorageAPI.getBoolean(location, Keys.BS_MULTIBLOCK_INTACT) || !allMagnetsPowered(location)) {
-            cancelCraft(location);
+            cancelProcessing(location);
         }
 
-        double secondsSinceCraftStarted = BlockStorageAPI.getDouble(location, Keys.BS_SECONDS_SINCE_CRAFT_STARTED);
-        secondsSinceCraftStarted += (double) QuapticTicker.INTERVAL_TICKS_2 / QuapticTicker.TICKS_PER_SECOND;
-        BlockStorageAPI.set(location, Keys.BS_SECONDS_SINCE_CRAFT_STARTED, secondsSinceCraftStarted);
+        final double secondsSinceCraftStarted = BlockStorageAPI.getDouble(location, Keys.BS_SECONDS_SINCE_CRAFT_STARTED);
 
+        tickProcessing(location, QuapticTicker.INTERVAL_TICKS_2);
         tickAnimation(location, secondsSinceCraftStarted);
 
         if (secondsSinceCraftStarted >= settings.getTimePerItem()) {
-            completeCraft(location);
+            completeProcessing(location);
+            animateCenterCompleted(location);
         }
     }
     @Override
     public boolean onInsert(@NotNull final Location location, @NotNull final String name, @NotNull final ItemStack stack, @NotNull final Player player) {
-        if (RECIPES.keySet().stream().noneMatch(input -> SlimefunUtils.isItemSimilar(input, stack, false))) {
+        if (!isValidRecipe(stack)) {
             Language.sendLanguageMessage(player, "entangler.cannot-be-entangled");
             return false;
         }
@@ -216,17 +218,21 @@ public class EntanglementContainer extends ConnectedBlock implements ItemHolderB
             return false;
         }
 
-        BlockStorageAPI.set(location, Keys.BS_SECONDS_SINCE_CRAFT_STARTED, 0);
-        BlockStorageAPI.set(location, Keys.BS_CRAFT_IN_PROGRESS, true);
+        startProcessing(location);
         return true;
     }
     @Override
     public Optional<ItemStack> onRemove(@NotNull final Location location, @NotNull final String name, @NotNull final ItemStack stack) {
-        BlockStorageAPI.set(location, Keys.BS_SECONDS_SINCE_CRAFT_STARTED, 0);
-        BlockStorageAPI.set(location, Keys.BS_CRAFT_IN_PROGRESS, false);
+        cancelProcessing(location);
         return Optional.of(stack);
     }
 
+    @Override
+    public Map<ItemStack, ItemStack> getRecipes() {
+        return Map.of(
+                INFUSED_MODULE_CARD, ENTANGLED_MODULE_CARD,
+                INFUSED_FREQUENCY_CRYSTAL, ENTANGLED_FREQUENCY_CRYSTAL);
+    }
     @Override
     public Map<Vector, ItemStack> getStructure() {
         return Map.of(
@@ -263,22 +269,5 @@ public class EntanglementContainer extends ConnectedBlock implements ItemHolderB
                 .extra(0.1)
                 .count(50)
                 .spawn();
-    }
-
-    private static void cancelCraft(@NotNull final Location location) {
-        BlockStorageAPI.set(location, Keys.BS_SECONDS_SINCE_CRAFT_STARTED, 0);
-        BlockStorageAPI.set(location, Keys.BS_CRAFT_IN_PROGRESS, false);
-    }
-    private static void completeCraft(@NotNull final Location location) {
-        animateCenterCompleted(location);
-        BlockStorageAPI.set(location, Keys.BS_SECONDS_SINCE_CRAFT_STARTED, 0);
-        BlockStorageAPI.set(location, Keys.BS_CRAFT_IN_PROGRESS, false);
-
-        final Optional<ItemStack> stack = ItemHolderBlock.getStack(location, "item");
-        if (stack.isEmpty()) {
-            return;
-        }
-
-        ItemHolderBlock.insertItem(location, "item", RECIPES.get(stack.get()));
     }
 }
