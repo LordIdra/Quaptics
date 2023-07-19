@@ -95,7 +95,7 @@
         <dependency>
             <groupId>org.metamechanists</groupId>
             <artifactId>MetaLib</artifactId>
-            <version>44</version>
+            <version>45</version>
             <scope>compile</scope>
         </dependency>
 
