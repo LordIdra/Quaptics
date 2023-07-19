@@ -10,7 +10,6 @@ import org.bukkit.inventory.ItemStack;
 import org.metamechanists.quaptics.Quaptics;
 import org.metamechanists.quaptics.items.Groups;
 import org.metamechanists.quaptics.items.Lore;
-import org.metamechanists.quaptics.items.Tier;
 import org.metamechanists.quaptics.utils.Colors;
 
 
@@ -31,12 +30,12 @@ public class Guide {
             "&7the &eLens I &7close to each other.");
     private final SlimefunItemStack GETTING_STARTED_3 = new SlimefunItemStack("QP_GUIDE_GETTING_STARTED_3", Material.CYAN_CONCRETE,
             Colors.QUAPTICS.getFormattedColor() + "Step 3",
-            "&7Hold the targeting wand and right click",
+            "&7Hold the &eTargeting Wand &7and right click",
             "&7the &aoutput &7on the &eSolar Concentrator I&7.");
     private final SlimefunItemStack GETTING_STARTED_4 = new SlimefunItemStack("QP_GUIDE_GETTING_STARTED_4", Material.CYAN_CONCRETE,
             Colors.QUAPTICS.getFormattedColor() + "Step 4",
-            "&7You've now selected an &aoutput. &7Next, right click",
-            "&7the &cinput &7on the &eLens I&7. You might",
+            "&7You've now selected an &aoutput. &7Next, right",
+            "&7click the &cinput &7on the &eLens I&7. You might",
             "&7need to select the &aoutput &7again if you've",
             "&7deselected it.");
     private final SlimefunItemStack GETTING_STARTED_5 = new SlimefunItemStack("QP_GUIDE_GETTING_STARTED_5", Material.CYAN_CONCRETE,
@@ -45,11 +44,6 @@ public class Guide {
             "&7You might have to wait until daytime to see",
             "&7the link, since the &eSolar Concentrator I",
             "&7only works during the day.");
-    private final SlimefunItemStack GETTING_STARTED_6 = new SlimefunItemStack("QP_GUIDE_GETTING_STARTED_6", Material.CYAN_CONCRETE,
-            Colors.QUAPTICS.getFormattedColor() + "Step 6",
-            "&7You can view information about &cinputs &7and",
-            "&aoutputs &7by right clicking them with an empty",
-            "&7hand to bring up an information panel. Try it!");
 
     private final SlimefunItemStack VIEWING_CONNECTION_INFORMATION = new SlimefunItemStack("QP_GUIDE_VIEWING_CONNECTION_INFORMATION", Material.WHITE_CONCRETE,
             Colors.QUAPTICS.getFormattedColor() + "Viewing Connection Information",
@@ -75,14 +69,14 @@ public class Guide {
     private final SlimefunItemStack USING_A_RAY_GUN_2 = new SlimefunItemStack("QP_GUIDE_USING_A_RAY_GUN_2", Material.CYAN_CONCRETE,
             Colors.QUAPTICS.getFormattedColor() + "Step 2",
             "&7Place down the &eCharger I &7and connect",
-            "&7it to a &eSolar Concentrator I &7or a &eLens I",
-            "&7that's connected to a &eSolar Concentrator I&7.");
+            "&7it to a power source (as explained in",
+            "&7the Getting Started section)");
     private final SlimefunItemStack USING_A_RAY_GUN_3 = new SlimefunItemStack("QP_GUIDE_USING_A_RAY_GUN_3", Material.CYAN_CONCRETE,
             Colors.QUAPTICS.getFormattedColor() + "Step 3",
             "&7Hold the &eRay Gun I &7and right click the",
-            "&7charger. The &eRay Gun I &7should start charging.",
-            "&7You might have to wait until daytime for the",
-            "&eSolar Concentrator I &7to start working.");
+            "&eCharger I&7. The &eRay Gun I &7should start",
+            "&7charging. You might have to wait until daytime for",
+            "&7the &eSolar Concentrator I &7to start working.");
     private final SlimefunItemStack USING_A_RAY_GUN_4 = new SlimefunItemStack("QP_GUIDE_USING_A_RAY_GUN_4", Material.CYAN_CONCRETE,
             Colors.QUAPTICS.getFormattedColor() + "Step 4",
             "&7When the &eRay Gun I &7is charged, right click",
@@ -102,12 +96,12 @@ public class Guide {
             Lore.clickToOpen());
     private final SlimefunItemStack BURNOUT_1 = new SlimefunItemStack("QP_GUIDE_BURNOUT_1", Material.CYAN_CONCRETE,
             Colors.QUAPTICS.getFormattedColor() + "Step 1",
-            "&7Once you get into the " + Tier.BASIC.name() + " &7tier",
-            "&7you might start encountering component burnout.");
+            "&7Once you get into the " + Colors.BASIC.getFormattedColor() + "Basic &7tier, you might",
+            "&7start encountering component burnout.");
     private final SlimefunItemStack BURNOUT_2 = new SlimefunItemStack("QP_GUIDE_BURNOUT_2", Material.CYAN_CONCRETE,
             Colors.QUAPTICS.getFormattedColor() + "Step 2",
             "&7This occurs when you put too high a power",
-            "&7through a component.");
+            "&7through a component, and it explodes.");
     private final SlimefunItemStack BURNOUT_3 = new SlimefunItemStack("QP_GUIDE_BURNOUT_3", Material.CYAN_CONCRETE,
             Colors.QUAPTICS.getFormattedColor() + "Step 3",
             "&7Avoid burnout by using the connection",
@@ -124,8 +118,8 @@ public class Guide {
     private final SlimefunItemStack INCREASING_FREQUENCY_1 = new SlimefunItemStack("QP_GUIDE_INCREASING_FREQUENCY_1", Material.CYAN_CONCRETE,
             Colors.QUAPTICS.getFormattedColor() + "Step 1",
             "&7More powerful machines require Quaptic rays",
-            "&7to be above a certain frequency. Let's",
-            "&7increase the frequency of a ray using repeaters.");
+            "&7to be above a certain frequency. Let's increase",
+            "&7the frequency of a ray using repeaters.");
     private final SlimefunItemStack INCREASING_FREQUENCY_2 = new SlimefunItemStack("QP_GUIDE_INCREASING_FREQUENCY_2", Material.CYAN_CONCRETE,
             Colors.QUAPTICS.getFormattedColor() + "Step 2",
             "&7Craft the following:",
@@ -140,12 +134,12 @@ public class Guide {
             Colors.QUAPTICS.getFormattedColor() + "Step 4",
             "&7The output of the last repeater in the chain",
             "&7should be enough to power a &eMultiblock",
-            "&eClicker I&7. Try building one!");
+            "&eClicker I&7. Try it!");
     private final SlimefunItemStack INCREASING_FREQUENCY_5 = new SlimefunItemStack("QP_GUIDE_INCREASING_FREQUENCY_5", Material.CYAN_CONCRETE,
             Colors.QUAPTICS.getFormattedColor() + "Step 5",
-            "&7You can also use Scatterers (and later",
-            "&7Diffraction Gratings) &7to further",
-            "&7increase frequency.");
+            "&7You'll need to use higher tier Repeaters, as",
+            "&7well as Scatterers (and later Diffraction Gratings)",
+            "&7to further increase frequency.");
 
     private final SlimefunItemStack BUILDING_MULTIBLOCKS = new SlimefunItemStack("QP_GUIDE_BUILDING_MULTIBLOCKS", Material.WHITE_CONCRETE,
             Colors.QUAPTICS.getFormattedColor() + "Building Multiblocks",
@@ -153,18 +147,20 @@ public class Guide {
     private final SlimefunItemStack BUILDING_MULTIBLOCKS_1 = new SlimefunItemStack("QP_GUIDE_BUILDING_MULTIBLOCKS_1", Material.CYAN_CONCRETE,
             Colors.QUAPTICS.getFormattedColor() + "Step 1",
             "&7The first multiblock you'll need to build",
-            "&7is an Infuser.",
+            "&7is an Infuser.");
+    private final SlimefunItemStack BUILDING_MULTIBLOCKS_2 = new SlimefunItemStack("QP_GUIDE_BUILDING_MULTIBLOCKS_2", Material.CYAN_CONCRETE,
+            Colors.QUAPTICS.getFormattedColor() + "Step 2",
             "&7Craft the following:",
             "&7- &eMultiblock Wand",
             "&7- &eInfusion Container",
             "&7- &eInfusion Pillar &7(x4)");
-    private final SlimefunItemStack BUILDING_MULTIBLOCKS_2 = new SlimefunItemStack("QP_GUIDE_BUILDING_MULTIBLOCKS_2", Material.CYAN_CONCRETE,
-            Colors.QUAPTICS.getFormattedColor() + "Step 2",
+    private final SlimefunItemStack BUILDING_MULTIBLOCKS_3 = new SlimefunItemStack("QP_GUIDE_BUILDING_MULTIBLOCKS_3", Material.CYAN_CONCRETE,
+            Colors.QUAPTICS.getFormattedColor() + "Step 3",
             "&7Place down the &eInfusion Container &7and",
             "&7right click it with the &eMultiblock Wand&7.",
             "&7The multiblock structure will be projected.");
-    private final SlimefunItemStack BUILDING_MULTIBLOCKS_3 = new SlimefunItemStack("QP_GUIDE_BUILDING_MULTIBLOCKS_3", Material.CYAN_CONCRETE,
-            Colors.QUAPTICS.getFormattedColor() + "Step 3",
+    private final SlimefunItemStack BUILDING_MULTIBLOCKS_4 = new SlimefunItemStack("QP_GUIDE_BUILDING_MULTIBLOCKS_4", Material.CYAN_CONCRETE,
+            Colors.QUAPTICS.getFormattedColor() + "Step 4",
             "&7Right click each projected block to see",
             "&7which block it is, and place them as shown.",
             "&7That's it!");
@@ -175,7 +171,7 @@ public class Guide {
 
         new SlimefunItem(Groups.GUIDE, GETTING_STARTED, RecipeType.NULL, new ItemStack[]{
                 GETTING_STARTED_1, GETTING_STARTED_2, GETTING_STARTED_3,
-                GETTING_STARTED_4, GETTING_STARTED_5, GETTING_STARTED_6,
+                GETTING_STARTED_4, GETTING_STARTED_5, null,
                 null, null, null
         }).register(addon);
 
@@ -205,7 +201,7 @@ public class Guide {
 
         new SlimefunItem(Groups.GUIDE, BUILDING_MULTIBLOCKS, RecipeType.NULL, new ItemStack[]{
                 BUILDING_MULTIBLOCKS_1, BUILDING_MULTIBLOCKS_2, BUILDING_MULTIBLOCKS_3,
-                null, null, null,
+                BUILDING_MULTIBLOCKS_4, null, null,
                 null, null, null
         }).register(addon);
     }
