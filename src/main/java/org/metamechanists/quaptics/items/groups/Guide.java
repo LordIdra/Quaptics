@@ -15,6 +15,22 @@ import org.metamechanists.quaptics.utils.Colors;
 
 @UtilityClass
 public class Guide {
+    private final SlimefunItemStack WHAT_IS_QUAPTICS = new SlimefunItemStack("QP_GUIDE_WHAT_IS_QUAPTICS", Material.WHITE_CONCRETE,
+            Colors.QUAPTICS.getFormattedColor() + "What Is Quaptics?",
+            Lore.clickToOpen());
+    private final SlimefunItemStack WHAT_IS_QUAPTICS_1 = new SlimefunItemStack("QP_GUIDE_WHAT_IS_QUAPTICS_1", Material.CYAN_CONCRETE,
+            "&7Quaptics is all about creating, manipulating,",
+            "&7and using quaptic rays, mysterious beams",
+            "&7of power that can be used to power quaptic",
+            "&7machines.");
+    private final SlimefunItemStack WHAT_IS_QUAPTICS_2 = new SlimefunItemStack("QP_GUIDE_WHAT_IS_QUAPTICS_2", Material.CYAN_CONCRETE,
+            "&7Quaptic Rays have properties such as power,",
+            "&7frequency, and phase. Quaptic machines may",
+            "&7require rays with some specific properties.");
+    private final SlimefunItemStack WHAT_IS_QUAPTICS_3 = new SlimefunItemStack("QP_GUIDE_WHAT_IS_QUAPTICS_3", Material.CYAN_CONCRETE,
+            "See the next guide entry 'Getting Started' to",
+            "&7begin your journey into Quaptics.");
+
     private final SlimefunItemStack GETTING_STARTED = new SlimefunItemStack("QP_GUIDE_GETTING_STARTED", Material.WHITE_CONCRETE,
             Colors.QUAPTICS.getFormattedColor() + "Getting Started",
             Lore.clickToOpen());
@@ -169,37 +185,43 @@ public class Guide {
     public void initialize() {
         final SlimefunAddon addon = Quaptics.getInstance();
 
-        new SlimefunItem(Groups.GUIDE, GETTING_STARTED, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
+        new SlimefunItem(Groups.GUIDE, WHAT_IS_QUAPTICS, RecipeType.NULL, new ItemStack[]{
+                WHAT_IS_QUAPTICS_1, WHAT_IS_QUAPTICS_2, WHAT_IS_QUAPTICS_3,
+                null, null, null,
+                null, null, null
+        }).register(addon);
+
+        new SlimefunItem(Groups.GUIDE, GETTING_STARTED, RecipeType.NULL, new ItemStack[]{
                 GETTING_STARTED_1, GETTING_STARTED_2, GETTING_STARTED_3,
                 GETTING_STARTED_4, GETTING_STARTED_5, null,
                 null, null, null
         }).register(addon);
 
-        new SlimefunItem(Groups.GUIDE, VIEWING_CONNECTION_INFORMATION, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
+        new SlimefunItem(Groups.GUIDE, VIEWING_CONNECTION_INFORMATION, RecipeType.NULL, new ItemStack[]{
                 VIEWING_CONNECTION_INFORMATION_1, VIEWING_CONNECTION_INFORMATION_2, null,
                 null, null, null,
                 null, null, null
         }).register(addon);
 
-        new SlimefunItem(Groups.GUIDE, USING_A_RAY_GUN, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
+        new SlimefunItem(Groups.GUIDE, USING_A_RAY_GUN, RecipeType.NULL, new ItemStack[]{
                 USING_A_RAY_GUN_1, USING_A_RAY_GUN_2, USING_A_RAY_GUN_3,
                 USING_A_RAY_GUN_4, USING_A_RAY_GUN_5, null,
                 null, null, null
         }).register(addon);
 
-        new SlimefunItem(Groups.GUIDE, BURNOUT, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
+        new SlimefunItem(Groups.GUIDE, BURNOUT, RecipeType.NULL, new ItemStack[]{
                 BURNOUT_1, BURNOUT_2, BURNOUT_3,
                 BURNOUT_4, null, null,
                 null, null, null
         }).register(addon);
 
-        new SlimefunItem(Groups.GUIDE, INCREASING_FREQUENCY, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
+        new SlimefunItem(Groups.GUIDE, INCREASING_FREQUENCY, RecipeType.NULL, new ItemStack[]{
                 INCREASING_FREQUENCY_1, INCREASING_FREQUENCY_2, INCREASING_FREQUENCY_3,
                 INCREASING_FREQUENCY_4, INCREASING_FREQUENCY_5, null,
                 null, null, null
         }).register(addon);
 
-        new SlimefunItem(Groups.GUIDE, BUILDING_MULTIBLOCKS, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
+        new SlimefunItem(Groups.GUIDE, BUILDING_MULTIBLOCKS, RecipeType.NULL, new ItemStack[]{
                 BUILDING_MULTIBLOCKS_1, BUILDING_MULTIBLOCKS_2, BUILDING_MULTIBLOCKS_3,
                 BUILDING_MULTIBLOCKS_4, null, null,
                 null, null, null
