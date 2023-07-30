@@ -7,6 +7,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.metalib.bstats.bukkit.Metrics;
+import org.metamechanists.quaptics.commands.QuapticsCommand;
 import org.metamechanists.quaptics.implementation.blocks.consumers.launchpad.LaunchpadListener;
 import org.metamechanists.quaptics.implementation.burnout.BurnoutManager;
 import org.metamechanists.quaptics.implementation.multiblocks.beacons.controllers.ModuleClickListener;
@@ -44,6 +45,7 @@ public final class Quaptics extends JavaPlugin implements SlimefunAddon {
     }
     private void initializeCommands() {
         final PaperCommandManager commandManager = new PaperCommandManager(this);
+        commandManager.registerCommand(new QuapticsCommand());
         commandManager.enableUnstableAPI("help");
     }
 

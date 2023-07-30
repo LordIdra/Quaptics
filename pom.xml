@@ -37,6 +37,10 @@
                             <pattern>dev.sefiraat.sefilib</pattern>
                             <shadedPattern>org.metamechanists.quaptics.sefilib</shadedPattern>
                         </relocation>
+                        <relocation>
+                            <pattern>org.metamechanists.metalib</pattern>
+                            <shadedPattern>org.metamechanists.quaptics.metalib</shadedPattern>
+                        </relocation>
                     </relocations>
                     <filters>
                         <filter>
@@ -91,8 +95,8 @@
         <dependency>
             <groupId>org.metamechanists</groupId>
             <artifactId>MetaLib</artifactId>
-            <version>44</version>
-            <scope>provided</scope>
+            <version>46</version>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>

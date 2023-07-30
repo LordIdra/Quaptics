@@ -45,25 +45,25 @@ public class BeaconModules {
     public void initialize() {
         final SlimefunAddon addon = Quaptics.getInstance();
 
-        new LuckModule(Groups.BEACON_MODULES, LUCK_MODULE_1, RecipeType.NULL, new ItemStack[]{
+        new LuckModule(Groups.BEACON_MODULES, LUCK_MODULE_1, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 new ItemStack(Material.LIME_DYE), BILLON_INGOT, new ItemStack(Material.LIME_DYE),
                 BILLON_INGOT, INFUSED_MODULE_CARD, BILLON_INGOT,
                 new ItemStack(Material.LIME_DYE), BILLON_INGOT, new ItemStack(Material.LIME_DYE)
         }, LUCK_MODULE_1_SETTINGS).register(addon);
 
-        new FireResistanceModule(Groups.BEACON_MODULES, FIRE_RESISTANCE_MODULE_1, RecipeType.NULL, new ItemStack[]{
+        new FireResistanceModule(Groups.BEACON_MODULES, FIRE_RESISTANCE_MODULE_1, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 new ItemStack(Material.BLAZE_ROD), BILLON_INGOT, new ItemStack(Material.BLAZE_ROD),
                 BILLON_INGOT, INFUSED_MODULE_CARD, BILLON_INGOT,
                 new ItemStack(Material.BLAZE_ROD), BILLON_INGOT, new ItemStack(Material.BLAZE_ROD)
         }, FIRE_RESISTANCE_MODULE_1_SETTINGS).register(addon);
 
-        new HungerRefillModule(Groups.BEACON_MODULES, HUNGER_REFILL_MODULE, RecipeType.NULL, new ItemStack[]{
+        new HungerRefillModule(Groups.BEACON_MODULES, HUNGER_REFILL_MODULE, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 new ItemStack(Material.HAY_BLOCK), BILLON_INGOT, new ItemStack(Material.HAY_BLOCK),
                 BILLON_INGOT, INFUSED_MODULE_CARD, BILLON_INGOT,
                 new ItemStack(Material.HAY_BLOCK), BILLON_INGOT, new ItemStack(Material.HAY_BLOCK)
         }, HUNGER_REFILL_MODULE_SETTINGS).register(addon);
 
-        new ExperienceModule(Groups.BEACON_MODULES, EXPERIENCE_MODULE_1, RecipeType.NULL, new ItemStack[]{
+        new ExperienceModule(Groups.BEACON_MODULES, EXPERIENCE_MODULE_1, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 FLASK_OF_KNOWLEDGE, BILLON_INGOT, FLASK_OF_KNOWLEDGE,
                 BILLON_INGOT, INFUSED_MODULE_CARD, BILLON_INGOT,
                 FLASK_OF_KNOWLEDGE, BILLON_INGOT, FLASK_OF_KNOWLEDGE
@@ -71,31 +71,31 @@ public class BeaconModules {
 
 
 
-        new LuckModule(Groups.BEACON_MODULES, LUCK_MODULE_2, RecipeType.NULL, new ItemStack[]{
+        new LuckModule(Groups.BEACON_MODULES, LUCK_MODULE_2, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 new ItemStack(Material.LIME_DYE), ENTANGLED_MODULE_CARD, new ItemStack(Material.LIME_DYE),
                 BILLON_INGOT, LUCK_MODULE_1, BILLON_INGOT,
                 new ItemStack(Material.LIME_DYE), ENTANGLED_MODULE_CARD, new ItemStack(Material.LIME_DYE)
         }, LUCK_MODULE_2_SETTINGS).register(addon);
 
-        new FireResistanceModule(Groups.BEACON_MODULES, FIRE_RESISTANCE_MODULE_2, RecipeType.NULL, new ItemStack[]{
+        new FireResistanceModule(Groups.BEACON_MODULES, FIRE_RESISTANCE_MODULE_2, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 new ItemStack(Material.BLAZE_ROD), ENTANGLED_MODULE_CARD, new ItemStack(Material.BLAZE_ROD),
                 BILLON_INGOT, FIRE_RESISTANCE_MODULE_1, BILLON_INGOT,
                 new ItemStack(Material.BLAZE_ROD), ENTANGLED_MODULE_CARD, new ItemStack(Material.BLAZE_ROD)
         }, FIRE_RESISTANCE_MODULE_2_SETTINGS).register(addon);
 
-        new ExperienceModule(Groups.BEACON_MODULES, EXPERIENCE_MODULE_2, RecipeType.NULL, new ItemStack[]{
+        new ExperienceModule(Groups.BEACON_MODULES, EXPERIENCE_MODULE_2, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 FLASK_OF_KNOWLEDGE, ENTANGLED_MODULE_CARD, FLASK_OF_KNOWLEDGE,
                 BILLON_INGOT, EXPERIENCE_MODULE_1, BILLON_INGOT,
                 FLASK_OF_KNOWLEDGE, ENTANGLED_MODULE_CARD, FLASK_OF_KNOWLEDGE
         }, EXPERIENCE_MODULE_2_SETTINGS).register(addon);
 
-        new WirelessChargerModule(Groups.BEACON_MODULES, WIRELESS_CHARGER_MODULE, RecipeType.NULL, new ItemStack[]{
+        new WirelessChargerModule(Groups.BEACON_MODULES, WIRELESS_CHARGER_MODULE, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 REINFORCED_ALLOY_INGOT, ENTANGLED_MODULE_CARD, REINFORCED_ALLOY_INGOT,
                 BILLON_INGOT, CHARGER_4, BILLON_INGOT,
                 REINFORCED_ALLOY_INGOT, ENTANGLED_MODULE_CARD, REINFORCED_ALLOY_INGOT
         }, WIRELESS_CHARGER_MODULE_SETTINGS).register(addon);
 
-        new InvincibilityModule(Groups.BEACON_MODULES, INVINCIBILITY_MODULE, RecipeType.NULL, new ItemStack[]{
+        new InvincibilityModule(Groups.BEACON_MODULES, INVINCIBILITY_MODULE, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 TRANSFORMER_COIL_3, ENTANGLED_MODULE_CARD, TRANSFORMER_COIL_3,
                 ENTANGLED_MODULE_CARD, REACTOR_CONTROLLER, ENTANGLED_MODULE_CARD,
                 TRANSFORMER_COIL_3, ENTANGLED_MODULE_CARD, TRANSFORMER_COIL_3

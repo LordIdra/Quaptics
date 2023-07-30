@@ -237,7 +237,7 @@ public class Lore {
         return (outputPower >= maxOutputPower ? "&a" : "&6") + formatZeroDp(outputPower) + "&7 / " + "&a" + formatZeroDp(maxOutputPower);
     }
     public String powerEfficiency(final double powerEfficiency) {
-        return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Power Efficiency &e" + formatZeroDp(powerEfficiency) + POWER_SUFFIX;
+        return ATTRIBUTE_SYMBOL + POWER_SYMBOL + "&7Power Efficiency &e" + formatTwoDp(powerEfficiency) + POWER_SUFFIX;
     }
 
     // Charge

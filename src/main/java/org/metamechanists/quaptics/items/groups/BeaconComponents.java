@@ -47,19 +47,19 @@ public class BeaconComponents {
     public void initialize() {
         final SlimefunAddon addon = Quaptics.getInstance();
 
-        new BeaconController1(Groups.BEACON_COMPONENTS, BEACON_CONTROLLER_1, RecipeType.NULL, new ItemStack[]{
+        new BeaconController1(Groups.BEACON_COMPONENTS, BEACON_CONTROLLER_1, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 HARDENED_METAL_INGOT, BLANK_MODULE_CARD, HARDENED_METAL_INGOT,
                 HARDENED_METAL_INGOT, BEACON_COMPUTER, HARDENED_METAL_INGOT,
                 HARDENED_METAL_INGOT, BLANK_MODULE_CARD, HARDENED_METAL_INGOT
         }, BEACON_CONTROLLER_1_SETTINGS).register(addon);
 
-        new BeaconController2(Groups.BEACON_COMPONENTS, BEACON_CONTROLLER_2, RecipeType.NULL, new ItemStack[]{
+        new BeaconController2(Groups.BEACON_COMPONENTS, BEACON_CONTROLLER_2, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 CARBONADO, BLANK_MODULE_CARD, CARBONADO,
                 INFUSED_FREQUENCY_CRYSTAL, BEACON_CONTROLLER_1, INFUSED_FREQUENCY_CRYSTAL,
                 CARBONADO, BLANK_MODULE_CARD, CARBONADO
         }, BEACON_CONTROLLER_2_SETTINGS).register(addon);
 
-        new BeaconController3(Groups.BEACON_COMPONENTS, BEACON_CONTROLLER_3, RecipeType.NULL, new ItemStack[]{
+        new BeaconController3(Groups.BEACON_COMPONENTS, BEACON_CONTROLLER_3, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 BLISTERING_INGOT_3, BLANK_MODULE_CARD, BLISTERING_INGOT_3,
                 ENTANGLED_FREQUENCY_CRYSTAL, BEACON_CONTROLLER_2, ENTANGLED_FREQUENCY_CRYSTAL,
                 BLISTERING_INGOT_3, BLANK_MODULE_CARD, BLISTERING_INGOT_3
@@ -67,13 +67,13 @@ public class BeaconComponents {
 
 
 
-        new BeaconPowerSupply(Groups.BEACON_COMPONENTS, BEACON_POWER_SUPPLY_1, RecipeType.NULL, new ItemStack[]{
+        new BeaconPowerSupply(Groups.BEACON_COMPONENTS, BEACON_POWER_SUPPLY_1, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 new ItemStack(Material.COPPER_BLOCK), new ItemStack(Material.COPPER_BLOCK), new ItemStack(Material.COPPER_BLOCK),
                 RECEIVER_3, TRANSCEIVER_3, TRANSCEIVER_3,
                 new ItemStack(Material.COPPER_BLOCK), new ItemStack(Material.COPPER_BLOCK), new ItemStack(Material.COPPER_BLOCK)
         }, BEACON_POWER_SUPPLY_1_SETTINGS).register(addon);
 
-        new BeaconPowerSupply(Groups.BEACON_COMPONENTS, BEACON_POWER_SUPPLY_2, RecipeType.NULL, new ItemStack[]{
+        new BeaconPowerSupply(Groups.BEACON_COMPONENTS, BEACON_POWER_SUPPLY_2, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 new ItemStack(Material.COPPER_BLOCK), new ItemStack(Material.COPPER_BLOCK), new ItemStack(Material.COPPER_BLOCK),
                 RECEIVER_4, BEACON_POWER_SUPPLY_1, BEACON_POWER_SUPPLY_1,
                 new ItemStack(Material.COPPER_BLOCK), new ItemStack(Material.COPPER_BLOCK), new ItemStack(Material.COPPER_BLOCK)
@@ -81,13 +81,13 @@ public class BeaconComponents {
 
 
 
-        new BeaconBattery(Groups.BEACON_COMPONENTS, BEACON_BATTERY_1, RecipeType.NULL, new ItemStack[]{
+        new BeaconBattery(Groups.BEACON_COMPONENTS, BEACON_BATTERY_1, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 POWER_CRYSTAL, TRANSFORMER_COIL_2, POWER_CRYSTAL,
                 CARBON_STRUCTURE, CARBON_STRUCTURE, CARBON_STRUCTURE,
                 POWER_CRYSTAL, TRANSFORMER_COIL_2, POWER_CRYSTAL,
         }, BEACON_BATTERY_1_SETTINGS).register(addon);
 
-        new BeaconBattery(Groups.BEACON_COMPONENTS, BEACON_BATTERY_2, RecipeType.NULL, new ItemStack[]{
+        new BeaconBattery(Groups.BEACON_COMPONENTS, BEACON_BATTERY_2, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 CARBON_STRUCTURE, TRANSFORMER_COIL_3, CARBON_STRUCTURE,
                 BEACON_BATTERY_1, CARBON_STRUCTURE, BEACON_BATTERY_1,
                 CARBON_STRUCTURE, TRANSFORMER_COIL_3, CARBON_STRUCTURE,
@@ -95,7 +95,7 @@ public class BeaconComponents {
 
 
 
-        new BeaconComputer(Groups.BEACON_COMPONENTS, BEACON_COMPUTER, RecipeType.NULL, new ItemStack[]{
+        new BeaconComputer(Groups.BEACON_COMPONENTS, BEACON_COMPUTER, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 FERROSILICON, FERROSILICON, FERROSILICON,
                 INFUSED_FREQUENCY_CRYSTAL, ADVANCED_CIRCUIT_BOARD, INFUSED_FREQUENCY_CRYSTAL,
                 FERROSILICON, FERROSILICON, FERROSILICON
@@ -103,7 +103,7 @@ public class BeaconComponents {
 
 
 
-        new BeaconMatrix(Groups.BEACON_COMPONENTS, BEACON_MATRIX, RecipeType.NULL, new ItemStack[]{
+        new BeaconMatrix(Groups.BEACON_COMPONENTS, BEACON_MATRIX, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 HARDENED_METAL_INGOT, HARDENED_METAL_INGOT, HARDENED_METAL_INGOT,
                 ENTANGLED_FREQUENCY_CRYSTAL, BEACON_COMPUTER, ENTANGLED_FREQUENCY_CRYSTAL,
                 HARDENED_METAL_INGOT, FERROSILICON, HARDENED_METAL_INGOT
@@ -111,7 +111,7 @@ public class BeaconComponents {
 
 
 
-        new BeaconRod(Groups.BEACON_COMPONENTS, BEACON_BEAM, RecipeType.NULL, new ItemStack[]{
+        new BeaconRod(Groups.BEACON_COMPONENTS, BEACON_BEAM, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 null, CARBON_STRUCTURE, null,
                 null, CARBON_STRUCTURE, null,
                 null, CARBON_STRUCTURE, null
@@ -119,7 +119,7 @@ public class BeaconComponents {
 
 
 
-        new BeaconRod(Groups.BEACON_COMPONENTS, BEACON_ROD, RecipeType.NULL, new ItemStack[]{
+        new BeaconRod(Groups.BEACON_COMPONENTS, BEACON_ROD, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 null, null, null,
                 CARBON_STRUCTURE, CARBON_STRUCTURE, CARBON_STRUCTURE,
                 null, null, null
@@ -127,7 +127,7 @@ public class BeaconComponents {
 
 
 
-        new BeaconPanel(Groups.BEACON_COMPONENTS, BEACON_PANEL, RecipeType.NULL, new ItemStack[]{
+        new BeaconPanel(Groups.BEACON_COMPONENTS, BEACON_PANEL, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 null, null, null,
                 CARBON_STRUCTURE, CARBON_STRUCTURE, null,
                 CARBON_STRUCTURE, CARBON_STRUCTURE, null,
@@ -135,7 +135,7 @@ public class BeaconComponents {
 
 
 
-        new BeaconTransmitter(Groups.BEACON_COMPONENTS, BEACON_TRANSMITTER, RecipeType.NULL, new ItemStack[]{
+        new BeaconTransmitter(Groups.BEACON_COMPONENTS, BEACON_TRANSMITTER, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 null, null, null,
                 null, TRANSCEIVER_3, null,
                 null, CARBON_STRUCTURE, null,
