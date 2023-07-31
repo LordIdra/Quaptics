@@ -4,7 +4,7 @@
 
 <p align="center">
   <a href="https://discord.gg/nR8axbxvwk">
-    <img src="https://discordapp.com/api/guilds/784830621830742036/widget.png?style=banner2" alt="Discord Invite"/>
+    <img src="https://discordapp.com/api/guilds/1135377345017036922/widget.png?style=banner2" alt="Discord Invite"/>
   </a>
 </p>
 
