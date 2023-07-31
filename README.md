@@ -19,9 +19,9 @@ stimulating. It revolves around creating, manipulating, and using quaptic rays i
 <br>
 
 ## Quaptics in action
-![turret](https://github.com/metamechanists/Quaptics/assets/35176119/c3221cc2-b503-4e74-b5e2-a612632c4d20)
 ![raygun](https://github.com/metamechanists/Quaptics/assets/35176119/005ee0ec-79c9-409d-9eae-609fccd3ee90)
 ![quaptics-logo](https://github.com/metamechanists/Quaptics/assets/35176119/752890ac-0c72-48b7-9bbe-6512d75b7bb7)
+![turret](https://github.com/metamechanists/Quaptics/assets/35176119/c3221cc2-b503-4e74-b5e2-a612632c4d20)
 ![multiblock-clicker](https://github.com/metamechanists/Quaptics/assets/35176119/463164c3-8d35-4278-b26a-321094e6f311)
 ![circuit-2](https://github.com/metamechanists/Quaptics/assets/35176119/0862eda9-51ff-40f5-bc36-81f81f40bd92)
 ![beacons](https://github.com/metamechanists/Quaptics/assets/35176119/5c4560a3-9b57-4d86-9c7c-66b95172c0d3)
