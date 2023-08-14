@@ -8,9 +8,9 @@ import org.bukkit.FluidCollisionMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Display;
 import org.bukkit.entity.Interaction;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.RayTraceResult;
@@ -82,9 +82,10 @@ public class DirectRayGun extends AbstractRayGun {
                 0,
                 5));
 
-        if (result.getHitEntity() instanceof final Damageable damageable
-                && Slimefun.getProtectionManager().hasPermission(player, damageable.getLocation(), io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction.ATTACK_ENTITY)) {
-            damageable.damage(settings.getDamage());
+        if (result.getHitEntity() instanceof final LivingEntity livingEntity
+                && Slimefun.getProtectionManager().hasPermission(player, livingEntity.getLocation(), io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction.ATTACK_ENTITY)) {
+            livingEntity.damage(settings.getDamage());
+            livingEntity.setVelocity(Vector.fromJOML(TransformationUtils.getDisplacement(handLocation, livingEntity.getEyeLocation()).mul(0.2F)));
         }
     }
 }

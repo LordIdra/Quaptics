@@ -92,7 +92,7 @@ public class Repeater extends ConnectedBlock implements PowerAnimatedBlock, Powe
 
     @Override
     protected float getConnectionRadius() {
-        return 0.50F;
+        return 0.40F;
     }
     @Override
     protected DisplayGroup initModel(final @NotNull Location location, final @NotNull Player player) {

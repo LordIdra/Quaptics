@@ -28,7 +28,7 @@ public class Guide {
             "&7frequency, and phase. Quaptic machines may",
             "&7require rays with some specific properties.");
     private final SlimefunItemStack WHAT_IS_QUAPTICS_3 = new SlimefunItemStack("QP_GUIDE_WHAT_IS_QUAPTICS_3", Material.CYAN_CONCRETE,
-            "See the next guide entry 'Getting Started' to",
+            "&7See the next guide entry 'Getting Started' to",
             "&7begin your journey into Quaptics.");
 
     private final SlimefunItemStack GETTING_STARTED = new SlimefunItemStack("QP_GUIDE_GETTING_STARTED", Material.WHITE_CONCRETE,

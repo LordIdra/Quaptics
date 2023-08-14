@@ -89,7 +89,7 @@ public class Splitter extends ConnectedBlock implements PowerAnimatedBlock, Powe
 
     @Override
     protected float getConnectionRadius() {
-        return 0.5F;
+        return 0.55F;
     }
     @Override
     protected DisplayGroup initModel(final @NotNull Location location, final @NotNull Player player) {

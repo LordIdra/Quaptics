@@ -16,18 +16,19 @@ import org.bukkit.entity.Interaction;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BannerMeta;
+import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
+import org.metamechanists.quaptics.implementation.Settings;
 import org.metamechanists.quaptics.implementation.attachments.ComplexMultiblock;
 import org.metamechanists.quaptics.implementation.attachments.ItemHolderBlock;
 import org.metamechanists.quaptics.implementation.attachments.PowerAnimatedBlock;
 import org.metamechanists.quaptics.implementation.base.ConnectedBlock;
 import org.metamechanists.quaptics.implementation.multiblocks.beacons.modules.BeaconModule;
 import org.metamechanists.quaptics.implementation.multiblocks.beacons.modules.PlayerModule;
-import org.metamechanists.quaptics.implementation.Settings;
 import org.metamechanists.quaptics.implementation.tools.QuapticChargeableItem;
 import org.metamechanists.quaptics.items.Tier;
 import org.metamechanists.quaptics.storage.PersistentDataTraverser;
@@ -164,7 +165,15 @@ public abstract class BeaconController extends ConnectedBlock implements ItemHol
     }
 
     private List<UUID> getNearbyPlayerUuids(final @NotNull Location location) {
-        return location.getNearbyPlayers(settings.getRange()).stream().map(Entity::getUniqueId).toList();
+        final BoundingBox boundingBox = new BoundingBox(
+                location.x() + settings.getRange() * 2, location.y() + 1000, location.z() + settings.getRange() * 2,
+                location.x() - settings.getRange() * 2, location.y() - 1000, location.z() - settings.getRange() * 2);
+
+        return Bukkit.getOnlinePlayers().stream()
+                .filter(player -> boundingBox.contains(player.getLocation().toVector()))
+                .map(Entity::getUniqueId)
+                .toList();
+        //return location.getNearbyPlayers(settings.getRange()).stream().map(Entity::getUniqueId).toList();
     }
     private static @NotNull List<Player> getStoredPlayers(final @NotNull Location location) {
         final Optional<DisplayGroup> displayGroup = getDisplayGroup(location);
