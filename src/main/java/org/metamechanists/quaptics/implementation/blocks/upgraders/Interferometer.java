@@ -42,7 +42,8 @@ public class Interferometer extends ConnectedBlock implements PowerAnimatedBlock
             Material.YELLOW_TERRACOTTA,
             "&cInterferometer",
             Lore.create(INTERFEROMETER_SETTINGS,
-                    "&7● Sets the phase of the main ray to the phase of the auxiliary ray"));
+                    "&7● Sets the phase of the main ray to the phase of the auxiliary ray",
+                    "&7● The operating power only applies to the main beam"));
 
     private static final Vector MAIN_INPUT_LOCATION = new Vector(0, 0, -0.45);
     private static final Vector AUXILIARY_INPUT_LOCATION = new Vector(0.4, 0, 0);
