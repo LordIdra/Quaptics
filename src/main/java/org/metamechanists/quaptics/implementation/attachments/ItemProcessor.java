@@ -42,7 +42,7 @@ public interface ItemProcessor {
     }
 
     default boolean isValidRecipe(@NotNull final ItemStack inputStack) {
-        return getRecipes().keySet().stream().anyMatch(input -> SlimefunUtils.isItemSimilar(input, inputStack, false));
+        return getRecipes().keySet().stream().anyMatch(input -> SlimefunUtils.isItemSimilar(input, inputStack, true));
     }
     Map<ItemStack, ItemStack> getRecipes();
 }
