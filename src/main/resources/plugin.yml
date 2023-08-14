@@ -1,8 +1,18 @@
-name: Aircraft
+name: Quaptics
 version: '${project.version}'
 author: Idra
-main: org.metamechanists.quaptics.Aircraft
+main: org.metamechanists.quaptics.Quaptics
 api-version: 1.19
 
 depend:
   - Slimefun
+
+commands:
+  quaptics:
+    description: /quaptics
+    usage: /quaptics <subcommand>
+
+permissions:
+  quaptics.command.charge:
+    default: op
+    description: Charge the held item by a specified amount

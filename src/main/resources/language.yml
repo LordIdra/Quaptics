@@ -1,0 +1,40 @@
+command.invalid-argument-count: "&cInvalid argument count."
+command.charge.cannot-be-charged: "&cThis item cannot be charged."
+command.charge.not-an-integer: "&cThe amount to charge must be an integer."
+
+targeting-wand.different-worlds: "&cSource and target cannot be in different worlds."
+targeting-wand.too-far: "&cSource and target points are too far apart."
+targeting-wand.same-connection-point: "&cSource and target cannot be the same connection point."
+targeting-wand.same-connection-group: "&cSource and target cannot be from the same block."
+targeting-wand.no-source-selected: "&cNo source selected."
+targeting-wand.source-must-be-output: "&cThe source must be an output point."
+targeting-wand.target-must-be-input: "&cYou can only link to an output point."
+
+multiblock-clicker.not-connected-to-multiblock: "&cNot connected to a multiblock. Make sure the multiblock clicker is facing the block you'd usually click to use the multiblock."
+multiblock-clicker.not-powered: "&cYou must power the multiblock clicker before you can enable it."
+
+multiblock.block-name: "&7Block: &3{1}"
+multiblock.valid: "&aMultiblock constructed correctly."
+
+infuser.cannot-be-infused: "&cThis item cannot be infused."
+infuser.pillars-not-powered: "&cYou must power all pillars of the infuser before infusing an item."
+
+entangler.cannot-be-entangled: "&cThis item cannot be entangled."
+entangler.magnets-not-powered: "&cYou must power all magnets of the entangler before infusing an item."
+
+beacon.not-module: "&cYou can only insert Beacon Modules."
+beacon.duplicate-module: "&cThe beacon already contains this module."
+beacon.incorrect-tier: "&cThis beacon only accepts {1} &cor lower modules."
+
+charger.multiple-items: "&cYou can only insert one item at a time."
+charger.not-chargeable: "&cThis item cannot be charged."
+
+data-stripper.not-slimefun-head: "&cYou can only insert Slimefun heads."
+
+crystal-refiner.invalid-item: "&cThis item cannot be refined."
+
+polariser.not-phase-crystal: "&cYou can only insert Phase Crystals."
+
+too-close: "&cToo close to another component."
+
+load.failed: "Failed to load laser tickers; if this is not your first run, make sure file permissions are set up correctly."
