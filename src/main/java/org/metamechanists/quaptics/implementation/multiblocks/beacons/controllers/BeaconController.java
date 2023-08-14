@@ -167,7 +167,7 @@ public abstract class BeaconController extends ConnectedBlock implements ItemHol
     private List<UUID> getNearbyPlayerUuids(final @NotNull Location location) {
         final BoundingBox boundingBox = new BoundingBox(
                 location.x() + settings.getRange() * 2, location.y() + 1000, location.z() + settings.getRange() * 2,
-                location.x() - settings.getRange() * 2, location.y() + 1000, location.z() - settings.getRange() * 2);
+                location.x() - settings.getRange() * 2, location.y() - 1000, location.z() - settings.getRange() * 2);
 
         return Bukkit.getOnlinePlayers().stream()
                 .filter(player -> boundingBox.contains(player.getLocation().toVector()))
