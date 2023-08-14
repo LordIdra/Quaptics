@@ -1,11 +1,9 @@
 <p align="center">
   <img src="https://github.com/metamechanists/Quaptics/assets/35176119/8334f11b-41e3-48ce-bfcb-ec51947822af" width=200px height=200px>
-</p>
-
-<p align="center">
-  <a href="https://discord.gg/nR8axbxvwk">
-    <img src="https://discordapp.com/api/guilds/1135377345017036922/widget.png?style=banner2" alt="Discord Invite"/>
-  </a>
+  <br>
+  <img src="https://img.shields.io/badge/build-passing%20on%20my%20laptop-brightgreen.svg">
+  <br>
+  <a href="https://discord.gg/nR8axbxvwk" alt="Discord Invite">Join the Quaptics Discord</a>
 </p>
 
 
