@@ -188,7 +188,7 @@ public abstract class Turret extends ConnectedBlock implements PowerAnimatedBloc
 
         if (shouldDamage()) {
             target.get().damage(settings.getDamage());
-            target.get().setVelocity(Vector.fromJOML(TransformationUtils.getDisplacement(location, target.get().getEyeLocation()).mul(0.5F)));
+            target.get().setVelocity(Vector.fromJOML(TransformationUtils.getDisplacement(location, target.get().getEyeLocation()).mul(0.2F)));
         }
     }
 

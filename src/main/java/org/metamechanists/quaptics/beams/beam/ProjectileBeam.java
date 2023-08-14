@@ -65,7 +65,7 @@ public class ProjectileBeam implements Beam {
             hitEntity.ifPresent(entity -> {
                 if (Slimefun.getProtectionManager().hasPermission(player, entity.getLocation(), Interaction.ATTACK_ENTITY)) {
                     entity.damage(damage);
-                    entity.setVelocity(velocity.clone().normalize().multiply(0.5));
+                    entity.setVelocity(velocity.clone().normalize().multiply(0.2));
                 }
                 DeprecatedBeamStorage.remove(this);
             });
