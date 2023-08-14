@@ -35,11 +35,11 @@
                     <relocations>
                         <relocation>
                             <pattern>dev.sefiraat.sefilib</pattern>
-                            <shadedPattern>org.metamechanists.quaptics.sefilib</shadedPattern>
+                            <shadedPattern>org.metamechanists.aircraft.sefilib</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>org.metamechanists.metalib</pattern>
-                            <shadedPattern>org.metamechanists.quaptics.metalib</shadedPattern>
+                            <shadedPattern>org.metamechanists.aircraft.metalib</shadedPattern>
                         </relocation>
                     </relocations>
                     <filters>
@@ -84,11 +84,6 @@
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
         </repository>
-
-        <repository>
-            <id>aikar</id>
-            <url>https://repo.aikar.co/content/groups/aikar/</url>
-        </repository>
     </repositories>
 
     <dependencies>
@@ -124,13 +119,6 @@
             <groupId>dev.sefiraat</groupId>
             <artifactId>SefiLib</artifactId>
             <version>0.2.6</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>co.aikar</groupId>
-            <artifactId>acf-paper</artifactId>
-            <version>0.5.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
