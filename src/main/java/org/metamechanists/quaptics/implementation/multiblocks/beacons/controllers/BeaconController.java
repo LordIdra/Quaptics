@@ -16,7 +16,6 @@ import org.bukkit.entity.Interaction;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BannerMeta;
-import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
@@ -165,15 +164,15 @@ public abstract class BeaconController extends ConnectedBlock implements ItemHol
     }
 
     private List<UUID> getNearbyPlayerUuids(final @NotNull Location location) {
-        final BoundingBox boundingBox = new BoundingBox(
-                location.x() + settings.getRange() * 2, location.y() + 1000, location.z() + settings.getRange() * 2,
-                location.x() - settings.getRange() * 2, location.y() - 1000, location.z() - settings.getRange() * 2);
-
-        return Bukkit.getOnlinePlayers().stream()
-                .filter(player -> boundingBox.contains(player.getLocation().toVector()))
-                .map(Entity::getUniqueId)
-                .collect(Collectors.toList());
-        //return location.getNearbyPlayers(settings.getRange()).stream().map(Entity::getUniqueId).toList();
+//        final BoundingBox boundingBox = new BoundingBox(
+//                location.x() + settings.getRange() * 2, location.y() + 1000, location.z() + settings.getRange() * 2,
+//                location.x() - settings.getRange() * 2, location.y() - 1000, location.z() - settings.getRange() * 2);
+//
+//        return Bukkit.getOnlinePlayers().stream()
+//                .filter(player -> boundingBox.contains(player.getLocation().toVector()))
+//                .map(Entity::getUniqueId)
+//                .toList();
+        return location.getNearbyPlayers(settings.getRange()).stream().map(Entity::getUniqueId).toList();
     }
     private static @NotNull List<Player> getStoredPlayers(final @NotNull Location location) {
         final Optional<DisplayGroup> displayGroup = getDisplayGroup(location);
