@@ -5,7 +5,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Interaction;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.storage.PersistentDataTraverser;
-import org.metamechanists.quaptics.utils.builders.InteractionBuilder;
+import org.metamechanists.displaymodellib.builders.InteractionBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConfigPanelAttributeId;
 import org.metamechanists.quaptics.utils.id.complex.ConfigPanelId;
 import org.metamechanists.quaptics.utils.id.simple.InteractionId;

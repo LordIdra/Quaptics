@@ -1,7 +1,7 @@
 package org.metamechanists.quaptics.implementation.base;
 
 import com.destroystokyo.paper.ParticleBuilder;
-import dev.sefiraat.sefilib.entity.display.DisplayGroup;
+import org.metamechanists.displaymodellib.sefilib.entity.display.DisplayGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
@@ -32,7 +32,7 @@ import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.implementation.Settings;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.id.simple.DisplayGroupId;
-import org.metamechanists.quaptics.utils.transformations.TransformationUtils;
+import org.metamechanists.displaymodellib.transformations.TransformationUtils;
 
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
@@ -96,7 +96,7 @@ public abstract class QuapticBlock extends SlimefunItem {
     }
 
     @ParametersAreNonnullByDefault
-    protected abstract DisplayGroup initModel(Location location, Player player);
+    protected abstract org.metamechanists.displaymodellib.sefilib.entity.display.DisplayGroup initModel(Location location, Player player);
     protected void initBlockStorage(@NotNull final Location location) {}
 
     protected void onPlace(@NotNull final BlockPlaceEvent event) {}

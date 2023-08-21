@@ -1,7 +1,7 @@
 package org.metamechanists.quaptics.implementation.burnout;
 
 import com.destroystokyo.paper.ParticleBuilder;
-import dev.sefiraat.sefilib.entity.display.DisplayGroup;
+import org.metamechanists.displaymodellib.sefilib.entity.display.DisplayGroup;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

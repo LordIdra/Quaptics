@@ -4,12 +4,12 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.BlockDisplay;
 import org.jetbrains.annotations.NotNull;
+import org.metamechanists.displaymodellib.models.components.ModelLine;
+import org.metamechanists.displaymodellib.transformations.TransformationUtils;
 import org.metamechanists.quaptics.beams.DeprecatedBeamStorage;
 import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.id.complex.DirectBeamId;
 import org.metamechanists.quaptics.utils.id.simple.BlockDisplayId;
-import org.metamechanists.quaptics.utils.models.components.ModelLine;
-import org.metamechanists.quaptics.utils.transformations.TransformationUtils;
 
 import java.util.Optional;
 
