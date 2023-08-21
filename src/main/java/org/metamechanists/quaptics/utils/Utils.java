@@ -49,7 +49,7 @@ public class Utils {
 
     public int getMajorServerVersion() {
         // https://www.spigotmc.org/threads/version-server-check.175755/
-        final String version = Bukkit.getServer().getVersion().replace(".", ",").split(",")[3];
+        final String version = Bukkit.getServer().getMinecraftVersion().replace(".", ",").split(",")[3];
         return Integer.parseInt(version.replace("1_", "").replaceAll("_R.", ""));
     }
 }
