@@ -22,6 +22,7 @@ public class ModelBuilder {
 
     /**
      * Creates all the components and adds them to a displaygroup
+     * The components are build with all coordinates relative to 'center'
      * @param center The center location of the model
      * @return The display group containing all the components
      */
@@ -32,6 +33,7 @@ public class ModelBuilder {
     }
     /**
      * Creates all the components and adds them to a displaygroup
+     * The components are build with all coordinates relative to 'blockLocation'
      * @param blockLocation The block location of the model (this will be converted to the center of the block and used to build the model)
      * @return The display group containing all the components
      */

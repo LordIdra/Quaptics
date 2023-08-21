@@ -61,7 +61,9 @@ public class DiffractionGrating extends ConnectedBlock implements PowerAnimatedB
             Lore.create(DIFFRACTION_GRATING_1_SETTINGS,
                     "&7● Increases the frequency of quaptic rays",
                     "&7● The closer the auxiliary input to the target phase, the",
-                    "&7  greater the increase in frequency"));
+                    "&7  greater the increase in frequency",
+                    "&7● The operating power & frequency only apply to the main beam",
+                    "&7● The target phase only applies to the auxiliary beam"));
 
     public static final SlimefunItemStack DIFFRACTION_GRATING_2 = new SlimefunItemStack(
             "QP_DIFFRACTION_GRATING_2",
@@ -70,7 +72,9 @@ public class DiffractionGrating extends ConnectedBlock implements PowerAnimatedB
             Lore.create(DIFFRACTION_GRATING_2_SETTINGS,
                     "&7● Increases the frequency of quaptic rays",
                     "&7● The closer the auxiliary input to the target phase, the",
-                    "&7  greater the increase in frequency"));
+                    "&7  greater the increase in frequency",
+                    "&7● The operating power & frequency only apply to the main beam",
+                    "&7● The target phase only applies to the auxiliary beam"));
 
     private final Vector mainPointLocation = new Vector(0, 0, -0.5);
     private final Vector auxiliaryPointLocation = new Vector(0, 0.4, 0);

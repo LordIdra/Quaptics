@@ -20,8 +20,8 @@ public class Link {
     private static final int ARBITRARILY_LARGE_NUMBER = 9999999;
     private static final double MAX_POWER_CHANGE_PROPORTION = 0.0001;
     private static final double MAX_FREQUENCY_CHANGE_PROPORTION = 0.0001;
-    private static final float MIN_BEAM_SIZE = 0.005F;
-    private static final float MAX_BEAM_SIZE = 0.095F;
+    private static final float MIN_BEAM_SIZE = 0.001F;
+    private static final float MAX_BEAM_SIZE = 0.050F;
     @Getter
     private final LinkId id;
     private final ConnectionPointId outputId;
