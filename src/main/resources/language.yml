@@ -8,7 +8,7 @@ targeting-wand.same-connection-point: "&cSource and target cannot be the same co
 targeting-wand.same-connection-group: "&cSource and target cannot be from the same block."
 targeting-wand.no-source-selected: "&cNo source selected."
 targeting-wand.source-must-be-output: "&cThe source must be an output point."
-targeting-wand.target-must-be-input: "&cYou can only link to an output point."
+targeting-wand.target-must-be-input: "&cYou can only link to an input point."
 
 multiblock-clicker.not-connected-to-multiblock: "&cNot connected to a multiblock. Make sure the multiblock clicker is facing the block you'd usually click to use the multiblock."
 multiblock-clicker.not-powered: "&cYou must power the multiblock clicker before you can enable it."
