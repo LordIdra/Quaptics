@@ -1,5 +1,6 @@
 package org.metamechanists.quaptics.utils.models.components;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -12,6 +13,7 @@ import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 import org.joml.Vector3d;
 import org.joml.Vector3f;
+import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.builders.ItemDisplayBuilder;
 import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
 
@@ -112,6 +114,8 @@ public class ModelItem implements ModelComponent {
     }
 
     public Matrix4f getMatrix() {
+        // 1.20 added 180 degrees to item display rotation, let's account for this
+        Bukkit.getServer().getLogger().info(String.valueOf(Utils.getMajorServerVersion()));
         return new TransformationMatrixBuilder()
                 .lookAlong(facing)
                 .translate(location)

@@ -1,6 +1,7 @@
 package org.metamechanists.quaptics.utils;
 
 import lombok.experimental.UtilityClass;
+import org.bukkit.Bukkit;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 
@@ -44,5 +45,11 @@ public class Utils {
 
     public boolean equal(final float a, final float b) {
         return Math.abs(a - b) < FLOATING_POINT_THRESHOLD;
+    }
+
+    public int getMajorServerVersion() {
+        // https://www.spigotmc.org/threads/version-server-check.175755/
+        final String version = Bukkit.getServer().getVersion().replace(".", ",").split(",")[3];
+        return Integer.parseInt(version.replace("1_", "").replaceAll("_R.", ""));
     }
 }
