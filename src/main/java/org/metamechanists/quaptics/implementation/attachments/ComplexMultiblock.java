@@ -16,8 +16,8 @@ import org.metamechanists.quaptics.implementation.tools.multiblockwand.Multibloc
 import org.metamechanists.quaptics.storage.PersistentDataTraverser;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Language;
-import org.metamechanists.quaptics.utils.builders.InteractionBuilder;
-import org.metamechanists.quaptics.utils.models.components.ModelCuboid;
+import org.metamechanists.displaymodellib.builders.InteractionBuilder;
+import org.metamechanists.displaymodellib.models.components.ModelCuboid;
 
 import java.util.ArrayList;
 import java.util.List;

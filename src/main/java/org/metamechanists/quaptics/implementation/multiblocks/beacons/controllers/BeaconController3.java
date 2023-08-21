@@ -1,6 +1,6 @@
 package org.metamechanists.quaptics.implementation.multiblocks.beacons.controllers;
 
-import dev.sefiraat.sefilib.entity.display.DisplayGroup;
+import org.metamechanists.displaymodellib.sefilib.entity.display.DisplayGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
@@ -19,9 +19,9 @@ import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.id.simple.InteractionId;
-import org.metamechanists.quaptics.utils.models.ModelBuilder;
-import org.metamechanists.quaptics.utils.models.components.ModelCuboid;
-import org.metamechanists.quaptics.utils.models.components.ModelItem;
+import org.metamechanists.displaymodellib.models.ModelBuilder;
+import org.metamechanists.displaymodellib.models.components.ModelCuboid;
+import org.metamechanists.displaymodellib.models.components.ModelItem;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -76,7 +76,7 @@ public class BeaconController3 extends BeaconController {
     }
 
     @Override
-    protected DisplayGroup initModel(@NotNull final Location location, @NotNull final Player player) {
+    protected org.metamechanists.displaymodellib.sefilib.entity.display.DisplayGroup initModel(@NotNull final Location location, @NotNull final Player player) {
         final DisplayGroup displayGroup = new ModelBuilder()
                 .add("main", new ModelCuboid()
                         .material(Material.BLUE_CONCRETE)

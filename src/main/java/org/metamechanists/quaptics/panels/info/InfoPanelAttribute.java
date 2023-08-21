@@ -11,10 +11,10 @@ import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import org.metamechanists.quaptics.storage.PersistentDataTraverser;
 import org.metamechanists.quaptics.utils.Utils;
-import org.metamechanists.quaptics.utils.builders.TextDisplayBuilder;
+import org.metamechanists.displaymodellib.builders.TextDisplayBuilder;
 import org.metamechanists.quaptics.utils.id.complex.InfoPanelAttributeId;
 import org.metamechanists.quaptics.utils.id.simple.TextDisplayId;
-import org.metamechanists.quaptics.utils.transformations.TransformationMatrixBuilder;
+import org.metamechanists.displaymodellib.transformations.TransformationMatrixBuilder;
 
 import java.util.Optional;
 

@@ -1,6 +1,5 @@
 package org.metamechanists.quaptics.implementation.multiblocks.infuser;
 
-import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
@@ -11,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
+import org.metamechanists.displaymodellib.sefilib.entity.display.DisplayGroup;
 import org.metamechanists.metalib.utils.ParticleUtils;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
@@ -28,9 +28,9 @@ import org.metamechanists.quaptics.utils.Language;
 import org.metamechanists.quaptics.utils.Particles;
 import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
-import org.metamechanists.quaptics.utils.models.ModelBuilder;
-import org.metamechanists.quaptics.utils.models.components.ModelCuboid;
-import org.metamechanists.quaptics.utils.models.components.ModelItem;
+import org.metamechanists.displaymodellib.models.ModelBuilder;
+import org.metamechanists.displaymodellib.models.components.ModelCuboid;
+import org.metamechanists.displaymodellib.models.components.ModelItem;
 
 import java.util.ArrayList;
 import java.util.List;

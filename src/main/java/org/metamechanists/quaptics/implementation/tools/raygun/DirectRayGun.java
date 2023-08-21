@@ -20,7 +20,7 @@ import org.metamechanists.quaptics.beams.beam.LifetimeDirectBeam;
 import org.metamechanists.quaptics.implementation.Settings;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
-import org.metamechanists.quaptics.utils.transformations.TransformationUtils;
+import org.metamechanists.displaymodellib.transformations.TransformationUtils;
 
 
 public class DirectRayGun extends AbstractRayGun {

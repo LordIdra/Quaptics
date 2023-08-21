@@ -34,12 +34,12 @@
                 <configuration>
                     <relocations>
                         <relocation>
-                            <pattern>dev.sefiraat.sefilib</pattern>
-                            <shadedPattern>org.metamechanists.quaptics.sefilib</shadedPattern>
-                        </relocation>
-                        <relocation>
                             <pattern>org.metamechanists.metalib</pattern>
                             <shadedPattern>org.metamechanists.quaptics.metalib</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>org.metamechanists.displaymodellib</pattern>
+                            <shadedPattern>org.metamechanists.quaptics.displaymodellib</shadedPattern>
                         </relocation>
                     </relocations>
                     <filters>
@@ -100,6 +100,13 @@
         </dependency>
 
         <dependency>
+            <groupId>org.metamechanists</groupId>
+            <artifactId>DisplayModelLib</artifactId>
+            <version>2</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
             <version>1.19.4-R0.1-SNAPSHOT</version>
@@ -118,13 +125,6 @@
             <artifactId>Slimefun4</artifactId>
             <version>ddb7ebd134</version>
             <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>dev.sefiraat</groupId>
-            <artifactId>SefiLib</artifactId>
-            <version>0.2.6</version>
-            <scope>compile</scope>
         </dependency>
 
         <dependency>

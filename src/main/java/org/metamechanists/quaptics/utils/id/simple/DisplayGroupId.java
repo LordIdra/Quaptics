@@ -1,6 +1,6 @@
 package org.metamechanists.quaptics.utils.id.simple;
 
-import dev.sefiraat.sefilib.entity.display.DisplayGroup;
+import org.metamechanists.displaymodellib.sefilib.entity.display.DisplayGroup;
 import org.metamechanists.quaptics.utils.id.CustomId;
 
 import java.util.Optional;

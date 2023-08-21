@@ -9,11 +9,11 @@ import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
+import org.metamechanists.displaymodellib.models.components.ModelLine;
+import org.metamechanists.displaymodellib.transformations.TransformationUtils;
 import org.metamechanists.quaptics.beams.DeprecatedBeamStorage;
 import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.id.simple.BlockDisplayId;
-import org.metamechanists.quaptics.utils.models.components.ModelLine;
-import org.metamechanists.quaptics.utils.transformations.TransformationUtils;
 
 import java.util.List;
 import java.util.Optional;

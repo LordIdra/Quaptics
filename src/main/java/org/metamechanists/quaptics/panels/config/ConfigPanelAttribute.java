@@ -1,6 +1,6 @@
 package org.metamechanists.quaptics.panels.config;
 
-import dev.sefiraat.sefilib.entity.display.DisplayGroup;
+import org.metamechanists.displaymodellib.sefilib.entity.display.DisplayGroup;
 import io.github.bakedlibs.dough.common.ChatColors;
 import org.bukkit.Color;
 import org.bukkit.Location;
@@ -11,13 +11,13 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3d;
 import org.metamechanists.quaptics.storage.PersistentDataTraverser;
-import org.metamechanists.quaptics.utils.builders.InteractionBuilder;
+import org.metamechanists.displaymodellib.builders.InteractionBuilder;
 import org.metamechanists.quaptics.utils.id.complex.ConfigPanelAttributeId;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import org.metamechanists.quaptics.utils.id.simple.DisplayGroupId;
 import org.metamechanists.quaptics.utils.id.simple.InteractionId;
-import org.metamechanists.quaptics.utils.models.ModelBuilder;
-import org.metamechanists.quaptics.utils.models.components.ModelText;
+import org.metamechanists.displaymodellib.models.ModelBuilder;
+import org.metamechanists.displaymodellib.models.components.ModelText;
 
 import java.util.Optional;
 
