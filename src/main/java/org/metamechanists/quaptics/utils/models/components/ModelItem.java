@@ -118,7 +118,7 @@ public class ModelItem implements ModelComponent {
         Bukkit.getServer().getLogger().info(String.valueOf(Utils.getMajorServerVersion()));
         Vector3d adjustedRotation = rotation;
         if (Utils.getMajorServerVersion() >= 20) {
-            adjustedRotation = new Vector3d(rotation).add(Math.PI / 2, Math.PI / 2, Math.PI / 2);
+            adjustedRotation = new Vector3d(rotation).add(Math.PI, Math.PI, Math.PI);
         }
 
         return new TransformationMatrixBuilder()
