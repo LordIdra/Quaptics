@@ -116,10 +116,15 @@ public class ModelItem implements ModelComponent {
     public Matrix4f getMatrix() {
         // 1.20 added 180 degrees to item display rotation, let's account for this
         Bukkit.getServer().getLogger().info(String.valueOf(Utils.getMajorServerVersion()));
+        Vector3d adjustedRotation = rotation;
+        if (Utils.getMajorServerVersion() >= 20) {
+            adjustedRotation = new Vector3d(rotation).add(Math.PI / 2, Math.PI / 2, Math.PI / 2);
+        }
+
         return new TransformationMatrixBuilder()
                 .lookAlong(facing)
                 .translate(location)
-                .rotate(rotation)
+                .rotate(adjustedRotation)
                 .scale(new Vector3f(size))
                 .buildForItemDisplay();
     }
