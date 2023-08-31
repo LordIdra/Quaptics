@@ -1,6 +1,7 @@
 package org.metamechanists.quaptics;
 
 import co.aikar.commands.PaperCommandManager;
+import io.github.bakedlibs.dough.updater.GitHubBuildsUpdater;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import lombok.Getter;
 import org.bukkit.plugin.PluginManager;
@@ -51,6 +52,12 @@ public final class Quaptics extends JavaPlugin implements SlimefunAddon {
 
     @Override
     public void onEnable() {
+        saveDefaultConfig();
+
+        if (getConfig().getBoolean("auto-update") && getDescription().getVersion().startsWith("DEV")) {
+            new GitHubBuildsUpdater(this, getFile(), "JustAHuman-xD/SpiritsUnchained/master").start();
+        }
+
         instance = this;
         Groups.initialize();
 
@@ -71,6 +78,6 @@ public final class Quaptics extends JavaPlugin implements SlimefunAddon {
     }
     @Override
     public @NotNull String getBugTrackerURL() {
-        return "https://github.com/metamechanists/Quaptics/issues";
+        return "https://github.com/lordidra/Quaptics/issues";
     }
 }
