@@ -3,7 +3,7 @@
   <br>
   <img src="https://img.shields.io/badge/build-passing%20on%20my%20laptop-brightgreen.svg">
   <br>
-  <a href="https://discord.gg/nR8axbxvwk" alt="Discord Invite">Join the Quaptics Discord</a>
+  <a href="https://discord.gg/SqD3gg5SAU" alt="Discord Invite">Need help? Click to join the Slimefun Addon Community Discord and ask in #quaptics</a>
 </p>
 
 
