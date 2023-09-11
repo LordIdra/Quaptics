@@ -55,7 +55,7 @@ public final class Quaptics extends JavaPlugin implements SlimefunAddon {
         saveDefaultConfig();
 
         if (getConfig().getBoolean("auto-update") && getDescription().getVersion().startsWith("DEV")) {
-            new GitHubBuildsUpdater(this, getFile(), "JustAHuman-xD/SpiritsUnchained/master").start();
+            new GitHubBuildsUpdater(this, getFile(), "LordIdra/Quaptics/master").start();
         }
 
         instance = this;
