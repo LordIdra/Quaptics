@@ -6,7 +6,6 @@
   <a href="https://discord.gg/SqD3gg5SAU" alt="Discord Invite">Need help? Click to join the Slimefun Addon Community Discord and ask in #quaptics</a>
 </p>
 
-
 ## What's Quaptics?
 Quaptics is a [Slimefun](https://github.com/Slimefun/Slimefun4) addon intended to provide something intellectually 
 stimulating. It revolves around creating, manipulating, and using quaptic rays in systems not unlike electronic circuits.
@@ -14,6 +13,10 @@ stimulating. It revolves around creating, manipulating, and using quaptic rays i
 - Eye candy with display entities
 - Introduces new machines like turrets, multiblock clickers, beacons, etc
 - Complex multiblock system
+<br>
+
+## Download link
+https://www.spigotmc.org/resources/quaptics.112602/
 <br>
 
 ## Quaptics in action
