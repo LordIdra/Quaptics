@@ -56,11 +56,11 @@ public class InfusionContainer extends ConnectedBlock implements ItemHolderBlock
                     "&7● Infuses items",
                     "&7● &eRight Click &7with an item to start infusing"));
 
-    private static final Vector PILLAR_1_LOCATION = new Vector(2, 0, 0);
-    private static final Vector PILLAR_2_LOCATION = new Vector(-2, 0, 0);
-    private static final Vector PILLAR_3_LOCATION = new Vector(0, 0, 2);
-    private static final Vector PILLAR_4_LOCATION = new Vector(0, 0, -2);
-    private static final List<Vector> PILLAR_LOCATIONS = List.of(PILLAR_1_LOCATION, PILLAR_2_LOCATION, PILLAR_3_LOCATION, PILLAR_4_LOCATION);
+    private static final Map<Vector, ItemStack> PILLARS = Map.of(
+            new Vector(2, 0, 0), INFUSION_PILLAR,
+            new Vector(-2, 0, 0), INFUSION_PILLAR,
+            new Vector(0, 0, 2), INFUSION_PILLAR,
+            new Vector(0, 0, -2), INFUSION_PILLAR);
 
     private static final int PILLAR_PARTICLE_COUNT = 3;
     private static final double PILLAR_PARTICLE_ANIMATION_LENGTH_SECONDS = 0.5;
@@ -191,24 +191,19 @@ public class InfusionContainer extends ConnectedBlock implements ItemHolderBlock
     }
     @Override
     public Map<Vector, ItemStack> getStructure() {
-        return Map.of(
-                PILLAR_1_LOCATION, INFUSION_PILLAR,
-                PILLAR_2_LOCATION, INFUSION_PILLAR,
-                PILLAR_3_LOCATION, INFUSION_PILLAR,
-                PILLAR_4_LOCATION, INFUSION_PILLAR
-        );
+        return PILLARS;
     }
     @Override
     public void tickAnimation(@NotNull final Location centerLocation, final double timeSeconds) {
-        PILLAR_LOCATIONS.forEach(pillarLocation -> animatePillar(centerLocation, centerLocation.clone().add(pillarLocation), timeSeconds));
+        getStructure().keySet().forEach(pillarLocation -> animatePillar(centerLocation, centerLocation.clone().add(pillarLocation), timeSeconds));
         animateCenter(centerLocation);
     }
 
     private static boolean isPillarPowered(@NotNull final Location pillarLocation) {
         return BlockStorageAPI.getBoolean(pillarLocation, Keys.BS_POWERED);
     }
-    private static boolean allPillarsPowered(@NotNull final Location location) {
-        return PILLAR_LOCATIONS.stream().allMatch(vector -> isPillarPowered(location.clone().add(vector)));
+    private boolean allPillarsPowered(@NotNull final Location location) {
+        return getStructure().keySet().stream().allMatch(vector -> isPillarPowered(location.clone().add(vector)));
     }
     private static void animatePillar(@NotNull final Location center, @NotNull final Location pillarLocation, final double timeSinceCraftStarted) {
         Particles.animatedLine(Particle.ELECTRIC_SPARK,

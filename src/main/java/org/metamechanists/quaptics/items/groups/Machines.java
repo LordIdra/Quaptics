@@ -16,10 +16,12 @@ import org.metamechanists.quaptics.implementation.blocks.consumers.turrets.Direc
 import org.metamechanists.quaptics.implementation.blocks.consumers.turrets.ModulatedTurret;
 import org.metamechanists.quaptics.implementation.multiblocks.entangler.EntanglementContainer;
 import org.metamechanists.quaptics.implementation.multiblocks.entangler.EntanglementMagnet;
+import org.metamechanists.quaptics.implementation.multiblocks.infuser.IndustrialInfusionContainer;
 import org.metamechanists.quaptics.implementation.multiblocks.infuser.InfusionContainer;
 import org.metamechanists.quaptics.implementation.multiblocks.infuser.InfusionPillar;
 import org.metamechanists.quaptics.items.Groups;
 
+import static io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems.ANDROID_MEMORY_CORE;
 import static io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems.BIG_CAPACITOR;
 import static io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems.CARBONADO_EDGED_CAPACITOR;
 import static io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems.DURALUMIN_INGOT;
@@ -76,6 +78,10 @@ import static org.metamechanists.quaptics.implementation.multiblocks.entangler.E
 import static org.metamechanists.quaptics.implementation.multiblocks.entangler.EntanglementContainer.ENTANGLEMENT_CONTAINER_SETTINGS;
 import static org.metamechanists.quaptics.implementation.multiblocks.entangler.EntanglementMagnet.ENTANGLEMENT_MAGNET;
 import static org.metamechanists.quaptics.implementation.multiblocks.entangler.EntanglementMagnet.ENTANGLEMENT_MAGNET_SETTINGS;
+import static org.metamechanists.quaptics.implementation.multiblocks.infuser.IndustrialInfusionContainer.INDUSTRIAL_INFUSION_CONTAINER;
+import static org.metamechanists.quaptics.implementation.multiblocks.infuser.IndustrialInfusionContainer.INDUSTRIAL_INFUSION_CONTAINER_SETTINGS;
+import static org.metamechanists.quaptics.implementation.multiblocks.infuser.IndustrialInfusionPillar.INDUSTRIAL_INFUSION_PILLAR;
+import static org.metamechanists.quaptics.implementation.multiblocks.infuser.IndustrialInfusionPillar.INDUSTRIAL_INFUSION_PILLAR_SETTINGS;
 import static org.metamechanists.quaptics.implementation.multiblocks.infuser.InfusionContainer.INFUSION_CONTAINER;
 import static org.metamechanists.quaptics.implementation.multiblocks.infuser.InfusionContainer.INFUSION_CONTAINER_SETTINGS;
 import static org.metamechanists.quaptics.implementation.multiblocks.infuser.InfusionPillar.INFUSION_PILLAR;
@@ -238,6 +244,20 @@ public class Machines {
                 RECEIVER_2, ELECTRIC_MOTOR, null,
                 null, CARBON_STRUCTURE, null
         }, INFUSION_PILLAR_SETTINGS).register(addon);
+
+
+
+        new IndustrialInfusionContainer(Groups.MACHINES, INDUSTRIAL_INFUSION_CONTAINER, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
+                CARBON_STRUCTURE, INFUSION_CONTAINER, CARBON_STRUCTURE,
+                CARBON_STRUCTURE, ANDROID_MEMORY_CORE, CARBON_STRUCTURE,
+                CARBON_STRUCTURE, INFUSION_CONTAINER, CARBON_STRUCTURE
+        }, INDUSTRIAL_INFUSION_CONTAINER_SETTINGS).register(addon);
+
+        new InfusionPillar(Groups.MACHINES, INDUSTRIAL_INFUSION_PILLAR, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
+                INFUSED_FREQUENCY_CRYSTAL, INFUSION_PILLAR, INFUSED_FREQUENCY_CRYSTAL,
+                RECEIVER_3, ELECTRIC_MOTOR, null,
+                INFUSED_FREQUENCY_CRYSTAL, INFUSION_PILLAR, INFUSED_FREQUENCY_CRYSTAL
+        }, INDUSTRIAL_INFUSION_PILLAR_SETTINGS).register(addon);
 
 
 
