@@ -86,7 +86,7 @@ public class IndustrialInfusionContainer extends InfusionContainer {
                         .facing(player.getFacing())
                         .location(0.6F, -0.1F, 0.6F)
                         .size(0.25F, 0.8F, 0.25F))
-                .add("pillar4", new ModelCuboid()
+                .add("plate", new ModelCuboid()
                         .material(Material.WHITE_CONCRETE)
                         .facing(player.getFacing())
                         .location(0, -0.1F, 0)

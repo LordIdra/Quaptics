@@ -26,7 +26,7 @@ import java.util.List;
 public class IndustrialInfusionPillar extends InfusionPillar {
     public static final Settings INDUSTRIAL_INFUSION_PILLAR_SETTINGS = Settings.builder()
             .tier(Tier.INTERMEDIATE)
-            .minPower(50)
+            .minPower(100)
             .minFrequency(80)
             .build();
     public static final SlimefunItemStack INDUSTRIAL_INFUSION_PILLAR = new SlimefunItemStack(
