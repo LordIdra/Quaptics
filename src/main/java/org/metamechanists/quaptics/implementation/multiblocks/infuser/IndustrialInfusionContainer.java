@@ -37,7 +37,7 @@ public class IndustrialInfusionContainer extends InfusionContainer {
     public static final SlimefunItemStack INDUSTRIAL_INFUSION_CONTAINER = new SlimefunItemStack(
             "QP_INDUSTRIAL_INFUSION_CONTAINER",
             Material.GRAY_CONCRETE,
-            "&6Infusion Container",
+            "&6Industrial Infusion Container",
             Lore.create(INDUSTRIAL_INFUSION_CONTAINER_SETTINGS,
                     Lore.multiblock(),
                     "&7● Infuses items",
@@ -45,14 +45,14 @@ public class IndustrialInfusionContainer extends InfusionContainer {
                     "&7● &eRight Click &7with an item to start infusing"));
 
     private static final Map<Vector, ItemStack> PILLARS = Map.of(
-            new Vector(2, 0, 0), INDUSTRIAL_INFUSION_PILLAR,
-            new Vector(1, 0, 1), INDUSTRIAL_INFUSION_PILLAR,
-            new Vector(0, 0, 2), INDUSTRIAL_INFUSION_PILLAR,
-            new Vector(-1, 0, 1), INDUSTRIAL_INFUSION_PILLAR,
-            new Vector(-2, 0, 0), INDUSTRIAL_INFUSION_PILLAR,
-            new Vector(-1, 0, -1), INDUSTRIAL_INFUSION_PILLAR,
-            new Vector(0, 0, -2), INDUSTRIAL_INFUSION_PILLAR,
-            new Vector(1, 0, -1), INDUSTRIAL_INFUSION_PILLAR);
+            new Vector(3, 0, 0), INDUSTRIAL_INFUSION_PILLAR,
+            new Vector(2, 0, 2), INDUSTRIAL_INFUSION_PILLAR,
+            new Vector(0, 0, 3), INDUSTRIAL_INFUSION_PILLAR,
+            new Vector(-2, 0, 2), INDUSTRIAL_INFUSION_PILLAR,
+            new Vector(-3, 0, 0), INDUSTRIAL_INFUSION_PILLAR,
+            new Vector(-2, 0, -2), INDUSTRIAL_INFUSION_PILLAR,
+            new Vector(0, 0, -3), INDUSTRIAL_INFUSION_PILLAR,
+            new Vector(2, 0, -2), INDUSTRIAL_INFUSION_PILLAR);
 
     public IndustrialInfusionContainer(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
@@ -64,7 +64,7 @@ public class IndustrialInfusionContainer extends InfusionContainer {
                 .add("base", new ModelCuboid()
                         .material(Material.GRAY_CONCRETE)
                         .facing(player.getFacing())
-                        .size(1.3F, 0.6F, 1.3F)
+                        .size(1.3F, 0.4F, 1.3F)
                         .location(0, -0.3F, 0))
                 .add("pillar1", new ModelCuboid()
                         .material(Material.ORANGE_CONCRETE)
@@ -86,6 +86,11 @@ public class IndustrialInfusionContainer extends InfusionContainer {
                         .facing(player.getFacing())
                         .location(0.6F, -0.1F, 0.6F)
                         .size(0.25F, 0.8F, 0.25F))
+                .add("pillar4", new ModelCuboid()
+                        .material(Material.WHITE_CONCRETE)
+                        .facing(player.getFacing())
+                        .location(0, -0.1F, 0)
+                        .size(0.6F, 0.1F, 0.6F))
                 .add("item", new ModelItem()
                         .brightness(Utils.BRIGHTNESS_ON)
                         .location(0, 0.4F, 0)

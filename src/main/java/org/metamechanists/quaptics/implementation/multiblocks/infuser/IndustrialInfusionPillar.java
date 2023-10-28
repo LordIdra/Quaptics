@@ -32,7 +32,7 @@ public class IndustrialInfusionPillar extends InfusionPillar {
     public static final SlimefunItemStack INDUSTRIAL_INFUSION_PILLAR = new SlimefunItemStack(
             "QP_INDUSTRIAL_INFUSION_PILLAR",
             Material.BLUE_CONCRETE,
-            "&6Infusion Pillar",
+            "&6Industrial Infusion Pillar",
             Lore.create(INDUSTRIAL_INFUSION_PILLAR_SETTINGS,
                     Lore.multiblockComponent()));
 
@@ -52,8 +52,8 @@ public class IndustrialInfusionPillar extends InfusionPillar {
                 .add("pillar", new ModelCuboid()
                         .material(Material.BLUE_CONCRETE)
                         .facing(player.getFacing())
-                        .size(0.4F, 0.6F, 0.4F)
-                        .location(0, -0.2F, 0))
+                        .size(0.4F, 0.8F, 0.4F)
+                        .location(0, -0.1F, 0))
                 .add("prism", new ModelCuboid()
                         .material(Material.LIGHT_BLUE_STAINED_GLASS)
                         .brightness(Utils.BRIGHTNESS_OFF)
