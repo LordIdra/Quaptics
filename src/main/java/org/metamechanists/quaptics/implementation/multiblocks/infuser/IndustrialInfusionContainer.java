@@ -22,7 +22,9 @@ import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Utils;
 
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Optional;
 
 import static org.metamechanists.quaptics.implementation.multiblocks.infuser.IndustrialInfusionPillar.INDUSTRIAL_INFUSION_PILLAR;
@@ -113,7 +115,7 @@ public class IndustrialInfusionContainer extends InfusionContainer {
         }
 
         final ItemStack itemStack = player.getInventory().getItemInMainHand();
-        final int amount = Math.max(itemStack.getAmount(), 16);
+        final int amount = Math.min(itemStack.getAmount(), 16);
         itemStack.subtract(amount);
         final ItemStack newItemStack = itemStack.clone();
         newItemStack.setAmount(amount);
@@ -122,7 +124,21 @@ public class IndustrialInfusionContainer extends InfusionContainer {
         }
 
         ItemHolderBlock.insertItem(location, name, itemStack);
-        player.getInventory().getItemInMainHand().subtract();
         BlockStorageAPI.set(location, Keys.BS_IS_HOLDING_ITEM, true);
+    }
+
+    @Override
+    public Map<ItemStack, ItemStack> getRecipes() {
+        final Map<ItemStack, ItemStack> recipes = new HashMap<>();
+        for (final Entry<ItemStack, ItemStack> recipe : super.getRecipes().entrySet()) {
+            for (int i = 0; i < 8; i++) {
+                final ItemStack input = recipe.getKey().clone();
+                final ItemStack output = recipe.getValue().clone();
+                input.add(i);
+                output.add(i);
+                recipes.put(input, output);
+            }
+        }
+        return recipes;
     }
 }
