@@ -73,7 +73,8 @@ public class IndustrialCrystalRefiner extends CrystalRefiner {
                 .add("panel1", new ModelCuboid()
                         .material(Material.RED_CONCRETE)
                         .location(0.4F, -0.21F, -0.4F)
-                        .size(0.05F, 0.6F, 0.8F))
+                        .size(0.05F, 0.4F, 0.5F)
+                        .rotation(Math.PI / 4))
 
                 .add("water", new ModelCuboid()
                         .material(Material.BLUE_CONCRETE)
