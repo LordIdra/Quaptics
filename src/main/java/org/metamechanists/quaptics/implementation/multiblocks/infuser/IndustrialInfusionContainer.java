@@ -116,13 +116,13 @@ public class IndustrialInfusionContainer extends InfusionContainer {
 
         final ItemStack itemStack = player.getInventory().getItemInMainHand();
         final int amount = Math.min(itemStack.getAmount(), 16);
-        itemStack.subtract(amount);
         final ItemStack newItemStack = itemStack.clone();
         newItemStack.setAmount(amount);
-        if (itemStack.getType().isEmpty() || !onInsert(location, name, itemStack, player)) {
+        if (newItemStack.getType().isEmpty() || !onInsert(location, name, newItemStack, player)) {
             return;
         }
 
+        itemStack.subtract(amount);
         ItemHolderBlock.insertItem(location, name, itemStack);
         BlockStorageAPI.set(location, Keys.BS_IS_HOLDING_ITEM, true);
     }
