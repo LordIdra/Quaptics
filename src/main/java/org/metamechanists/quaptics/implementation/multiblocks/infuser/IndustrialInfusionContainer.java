@@ -131,7 +131,7 @@ public class IndustrialInfusionContainer extends InfusionContainer {
     public Map<ItemStack, ItemStack> getRecipes() {
         final Map<ItemStack, ItemStack> recipes = new HashMap<>();
         for (final Entry<ItemStack, ItemStack> recipe : super.getRecipes().entrySet()) {
-            for (int i = 0; i < 8; i++) {
+            for (int i = 0; i < 16; i++) {
                 final ItemStack input = recipe.getKey().clone();
                 final ItemStack output = recipe.getValue().clone();
                 input.add(i);
