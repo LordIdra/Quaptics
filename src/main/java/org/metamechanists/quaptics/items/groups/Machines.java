@@ -9,6 +9,7 @@ import org.metamechanists.quaptics.Quaptics;
 import org.metamechanists.quaptics.implementation.blocks.consumers.Charger;
 import org.metamechanists.quaptics.implementation.blocks.consumers.CrystalRefiner;
 import org.metamechanists.quaptics.implementation.blocks.consumers.DataStripper;
+import org.metamechanists.quaptics.implementation.blocks.consumers.IndustrialCrystalRefiner;
 import org.metamechanists.quaptics.implementation.blocks.consumers.ItemProjector;
 import org.metamechanists.quaptics.implementation.blocks.consumers.MultiblockClicker;
 import org.metamechanists.quaptics.implementation.blocks.consumers.launchpad.Launchpad;
@@ -16,6 +17,8 @@ import org.metamechanists.quaptics.implementation.blocks.consumers.turrets.Direc
 import org.metamechanists.quaptics.implementation.blocks.consumers.turrets.ModulatedTurret;
 import org.metamechanists.quaptics.implementation.multiblocks.entangler.EntanglementContainer;
 import org.metamechanists.quaptics.implementation.multiblocks.entangler.EntanglementMagnet;
+import org.metamechanists.quaptics.implementation.multiblocks.entangler.IndustrialEntanglementContainer;
+import org.metamechanists.quaptics.implementation.multiblocks.entangler.IndustrialEntanglementMagnet;
 import org.metamechanists.quaptics.implementation.multiblocks.infuser.IndustrialInfusionContainer;
 import org.metamechanists.quaptics.implementation.multiblocks.infuser.InfusionContainer;
 import org.metamechanists.quaptics.implementation.multiblocks.infuser.InfusionPillar;
@@ -48,6 +51,7 @@ import static org.metamechanists.quaptics.implementation.blocks.consumers.DataSt
 import static org.metamechanists.quaptics.implementation.blocks.consumers.DataStripper.DATA_STRIPPER_1_SETTINGS;
 import static org.metamechanists.quaptics.implementation.blocks.consumers.DataStripper.DATA_STRIPPER_2;
 import static org.metamechanists.quaptics.implementation.blocks.consumers.DataStripper.DATA_STRIPPER_2_SETTINGS;
+import static org.metamechanists.quaptics.implementation.blocks.consumers.IndustrialCrystalRefiner.INDUSTRIAL_CRYSTAL_REFINER;
 import static org.metamechanists.quaptics.implementation.blocks.consumers.ItemProjector.ITEM_PROJECTOR;
 import static org.metamechanists.quaptics.implementation.blocks.consumers.ItemProjector.ITEM_PROJECTOR_SETTINGS;
 import static org.metamechanists.quaptics.implementation.blocks.consumers.MultiblockClicker.MULTIBLOCK_CLICKER_1;
@@ -78,6 +82,10 @@ import static org.metamechanists.quaptics.implementation.multiblocks.entangler.E
 import static org.metamechanists.quaptics.implementation.multiblocks.entangler.EntanglementContainer.ENTANGLEMENT_CONTAINER_SETTINGS;
 import static org.metamechanists.quaptics.implementation.multiblocks.entangler.EntanglementMagnet.ENTANGLEMENT_MAGNET;
 import static org.metamechanists.quaptics.implementation.multiblocks.entangler.EntanglementMagnet.ENTANGLEMENT_MAGNET_SETTINGS;
+import static org.metamechanists.quaptics.implementation.multiblocks.entangler.IndustrialEntanglementContainer.INDUSTRIAL_ENTANGLEMENT_CONTAINER;
+import static org.metamechanists.quaptics.implementation.multiblocks.entangler.IndustrialEntanglementContainer.INDUSTRIAL_ENTANGLEMENT_CONTAINER_SETTINGS;
+import static org.metamechanists.quaptics.implementation.multiblocks.entangler.IndustrialEntanglementMagnet.INDUSTRIAL_ENTANGLEMENT_MAGNET;
+import static org.metamechanists.quaptics.implementation.multiblocks.entangler.IndustrialEntanglementMagnet.INDUSTRIAL_ENTANGLEMENT_MAGNET_SETTINGS;
 import static org.metamechanists.quaptics.implementation.multiblocks.infuser.IndustrialInfusionContainer.INDUSTRIAL_INFUSION_CONTAINER;
 import static org.metamechanists.quaptics.implementation.multiblocks.infuser.IndustrialInfusionContainer.INDUSTRIAL_INFUSION_CONTAINER_SETTINGS;
 import static org.metamechanists.quaptics.implementation.multiblocks.infuser.IndustrialInfusionPillar.INDUSTRIAL_INFUSION_PILLAR;
@@ -231,13 +239,12 @@ public class Machines {
                 REINFORCED_ALLOY_INGOT, new ItemStack(Material.CAULDRON), REINFORCED_ALLOY_INGOT
         }, CRYSTAL_REFINER_SETTINGS).register(addon);
 
+        new IndustrialCrystalRefiner(Groups.MACHINES, INDUSTRIAL_CRYSTAL_REFINER, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
+                null, ELECTRO_MAGNET, null,
+                CRYSTAL_REFINER, new ItemStack(Material.WATER_BUCKET), CRYSTAL_REFINER,
+                DIELECTRIC_3, new ItemStack(Material.CAULDRON), DIELECTRIC_3
+        }, IndustrialCrystalRefiner.INDUSTRIAL_CRYSTAL_REFINER_SETTINGS).register(addon);
 
-
-        new InfusionContainer(Groups.MACHINES, INFUSION_CONTAINER, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
-                null, null, null,
-                CARBON_STRUCTURE, null, CARBON_STRUCTURE,
-                CARBON_STRUCTURE, POWER_CRYSTAL, CARBON_STRUCTURE
-        }, INFUSION_CONTAINER_SETTINGS).register(addon);
 
         new InfusionPillar(Groups.MACHINES, INFUSION_PILLAR, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 null, TRANSCEIVER_2, null,
@@ -245,7 +252,17 @@ public class Machines {
                 null, CARBON_STRUCTURE, null
         }, INFUSION_PILLAR_SETTINGS).register(addon);
 
+        new InfusionPillar(Groups.MACHINES, INDUSTRIAL_INFUSION_PILLAR, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
+                INFUSED_FREQUENCY_CRYSTAL, INFUSION_PILLAR, INFUSED_FREQUENCY_CRYSTAL,
+                RECEIVER_3, ELECTRIC_MOTOR, null,
+                INFUSED_FREQUENCY_CRYSTAL, INFUSION_PILLAR, INFUSED_FREQUENCY_CRYSTAL
+        }, INDUSTRIAL_INFUSION_PILLAR_SETTINGS).register(addon);
 
+        new InfusionContainer(Groups.MACHINES, INFUSION_CONTAINER, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
+                null, null, null,
+                CARBON_STRUCTURE, null, CARBON_STRUCTURE,
+                CARBON_STRUCTURE, POWER_CRYSTAL, CARBON_STRUCTURE
+        }, INFUSION_CONTAINER_SETTINGS).register(addon);
 
         new IndustrialInfusionContainer(Groups.MACHINES, INDUSTRIAL_INFUSION_CONTAINER, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 CARBON_STRUCTURE, INFUSION_CONTAINER, CARBON_STRUCTURE,
@@ -253,13 +270,19 @@ public class Machines {
                 CARBON_STRUCTURE, INFUSION_CONTAINER, CARBON_STRUCTURE
         }, INDUSTRIAL_INFUSION_CONTAINER_SETTINGS).register(addon);
 
-        new InfusionPillar(Groups.MACHINES, INDUSTRIAL_INFUSION_PILLAR, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
-                INFUSED_FREQUENCY_CRYSTAL, INFUSION_PILLAR, INFUSED_FREQUENCY_CRYSTAL,
-                RECEIVER_3, ELECTRIC_MOTOR, null,
-                INFUSED_FREQUENCY_CRYSTAL, INFUSION_PILLAR, INFUSED_FREQUENCY_CRYSTAL
-        }, INDUSTRIAL_INFUSION_PILLAR_SETTINGS).register(addon);
 
 
+        new EntanglementMagnet(Groups.MACHINES, ENTANGLEMENT_MAGNET, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
+                null, ELECTRO_MAGNET, null,
+                RECEIVER_3, CARBON_STRUCTURE, null,
+                null, ELECTRO_MAGNET, null
+        }, ENTANGLEMENT_MAGNET_SETTINGS).register(addon);
+
+        new IndustrialEntanglementMagnet(Groups.MACHINES, INDUSTRIAL_ENTANGLEMENT_MAGNET, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
+                ELECTRO_MAGNET, ENTANGLED_FREQUENCY_CRYSTAL, ELECTRO_MAGNET,
+                RECEIVER_3, ENTANGLEMENT_MAGNET, null,
+                ELECTRO_MAGNET, ENTANGLED_FREQUENCY_CRYSTAL, ELECTRO_MAGNET
+        }, INDUSTRIAL_ENTANGLEMENT_MAGNET_SETTINGS).register(addon);
 
         new EntanglementContainer(Groups.MACHINES, ENTANGLEMENT_CONTAINER, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 CARBON_STRUCTURE, DIELECTRIC_3, CARBON_STRUCTURE,
@@ -267,10 +290,12 @@ public class Machines {
                 CARBON_STRUCTURE, DIELECTRIC_3, CARBON_STRUCTURE
         }, ENTANGLEMENT_CONTAINER_SETTINGS).register(addon);
 
-        new EntanglementMagnet(Groups.MACHINES, ENTANGLEMENT_MAGNET, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
-                null, ELECTRO_MAGNET, null,
-                RECEIVER_3, CARBON_STRUCTURE, null,
-                null, ELECTRO_MAGNET, null
-        }, ENTANGLEMENT_MAGNET_SETTINGS).register(addon);
+        new IndustrialEntanglementContainer(Groups.MACHINES, INDUSTRIAL_ENTANGLEMENT_CONTAINER, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
+                CARBON_STRUCTURE, ENTANGLEMENT_CONTAINER, CARBON_STRUCTURE,
+                DIELECTRIC_4, ENTANGLED_FREQUENCY_CRYSTAL, DIELECTRIC_4,
+                CARBON_STRUCTURE, ENTANGLEMENT_CONTAINER, CARBON_STRUCTURE
+        }, INDUSTRIAL_ENTANGLEMENT_CONTAINER_SETTINGS).register(addon);
+
+
     }
 }

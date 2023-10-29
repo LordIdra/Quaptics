@@ -34,7 +34,7 @@ public class IndustrialInfusionContainer extends InfusionContainer {
     public static final Settings INDUSTRIAL_INFUSION_CONTAINER_SETTINGS = Settings.builder()
             .tier(Tier.INTERMEDIATE)
             .operatingPowerHidden(true)
-            .timePerItem(30)
+            .timePerItem(15)
             .build();
     public static final SlimefunItemStack INDUSTRIAL_INFUSION_CONTAINER = new SlimefunItemStack(
             "QP_INDUSTRIAL_INFUSION_CONTAINER",
@@ -101,6 +101,21 @@ public class IndustrialInfusionContainer extends InfusionContainer {
     }
 
     @Override
+    public Map<ItemStack, ItemStack> getRecipes() {
+        final Map<ItemStack, ItemStack> recipes = new HashMap<>();
+        for (final Entry<ItemStack, ItemStack> recipe : super.getRecipes().entrySet()) {
+            for (int i = 0; i < 16; i++) {
+                final ItemStack input = recipe.getKey().clone();
+                final ItemStack output = recipe.getValue().clone();
+                input.add(i);
+                output.add(i);
+                recipes.put(input, output);
+            }
+        }
+        return recipes;
+    }
+
+    @Override
     public Map<Vector, ItemStack> getStructure() {
         return PILLARS;
     }
@@ -125,20 +140,5 @@ public class IndustrialInfusionContainer extends InfusionContainer {
         itemStack.subtract(amount);
         ItemHolderBlock.insertItem(location, name, newItemStack);
         BlockStorageAPI.set(location, Keys.BS_IS_HOLDING_ITEM, true);
-    }
-
-    @Override
-    public Map<ItemStack, ItemStack> getRecipes() {
-        final Map<ItemStack, ItemStack> recipes = new HashMap<>();
-        for (final Entry<ItemStack, ItemStack> recipe : super.getRecipes().entrySet()) {
-            for (int i = 0; i < 16; i++) {
-                final ItemStack input = recipe.getKey().clone();
-                final ItemStack output = recipe.getValue().clone();
-                input.add(i);
-                output.add(i);
-                recipes.put(input, output);
-            }
-        }
-        return recipes;
     }
 }
