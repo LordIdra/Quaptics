@@ -123,7 +123,7 @@ public class IndustrialInfusionContainer extends InfusionContainer {
         }
 
         itemStack.subtract(amount);
-        ItemHolderBlock.insertItem(location, name, itemStack);
+        ItemHolderBlock.insertItem(location, name, newItemStack);
         BlockStorageAPI.set(location, Keys.BS_IS_HOLDING_ITEM, true);
     }
 
