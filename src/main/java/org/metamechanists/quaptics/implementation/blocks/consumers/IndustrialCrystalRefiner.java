@@ -75,6 +75,21 @@ public class IndustrialCrystalRefiner extends CrystalRefiner {
                         .location(0.4F, -0.21F, -0.4F)
                         .size(0.05F, 0.4F, 0.5F)
                         .rotation(Math.PI / 4))
+                .add("panel2", new ModelCuboid()
+                        .material(Material.RED_CONCRETE)
+                        .location(-0.3F, -0.21F, 0.3F)
+                        .size(0.05F, 0.4F, 0.5F)
+                        .rotation(Math.PI / 4))
+                .add("panel3", new ModelCuboid()
+                        .material(Material.RED_CONCRETE)
+                        .location(0.3F, -0.21F, 0.3F)
+                        .size(0.5F, 0.4F, 0.05F)
+                        .rotation(Math.PI / 4))
+                .add("panel4", new ModelCuboid()
+                        .material(Material.RED_CONCRETE)
+                        .location(-0.3F, -0.21F, -0.3F)
+                        .size(0.5F, 0.4F, 0.05F)
+                        .rotation(Math.PI / 4))
 
                 .add("water", new ModelCuboid()
                         .material(Material.BLUE_CONCRETE)
@@ -85,7 +100,7 @@ public class IndustrialCrystalRefiner extends CrystalRefiner {
                         .material(settings.getTier().concreteMaterial)
                         .brightness(Utils.BRIGHTNESS_OFF)
                         .location(0, -0.2F, 0)
-                        .size(0.5F)
+                        .size(0.4F)
                         .rotation(Math.PI / 4))
 
                 .add("item", new ModelItem()
@@ -94,6 +109,15 @@ public class IndustrialCrystalRefiner extends CrystalRefiner {
                         .location(0, 0.2F, 0))
 
                 .buildAtBlockCenter(location);
+    }
+
+    @Override
+    public void onPoweredAnimation(final @NotNull Location location, final boolean powered) {
+        brightnessAnimation(location, "concrete", powered);
+        brightnessAnimation(location, "panel1", powered);
+        brightnessAnimation(location, "panel2", powered);
+        brightnessAnimation(location, "panel3", powered);
+        brightnessAnimation(location, "panel4", powered);
     }
 
     @Override
