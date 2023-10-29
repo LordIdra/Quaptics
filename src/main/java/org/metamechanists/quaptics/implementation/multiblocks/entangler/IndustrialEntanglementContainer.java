@@ -57,7 +57,7 @@ public class IndustrialEntanglementContainer extends EntanglementContainer {
             Map.entry(new Vector(2, 2, 0), ENTANGLEMENT_MAGNET),
             Map.entry(new Vector(2, -2, 0), ENTANGLEMENT_MAGNET),
             Map.entry(new Vector(-2, 2, 0), ENTANGLEMENT_MAGNET),
-            Map.entry(new Vector(2, 2, 0), ENTANGLEMENT_MAGNET),
+            Map.entry(new Vector(-2, -2, 0), ENTANGLEMENT_MAGNET),
 
             Map.entry(new Vector(2, 0, 2), ENTANGLEMENT_MAGNET),
             Map.entry(new Vector(2, 0, -2), ENTANGLEMENT_MAGNET),
