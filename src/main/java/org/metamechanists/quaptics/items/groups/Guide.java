@@ -21,7 +21,7 @@ public class Guide {
     private final SlimefunItemStack WHAT_IS_QUAPTICS_1 = new SlimefunItemStack("QP_GUIDE_WHAT_IS_QUAPTICS_1", Material.CYAN_CONCRETE,
             "&7Quaptics is all about creating, manipulating,",
             "&7and using quaptic rays, mysterious beams",
-            "&7of power that can be used to power quaptic",
+            "&7of power that can be used to power Quaptic",
             "&7machines.");
     private final SlimefunItemStack WHAT_IS_QUAPTICS_2 = new SlimefunItemStack("QP_GUIDE_WHAT_IS_QUAPTICS_2", Material.CYAN_CONCRETE,
             "&7Quaptic Rays have properties such as power,",
