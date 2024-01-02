@@ -27,7 +27,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 
-import static org.metamechanists.quaptics.implementation.multiblocks.entangler.EntanglementMagnet.ENTANGLEMENT_MAGNET;
+import static org.metamechanists.quaptics.implementation.multiblocks.entangler.IndustrialEntanglementMagnet.INDUSTRIAL_ENTANGLEMENT_MAGNET;
 
 
 public class IndustrialEntanglementContainer extends EntanglementContainer {
@@ -47,27 +47,27 @@ public class IndustrialEntanglementContainer extends EntanglementContainer {
 
     // I hate this stupid language jesus christ
     private static final Map<Vector, ItemStack> MAGNETS = Map.ofEntries(
-            Map.entry(new Vector(3, 0, 0), ENTANGLEMENT_MAGNET),
-            Map.entry(new Vector(-3, 0, 0), ENTANGLEMENT_MAGNET),
-            Map.entry(new Vector(0, 3, 0), ENTANGLEMENT_MAGNET),
-            Map.entry(new Vector(0, -3, 0), ENTANGLEMENT_MAGNET),
-            Map.entry(new Vector(0, 0, 3), ENTANGLEMENT_MAGNET),
-            Map.entry(new Vector(0, 0, -3), ENTANGLEMENT_MAGNET),
+            Map.entry(new Vector(3, 0, 0), INDUSTRIAL_ENTANGLEMENT_MAGNET),
+            Map.entry(new Vector(-3, 0, 0), INDUSTRIAL_ENTANGLEMENT_MAGNET),
+            Map.entry(new Vector(0, 3, 0), INDUSTRIAL_ENTANGLEMENT_MAGNET),
+            Map.entry(new Vector(0, -3, 0), INDUSTRIAL_ENTANGLEMENT_MAGNET),
+            Map.entry(new Vector(0, 0, 3), INDUSTRIAL_ENTANGLEMENT_MAGNET),
+            Map.entry(new Vector(0, 0, -3), INDUSTRIAL_ENTANGLEMENT_MAGNET),
 
-            Map.entry(new Vector(2, 2, 0), ENTANGLEMENT_MAGNET),
-            Map.entry(new Vector(2, -2, 0), ENTANGLEMENT_MAGNET),
-            Map.entry(new Vector(-2, 2, 0), ENTANGLEMENT_MAGNET),
-            Map.entry(new Vector(-2, -2, 0), ENTANGLEMENT_MAGNET),
+            Map.entry(new Vector(2, 2, 0), INDUSTRIAL_ENTANGLEMENT_MAGNET),
+            Map.entry(new Vector(2, -2, 0), INDUSTRIAL_ENTANGLEMENT_MAGNET),
+            Map.entry(new Vector(-2, 2, 0), INDUSTRIAL_ENTANGLEMENT_MAGNET),
+            Map.entry(new Vector(-2, -2, 0), INDUSTRIAL_ENTANGLEMENT_MAGNET),
 
-            Map.entry(new Vector(2, 0, 2), ENTANGLEMENT_MAGNET),
-            Map.entry(new Vector(2, 0, -2), ENTANGLEMENT_MAGNET),
-            Map.entry(new Vector(-2, 0, 2), ENTANGLEMENT_MAGNET),
-            Map.entry(new Vector(-2, 0, -2), ENTANGLEMENT_MAGNET),
+            Map.entry(new Vector(2, 0, 2), INDUSTRIAL_ENTANGLEMENT_MAGNET),
+            Map.entry(new Vector(2, 0, -2), INDUSTRIAL_ENTANGLEMENT_MAGNET),
+            Map.entry(new Vector(-2, 0, 2), INDUSTRIAL_ENTANGLEMENT_MAGNET),
+            Map.entry(new Vector(-2, 0, -2), INDUSTRIAL_ENTANGLEMENT_MAGNET),
 
-            Map.entry(new Vector(0, 2, 2), ENTANGLEMENT_MAGNET),
-            Map.entry(new Vector(0, 2, -2), ENTANGLEMENT_MAGNET),
-            Map.entry(new Vector(0, -2, 2), ENTANGLEMENT_MAGNET),
-            Map.entry(new Vector(0, -2, -2), ENTANGLEMENT_MAGNET));
+            Map.entry(new Vector(0, 2, 2), INDUSTRIAL_ENTANGLEMENT_MAGNET),
+            Map.entry(new Vector(0, 2, -2), INDUSTRIAL_ENTANGLEMENT_MAGNET),
+            Map.entry(new Vector(0, -2, 2), INDUSTRIAL_ENTANGLEMENT_MAGNET),
+            Map.entry(new Vector(0, -2, -2), INDUSTRIAL_ENTANGLEMENT_MAGNET));
 
     public IndustrialEntanglementContainer(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
