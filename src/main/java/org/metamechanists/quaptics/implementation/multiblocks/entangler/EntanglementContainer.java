@@ -55,15 +55,13 @@ public class EntanglementContainer extends ConnectedBlock implements ItemHolderB
                     "&7● Entangles items",
                     "&7● &eRight Click &7with an item to start the entanglement process"));
 
-    private static final Vector MAGNET_1_LOCATION = new Vector(3, 0, 0);
-    private static final Vector MAGNET_2_LOCATION = new Vector(-3, 0, 0);
-    private static final Vector MAGNET_3_LOCATION = new Vector(0, 3, 0);
-    private static final Vector MAGNET_4_LOCATION = new Vector(0, -3, 0);
-    private static final Vector MAGNET_5_LOCATION = new Vector(0, 0, 3);
-    private static final Vector MAGNET_6_LOCATION = new Vector(0, 0, -3);
-    private static final List<Vector> MAGNET_LOCATIONS = List.of(
-            MAGNET_1_LOCATION, MAGNET_2_LOCATION, MAGNET_3_LOCATION,
-            MAGNET_4_LOCATION, MAGNET_5_LOCATION, MAGNET_6_LOCATION);
+    private static final Map<Vector, ItemStack> MAGNETS = Map.of(
+            new Vector(3, 0, 0), ENTANGLEMENT_MAGNET,
+            new Vector(-3, 0, 0), ENTANGLEMENT_MAGNET,
+            new Vector(0, 3, 0), ENTANGLEMENT_MAGNET,
+            new Vector(0, -3, 0), ENTANGLEMENT_MAGNET,
+            new Vector(0, 0, 3), ENTANGLEMENT_MAGNET,
+            new Vector(0, 0, -3), ENTANGLEMENT_MAGNET);
 
     private final double magnetParticleAnimationLengthSeconds = settings.getTimePerItem();
 
@@ -232,24 +230,18 @@ public class EntanglementContainer extends ConnectedBlock implements ItemHolderB
     }
     @Override
     public Map<Vector, ItemStack> getStructure() {
-        return Map.of(
-                MAGNET_1_LOCATION, ENTANGLEMENT_MAGNET,
-                MAGNET_2_LOCATION, ENTANGLEMENT_MAGNET,
-                MAGNET_3_LOCATION, ENTANGLEMENT_MAGNET,
-                MAGNET_4_LOCATION, ENTANGLEMENT_MAGNET,
-                MAGNET_5_LOCATION, ENTANGLEMENT_MAGNET,
-                MAGNET_6_LOCATION, ENTANGLEMENT_MAGNET);
+        return MAGNETS;
     }
     @Override
     public void tickAnimation(@NotNull final Location centerLocation, final double timeSeconds) {
-        MAGNET_LOCATIONS.forEach(magnetLocation -> animateMagnet(centerLocation, centerLocation.clone().add(magnetLocation), timeSeconds));
+        getStructure().keySet().forEach(magnetLocation -> animateMagnet(centerLocation, centerLocation.clone().add(magnetLocation), timeSeconds));
     }
 
     private static boolean isMagnetPowered(@NotNull final Location pillarLocation) {
         return BlockStorageAPI.getBoolean(pillarLocation, Keys.BS_POWERED);
     }
-    private static boolean allMagnetsPowered(@NotNull final Location location) {
-        return MAGNET_LOCATIONS.stream().allMatch(vector -> isMagnetPowered(location.clone().add(vector)));
+    private boolean allMagnetsPowered(@NotNull final Location location) {
+        return getStructure().keySet().stream().allMatch(vector -> isMagnetPowered(location.clone().add(vector)));
     }
 
     private void animateMagnet(@NotNull final Location center, @NotNull final Location pillarLocation, final double timeSinceCraftStarted) {

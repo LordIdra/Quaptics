@@ -21,7 +21,7 @@ public class Guide {
     private final SlimefunItemStack WHAT_IS_QUAPTICS_1 = new SlimefunItemStack("QP_GUIDE_WHAT_IS_QUAPTICS_1", Material.CYAN_CONCRETE,
             "&7Quaptics is all about creating, manipulating,",
             "&7and using quaptic rays, mysterious beams",
-            "&7of power that can be used to power quaptic",
+            "&7of power that can be used to power Quaptic",
             "&7machines.");
     private final SlimefunItemStack WHAT_IS_QUAPTICS_2 = new SlimefunItemStack("QP_GUIDE_WHAT_IS_QUAPTICS_2", Material.CYAN_CONCRETE,
             "&7Quaptic Rays have properties such as power,",
@@ -181,6 +181,23 @@ public class Guide {
             "&7which block it is, and place them as shown.",
             "&7That's it!");
 
+    private final SlimefunItemStack GENERAL_TIPS = new SlimefunItemStack("QP_GUIDE_GENERAL_TIPS", Material.WHITE_CONCRETE,
+            Colors.QUAPTICS.getFormattedColor() + "General Tips",
+            Lore.clickToOpen());
+    private final SlimefunItemStack GENERAL_TIPS_1 = new SlimefunItemStack("QP_GUIDE_GENERAL_TIPS_1", Material.CYAN_CONCRETE,
+            "&7There are often many ways to do something.",
+            "&7Sometimes it's best to try multiple approaches",
+            "&7to see which one works the best.");
+    private final SlimefunItemStack GENERAL_TIPS_2 = new SlimefunItemStack("QP_GUIDE_GENERAL_TIPS_2", Material.CYAN_CONCRETE,
+            "&7Transformers are quite wasteful.",
+            "&7Try and minimise how many you use -",
+            "&7can you replace a group of transformers",
+            "&7with just one?");
+    private final SlimefunItemStack GENERAL_TIPS_3 = new SlimefunItemStack("QP_GUIDE_GENERAL_TIPS_3", Material.CYAN_CONCRETE,
+            "&7The tier 3 beacon is very hard to power.",
+            "&7Hint: Try getting the maximum power on",
+            "&7a Quaptic Reactor.");
+
 
     public void initialize() {
         final SlimefunAddon addon = Quaptics.getInstance();
@@ -224,6 +241,12 @@ public class Guide {
         new SlimefunItem(Groups.GUIDE, BUILDING_MULTIBLOCKS, RecipeType.NULL, new ItemStack[]{
                 BUILDING_MULTIBLOCKS_1, BUILDING_MULTIBLOCKS_2, BUILDING_MULTIBLOCKS_3,
                 BUILDING_MULTIBLOCKS_4, null, null,
+                null, null, null
+        }).register(addon);
+
+        new SlimefunItem(Groups.GUIDE, GENERAL_TIPS, RecipeType.NULL, new ItemStack[]{
+                GENERAL_TIPS_1, GENERAL_TIPS_2, GENERAL_TIPS_3,
+                null, null, null,
                 null, null, null
         }).register(addon);
     }
