@@ -22,8 +22,8 @@ import org.metamechanists.quaptics.utils.Utils;
 public class IndustrialEntanglementMagnet extends EntanglementMagnet {
     public static final Settings INDUSTRIAL_ENTANGLEMENT_MAGNET_SETTINGS = Settings.builder()
             .tier(Tier.ADVANCED)
-            .minPower(1)
-            .minFrequency(0)
+            .minPower(100)
+            .minFrequency(1200)
             .build();
     public static final SlimefunItemStack INDUSTRIAL_ENTANGLEMENT_MAGNET = new SlimefunItemStack(
             "QP_INDUSTRIAL_ENTANGLEMENT_MAGNET",
